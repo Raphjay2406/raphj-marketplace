@@ -9,10 +9,10 @@
   },
   "plugins": [
     {
-      "name": "v0-ahh-skill",
-      "source": "./plugins/v0-ahh-skill",
-      "description": "Ultimate UI/UX plugin with 22 skills for frontend design, animations, mobile patterns, premium aesthetics, and visual auditing",
-      "version": "1.0.0",
+      "name": "modulo",
+      "source": "./plugins/modulo",
+      "description": "Premium design workflow system with 25 skills, 4 commands, and 3 agents for creating 90k-quality websites",
+      "version": "2.0.0",
       "author": {
         "name": "raphj"
       },
@@ -27,7 +27,9 @@
         "tailwind",
         "design",
         "mobile",
-        "animation"
+        "animation",
+        "workflow",
+        "premium"
       ]
     },
     {

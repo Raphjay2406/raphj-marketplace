@@ -1,8 +1,0 @@
-{
-  "name": "v0-ahh-skill",
-  "description": "v0-inspired frontend design skill for creating polished React/Next.js UI components with shadcn/ui and Tailwind CSS",
-  "version": "1.0.0",
-  "author": {
-    "name": "raphj"
-  }
-}
