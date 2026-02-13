@@ -13,6 +13,7 @@ claude plugin marketplace add https://github.com/Raphjay2406/raphj-marketplace
 | Plugin | Description |
 |--------|-------------|
 | `v0-ahh-skill` | v0-inspired frontend design skill for React/Next.js with shadcn/ui and Tailwind CSS |
+| `wavy-bavy` | Integrate the wavy-bavy library for seamless wave transitions between page sections |
 
 ## Install a Plugin
 
@@ -20,4 +21,5 @@ After adding the marketplace, install any plugin:
 
 ```bash
 claude plugin install v0-ahh-skill@raphj-marketplace
+claude plugin install wavy-bavy@raphj-marketplace
 ```
