@@ -10,10 +10,10 @@ claude plugin marketplace add https://github.com/Raphjay2406/raphj-marketplace
 
 ## Available Plugins
 
-| Plugin | Description |
-|--------|-------------|
-| `v0-ahh-skill` | v0-inspired frontend design skill for React/Next.js with shadcn/ui and Tailwind CSS |
-| `wavy-bavy` | Integrate the wavy-bavy library for seamless wave transitions between page sections |
+| Plugin | Skills | Description |
+|--------|--------|-------------|
+| `v0-ahh-skill` | 22 | Ultimate UI/UX plugin - frontend design, animations, mobile patterns, premium aesthetics, visual auditing |
+| `wavy-bavy` | 1 | Integrate the wavy-bavy library for seamless wave transitions between page sections |
 
 ## Install a Plugin
 
