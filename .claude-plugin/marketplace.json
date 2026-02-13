@@ -1,0 +1,50 @@
+{
+  "name": "raphj-marketplace",
+  "owner": {
+    "name": "Raphjay2406"
+  },
+  "metadata": {
+    "description": "Personal Claude Code plugin marketplace by Raphjay2406",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "v0-ahh-skill",
+      "source": "./plugins/v0-ahh-skill",
+      "description": "Ultimate UI/UX plugin with 22 skills for frontend design, animations, mobile patterns, premium aesthetics, and visual auditing",
+      "version": "1.0.0",
+      "author": {
+        "name": "raphj"
+      },
+      "category": "design",
+      "keywords": [
+        "frontend",
+        "ui",
+        "ux",
+        "react",
+        "nextjs",
+        "shadcn",
+        "tailwind",
+        "design",
+        "mobile",
+        "animation"
+      ]
+    },
+    {
+      "name": "wavy-bavy",
+      "source": "./plugins/wavy-bavy",
+      "description": "Integrate the wavy-bavy library for seamless wave transitions between page sections",
+      "version": "1.0.0",
+      "author": {
+        "name": "raphj"
+      },
+      "category": "design",
+      "keywords": [
+        "waves",
+        "transitions",
+        "animation",
+        "sections"
+      ]
+    }
+  ]
+}
