@@ -1,48 +1,63 @@
 # v0-ahh-skill
 
-A Claude Code plugin providing a v0-inspired frontend design skill for building polished React/Next.js UI components.
-
-## What it does
-
-This skill guides Claude to generate production-grade frontend components using:
-
-- **React** with Next.js App Router
-- **shadcn/ui** component library
-- **Tailwind CSS** with variable-based theming
-- **Lucide React** icons
-- Accessibility best practices baked in
+The ultimate UI/UX plugin for Claude Code. 22 skills covering frontend design, animations, mobile patterns, premium aesthetics, and visual quality auditing.
 
 ## Installation
 
+Via marketplace:
 ```bash
-claude plugin add C:\Users\raphj\v0-ahh-skill
+claude plugin marketplace add https://github.com/Raphjay2406/raphj-marketplace
+claude plugin install v0-ahh-skill@raphj-marketplace
 ```
 
-## Usage
+## Skills (22)
 
-The skill activates when you ask Claude to build frontend components, pages, or UI/UX designs. Examples:
+### Core Framework
+| Skill | Description |
+|-------|-------------|
+| `v0-ahh` | Core frontend design and UI implementation guidance |
+| `shadcn-components` | All shadcn/ui components, variants, and composition patterns |
+| `tailwind-patterns` | Advanced Tailwind CSS patterns, animations, gradients, glass effects |
+| `nextjs-app-router` | App Router conventions, layouts, server/client components, metadata |
 
-- "Build me a dashboard page"
-- "Create a pricing card component"
-- "Design a navigation bar with shadcn"
-- "Implement a responsive landing page"
+### UI Patterns
+| Skill | Description |
+|-------|-------------|
+| `form-builder` | react-hook-form + zod + shadcn forms with all field types |
+| `responsive-layout` | Layout systems, grid patterns, bento grids, container queries |
+| `data-table` | TanStack Table + shadcn with sorting, filtering, pagination |
+| `auth-ui` | Login, signup, OTP, forgot password, social auth flows |
+| `dashboard-patterns` | Dashboard shells, stat cards, charts, command palette |
+| `landing-page` | Hero sections, pricing tables, testimonials, CTAs, footers |
 
-Or invoke it directly:
+### Animation
+| Skill | Description |
+|-------|-------------|
+| `framer-motion` | Variants, stagger, scroll animations, layout animations, gestures |
+| `gsap-animations` | GSAP + ScrollTrigger, timelines, text animations, horizontal scroll |
+| `css-animations` | Pure CSS keyframes, scroll-driven animations, micro-interactions |
 
-```
-/v0-ahh
-```
+### Design Philosophy
+| Skill | Description |
+|-------|-------------|
+| `anti-slop-design` | Eliminate generic AI aesthetics, create distinctive premium design |
+| `premium-dark-ui` | Surface hierarchy, glass morphism, glow effects, depth systems |
+| `premium-typography` | Distinctive font pairings, type scale, gradient text, fluid type |
+| `creative-sections` | Bento grids, 3D perspective heroes, interactive showcases |
+| `glow-neon-effects` | Neon glow, luminous borders, spotlight effects, ambient lighting |
+| `geometry-shapes` | SVG/CSS shapes, clip-path, blobs, section dividers, 3D transforms |
 
-## Included Components
+### Mobile
+| Skill | Description |
+|-------|-------------|
+| `mobile-patterns` | Bottom sheets, touch targets, safe areas, swipeable cards |
+| `mobile-navigation` | Tab bars, drawer menus, segmented controls, action sheets |
 
-| Component | Type | Description |
-|-----------|------|-------------|
-| `v0-ahh` | Skill | Frontend design and UI implementation guidance |
+### Quality
+| Skill | Description |
+|-------|-------------|
+| `visual-auditor` | Catches spacing, alignment, color, responsive, and accessibility bugs |
 
-## Tech Stack Defaults
+## License
 
-- shadcn/ui components from `@/components/ui`
-- Tailwind CSS variable colors (`bg-primary`, `text-muted-foreground`, etc.)
-- Lucide React for all icons (no raw SVGs)
-- Responsive, mobile-first designs
-- Complete, deployable code (no TODOs or placeholders)
+MIT
