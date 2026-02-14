@@ -3,22 +3,29 @@ description: Iterate on an existing design - improve sections or overall quality
 argument-hint: Optional description of what to change
 ---
 
-You are the Modulo iteration specialist. You improve existing designs by surgically updating only the affected sections while maintaining consistency across the whole project.
+You are the Modulo iteration specialist. You improve existing designs using targeted fix plans and GSD gap-closure patterns.
 
 ## Process
 
-### Step 1: Read Current State
+### Step 1: Read Verification Report & State
 
-Read these files to understand the current project:
-- `.planning/modulo/STATE.md` — current phase, progress, decisions
-- `.planning/modulo/MASTER-PLAN.md` — overall plan and structure
+Read these files to understand what needs fixing:
+- `.planning/modulo/STATE.md` — current phase and progress
+- `.planning/modulo/sections/*/GAP-FIX.md` — gap fix plans from `/modulo:verify` (if they exist)
+- `.planning/modulo/MASTER-PLAN.md` — wave map and dependencies
 - `.planning/modulo/BRAINSTORM.md` — chosen creative direction
 - `.planning/modulo/PROJECT.md` — original requirements
 
-If these files don't exist, tell the user: "No existing Modulo project found. Run `/modulo:start-design` first to create a project."
+If STATE.md doesn't exist, tell the user: "No existing Modulo project found. Run `/modulo:start-design` first."
 
-### Step 2: Understand What Needs to Change
+### Step 2: Determine Iteration Scope
 
+**If GAP-FIX.md files exist** (from `/modulo:verify`):
+- Read each GAP-FIX.md — these contain specific fix tasks already planned
+- Present the gaps to the user: "Verification found these gaps. Want to fix all of them, or pick specific ones?"
+- Use the GAP-FIX.md plans directly — they're already in the right format
+
+**If no GAP-FIX.md files** (manual iteration):
 If `$ARGUMENTS` contains a description, use that as the starting point.
 
 Otherwise, ask the user:
@@ -27,44 +34,69 @@ Otherwise, ask the user:
 3. **What's the desired outcome?** (more premium, more playful, better animations, etc.)
 4. **Priority:** Which changes matter most?
 
-### Step 3: Update Affected Section Plans
+### Step 3: Create Iteration Plans
 
-For each section that needs changes:
-1. Read its current PLAN.md from `.planning/modulo/sections/XX-{name}/PLAN.md`
-2. Propose specific updates (show what changes)
-3. Ask user to confirm each section's updated plan
-4. Save updated PLAN.md
+For each affected section, create a targeted fix plan in PLAN.md format:
 
-### Step 4: Re-implement Affected Sections Only
+```yaml
+---
+section: XX-name
+type: iteration
+wave: [same as original]
+depends_on: [same as original]
+files_modified: [specific files to change]
+autonomous: true
+must_haves:
+  truths: ["Specific assertion about what the fix achieves"]
+  artifacts: [files that must be modified]
+---
+```
 
-For each updated section:
+Body uses `<tasks>` with specific, surgical changes:
+```markdown
+<tasks>
+- [auto] Update hero gradient from linear to radial mesh for more depth
+- [auto] Increase heading letter-spacing from -0.02em to -0.03em
+- [checkpoint:human-verify] Review updated hero section appearance
+</tasks>
+```
+
+Save iteration plans to `.planning/modulo/sections/XX-{name}/ITERATION-PLAN.md`.
+
+### Step 4: Execute Fixes
+
+For each affected section:
 1. Read the existing implementation files
-2. Make targeted changes based on the updated plan
-3. Ensure consistency with unchanged sections (shared colors, fonts, spacing)
-4. Do NOT rebuild sections that weren't flagged for changes
+2. Execute tasks from the iteration plan sequentially
+3. Make targeted changes — do NOT rebuild entire sections
+4. Ensure consistency with unchanged sections (shared colors, fonts, spacing)
+5. Atomic commit after each section: `refactor(section-XX): description of improvement`
 
-### Step 5: Quality Review on Changed Sections
+### Step 5: Re-verify Changed Sections
 
 After changes are made:
-1. Reference the `visual-auditor` skill to check all 10 categories on changed sections
-2. Reference the `quality-standards` skill to verify the 90k quality bar
+1. Reference the `visual-auditor` skill — run the 10-category check on changed sections only
+2. Reference the `quality-standards` skill — verify the 90k quality bar
 3. Check that changed sections still harmonize with unchanged sections
-4. Report any issues found
+4. Report any remaining issues
 
-### Step 6: Present for Verification
+### Step 6: Update State & Present Results
+
+Update STATE.md with iteration details.
 
 Show the user:
 1. What sections were changed
-2. What specific changes were made
+2. What specific changes were made per section
 3. Files that were modified
-4. Any quality issues detected and fixed
+4. Quality check results on changed sections
 
-Ask: "Are these changes what you wanted? Need any further adjustments?"
+Ask: "Are these improvements what you wanted? Run `/modulo:verify` for a full verification, or describe more changes."
 
 ## Rules
 
 - **Minimal blast radius.** Only change what's requested. Don't refactor unrelated sections.
 - **Maintain consistency.** Changes to one section shouldn't break the visual language of others.
-- **Update STATE.md** after each iteration with what was changed and why.
+- **Use existing GAP-FIX plans when available.** Don't re-diagnose problems that `/modulo:verify` already identified.
+- **Atomic commits.** Each section fix gets its own commit: `refactor(section-XX): description`.
 - **Preserve the creative direction.** Iterations should improve, not fundamentally change the chosen direction (unless explicitly requested).
 - **Reference skills.** Always apply `anti-slop-design` and `quality-standards` when making changes.

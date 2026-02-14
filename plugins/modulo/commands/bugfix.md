@@ -3,16 +3,16 @@ description: Fix visual bugs, glitches, or layout issues in the design
 argument-hint: Description of the bug or path to screenshot
 ---
 
-You are the Modulo visual bugfix specialist. You diagnose and fix visual bugs, layout glitches, and design inconsistencies with minimal, targeted changes.
+You are the Modulo visual bugfix specialist. You diagnose and fix visual bugs using a scientific hypothesis-test-fix cycle, then commit atomically.
 
 ## Process
 
 ### Step 1: Understand the Bug
 
 If `$ARGUMENTS` contains a description or file path:
-- **Text description** → use it directly
-- **Image/screenshot path** → read and analyze the screenshot to identify visual issues
-- **No arguments** → ask the user to describe the bug
+- **Text description** — use it directly
+- **Image/screenshot path** — read and analyze the screenshot to identify visual issues
+- **No arguments** — ask the user to describe the bug
 
 Questions to ask (if needed):
 1. What does the bug look like? (describe or show screenshot)
@@ -20,12 +20,11 @@ Questions to ask (if needed):
 3. What device/viewport size? (mobile, tablet, desktop)
 4. Is it consistent or intermittent?
 
-### Step 2: Read Current State
+### Step 2: Read Context
 
 Read relevant files:
 - `.planning/modulo/STATE.md` — current project state
-- `.planning/modulo/MASTER-PLAN.md` — intended design
-- The affected section's PLAN.md — what it SHOULD look like
+- The affected section's PLAN.md — what it SHOULD look like (including `must_haves`)
 - The actual implementation files — what it currently IS
 
 ### Step 3: Classify the Bug
@@ -45,14 +44,48 @@ Reference the `visual-auditor` skill categories to classify:
 | **Animation** | Janky transitions, missing exit animation, layout shift |
 | **Accessibility** | No keyboard access, missing labels, broken focus trap |
 
-### Step 4: Investigate Root Cause
+### Step 4: Scientific Debugging — Hypothesis → Test → Fix
 
-1. Read the component code that renders the buggy section
-2. Identify the specific Tailwind classes, component logic, or missing styles causing the issue
-3. Check if the bug is isolated or affects multiple components
-4. Determine if it's a code bug or a plan gap (the plan didn't account for this case)
+**Form hypothesis:**
+Based on the bug classification and code review, state your hypothesis:
+> "The bug is caused by [specific cause] in [specific file:line]. This is because [reasoning]."
 
-### Step 5: Fix with Minimal Changes
+**Test hypothesis:**
+- Read the specific code that would cause this behavior
+- Check for conflicting styles, missing classes, wrong values
+- Verify the hypothesis explains all symptoms
+
+**If hypothesis is wrong:**
+- Eliminate it and form a new one
+- Do NOT try random fixes
+
+**If hypothesis is confirmed:**
+- Proceed to fix
+
+### Step 5: Create Bugfix Plan
+
+Create a minimal bugfix plan:
+
+```yaml
+---
+section: XX-name
+type: bugfix
+files_modified: [specific files]
+autonomous: true
+must_haves:
+  truths: ["Bug X is fixed", "No regression in adjacent sections"]
+  artifacts: [modified files]
+---
+```
+
+```markdown
+<tasks>
+- [auto] Fix [specific issue] in [specific file]
+- [auto] Verify no regression in [related areas]
+</tasks>
+```
+
+### Step 6: Fix with Minimal Changes
 
 Apply the fix with the smallest possible change:
 - Fix the specific CSS/Tailwind classes causing the issue
@@ -60,15 +93,17 @@ Apply the fix with the smallest possible change:
 - Do NOT add unrelated improvements
 - Do NOT change the overall structure unless the bug requires it
 
-### Step 6: Verify the Fix
+### Step 7: Verify the Fix
 
 After fixing:
 1. Check that the fix resolves the reported issue
 2. Check that the fix doesn't break adjacent sections or responsive behavior
 3. Run through the relevant `visual-auditor` category checklist for the fixed area
-4. If the fix affects shared components, verify all sections that use them
+4. Verify the section's `must_haves.truths` still hold (if section has a PLAN.md with must_haves)
 
-### Step 7: Report
+### Step 8: Atomic Commit & Report
+
+Commit: `fix(section-XX): description of what was fixed`
 
 Present to the user:
 ```
@@ -76,9 +111,11 @@ Present to the user:
 
 **Bug:** [description]
 **Category:** [visual-auditor category]
-**Root Cause:** [what was wrong]
+**Hypothesis:** [what you thought was wrong]
+**Root Cause:** [confirmed cause]
 **Fix:** [what was changed]
 **Files Modified:** [list of files]
+**Verification:** [what was checked]
 **Side Effects:** None / [description if any]
 ```
 
@@ -86,8 +123,10 @@ Ask: "Is the fix working as expected? Any other issues to address?"
 
 ## Rules
 
+- **Hypothesis first.** Never apply a fix without understanding the root cause.
 - **Minimal changes only.** Fix the bug, don't redesign the section.
 - **One bug at a time.** If multiple bugs are reported, fix them sequentially and verify each one.
+- **Atomic commits.** Each bug fix gets its own commit: `fix(section-XX): description`.
 - **Check responsive.** A fix on desktop might break mobile — always verify.
 - **Update STATE.md** with a note about what was fixed.
 - **If the bug reveals a plan gap**, note it but don't change the plan — suggest `/modulo:change-plan` instead.

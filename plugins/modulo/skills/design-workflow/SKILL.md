@@ -1,256 +1,205 @@
 ---
 name: design-workflow
-description: "Reference for the multi-phase Modulo design workflow. Covers phases, planning directory structure, state management, plan formats, and agent team coordination."
+description: "Reference for the Modulo design workflow. Covers the 5-command flow, wave-based execution, PLAN.md format, STATE.md format, SUMMARY.md format, checkpoint protocol, commit conventions, session continuity, and agent coordination."
 ---
 
-Use this skill when referencing the design workflow, understanding project phases, working with planning files, or coordinating the build process. Triggers on: design workflow, project phases, design process, modulo workflow, planning structure, design pipeline, build process, section planning.
+Use this skill when referencing the design workflow, understanding project phases, working with planning files, or coordinating the build process. Triggers on: design workflow, project phases, design process, modulo workflow, planning structure, design pipeline, build process, section planning, wave execution, session continuity.
 
-You are a workflow expert for the Modulo design system. You understand every phase, every file format, and every coordination pattern.
+You are a workflow expert for the Modulo design system. You understand every command, every file format, every wave rule, and every coordination pattern.
 
-## Workflow Phases
-
-The Modulo design workflow consists of 7 phases executed in order:
+## Command Flow
 
 ```
-DISCOVERY → BRAINSTORMING → SECTION_PLANNING → PLAN_WRITING → IMPLEMENTATION → QUALITY_REVIEW → VERIFICATION
+/modulo:start-design → /modulo:plan-sections → /modulo:execute → /modulo:verify → /modulo:iterate
 ```
 
-### Phase 1: DISCOVERY
-- **Input:** User requirements (text, files, screenshots)
-- **Process:** Structured questioning (8 questions covering product, audience, tone, references, scope, features, brand, platform)
-- **Output:** `.planning/modulo/PROJECT.md`
-- **Gate:** User confirms the summary is accurate
+| Command | Purpose | Input | Output |
+|---------|---------|-------|--------|
+| `start-design` | Discovery + Research + Brainstorm | User requirements | PROJECT.md, research/SUMMARY.md, BRAINSTORM.md, STATE.md |
+| `plan-sections` | Section plans with wave assignments | BRAINSTORM.md | Section PLAN.md files, MASTER-PLAN.md |
+| `execute` | Wave-based parallel implementation | PLAN.md files | Built components, SUMMARY.md per section |
+| `verify` | Three-level goal-backward verification | Built components + PLAN.md | Verification report, GAP-FIX.md |
+| `iterate` | Targeted fixes from verify or user feedback | GAP-FIX.md or user input | Updated components |
+| `change-plan` | Modify plans with wave recalculation | User changes | Updated PLAN.md files |
+| `bugfix` | Scientific hypothesis-test-fix cycle | Bug description | Minimal targeted fix |
 
-### Phase 2: BRAINSTORMING
-- **Input:** PROJECT.md requirements
-- **Process:** Generate 2-3 creative directions with palettes, typography, layouts, and hooks
-- **Output:** `.planning/modulo/BRAINSTORM.md`
-- **Gate:** User selects a direction
+## Wave Assignment Rules
 
-### Phase 3: SECTION_PLANNING
-- **Input:** Chosen direction + requirements
-- **Process:** Break design into sections, present each plan individually
-- **Output:** `.planning/modulo/sections/XX-{name}/PLAN.md` per section
-- **Gate:** User approves EACH section plan individually
+| Wave | Purpose | Rule |
+|------|---------|------|
+| **0** | Scaffold & tokens | Tailwind config, CSS variables, layout wrapper, utilities |
+| **1** | Shared UI | Navigation, footer, theme provider — things many sections import |
+| **2+** | Independent sections | Sections that only depend on wave 0/1 |
+| **Higher** | Dependent sections | Sections depending on other section outputs |
 
-### Phase 4: PLAN_WRITING
-- **Input:** All approved section plans
-- **Process:** Create master implementation plan with dependencies, tech stack, file structure
-- **Output:** `.planning/modulo/MASTER-PLAN.md`, `.planning/modulo/STATE.md`
-- **Gate:** User approves master plan
-
-### Phase 5: IMPLEMENTATION
-- **Input:** MASTER-PLAN.md + all section PLANs
-- **Process:** Agent team builds shared components, then sections in parallel
-- **Output:** Actual component files
-- **Gate:** All sections complete
-
-### Phase 6: QUALITY_REVIEW
-- **Input:** Implemented components
-- **Process:** Visual auditor checklist (10 categories) + quality standards (90k bar)
-- **Output:** Quality report with verdict
-- **Gate:** PASS or PASS WITH ISSUES
-
-### Phase 7: VERIFICATION
-- **Input:** Completed implementation + quality report
-- **Process:** Present result to user
-- **Output:** Final sign-off or iteration request
-- **Gate:** User satisfaction
+**Constraints:**
+- Max 4 sections per wave (parallel builder limit)
+- Sections in the same wave MUST be independent of each other
+- A section's wave = max(wave of its dependencies) + 1
 
 ## Planning Directory Structure
 
 ```
 .planning/modulo/
-├── PROJECT.md          # Requirements from discovery phase
-├── BRAINSTORM.md       # Creative directions and chosen direction
-├── MASTER-PLAN.md      # Master implementation plan
-├── STATE.md            # Current phase, progress, decisions
+├── PROJECT.md                # Discovery output
+├── BRAINSTORM.md             # Creative directions + chosen direction
+├── MASTER-PLAN.md            # Wave map + dependency graph + file structure
+├── STATE.md                  # Current phase, wave, section statuses (<100 lines)
+├── .continue-here.md         # Session resumption context (created on pause)
+├── research/                 # Parallel researcher outputs
+│   ├── DESIGN-TRENDS.md
+│   ├── REFERENCE-ANALYSIS.md
+│   ├── COMPONENT-LIBRARY.md
+│   ├── ANIMATION-TECHNIQUES.md
+│   └── SUMMARY.md            # Synthesized research findings
 └── sections/
     ├── 00-shared/
-    │   └── PLAN.md     # Theme, nav, footer, shared components
+    │   ├── PLAN.md            # GSD frontmatter + structured tasks
+    │   └── SUMMARY.md         # Machine-readable completion summary
     ├── 01-hero/
-    │   ├── PLAN.md     # Section specification
-    │   └── SUMMARY.md  # Post-build summary (files created, notes)
-    ├── 02-features/
     │   ├── PLAN.md
-    │   └── SUMMARY.md
+    │   ├── SUMMARY.md
+    │   └── GAP-FIX.md         # Created by /verify if gaps found
     └── ...
 ```
 
-## File Formats
+## STATE.md Format (<100 lines, machine-readable)
 
-### PROJECT.md
-```markdown
-# Project Requirements
-
-## Product
-[What the product/service is]
-
-## Target Audience
-[Who the users are]
-
-## Tone & Mood
-[How the site should feel]
-
-## Reference Sites
-[URLs and what to draw from each]
-
-## Scope
-[Pages and sections needed]
-
-## Must-Have Features
-[Specific functionality]
-
-## Brand Guidelines
-[Colors, fonts, logos, existing assets]
-
-## Platform Priority
-[Desktop-first or mobile-first]
-```
-
-### BRAINSTORM.md
-```markdown
-# Creative Directions
-
-## Direction A: "[Name]"
-[Full direction details — palette, typography, layout, hooks]
-
-## Direction B: "[Name]"
-[Full direction details]
-
-## Direction C: "[Name]"
-[Full direction details]
-
----
-
-## Chosen Direction: [Name]
-[Why this was selected, any elements combined from other directions]
-```
-
-### Section PLAN.md
-```markdown
-# Section: [Name]
-
-## Layout
-[Grid/flex structure, container width, alignment]
-
-## Components
-[List of components with descriptions]
-
-## Visual Details
-- Background: [color/gradient]
-- Text colors: [primary, muted]
-- Borders: [style, color, radius]
-- Shadows: [type, color]
-
-## Interactions
-- Hover: [behavior]
-- Click: [behavior]
-- Scroll: [trigger, animation]
-
-## Responsive
-- Mobile (< 768px): [layout changes]
-- Tablet (768px - 1024px): [layout changes]
-- Desktop (> 1024px): [default layout]
-
-## Animations
-- Entrance: [type, duration, easing, stagger]
-- Hover: [type, duration]
-- Scroll: [trigger point, behavior]
-
-## Files
-- `components/sections/[name].tsx` — main section component
-- `components/sections/[name]/[sub-component].tsx` — sub-components if needed
-```
-
-### STATE.md
 ```markdown
 # Modulo Design State
 
-## Phase: [CURRENT_PHASE]
-## Last Updated: [timestamp]
-## Direction: [chosen direction name]
+## Current Phase
+phase: [BRAINSTORM_COMPLETE | PLANNING_COMPLETE | EXECUTING | EXECUTION_COMPLETE | VERIFIED]
+current_wave: [number]
+last_updated: [ISO date]
 
-## Decisions Log
-- [date]: [decision made and why]
+## Project
+direction: [chosen direction name]
+platform: [desktop-first | mobile-first]
+total_sections: [N]
+total_waves: [N]
+
+## Completed Phases
+- [x] Discovery — PROJECT.md
+- [x] Research — SUMMARY.md
+- [x] Brainstorm — Direction: [name]
+- [x] Section Planning — [N] sections, [N] waves
+- [ ] Execution
+- [ ] Verification
 
 ## Section Status
-| Section | Plan | Build | Review | Notes |
-|---------|------|-------|--------|-------|
-| 00-shared | APPROVED | COMPLETE | PASS | — |
-| 01-hero | APPROVED | IN_PROGRESS | — | Builder: agent-1 |
-| 02-features | APPROVED | PENDING | — | Depends on shared |
-| ... | ... | ... | ... | ... |
+| Section | Wave | Status | Notes |
+|---------|------|--------|-------|
+| 00-shared | 0 | COMPLETE | — |
+| 01-hero | 2 | IN_PROGRESS | Builder active |
+| 02-features | 2 | PENDING | — |
 
-## Issues
-- [any blocked items or unresolved questions]
+## Recent Decisions
+- [date]: [decision]
+
+## Next Action
+[what to do next]
 ```
 
-### MASTER-PLAN.md
+## PLAN.md Format (GSD frontmatter + structured body)
+
+See the `plan-format` skill for the complete specification.
+
+**Frontmatter:**
+```yaml
+---
+section: XX-name
+wave: [number]
+depends_on: [section names]
+files_modified: [file paths]
+autonomous: true
+must_haves:
+  truths: [assertions]
+  artifacts: [file paths]
+  key_links: [reference files]
+---
+```
+
+**Body sections:** `<objective>`, `<context>`, `<tasks>`, `<verification>`, `<success_criteria>`
+
+## SUMMARY.md Format (machine-readable frontmatter)
+
+```yaml
+---
+section: XX-name
+status: complete
+subsystem: [e.g., landing-page]
+tags: [categories]
+provides: [exports for other sections]
+affects: [shared files modified]
+key_files: [file paths]
+key_decisions: [decisions with rationale]
+duration: [time/turns]
+---
+```
+
+## Checkpoint Types
+
+| Type | Behavior |
+|------|----------|
+| `[auto]` | Builder executes autonomously |
+| `[checkpoint:human-verify]` | Builder pauses, describes output, waits for user approval |
+| `[checkpoint:decision]` | Builder presents options, waits for user choice |
+| `[checkpoint:human-action]` | Builder needs user to do something (provide asset, etc.) |
+
+## Commit Conventions
+
+| Prefix | When | Example |
+|--------|------|---------|
+| `feat(section-XX)` | New section task completed | `feat(section-02-hero): create hero with gradient mesh` |
+| `fix(section-XX)` | Bug fix via `/modulo:bugfix` | `fix(section-02-hero): fix mobile overflow` |
+| `refactor(section-XX)` | Iteration via `/modulo:iterate` | `refactor(section-02-hero): improve animation timing` |
+
+## Session Continuity
+
+When a session ends mid-execution, `.continue-here.md` is written:
+
 ```markdown
-# Master Implementation Plan
+# Continue Here
 
-## Tech Stack
-- Framework: [Next.js App Router / etc.]
-- Styling: [Tailwind CSS + shadcn/ui]
-- Animations: [Framer Motion / GSAP / CSS]
-- Fonts: [Display font + Body font — source]
+## Session ended during
+wave: [N]
+date: [ISO date]
 
-## Design Tokens
-[Colors, spacing scale, border-radius, shadows]
+## Completed this session
+- [list]
 
-## File Structure
-[Exact file tree with paths]
+## In progress
+- [section]: [what remains]
 
-## Section Order & Dependencies
-1. `00-shared` — NO dependencies (build first)
-2. `01-hero` — depends on: 00-shared
-3. `02-features` — depends on: 00-shared
-4. ...
-
-## Parallel Build Groups
-- Group 1 (sequential): 00-shared
-- Group 2 (parallel): 01-hero, 02-features, 03-how-it-works
-- Group 3 (parallel): 04-pricing, 05-testimonials
-- Group 4 (sequential): 06-cta, 07-footer
-
-## Shared Components
-[Nav, Footer, Section wrapper, Theme provider — details]
+## Resume instructions
+[Specific steps to resume]
 ```
 
-## Agent Team Coordination
+Resume with: `/modulo:execute resume`
+
+## Agent Coordination
 
 ### Team Structure
 ```
-design-lead (orchestrator)
-├── section-builder (01-hero)
-├── section-builder (02-features)
-├── section-builder (03-pricing)
-├── ...
-└── quality-reviewer (runs after all builders complete)
+start-design command
+├── design-researcher (DESIGN-TRENDS)
+├── design-researcher (REFERENCE-ANALYSIS)
+├── design-researcher (COMPONENT-LIBRARY)
+└── design-researcher (ANIMATION-TECHNIQUES)
+
+execute command → design-lead (orchestrator)
+├── section-builder (wave N sections, max 4 parallel)
+├── section-builder (...)
+└── ...
+
+verify command → quality-reviewer
 ```
 
-### Build Sequence
-1. **design-lead** reads MASTER-PLAN.md
-2. **design-lead** builds shared components (00-shared)
-3. **design-lead** spawns section-builder agents for independent sections
-4. **section-builders** read their PLAN.md and build
-5. **section-builders** report completion
-6. **design-lead** integrates all sections
-7. **quality-reviewer** audits the complete implementation
-8. **quality-reviewer** reports verdict
-
-### Communication
-- Section builders receive: section PLAN.md path, shared component paths, creative direction summary
-- Section builders report: files created, dependencies needed, integration notes
-- Quality reviewer receives: all file paths, all PLAN.md paths
-- Quality reviewer reports: categorized issues, verdict, fix instructions
-
-## Commands Reference
-
-| Command | Purpose |
-|---------|---------|
-| `/modulo:start-design` | Start new project from scratch |
-| `/modulo:iterate` | Improve existing implementation |
-| `/modulo:change-plan` | Modify plans before/during build |
-| `/modulo:bugfix` | Fix visual bugs and glitches |
+### Agent Roles
+| Agent | Role | Key Behavior |
+|-------|------|-------------|
+| `design-researcher` | Research one track | Writes to research/{TRACK}.md |
+| `design-lead` | Wave orchestrator | Reads STATE.md first, spawns builders, updates state |
+| `section-builder` | Build one section | Follows PLAN.md tasks, pauses at checkpoints, writes SUMMARY.md |
+| `quality-reviewer` | Three-level verifier | Goal-backward checking, creates GAP-FIX.md |
