@@ -1,7 +1,7 @@
 {
   "name": "modulo",
-  "description": "Premium design workflow system with 25 skills, 4 commands, and 3 agents for creating 90k-quality websites",
-  "version": "2.0.0",
+  "description": "Premium design workflow system with 25 skills, 7 commands, and 4 agents for creating 90k-quality websites with wave-based parallel execution",
+  "version": "2.1.0",
   "author": {
     "name": "raphj"
   }

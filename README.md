@@ -1,6 +1,6 @@
 # modulo
 
-Premium design workflow system for Claude Code. 25 skills, 4 slash commands, and 3 agents for creating 90k-quality websites with guided multi-phase execution.
+Premium design workflow system for Claude Code. 26 skills, 7 slash commands, and 4 agents for creating 90k-quality websites with wave-based parallel execution and goal-backward verification.
 
 ## Installation
 
@@ -14,32 +14,47 @@ claude plugin install modulo@raphj-marketplace
 
 | Command | Description |
 |---------|-------------|
-| `/modulo:start-design` | Start a new premium design project with guided 7-phase workflow |
-| `/modulo:iterate` | Iterate on an existing design — improve sections or overall quality |
-| `/modulo:change-plan` | Modify the design plan — add, remove, or change sections |
-| `/modulo:bugfix` | Fix visual bugs, glitches, or layout issues |
+| `/modulo:start-design` | Start a new project: discovery, parallel research, brainstorming |
+| `/modulo:plan-sections` | Create section plans with wave assignments and GSD execution format |
+| `/modulo:execute` | Execute the design wave by wave with parallel section builders |
+| `/modulo:verify` | Three-level goal-backward verification + 10-category visual audit |
+| `/modulo:iterate` | Iterate on existing design using gap-fix plans or manual feedback |
+| `/modulo:change-plan` | Modify plans with automatic wave recalculation |
+| `/modulo:bugfix` | Fix visual bugs with scientific hypothesis-test-fix cycle |
+
+## Workflow
+
+```
+start-design → plan-sections → execute → verify → iterate (if needed)
+```
+
+1. **Start Design** — Discovery questioning, parallel research (4 tracks), brainstorm 2-3 directions
+2. **Plan Sections** — Break into sections with wave assignments, GSD frontmatter, user approval per section
+3. **Execute** — Wave-based parallel implementation (max 4 builders per wave), checkpoint support
+4. **Verify** — Three-level verification (Existence → Substantive → Wired) + visual audit
+5. **Iterate** — Targeted fixes from verification gaps or user feedback
 
 ## Agents
 
 | Agent | Role | Description |
 |-------|------|-------------|
-| `design-lead` | Orchestrator | Coordinates section builders, manages dependencies, ensures consistency |
-| `section-builder` | Builder | Implements a single section from its PLAN.md specification |
-| `quality-reviewer` | Auditor | Reviews implementation against 90k quality standards |
+| `design-lead` | Orchestrator | Wave-based execution, spawns parallel builders, manages STATE.md |
+| `section-builder` | Builder | Executes PLAN.md tasks sequentially, pauses at checkpoints, writes SUMMARY.md |
+| `quality-reviewer` | Verifier | Three-level goal-backward verification, creates GAP-FIX.md plans |
+| `design-researcher` | Researcher | Parallel research agent for one track (trends, references, components, animations) |
 
-## Design Workflow
+## Wave System
 
-The `/modulo:start-design` command guides you through 7 phases:
+Sections are assigned to waves based on dependencies:
 
-1. **Discovery** — Structured questioning to understand requirements
-2. **Brainstorming** — 2-3 creative directions with palettes, typography, and hooks
-3. **Section Planning** — Individual section plans with user approval on each
-4. **Implementation Planning** — Master plan with dependencies and file structure
-5. **Implementation** — Agent team builds shared components then sections in parallel
-6. **Quality Review** — Visual auditor checklist + 90k quality bar verification
-7. **User Verification** — Final sign-off or iteration
+| Wave | Purpose | Example |
+|------|---------|---------|
+| 0 | Scaffold & tokens | Tailwind config, CSS variables, shared utilities |
+| 1 | Shared UI | Navigation, footer, theme provider |
+| 2+ | Independent sections | Hero, features, pricing (parallel, max 4 per wave) |
+| Higher | Dependent sections | Sections that depend on other sections |
 
-## Skills (25)
+## Skills (26)
 
 ### Core Framework
 | Skill | Description |
@@ -87,8 +102,9 @@ The `/modulo:start-design` command guides you through 7 phases:
 |-------|-------------|
 | `visual-auditor` | Catches spacing, alignment, color, responsive, and accessibility bugs |
 | `design-brainstorm` | Mood boards, creative directions, color palettes, typography pairings |
-| `quality-standards` | 90k quality bar definition, quality tiers, premium indicators |
-| `design-workflow` | Multi-phase workflow reference, planning structure, agent coordination |
+| `quality-standards` | 90k quality bar, quality tiers, three-level verification, gap closure |
+| `design-workflow` | Command flow, wave system, STATE.md format, agent coordination |
+| `plan-format` | PLAN.md format reference: frontmatter, task types, SUMMARY.md format |
 
 ## License
 

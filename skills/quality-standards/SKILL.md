@@ -1,11 +1,11 @@
 ---
 name: quality-standards
-description: "Defines what separates a 90k premium site from a template. Quality tiers, checklists, premium indicators, and common gaps between quality levels."
+description: "Defines what separates a 90k premium site from a template. Quality tiers, checklists, premium indicators, GSD three-level verification, gap-closure protocol, and must_haves format."
 ---
 
-Use this skill when evaluating design quality, aiming for premium/high-end output, or understanding what makes a site worth 90k. Triggers on: quality, premium quality, 90k, high-end, world-class, production quality, quality bar, quality standards, premium indicators, template vs custom.
+Use this skill when evaluating design quality, aiming for premium/high-end output, verifying implementations, or understanding what makes a site worth 90k. Triggers on: quality, premium quality, 90k, high-end, world-class, production quality, quality bar, quality standards, premium indicators, template vs custom, verification, gap closure, must_haves.
 
-You are a quality assessor who understands exactly what separates a $5k template site from a $90k premium site. Every design decision is measured against this standard.
+You are a quality assessor who understands exactly what separates a $5k template site from a $90k premium site — and how to systematically verify it.
 
 ## Quality Tiers
 
@@ -72,8 +72,6 @@ The site is a portfolio piece. People screenshot it and share it.
 
 ## Quality Checklist (90k Bar)
 
-Use this checklist to verify premium quality:
-
 ### Visual Design
 - [ ] Custom color palette with 4+ surface hierarchy levels
 - [ ] Non-generic accent color (not blue-500 or purple-600)
@@ -124,8 +122,6 @@ Use this checklist to verify premium quality:
 
 ## Common Quality Gaps
 
-These are the most frequent gaps that separate $20k from $90k:
-
 | Gap | $20k Version | $90k Version |
 |-----|-------------|-------------|
 | Hover states | Color change only | Glow, shadow shift, border reveal, scale |
@@ -138,6 +134,62 @@ These are the most frequent gaps that separate $20k from $90k:
 | Empty states | "No data" text | Illustrated empty state with CTA |
 | Loading | Spinner | Skeleton that matches content shape |
 | Dark mode | Inverted colors | Redesigned surface hierarchy with glow |
+
+## GSD Three-Level Verification
+
+Use this to systematically verify implementations go beyond task completion to goal achievement.
+
+### Level 1: Existence
+> Do all required artifacts exist and contain real content?
+
+Check each `must_haves.artifacts` entry:
+- File exists at specified path
+- File is non-empty
+- File contains actual implementation (not stubs)
+
+### Level 2: Substantive
+> Do the stated truths actually hold?
+
+Check each `must_haves.truths` entry:
+- Read the code and verify the assertion
+- Check for real vs. placeholder content
+- Verify responsive breakpoints exist in code
+- Verify animations are implemented
+- Verify interactive states are present
+
+### Level 3: Wired
+> Is everything connected into a working whole?
+
+- Section imported and rendered in main page
+- Shared components used correctly
+- All imports resolve
+- Design tokens from theme (not hardcoded)
+- Correct page order
+
+## Gap-Closure Protocol
+
+When verification finds gaps:
+
+1. **Document** each gap with file:line reference and severity
+2. **Create GAP-FIX.md** with targeted fix plan in PLAN.md format
+3. **Execute** fixes via `/modulo:iterate` (uses GAP-FIX.md plans)
+4. **Re-verify** changed sections only
+5. **Repeat** until `passed`
+
+### must_haves Format Reference
+
+```yaml
+must_haves:
+  truths:
+    - "Assertion that must be true about the implementation"
+    - "Another verifiable assertion"
+  artifacts:
+    - path/to/file.tsx
+    - path/to/another-file.tsx
+  key_links:
+    - BRAINSTORM.md
+    - 00-shared/PLAN.md
+```
 
 ## Quick Quality Test
 

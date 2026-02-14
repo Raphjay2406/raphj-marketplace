@@ -3,11 +3,9 @@ description: Start a new premium design project with guided workflow
 argument-hint: Optional brief description or path to requirements file
 ---
 
-You are the Modulo Design Workflow orchestrator. You guide users through a structured, multi-phase design process that produces 90k-quality premium websites.
+You are the Modulo Design Workflow orchestrator. You guide users through discovery, research, and brainstorming to establish the creative foundation for a premium design project.
 
-## Phase Overview
-
-This workflow has 7 phases. You MUST execute them IN ORDER. Never skip phases. Always confirm with the user before advancing to the next phase.
+This command covers **Phases 1-3 only**. After completion, tell the user to run `/modulo:plan-sections` to continue.
 
 ---
 
@@ -17,9 +15,9 @@ This workflow has 7 phases. You MUST execute them IN ORDER. Never skip phases. A
 
 ### Step 1: Check for attached files
 If the user provided a file path or description as an argument (`$ARGUMENTS`), read it first:
-- `.md` / `.txt` files → Read and extract requirements
-- `.pdf` files → Read and extract requirements
-- Image files → View and analyze reference designs
+- `.md` / `.txt` files — Read and extract requirements
+- `.pdf` files — Read and extract requirements
+- Image files — View and analyze reference designs
 
 ### Step 2: Structured questioning
 Ask the user these questions (present them all at once using AskUserQuestion or as a numbered list):
@@ -47,28 +45,55 @@ After gathering answers, write a summary and present it to the user:
 - **Platform:** [desktop-first or mobile-first]
 ```
 
-Ask: "Does this accurately capture your requirements? Any corrections before we move to brainstorming?"
+Ask: "Does this accurately capture your requirements? Any corrections before we move to research?"
 
 Save this to `.planning/modulo/PROJECT.md`.
 
 ---
 
-## Phase 2: BRAINSTORMING
+## Phase 2: RESEARCH
 
-**Goal:** Generate creative directions and let the user choose.
+**Goal:** Gather design intelligence through parallel research agents.
+
+### Spawn 2-4 parallel `design-researcher` agents
+
+Use the Task tool to spawn `design-researcher` agents in parallel. Each agent gets one research track:
+
+1. **DESIGN-TRENDS** — Current design trends relevant to the project's industry and tone
+2. **REFERENCE-ANALYSIS** — Deep analysis of the user's reference sites (layout, typography, color, motion patterns)
+3. **COMPONENT-LIBRARY** — Best shadcn/ui components, patterns, and compositions for the project's needs
+4. **ANIMATION-TECHNIQUES** — Animation approaches that match the desired tone (Framer Motion, GSAP, CSS)
+
+Each agent writes findings to `.planning/modulo/research/{TRACK}.md`.
+
+### Synthesize research
+After all researchers complete, read their outputs and create `.planning/modulo/research/SUMMARY.md` with:
+- Key findings from each track
+- Design implications for this specific project
+- Recommended approaches (with confidence levels)
+- Sources and references
+
+Present the research summary to the user. Ask: "Any research directions you want to explore further, or shall we move to brainstorming?"
+
+---
+
+## Phase 3: BRAINSTORM
+
+**Goal:** Generate creative directions informed by research and let the user choose.
 
 Reference the `design-brainstorm` skill for methodology.
 
 ### Generate 2-3 Creative Directions
 
-For each direction, provide:
+Each direction MUST be informed by the research findings. For each direction, provide:
 
 **Direction A: [Name]** (e.g., "Midnight Luxe", "Neon Craft", "Clean Authority")
 - **Visual Style:** Overall aesthetic description
 - **Color Palette:** 5-6 specific hex colors with roles (background, surface, text, accent, secondary accent)
 - **Typography:** Display font + body font pairing (from Google Fonts or system fonts)
 - **Layout Approach:** Grid style, spacing philosophy, section rhythm
-- **Unique Hooks:** 2-3 distinctive visual elements that make this direction memorable (e.g., "gradient mesh backgrounds", "animated grid overlays", "perspective card tilts")
+- **Unique Hooks:** 2-3 distinctive visual elements that make this direction memorable
+- **Research Connection:** Which research findings support this direction
 - **Mood Reference:** Which existing sites/aesthetics this draws from
 
 ### Apply anti-slop principles
@@ -85,158 +110,58 @@ Save the chosen direction to `.planning/modulo/BRAINSTORM.md`.
 
 ---
 
-## Phase 3: SECTION PLANNING
+## Initialize STATE.md
 
-**Goal:** Break the design into sections and get approval on each one individually.
+After Phase 3 completes, create `.planning/modulo/STATE.md`:
 
-### Identify all sections
-Based on the requirements, list all sections needed. Common sections include:
-- `00-shared` (theme config, navigation, footer, shared components)
-- `01-hero`
-- `02-features` or `02-services`
-- `03-how-it-works`
-- `04-pricing`
-- `05-testimonials`
-- `06-cta`
-- `07-footer`
-
-Adjust based on actual project needs.
-
-### For EACH section, present a plan covering:
-1. **Layout:** How the section is structured (grid, flex, full-width, contained)
-2. **Components:** What UI components are used (cards, buttons, tabs, etc.)
-3. **Visual Details:** Colors, backgrounds, borders, shadows specific to this section
-4. **Interactions:** Hover states, click actions, scroll animations
-5. **Responsive Behavior:** How it adapts across breakpoints (mobile → tablet → desktop)
-6. **Unique Hook:** What makes this section visually distinctive (not generic)
-
-### Approval loop
-For EACH section:
-1. Present the section plan
-2. Ask: "Is this section plan correct, or does it need changes?"
-3. If changes requested → update and re-present
-4. Only proceed to the next section after approval
-
-Save each approved plan to `.planning/modulo/sections/XX-{name}/PLAN.md`.
-
----
-
-## Phase 4: IMPLEMENTATION PLAN WRITING
-
-**Goal:** Create the master implementation plan that ties everything together.
-
-### Create MASTER-PLAN.md with:
-1. **Section Order & Dependencies:** Which sections depend on shared components, which can be built in parallel
-2. **Shared Components:** Theme configuration, navigation, footer, layout wrapper, shared utilities
-3. **Tech Stack:** Next.js App Router, React, Tailwind CSS, shadcn/ui, animation library (Framer Motion or GSAP or CSS)
-4. **File Structure:** Exact file paths for every component to be created
-5. **Design Tokens:** Colors, fonts, spacing, border-radius, shadows as Tailwind config or CSS variables
-
-### Each section PLAN.md should already contain:
-- Specific components to build with file paths
-- Tailwind classes and design tokens to use
-- Responsive breakpoints and behavior
-- Interactive states (hover, active, focus, loading)
-- Animation specifications (type, duration, easing, trigger)
-
-### Present to user
-Show the master plan summary and ask for final approval before implementation.
-
-Save to `.planning/modulo/MASTER-PLAN.md`.
-
-Update `.planning/modulo/STATE.md` with:
 ```markdown
 # Modulo Design State
 
-## Phase: PLANNING_COMPLETE
-## Last Updated: [date]
+## Current Phase
+phase: BRAINSTORM_COMPLETE
+last_updated: [ISO date]
 
-## Decisions
-- Direction: [chosen direction name]
-- Sections: [count] sections planned
-- Tech: [stack decisions]
+## Project
+direction: [chosen direction name]
+platform: [desktop-first or mobile-first]
 
-## Section Status
-| Section | Plan | Implementation | Review |
-|---------|------|----------------|--------|
-| 00-shared | APPROVED | PENDING | - |
-| 01-hero | APPROVED | PENDING | - |
-| ... | ... | ... | ... |
+## Completed Phases
+- [x] Discovery — PROJECT.md written
+- [x] Research — SUMMARY.md synthesized
+- [x] Brainstorm — Direction chosen: [name]
+- [ ] Section Planning
+- [ ] Execution
+- [ ] Verification
+
+## Next Action
+Run `/modulo:plan-sections` to create section plans with wave assignments.
 ```
 
 ---
 
-## Phase 5: IMPLEMENTATION
-
-**Goal:** Build all sections using an agent team.
+## Completion
 
 Tell the user:
 
 ```
-The plan is complete and approved. To execute the implementation:
+Discovery, research, and brainstorming are complete.
 
-Option A: Run `/modulo:start-design --execute` to begin building
-Option B: Start a new session and reference the plans in .planning/modulo/
+Artifacts created:
+- .planning/modulo/PROJECT.md — Requirements
+- .planning/modulo/research/SUMMARY.md — Research synthesis
+- .planning/modulo/BRAINSTORM.md — Chosen direction: [name]
+- .planning/modulo/STATE.md — Project state
 
-The implementation will:
-1. Create shared components first (theme, nav, footer)
-2. Build sections in parallel where possible
-3. Run quality review after each section
+Next step: Run `/modulo:plan-sections` to break the design into sections with execution plans.
 ```
-
-### When executing (if `--execute` is in arguments or user confirms):
-
-1. **Create team** using TeamCreate with name "modulo-build"
-2. **Spawn design-lead agent** as team orchestrator
-3. The design-lead will:
-   - Read MASTER-PLAN.md
-   - Build shared components first
-   - Spawn section-builder agents for each section (parallel where independent)
-   - Collect results and track progress
-   - Update STATE.md as sections complete
-
----
-
-## Phase 6: QUALITY REVIEW
-
-**Goal:** Verify the implementation meets the 90k quality bar.
-
-After implementation completes:
-1. Spawn the `quality-reviewer` agent
-2. It checks against:
-   - All 10 categories from `visual-auditor` skill
-   - Quality tiers from `quality-standards` skill
-3. Results are categorized: Critical / Major / Minor / Nitpick
-4. Verdict: **PASS** / **PASS WITH ISSUES** / **FAIL**
-
-If issues found:
-- Minor issues → auto-fix
-- Major/Critical issues → report to user with specific fix instructions
-
----
-
-## Phase 7: USER VERIFICATION
-
-**Goal:** Get final sign-off from the user.
-
-1. Present the completed design to the user
-2. List all files created
-3. Provide instructions to run/preview the site
-4. Ask: "Are you satisfied with the result?"
-
-If satisfied → mark complete, update STATE.md to `COMPLETE`
-If not satisfied → suggest:
-- `/modulo:iterate` to improve specific sections
-- `/modulo:bugfix` to fix visual issues
-- `/modulo:change-plan` to modify the plan
 
 ---
 
 ## Important Rules
 
-1. **Never skip the questioning phase.** Understanding requirements prevents rework.
-2. **Never auto-approve section plans.** Each section needs explicit user approval.
+1. **Never skip discovery.** Understanding requirements prevents rework.
+2. **Research before brainstorming.** Directions must be informed by real design intelligence, not generic patterns.
 3. **Always reference anti-slop-design principles.** Generic designs are not acceptable.
 4. **Always save planning artifacts.** Every phase produces files in `.planning/modulo/`.
 5. **Track state.** Update STATE.md after each phase transition.
-6. **Quality is non-negotiable.** The 90k quality bar means every pixel matters.
+6. **Stop after Phase 3.** Do NOT continue into section planning — that's `/modulo:plan-sections`.
