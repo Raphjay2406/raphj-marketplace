@@ -267,3 +267,55 @@ function ConcentricRings({ count = 5, maxSize = 300 }) {
 7. Generate random shapes with deterministic seeds for consistency
 8. Always use `hsl(var(--color) / opacity)` for theme-aware decorative elements
 9. Test decorative elements on both light and dark themes
+
+## When to Use Each Technique
+
+| Technique | Best For | Avoid When |
+|-----------|----------|------------|
+| **CSS clip-path** | Simple shapes (triangles, hexagons, arrows), section dividers | Complex curves, many points |
+| **SVG inline** | Logo shapes, icons, complex illustrations, animated paths | Simple geometric shapes (use CSS instead) |
+| **SVG background** | Repeating patterns, textures, dot grids | Interactive elements |
+| **CSS gradients** | Ambient glows, blob backgrounds, color transitions | Sharp-edged shapes |
+| **CSS border-radius** | Organic blobs (`border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%`) | Precise geometric shapes |
+| **CSS transforms** | 3D effects, rotated cards, perspective views | Flat 2D shapes (use clip-path) |
+| **Canvas** | Generative art, particle systems, interactive drawings | Static decorative elements (use CSS/SVG) |
+
+## Common Shape Recipes
+
+### Section Divider (Wave)
+Use between sections to break the hard horizontal line:
+```tsx
+<div className="relative">
+  <svg className="absolute bottom-0 left-0 w-full" viewBox="0 0 1440 60" fill="none">
+    <path d="M0 30C240 60 480 0 720 30C960 60 1200 0 1440 30V60H0V30Z" fill="currentColor" className="text-background" />
+  </svg>
+</div>
+```
+
+### Section Divider (Angle)
+Simpler alternative — CSS only:
+```tsx
+<div className="relative bg-muted">
+  <div className="absolute -top-8 left-0 right-0 h-8 bg-background [clip-path:polygon(0_0,100%_0,100%_100%)]" />
+</div>
+```
+
+### Background Blob (Decorative)
+Use behind hero sections for ambient depth:
+```tsx
+<div className="pointer-events-none absolute -top-40 -right-40 h-[500px] w-[500px] rounded-full bg-primary/10 blur-[100px]" />
+```
+
+### Dot Grid Pattern
+Use as subtle background texture:
+```tsx
+<div className="absolute inset-0 [background-image:radial-gradient(circle,currentColor_1px,transparent_1px)] [background-size:24px_24px] opacity-[0.03]" />
+```
+
+## Performance Notes
+
+- CSS clip-path and gradients: Zero performance cost (GPU composited)
+- SVG: Lightweight, scales perfectly, but complex SVGs can impact rendering
+- Canvas: Requires JavaScript, higher CPU usage — use sparingly
+- Blur effects: GPU-heavy — limit to 2-3 blurred elements per viewport
+- Avoid animating clip-path (causes repaints) — animate transform instead

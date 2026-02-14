@@ -1,6 +1,6 @@
 # modulo
 
-Premium frontend design system for Claude Code. 59 skills, 9 slash commands, and 12 agents for creating 90k-quality websites with wave-based parallel execution and goal-backward verification. Works with **Next.js** and **Astro**.
+Premium frontend design system for Claude Code. 74 skills, 11 slash commands, and 15 agents for creating 90k-quality websites with wave-based parallel execution and goal-backward verification. Works with **Next.js** and **Astro**.
 
 ## Installation
 
@@ -23,12 +23,15 @@ claude plugin install modulo@raphj-marketplace
 | `/modulo:bugfix` | Fix visual bugs with scientific hypothesis-test-fix cycle |
 | `/modulo:audit` | Comprehensive site audit (performance, SEO, accessibility, quality) |
 | `/modulo:responsive-check` | Systematic responsive verification at all breakpoints |
+| `/modulo:generate-tests` | Generate comprehensive test suites (Vitest + RTL + Playwright E2E) |
+| `/modulo:lighthouse` | Lighthouse performance audit with build analysis and Core Web Vitals |
 
 ## Workflow
 
 ```
 start-design → plan-sections → execute → verify → iterate (if needed)
                                                  ↘ audit / responsive-check
+                                                 ↘ generate-tests / lighthouse
 ```
 
 1. **Start Design** — Discovery questioning, parallel research (4 tracks), brainstorm 2-3 directions
@@ -38,8 +41,10 @@ start-design → plan-sections → execute → verify → iterate (if needed)
 5. **Iterate** — Targeted fixes from verification gaps or user feedback
 6. **Audit** — Spawn 4 parallel agents for performance, SEO, accessibility, and quality review
 7. **Responsive Check** — Verify layout/typography/touch targets at 375/768/1024/1440px
+8. **Generate Tests** — Discover components, generate unit + E2E tests, verify passing
+9. **Lighthouse** — Static + build + runtime analysis, Core Web Vitals report
 
-## Agents (12)
+## Agents (15)
 
 | Agent | Role | Description |
 |-------|------|-------------|
@@ -55,6 +60,9 @@ start-design → plan-sections → execute → verify → iterate (if needed)
 | `component-documenter` | Documenter | Auto-generates Storybook stories, prop tables, usage examples |
 | `migration-assistant` | Migration | Pages→App Router, Next.js upgrades, Next.js→Astro conversion |
 | `design-system-auditor` | Auditor | Token usage, component consistency, pattern duplication, adoption score |
+| `security-auditor` | Auditor | Frontend security audit: XSS, auth/session, data exposure, deps, headers |
+| `typescript-auditor` | Auditor | Type safety audit: any usage, assertions, config, patterns, API types |
+| `interaction-reviewer` | Reviewer | UI interaction quality: hover states, focus, transitions, micro-interactions |
 
 ## Wave System
 
@@ -67,7 +75,7 @@ Sections are assigned to waves based on dependencies:
 | 2+ | Independent sections | Hero, features, pricing (parallel, max 4 per wave) |
 | Higher | Dependent sections | Sections that depend on other sections |
 
-## Skills (59)
+## Skills (74)
 
 ### Core Framework
 | Skill | Description |
@@ -96,6 +104,10 @@ Sections are assigned to waves based on dependencies:
 | `skeleton-loading` | Skeleton primitives, Suspense boundaries, streaming SSR, shimmer animations |
 | `search-ui` | Search results, faceted filtering, autocomplete, highlighting, recent searches |
 | `rich-text-editor` | TipTap editor with toolbar, slash commands, bubble menu, Astro integration |
+| `virtual-scroll` | TanStack Virtual lists/grids, infinite scroll, cursor pagination, Intersection Observer |
+| `context-menu` | Right-click context menus, command palette (Cmd+K), keyboard shortcuts hook |
+| `notification-center` | Notification bell, feed with tabs, preferences panel, push notification setup |
+| `rating-review` | Star ratings, aggregate displays, review cards, review forms |
 
 ### E-commerce & Payments
 | Skill | Description |
@@ -107,6 +119,15 @@ Sections are assigned to waves based on dependencies:
 | Skill | Description |
 |-------|-------------|
 | `cms-integration` | Sanity, Contentful, Astro Content Collections, draft mode, webhook revalidation |
+| `markdown-mdx` | react-markdown, Shiki syntax highlighting, TOC generator, MDX with next-mdx-remote |
+| `blog-patterns` | Post listings, blog post layout, reading progress, related posts, RSS feed, tag filter |
+
+### Backend & API
+| Skill | Description |
+|-------|-------------|
+| `webhook-api-patterns` | REST CRUD routes, webhook signature verification, middleware, rate limiting, Server Actions |
+| `database-crud-ui` | CRUD tables, Server Actions with Zod, inline edit, bulk actions, Prisma patterns |
+| `admin-panel` | Admin layout, user management, audit log, role permissions, permission guard |
 
 ### Maps & Location
 | Skill | Description |
@@ -132,6 +153,9 @@ Sections are assigned to waves based on dependencies:
 | `file-upload-media` | Drag-drop zones, image crop, multi-file upload, video player, gallery/lightbox |
 | `real-time-ui` | WebSocket connections, presence indicators, streaming AI responses, notification badges |
 | `ai-chat-interface` | Streaming chat, message bubbles, code highlighting, model selector, typing indicators |
+| `collaboration-realtime` | Yjs + TipTap collaborative editing, presence avatars, live cursors, conflict resolution |
+| `advanced-kanban` | Swimlane kanban, inline card editor, filter bar, dnd-kit with WIP limits |
+| `code-editor-terminal` | Monaco editor, diff viewer, JSON tree viewer, log viewer, multi-tab editor |
 
 ### Animation
 | Skill | Description |
@@ -140,15 +164,26 @@ Sections are assigned to waves based on dependencies:
 | `gsap-animations` | GSAP + ScrollTrigger, timelines, text animations, horizontal scroll |
 | `css-animations` | Pure CSS keyframes, scroll-driven animations, micro-interactions |
 
+### 3D & WebGL
+| Skill | Description |
+|-------|-------------|
+| `three-js-webgl` | React Three Fiber scenes, particles, product viewer, scroll-driven 3D, custom shaders |
+
 ### Design Philosophy
 | Skill | Description |
 |-------|-------------|
-| `anti-slop-design` | Eliminate generic AI aesthetics, create distinctive premium design |
+| `anti-slop-design` | Eliminate generic AI aesthetics, concrete anti-slop checklist with scoring |
 | `premium-dark-ui` | Surface hierarchy, glass morphism, glow effects, depth systems |
-| `premium-typography` | Distinctive font pairings, type scale, gradient text, fluid type |
-| `creative-sections` | Bento grids, 3D perspective heroes, scroll-driven storytelling, cursor effects |
-| `glow-neon-effects` | Neon glow, luminous borders, spotlight effects, ambient lighting |
-| `geometry-shapes` | SVG/CSS shapes, clip-path, blobs, section dividers, 3D transforms |
+| `premium-typography` | Font pairings, type scale systems, gradient text, fluid type, spacing rules |
+| `creative-sections` | Bento grids, 3D heroes, scroll-driven storytelling, cursor effects, section recipes |
+| `glow-neon-effects` | Neon glow, luminous borders, spotlight effects, design system integration |
+| `geometry-shapes` | SVG/CSS shapes, clip-path, blobs, section dividers, performance guide |
+
+### Portfolio & Showcase
+| Skill | Description |
+|-------|-------------|
+| `portfolio-patterns` | Project showcase grid, case study layout, skills visualization, experience timeline |
+| `timeline-gantt` | Timeline views, Gantt charts with groups, milestone tracker |
 
 ### Accessibility & i18n
 | Skill | Description |
