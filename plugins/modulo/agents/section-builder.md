@@ -14,7 +14,22 @@ Build one section as a complete, production-ready React component. Execute tasks
 
 ## Process
 
-### Step 1: Read Your Assignment
+### Step 1: Read Design DNA FIRST
+
+**Before anything else**, read `.planning/modulo/DESIGN-DNA.md`. This is the project's unique visual identity and your primary reference for ALL design decisions. It contains:
+- Exact color tokens (use ONLY these)
+- Typography system (fonts, weights, tracking, leading)
+- Spacing scale (section padding, element gaps)
+- Border radius system
+- Shadow & depth system
+- Signature element (you must incorporate this if your section is prominent)
+- Motion language (easing curves, stagger timing, enter directions)
+- Texture/effects (grain, glow, glass — which are active)
+- Archetype forbidden patterns (things you CANNOT do)
+
+**If DESIGN-DNA.md doesn't exist, STOP and report the error.**
+
+### Step 2: Read Your Assignment
 
 Read the section's PLAN.md. It has two parts:
 
@@ -39,11 +54,13 @@ must_haves:
 - `<success_criteria>` — definition of done
 
 Also read:
+- `.planning/modulo/DESIGN-DNA.md` — ALREADY READ in Step 1 (reference throughout)
+- The BRAINSTORM.md for archetype and creative direction
 - The shared theme/design tokens for consistency
-- The BRAINSTORM.md for creative direction
 - Any shared components you need to import
+- The list of layout patterns already used (passed by design-lead) — pick a DIFFERENT pattern
 
-### Step 2: Execute Tasks Sequentially
+### Step 3: Execute Tasks Sequentially
 
 Process each task from `<tasks>` in order:
 
@@ -68,9 +85,20 @@ Process each task from `<tasks>` in order:
 - Wait for them to complete the action
 - Continue once the required input is provided
 
-### Step 3: Build Quality
+### Step 4: Build Quality
 
 Follow these principles for every component:
+
+**Design DNA Compliance (MANDATORY):**
+- Use ONLY color tokens from DESIGN-DNA.md (no stray hex values)
+- Use ONLY the fonts specified in DESIGN-DNA.md
+- Follow the spacing scale from DESIGN-DNA.md
+- Apply the shadow system from DESIGN-DNA.md
+- Match the border-radius system from DESIGN-DNA.md
+- Follow the motion language (easing, timing, direction) from DESIGN-DNA.md
+- Apply texture/effects as specified (grain, glow, glass)
+- NEVER use any archetype forbidden patterns
+- If this is a prominent section (hero, CTA), incorporate the signature element
 
 **Code Quality:**
 - Complete implementations — no TODOs, no placeholder text unless the plan says so
@@ -109,14 +137,14 @@ Follow these principles for every component:
 - Keyboard navigable interactive elements
 - Proper heading hierarchy
 
-### Step 4: Self-Verify
+### Step 5: Self-Verify
 
 Before marking as complete, check against `<verification>` and `must_haves`:
 - All `must_haves.truths` hold
 - All `must_haves.artifacts` exist and are non-empty
 - All `<success_criteria>` met
 
-### Step 5: Write SUMMARY.md
+### Step 6: Write SUMMARY.md
 
 On completion, write `.planning/modulo/sections/XX-{name}/SUMMARY.md`:
 
@@ -154,7 +182,7 @@ duration: [approx time or turns spent]
 [Any changes from the PLAN.md and why, or "None"]
 ```
 
-### Step 6: Atomic Commits
+### Step 7: Atomic Commits
 
 Commit after each task completion:
 ```
@@ -173,8 +201,10 @@ Examples:
 - **Pause at checkpoints.** Never skip a `checkpoint:human-verify` or `checkpoint:decision`.
 - **Atomic commits per task.** Not per file, not per session — per task.
 - **Complete code only.** Every component must be ready to render without modification.
-- **Use shared design tokens.** Colors, fonts, and spacing must match the project's theme.
-- **No generic defaults.** No `bg-blue-500`, no `font-sans`, no `rounded-lg` unless the plan says so.
+- **DESIGN-DNA.md is your bible.** Read it first, reference it constantly, use ONLY its tokens.
+- **No generic defaults.** No `bg-blue-500`, no `font-sans`, no `rounded-lg` unless the DNA says so.
+- **Archetype forbidden patterns are hard no's.** If the DNA forbids it, you CANNOT use it.
+- **Layout diversity.** Check which patterns adjacent sections use. Pick a different one.
 - **Responsive is mandatory.** Every component must work from 320px to 2560px.
 - **Animations must be smooth.** Use `transform` and `opacity`, never `width`/`height`/`top`/`left`.
 - **Write SUMMARY.md with machine-readable frontmatter.** This is used by other agents.

@@ -227,7 +227,22 @@ Run this checklist on every page/component before marking it done. Each "No" mea
 - [ ] Transitions use appropriate easing (not all linear)
 - [ ] Motion has direction/story (elements come from a logical source)
 
-**Scoring:** 20+ = Premium | 15-19 = Good | 10-14 = Template-tier | Below 10 = Slop
+**Scoring:** 20+ = Premium | 18-19 = Good | 15-17 = Template-tier | Below 15 = Slop
+
+### ENFORCEMENT (Mandatory Quality Gate)
+
+This checklist is enforced automatically by `/modulo:verify`. It is NOT advisory — it is a **hard gate**:
+
+- **Score 18+** = PASSED. The design meets the quality bar.
+- **Score 15-17** = **AUTOMATIC FAIL.** GAP-FIX.md plans generated for every failed item. Must iterate.
+- **Score below 15** = **AUTOMATIC FAIL.** Major rework required.
+
+**Additional penalties (applied on top of the 25-point score):**
+- Missing Design DNA signature element = **-3 points**
+- Archetype forbidden pattern present = **-5 points**
+- Inter/Roboto/system-ui as display font = **-5 points** (unless archetype explicitly requires it)
+
+**The anti-slop gate cannot be skipped or overridden.** If the output looks generic, it doesn't ship. Period.
 
 ## Slop Detector Quick Scan
 

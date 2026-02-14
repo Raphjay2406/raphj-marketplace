@@ -11,8 +11,8 @@
     {
       "name": "modulo",
       "source": "./plugins/modulo",
-      "description": "Premium frontend design system with 74 skills, 11 commands, and 15 agents for creating 90k-quality websites. Covers UI patterns, e-commerce, payments, CMS, maps, social features, PWA, analytics, multi-tenant, onboarding, print/PDF, design tokens, SEO/GEO, accessibility, i18n, performance, testing, virtual scroll, webhooks, database CRUD, markdown/MDX, blog, admin panels, code editors, 3D/WebGL, kanban, timelines, portfolios, notifications, ratings, and real-time collaboration. Includes agents for auditing, Figma translation, security, TypeScript, and interaction review. Works with Next.js and Astro.",
-      "version": "4.0.0",
+      "description": "Premium frontend design system with 76 skills, 12 commands, and 16 agents. Features Design DNA identity system with 16 opinionated archetypes, mandatory anti-slop quality gate, live browser visual auditing with GIF recording, and section layout diversity enforcement. Creates Awwwards-level, production-ready websites — not templates. Works with Next.js and Astro.",
+      "version": "4.1.0",
       "author": {
         "name": "raphj"
       },
@@ -63,7 +63,12 @@
         "virtual-scroll",
         "notifications",
         "portfolio",
-        "timeline"
+        "timeline",
+        "design-dna",
+        "archetypes",
+        "anti-slop",
+        "visual-audit",
+        "awwwards"
       ]
     },
     {

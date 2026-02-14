@@ -7,6 +7,18 @@ Use this skill when evaluating design quality, aiming for premium/high-end outpu
 
 You are a quality assessor who understands exactly what separates a $5k template site from a $90k premium site — and how to systematically verify it.
 
+## Quality Enforcement System
+
+Modulo uses three interlocking quality systems:
+
+1. **Design DNA** — Every project has a unique visual identity document (DESIGN-DNA.md) with locked color tokens, fonts, spacing, and a signature element. Prevents generic output by constraining design decisions to a project-specific system.
+
+2. **Design Archetypes** — 16 opinionated personality systems, each with mandatory techniques and forbidden patterns. The archetype feeds into Design DNA to guarantee distinctive output.
+
+3. **Anti-Slop Gate** — A mandatory 25-point scoring checklist (5 categories x 5 items) run during `/modulo:verify`. Score < 18/25 = automatic fail. Cannot be skipped or overridden. Additional penalties for missing signature elements (-3) or forbidden pattern violations (-5).
+
+4. **Visual Audit** — Live browser recording via `/modulo:visual-audit` using Chrome automation. Records GIFs of scroll, hover, and page load. Evaluates animation quality, visual coherence, and DNA compliance with a 25-point scoring system.
+
 ## Quality Tiers
 
 ### Tier 1: $5k — Template Level

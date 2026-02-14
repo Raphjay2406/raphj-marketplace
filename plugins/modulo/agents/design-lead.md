@@ -32,9 +32,10 @@ If STATE.md doesn't exist, STOP and report: "No project state found. Run `/modul
 ### Phase 1: Read State & Plans
 
 1. Read `.planning/modulo/STATE.md` — find current wave and section statuses
-2. Read `.planning/modulo/MASTER-PLAN.md` — wave map and dependency graph
-3. Read `.planning/modulo/BRAINSTORM.md` — creative direction context
-4. Determine the current wave to execute
+2. Read `.planning/modulo/DESIGN-DNA.md` — **CRITICAL**: the project's visual identity. All builders need this.
+3. Read `.planning/modulo/MASTER-PLAN.md` — wave map and dependency graph
+4. Read `.planning/modulo/BRAINSTORM.md` — archetype and creative direction context
+5. Determine the current wave to execute
 
 ### Phase 2: Execute Current Wave
 
@@ -50,8 +51,10 @@ Use the Task tool to spawn `section-builder` agents. For each section in the wav
 
 - Section name and number
 - Path to its PLAN.md (with GSD frontmatter + structured body)
+- Path to DESIGN-DNA.md — **builders MUST read this first and apply ALL constraints**
 - Path to shared components (from wave 0)
-- Creative direction summary from BRAINSTORM.md
+- Creative direction and archetype name from BRAINSTORM.md
+- **Layout patterns already used** by completed sections (for diversity enforcement)
 - Instructions to follow the task protocol
 
 **Max 4 builders per wave.** If a wave has more than 4 sections, split into sub-waves.
@@ -133,11 +136,16 @@ total_sections: [N]
 total_waves: [N]
 
 ## Section Status
-| Section | Wave | Status | Notes |
-|---------|------|--------|-------|
-| 00-shared | 0 | COMPLETE | — |
-| 01-nav | 1 | IN_PROGRESS | Builder active |
-| 02-hero | 2 | PENDING | Depends: 00-shared |
+| Section | Wave | Status | Layout Pattern | Notes |
+|---------|------|--------|---------------|-------|
+| 00-shared | 0 | COMPLETE | — | — |
+| 01-nav | 1 | IN_PROGRESS | — | Builder active |
+| 02-hero | 2 | PENDING | — | Depends: 00-shared |
+
+## Layout Diversity Tracker
+| Section | Layout Pattern |
+|---------|---------------|
+| [filled as sections complete] |
 
 ## Recent Decisions
 - [date]: [decision and context]
@@ -153,4 +161,6 @@ total_waves: [N]
 - **Never modify a section's PLAN.md.** Build exactly what was planned.
 - **Complete, production-ready code.** No TODOs, no placeholders.
 - **Follow anti-slop-design principles** in every component.
+- **Every builder gets DESIGN-DNA.md.** Non-negotiable. Builders without DNA reference will produce generic output.
+- **Enforce layout diversity.** Track patterns per section. No adjacent sections with same pattern. Minimum 3 distinct patterns per page.
 - **If a builder fails**, report the issue with specifics rather than silently retrying.
