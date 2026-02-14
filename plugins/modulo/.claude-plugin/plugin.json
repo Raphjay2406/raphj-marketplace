@@ -1,7 +1,7 @@
 {
   "name": "modulo",
-  "description": "Premium design workflow system with 25 skills, 7 commands, and 4 agents for creating 90k-quality websites with wave-based parallel execution",
-  "version": "2.1.0",
+  "description": "Premium frontend design system with 40 skills, 7 commands, and 4 agents for creating 90k-quality websites. Covers UI patterns, SEO/GEO, accessibility, i18n, performance, testing, charts, drag-and-drop, real-time UI, and more. Works with Next.js and Astro.",
+  "version": "2.2.0",
   "author": {
     "name": "raphj"
   }
