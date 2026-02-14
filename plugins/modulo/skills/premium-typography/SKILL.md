@@ -171,3 +171,86 @@ className="max-w-[20ch]" // Short headlines
 8. **Font weight variety** - at least 3 different weights per page (light, regular, bold)
 9. **Overlines in uppercase with wide tracking** look premium above sections
 10. **Test font loading** - use `font-display: swap` and proper fallbacks
+
+## Type Scale System
+
+Use a consistent, harmonious type scale. Recommended scales:
+
+### Major Third (1.25 ratio) — Clean, professional
+```
+text-xs:   12px / 0.75rem
+text-sm:   14px / 0.875rem
+text-base: 16px / 1rem
+text-lg:   20px / 1.25rem
+text-xl:   25px / 1.563rem
+text-2xl:  31px / 1.953rem
+text-3xl:  39px / 2.441rem
+text-4xl:  49px / 3.052rem
+text-5xl:  61px / 3.815rem
+```
+
+### Perfect Fourth (1.333 ratio) — More dramatic
+```
+text-xs:   12px
+text-sm:   14px
+text-base: 16px
+text-lg:   21px
+text-xl:   28px
+text-2xl:  38px
+text-3xl:  50px
+text-4xl:  67px
+text-5xl:  90px
+```
+
+## Line Height Rules
+
+```
+Headings (text-3xl+):  leading-[0.9] to leading-[1.1]
+Subheadings (text-xl): leading-[1.15] to leading-[1.25]
+Body text:             leading-[1.5] to leading-[1.75]
+Small text:            leading-[1.4] to leading-[1.5]
+UI labels:             leading-none to leading-tight
+```
+
+## Letter Spacing Rules
+
+```
+Display text (60px+):  tracking-[-0.04em] to tracking-[-0.03em]
+Headings (30-60px):    tracking-[-0.025em] to tracking-[-0.02em]
+Subheadings:           tracking-[-0.01em]
+Body text:             tracking-normal (0)
+Small text:            tracking-[0.01em]
+Overlines/labels:      tracking-[0.05em] to tracking-[0.1em] (uppercase)
+```
+
+## Line Length (Measure)
+
+```
+Body text:    max-w-[65ch] — optimal readability
+Wide layouts: max-w-[75ch] — acceptable maximum
+Narrow:       max-w-[45ch] — captions, sidebars
+Headlines:    max-w-[20ch] — force impactful breaks
+```
+
+## Responsive Typography
+
+```tsx
+// Fluid type scale using clamp()
+className="text-[clamp(2rem,5vw,4rem)]"
+className="text-[clamp(1rem,2.5vw,1.5rem)]"
+
+// Tailwind responsive approach
+className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl"
+
+// Reduce tracking tighter on larger screens
+className="tracking-tight lg:tracking-[-0.04em]"
+```
+
+## Paragraph Spacing
+
+```
+Between paragraphs:    mt-4 (1rem) — standard
+After headings:        mt-2 (0.5rem) — tighter
+Before headings:       mt-8 to mt-12 — breathing room
+Between sections:      mt-16 to mt-24 — clear separation
+```

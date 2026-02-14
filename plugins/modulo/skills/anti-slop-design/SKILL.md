@@ -187,3 +187,56 @@ Study these design languages:
 - **Arc browser**: Playful color + spatial design + unexpected interactions
 
 Every design should feel like it belongs on Dribbble's Popular page, not in a template marketplace.
+
+## Concrete Anti-Slop Checklist
+
+Run this checklist on every page/component before marking it done. Each "No" means rework needed.
+
+### Colors (score /5)
+- [ ] Primary color is NOT blue, indigo, or violet (unless brand requires it)
+- [ ] At least one unexpected color accent exists
+- [ ] Gradients are subtle and purposeful, not decorative filler
+- [ ] Background has depth (not flat white/black — use subtle tints/noise)
+- [ ] Dark mode is hand-tuned (not just `dark:` inverse)
+
+### Typography (score /5)
+- [ ] Display font is distinctive (not Inter/Roboto/system)
+- [ ] At least 3 different font weights visible
+- [ ] Letter-spacing is tuned on headings (tighter) and labels (wider)
+- [ ] Line heights are varied (tight on headings, relaxed on body)
+- [ ] At least one typographic surprise (gradient text, variable weight, oversized)
+
+### Layout (score /5)
+- [ ] Something breaks the grid (overlapping element, asymmetric layout, full-bleed)
+- [ ] Spacing is varied (not uniform gap-4 everywhere)
+- [ ] Visual hierarchy has at least 3 distinct levels
+- [ ] Negative space is used intentionally (not just default margins)
+- [ ] At least one element has unexpected positioning or sizing
+
+### Depth & Polish (score /5)
+- [ ] Shadows are layered (not just `shadow-md` — use 2-3 shadow layers)
+- [ ] Borders are subtle (opacity, not solid gray)
+- [ ] At least one glass/frost/blur element exists
+- [ ] Images/cards have thoughtful rounded corners (not default rounded-lg everywhere)
+- [ ] Micro-details present (noise texture, grain, dot pattern, subtle animation)
+
+### Motion (score /5)
+- [ ] Elements enter with staggered timing (not all at once)
+- [ ] Hover states are distinct and intentional
+- [ ] At least one scroll-triggered animation
+- [ ] Transitions use appropriate easing (not all linear)
+- [ ] Motion has direction/story (elements come from a logical source)
+
+**Scoring:** 20+ = Premium | 15-19 = Good | 10-14 = Template-tier | Below 10 = Slop
+
+## Slop Detector Quick Scan
+
+When reviewing code, search for these red flags:
+- `bg-white` or `bg-black` as the only backgrounds (add subtle tints)
+- `text-gray-500` used more than 3 times (create intentional hierarchy)
+- `shadow-md` without custom shadow layers
+- `rounded-lg` on everything (vary corner radii)
+- `gap-4` or `gap-6` used uniformly (vary spacing)
+- `transition-all duration-300` on everything (vary timing)
+- Generic icon usage without personality
+- Stock photo placeholders without styling treatments

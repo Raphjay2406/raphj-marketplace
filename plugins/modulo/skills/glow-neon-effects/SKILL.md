@@ -192,3 +192,116 @@ shadow: "rgba(239,68,68,0.4)"    text: "#f87171"   bg: "#ef4444"
 7. **Text shadow for glow text** not box-shadow
 8. **Always combine glow with dark backgrounds** - glow on light bg looks wrong
 9. **Breathing/pulsing** should be slow (6-10s) and subtle
+
+## Design System Integration
+
+### Theme-Aware Glow Colors
+```tsx
+// Instead of hardcoded hex colors, use CSS variables for theme-aware glow:
+
+// In globals.css or tailwind config:
+// --glow-primary: 99 102 241;    /* indigo RGB */
+// --glow-accent: 236 72 153;     /* pink RGB */
+// --glow-success: 34 197 94;     /* green RGB */
+
+// Usage with opacity control:
+className="shadow-[0_0_20px_rgba(var(--glow-primary),0.35)]"
+className="bg-[rgba(var(--glow-primary),0.1)]"
+className="text-[rgb(var(--glow-primary))]"
+
+// This lets you swap glow palettes via CSS variable changes,
+// e.g., different glow colors per section or per theme.
+```
+
+### Glow Intensity Scale
+```tsx
+// Define consistent glow levels to reuse across components:
+
+// Level 1 — Subtle ambient (backgrounds, section mood)
+shadow-[0_0_60px_rgba(var(--glow-primary),0.08)]
+
+// Level 2 — Soft accent (cards, containers on hover)
+shadow-[0_0_20px_rgba(var(--glow-primary),0.2)]
+
+// Level 3 — Medium emphasis (buttons, active elements)
+shadow-[0_0_20px_rgba(var(--glow-primary),0.35),0_0_60px_rgba(var(--glow-primary),0.15)]
+
+// Level 4 — Strong neon (hero CTAs, featured elements)
+shadow-[0_0_15px_rgba(var(--glow-primary),0.4),0_0_45px_rgba(var(--glow-primary),0.2),0_0_80px_rgba(var(--glow-primary),0.1)]
+
+// Level 5 — Intense (sparingly — neon signs, special effects)
+shadow-[0_0_10px_rgba(var(--glow-primary),0.6),0_0_40px_rgba(var(--glow-primary),0.4),0_0_80px_rgba(var(--glow-primary),0.2),0_0_120px_rgba(var(--glow-primary),0.1)]
+```
+
+### Tailwind Plugin Approach
+```js
+// tailwind.config.js — define glow utilities once
+module.exports = {
+  theme: {
+    extend: {
+      boxShadow: {
+        'glow-sm': '0 0 20px rgba(var(--glow-primary), 0.2)',
+        'glow-md': '0 0 20px rgba(var(--glow-primary), 0.35), 0 0 60px rgba(var(--glow-primary), 0.15)',
+        'glow-lg': '0 0 15px rgba(var(--glow-primary), 0.4), 0 0 45px rgba(var(--glow-primary), 0.2), 0 0 80px rgba(var(--glow-primary), 0.1)',
+      },
+    },
+  },
+}
+// Then use: className="shadow-glow-sm hover:shadow-glow-md transition-shadow"
+```
+
+## When to Use Each Effect
+
+| Effect | Best For | Avoid When |
+|--------|----------|------------|
+| **Soft glow button** | Primary CTAs, important actions | Secondary/tertiary buttons (too much emphasis) |
+| **Neon glow button** | Hero CTAs, launch buttons, special actions | Regular UI buttons, form submits |
+| **Gradient border** | Featured cards, premium tiers, selected states | Every card (loses meaning) |
+| **Animated border** | Hero elements, loading states, special cards | More than 1-2 per page (too distracting) |
+| **Hover glow border** | Card grids, interactive lists | Static content, text blocks |
+| **Ambient orbs** | Hero backgrounds, section mood, page atmosphere | Small components, tight layouts |
+| **Spotlight card** | Feature cards, interactive grids | Mobile (no cursor), simple lists |
+| **Text glow** | Hero headlines, key phrases | Body text, paragraphs |
+| **Neon text** | Titles, brand names, special emphasis | More than 1-2 words per section |
+| **Gradient line** | Section dividers, visual breaks | Between every element (overuse) |
+| **Icon glow** | Feature icons, status indicators | Decorative icons, logos |
+| **Pulse glow** | Live indicators, active states, notifications | Static elements, many items at once |
+
+## Performance Notes
+
+```
+Effect               | GPU Cost | Repaint | Recommendation
+---------------------|----------|---------|---------------
+box-shadow glow      | Low      | No      | Safe to use freely
+text-shadow glow     | Low      | No      | Safe on headings
+blur-[100px]+ orbs   | Medium   | No      | Max 3 per viewport
+backdrop-blur        | High     | Yes     | Max 1-2 per viewport
+animated border spin | Medium   | No      | Max 1 per viewport
+cursor spotlight     | Low      | No      | JS mousemove is cheap
+animate-ping         | Low      | No      | Keep to 1-2 instances
+
+Tips:
+- box-shadow is GPU-composited, so glow buttons/cards are essentially free
+- blur on large elements (500px+ orbs) costs more — limit to 2-3 visible
+- Animated conic-gradient borders trigger paint — limit to 1 hero element
+- Combine multiple shadow layers in ONE property (not stacked divs)
+- Use will-change: transform on animated glow elements for GPU compositing
+```
+
+## Reduced Motion Fallback
+
+```tsx
+// Glow is safe for reduced-motion users (it's a static visual)
+// But ANIMATED glow should respect the preference:
+
+// Breathing orbs — disable animation, keep the glow
+className="bg-[#6366f1]/15 blur-[150px] motion-safe:animate-[breathe_8s_ease-in-out_infinite]"
+
+// Pulse glow — disable ping, keep the button
+<span className="absolute inset-0 rounded-xl bg-[#6366f1] motion-safe:animate-ping opacity-20" />
+
+// Rotating border — stop rotation, keep the gradient border visible
+className="motion-safe:animate-[spin_4s_linear_infinite]"
+
+// Hover glow is fine — it's user-initiated, not auto-playing
+```

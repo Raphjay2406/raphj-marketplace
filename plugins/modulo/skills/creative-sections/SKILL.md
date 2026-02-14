@@ -432,3 +432,84 @@ const [activeTab, setActiveTab] = useState(0)
 13. **Grain texture**: SVG noise overlay at 5% opacity adds analog warmth to digital surfaces
 14. **Text splitting**: Reveal words/lines sequentially for dramatic reading experience
 15. **Respect reduced motion**: Wrap all animations in `motion-safe:` or check `prefers-reduced-motion`
+
+## When to Use Each Pattern
+
+| Pattern | Best For | Avoid When |
+|---------|----------|------------|
+| **Split Hero (3D tilt)** | SaaS products, dev tools, dashboards — shows the product | Content-heavy sites, blogs, portfolios |
+| **Centered Hero (grid bg)** | Bold brand statements, launch pages, minimal products | When you have a strong product screenshot to show |
+| **Bento Grid** | Feature overviews, capability showcases, "why us" sections | Simple products with < 4 features |
+| **Scroll-Driven Animation** | Storytelling, case studies, product walkthroughs | Above-the-fold content (user hasn't scrolled yet) |
+| **Variable Font Animation** | Headlines, hero text, interactive labels | Body text, small text, data-heavy interfaces |
+| **Cursor-Following Glow** | Dark landing pages, card grids, interactive showcases | Mobile (no cursor), light themes, text-heavy pages |
+| **Text Splitting Reveal** | Hero headlines, manifesto sections, key value props | Long paragraphs, secondary content, navigation |
+| **Noise/Grain Texture** | Dark backgrounds, hero sections, premium card surfaces | Light themes (grain becomes distracting), images |
+| **Tabbed Showcase** | Multi-feature products, "how it works", workflows | Single-feature pages, simple marketing |
+| **Marquee Logos** | Social proof, integrations, partner sections | < 6 logos (use static grid instead) |
+| **Stats Section** | Credibility, traction, performance metrics | Early-stage products with no impressive numbers |
+| **Before/After Comparison** | Competitor differentiation, transformation stories | When you can't articulate specific pain points |
+
+## Section Combination Recipes
+
+Proven page flows that work well together:
+
+### SaaS Landing Page
+```
+1. Split Hero (3D tilt) — show the product immediately
+2. Marquee Logos — social proof
+3. Bento Grid — feature overview
+4. Tabbed Showcase — deep dive into top 3 features
+5. Stats Section — traction/credibility
+6. Before/After — differentiation
+7. CTA Section with ambient glow
+```
+
+### Developer Tool
+```
+1. Centered Hero (grid bg) — bold statement + code snippet
+2. Scroll-Driven code walkthrough — step by step
+3. Bento Grid — capabilities
+4. Terminal/code demo with spotlight card
+5. Stats + Marquee logos
+6. CTA with gradient border
+```
+
+### Creative Portfolio
+```
+1. Variable Font Hero — name/title with weight animation
+2. Horizontal scroll project showcase
+3. Cursor-following spotlight grid — project cards
+4. Text splitting manifesto — design philosophy
+5. Noise-textured contact section
+```
+
+### Product Launch
+```
+1. Centered Hero — dramatic reveal with text splitting
+2. Scroll storytelling — problem → solution narrative
+3. Bento Grid — features with ambient glow
+4. Before/After comparison
+5. Stats with gradient text
+6. CTA with animated border
+```
+
+## Accessibility Considerations
+
+```tsx
+// Always wrap motion in reduced-motion checks
+<div className="motion-safe:animate-[reveal_0.6s_ease-out_both]">
+
+// For cursor effects, provide non-motion fallback
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+// Marquee: pause on hover AND on focus-within
+className="hover:[animation-play-state:paused] focus-within:[animation-play-state:paused]"
+
+// Scroll-driven: ensure content is readable without animation
+// The content should be visible by default, animation is enhancement
+className="opacity-100 motion-safe:opacity-0 motion-safe:[animation:reveal_linear_both]"
+
+// Variable font: ensure text is readable at all weight states
+// Don't rely solely on weight change to convey meaning
+```
