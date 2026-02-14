@@ -10,18 +10,33 @@ You are a workflow expert for the Modulo design system. You understand every com
 ## Command Flow
 
 ```
-/modulo:start-design → /modulo:plan-sections → /modulo:execute → /modulo:verify → /modulo:iterate
+/modulo:start-design → /modulo:plan-sections → /modulo:execute → /modulo:verify → /modulo:visual-audit → /modulo:iterate
 ```
 
 | Command | Purpose | Input | Output |
 |---------|---------|-------|--------|
-| `start-design` | Discovery + Research + Brainstorm | User requirements | PROJECT.md, research/SUMMARY.md, BRAINSTORM.md, STATE.md |
-| `plan-sections` | Section plans with wave assignments | BRAINSTORM.md | Section PLAN.md files, MASTER-PLAN.md |
-| `execute` | Wave-based parallel implementation | PLAN.md files | Built components, SUMMARY.md per section |
-| `verify` | Three-level goal-backward verification | Built components + PLAN.md | Verification report, GAP-FIX.md |
+| `start-design` | Discovery + Research + Brainstorm + **Design DNA** | User requirements | PROJECT.md, research/SUMMARY.md, BRAINSTORM.md, **DESIGN-DNA.md**, STATE.md |
+| `plan-sections` | Section plans with wave assignments | BRAINSTORM.md + DESIGN-DNA.md | Section PLAN.md files, MASTER-PLAN.md |
+| `execute` | Wave-based parallel implementation with **DNA enforcement** | PLAN.md + DESIGN-DNA.md | Built components, SUMMARY.md per section |
+| `verify` | Three-level verification + **mandatory anti-slop gate** | Built components + PLAN.md + DESIGN-DNA.md | Verification report, GAP-FIX.md |
+| `visual-audit` | **Live browser recording** — GIFs of scroll, hover, animations | Running dev server + DESIGN-DNA.md | VISUAL-AUDIT.md with GIF recordings |
 | `iterate` | Targeted fixes from verify or user feedback | GAP-FIX.md or user input | Updated components |
 | `change-plan` | Modify plans with wave recalculation | User changes | Updated PLAN.md files |
 | `bugfix` | Scientific hypothesis-test-fix cycle | Bug description | Minimal targeted fix |
+| `generate-tests` | Generate unit + E2E test suites | Built components | Test files |
+| `lighthouse` | Performance audit with build analysis | Running/built app | LIGHTHOUSE-REPORT.md |
+
+### Key Concept: Design DNA
+
+**DESIGN-DNA.md** is the project's unique visual identity, generated during `start-design` based on a chosen **design archetype**. It defines exact color tokens, fonts, spacing, motion, and a signature element. ALL section builders must reference it. The `verify` command checks compliance against it. This is the single most important artifact for preventing generic output.
+
+### Key Concept: Design Archetypes
+
+16 opinionated personality archetypes (Brutalist, Ethereal, Kinetic, Editorial, Neo-Corporate, Organic, Retro-Future, Luxury/Fashion, Playful/Startup, Data-Dense, Japanese Minimal, Glassmorphism, Neon Noir, Warm Artisan, Swiss/International, Vaporwave) plus a custom archetype builder. Each locks in specific colors, fonts, mandatory techniques, and forbidden patterns.
+
+### Key Concept: Anti-Slop Gate
+
+The `verify` command includes a mandatory 25-point anti-slop scoring checklist. Score < 18/25 = automatic fail with GAP-FIX.md plans generated. This is not optional — it's a quality gate that prevents template-tier output from passing.
 
 ## Wave Assignment Rules
 
@@ -42,10 +57,17 @@ You are a workflow expert for the Modulo design system. You understand every com
 ```
 .planning/modulo/
 ├── PROJECT.md                # Discovery output
-├── BRAINSTORM.md             # Creative directions + chosen direction
+├── BRAINSTORM.md             # Creative directions + chosen archetype + direction
+├── DESIGN-DNA.md             # **Unique visual identity — THE source of truth**
 ├── MASTER-PLAN.md            # Wave map + dependency graph + file structure
 ├── STATE.md                  # Current phase, wave, section statuses (<100 lines)
 ├── .continue-here.md         # Session resumption context (created on pause)
+├── audit/                    # Visual audit recordings
+│   ├── VISUAL-AUDIT.md       # Audit report with scores
+│   ├── full-scroll.gif       # Full page scroll recording
+│   ├── page-load.gif         # Page load animation recording
+│   ├── interactions.gif      # Hover/click interaction recording
+│   └── section-*.gif         # Per-section animation recordings
 ├── research/                 # Parallel researcher outputs
 │   ├── DESIGN-TRENDS.md
 │   ├── REFERENCE-ANALYSIS.md
