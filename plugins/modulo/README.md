@@ -1,6 +1,6 @@
 # modulo
 
-Premium frontend design system for Claude Code. 40 skills, 7 slash commands, and 4 agents for creating 90k-quality websites with wave-based parallel execution and goal-backward verification. Works with **Next.js** and **Astro**.
+Premium frontend design system for Claude Code. 59 skills, 9 slash commands, and 12 agents for creating 90k-quality websites with wave-based parallel execution and goal-backward verification. Works with **Next.js** and **Astro**.
 
 ## Installation
 
@@ -21,11 +21,14 @@ claude plugin install modulo@raphj-marketplace
 | `/modulo:iterate` | Iterate on existing design using gap-fix plans or manual feedback |
 | `/modulo:change-plan` | Modify plans with automatic wave recalculation |
 | `/modulo:bugfix` | Fix visual bugs with scientific hypothesis-test-fix cycle |
+| `/modulo:audit` | Comprehensive site audit (performance, SEO, accessibility, quality) |
+| `/modulo:responsive-check` | Systematic responsive verification at all breakpoints |
 
 ## Workflow
 
 ```
 start-design → plan-sections → execute → verify → iterate (if needed)
+                                                 ↘ audit / responsive-check
 ```
 
 1. **Start Design** — Discovery questioning, parallel research (4 tracks), brainstorm 2-3 directions
@@ -33,8 +36,10 @@ start-design → plan-sections → execute → verify → iterate (if needed)
 3. **Execute** — Wave-based parallel implementation (max 4 builders per wave), checkpoint support
 4. **Verify** — Three-level verification (Existence → Substantive → Wired) + visual audit
 5. **Iterate** — Targeted fixes from verification gaps or user feedback
+6. **Audit** — Spawn 4 parallel agents for performance, SEO, accessibility, and quality review
+7. **Responsive Check** — Verify layout/typography/touch targets at 375/768/1024/1440px
 
-## Agents
+## Agents (12)
 
 | Agent | Role | Description |
 |-------|------|-------------|
@@ -42,6 +47,14 @@ start-design → plan-sections → execute → verify → iterate (if needed)
 | `section-builder` | Builder | Executes PLAN.md tasks sequentially, pauses at checkpoints, writes SUMMARY.md |
 | `quality-reviewer` | Verifier | Three-level goal-backward verification, creates GAP-FIX.md plans |
 | `design-researcher` | Researcher | Parallel research agent for one track (trends, references, components, animations) |
+| `performance-auditor` | Auditor | Core Web Vitals, bundle size, image/font optimization, caching analysis |
+| `seo-optimizer` | Auditor | Meta tags, structured data, sitemaps, robots.txt, Open Graph compliance |
+| `accessibility-auditor` | Auditor | WCAG 2.1 AA compliance, keyboard nav, ARIA, color contrast, screen readers |
+| `responsive-tester` | Tester | Layout verification at 375/768/1024/1440px breakpoints |
+| `figma-translator` | Translator | Figma-to-code with pixel-perfect accuracy using shadcn/ui + Tailwind |
+| `component-documenter` | Documenter | Auto-generates Storybook stories, prop tables, usage examples |
+| `migration-assistant` | Migration | Pages→App Router, Next.js upgrades, Next.js→Astro conversion |
+| `design-system-auditor` | Auditor | Token usage, component consistency, pattern duplication, adoption score |
 
 ## Wave System
 
@@ -54,7 +67,7 @@ Sections are assigned to waves based on dependencies:
 | 2+ | Independent sections | Hero, features, pricing (parallel, max 4 per wave) |
 | Higher | Dependent sections | Sections that depend on other sections |
 
-## Skills (40)
+## Skills (59)
 
 ### Core Framework
 | Skill | Description |
@@ -64,6 +77,8 @@ Sections are assigned to waves based on dependencies:
 | `tailwind-patterns` | Advanced Tailwind CSS patterns, animations, gradients, glass effects |
 | `nextjs-app-router` | App Router conventions, layouts, server/client components, metadata |
 | `component-library-setup` | Design system bootstrap, Tailwind config, design tokens, Storybook, theming |
+| `astro-patterns` | Islands architecture, View Transitions, Content Collections, hybrid rendering, Actions, middleware |
+| `design-tokens-sync` | Style Dictionary pipeline, Figma token sync, multi-theme token sets |
 
 ### UI Patterns
 | Skill | Description |
@@ -72,9 +87,36 @@ Sections are assigned to waves based on dependencies:
 | `responsive-layout` | Layout systems, grid patterns, bento grids, container queries |
 | `data-table` | TanStack Table + shadcn with sorting, filtering, pagination |
 | `auth-ui` | Login, signup, OTP, forgot password, social auth flows |
-| `dashboard-patterns` | Dashboard shells, stat cards, settings pages, onboarding wizard, activity feeds, role-based UI, breadcrumbs |
-| `landing-page` | Hero sections, pricing tables, testimonials, CTAs, SaaS comparison, changelog, waitlist, trust signals |
-| `email-notification-ui` | Toast notifications (Sonner), alert banners, notification dropdowns, empty states, confirmation dialogs |
+| `dashboard-patterns` | Dashboard shells, stat cards, settings pages, onboarding wizard, activity feeds, role-based UI |
+| `landing-page` | Hero sections, pricing tables, testimonials, CTAs, SaaS comparison, changelog |
+| `email-notification-ui` | Toast notifications (Sonner), alert banners, notification dropdowns, confirmation dialogs |
+| `navigation-patterns` | Mega menus, sticky headers with scroll behavior, search autocomplete, multi-level sidebar |
+| `modal-dialog-patterns` | Multi-step modals, slide-over panels, confirmation dialogs, responsive dialog/drawer |
+| `error-states-ui` | 404/500 pages, error boundaries, empty states, offline indicators, retry patterns |
+| `skeleton-loading` | Skeleton primitives, Suspense boundaries, streaming SSR, shimmer animations |
+| `search-ui` | Search results, faceted filtering, autocomplete, highlighting, recent searches |
+| `rich-text-editor` | TipTap editor with toolbar, slash commands, bubble menu, Astro integration |
+
+### E-commerce & Payments
+| Skill | Description |
+|-------|-------------|
+| `ecommerce-ui` | Product cards, gallery, cart drawer, quantity selector, size picker |
+| `payment-ui` | Stripe Elements, order summary, saved payment methods, subscription management |
+
+### Content & CMS
+| Skill | Description |
+|-------|-------------|
+| `cms-integration` | Sanity, Contentful, Astro Content Collections, draft mode, webhook revalidation |
+
+### Maps & Location
+| Skill | Description |
+|-------|-------------|
+| `map-location` | Mapbox GL, store locator, address autocomplete, static map images |
+
+### Social Features
+| Skill | Description |
+|-------|-------------|
+| `social-features` | Threaded comments, reactions, share buttons, social proof widgets |
 
 ### Data & State
 | Skill | Description |
@@ -104,21 +146,22 @@ Sections are assigned to waves based on dependencies:
 | `anti-slop-design` | Eliminate generic AI aesthetics, create distinctive premium design |
 | `premium-dark-ui` | Surface hierarchy, glass morphism, glow effects, depth systems |
 | `premium-typography` | Distinctive font pairings, type scale, gradient text, fluid type |
-| `creative-sections` | Bento grids, 3D perspective heroes, scroll-driven storytelling, variable font animations, cursor effects, noise/grain |
+| `creative-sections` | Bento grids, 3D perspective heroes, scroll-driven storytelling, cursor effects |
 | `glow-neon-effects` | Neon glow, luminous borders, spotlight effects, ambient lighting |
 | `geometry-shapes` | SVG/CSS shapes, clip-path, blobs, section dividers, 3D transforms |
 
 ### Accessibility & i18n
 | Skill | Description |
 |-------|-------------|
-| `accessibility-patterns` | Focus management, keyboard navigation, screen reader, ARIA, skip links, color-blind safe |
-| `i18n-rtl` | next-intl, Astro i18n, RTL logical properties, language switcher, locale formatting |
+| `accessibility-patterns` | Focus management, keyboard navigation, screen reader, ARIA, skip links |
+| `i18n-rtl` | next-intl, Astro i18n, RTL logical properties, language switcher |
 
 ### SEO & Performance
 | Skill | Description |
 |-------|-------------|
-| `seo-meta` | Sitemaps (Google/Bing compliant), robots.txt, JSON-LD, Open Graph, IndexNow, GEO |
-| `performance-patterns` | Core Web Vitals, image optimization, font loading, code splitting, virtualization |
+| `seo-meta` | Sitemaps, robots.txt, JSON-LD, Open Graph, IndexNow, GEO |
+| `performance-patterns` | Core Web Vitals, image optimization, font loading, code splitting |
+| `image-asset-pipeline` | OG image generation, favicon sets, SVG optimization, blur placeholders |
 
 ### Testing
 | Skill | Description |
@@ -130,6 +173,31 @@ Sections are assigned to waves based on dependencies:
 |-------|-------------|
 | `mobile-patterns` | Bottom sheets, touch targets, safe areas, swipeable cards |
 | `mobile-navigation` | Tab bars, drawer menus, segmented controls, action sheets |
+
+### PWA & Offline
+| Skill | Description |
+|-------|-------------|
+| `pwa-patterns` | Service workers, install prompts, offline caching, push notifications |
+
+### Multi-tenant & SaaS
+| Skill | Description |
+|-------|-------------|
+| `multi-tenant-ui` | Organization switcher, tenant context, team management, feature gating |
+
+### Onboarding
+| Skill | Description |
+|-------|-------------|
+| `onboarding-tours` | Product tours, hotspot indicators, onboarding checklists |
+
+### Analytics
+| Skill | Description |
+|-------|-------------|
+| `analytics-tracking` | GA4, PostHog, Plausible, GDPR consent banners, conversion tracking |
+
+### Print & PDF
+| Skill | Description |
+|-------|-------------|
+| `print-pdf` | Print stylesheets, react-pdf invoice templates, PDF generation |
 
 ### Quality & Workflow
 | Skill | Description |
@@ -147,7 +215,7 @@ All skills include patterns for both frameworks:
 | Framework | Features |
 |-----------|----------|
 | **Next.js** | App Router, Server Components, Server Actions, Metadata API, next/image, next/font, next-intl |
-| **Astro** | Islands architecture, content collections, @astrojs/sitemap, ViewTransitions, i18n routing |
+| **Astro** | Islands architecture, Content Collections, View Transitions, hybrid rendering, Actions, middleware |
 
 ## License
 
