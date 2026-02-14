@@ -1,7 +1,7 @@
 {
   "name": "modulo",
-  "description": "Premium frontend design system with 40 skills, 7 commands, and 4 agents for creating 90k-quality websites. Covers UI patterns, SEO/GEO, accessibility, i18n, performance, testing, charts, drag-and-drop, real-time UI, and more. Works with Next.js and Astro.",
-  "version": "2.2.0",
+  "description": "Premium frontend design system with 59 skills, 9 commands, and 12 agents for creating 90k-quality websites. Covers UI patterns, e-commerce, payments, CMS, maps, social features, PWA, analytics, multi-tenant, onboarding, print/PDF, design tokens, SEO/GEO, accessibility, i18n, performance, testing, and more. Includes specialized agents for performance auditing, SEO optimization, accessibility compliance, responsive testing, Figma-to-code translation, component documentation, framework migration, and design system health. Works with Next.js and Astro.",
+  "version": "3.0.0",
   "author": {
     "name": "raphj"
   }
