@@ -1,9 +1,9 @@
 ---
 name: creative-sections
-description: "Creative, memorable UI sections that break conventions. Unique heroes, bento grids, interactive showcases, and sections that feel designed, not templated."
+description: "Creative, memorable UI sections that break conventions. Unique heroes, bento grids, interactive showcases, scroll-driven storytelling, variable font animations, Lottie, cursor-following, text splitting, noise/grain textures."
 ---
 
-Use this skill when the user wants creative design, unique sections, memorable UI, unconventional layouts, bento grid, interactive showcase, or asks for something that looks premium/unique/different.
+Use this skill when the user wants creative design, unique sections, memorable UI, unconventional layouts, bento grid, interactive showcase, scroll storytelling, text animation, grain texture, or asks for something that looks premium/unique/different. Triggers on: creative, unique, memorable, bento, showcase, scroll storytelling, text animation, grain, noise, cursor, Lottie, variable font.
 
 You are a creative director who designs sections that people screenshot and share. Every section must have a "wow" moment.
 
@@ -110,6 +110,210 @@ You are a creative director who designs sections that people screenshot and shar
 </div>
 ```
 
+## Scroll-Driven Storytelling
+
+```tsx
+// CSS scroll-driven animations (native, no JS)
+<section className="relative">
+  {/* Section that reveals on scroll */}
+  <div
+    className="opacity-0 translate-y-8"
+    style={{
+      animation: 'reveal linear both',
+      animationTimeline: 'view()',
+      animationRange: 'entry 0% entry 40%',
+    }}
+  >
+    <h2 className="text-4xl font-bold">Section Title</h2>
+    <p className="text-muted-foreground mt-4">Content that reveals as you scroll.</p>
+  </div>
+</section>
+
+// Add to globals.css:
+// @keyframes reveal { from { opacity: 0; transform: translateY(2rem); } to { opacity: 1; transform: translateY(0); } }
+
+// Horizontal scroll section
+<section className="overflow-hidden">
+  <div
+    className="flex gap-6 px-6"
+    style={{
+      animation: 'scrollX linear both',
+      animationTimeline: 'view()',
+      animationRange: 'contain 0% contain 100%',
+    }}
+  >
+    {cards.map(card => (
+      <div key={card.id} className="flex-shrink-0 w-80 rounded-2xl border p-6">
+        {card.content}
+      </div>
+    ))}
+  </div>
+</section>
+// @keyframes scrollX { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+```
+
+## Variable Font Animations
+
+```tsx
+// Weight animation on hover
+<h1
+  className="text-8xl tracking-[-0.04em] transition-all duration-500 cursor-default"
+  style={{ fontVariationSettings: '"wght" 400' }}
+  onMouseEnter={(e) => { e.currentTarget.style.fontVariationSettings = '"wght" 900' }}
+  onMouseLeave={(e) => { e.currentTarget.style.fontVariationSettings = '"wght" 400' }}
+>
+  Hover me
+</h1>
+
+// Per-character weight animation
+function AnimatedText({ text }: { text: string }) {
+  return (
+    <span className="inline-flex">
+      {text.split('').map((char, i) => (
+        <span
+          key={i}
+          className="inline-block transition-all duration-300 hover:font-black"
+          style={{ animationDelay: `${i * 30}ms` }}
+        >
+          {char === ' ' ? '\u00A0' : char}
+        </span>
+      ))}
+    </span>
+  )
+}
+```
+
+## Cursor-Following Effects
+
+```tsx
+'use client'
+import { useEffect, useRef } from 'react'
+
+function CursorGlow() {
+  const glowRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const handleMove = (e: MouseEvent) => {
+      if (glowRef.current) {
+        glowRef.current.style.left = `${e.clientX}px`
+        glowRef.current.style.top = `${e.clientY}px`
+      }
+    }
+    window.addEventListener('mousemove', handleMove)
+    return () => window.removeEventListener('mousemove', handleMove)
+  }, [])
+
+  return (
+    <div
+      ref={glowRef}
+      className="pointer-events-none fixed -translate-x-1/2 -translate-y-1/2 h-[300px] w-[300px] rounded-full bg-primary/10 blur-[80px] transition-all duration-200 ease-out z-0"
+    />
+  )
+}
+
+// Card with spotlight effect on hover
+function SpotlightCard({ children }: { children: React.ReactNode }) {
+  const cardRef = useRef<HTMLDivElement>(null)
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const card = cardRef.current
+    if (!card) return
+    const rect = card.getBoundingClientRect()
+    card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`)
+    card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`)
+  }
+
+  return (
+    <div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      className="relative rounded-2xl border border-white/[0.08] bg-[#111113] p-6 overflow-hidden group"
+    >
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-[radial-gradient(300px_circle_at_var(--mouse-x)_var(--mouse-y),rgba(255,255,255,0.06),transparent_40%)]" />
+      <div className="relative z-10">{children}</div>
+    </div>
+  )
+}
+```
+
+## Text Splitting & Reveal
+
+```tsx
+'use client'
+import { motion } from 'framer-motion'
+
+function SplitRevealText({ text }: { text: string }) {
+  const words = text.split(' ')
+
+  return (
+    <motion.p
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-100px' }}
+      className="text-4xl font-bold tracking-tight"
+    >
+      {words.map((word, i) => (
+        <motion.span
+          key={i}
+          variants={{
+            hidden: { opacity: 0, y: 20 },
+            visible: { opacity: 1, y: 0, transition: { delay: i * 0.08, duration: 0.5 } },
+          }}
+          className="inline-block mr-[0.25em]"
+        >
+          {word}
+        </motion.span>
+      ))}
+    </motion.p>
+  )
+}
+
+// Line-by-line reveal
+function LineReveal({ lines }: { lines: string[] }) {
+  return (
+    <div className="space-y-2">
+      {lines.map((line, i) => (
+        <motion.div
+          key={i}
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: i * 0.15, duration: 0.6 }}
+        >
+          <p className="text-lg text-muted-foreground">{line}</p>
+        </motion.div>
+      ))}
+    </div>
+  )
+}
+```
+
+## Noise / Grain Texture
+
+```css
+/* Add to globals.css */
+.noise-overlay {
+  position: relative;
+}
+.noise-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+}
+```
+
+```tsx
+// Usage
+<section className="noise-overlay bg-[#0a0a0f] py-24">
+  <div className="relative z-10 container mx-auto px-6">
+    {/* Content appears above the grain texture */}
+  </div>
+</section>
+```
+
 ## Interactive Showcase Sections
 
 ### Tabbed Feature Showcase
@@ -140,7 +344,7 @@ const [activeTab, setActiveTab] = useState(0)
         ))}
       </div>
 
-      {/* Content area with animated transition */}
+      {/* Content area */}
       <div className="rounded-2xl border border-white/[0.06] bg-[#111113] overflow-hidden aspect-video">
         {/* Feature screenshot/demo */}
       </div>
@@ -222,3 +426,9 @@ const [activeTab, setActiveTab] = useState(0)
 7. **Stats sections** work best with gradient text and `gap-px` borders
 8. **Tab-based showcases** beat static feature lists every time
 9. **Mix rounded corners** - `rounded-3xl` for containers, `rounded-xl` for inner elements
+10. **Scroll-driven animations**: Use native CSS `animation-timeline: view()` — zero JS, great performance
+11. **Variable font animations**: Weight transitions create premium feel on hover
+12. **Cursor effects**: Subtle glow following cursor adds interactivity without overwhelming
+13. **Grain texture**: SVG noise overlay at 5% opacity adds analog warmth to digital surfaces
+14. **Text splitting**: Reveal words/lines sequentially for dramatic reading experience
+15. **Respect reduced motion**: Wrap all animations in `motion-safe:` or check `prefers-reduced-motion`

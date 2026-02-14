@@ -1,6 +1,6 @@
 # modulo
 
-Premium design workflow system for Claude Code. 26 skills, 7 slash commands, and 4 agents for creating 90k-quality websites with wave-based parallel execution and goal-backward verification.
+Premium frontend design system for Claude Code. 40 skills, 7 slash commands, and 4 agents for creating 90k-quality websites with wave-based parallel execution and goal-backward verification. Works with **Next.js** and **Astro**.
 
 ## Installation
 
@@ -54,15 +54,16 @@ Sections are assigned to waves based on dependencies:
 | 2+ | Independent sections | Hero, features, pricing (parallel, max 4 per wave) |
 | Higher | Dependent sections | Sections that depend on other sections |
 
-## Skills (26)
+## Skills (40)
 
 ### Core Framework
 | Skill | Description |
 |-------|-------------|
 | `v0-ahh` | Core frontend design and UI implementation guidance |
-| `shadcn-components` | All shadcn/ui components, variants, and composition patterns |
+| `shadcn-components` | All shadcn/ui components, variants, composition patterns, multi-select, stepper, timeline, tree view, color picker |
 | `tailwind-patterns` | Advanced Tailwind CSS patterns, animations, gradients, glass effects |
 | `nextjs-app-router` | App Router conventions, layouts, server/client components, metadata |
+| `component-library-setup` | Design system bootstrap, Tailwind config, design tokens, Storybook, theming |
 
 ### UI Patterns
 | Skill | Description |
@@ -71,8 +72,24 @@ Sections are assigned to waves based on dependencies:
 | `responsive-layout` | Layout systems, grid patterns, bento grids, container queries |
 | `data-table` | TanStack Table + shadcn with sorting, filtering, pagination |
 | `auth-ui` | Login, signup, OTP, forgot password, social auth flows |
-| `dashboard-patterns` | Dashboard shells, stat cards, charts, command palette |
-| `landing-page` | Hero sections, pricing tables, testimonials, CTAs, footers |
+| `dashboard-patterns` | Dashboard shells, stat cards, settings pages, onboarding wizard, activity feeds, role-based UI, breadcrumbs |
+| `landing-page` | Hero sections, pricing tables, testimonials, CTAs, SaaS comparison, changelog, waitlist, trust signals |
+| `email-notification-ui` | Toast notifications (Sonner), alert banners, notification dropdowns, empty states, confirmation dialogs |
+
+### Data & State
+| Skill | Description |
+|-------|-------------|
+| `data-fetching` | TanStack Query, Server Actions, RSC async data, Astro content collections, optimistic updates |
+| `state-management` | Zustand stores, React Context, URL state (nuqs), Astro islands state sharing |
+| `chart-data-viz` | Recharts with shadcn styling, area/bar/donut charts, sparklines, accessible charts |
+
+### Interactive
+| Skill | Description |
+|-------|-------------|
+| `drag-and-drop` | dnd-kit: sortable lists, kanban boards, grid reorder, accessible drag-and-drop |
+| `file-upload-media` | Drag-drop zones, image crop, multi-file upload, video player, gallery/lightbox |
+| `real-time-ui` | WebSocket connections, presence indicators, streaming AI responses, notification badges |
+| `ai-chat-interface` | Streaming chat, message bubbles, code highlighting, model selector, typing indicators |
 
 ### Animation
 | Skill | Description |
@@ -87,9 +104,26 @@ Sections are assigned to waves based on dependencies:
 | `anti-slop-design` | Eliminate generic AI aesthetics, create distinctive premium design |
 | `premium-dark-ui` | Surface hierarchy, glass morphism, glow effects, depth systems |
 | `premium-typography` | Distinctive font pairings, type scale, gradient text, fluid type |
-| `creative-sections` | Bento grids, 3D perspective heroes, interactive showcases |
+| `creative-sections` | Bento grids, 3D perspective heroes, scroll-driven storytelling, variable font animations, cursor effects, noise/grain |
 | `glow-neon-effects` | Neon glow, luminous borders, spotlight effects, ambient lighting |
 | `geometry-shapes` | SVG/CSS shapes, clip-path, blobs, section dividers, 3D transforms |
+
+### Accessibility & i18n
+| Skill | Description |
+|-------|-------------|
+| `accessibility-patterns` | Focus management, keyboard navigation, screen reader, ARIA, skip links, color-blind safe |
+| `i18n-rtl` | next-intl, Astro i18n, RTL logical properties, language switcher, locale formatting |
+
+### SEO & Performance
+| Skill | Description |
+|-------|-------------|
+| `seo-meta` | Sitemaps (Google/Bing compliant), robots.txt, JSON-LD, Open Graph, IndexNow, GEO |
+| `performance-patterns` | Core Web Vitals, image optimization, font loading, code splitting, virtualization |
+
+### Testing
+| Skill | Description |
+|-------|-------------|
+| `testing-patterns` | Vitest, React Testing Library, a11y testing, MSW mocking, Playwright E2E |
 
 ### Mobile
 | Skill | Description |
@@ -105,6 +139,15 @@ Sections are assigned to waves based on dependencies:
 | `quality-standards` | 90k quality bar, quality tiers, three-level verification, gap closure |
 | `design-workflow` | Command flow, wave system, STATE.md format, agent coordination |
 | `plan-format` | PLAN.md format reference: frontmatter, task types, SUMMARY.md format |
+
+## Framework Support
+
+All skills include patterns for both frameworks:
+
+| Framework | Features |
+|-----------|----------|
+| **Next.js** | App Router, Server Components, Server Actions, Metadata API, next/image, next/font, next-intl |
+| **Astro** | Islands architecture, content collections, @astrojs/sitemap, ViewTransitions, i18n routing |
 
 ## License
 

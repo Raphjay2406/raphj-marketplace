@@ -1,9 +1,9 @@
 ---
 name: landing-page
-description: "Landing page patterns including hero sections, CTAs, feature grids, testimonials, pricing tables, and marketing layouts."
+description: "Landing page patterns including hero sections, CTAs, feature grids, testimonials, pricing tables, marketing layouts, SaaS patterns, changelog, waitlist, trust signals. Works with Next.js and Astro."
 ---
 
-Use this skill when the user mentions landing page, hero section, CTA, pricing page, features section, testimonials, marketing page, or homepage design.
+Use this skill when the user mentions landing page, hero section, CTA, pricing page, features section, testimonials, marketing page, homepage design, SaaS page, changelog, waitlist, or trust signals. Triggers on: landing page, hero, CTA, pricing, features, testimonials, marketing, homepage, SaaS, changelog, waitlist, trust.
 
 You are an expert at building high-converting, visually stunning landing pages.
 
@@ -170,6 +170,174 @@ const plans = [
 </section>
 ```
 
+## SaaS Comparison Table
+
+```tsx
+function ComparisonTable({ features, products }: ComparisonTableProps) {
+  return (
+    <section className="py-20">
+      <div className="container mx-auto px-4">
+        <h2 className="text-3xl font-bold tracking-tight text-center mb-12">How we compare</h2>
+        <div className="overflow-x-auto">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-[250px]">Feature</TableHead>
+                {products.map(p => (
+                  <TableHead key={p.name} className={cn("text-center", p.isUs && "bg-primary/5")}>
+                    {p.name} {p.isUs && <Badge className="ml-2">Us</Badge>}
+                  </TableHead>
+                ))}
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {features.map(feature => (
+                <TableRow key={feature.name}>
+                  <TableCell className="font-medium">{feature.name}</TableCell>
+                  {products.map(p => (
+                    <TableCell key={p.name} className={cn("text-center", p.isUs && "bg-primary/5")}>
+                      {feature.values[p.id] === true ? (
+                        <Check className="h-5 w-5 text-green-600 mx-auto" />
+                      ) : feature.values[p.id] === false ? (
+                        <X className="h-5 w-5 text-muted-foreground/30 mx-auto" />
+                      ) : (
+                        <span className="text-sm">{feature.values[p.id]}</span>
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      </div>
+    </section>
+  )
+}
+```
+
+## Integration Logos (Trust Bar)
+
+```tsx
+<section className="py-12 border-y">
+  <div className="container mx-auto px-4">
+    <p className="text-center text-sm text-muted-foreground mb-8">Trusted by teams at</p>
+    <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-6">
+      {logos.map(logo => (
+        <img
+          key={logo.name}
+          src={logo.src}
+          alt={logo.name}
+          className="h-8 opacity-40 grayscale hover:opacity-100 hover:grayscale-0 transition-all"
+        />
+      ))}
+    </div>
+  </div>
+</section>
+```
+
+## Changelog Section
+
+```tsx
+function Changelog({ entries }: { entries: ChangelogEntry[] }) {
+  return (
+    <section className="py-20">
+      <div className="container mx-auto px-4 max-w-3xl">
+        <h2 className="text-3xl font-bold tracking-tight mb-12">Changelog</h2>
+        <div className="space-y-12">
+          {entries.map(entry => (
+            <article key={entry.version} className="relative pl-8 border-l-2 border-muted">
+              <div className="absolute -left-[9px] top-0 h-4 w-4 rounded-full bg-primary" />
+              <div className="flex items-center gap-3 mb-3">
+                <Badge variant="outline">{entry.version}</Badge>
+                <time className="text-sm text-muted-foreground">{entry.date}</time>
+              </div>
+              <h3 className="text-xl font-semibold mb-2">{entry.title}</h3>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                {entry.changes.map((change, i) => (
+                  <li key={i} className="flex items-start gap-2">
+                    <Badge variant={change.type === 'new' ? 'default' : change.type === 'fix' ? 'secondary' : 'outline'} className="text-xs mt-0.5 flex-shrink-0">
+                      {change.type}
+                    </Badge>
+                    {change.description}
+                  </li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+```
+
+## Waitlist / Early Access
+
+```tsx
+function WaitlistSection() {
+  return (
+    <section className="py-20 bg-muted/50">
+      <div className="container mx-auto px-4 text-center">
+        <Badge variant="secondary" className="mb-4">Coming Soon</Badge>
+        <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">Get early access</h2>
+        <p className="text-muted-foreground max-w-md mx-auto mb-8">
+          Join 2,500+ people on the waitlist. Be the first to know when we launch.
+        </p>
+        <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+          <Input type="email" placeholder="Enter your email" className="flex-1" required />
+          <Button type="submit">Join Waitlist</Button>
+        </form>
+        <p className="mt-4 text-xs text-muted-foreground">No spam. Unsubscribe anytime.</p>
+      </div>
+    </section>
+  )
+}
+```
+
+## Interactive Demo Section
+
+```tsx
+function InteractiveDemo() {
+  const [activeFeature, setActiveFeature] = useState(0)
+
+  return (
+    <section className="py-20">
+      <div className="container mx-auto px-4">
+        <h2 className="text-3xl font-bold tracking-tight text-center mb-12">See it in action</h2>
+        <div className="grid lg:grid-cols-[1fr_1.5fr] gap-8 items-start">
+          <div className="space-y-2">
+            {demoFeatures.map((feature, i) => (
+              <button
+                key={i}
+                onClick={() => setActiveFeature(i)}
+                className={cn(
+                  "w-full text-left rounded-xl p-4 transition-all",
+                  activeFeature === i
+                    ? "bg-primary/10 border border-primary/20 shadow-sm"
+                    : "hover:bg-muted border border-transparent"
+                )}
+              >
+                <div className="flex items-center gap-3">
+                  <feature.icon className="h-5 w-5 text-primary" />
+                  <div>
+                    <p className="font-semibold text-sm">{feature.title}</p>
+                    <p className="text-xs text-muted-foreground mt-0.5">{feature.description}</p>
+                  </div>
+                </div>
+              </button>
+            ))}
+          </div>
+          <div className="rounded-2xl border overflow-hidden bg-muted/30 aspect-video">
+            <img src={demoFeatures[activeFeature].screenshot} alt={demoFeatures[activeFeature].title} className="w-full h-full object-cover" />
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+```
+
 ## Footer
 
 ```tsx
@@ -188,11 +356,36 @@ const plans = [
     </div>
     <Separator className="my-8" />
     <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
-      <p>&copy; 2026 Company. All rights reserved.</p>
+      <p>2026 Company. All rights reserved.</p>
       <div className="flex gap-4">{/* Social icons */}</div>
     </div>
   </div>
 </footer>
+```
+
+## Astro Landing Page
+
+```astro
+---
+// src/pages/index.astro — static landing page
+import Layout from '../layouts/Layout.astro'
+import { HeroSection } from '../components/HeroSection'
+import { WaitlistSection } from '../components/WaitlistSection'
+---
+
+<Layout title="Example — Build Amazing Products" description="The modern development platform.">
+  <HeroSection />
+
+  <!-- Static sections render as HTML — zero JS -->
+  <section class="py-20 bg-muted/50">
+    <div class="container mx-auto px-4">
+      <!-- Feature grid etc. -->
+    </div>
+  </section>
+
+  <!-- Interactive sections need client:load or client:visible -->
+  <WaitlistSection client:visible />
+</Layout>
 ```
 
 ## Best Practices
@@ -205,3 +398,8 @@ const plans = [
 6. Keep sections alternating between white and `bg-muted/50` backgrounds
 7. Use `container mx-auto px-4` consistently for content width
 8. All sections should be `py-20` for generous vertical spacing
+9. **Trust signals**: Logos, testimonials, stats — show social proof early
+10. **Comparison tables**: Show competitive advantages clearly with checkmarks
+11. **Changelog**: Timeline with version badges — shows the product is actively developed
+12. **Waitlist**: Email capture + social proof count + no-spam reassurance
+13. **Astro**: Use static rendering for content, islands for interactive elements
