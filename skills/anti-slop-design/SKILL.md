@@ -188,7 +188,7 @@ Study these design languages:
 
 Every design should feel like it belongs on Dribbble's Popular page, not in a template marketplace.
 
-## Concrete Anti-Slop Checklist
+## Concrete Anti-Slop Checklist (35-Point / 7-Category Gate)
 
 Run this checklist on every page/component before marking it done. Each "No" means rework needed.
 
@@ -227,20 +227,38 @@ Run this checklist on every page/component before marking it done. Each "No" mea
 - [ ] Transitions use appropriate easing (not all linear)
 - [ ] Motion has direction/story (elements come from a logical source)
 
-**Scoring:** 20+ = Premium | 18-19 = Good | 15-17 = Template-tier | Below 15 = Slop
+### Creative Courage (score /5) — NEW
+- [ ] At least one "impossible moment" — something that makes users think "how did they do that?"
+- [ ] At least one "stop-scrolling moment" — a wow interaction or visual that halts scroll
+- [ ] Bold implementation — the creative tension moment is genuinely bold, not timid
+- [ ] Originality — the page has something you haven't seen on another site this week
+- [ ] Screenshot-worthy — at least one section is worth screenshotting and sharing
+
+### UX Intelligence (score /5) — NEW
+- [ ] Navigation has visible current-page indicator
+- [ ] Interactive elements provide feedback within 100ms (active/hover states)
+- [ ] CTA hierarchy is clear — one primary per viewport, secondary is visually distinct
+- [ ] Micro-copy is outcome-driven — no "Submit", "Learn More", or "Click Here"
+- [ ] Content flow follows a logical visual pattern (F-pattern or Z-pattern)
+
+**Scoring:** 30+ = Premium | 25-29 = Good | 21-24 = Template-tier | Below 21 = Slop
 
 ### ENFORCEMENT (Mandatory Quality Gate)
 
 This checklist is enforced automatically by `/modulo:verify`. It is NOT advisory — it is a **hard gate**:
 
-- **Score 18+** = PASSED. The design meets the quality bar.
-- **Score 15-17** = **AUTOMATIC FAIL.** GAP-FIX.md plans generated for every failed item. Must iterate.
-- **Score below 15** = **AUTOMATIC FAIL.** Major rework required.
+- **Score 25+/35** = PASSED. The design meets the quality bar. (71% — same ratio as previous 18/25)
+- **Score 21-24** = **AUTOMATIC FAIL.** GAP-FIX.md plans generated for every failed item. Must iterate.
+- **Score below 21** = **AUTOMATIC FAIL.** Major rework required.
 
-**Additional penalties (applied on top of the 25-point score):**
+**SOTD-ready threshold:** 30/35+ indicates a site competitive for Awwwards Site of the Day.
+
+**Additional penalties (applied on top of the 35-point score):**
 - Missing Design DNA signature element = **-3 points**
 - Archetype forbidden pattern present = **-5 points**
 - Inter/Roboto/system-ui as display font = **-5 points** (unless archetype explicitly requires it)
+- No creative tension moment present = **-5 points**
+- "Submit" or "Learn More" on any button = **-2 points**
 
 **The anti-slop gate cannot be skipped or overridden.** If the output looks generic, it doesn't ship. Period.
 

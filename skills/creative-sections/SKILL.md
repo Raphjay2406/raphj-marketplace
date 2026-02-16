@@ -415,6 +415,59 @@ const [activeTab, setActiveTab] = useState(0)
 </div>
 ```
 
+## Light-Mode Variants
+
+For light-themed archetypes (Ethereal, Editorial, Organic, Luxury, Playful, Japanese Minimal, Swiss, Warm Artisan), reference the `light-mode-patterns` skill for equivalent depth and quality on light backgrounds. Key differences:
+
+- **Shadows replace glows** — use layered box-shadows instead of neon/glow effects
+- **Background tints replace dark surfaces** — warm off-whites (#faf9f6) instead of near-black
+- **Borders are lighter** — rgba(0,0,0,0.06) instead of rgba(255,255,255,0.06)
+- **Cards are white on tinted backgrounds** — elevation through background contrast
+- **Dark-fill buttons** work well in light mode — bg-[text-primary] text-white
+
+All section patterns above have light-mode equivalents in the `light-mode-patterns` skill with comparable depth and code quality.
+
+## Per-Archetype Pattern Recommendations
+
+| Archetype | Recommended Hero | Recommended Feature | Recommended Showcase |
+|-----------|-----------------|--------------------|--------------------|
+| **Neo-Corporate** | Split Hero (3D tilt) | Bento Grid | Tabbed Showcase |
+| **Brutalist** | Variable Font Hero | Exposed Grid | Before/After |
+| **Ethereal** | Magazine Split (light) | Asymmetric Image/Text | Pull Quote |
+| **Kinetic** | Centered Hero (grid bg) | Horizontal Scroll | Interactive Demo |
+| **Editorial** | Editorial Dramatic (light) | Magazine Grid | Pull Quote |
+| **Luxury** | Full-Bleed Image Hero | Magazine Split | Scroll Storytelling |
+| **Playful** | Centered Hero (animated) | Card Collection | Interactive Demo |
+| **Data-Dense** | Stats Hero (no traditional hero) | Dense Grid | Tabbed Showcase |
+| **Japanese Minimal** | Single Element + Space | Asymmetric Image/Text | Scroll Storytelling |
+| **Glassmorphism** | Centered Hero (glass) | Spotlight Grid | Glass Panel Layers |
+| **Neon Noir** | Neon Title Hero | Bento Grid (dark) | Terminal Demo |
+| **Organic** | Nature Visual Hero (light) | Card Collection (light) | Scroll Storytelling |
+| **Retro-Future** | Terminal Boot Hero | Code Blocks | Terminal Demo |
+| **Warm Artisan** | Craft Image Hero (light) | Magazine Grid (light) | Before/After |
+| **Swiss** | Typographic Statement | Grid Layout | Case Study List |
+| **Vaporwave** | Retro Splash | Window UI Grid | Interactive OS |
+
+## Beat-Type Compatibility Tags
+
+Each pattern works best with specific emotional beats:
+
+| Pattern | Compatible Beats |
+|---------|-----------------|
+| **Split Hero (3D tilt)** | HOOK |
+| **Centered Hero (grid bg)** | HOOK |
+| **Magazine Split Hero** | HOOK |
+| **Bento Grid** | BUILD, REVEAL |
+| **Marquee Logos** | TEASE, PROOF |
+| **Stats Section** | PROOF, TEASE |
+| **Tabbed Showcase** | BUILD, REVEAL |
+| **Before/After** | TENSION |
+| **Scroll-Driven Storytelling** | REVEAL, PEAK |
+| **Variable Font Animation** | HOOK, PEAK |
+| **Cursor-Following Glow** | BUILD, PEAK |
+| **Text Splitting Reveal** | HOOK, BREATHE |
+| **Noise/Grain Texture** | Any (as overlay) |
+
 ## Best Practices
 
 1. **Every section needs a unique visual hook** - don't repeat the same card pattern
