@@ -268,29 +268,12 @@ After EVERY wave completion, BEFORE spawning the next wave, perform a canary che
 
 ### Phase 5: Session Boundary
 
-If the session needs to end (context approaching limit, user pauses):
+If the session needs to end (context approaching limit, user pauses, canary failure, or 2-wave suggestion accepted):
 
-Write `.planning/modulo/.continue-here.md`:
-```markdown
-# Continue Here
-
-## Session ended during
-wave: [N]
-date: [ISO date]
-
-## Completed this session
-- [sections completed]
-
-## In progress
-- [section]: [status — what was done, what remains]
-
-## Resume instructions
-1. Read STATE.md for full status
-2. Resume wave [N] — [sections] still need building
-3. After wave [N], proceed to wave [N+1]
-```
-
-Update STATE.md with current progress.
+1. **Write/update CONTEXT.md** with full current state (using the template above)
+2. **Update STATE.md** with current progress
+3. **Delete legacy files** — Remove `.continue-here.md` and `.session-transfer.md` if they exist
+4. **Tell user:** "Session state saved to CONTEXT.md. Run `/modulo:execute resume` in a new session to continue from Wave [N]."
 
 ### Phase 6: All Waves Complete
 

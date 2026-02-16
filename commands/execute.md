@@ -201,11 +201,11 @@ Track the primary layout pattern used by each completed section. Maintain this i
 
 ## Rules
 
-1. **Always read STATE.md AND DESIGN-DNA.md first.** Never assume where execution left off or what the design language is.
+1. **Always read CONTEXT.md (or STATE.md + DESIGN-DNA.md) first.** Never assume where execution left off or what the design language is.
 2. **Respect wave order.** Never build a section before its dependencies are complete.
 3. **Max 4 parallel builders per wave.** If a wave has more than 4 sections, split into sub-waves.
 4. **Atomic commits per task.** Format: `feat(section-XX-name): task description`.
-5. **Write .continue-here.md on session boundaries.** The next session must be able to resume seamlessly.
+5. **Write CONTEXT.md on session boundaries.** The next session must be able to resume seamlessly from CONTEXT.md alone.
 6. **Don't skip checkpoints.** Human verification points exist for a reason.
 7. **Track everything in STATE.md.** Progress must be visible at all times.
 8. **Enforce layout diversity.** No adjacent sections with the same pattern. Minimum 3 patterns per page.
