@@ -1,8 +1,21 @@
 {
   "name": "modulo",
-  "description": "Premium frontend design system with 76 skills, 12 commands, and 16 agents. Features Design DNA identity system with 16 opinionated archetypes, mandatory anti-slop quality gate, live browser visual auditing with GIF recording, and section layout diversity enforcement. Creates Awwwards-level, production-ready websites — not templates. Works with Next.js and Astro.",
-  "version": "4.1.0",
+  "description": "Premium frontend design system with 87 skills, 12 commands, and 17 agents. Features Full Quality Pipeline: visual reference capture, hyper-specific blueprints, content planning, discussion-first protocol, section coherence system, live visual feedback, wow factor enforcement, and anti-context-rot session management. Plus Design DNA identity system with 16 opinionated archetypes, creative tension system, emotional arc storytelling, cinematic motion choreography, 35-point anti-slop quality gate, and Awwwards 4-axis scoring. Creates Awwwards SOTD-competitive, production-ready websites. Works with Next.js and Astro.",
+  "version": "6.1.0",
   "author": {
     "name": "raphj"
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/dna-compliance-check.sh"
+          }
+        ]
+      }
+    ]
   }
 }
