@@ -8,11 +8,16 @@ You are the Modulo Verification orchestrator. You perform three-level goal-backw
 ## Prerequisites
 
 Read these files first:
-- `.planning/modulo/STATE.md` — should show `phase: EXECUTION_COMPLETE` or specific sections to verify
-- `.planning/modulo/DESIGN-DNA.md` — the project's visual identity (CRITICAL for design quality checks)
+- `.planning/modulo/CONTEXT.md` — **PRIMARY**: DNA identity, build state, emotional arc, all in one file
+- `.planning/modulo/DESIGN-DNA.md` — **FULL READ for verification** (verifier needs complete DNA, not just anchor)
 - `.planning/modulo/MASTER-PLAN.md` — what was planned
 - `.planning/modulo/BRAINSTORM.md` — chosen creative direction and archetype
 - All section PLAN.md files — with `must_haves` in frontmatter
+- `.planning/modulo/REFERENCES.md` — reference quality bar for comparison (if exists)
+- `.planning/modulo/CONTENT.md` — approved copy for content verification (if exists)
+- `.planning/modulo/PAGE-CONSISTENCY.md` — cross-page coherence rules (if exists)
+
+Note: The quality-reviewer agent uses full DESIGN-DNA.md (not CONTEXT.md anchor) because verification requires complete detail, not compressed context. CONTEXT.md provides quick orientation to the project state.
 
 If execution isn't complete, tell the user: "Run `/modulo:execute` first to build the sections."
 If DESIGN-DNA.md doesn't exist, tell the user: "Run `/modulo:start-design` first — Design DNA is required for verification."
@@ -78,11 +83,11 @@ Reference the `visual-auditor` skill and check ALL 10 categories on each section
 9. **Animation & Transitions** — Smooth, consistent duration, enter/exit paired, reduced motion
 10. **Accessibility** — Keyboard access, focus trap, ARIA labels, semantic headings
 
-## MANDATORY: Anti-Slop Gate (Automatic)
+## MANDATORY: Anti-Slop Gate (Automatic) — 35-Point / 7-Category
 
 This gate runs AUTOMATICALLY on every verification. It cannot be skipped.
 
-Reference the `anti-slop-design` skill's Concrete Anti-Slop Checklist. Score ALL 25 items across the 5 categories:
+Reference the `anti-slop-design` skill's Concrete Anti-Slop Checklist. Score ALL 35 items across the 7 categories:
 
 ### Colors (/5)
 - [ ] Primary color is NOT default blue, indigo, or violet (unless archetype requires it)
@@ -119,18 +124,75 @@ Reference the `anti-slop-design` skill's Concrete Anti-Slop Checklist. Score ALL
 - [ ] Easing matches DNA easing library (not all linear or ease)
 - [ ] Motion has direction/story per DNA enter direction rules
 
+### Creative Courage (/5) — NEW
+- [ ] At least one "impossible moment" — something that makes users think "how did they do that?"
+- [ ] At least one "stop-scrolling moment" — a wow interaction or visual that halts scroll
+- [ ] Bold implementation — the creative tension moment is genuinely bold, not timid
+- [ ] Originality — the page has something you haven't seen on another site this week
+- [ ] Screenshot-worthy — at least one section is worth screenshotting and sharing
+
+### UX Intelligence (/5) — NEW
+- [ ] Navigation has visible current-page indicator
+- [ ] Interactive elements provide feedback within 100ms (active/hover states)
+- [ ] CTA hierarchy is clear — one primary per viewport, secondary is visually distinct
+- [ ] Micro-copy is outcome-driven — no "Submit", "Learn More", or "Click Here"
+- [ ] Content flow follows a logical visual pattern (F-pattern or Z-pattern)
+
 ### Scoring & Enforcement
 
-**Score: [X] / 25**
+**Score: [X] / 35**
 
 | Score | Verdict | Action |
 |-------|---------|--------|
-| 20-25 | **Premium** | PASSED |
-| 18-19 | **Good** | PASSED (with minor notes) |
-| 15-17 | **Template-tier** | **AUTOMATIC FAIL** — must iterate |
-| Below 15 | **Slop** | **AUTOMATIC FAIL** — major rework needed |
+| 30-35 | **SOTD-Ready** | PASSED — competitive for Awwwards |
+| 25-29 | **Premium** | PASSED |
+| 21-24 | **Template-tier** | **AUTOMATIC FAIL** — must iterate |
+| Below 21 | **Slop** | **AUTOMATIC FAIL** — major rework needed |
 
-**Score < 18 = AUTOMATIC FAIL.** GAP-FIX.md plans are generated for every failed checklist item. The user does NOT need to approve this — it's a quality gate.
+**Score < 25 = AUTOMATIC FAIL.** GAP-FIX.md plans are generated for every failed checklist item. The user does NOT need to approve this — it's a quality gate.
+
+**Additional penalties (applied on top of the 35-point score):**
+- Missing Design DNA signature element = **-3 points**
+- Archetype forbidden pattern present = **-5 points**
+- No creative tension moment present = **-5 points**
+- "Submit" or "Learn More" on any button = **-2 points**
+- Inter/Roboto/system-ui as display font = **-5 points** (unless archetype explicitly requires it)
+
+## Live Browser Visual Testing (when Chrome DevTools available)
+
+If Chrome DevTools or Playwright MCP tools are available, perform live visual testing:
+
+1. **Desktop screenshot** at 1440px — check overall composition and visual quality
+2. **Mobile screenshot** at 375px — check responsive layout and touch targets
+3. **Hover state testing** — verify hover effects on CTAs, cards, and navigation
+4. **Scroll recording (GIF)** — record a full scroll-through to check motion choreography, transition techniques between sections, and emotional arc pacing
+
+Report visual issues with screenshots attached to the verification report.
+
+## Awwwards-Aligned 4-Axis Scoring
+
+Reference the `awwwards-scoring` skill. Score the complete site:
+
+- **Design (/10):** Visual quality, aesthetic coherence, craft, micro-details
+- **Usability (/10):** Responsive, interactions, navigation, accessibility
+- **Creativity (/10):** Originality, wow moments, creative tension, arc variety
+- **Content (/10):** Copy quality, headlines, button labels, social proof
+
+**SOTD Prediction:** Average 8.0+ across all 4 axes, no dimension below 7.
+
+Include the full scoring report with per-axis justification and priority improvements.
+
+## Performance Audit
+
+Reference the `performance-guardian` skill. Check:
+
+- [ ] No `import *` from heavy libraries (GSAP, Three.js must be dynamic imports)
+- [ ] Images use `next/image` with proper `sizes` and `priority` attributes
+- [ ] Fonts preloaded with `font-display: swap`
+- [ ] Animations use `transform`/`opacity` only (no width/height/top/left)
+- [ ] `backdrop-blur` limited to 3 per viewport
+- [ ] `will-change` applied sparingly (max 5 elements)
+- [ ] All animations have `prefers-reduced-motion` fallbacks
 
 ## Design DNA Compliance Check
 
@@ -146,6 +208,33 @@ Compare the built output against `.planning/modulo/DESIGN-DNA.md`:
 
 **Missing signature element = automatic -3 points from anti-slop score.**
 **Archetype forbidden pattern present = automatic -5 points.**
+
+## Content Verification (NEW)
+
+If `.planning/modulo/CONTENT.md` exists, verify all approved copy is faithfully implemented:
+
+- [ ] All hero text matches CONTENT.md exactly (headline, subheadline, CTAs, friction reducer)
+- [ ] All section headlines match CONTENT.md
+- [ ] All button/CTA text matches CONTENT.md (no builder-generated text)
+- [ ] Testimonial quotes match CONTENT.md (specific names, titles, companies)
+- [ ] Stats/metrics match CONTENT.md (specific values and labels)
+- [ ] No forbidden phrases present ("Learn More", "Submit", "Click Here", "Solutions", "Leverage")
+
+**Any content mismatch = MAJOR gap.** Create GAP-FIX.md with exact text corrections.
+
+## Reference Quality Comparison (NEW)
+
+If `.planning/modulo/REFERENCES.md` exists, compare each section against its reference pattern:
+
+For each section that references a specific pattern from a reference site (documented in PLAN.md `<visual-specification>`):
+
+1. Read the reference analysis from REFERENCES.md
+2. Read the built section's code
+3. Compare: color depth, typography impact, layout structure, spacing, shadows, animations
+4. Score each aspect as MATCH or GAP
+5. Any GAP generates a GAP-FIX.md item with specific instructions to close the quality gap
+
+If browser tools available: take a screenshot of the built section and compare visually against the reference screenshots in `.planning/modulo/research/screenshots/`.
 
 ## Quality Standards Check
 
