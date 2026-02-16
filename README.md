@@ -12,7 +12,7 @@ claude plugin marketplace add https://github.com/Raphjay2406/raphj-marketplace
 
 | Plugin | Skills | Commands | Agents | Description |
 |--------|--------|----------|--------|-------------|
-| `modulo` | 25 | 4 | 3 | Premium design workflow system — guided multi-phase design, 90k-quality output |
+| `modulo` | 87 | 13 | 17 | Premium frontend design system (v6.1.0) — Full Quality Pipeline, 6-layer Context Rot Prevention, Design DNA, 16 archetypes, 35-point anti-slop gate, Awwwards 4-axis scoring. Creates SOTD-competitive websites. Next.js + Astro. |
 | `wavy-bavy` | 1 | — | — | Integrate the wavy-bavy library for seamless wave transitions between page sections |
 
 ## Install a Plugin

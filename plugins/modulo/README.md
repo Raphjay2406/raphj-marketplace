@@ -1,6 +1,6 @@
 # modulo
 
-Premium frontend design system for Claude Code. 76 skills, 12 slash commands, and 16 agents for creating Awwwards-level websites with Design DNA identity system, 16 opinionated archetypes, mandatory anti-slop quality gate, live browser visual auditing with GIF recording, and section layout diversity enforcement. Works with **Next.js** and **Astro**.
+Premium frontend design system for Claude Code. 87 skills, 13 slash commands, and 17 agents for creating Awwwards SOTD-competitive websites with Full Quality Pipeline (visual reference capture, hyper-specific blueprints, content planning, discussion-first protocol, section coherence, live visual feedback, wow factor enforcement), 6-layer Context Rot Prevention (pre-commit hooks, CONTEXT.md anchoring, pre-extracted spawn prompts, canary checks, session boundaries, baked-in rules), Design DNA identity system, 16 opinionated archetypes, creative tension system, emotional arc storytelling, cinematic motion choreography, 35-point anti-slop quality gate, Awwwards 4-axis scoring, UX intelligence patterns, wow moment library, and section layout diversity enforcement. Works with **Next.js** and **Astro**.
 
 ## Installation
 
@@ -10,26 +10,45 @@ claude plugin marketplace add https://github.com/Raphjay2406/raphj-marketplace
 claude plugin install modulo@raphj-marketplace
 ```
 
-## What Makes v4.1 Different
+## What's New in v6.1 — Context Rot Prevention
 
-**The problem:** AI-generated frontends all look the same — blue gradients, Inter font, symmetric grids, generic everything.
+**The problem:** AI agents lose design fidelity during long build sessions. By wave 4+, fonts drift, colors shift, spacing becomes inconsistent, and sections feel like different designers made them. Previous mitigations (80% rule, `.continue-here.md`) were reactive and advisory.
 
-**The solution:** Four interlocking quality systems that force unique, bold, project-specific design:
+**The solution:** A 6-layer context rot prevention system with zero context window cost for most layers:
 
-1. **Design DNA** — Every project gets a unique `DESIGN-DNA.md` with locked color tokens, fonts, spacing, signature element, and motion language. Section builders MUST reference it.
-2. **16 Design Archetypes** — Opinionated personality systems (Brutalist, Ethereal, Kinetic, Editorial, Neo-Corporate, Organic, Retro-Future, Luxury/Fashion, Playful/Startup, Data-Dense, Japanese Minimal, Glassmorphism, Neon Noir, Warm Artisan, Swiss/International, Vaporwave) plus a custom archetype builder. Each locks in specific colors, fonts, mandatory techniques, and forbidden patterns.
-3. **Mandatory Anti-Slop Gate** — 25-point scoring checklist enforced during `/modulo:verify`. Score < 18/25 = automatic fail. Cannot be skipped.
-4. **Section Layout Diversity** — No adjacent sections may share the same layout pattern. Minimum 3 distinct patterns per page.
+| Layer | Mechanism | Context Cost |
+|-------|-----------|-------------|
+| **L0** | Pre-commit DNA compliance hook — greps staged files for anti-slop violations | Zero (shell script) |
+| **L1** | CONTEXT.md — single source of truth rewritten after every wave | Low (~50 lines) |
+| **L2** | Pre-extracted spawn prompts — builders get Complete Build Context, read only PLAN.md | Amortized |
+| **L3** | Canary checks — 5 self-test questions from memory after each wave | Minimal |
+| **L4** | 2-wave session boundaries — proactive session rotation | Zero (policy) |
+| **L5** | Baked-in rules — beat params, performance rules, anti-slop checks embedded in agent files | Zero |
 
-Plus: **Live Visual Audit** via Chrome MCP — records GIFs of scroll, hover, and page load animations for motion quality verification.
+**Result:** Builders read 1 file instead of 6+. Sessions stay sharp through wave 5+. Quality drift is detected automatically.
 
-## Commands (12)
+## What Made v6.0 Different
+
+The Full Quality Pipeline — 8 systems on top of the existing 7:
+
+1. **Visual Reference System** — Browser-assisted screenshot capture of reference sites, pattern extraction, and quality bar comparison throughout the pipeline
+2. **Hyper-Specific Blueprints** — PLAN.md files with ASCII layout diagrams, exact Tailwind classes per element, exact copy, exact animation sequences, and inline wow moment code
+3. **Content Planning** — Dedicated content phase with all copy written and user-approved before any section building
+4. **Discussion-First Protocol** — Mandatory user approval before ANY code change. No autonomous modifications. Every change presented with exact diff preview.
+5. **Section Coherence System** — Page context snapshots, cross-section visual rules, background progression planning, and coherence checkpoints between waves
+6. **Live Visual Feedback** — Post-build screenshots, wave scroll-through GIFs, and before/after comparisons for iterate/bugfix
+7. **Wow Factor Enforcement** — Full TSX code embedded in plans (not just references), wow moment minimums (3-5 per page), and boldness verification
+8. **Anti-Context-Rot** — Task-level DNA checkpoints, plan mutation protocol, file-based context architecture
+
+Plus the core 7 systems: Design DNA, 16 Archetypes, Creative Tension, Emotional Arc, Cinematic Motion, Anti-Slop Gate, Awwwards Scoring.
+
+## Commands (13)
 
 | Command | Description |
 |---------|-------------|
 | `/modulo:start-design` | Start a new project: discovery, parallel research, archetype selection, Design DNA generation |
 | `/modulo:plan-sections` | Create section plans with wave assignments and GSD execution format |
-| `/modulo:execute` | Execute the design wave by wave with parallel section builders + layout diversity enforcement |
+| `/modulo:execute` | Execute the design wave by wave with parallel section builders + CONTEXT.md session management |
 | `/modulo:verify` | Three-level verification + mandatory anti-slop gate + Design DNA compliance check |
 | `/modulo:visual-audit` | Live browser visual audit with GIF recording of scroll, hover, and animations |
 | `/modulo:iterate` | Iterate on existing design using gap-fix plans or manual feedback |
@@ -39,28 +58,30 @@ Plus: **Live Visual Audit** via Chrome MCP — records GIFs of scroll, hover, an
 | `/modulo:responsive-check` | Systematic responsive verification at all breakpoints |
 | `/modulo:generate-tests` | Generate comprehensive test suites (Vitest + RTL + Playwright E2E) |
 | `/modulo:lighthouse` | Lighthouse performance audit with build analysis and Core Web Vitals |
+| `/modulo:update` | Show changelog, what's new, and migration notes for the current version |
 
 ## Workflow
 
 ```
 start-design → plan-sections → execute → verify → visual-audit → iterate (if needed)
-                                                 ↘ audit / responsive-check
-                                                 ↘ generate-tests / lighthouse
+                                  ↕ CONTEXT.md        ↘ audit / responsive-check
+                            (session resume)           ↘ generate-tests / lighthouse
 ```
 
-1. **Start Design** — Discovery questioning, parallel research (4 tracks), archetype selection, Design DNA generation
-2. **Plan Sections** — Break into sections with wave assignments, GSD frontmatter, user approval per section
-3. **Execute** — Wave-based parallel implementation (max 4 builders per wave), DNA enforcement, layout diversity tracking
-4. **Verify** — Three-level verification (Existence → Substantive → Wired) + anti-slop gate + DNA compliance
-5. **Visual Audit** — Live browser GIF recording of scroll, hover, and animations with 25-point scoring
+1. **Start Design** — Discovery, parallel research, **visual reference capture**, archetype selection, Design DNA, **content planning**
+2. **Plan Sections** — Break into sections with wave assignments, emotional beat assignment, wow moment assignment, creative tension placement, transition techniques, GSD frontmatter, user approval per section
+3. **Execute** — Wave-based parallel implementation (max 4 builders per wave), DNA enforcement, beat compliance, choreography compliance, performance compliance, layout diversity tracking
+4. **Verify** — Three-level verification (Existence → Substantive → Wired) + 35-point anti-slop gate + DNA compliance + UX pattern check + Awwwards 4-axis scoring + performance audit + live browser testing
+5. **Visual Audit** — Live browser GIF recording of scroll, hover, and animations with visual scoring
 6. **Iterate** — Targeted fixes from verification gaps or user feedback
 
-## Agents (16)
+## Agents (17)
 
 | Agent | Role | Description |
 |-------|------|-------------|
-| `design-lead` | Orchestrator | Wave-based execution, spawns parallel builders, manages STATE.md, enforces layout diversity |
-| `section-builder` | Builder | Executes PLAN.md tasks, reads Design DNA FIRST, pauses at checkpoints, writes SUMMARY.md |
+| `discussion-protocol` | Protocol | Mandatory discussion-before-action rules for all code-modifying commands |
+| `design-lead` | Orchestrator | Wave-based execution, spawns parallel builders with pre-extracted context, manages STATE.md + CONTEXT.md, canary checks, 2-wave session boundaries |
+| `section-builder` | Builder | Executes PLAN.md tasks (reads only PLAN.md — all context pre-extracted in spawn prompt), pauses at checkpoints, embedded beat/performance/anti-slop rules |
 | `quality-reviewer` | Verifier | Three-level verification + mandatory anti-slop gate + DNA compliance check |
 | `design-researcher` | Researcher | Parallel research agent for one track (trends, references, components, animations) |
 | `visual-auditor-live` | Auditor | Live browser visual audit with Chrome MCP — GIF recording of scroll, hover, animations |
@@ -87,6 +108,10 @@ Every project gets a unique `DESIGN-DNA.md` generated from the chosen archetype:
 - **Signature Element** — One unique visual hook that makes the site memorable
 - **Motion Language** — Easing library, enter/exit/hover/scroll defaults
 - **Texture & Effects** — Grain, glow, glass, noise, gradients
+- **Tension Plan** — 2-3 creative tensions from archetype's aggressive zones, assigned to specific sections
+- **Emotional Arc Template** — Archetype-specific default beat sequence and transition pattern
+- **Choreography Defaults** — Per-beat motion choreography (direction, easing, duration, stagger)
+- **Scaffold Specification** — Wave 0 code generation templates (globals.css, tailwind.config, motion presets)
 
 Section builders read DNA before writing any code. The verify command checks every section against it.
 
@@ -111,21 +136,23 @@ Section builders read DNA before writing any code. The verify command checks eve
 | Swiss/International | Grid-perfect, Helvetica heritage, systematic | Swisscom, Dieter Rams |
 | Vaporwave | Retrowave, pink/purple/cyan, glitch aesthetic | Poolsuite, A E S T H E T I C |
 
-Each archetype includes locked palette, required fonts, mandatory techniques, and forbidden patterns. Custom archetypes can be built using the archetype builder template.
+Each archetype includes locked palette, required fonts, mandatory techniques, forbidden patterns, and 3 aggressive tension zones for creative risk-taking. Custom archetypes can be built using the archetype builder template.
 
 ## Anti-Slop Gate
 
-25-point mandatory quality checklist scored during `/modulo:verify`:
+35-point mandatory quality checklist across 7 categories scored during `/modulo:verify`:
 
 | Category | Items |
 |----------|-------|
-| Colors | Primary not default, unexpected accent, purposeful gradients, background depth, hand-tuned dark mode |
-| Typography | Distinctive display font, 3+ weights, tuned letter-spacing, varied line-heights, typographic surprise |
-| Layout | Grid broken, spacing varied, 3+ hierarchy levels, intentional negative space, unexpected positioning |
-| Depth & Polish | Layered shadows, subtle borders, glass/blur, varied border-radius, micro-details |
-| Motion | Staggered timing, distinct hovers, scroll-triggered, appropriate easing, directional motion |
+| Colors (/5) | Primary not default, unexpected accent, purposeful gradients, background depth, hand-tuned dark mode |
+| Typography (/5) | Distinctive display font, 3+ weights, tuned letter-spacing, varied line-heights, typographic surprise |
+| Layout (/5) | Grid broken, spacing varied, 3+ hierarchy levels, intentional negative space, unexpected positioning |
+| Depth & Polish (/5) | Layered shadows, subtle borders, glass/blur, varied border-radius, micro-details |
+| Motion (/5) | Staggered timing, distinct hovers, scroll-triggered, appropriate easing, directional motion |
+| Creative Courage (/5) | Impossible moment, stop-scrolling moment, bold implementation, originality, screenshot-worthy |
+| UX Intelligence (/5) | Nav current indicator, interactive feedback <100ms, CTA hierarchy, outcome-driven micro-copy, logical content flow |
 
-**Score 18+ = PASS. Score < 18 = AUTOMATIC FAIL.** Additional penalties: missing signature element (-3), archetype forbidden pattern (-5).
+**Score 25+ = PASS. Score 30+ = SOTD-Ready. Score < 25 = AUTOMATIC FAIL.** Additional penalties: missing signature element (-3), archetype forbidden pattern (-5), no creative tension (-5), "Submit"/"Learn More" copy (-2), Inter/Roboto as display font (-5).
 
 ## Wave System
 
@@ -133,12 +160,12 @@ Sections are assigned to waves based on dependencies:
 
 | Wave | Purpose | Example |
 |------|---------|---------|
-| 0 | Scaffold & tokens | Tailwind config, CSS variables, shared utilities |
+| 0 | Scaffold & tokens | Tailwind config, CSS variables, shared utilities (generated from Design DNA via design-system-scaffold) |
 | 1 | Shared UI | Navigation, footer, theme provider |
 | 2+ | Independent sections | Hero, features, pricing (parallel, max 4 per wave) |
 | Higher | Dependent sections | Sections that depend on other sections |
 
-## Skills (76)
+## Skills (87)
 
 ### Core Framework
 | Skill | Description |
@@ -151,11 +178,30 @@ Sections are assigned to waves based on dependencies:
 | `astro-patterns` | Islands architecture, View Transitions, Content Collections, hybrid rendering, Actions, middleware |
 | `design-tokens-sync` | Style Dictionary pipeline, Figma token sync, multi-theme token sets |
 
-### Design Identity (NEW in v4.1)
+### Design Identity
 | Skill | Description |
 |-------|-------------|
-| `design-dna` | Design DNA format spec — unique per-project visual identity with locked tokens, signature element, motion language |
-| `design-archetypes` | 16 opinionated personality archetypes + custom archetype builder, each with locked palette, fonts, mandatory techniques, forbidden patterns |
+| `design-dna` | Design DNA format spec — unique per-project visual identity with locked tokens, signature element, motion language, tension plan, emotional arc, choreography defaults |
+| `design-archetypes` | 16 opinionated personality archetypes + custom archetype builder, each with locked palette, fonts, mandatory techniques, forbidden patterns, and 3 aggressive tension zones |
+
+### Creative Engine (NEW in v5.0)
+| Skill | Description |
+|-------|-------------|
+| `creative-tension` | 5 tension levels with per-archetype aggressive tensions (3 per archetype), controlled rule-breaking patterns |
+| `emotional-arc` | 10 beat types with measurable parameters, archetype-specific arc templates, 6 transition techniques, valid/invalid sequence rules |
+| `cinematic-motion` | 10-direction motion vocabulary, frame-by-frame choreography, multi-layer hover patterns, 9 scroll patterns with full code |
+| `wow-moments` | 30+ signature interaction patterns: cursor-responsive, scroll-responsive, interactive, ambient — with archetype/beat compatibility |
+| `awwwards-scoring` | 4-axis rubric (Design, Usability, Creativity, Content /10), SOTD prediction, competitive benchmark process |
+| `light-mode-patterns` | Full-depth light-mode patterns: editorial heroes, magazine grids, product showcase, e-commerce, agency/portfolio |
+| `design-system-scaffold` | Wave 0 code generation templates: globals.css, tailwind.config.ts, lib/motion.ts, section-wrapper.tsx from Design DNA |
+
+### UX & Content Intelligence (NEW in v5.0)
+| Skill | Description |
+|-------|-------------|
+| `ux-patterns` | Navigation intelligence, form intelligence, feedback timing, content discovery patterns |
+| `micro-copy` | Headline templates per beat, button copy rules (banned words), empty/error state copy, CTA + social proof integration |
+| `conversion-patterns` | Social proof placement, CTA hierarchy, friction reduction, cognitive load management, pricing table best practices |
+| `performance-guardian` | Performance budgets (LCP, FID, CLS, TBT), font/image/animation rules, code splitting, bundle monitoring |
 
 ### UI Patterns
 | Skill | Description |
@@ -241,10 +287,10 @@ Sections are assigned to waves based on dependencies:
 ### Design Philosophy
 | Skill | Description |
 |-------|-------------|
-| `anti-slop-design` | Mandatory anti-slop gate with 25-point scoring, enforcement rules, and automatic penalties |
+| `anti-slop-design` | 35-point / 7-category anti-slop gate with Creative Courage and UX Intelligence categories, SOTD-ready threshold at 30+, automatic penalties |
 | `premium-dark-ui` | Surface hierarchy, glass morphism, glow effects, depth systems |
 | `premium-typography` | Font pairings, type scale systems, gradient text, fluid type, spacing rules |
-| `creative-sections` | Bento grids, 3D heroes, scroll-driven storytelling, cursor effects, section recipes, accessibility |
+| `creative-sections` | Bento grids, 3D heroes, scroll-driven storytelling, cursor effects, section recipes, light-mode variants, per-archetype recommendations, beat-type compatibility tags |
 | `glow-neon-effects` | Neon glow effects, luminous borders, spotlight effects, design system integration, performance notes |
 | `geometry-shapes` | SVG/CSS shapes, clip-path, blobs, section dividers, performance guide |
 
@@ -311,6 +357,18 @@ Sections are assigned to waves based on dependencies:
 | `quality-standards` | 90k quality bar, quality tiers, three-level verification, gap closure, 4 interlocking quality systems |
 | `design-workflow` | Command flow, wave system, STATE.md format, agent coordination, Design DNA, archetypes |
 | `plan-format` | PLAN.md format reference: frontmatter, task types, SUMMARY.md format |
+
+## Planning Artifacts
+
+| Artifact | Purpose |
+|----------|---------|
+| `CONTEXT.md` | **NEW v6.1** — Single source of truth for context recovery. DNA anchor, build state, arc position, next instructions. Rewritten after every wave. Replaces `.continue-here.md` and `.session-transfer.md`. |
+| `CONTENT.md` | All approved page copy — no builder-generated text |
+| `REFERENCES.md` | Reference site analysis with pattern extraction |
+| `research/screenshots/` | Reference site screenshots for quality comparison |
+| `PAGE-CONSISTENCY.md` | Cross-page coherence rules (multi-page projects) |
+| `sections/XX/screenshots/` | Built section screenshots for visual feedback |
+| `progress/` | Wave scroll-through GIFs |
 
 ## Framework Support
 

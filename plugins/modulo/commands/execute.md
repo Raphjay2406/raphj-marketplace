@@ -17,12 +17,30 @@ Read these files first:
 If STATE.md doesn't exist or planning isn't complete, tell the user: "Run `/modulo:plan-sections` first to create section plans."
 If DESIGN-DNA.md doesn't exist, tell the user: "Run `/modulo:start-design` first — Design DNA is required before execution."
 
-## Session Resumption
+## MANDATORY: Discussion-First Protocol
 
-If `$ARGUMENTS` contains "resume" or `.planning/modulo/.continue-here.md` exists:
-1. Read `.continue-here.md` for context on where the previous session stopped
-2. Read STATE.md to find the current wave and section statuses
-3. Resume from the interrupted point — don't restart completed work
+Before modifying ANY file in the target project, you MUST follow the Discussion-Before-Action protocol defined in `agents/discussion-protocol.md`. This means:
+
+- **Before spawning any wave:** Present a summary of all sections in the wave (name, beat type, key visual element, files to create) and wait for user approval.
+- **After each section completes:** Present the section's SUMMARY.md and screenshots (if browser tools available) before marking it complete.
+- **Before advancing to next wave:** Confirm with user that the current wave output is acceptable.
+- **No autonomous wave advancement.** Every wave transition requires user awareness.
+
+## Session Resumption (Boot Protocol)
+
+If `$ARGUMENTS` contains "resume" or `.planning/modulo/CONTEXT.md` exists with a non-COMPLETE phase:
+
+**Structured Session Boot Sequence:**
+1. Read `.planning/modulo/CONTEXT.md` — This single file has everything: DNA identity, build state, latest wave results, and next instructions.
+2. Read next wave's section PLAN.md files (paths listed in CONTEXT.md "Next Wave Instructions")
+3. Run Canary Check — Answer from memory, then verify against CONTEXT.md:
+   - Display font? Accent-1 hex? Forbidden patterns? Layouts used? Next beat type?
+4. Present wave summary to user (discussion-first protocol)
+5. Begin building
+
+**Legacy fallback:** If CONTEXT.md doesn't exist but `.continue-here.md` or `.session-transfer.md` does, read those instead. Then generate CONTEXT.md from their contents + STATE.md for future sessions.
+
+**Total reads to resume: 2-4 files.** No exploration needed. No redundant reads.
 
 ## Execution Process
 
@@ -40,6 +58,17 @@ For the current wave:
 1. **Identify sections** in this wave from MASTER-PLAN.md
 2. **Check dependencies** — verify all sections in previous waves are `COMPLETE`
 3. **Update STATE.md** — mark current wave sections as `IN_PROGRESS`
+4. **Present Wave Plan to User:**
+   ```
+   ## Wave [N] — Ready to Build
+
+   | Section | Beat | Key Visual | Files |
+   |---------|------|-----------|-------|
+   | [name] | [beat] | [1-line description] | [file paths] |
+
+   Proceed with Wave [N]?
+   ```
+   Wait for user approval before spawning builders.
 
 #### Spawn Parallel Builders
 
@@ -90,35 +119,37 @@ When ALL sections in the current wave are `COMPLETE`:
    ```
 3. Go to Step 2 for the next wave
 
+### Session Boundary Check (after wave completion)
+
+After completing a wave:
+
+1. **Rewrite CONTEXT.md** with current state (design-lead protocol)
+2. **Run Canary Check** (design-lead protocol)
+3. **Check 2-wave suggestion:** If this is the 2nd wave completed this session, recommend new session:
+   ```
+   Wave [N] and [N-1] complete. [X] sections built this session.
+
+   Recommendation: Start a new session for the next wave to maintain peak quality.
+   State saved to CONTEXT.md.
+
+   To continue: Run `/modulo:execute resume` in a new session.
+   To override: Say "continue" (canary checks remain active).
+   ```
+4. If user overrides, continue to next wave.
+5. If user accepts (or canary check failed), save and end session.
+
 ### Step 6: Session Boundary
 
-If the session needs to end mid-wave (context limit approaching, user interrupts, etc.):
+When a session boundary is triggered (by canary check failure, 2-wave suggestion acceptance, turn limit, or user request):
 
-Write `.planning/modulo/.continue-here.md`:
-```markdown
-# Continue Here
-
-## Session ended during
-wave: [current wave number]
-date: [ISO date]
-
-## Completed in this session
-- [list of sections completed]
-
-## In progress
-- [section name]: [what was done, what remains]
-
-## Next steps
-1. Resume wave [N] — sections [X, Y] still need building
-2. After wave [N] completes, proceed to wave [N+1]
-
-## Resume command
-Run `/modulo:execute resume` to continue from here.
-```
-
-Update STATE.md with current progress.
-
-Tell the user: "Session paused. Run `/modulo:execute resume` next time to continue from wave [N]."
+1. **Write/update CONTEXT.md** — Full state with next instructions
+2. **Update STATE.md** — Current section statuses
+3. **Delete legacy files** — Remove `.continue-here.md` and `.session-transfer.md` if they exist
+4. **Tell user:**
+   ```
+   Session state saved to CONTEXT.md.
+   Run `/modulo:execute resume` in a new session to continue from Wave [N].
+   ```
 
 ### Step 7: All Waves Complete
 
@@ -170,11 +201,11 @@ Track the primary layout pattern used by each completed section. Maintain this i
 
 ## Rules
 
-1. **Always read STATE.md AND DESIGN-DNA.md first.** Never assume where execution left off or what the design language is.
+1. **Always read CONTEXT.md (or STATE.md + DESIGN-DNA.md) first.** Never assume where execution left off or what the design language is.
 2. **Respect wave order.** Never build a section before its dependencies are complete.
 3. **Max 4 parallel builders per wave.** If a wave has more than 4 sections, split into sub-waves.
 4. **Atomic commits per task.** Format: `feat(section-XX-name): task description`.
-5. **Write .continue-here.md on session boundaries.** The next session must be able to resume seamlessly.
+5. **Write CONTEXT.md on session boundaries.** The next session must be able to resume seamlessly from CONTEXT.md alone.
 6. **Don't skip checkpoints.** Human verification points exist for a reason.
 7. **Track everything in STATE.md.** Progress must be visible at all times.
 8. **Enforce layout diversity.** No adjacent sections with the same pattern. Minimum 3 patterns per page.

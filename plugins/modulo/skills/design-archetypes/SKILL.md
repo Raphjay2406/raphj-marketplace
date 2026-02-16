@@ -58,6 +58,11 @@ You are a creative director who uses personality archetypes to guarantee every p
 ### Signature Element
 Exposed CSS grid with visible grid lines or an element with a hard drop-shadow that looks like a physical sticker.
 
+### Aggressive Tension Zones
+1. **Scale Violence — Viewport-dominating type:** One word at 25vw+ that bleeds off-screen. Rawness amplified to maximum.
+2. **Material Collision — Polished intrusion:** One hyper-smooth glass element in the otherwise raw layout. The contrast screams.
+3. **Interaction Shock — Destructive hover:** Elements that "break" on hover — glitch, fragment, distort — then snap back.
+
 ### References
 [Balenciaga](https://balenciaga.com), [Bloomberg Businessweek](https://businessweek.com), brutalistwebsites.com
 
@@ -104,6 +109,11 @@ Exposed CSS grid with visible grid lines or an element with a hard drop-shadow t
 ### Signature Element
 A large, slow-moving gradient orb (8-12s animation) that drifts behind the hero content, creating a living, breathing atmosphere.
 
+### Aggressive Tension Zones
+1. **Scale Violence — Microscopic precision:** Extremely small, precise details (6-8px labels) against the soft, generous whitespace. Tension through restraint.
+2. **Temporal Disruption — Frozen bloom:** One element mid-animation frozen in time — a gradient orb caught mid-expansion, a petal caught mid-fall.
+3. **Dimensional Break — Depth puncture:** One element with hard perspective/3D in the otherwise flat, floaty layout.
+
 ### References
 [Glossier](https://glossier.com), [Aesop](https://aesop.com), [Calm](https://calm.com)
 
@@ -146,6 +156,11 @@ A large, slow-moving gradient orb (8-12s animation) that drifts behind the hero 
 
 ### Signature Element
 A scroll-progress indicator that's visible throughout the page — either a custom progress bar, or background elements that transform as the user scrolls (e.g., a shape that morphs from circle to square).
+
+### Aggressive Tension Zones
+1. **Interaction Shock — Velocity feedback:** Elements that respond to scroll SPEED, not just position. Fast scroll = blur/stretch. Slow = crystal clear.
+2. **Material Collision — Static island:** One completely static, non-animated element in the sea of motion. A calm eye in the storm.
+3. **Scale Violence — Micro-to-macro transition:** Elements that start tiny and scale up massively as you scroll to them.
 
 ### References
 [Locomotive](https://locomotive.ca), [Resn](https://resn.co.nz), [Active Theory](https://activetheory.net)
@@ -191,6 +206,11 @@ A scroll-progress indicator that's visible throughout the page — either a cust
 
 ### Signature Element
 An oversized drop cap (4-5 lines tall) on the first paragraph of each major section, set in the display serif font with a contrasting color.
+
+### Aggressive Tension Zones
+1. **Scale Violence — Oversized drop cap on steroids:** A drop cap that takes up the ENTIRE left column (not 4-5 lines — 40% of the viewport).
+2. **Material Collision — Digital intrusion:** One neon/glowing element in the otherwise paper-like layout. Like a screen glowing in a library.
+3. **Dimensional Break — Z-axis pull quote:** One pull quote that appears to float above the page with heavy shadow and slight rotation.
 
 ### References
 [Medium](https://medium.com), [The New York Times](https://nytimes.com), [Monocle](https://monocle.com)
@@ -240,6 +260,11 @@ An oversized drop cap (4-5 lines tall) on the first paragraph of each major sect
 ### Signature Element
 A persistent subtle grid or dot-pattern background with radial fade-to-transparent at edges, making the content appear to float on a digital canvas.
 
+### Aggressive Tension Zones
+1. **Scale Violence — Hero number:** A massive metric (revenue, users, speed) at 15-20vw dominating the hero, with the product UI secondary.
+2. **Material Collision — Analog texture:** One section with subtle paper/grain texture breaking the otherwise clean digital surface.
+3. **Interaction Shock — Data reveal:** Hovering over a card reveals real-time data, charts, or metrics that weren't visible before.
+
 ### References
 [Linear](https://linear.app), [Huly](https://huly.io), [Raycast](https://raycast.com), [Vercel](https://vercel.com)
 
@@ -284,6 +309,11 @@ A persistent subtle grid or dot-pattern background with radial fade-to-transpare
 
 ### Signature Element
 Animated morphing SVG blob that slowly shifts shape (8-12s cycle) behind the hero section, using earthy accent colors.
+
+### Aggressive Tension Zones
+1. **Scale Violence — Giant botanical:** One oversized SVG botanical illustration that spans the full viewport height as a background.
+2. **Dimensional Break — Geometric intrusion:** One sharp, geometric element in the otherwise curved, flowing layout. Like a crystal in soil.
+3. **Temporal Disruption — Growth animation:** One element that appears to "grow" continuously — an SVG path that keeps extending.
 
 ### References
 [Oatly](https://oatly.com), [Allbirds](https://allbirds.com), [Patagonia](https://patagonia.com)
@@ -331,6 +361,11 @@ Animated morphing SVG blob that slowly shifts shape (8-12s cycle) behind the her
 ### Signature Element
 A CRT scan-line overlay across the entire page with a subtle flicker animation, combined with a persistent blinking cursor after the hero headline.
 
+### Aggressive Tension Zones
+1. **Scale Violence — Massive ASCII:** ASCII art that spans the full width at a scale that turns characters into abstract patterns.
+2. **Interaction Shock — Terminal command:** An interactive terminal that accepts real commands (easter egg) like `help`, `about`, `hire me`.
+3. **Material Collision — High-res photo:** One high-resolution, modern photograph amidst the low-res, pixelated aesthetic.
+
 ### References
 [Cool Retro Term](https://github.com/Swordfish90/cool-retro-term), Fallout Pip-Boy UI, old-school terminal UIs
 
@@ -377,6 +412,11 @@ A CRT scan-line overlay across the entire page with a subtle flicker animation, 
 ### Signature Element
 Full-bleed images that split or reveal on scroll, with text overlaid in thin serif type. The transition between light and dark sections creates a rhythm like turning magazine pages.
 
+### Aggressive Tension Zones
+1. **Scale Violence — Single word hero:** One word (the brand or concept) at 25vw+, ultra-thin weight (100-200), massive tracking.
+2. **Temporal Disruption — Slow reveal:** Content that takes 3-5 seconds to fully appear — painfully slow, exquisitely elegant.
+3. **Material Collision — Raw element:** One deliberately unpolished element (hand-drawn line, raw texture) in the refined layout.
+
 ### References
 [Chanel](https://chanel.com), [Bottega Veneta](https://bottegaveneta.com), [Celine](https://celine.com)
 
@@ -422,6 +462,11 @@ Full-bleed images that split or reveal on scroll, with text overlaid in thin ser
 
 ### Signature Element
 Interactive elements that "bounce" or "wiggle" on hover with a springy easing curve, combined with tilted cards at slight angles (`rotate-[-2deg]` to `rotate-[3deg]`).
+
+### Aggressive Tension Zones
+1. **Interaction Shock — Physics play:** Elements that respond to click/drag with real physics — bounce, collide, spin. A moment of pure play.
+2. **Scale Violence — Giant emoji/illustration:** One oversized illustration (50%+ viewport) as the hero instead of text.
+3. **Dimensional Break — Flat in 3D world:** One deliberately flat, sticker-like element in an otherwise dimensional layout.
 
 ### References
 [Notion](https://notion.so), [Figma](https://figma.com), [Duolingo](https://duolingo.com)
@@ -472,6 +517,11 @@ Interactive elements that "bounce" or "wiggle" on hover with a springy easing cu
 ### Signature Element
 A persistent status bar at the top or bottom showing real-time metrics (uptime, response time, active users) with live-updating numbers and subtle color-coded indicators.
 
+### Aggressive Tension Zones
+1. **Scale Violence — Mega metric:** One number displayed at 200px+ font size — the single most important KPI, impossible to miss.
+2. **Interaction Shock — Drill-down explosion:** Clicking a data point expands it into a full panel with detailed breakdown.
+3. **Material Collision — Warm accent:** One warmly-colored, soft element (illustration, photo) in the otherwise cold data interface.
+
 ### References
 [Bloomberg Terminal](https://bloomberg.com), [Grafana](https://grafana.com), [Datadog](https://datadoghq.com)
 
@@ -516,6 +566,11 @@ A persistent status bar at the top or bottom showing real-time metrics (uptime, 
 
 ### Signature Element
 A single thin horizontal line that spans the full viewport width, used as a section divider, with content positioned in deliberate asymmetric relationship to it.
+
+### Aggressive Tension Zones
+1. **Scale Violence — Enormous negative space:** A section with 80%+ whitespace — content occupies only a tiny corner. Space IS the design.
+2. **Material Collision — Red burst:** One bold vermillion stroke or shape that breaks the restraint — like a calligraphy brushstroke.
+3. **Temporal Disruption — Stillness:** One element that is AGGRESSIVELY static while subtle motion exists elsewhere. Not frozen — intentionally still.
 
 ### References
 [Muji](https://muji.com), [Aman Hotels](https://aman.com), Japanese ceramics websites
@@ -564,6 +619,11 @@ A single thin horizontal line that spans the full viewport width, used as a sect
 ### Signature Element
 Overlapping glass panels at different depths with visible gradient orbs behind them, creating an illusion of real depth — like looking through stacked panes of glass.
 
+### Aggressive Tension Zones
+1. **Dimensional Break — Solid intrusion:** One completely opaque, solid-colored element amidst the translucent glass panels.
+2. **Scale Violence — Giant glass pane:** One glass panel that spans the ENTIRE viewport — content floats within it.
+3. **Interaction Shock — Refraction shift:** Hovering over glass panels shifts the refraction/blur of elements behind them.
+
 ### References
 Apple macOS/iOS UI, [Figma](https://figma.com) dark mode, Windows 11 Mica/Acrylic
 
@@ -611,6 +671,11 @@ Apple macOS/iOS UI, [Figma](https://figma.com) dark mode, Windows 11 Mica/Acryli
 ### Signature Element
 A neon "sign" element — text with triple-layer glow that appears to flicker subtly (random opacity 0.9-1.0 at irregular intervals), mimicking a real neon tube sign.
 
+### Aggressive Tension Zones
+1. **Scale Violence — Neon word wall:** One word in neon at viewport scale, with the triple glow creating a light source that illuminates surrounding elements.
+2. **Interaction Shock — Blackout hover:** Hovering over an element causes everything ELSE to go dark, creating a spotlight effect.
+3. **Temporal Disruption — Dying neon:** One neon element with irregular, realistic flickering — like a neon sign about to burn out.
+
 ### References
 Cyberpunk 2077 UI, [VOID](https://voidinterface.com), synthwave aesthetics
 
@@ -657,6 +722,11 @@ Cyberpunk 2077 UI, [VOID](https://voidinterface.com), synthwave aesthetics
 ### Signature Element
 A paper/parchment noise texture across the entire page that makes the screen feel like a physical surface, combined with stamp-style badges on featured elements.
 
+### Aggressive Tension Zones
+1. **Material Collision — Digital precision:** One sharp, pixel-perfect geometric element in the otherwise handcrafted layout.
+2. **Scale Violence — Giant stamp:** An oversized stamp/badge element (40%+ of viewport) as a section background.
+3. **Interaction Shock — Texture reveal:** Hovering over elements reveals the underlying paper/grain texture more prominently.
+
 ### References
 Craft brewery websites, Etsy artisan shops, vintage cookbook layouts
 
@@ -702,6 +772,11 @@ Craft brewery websites, Etsy artisan shops, vintage cookbook layouts
 ### Signature Element
 A strict visible grid overlay (at very low opacity) that aligns all elements mathematically, demonstrating the underlying structure.
 
+### Aggressive Tension Zones
+1. **Scale Violence — Grid demonstration:** Content arranged so dramatically that the underlying grid structure itself becomes visual art.
+2. **Material Collision — Organic photo:** One lush, organic photograph in the otherwise mathematical precision.
+3. **Dimensional Break — Type depth:** One headline with subtle 3D/shadow that lifts it off the flat grid.
+
 ### References
 [ECAL](https://ecal.ch), Swiss poster design, [Muller-Brockmann](https://en.wikipedia.org/wiki/Josef_M%C3%BCller-Brockmann) grids
 
@@ -746,6 +821,11 @@ A strict visible grid overlay (at very low opacity) that aligns all elements mat
 
 ### Signature Element
 A retro grid floor (perspective-vanishing-point lines in neon) stretching to a sunset horizon gradient, visible as the page background.
+
+### Aggressive Tension Zones
+1. **Scale Violence — Massive glitch:** A full-viewport glitch effect that distorts everything for 2-3 seconds on page load.
+2. **Interaction Shock — Window manipulation:** OS-style windows that the user can actually drag, resize, and minimize.
+3. **Temporal Disruption — Loading nostalgia:** A fake loading bar (like 90s web) that plays before content reveals.
 
 ### References
 Vaporwave aesthetic, old Geocities, [Windows 95 UI](https://poolsuite.net)

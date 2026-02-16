@@ -1,8 +1,21 @@
 {
   "name": "modulo",
-  "description": "Premium frontend design system with 40 skills, 7 commands, and 4 agents for creating 90k-quality websites. Covers UI patterns, SEO/GEO, accessibility, i18n, performance, testing, charts, drag-and-drop, real-time UI, and more. Works with Next.js and Astro.",
-  "version": "2.2.0",
+  "description": "Premium frontend design system with 87 skills, 13 commands, and 17 agents. Features Full Quality Pipeline and 6-layer Context Rot Prevention (pre-commit hooks, CONTEXT.md anchoring, pre-extracted spawn prompts, canary checks, session boundaries, baked-in rules). Plus Design DNA identity system with 16 opinionated archetypes, creative tension system, emotional arc storytelling, cinematic motion choreography, 35-point anti-slop quality gate, and Awwwards 4-axis scoring. Creates Awwwards SOTD-competitive, production-ready websites. Works with Next.js and Astro.",
+  "version": "6.1.0",
   "author": {
     "name": "raphj"
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/dna-compliance-check.sh"
+          }
+        ]
+      }
+    ]
   }
 }

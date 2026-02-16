@@ -177,6 +177,59 @@ List the specific layout patterns this project will use (minimum 4 distinct patt
 
 ### Diversity Rule
 No two adjacent sections may use the same layout pattern type.
+
+## Tension Plan
+
+> Which creative tensions will push this project beyond safe archetype territory?
+
+**Selected tensions (2-3 per project):**
+1. [Tension type] — [Which section] — [Approach description]
+2. [Tension type] — [Which section] — [Approach description]
+3. [Tension type (optional)] — [Which section] — [Approach description]
+
+**Tension budget:** [1-3 per page, spaced apart — never adjacent sections]
+
+Reference the `creative-tension` skill for the archetype's specific aggressive tension zones.
+
+## Emotional Arc Template
+
+> The default emotional beat sequence for this project's archetype.
+
+**Arc:** [e.g., HOOK → TEASE → REVEAL → BUILD → BREATHE → PROOF → BUILD → CLOSE]
+
+**Transition pattern:** [e.g., scroll-fade → acceleration → acceleration → gentle-resume → hard-cut → acceleration → convergence]
+
+Reference the `emotional-arc` skill for archetype-specific arc templates and valid/invalid beat sequences.
+
+## Choreography Defaults
+
+> Per-beat motion choreography that all section builders must follow.
+
+| Beat | Primary Direction | Secondary Direction | Easing | Duration | Stagger |
+|------|------------------|--------------------|---------|---------|---------|
+| HOOK | RISE (headlines) | REVEAL (background) | [DNA default easing] | 600-800ms | 150ms |
+| TEASE | RISE | CASCADE | [DNA default easing] | 400-600ms | 80ms |
+| REVEAL | EXPAND | UNFOLD | [DNA default easing] | 600-800ms | 100ms |
+| BUILD | CASCADE | RISE | [DNA default easing] | 300-500ms | 60ms |
+| PEAK | [Custom per project] | [Custom] | [DNA default easing] | 800-1200ms | 80ms |
+| BREATHE | REVEAL | — | [DNA gentle easing] | 600-800ms | — |
+| TENSION | RISE | ENTER-STAGE | [DNA default easing] | 500-700ms | 80ms |
+| PROOF | CASCADE | REVEAL | [DNA default easing] | 200-400ms | 60ms |
+| PIVOT | RISE | REVEAL | [DNA default easing] | 500-700ms | 100ms |
+| CLOSE | RISE (CTA) | EXPAND (button glow) | [DNA default easing] | 400-600ms | 80ms |
+
+Reference the `cinematic-motion` skill for detailed choreography sequences and the archetype's motion personality.
+
+## Scaffold Specification
+
+> The design system foundation generated during Wave 0.
+
+Wave 0 scaffold tasks reference the `design-system-scaffold` skill for code generation templates:
+- `globals.css` — all DNA tokens as CSS custom properties
+- `tailwind.config.ts` — theme extension mapped to CSS variables
+- `lib/motion.ts` — reusable Framer Motion presets from DNA motion language
+- `components/ui/section-wrapper.tsx` — beat-aware section container
+- Font preloading setup matching DNA typography
 ```
 
 ## How Section Builders Use Design DNA
