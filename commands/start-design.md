@@ -66,6 +66,104 @@ Use the Task tool to spawn `design-researcher` agents in parallel. Each agent ge
 
 Each agent writes findings to `.planning/modulo/research/{TRACK}.md`.
 
+### Visual Reference Capture (NEW)
+
+Before synthesizing research, capture visual references from the user's reference URLs (from discovery Step 2, question 4).
+
+**Tool priority order:**
+1. Playwright MCP (`browser_navigate`, `browser_take_screenshot`, `browser_resize`) — preferred
+2. Chrome DevTools MCP (`navigate_page`, `take_screenshot`, `resize_page`) — fallback
+3. Claude in Chrome (`navigate`, `upload_image`, `resize_window`) — fallback
+4. WebFetch + manual screenshots — last resort
+
+**For each reference URL (max 5 sites):**
+1. Navigate to the URL, wait for page load
+2. Resize to 1440px width
+3. Take full-page screenshot → `.planning/modulo/research/screenshots/{site}-desktop-full.png`
+4. Take above-fold screenshot → `.planning/modulo/research/screenshots/{site}-desktop-fold.png`
+5. Resize to 375px width
+6. Take above-fold screenshot → `.planning/modulo/research/screenshots/{site}-mobile-fold.png`
+7. Scroll to ~50% and screenshot → `.planning/modulo/research/screenshots/{site}-desktop-mid.png`
+8. Scroll to bottom and screenshot → `.planning/modulo/research/screenshots/{site}-desktop-footer.png`
+
+**That's 5 screenshots per site, covering:** full structure, first impression, mobile, mid-page quality, and footer/CTA.
+
+**For each reference site, analyze the screenshots and document in `.planning/modulo/research/REFERENCES.md`:**
+
+```markdown
+## Reference Analysis: [Site Name]
+URL: [url]
+Screenshots: [list of screenshot file paths]
+
+### 1. Color Analysis
+- Background: [exact observed color]
+- Text primary: [color + warmth]
+- Text secondary: [color]
+- Accent 1: [color + usage]
+- Accent 2: [color + usage]
+- Gradient usage: [description]
+- Color temperature: [warm/cool/neutral]
+- Unique color moment: [what stands out]
+
+### 2. Typography Analysis
+- Display font: [observed font]
+- Body font: [observed font]
+- Headline sizes: [approximate]
+- Headline tracking: [approximate]
+- Weight variety: [count + weights observed]
+- Typographic surprise: [what stands out]
+
+### 3. Layout Analysis
+- Hero pattern: [description]
+- Grid approach: [description]
+- Spacing character: [generous/tight/varied]
+- Container width: [approximate]
+- Grid-breaking moment: [what breaks the grid]
+- Layout variety score: [count of distinct patterns]
+
+### 4. Motion/Animation Analysis
+- Entrance animations: [description]
+- Scroll behavior: [description]
+- Hover effects: [description]
+- Transition style: [description]
+- Motion intensity: [low/medium/high]
+- Wow moment: [what's impressive]
+
+### 5. Depth & Polish Analysis
+- Shadow approach: [description]
+- Glass/blur: [where and how]
+- Border style: [description]
+- Texture: [grain/dots/grid]
+- Micro-details: [list]
+
+### 6. Content/Copy Quality
+- Hero headline: [text or paraphrase]
+- CTA text: [text]
+- Tone: [description]
+- Friction reducers: [list]
+
+### 7. Overall Assessment
+- Estimated Awwwards: Design [X]/10, Usability [X]/10, Creativity [X]/10, Content [X]/10
+- What makes it special: [1-2 sentences]
+- Patterns to adopt: [list]
+- Patterns NOT to copy: [list — things that are their brand]
+```
+
+**Fallback (no browser tools):**
+- Use `WebFetch` to grab page content and analyze HTML/CSS structure
+- Ask user: "I can't capture screenshots. Please provide reference screenshots if possible."
+- Document that visual analysis was limited in REFERENCES.md
+
+Copy the REFERENCES.md to `.planning/modulo/REFERENCES.md` after synthesis.
+
+### Competitive Benchmark (NEW)
+After research completes, capture 3-5 reference screenshots from current Awwwards SOTD winners in the same category (SaaS, portfolio, e-commerce, etc.). Reference the `awwwards-scoring` skill's competitive benchmark process:
+
+1. Identify 3-5 recent SOTD winners in the same project category
+2. Note their: color approach, typography, layout patterns, motion intensity, signature elements, content quality
+3. Identify minimum techniques required, common patterns to avoid, and opportunity gaps
+4. Document findings in `.planning/modulo/research/BENCHMARK.md`
+
 ### Synthesize research
 After all researchers complete, read their outputs and create `.planning/modulo/research/SUMMARY.md` with:
 - Key findings from each track
@@ -142,6 +240,10 @@ Using the chosen archetype + creative direction, generate `.planning/modulo/DESI
 8. **Texture & Effects** — Which effects are active (grain, glow, glass, etc.)
 9. **Layout Patterns Required** — Minimum 4 distinct patterns, informed by archetype
 10. **Diversity Rule** — No two adjacent sections may share the same layout pattern
+11. **Tension Plan** (NEW) — Select 2-3 creative tensions from the archetype's aggressive tension zones (reference `creative-tension` skill). Specify which sections and approach.
+12. **Emotional Arc Template** (NEW) — Generate the archetype-specific default beat sequence and transition pattern (reference `emotional-arc` skill).
+13. **Choreography Defaults** (NEW) — Per-beat motion choreography sequences with directions, easing, duration, and stagger (reference `cinematic-motion` skill).
+14. **Scaffold Specification** (NEW) — Reference `design-system-scaffold` skill for Wave 0 code generation templates.
 
 ### User Review
 
@@ -163,6 +265,113 @@ Save to `.planning/modulo/DESIGN-DNA.md`.
 
 **This document is now the single source of truth. All section builders MUST reference it.**
 
+### Generate Initial CONTEXT.md
+
+After saving DESIGN-DNA.md, create the initial `.planning/modulo/CONTEXT.md`:
+
+```markdown
+# Modulo Context (auto-rewritten after each wave)
+Last updated: [ISO date] | Wave: -- | Session: 1
+
+## DNA Identity
+Archetype: [selected archetype name]
+Display: [display font] | Body: [body font] | Mono: [mono font or "none"]
+Signature: [signature element description]
+Colors: bg-primary [hex], bg-secondary [hex], bg-tertiary [hex], accent-1 [hex], accent-2 [hex], accent-3 [hex]
+Text: primary [hex], secondary [hex], tertiary [hex]
+Spacing: [5 levels from DNA]
+Radius: [from DNA]
+Shadows: [levels from DNA]
+Motion: easing [from DNA], stagger [from DNA]
+FORBIDDEN: [forbidden patterns from archetype]
+
+## Emotional Arc & Creative Systems
+Beat sequence: [archetype default template from DNA]
+Tensions: [from DNA tension plan]
+Wow moments: [to be assigned in plan-sections]
+Current position: Pre-planning
+
+## Build State
+[to be populated by plan-sections]
+
+## Next Instructions
+Run `/modulo:plan-sections` to create section plans with wave assignments.
+```
+
+This initial CONTEXT.md captures DNA identity immediately after generation, ensuring it's available from the very start.
+
+**Next:** Proceed to Phase 3.75 (Content Planning) before section planning.
+
+---
+
+## Phase 3.75: CONTENT PLANNING (NEW)
+
+**Goal:** Write all page copy before section planning. User approves every piece of text.
+
+### Step 1: Read Context
+
+Read:
+- `.planning/modulo/PROJECT.md` — what the product/service is
+- `.planning/modulo/BRAINSTORM.md` — archetype and creative direction
+- `.planning/modulo/DESIGN-DNA.md` — personality and tone
+- Reference the `micro-copy` skill for button/CTA rules
+- Reference the `conversion-patterns` skill for persuasion structure
+
+### Step 2: Generate Content Plan
+
+Create `.planning/modulo/CONTENT.md`:
+
+```markdown
+# Content Plan: [Project Name]
+
+## Voice & Tone
+**Archetype:** [name]
+**Voice:** [2-3 sentences describing the voice personality]
+**Forbidden phrases:** ["Learn More", "Submit", "Click Here", "Solutions", "Leverage", "Empower", "Unlock", "Seamless"]
+
+## Hero Section
+- **Status badge:** "[text]"
+- **Headline:** "[text, < 8 words, emotional response]"
+- **Subheadline:** "[1-2 sentences, max 30 words]"
+- **Primary CTA:** "[outcome-driven verb + benefit]"
+- **Secondary CTA:** "[lower commitment action]"
+- **Friction reducer:** "[e.g., No credit card · 2-minute setup]"
+
+## Section: [name] ([beat type])
+- **Overline:** "[text]"
+- **Headline:** "[text]"
+- **Body:** "[text]"
+- **Element-specific text:**
+  - [Card/feature 1]: title "[text]", description "[text]"
+  - [Card/feature 2]: title "[text]", description "[text]"
+  - ...
+- **CTA (if any):** "[text]"
+
+[Repeat for every planned section]
+
+## Testimonials
+- "[quote]" — [Full Name], [Title] at [Company]
+- "[quote]" — [Full Name], [Title] at [Company]
+
+## Stats/Metrics
+- [value]: [label]
+- [value]: [label]
+
+## Footer
+- **Tagline:** "[text]"
+- **Copyright:** "[text]"
+- **Link groups:** [list]
+```
+
+### Step 3: User Approval
+
+Present all content for approval:
+"Here's the complete content plan. Content is as important as visual design — weak copy kills even beautiful designs. Please review and approve, or suggest changes."
+
+**User must approve content before proceeding to section planning.**
+
+Save approved content to `.planning/modulo/CONTENT.md`.
+
 ---
 
 ## Initialize STATE.md
@@ -173,7 +382,7 @@ After Phase 3.5 completes, create `.planning/modulo/STATE.md`:
 # Modulo Design State
 
 ## Current Phase
-phase: DNA_COMPLETE
+phase: CONTENT_COMPLETE
 last_updated: [ISO date]
 
 ## Project
@@ -187,6 +396,7 @@ signature_element: [brief description]
 - [x] Research — SUMMARY.md synthesized
 - [x] Brainstorm — Archetype selected: [name]
 - [x] Design DNA — DESIGN-DNA.md generated
+- [x] Content Planning — CONTENT.md written and approved
 - [ ] Section Planning
 - [ ] Execution
 - [ ] Verification
@@ -210,6 +420,9 @@ Artifacts created:
 - .planning/modulo/research/SUMMARY.md — Research synthesis
 - .planning/modulo/BRAINSTORM.md — Chosen direction: [name]
 - .planning/modulo/DESIGN-DNA.md — Unique visual identity (archetype: [name])
+- .planning/modulo/CONTENT.md — Approved page copy
+- .planning/modulo/REFERENCES.md — Reference site analysis
+- .planning/modulo/CONTEXT.md — Context anchor (DNA identity + state)
 - .planning/modulo/STATE.md — Project state
 
 Next step: Run `/modulo:plan-sections` to break the design into sections with execution plans.
