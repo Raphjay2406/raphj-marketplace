@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**Modulo** (v6.1.0) is a Claude Code plugin for premium frontend design. It provides 87 skills, 12 slash commands, and 17 agents that work together to produce distinctive, production-quality websites for Next.js and Astro. It is NOT a template generator — it enforces unique visual identity per project through eight interlocking quality systems: Design DNA, Design Archetypes, Creative Tension, Emotional Arc, Cinematic Motion, Anti-Slop Gate (35-point/7-category), Awwwards 4-Axis Scoring, and Context Rot Prevention.
+**Modulo** (v6.1.0) is a Claude Code plugin for premium frontend design. It provides 87 skills, 13 slash commands, and 17 agents that work together to produce distinctive, production-quality websites for Next.js and Astro. It is NOT a template generator — it enforces unique visual identity per project through eight interlocking quality systems: Design DNA, Design Archetypes, Creative Tension, Emotional Arc, Cinematic Motion, Anti-Slop Gate (35-point/7-category), Awwwards 4-Axis Scoring, and Context Rot Prevention.
 
 This repository contains only markdown definitions and a plugin manifest — there is no application code, build system, or test suite.
 
@@ -13,7 +13,7 @@ This repository contains only markdown definitions and a plugin manifest — the
 Three-tier system where commands are entry points, agents do the work, and skills provide domain knowledge:
 
 ```
-commands/ (12 slash commands — user-facing entry points)
+commands/ (13 slash commands — user-facing entry points)
     ↓ invoke
 agents/ (16 agents — orchestrators, builders, auditors)
     ↓ reference
