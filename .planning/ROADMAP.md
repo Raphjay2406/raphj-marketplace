@@ -31,18 +31,18 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Success Criteria** (what must be TRUE):
   1. Design DNA skill defines all 12 color tokens, type scale, spacing scale, signature element, motion language, and forbidden patterns in a format that agents can parse and enforce programmatically
   2. All 16+ archetypes (including Neubrutalism, AI-Native, Dark Academia) have locked constraints, mandatory techniques, forbidden patterns, and 3 tension zones that are machine-readable (not advisory prose)
-  3. Anti-Slop Gate defines all 35 points across 7 categories with inline self-check protocol that builders execute before emitting code, not just reviewers after the fact
+  3. Anti-Slop Gate defines all 35 points across 7 categories with scoring protocol (NOTE: CONTEXT.md overrides FOUND-03 -- post-review enforcement only, NOT inline self-check. The skill defines the scoring SYSTEM, enforcement is Phase 2/4)
   4. Emotional Arc defines all 10 beat types with hard parameter constraints (whitespace %, element count, viewport height) that are enforceable values, not suggestions
   5. Skill directory uses 3-tier structure (Core/Domain/Utility) with the 4-layer format (Decision Guidance, Award-Winning Examples, Integration Context, Anti-Patterns) and a concrete cull list of removed v6.1.0 skills
-**Plans**: TBD
+**Plans**: 6 plans
 
 Plans:
-- [ ] 01-01: Plugin skeleton and CLAUDE.md with embedded core rules
-- [ ] 01-02: Design DNA skill (4-layer format, machine-enforceable tokens)
-- [ ] 01-03: Design Archetypes skill (16+ archetypes with locked constraints)
-- [ ] 01-04: Anti-Slop Gate skill (35-point inline enforcement protocol)
-- [ ] 01-05: Emotional Arc skill (10 beats with hard parameter constraints)
-- [ ] 01-06: Skill architecture (tier structure, 4-layer format template, cull list)
+- [ ] 01-01-PLAN.md -- Plugin skeleton + CLAUDE.md rewrite + 4-layer skill template
+- [ ] 01-02-PLAN.md -- Design DNA skill (12 color tokens, type/spacing/motion, Tailwind v4 @theme)
+- [ ] 01-03-PLAN.md -- Design Archetypes skill (19 archetypes with locked constraints + custom builder)
+- [ ] 01-04-PLAN.md -- Anti-Slop Gate skill (35-point weighted scoring, post-review enforcement)
+- [ ] 01-05-PLAN.md -- Emotional Arc skill (10 beats with hard parameter constraints)
+- [ ] 01-06-PLAN.md -- Skill directory (3-tier structure, cull list, v6.1.0 cleanup)
 
 ### Phase 2: Pipeline Architecture
 **Goal**: Work flows through a defined pipeline (Research -> Design -> Build -> Review -> Polish) where each agent has explicit input/output contracts, builders are stateless with pre-extracted context, and context rot is structurally prevented
@@ -210,7 +210,7 @@ Note: Phases 3 and 4 both depend on Phase 2. Phases 5, 6, 7, 8 can partially ove
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/6 | Not started | - |
+| 1. Foundation | 0/6 | Planned | - |
 | 2. Pipeline Architecture | 0/7 | Planned | - |
 | 3. Command System | 0/6 | Planned | - |
 | 4. Quality Enforcement | 0/5 | Not started | - |
