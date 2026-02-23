@@ -20,7 +20,7 @@ Define the agent pipeline model (Research -> Design -> Build -> Review -> Polish
 - Build failures bubble directly to the user -- orchestrator does NOT auto-retry. Any failure pauses execution and asks the user how to proceed
 
 ### Context Passing Strategy
-- Full Design DNA snapshot embedded in every builder's spawn prompt (~100-150 lines). Builders get the complete reference, not a compressed extract
+- Full Design DNA document embedded in every builder's spawn prompt (~150 lines for DNA, ~300 lines total spawn prompt). Builders get the complete DESIGN-DNA.md content, not a compressed extract. This increases the spawn prompt budget from the original ~150 to ~300 lines
 - CONTEXT.md ownership is split: orchestrator writes build state/progress after each wave, Creative Director appends creative direction notes and drift observations. Both contribute to the living context
 - Design system growth follows "builder proposes, orchestrator collects" -- builders flag reusable components in their SUMMARY.md, orchestrator aggregates after each wave. No approval gate, but deliberate collection
 - Reviewer feedback loop (lessons learned) is visible to builders in subsequent waves via a snippet in their spawn prompt. Builders know both what worked and what to avoid
