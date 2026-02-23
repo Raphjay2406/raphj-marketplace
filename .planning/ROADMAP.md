@@ -87,7 +87,7 @@ Plans:
 - [ ] 03-06-PLAN.md -- Utility commands (status, audit), v6.1.0 cleanup, plugin manifest update, guided flow consistency verification
 
 ### Phase 4: Quality Enforcement
-**Goal**: Design quality is enforced progressively through 4 layers (build-time, post-wave, end-of-phase, user checkpoint) so problems are caught where they are cheapest to fix
+**Goal**: Design quality is enforced progressively through 4 layers (build-time, post-wave, end-of-build, user checkpoint) so problems are caught where they are cheapest to fix
 **Depends on**: Phase 2
 **Requirements**: QUAL-01, QUAL-02, QUAL-03, QUAL-04, BILD-04
 **Success Criteria** (what must be TRUE):
@@ -96,14 +96,14 @@ Plans:
   3. No two adjacent sections share the same layout pattern -- this is structurally enforced via pre-assignment in MASTER-PLAN.md, not caught in review
   4. Live browser testing auto-screenshots at 4 breakpoints (375, 768, 1024, 1440px), runs Lighthouse with hard fail at score <80, monitors animation FPS (flag <30fps), and runs axe-core accessibility audit
   5. Creative Director reviews each section against DNA and creative vision before acceptance, with specific improvement actions when drift is detected
-**Plans**: TBD
+**Plans**: 5 plans
 
 Plans:
-- [ ] 04-01: Reference-quality benchmarking system (real-world targets per section)
-- [ ] 04-02: Compositional diversity enforcement (layout pre-assignment, adjacency rules)
-- [ ] 04-03: Polish pass protocol (micro-detail checklist, polisher agent refinement)
-- [ ] 04-04: Live browser testing integration (screenshots, Lighthouse, FPS, axe-core)
-- [ ] 04-05: Quality gate integration (severity classification, 4-layer progressive enforcement)
+- [ ] 04-01-PLAN.md -- Reference benchmarking skill: curated per-archetype library, PLAN.md reference target format, quality comparison protocol
+- [ ] 04-02-PLAN.md -- Compositional diversity skill: 18-pattern taxonomy across 6 visual groups, adjacency rules, MASTER-PLAN.md layout assignment format
+- [ ] 04-03-PLAN.md -- Polish pass skill: universal 8-category checklist, 19 archetype addenda with FORBIDDEN items, creative license protocol
+- [ ] 04-04-PLAN.md -- Live testing skill: 4-step Playwright MCP protocol (screenshots, Lighthouse, axe-core, FPS), thresholds, report format
+- [ ] 04-05-PLAN.md -- Quality gate protocol skill: 4-layer progressive enforcement, severity classification, running tally, user checkpoint logic
 
 ### Phase 5: Motion & Design Skills
 **Goal**: The plugin produces award-winning motion design through DNA-generated presets, diversity enforcement, and a rich library of wow moments, with a design system scaffold that makes slop harder to produce than quality
@@ -213,7 +213,7 @@ Note: Phases 3 and 4 both depend on Phase 2. Phases 5, 6, 7, 8 can partially ove
 | 1. Foundation | 0/6 | Planned | - |
 | 2. Pipeline Architecture | 0/7 | Planned | - |
 | 3. Command System | 0/6 | Planned | - |
-| 4. Quality Enforcement | 0/5 | Not started | - |
+| 4. Quality Enforcement | 0/5 | Planned | - |
 | 5. Motion & Design Skills | 0/6 | Planned | - |
 | 6. Brainstorming & Content | 0/4 | Planned | - |
 | 7. Asset & Specialist Skills | 0/6 | Not started | - |
