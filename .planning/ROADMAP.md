@@ -115,15 +115,15 @@ Plans:
   3. Wow Moment Library includes 30+ patterns spanning View Transitions API, Lottie/Rive, WebGL shaders, and scroll-linked video, with auto-suggestion based on archetype + beat type
   4. Page Transition skill covers View Transitions API (native), Framer Motion AnimatePresence, shared element transitions, and per-archetype transition choreography
   5. Design System Scaffold skill auto-generates typed utilities, section templates per beat type, motion presets, and color utilities from DNA -- making arbitrary hex values and unsanctioned patterns structurally difficult
-**Plans**: TBD
+**Plans**: 6 plans
 
 Plans:
-- [ ] 05-01: Cinematic Motion skill (DNA presets, diversity enforcement, CSS scroll-driven default)
-- [ ] 05-02: Creative Tension skill (copy-paste TSX per archetype, PEAK enforcement, boldness calibration)
-- [ ] 05-03: Wow Moment Library skill (30+ patterns, auto-suggestion matrix)
-- [ ] 05-04: Page Transition skill (View Transitions, AnimatePresence, shared elements)
-- [ ] 05-05: Performance-Aware Animation skill (CWV compliance, code-splitting, font loading)
-- [ ] 05-06: Design System Scaffold skill (typed utilities, beat templates, DNA-enforced tokens)
+- [ ] 05-01-PLAN.md -- Cinematic Motion skill: unified motion system (CSS scroll-driven default, 19 archetype profiles, diversity enforcement, v6.1.0 library skill cull)
+- [ ] 05-02-PLAN.md -- Creative Tension skill: 5 levels with safe/aggressive ranges, 19 archetype TSX implementations, dual adjacency rules, PEAK mandate
+- [ ] 05-03-PLAN.md -- Wow Moment Library skill: 33+ tiered patterns (copy-paste/pattern/guidance), three-factor auto-suggestion matrix
+- [ ] 05-04-PLAN.md -- Page Transition skill: View Transitions API (Astro stable, Next.js experimental), AnimatePresence fallback, per-archetype choreography
+- [ ] 05-05-PLAN.md -- Performance-Aware Animation skill: CWV compliance, code-splitting patterns, font loading, performance budgets, will-change discipline
+- [ ] 05-06-PLAN.md -- Design System Scaffold skill: Tailwind v4 @theme generation, typed utilities, 10 beat templates, extension mechanism
 
 ### Phase 6: Brainstorming & Content
 **Goal**: The plugin produces genuinely creative design directions through real-world research and cross-pollination, backed by a content intelligence engine that generates brand-appropriate copy instead of generic placeholder text
@@ -214,7 +214,7 @@ Note: Phases 3 and 4 both depend on Phase 2. Phases 5, 6, 7, 8 can partially ove
 | 2. Pipeline Architecture | 0/7 | Planned | - |
 | 3. Command System | 0/6 | Planned | - |
 | 4. Quality Enforcement | 0/5 | Not started | - |
-| 5. Motion & Design Skills | 0/6 | Not started | - |
+| 5. Motion & Design Skills | 0/6 | Planned | - |
 | 6. Brainstorming & Content | 0/4 | Planned | - |
 | 7. Asset & Specialist Skills | 0/6 | Not started | - |
 | 8. Experience & Frameworks | 0/8 | Not started | - |
