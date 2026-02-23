@@ -54,16 +54,16 @@ Plans:
   3. Creative Director agent actively reviews output against DNA and creative vision, proposes bold directions, and catches drift immediately (not at end-of-phase)
   4. Context rot prevention is structural: mandatory session boundaries every 2 waves, pre-compiled DNA snapshots in spawn prompts, canary checks with real consequences (2+ failures = new session), CONTEXT.md rewritten every wave
   5. 3-layer agent memory (living context file, growing design system, reviewer feedback loop) enables pattern accumulation across waves without context window bloat
-**Plans**: TBD
+**Plans**: 7 plans
 
 Plans:
-- [ ] 02-01: Pipeline agent definitions (researcher, section-planner, build-orchestrator)
-- [ ] 02-02: Creative Director agent with active review protocol
-- [ ] 02-03: Section builder with stateless spawn prompt pattern
-- [ ] 02-04: Quality reviewer and polisher agents
-- [ ] 02-05: Domain specialist agent definitions (3D, animation, content)
-- [ ] 02-06: Context rot prevention system (CONTEXT.md lifecycle, canary checks, session boundaries)
-- [ ] 02-07: Agent memory system (3-layer: context file, design system, feedback loop)
+- [ ] 02-01-PLAN.md -- Pipeline agent definitions (researcher, section-planner, build-orchestrator)
+- [ ] 02-02-PLAN.md -- Creative Director agent with active review protocol
+- [ ] 02-03-PLAN.md -- Section builder with stateless spawn prompt pattern
+- [ ] 02-04-PLAN.md -- Quality reviewer and polisher agents
+- [ ] 02-05-PLAN.md -- Domain specialist agent definitions (3D, animation, content)
+- [ ] 02-06-PLAN.md -- Context rot prevention system (CONTEXT.md lifecycle, canary checks, session boundaries)
+- [ ] 02-07-PLAN.md -- Agent memory system (3-layer: context file, design system, feedback loop)
 
 ### Phase 3: Command System
 **Goal**: Users interact with Modulo through 6 clear commands that route to pipeline stages, with guided flow making it impossible to get lost
@@ -211,7 +211,7 @@ Note: Phases 3 and 4 both depend on Phase 2. Phases 5, 6, 7, 8 can partially ove
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 0/6 | Not started | - |
-| 2. Pipeline Architecture | 0/7 | Not started | - |
+| 2. Pipeline Architecture | 0/7 | Planned | - |
 | 3. Command System | 0/6 | Not started | - |
 | 4. Quality Enforcement | 0/5 | Not started | - |
 | 5. Motion & Design Skills | 0/6 | Not started | - |
