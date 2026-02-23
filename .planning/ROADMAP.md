@@ -135,13 +135,13 @@ Plans:
   3. Constraint-breaking identifies the "rules" for the target industry and proposes breaking specific ones with clear intent and rationale
   4. 2 refined creative directions include ASCII mockup prototypes and motion identity, each distinct enough to represent a real choice
   5. Copy Intelligence Engine generates a brand voice document during brainstorm, maintains a content bank of pre-generated headlines/CTAs/descriptions, enforces banned generic phrases ("Submit", "Learn More", "Click Here"), and produces archetype-aware micro-copy
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
-- [ ] 06-01: Research-first brainstorming protocol (Awwwards/Dribbble/competitor study)
-- [ ] 06-02: Cross-pollination and constraint-breaking techniques
-- [ ] 06-03: Creative direction format (ASCII mockups, motion identity, competitive benchmarking)
-- [ ] 06-04: Copy Intelligence Engine skill (brand voice, content bank, banned phrases, archetype tone)
+- [ ] 06-01-PLAN.md -- Research-first brainstorming protocol: complete design-brainstorm rewrite with 7-phase process, curated 12-industry library, competitive teardown framework
+- [ ] 06-02-PLAN.md -- Cross-pollination skill: industry rule catalogs, distant-industry pairing matrix, constraint-breaking protocol, double coherence guardrails
+- [ ] 06-03-PLAN.md -- Creative direction format skill: full concept board template, ASCII mockup system, distinctness validation, free mixing protocol
+- [ ] 06-04-PLAN.md -- Copy Intelligence Engine skill: brand voice template, archetype voice profiles, content bank matrix, tiered banned phrases, voice extraction protocol
 
 ### Phase 7: Asset & Specialist Skills
 **Goal**: The plugin can generate or integrate rich visual assets -- procedural shapes, 3D scenes, marketplace components, video content, Spline embeds, and AI image prompts -- all constrained to project DNA
@@ -215,11 +215,11 @@ Note: Phases 3 and 4 both depend on Phase 2. Phases 5, 6, 7, 8 can partially ove
 | 3. Command System | 0/6 | Planned | - |
 | 4. Quality Enforcement | 0/5 | Not started | - |
 | 5. Motion & Design Skills | 0/6 | Not started | - |
-| 6. Brainstorming & Content | 0/4 | Not started | - |
+| 6. Brainstorming & Content | 0/4 | Planned | - |
 | 7. Asset & Specialist Skills | 0/6 | Not started | - |
 | 8. Experience & Frameworks | 0/8 | Not started | - |
 | 9. Integration & Polish | 0/4 | Not started | - |
 
 ---
 *Roadmap created: 2026-02-23*
-*Last updated: 2026-02-23*
+*Last updated: 2026-02-24*
