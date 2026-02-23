@@ -76,15 +76,15 @@ Plans:
   4. `/modulo:execute` runs plans sequentially or in parallel waves per master plan, with real-time status updates
   5. `/modulo:iterate` and `/modulo:bug-fix` both require brainstorming before changes, present proposed solutions for user approval, and preserve adjacent component integrity
   6. At every step, the plugin tells the user exactly what to do next -- there is never a "now what?" moment
-**Plans**: TBD
+**Plans**: 6 plans
 
 Plans:
-- [ ] 03-01: Start-Project command (discovery + research + DNA generation)
-- [ ] 03-02: Lets-Discuss command (creative deep dive protocol)
-- [ ] 03-03: Plan-Dev command (context-rot-safe planning)
-- [ ] 03-04: Execute command (wave-based parallel execution)
-- [ ] 03-05: Iterate and Bug-Fix commands (brainstorm-first changes)
-- [ ] 03-06: Guided flow system (next-step prompts, state checking)
+- [ ] 03-01-PLAN.md -- Start-Project command: thin router for discovery, parallel research, DNA generation, content planning (~120-150 lines)
+- [ ] 03-02-PLAN.md -- Lets-Discuss command: per-phase creative deep dive with visual proposals, voice refinement, DISCUSSION-{phase}.md output (~100-130 lines)
+- [ ] 03-03-PLAN.md -- Plan-Dev command: phase-scoped re-research, discussion integration, context-rot-safe PLAN.md generation (~100-140 lines)
+- [ ] 03-04-PLAN.md -- Execute command: thin wrapper around build-orchestrator with session resume, flags, canary checks (~80-120 lines)
+- [ ] 03-05-PLAN.md -- Iterate + Bug-Fix commands: brainstorm-first design changes (creative) and diagnostic root cause analysis (bugs)
+- [ ] 03-06-PLAN.md -- Utility commands (status, audit), v6.1.0 cleanup, plugin manifest update, guided flow consistency verification
 
 ### Phase 4: Quality Enforcement
 **Goal**: Design quality is enforced progressively through 4 layers (build-time, post-wave, end-of-phase, user checkpoint) so problems are caught where they are cheapest to fix
@@ -212,7 +212,7 @@ Note: Phases 3 and 4 both depend on Phase 2. Phases 5, 6, 7, 8 can partially ove
 |-------|----------------|--------|-----------|
 | 1. Foundation | 0/6 | Not started | - |
 | 2. Pipeline Architecture | 0/7 | Planned | - |
-| 3. Command System | 0/6 | Not started | - |
+| 3. Command System | 0/6 | Planned | - |
 | 4. Quality Enforcement | 0/5 | Not started | - |
 | 5. Motion & Design Skills | 0/6 | Not started | - |
 | 6. Brainstorming & Content | 0/4 | Not started | - |
