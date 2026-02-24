@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-23)
 
 **Core value:** Every output must be award-winning by default (Awwwards SOTD 8.0+) -- not as a stretch goal, but as the baseline.
-**Current focus:** Phase 3 - Command System (ready to plan)
+**Current focus:** Phase 3 - Command System (executing)
 
 ## Current Position
 
 Phase: 3 of 9 (Command System)
-Plan: 0 of 6 in current phase
-Status: Phase 2 VERIFIED ✓ — ready to plan Phase 3
-Last activity: 2026-02-24 -- Phase 2 executed (7/7 plans), verified (5/5 must-haves passed)
+Plan: 4 of 6 in current phase
+Status: In progress
+Last activity: 2026-02-24 -- Completed 03-04-PLAN.md (execute command rewrite)
 
-Progress: [██░░░░░░░░] 25% (13/52 plans)
+Progress: [███░░░░░░░] 27% (14/52 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 13
-- Average duration: 4 min
-- Total execution time: 46 min
+- Total plans completed: 14
+- Average duration: 3 min
+- Total execution time: 47 min
 
 **By Phase:**
 
@@ -29,10 +29,11 @@ Progress: [██░░░░░░░░] 25% (13/52 plans)
 |-------|-------|-------|----------|
 | 1. Foundation | 6/6 | 22 min | 4 min |
 | 2. Pipeline Architecture | 7/7 | 24 min | 3 min |
+| 3. Command System | 1/6 | 1 min | 1 min |
 
 **Recent Trend:**
-- Last 5 plans: 02-07 (3 min), 02-06 (4 min), 02-03 (3 min), 02-01 (6 min), 02-04 (5 min)
-- Trend: Consistent execution; Phase 2 complete at 3 min average
+- Last 5 plans: 03-04 (1 min), 02-07 (3 min), 02-06 (4 min), 02-03 (3 min), 02-01 (6 min)
+- Trend: Accelerating; single-task plans complete in ~1 min
 
 *Updated after each plan completion*
 
@@ -106,6 +107,9 @@ Recent decisions affecting current work:
 - [Phase 2-07]: Platform memory supplements (not replaces) file-based feedback -- file-based is primary, platform memory is secondary
 - [Phase 2-07]: Discussion protocol: 6 decision gates, 4 participating agents, builders explicitly exempt
 - [Phase 2-07]: Protocol violations handled through quality review feedback loop, not hard errors
+- [Phase 3-04]: Execute command is thinnest core command at 127 lines -- all wave/builder/diversity logic in build-orchestrator
+- [Phase 3-04]: Auto-detection: CONTEXT.md with incomplete state auto-triggers resume mode
+- [Phase 3-04]: Backward compatibility: bare word 'resume' treated as --resume flag
 - [Phase 5]: Motion intensity, wow moment count, tension mandate all archetype-driven (user decision)
 - [Phase 5]: Scroll-driven animations are beat-dependent -- HOOK/PEAK get continuous, others entrance-only
 - [Phase 5]: Hybrid motion presets -- archetype base family + DNA parameter tweaks
@@ -149,5 +153,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-24
-Stopped at: Phase 2 complete and verified — ready for Phase 3 planning
+Stopped at: Completed 03-04-PLAN.md (execute command rewrite)
 Resume file: None
