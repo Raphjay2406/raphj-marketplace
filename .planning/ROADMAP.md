@@ -21,6 +21,10 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 7: Asset & Specialist Skills** - Shape generation, 3D/WebGL, component marketplace, Remotion, Spline, image prompts
 - [x] **Phase 8: Experience & Frameworks** - Responsive, accessibility, multi-page, dark/light mode, framework support, skill rewrites
 - [x] **Phase 9: Integration & Polish** - Figma integration, design system export, progress reporting, error recovery
+- [ ] **Phase 10: Wire Quality Enforcement** - Add CD/QR invocation to build-orchestrator wave protocol (GAP-1)
+- [ ] **Phase 11: Fix Stale Cross-References** - Repair all stale agent/command references across skills (GAP-2, GAP-3, ISSUE-1-3)
+- [ ] **Phase 12: Registry & Documentation** - Rebuild SKILL-DIRECTORY.md and rewrite README.md (ISSUE-4-5)
+- [ ] **Phase 13: Legacy Cleanup** - Remove v6.1.0 agents/skills, fix bookkeeping, resolve duplicates
 
 ## Phase Details
 
@@ -202,11 +206,74 @@ Plans:
 - [x] 09-03-PLAN.md -- Progress Reporting skill: 4-tier reporting (task/section/wave/milestone), STATE.md extensions, review gates, screenshot protocol
 - [x] 09-04-PLAN.md -- Error Recovery skill: severity classification (MINOR/MAJOR/CRITICAL), structured diagnosis, checkpoint resume, failure pattern escalation
 
+### Phase 10: Wire Quality Enforcement into Build Pipeline
+**Goal**: Quality enforcement (CD + QR review after every wave) fires automatically during `/execute`, completing the build-time → post-wave → end-of-build → user-checkpoint quality chain
+**Depends on**: Phase 2, Phase 4
+**Requirements**: GAP-1 (CRITICAL), Flow 1 (partial), Flow 3 (broken)
+**Gap Closure**: Closes audit GAP-1 + Flow 3 + Flow 1 partial
+**Success Criteria** (what must be TRUE):
+  1. Build-orchestrator spawns creative-director and quality-reviewer in parallel after every wave completes
+  2. Build-orchestrator `tools:` frontmatter includes CD and QR agent references
+  3. GAP-FIX.md from QR triggers polisher automatically, then re-review loop runs
+  4. Wave review gate blocks next wave until CD/QR findings are addressed or user approves proceeding
+
+Plans:
+- [ ] 10-01-PLAN.md -- Add CD/QR invocation to build-orchestrator wave protocol, update tools, wire GAP-FIX → polisher → re-review
+
+### Phase 11: Fix Stale Cross-References
+**Goal**: All agent and command references across skills point to correct v2.0 names, and the REFERENCES.md producer/consumer chain is resolved
+**Depends on**: Phase 10
+**Requirements**: GAP-2 (CRITICAL), GAP-3 (CRITICAL), ISSUE-1 (MAJOR), ISSUE-2 (MAJOR), ISSUE-3 (MAJOR), Flow 2 (broken), Flow 4 (broken)
+**Gap Closure**: Closes audit GAP-2, GAP-3, ISSUE-1, ISSUE-2, ISSUE-3 + Flow 2, Flow 4
+**Success Criteria** (what must be TRUE):
+  1. Zero references to `design-lead` in any v2.0 skill or agent (replaced with `build-orchestrator`)
+  2. Zero references to `start-design` in any skill or agent (replaced with `start-project`)
+  3. Zero references to `plan-sections` in any skill (replaced with `plan-dev`)
+  4. Zero references to `/modulo:verify` (replaced with `/modulo:audit`) or `/modulo:export` (removed or rewired)
+  5. REFERENCES.md either produced by a command/agent or consumers updated to read the correct artifact
+
+Plans:
+- [ ] 11-01-PLAN.md -- Systematic cross-reference repair: design-lead, start-design, plan-sections, verify/export replacements
+- [ ] 11-02-PLAN.md -- Resolve REFERENCES.md producer gap (either add production step or update consumers)
+
+### Phase 12: Registry & Documentation Update
+**Goal**: SKILL-DIRECTORY.md accurately reflects the complete v2.0 skill inventory and README.md documents the correct v2.0 architecture, commands, and workflow
+**Depends on**: Phase 11
+**Requirements**: ISSUE-4 (MAJOR), ISSUE-5 (MAJOR)
+**Gap Closure**: Closes audit ISSUE-4 and ISSUE-5
+**Success Criteria** (what must be TRUE):
+  1. SKILL-DIRECTORY.md lists every skill in `skills/` with correct name, tier, status, and description
+  2. No "PLANNED" entries remain for skills that are complete
+  3. README.md documents v2.0 commands (8), pipeline agents, 19 archetypes, and correct workflow sequence
+  4. README.md version matches plugin manifest version
+
+Plans:
+- [ ] 12-01-PLAN.md -- Rebuild SKILL-DIRECTORY.md from actual skill inventory
+- [ ] 12-02-PLAN.md -- Rewrite README.md for v2.0
+
+### Phase 13: Legacy Cleanup
+**Goal**: Remove all legacy v6.1.0 artifacts that conflict with or shadow v2.0 definitions, fix remaining bookkeeping, and ensure clean repository state
+**Depends on**: Phase 12
+**Requirements**: Tech debt items from audit
+**Gap Closure**: Closes all tech debt items from milestone audit
+**Success Criteria** (what must be TRUE):
+  1. No legacy v6.1.0 agents remain in `agents/` root (design-lead, design-researcher, quality-reviewer, section-builder, specialist auditors removed)
+  2. Duplicate discussion-protocol.md resolved (keep Phase 2 version at agents/protocols/)
+  3. Superseded v6.1.0 skills removed from `skills/`
+  4. REQUIREMENTS.md and ROADMAP.md bookkeeping updated (checkmarks, status)
+  5. react-vite-patterns has Machine-Readable Constraints section
+  6. Phantom typography/color-system directory entries resolved
+  7. Phase 6 brainstorm skills explicitly referenced by relevant agents
+
+Plans:
+- [ ] 13-01-PLAN.md -- Remove legacy v6.1.0 agents and resolve duplicates
+- [ ] 13-02-PLAN.md -- Remove superseded skills, fix bookkeeping, add missing constraints, wire brainstorm skills
+
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9
-Note: Phases 3 and 4 both depend on Phase 2. Phases 5, 6, 7, 8 can partially overlap as they depend on Phase 1 (and some on Phase 2/5).
+Phases 1-9: original build (complete). Phases 10-13: gap closure from v1 milestone audit.
+Phase order: 10 -> 11 -> 12 -> 13 (sequential, each depends on prior)
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -219,7 +286,11 @@ Note: Phases 3 and 4 both depend on Phase 2. Phases 5, 6, 7, 8 can partially ove
 | 7. Asset & Specialist Skills | 6/6 | Complete | 2026-02-24 |
 | 8. Experience & Frameworks | 8/8 | Complete | 2026-02-24 |
 | 9. Integration & Polish | 4/4 | Complete | 2026-02-24 |
+| 10. Wire Quality Enforcement | 0/1 | Pending | -- |
+| 11. Fix Stale Cross-References | 0/2 | Pending | -- |
+| 12. Registry & Documentation | 0/2 | Pending | -- |
+| 13. Legacy Cleanup | 0/2 | Pending | -- |
 
 ---
 *Roadmap created: 2026-02-23*
-*Last updated: 2026-02-24 — Phase 9 complete, all phases done*
+*Last updated: 2026-02-25 — Gap closure phases 10-13 added from v1 milestone audit*
