@@ -5,14 +5,14 @@
 See: .planning/PROJECT.md (updated 2026-02-23)
 
 **Core value:** Every output must be award-winning by default (Awwwards SOTD 8.0+) -- not as a stretch goal, but as the baseline.
-**Current focus:** Phase 7 - Asset & Specialist Skills (planned, ready to execute)
+**Current focus:** Phase 8 - Experience & Frameworks (planned, ready to execute)
 
 ## Current Position
 
-Phase: 7 of 9 (Asset & Specialist Skills)
-Plan: 0 of 6 in current phase
-Status: Planned — ready to execute
-Last activity: 2026-02-24 -- Phase 7 discussed, researched, planned (6 plans in 1 wave), verified
+Phase: 8 of 9 (Experience & Frameworks)
+Plan: 0 of 8 in current phase
+Status: Planned -- ready to execute
+Last activity: 2026-02-24 -- Phase 8 discussed, researched, planned (8 plans in 4 waves)
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -46,14 +46,14 @@ Recent decisions affecting current work:
 - [Roadmap]: Foundation (identity + skills) before Pipeline (agents) before Commands -- research confirmed this ordering prevents context rot
 - [Roadmap]: Brainstorming (BRNS) grouped with Content (CONT-01) in Phase 6 since creative direction feeds copy intelligence
 - [Phase 2]: Spawn prompt budget increased to ~300 lines to fit full Design DNA document (user decision)
-- [Phase 2]: CD has real authority — can request changes, reviews both plans and output per wave
+- [Phase 2]: CD has real authority -- can request changes, reviews both plans and output per wave
 - [Phase 2]: Build failures bubble to user (no auto-retry)
-- [Phase 2]: Subagents cannot spawn subagents — build-orchestrator is the only spawner
+- [Phase 2]: Subagents cannot spawn subagents -- build-orchestrator is the only spawner
 - [Phase 5]: Motion intensity, wow moment count, tension mandate all archetype-driven (user decision)
-- [Phase 5]: Scroll-driven animations are beat-dependent — HOOK/PEAK get continuous, others entrance-only
-- [Phase 5]: Hybrid motion presets — archetype base family + DNA parameter tweaks
-- [Phase 5]: Hard enforcement of DNA tokens in scaffold — typed utilities only accept DNA tokens
-- [Phase 5]: GSAP now 100% free (all plugins) — Webflow acquisition. No premium caveats
+- [Phase 5]: Scroll-driven animations are beat-dependent -- HOOK/PEAK get continuous, others entrance-only
+- [Phase 5]: Hybrid motion presets -- archetype base family + DNA parameter tweaks
+- [Phase 5]: Hard enforcement of DNA tokens in scaffold -- typed utilities only accept DNA tokens
+- [Phase 5]: GSAP now 100% free (all plugins) -- Webflow acquisition. No premium caveats
 - [Phase 5]: Motion library rebranded to `motion/react` imports (not `framer-motion`)
 - [Phase 5]: CSS scroll-driven animations are production default, `@supports` for progressive enhancement
 - [Phase 7]: Shapes serve both atmospheric and foreground roles; beat-aware shape intensity
@@ -62,6 +62,14 @@ Recent decisions affecting current work:
 - [Phase 7]: Tool-agnostic AI image prompts with full DNA translation and DNA-derived negative prompts
 - [Phase 7]: WebGPU ~95% browser support; R3F v9 stable target, v10 alpha forward-looking
 - [Phase 7]: GSAP MorphSVG + DrawSVG now free -- include in shape skill freely
+- [Phase 8]: 375px is design target, fluid scaling gracefully handles down to ~320px
+- [Phase 8]: Container queries vs media queries at Claude's discretion per component type
+- [Phase 8]: Hybrid typography -- clamp() for body, breakpoint steps for display text
+- [Phase 8]: Next.js: full coverage of BOTH App Router and Pages Router equally
+- [Phase 8]: Tauri and Electron: full desktop-aware design skills (window chrome, drag regions, titlebars)
+- [Phase 8]: Dark/light mode equal parity -- both independently award-worthy, archetype signature transitions
+- [Phase 8]: Framework detection auto-detect then user-confirm, stored in DESIGN-DNA.md
+- [Phase 8]: Tailwind v4 skill rewrite is foundational -- completes before other skills reference it
 
 ### Pending Todos
 
@@ -70,11 +78,12 @@ None yet.
 ### Blockers/Concerns
 
 - ~~Tailwind v4 @theme syntax needs verification against current docs before Phase 5/8 skill writing~~ RESOLVED: Phase 5 research verified Tailwind v4 @theme syntax
-- Next.js 16 and Astro 5 APIs should be spot-checked before Phase 8 framework skills
-- Multi-page orchestration (Phase 8, EXPR-03) is largely uncharted territory -- may need experimentation
+- ~~Next.js 16 and Astro 5 APIs should be spot-checked before Phase 8 framework skills~~ RESOLVED: Phase 8 research verified Next.js 16 (proxy.ts, async params) and Astro 5/6 (ClientRouter, Content Layer API)
+- ~~Multi-page orchestration (Phase 8, EXPR-03) is largely uncharted territory -- may need experimentation~~ ADDRESSED: Phase 8 research identified key patterns; creative judgment needed for per-page emotional arcs
+- Surviving skill rewrite scope (Plan 08-08) depends on Phases 1-7 execution -- actual file list may shift
 
 ## Session Continuity
 
 Last session: 2026-02-24
-Stopped at: Phase 7 planned (6 plans, 1 wave), verified, ready to execute
+Stopped at: Phase 8 planned (8 plans, 4 waves), ready to execute
 Resume file: None

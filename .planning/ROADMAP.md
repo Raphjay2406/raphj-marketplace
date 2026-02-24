@@ -173,17 +173,17 @@ Plans:
   3. Multi-page architecture skill covers site-level DNA, page-type templates (landing, about, pricing, blog, docs, contact), shared components, and per-page emotional arcs
   4. Framework skills for Next.js (App Router), Astro (Islands), React/Vite, Tauri, and Electron produce correct idiomatic code with framework-specific patterns detected and adapted automatically
   5. All surviving skills are rewritten to current library versions (Tailwind v4 @theme, Motion 12.x, GSAP 3.14) with the 4-layer quality standard, and code quality standards (TypeScript strict, clean structure, consistent naming) are enforced
-**Plans**: TBD
+**Plans**: 8 plans
 
 Plans:
-- [ ] 08-01: Responsive Design skill (mobile-first, 375px constraint, clamp(), container queries)
-- [ ] 08-02: Accessibility skill (WCAG AA baked-in, ARIA, keyboard, focus, motion-safe)
-- [ ] 08-03: Multi-page architecture skill (site DNA, page templates, shared components)
-- [ ] 08-04: Dark/Light mode skill (archetype-aware, both themes award-worthy, transition animation)
-- [ ] 08-05: Framework skills -- Next.js and Astro (App Router, Islands, detection)
-- [ ] 08-06: Framework skills -- React/Vite, Tauri, Electron (desktop-aware patterns)
-- [ ] 08-07: Tailwind v4 skill rewrite (@theme CSS-first, DNA token mapping)
-- [ ] 08-08: Remaining skill rewrites to 4-layer format and current library versions
+- [ ] 08-01-PLAN.md -- Tailwind v4 system skill: @theme CSS-first config, DNA 12-token mapping, container queries, dark mode @custom-variant, animation presets
+- [ ] 08-02-PLAN.md -- Responsive Design skill: mobile-first 375px floor, hybrid typography (clamp body + stepped display), container queries, touch targets
+- [ ] 08-03-PLAN.md -- Accessibility skill: WCAG 2.1 AA baked-in, 19 archetype focus indicators, ARIA patterns, keyboard nav, reduced-motion per archetype
+- [ ] 08-04-PLAN.md -- Dark/Light Mode skill: dual independent palettes, archetype signature transitions, FOUC prevention, dual asset support
+- [ ] 08-05-PLAN.md -- Multi-page Architecture skill: site-level DNA, 6 page-type templates with emotional arcs, shared components, cross-page cohesion
+- [ ] 08-06-PLAN.md -- Next.js 16 + Astro 5/6 framework skills: proxy.ts, async params, ClientRouter, Content Layer, Islands architecture
+- [ ] 08-07-PLAN.md -- React/Vite + Desktop (Tauri/Electron) framework skills: SPA patterns, custom titlebars, drag regions, platform awareness
+- [ ] 08-08-PLAN.md -- Remaining skill rewrites: 7 domain/utility skills to 4-layer format with current library versions
 
 ### Phase 9: Integration & Polish
 **Goal**: The system delivers a complete end-to-end workflow with Figma design import, design system export for handoff, transparent execution progress, and graceful error recovery from any failure state
@@ -217,7 +217,7 @@ Note: Phases 3 and 4 both depend on Phase 2. Phases 5, 6, 7, 8 can partially ove
 | 5. Motion & Design Skills | 0/6 | Planned | - |
 | 6. Brainstorming & Content | 0/4 | Planned | - |
 | 7. Asset & Specialist Skills | 0/6 | Planned | - |
-| 8. Experience & Frameworks | 0/8 | Not started | - |
+| 8. Experience & Frameworks | 0/8 | Planned | - |
 | 9. Integration & Polish | 0/4 | Not started | - |
 
 ---
