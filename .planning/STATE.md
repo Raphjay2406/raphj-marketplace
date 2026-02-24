@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-23)
 ## Current Position
 
 Phase: 3 of 9 (Command System)
-Plan: 4 of 6 in current phase
+Plan: 2 of 6 in current phase (03-01, 03-04 complete)
 Status: In progress
-Last activity: 2026-02-24 -- Completed 03-04-PLAN.md (execute command rewrite)
+Last activity: 2026-02-24 -- Completed 03-01-PLAN.md (start-project command)
 
-Progress: [███░░░░░░░] 27% (14/52 plans)
+Progress: [███░░░░░░░] 29% (15/52 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 14
+- Total plans completed: 15
 - Average duration: 3 min
-- Total execution time: 47 min
+- Total execution time: 49 min
 
 **By Phase:**
 
@@ -29,11 +29,11 @@ Progress: [███░░░░░░░] 27% (14/52 plans)
 |-------|-------|-------|----------|
 | 1. Foundation | 6/6 | 22 min | 4 min |
 | 2. Pipeline Architecture | 7/7 | 24 min | 3 min |
-| 3. Command System | 1/6 | 1 min | 1 min |
+| 3. Command System | 2/6 | 3 min | 2 min |
 
 **Recent Trend:**
-- Last 5 plans: 03-04 (1 min), 02-07 (3 min), 02-06 (4 min), 02-03 (3 min), 02-01 (6 min)
-- Trend: Accelerating; single-task plans complete in ~1 min
+- Last 5 plans: 03-01 (2 min), 03-04 (1 min), 02-07 (3 min), 02-06 (4 min), 02-03 (3 min)
+- Trend: Accelerating; command plans completing in 1-2 min
 
 *Updated after each plan completion*
 
@@ -107,6 +107,10 @@ Recent decisions affecting current work:
 - [Phase 2-07]: Platform memory supplements (not replaces) file-based feedback -- file-based is primary, platform memory is secondary
 - [Phase 2-07]: Discussion protocol: 6 decision gates, 4 participating agents, builders explicitly exempt
 - [Phase 2-07]: Protocol violations handled through quality review feedback loop, not hard errors
+- [Phase 3-01]: start-project.md at 154 lines (within 100-180 range) -- all domain logic in agents, zero in command
+- [Phase 3-01]: Discovery phase in-command (not dispatched to agent) -- conversational UX needs direct user interaction
+- [Phase 3-01]: 4 research tracks dispatched in parallel via Task tool (trends, references, components, animation)
+- [Phase 3-01]: Content planning gated behind --skip-content flag for deferred copy workflows
 - [Phase 3-04]: Execute command is thinnest core command at 127 lines -- all wave/builder/diversity logic in build-orchestrator
 - [Phase 3-04]: Auto-detection: CONTEXT.md with incomplete state auto-triggers resume mode
 - [Phase 3-04]: Backward compatibility: bare word 'resume' treated as --resume flag
@@ -153,5 +157,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-24
-Stopped at: Completed 03-04-PLAN.md (execute command rewrite)
+Stopped at: Completed 03-01-PLAN.md (start-project command)
 Resume file: None
