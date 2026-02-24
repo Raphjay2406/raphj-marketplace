@@ -263,6 +263,11 @@ Recent decisions affecting current work:
 - [Phase 9-03]: Wave review gates are HARD gates -- design-lead never auto-proceeds without user approval
 - [Phase 9-03]: STATE.md budget: current-wave-only task tables enforce 100-line limit; previous wave data cleared on new wave start
 - [Phase 9-03]: FAILURE-LOG.md as overflow destination -- max 5 failure entries in STATE.md, full diagnostics in FAILURE-LOG.md
+- [Phase 9-04]: 594 lines exceeds 450-550 target but all content substantive (7 patterns, 7 anti-patterns, 13 machine-readable constraints)
+- [Phase 9-04]: Auto-fix (targeted correction) permitted for MINOR; distinct from auto-retry which is forbidden per Phase 2 decision
+- [Phase 9-04]: FAILURE-LOG.md is append-only and unbounded; STATE.md capped at 5 most recent failures
+- [Phase 9-04]: DNA-related failures are always MAJOR minimum due to cascade risk to all consuming sections
+- [Phase 9-04]: Pre-wave checkpoint is HARD requirement -- write to STATE.md before spawning any builders
 
 ### Pending Todos
 
@@ -278,5 +283,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-24
-Stopped at: Completed 09-03-PLAN.md (Progress Reporting skill)
+Stopped at: Completed 09-04-PLAN.md (Error Recovery skill)
 Resume file: None
