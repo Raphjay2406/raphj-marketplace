@@ -225,6 +225,9 @@ Recent decisions affecting current work:
 - [Phase 7-02]: Post-processing archetype mapping table (8 archetypes x 4 effects) for direct builder reference
 - [Phase 7-01]: 1304 lines exceeds 700-900 target but all content substantive (25 code patterns, 19-archetype palette, full SVG animation suite)
 - [Phase 7-01]: Isometric/CSS pseudo-3D placed in shape skill (not 3D skill) -- clear boundary at Canvas requirement
+- [Phase 8-01]: 877 lines exceeds 500-600 target but all content substantive (7 complete code patterns, 7 anti-patterns, 10 constraints)
+- [Phase 8-01]: v3-to-v4 migration table in Layer 1 as primary decision reference -- v3 avoidance is the main decision builders face
+- [Phase 8-01]: Container query breakpoints enumerated (@xs through @5xl) for builder reference in container-vs-media decisions
 - [Phase 8-03]: 929 lines exceeds 550-650 target but all content substantive (19 archetype CSS + Tailwind focus mappings, 6 ARIA components, 19-row reduced-motion table)
 - [Phase 8-03]: Focus indicators use dual CSS data-archetype selectors + Tailwind archetypeFocusClass Record
 - [Phase 8-03]: Focus trap uses inert attribute (Baseline 2023) instead of manual Tab key interception
