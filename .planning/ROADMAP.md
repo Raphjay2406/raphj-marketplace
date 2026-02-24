@@ -194,13 +194,13 @@ Plans:
   2. Design System Export produces Storybook components and design tokens package from the generated system for handoff to design teams
   3. Multi-level progress reporting shows real-time agent status updates, wave summaries with screenshots, and milestone checkpoints with user review gates
   4. Error recovery diagnoses problems, proposes solutions for user approval before applying, and can cleanly resume from any failure state including mid-wave crashes and session interruptions
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
-- [ ] 09-01: Figma Integration skill (MCP tools, DNA translation, visual QA source)
-- [ ] 09-02: Design System Export skill (Storybook components, design tokens package)
-- [ ] 09-03: Progress reporting system (real-time status, wave summaries, checkpoints)
-- [ ] 09-04: Error recovery system (diagnosis, proposed solutions, clean resume)
+- [ ] 09-01-PLAN.md -- Figma Integration skill: MCP tool decision tree, DNA-Figma hybrid token resolution, PLAN.md generation from Figma, visual QA overlay diff, agent rewrite
+- [ ] 09-02-PLAN.md -- Design System Export skill: Storybook 10 CSF Factories stories, W3C DTCG tokens via Style Dictionary 5, multi-format output (CSS/JSON/Figma)
+- [ ] 09-03-PLAN.md -- Progress Reporting skill: 4-tier reporting (task/section/wave/milestone), STATE.md extensions, review gates, screenshot protocol
+- [ ] 09-04-PLAN.md -- Error Recovery skill: severity classification (MINOR/MAJOR/CRITICAL), structured diagnosis, checkpoint resume, failure pattern escalation
 
 ## Progress
 
@@ -218,7 +218,7 @@ Note: Phases 3 and 4 both depend on Phase 2. Phases 5, 6, 7, 8 can partially ove
 | 6. Brainstorming & Content | 0/4 | Planned | - |
 | 7. Asset & Specialist Skills | 0/6 | Planned | - |
 | 8. Experience & Frameworks | 0/8 | Planned | - |
-| 9. Integration & Polish | 0/4 | Not started | - |
+| 9. Integration & Polish | 0/4 | Planned | - |
 
 ---
 *Roadmap created: 2026-02-23*
