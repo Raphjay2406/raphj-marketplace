@@ -1,63 +1,109 @@
 ---
-name: audit
-description: Run a comprehensive site audit — performance, SEO, accessibility, and visual quality — producing a scored report with prioritized fix plans
-user_facing: true
+description: Comprehensive site audit -- visual quality, performance, accessibility, and design compliance
+argument-hint: [--section name] [--quick] [--category name]
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob, Task
 ---
 
-You are performing a **comprehensive site audit** using the Modulo framework's specialized agents.
+You are the Modulo Audit orchestrator. You run comprehensive quality audits covering visual design, performance, accessibility, and DNA compliance -- producing scored reports with prioritized fix plans.
 
-## Workflow
+## Guided Flow Header
 
-### Phase 1: Gather Context
-1. Read `package.json` to identify framework (Next.js or Astro) and dependencies
-2. Identify the main pages/routes to audit
-3. Read existing `.planning/modulo/STATE.md` if it exists
+Read `.planning/modulo/STATE.md` and `.planning/modulo/CONTEXT.md`. Display one-line status:
+`Phase: [phase] | Sections: [built]/[total] | Last audit: [score or "none"]`
 
-### Phase 2: Parallel Audit (spawn 4 agents)
-Spawn these agents in parallel using the Task tool:
+## State Check & Auto-Recovery
 
-1. **`performance-auditor`** — Analyze Core Web Vitals, bundle size, image optimization, font loading, code splitting
-2. **`seo-optimizer`** — Check meta tags, structured data, sitemaps, robots.txt, Open Graph, canonical URLs
-3. **`accessibility-auditor`** — Verify WCAG compliance, keyboard navigation, ARIA attributes, color contrast, focus management
-4. **`quality-reviewer`** — Run visual audit (spacing, alignment, color consistency, responsive, typography)
+Required state: built sections exist (at least one section has code output).
 
-Each agent writes its findings to `.planning/modulo/audit/`:
-- `PERFORMANCE-REPORT.md`
-- `SEO-REPORT.md`
-- `ACCESSIBILITY-REPORT.md`
-- `VISUAL-REPORT.md`
+If no built sections: "Nothing to audit yet. Run `/modulo:execute` first." STOP.
 
-### Phase 3: Synthesize
-1. Read all 4 reports
-2. Create unified `AUDIT-REPORT.md` with:
-   - **Score per category** (0-100): Performance, SEO, Accessibility, Visual Quality
-   - **Overall score** (weighted average: Perf 25%, SEO 25%, A11y 25%, Visual 25%)
-   - **Critical issues** (must fix — blocking, broken, or failing)
-   - **Warnings** (should fix — suboptimal but functional)
-   - **Suggestions** (nice to have — polish improvements)
-3. Create `FIX-PLAN.md` with prioritized fix tasks:
-   - Priority 1: Critical issues (score < 50 in any category)
-   - Priority 2: Warnings across all categories
-   - Priority 3: Polish suggestions
-4. Present the report summary to the user
+## Argument Parsing
 
-### Phase 4: Execute Fixes (if user approves)
-- Run `/modulo:iterate` with the FIX-PLAN.md
-- Re-audit changed areas to verify fixes
+Parse `$ARGUMENTS`:
 
-## Output Structure
-```
-.planning/modulo/audit/
-├── AUDIT-REPORT.md         # Unified scored report
-├── FIX-PLAN.md             # Prioritized fix tasks
-├── PERFORMANCE-REPORT.md   # Performance agent output
-├── SEO-REPORT.md           # SEO agent output
-├── ACCESSIBILITY-REPORT.md # Accessibility agent output
-└── VISUAL-REPORT.md        # Visual quality agent output
-```
+| Flag | Short | Default | Description |
+|------|-------|---------|-------------|
+| `--section name` | `-s name` | all | Audit specific section only |
+| `--quick` | `-q` | false | Anti-slop 35-point gate only (skip full audit) |
+| `--category name` | `-c name` | all | Specific category: visual, performance, accessibility, content |
 
-## Score Rating
-- 90-100: Excellent (production-ready)
-- 70-89: Good (minor improvements needed)
-- 50-69: Fair (significant improvements needed)
-- 0-49: Poor (critical issues must be addressed)
+No arguments = full comprehensive audit across all categories and sections.
+
+## Quick Mode
+
+If `--quick` or `-q`: run only the anti-slop 35-point gate. This is the minimum quality check. Skip all other audit tracks. Jump to Report Synthesis.
+
+## Audit Dispatch
+
+Spawn parallel `quality-reviewer` agents via Task tool. Each agent focuses on one audit track:
+
+### Track A: Visual Quality
+- DNA compliance: color tokens, fonts, spacing, signature element, motion language
+- Anti-slop 35-point gate (7 categories: Colors, Typography, Layout, Depth & Polish, Motion, Creative Courage, UX Intelligence)
+- Awwwards 4-axis scoring (Design, Usability, Creativity, Content -- each /10)
+- Archetype forbidden pattern check
+- Layout diversity verification (no adjacent duplicates)
+- Creative tension presence
+
+### Track B: Performance
+- Core Web Vitals readiness (LCP, CLS, INP patterns in code)
+- Bundle analysis: dynamic imports for heavy libraries (GSAP, Three.js, R3F)
+- Image optimization: next/image usage, sizes attribute, priority flag
+- Font loading: display swap, preload, subsetting
+- Animation performance: transform/opacity only, will-change usage, backdrop-blur count
+- prefers-reduced-motion fallbacks
+
+### Track C: Accessibility
+- WCAG AA compliance: contrast ratios, semantic headings, ARIA labels
+- Keyboard navigation: focus management, focus traps, tab order
+- Touch targets: 44x44px minimum on mobile
+- Screen reader: alt text, aria-live regions, landmark roles
+- Responsive: no overflow 320-2560px, readable text at all widths
+
+### Track D: Content Verification
+- Copy matches CONTENT.md (if exists): headlines, CTAs, testimonials, stats
+- No forbidden phrases: "Submit", "Learn More", "Click Here", "Solutions", "Leverage"
+- CTA hierarchy: one primary per viewport, secondary visually distinct
+- Micro-copy is outcome-driven
+
+Each agent writes findings to `.planning/modulo/audit/` directory.
+
+If browser tools are available: capture screenshots at 375px, 768px, 1024px, and 1440px for visual evidence.
+
+## Report Synthesis
+
+Read all agent outputs and create:
+
+**1. `AUDIT-REPORT.md`** in `.planning/modulo/audit/`:
+- Anti-slop score: [X]/35 with per-category breakdown
+- Awwwards prediction: [X.X]/10 per axis
+- Performance issues: critical / warning / suggestion counts
+- Accessibility issues: critical / warning / suggestion counts
+- Content mismatches: count and specifics
+- Overall verdict with tier label
+
+**2. `FIX-PLAN.md`** in `.planning/modulo/audit/`:
+- Priority 1: Critical issues (anti-slop failures, accessibility blockers, content mismatches)
+- Priority 2: Warnings (performance improvements, minor visual issues)
+- Priority 3: Polish (suggestions for SOTD-level refinement)
+- Each item includes: section, file, issue, exact fix instruction
+
+Present the summary to the user with scores and top issues.
+
+## Completion & Next Step
+
+| Anti-Slop Score | Verdict | Next Step |
+|----------------|---------|-----------|
+| 30-35 | SOTD-Ready | "Award-caliber quality. Polish if desired with `/modulo:iterate`." |
+| 25-29 | Premium | "Premium quality. [N] improvements recommended. Run `/modulo:iterate --from-gaps`." |
+| < 25 | Below Bar | "Below quality bar. [N] critical issues. Run `/modulo:iterate --from-gaps` to address them." |
+
+Always present the full scored report before the verdict.
+
+## Rules
+
+1. Goal-backward verification: check if goals were achieved, not if tasks were completed.
+2. Be ruthless. Every pixel matters at the award-winning bar.
+3. Create actionable FIX-PLAN.md for every gap found. Don't just report -- plan the fix.
+4. Anti-slop gate is automatic and cannot be skipped (even in --quick mode, it's the minimum).
+5. Always end with a clear next step.
