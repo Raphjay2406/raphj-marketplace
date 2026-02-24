@@ -210,3 +210,420 @@ Maximum voice variation. Hero tone is dramatically different from body. CTA can 
 | Navigation | Single nouns: "Work", "About", "Contact" | Descriptive nouns: "Our Work", "About Us" | Characterful: "The Goods", "Who We Are", "Say Hi" |
 
 ---
+
+## Layer 2: Content Bank Matrix
+
+The content bank is organized as a beat x section matrix. Each cell provides a structural formula that produces archetype-appropriate copy when combined with the voice profile. Formulas NEVER produce banned phrases -- they are structurally designed to require specificity.
+
+### Coverage Matrix
+
+| Beat \ Section | Hero | Features | Testimonial | CTA | Pricing | About |
+|----------------|------|----------|-------------|-----|---------|-------|
+| HOOK | FULL | - | - | - | - | - |
+| TEASE | template | template | - | - | - | - |
+| REVEAL | template | FULL | - | template | template | - |
+| BUILD | - | FULL | template | template | FULL | template |
+| PEAK | template | template | - | template | - | - |
+| BREATHE | template | - | template | - | - | template |
+| TENSION | - | template | - | - | - | - |
+| PROOF | - | - | FULL | template | template | - |
+| PIVOT | template | - | - | template | - | FULL |
+| CLOSE | - | - | - | FULL | template | - |
+
+**FULL** = Formula + 5-8 worked examples (archetype-varied)
+**template** = Formula + 1-2 examples
+**-** = Invalid or rare combination (skip)
+
+### HOOK-Hero (FULL)
+
+**Formula:** [Emotional claim or provocation] + [outcome or vision] in 4-8 words. The headline must be understandable in under 2 seconds and create an immediate emotional response. No jargon. No compound sentences. One idea only.
+
+**Archetype modifier:** Conservative archetypes use declarative authority. Moderate archetypes use confident benefit statements. Bold archetypes use provocation or radical simplicity.
+
+**Worked examples (tagged by archetype fit):**
+
+1. "Ship at the speed of thought." -- Neo-Corporate, Kinetic (outcome vision, verb-first)
+2. "We make websites." -- Brutalist (radical simplicity, anti-marketing)
+3. "Find your calm." -- Ethereal (emotional invitation, soft imperative)
+4. "Words that matter." -- Editorial (intellectual claim, understated authority)
+5. "Build products people screenshot." -- Playful/Startup (outcome vision, specificity)
+6. "Real-time, always." -- Data-Dense (functional promise, no embellishment)
+7. "Made with care." -- Warm Artisan (values statement, emotional warmth)
+8. "Intelligence, visible." -- AI-Native (concept compression, technical-poetic)
+
+### REVEAL-Features / BUILD-Features (FULL)
+
+**Formula:** [Specific capability noun] + [concrete benefit verb phrase]. Feature descriptions must answer "what does the user GET?" not "what does the product DO?" Each feature gets a headline (3-6 words) and a description (1-2 sentences, max 25 words).
+
+**Archetype modifier:** Conservative archetypes describe capabilities factually. Moderate archetypes lead with benefit, follow with capability. Bold archetypes let personality carry the feature -- metaphor and attitude over completeness.
+
+**Worked examples:**
+
+1. **Headline:** "Instant deploys" / **Desc:** "Push to main. Live in 8 seconds. No build queues, no waiting." -- Neo-Corporate (metric-specific, confidence)
+2. **Headline:** "Collaborative canvas" / **Desc:** "Design together in real-time. See cursors. Share context. Ship aligned." -- Kinetic (action verbs stacked)
+3. **Headline:** "Type. Ship." / **Desc:** "Two steps. That is the product." -- Brutalist (radical compression)
+4. **Headline:** "Gentle onboarding" / **Desc:** "New users find their way without guides, tooltips, or tutorials. The interface teaches itself." -- Ethereal (soft language, user-centered)
+5. **Headline:** "The archive" / **Desc:** "Every revision, every branch, every thought -- preserved. Knowledge does not decay here." -- Dark Academia (literary register, permanence)
+6. **Headline:** "99.99% uptime" / **Desc:** "Four nines. Verified independently. Check the status page." -- Data-Dense (numbers-first, proof-oriented)
+
+### BUILD-Pricing (FULL)
+
+**Formula:** Plan names must reflect brand personality (never "Basic/Pro/Enterprise" unless archetype demands corporate convention). Feature descriptions use parallel structure. CTA per tier follows the voice document's CTA philosophy.
+
+**Archetype modifier:** Conservative archetypes use descriptive plan names ("Individual", "Team", "Organization"). Moderate archetypes add personality ("Starter", "Growth", "Scale"). Bold archetypes make plan names characterful ("Solo", "Squad", "Armada" or "Spark", "Blaze", "Inferno").
+
+**Worked examples:**
+
+1. **Neo-Corporate:** Plans: "Starter" / "Team" / "Enterprise" -- CTAs: "Start building" / "Upgrade your team" / "Talk to sales" -- Feature style: checkmarks, parallel structure, professional nouns
+2. **Brutalist:** Plans: "Free" / "Paid" / "A Lot" -- CTAs: "Use it" / "Pay for it" / "Call us" -- Feature style: raw list, no icons, no embellishment
+3. **Playful:** Plans: "Just Me" / "The Crew" / "The Whole Company" -- CTAs: "Start free" / "Level up" / "Let's talk" -- Feature style: emoji bullets OK, conversational descriptions
+4. **Luxury:** Plans: (no plan names -- pricing by inquiry only) -- CTA: "Request pricing" -- Feature style: N/A, pricing is exclusive and private
+5. **Warm Artisan:** Plans: "Seedling" / "Garden" / "Orchard" -- CTAs: "Plant your first seed" / "Grow your garden" / "Let's cultivate together" -- Feature style: metaphor-consistent, nature vocabulary
+6. **Retro-Future:** Plans: "localhost" / "staging" / "production" -- CTAs: "> npm start" / "> deploy --team" / "> deploy --enterprise" -- Feature style: monospace, CLI-inspired formatting
+7. **Ethereal:** Plans: "Personal" / "Studio" / "Collective" -- CTAs: "Begin your journey" / "Expand your practice" / "Grow together" -- Feature style: soft verbs, aspirational language
+8. **Dark Academia:** Plans: "Scholar" / "Faculty" / "Institution" -- CTAs: "Begin your studies" / "Establish your practice" / "Contact the registrar" -- Feature style: academic register, gravitas
+
+### PROOF-Testimonial (FULL)
+
+**Formula:** [Framing headline] + [selected quote] + [attribution with specificity]. Testimonial framing must match brand voice -- never generic "What our customers say." Quote selection prioritizes specificity and results over generic praise.
+
+**Archetype modifier:** Conservative archetypes use minimal framing, let quotes speak. Moderate archetypes add light editorial framing. Bold archetypes curate aggressively and may reframe the proof section entirely.
+
+**Worked examples:**
+
+1. **Frame:** "Trusted by teams that ship" / **Quote:** "We cut our deploy cycle from 3 days to 3 hours." / **Attribution:** "Sarah Chen, VP Engineering at Ramp" -- Neo-Corporate (metric-specific, role + company)
+2. **Frame:** "They use it." / **Quote:** [no quotes -- logo grid only] -- Brutalist (anti-testimonial, proof through presence)
+3. **Frame:** "Stories from the community" / **Quote:** "I finally enjoy the process again. That sounds small but it changed everything." / **Attribution:** "Marcus, independent designer" -- Warm Artisan (emotional, first-name basis)
+4. **Frame:** "The evidence" / **Quote:** "40% reduction in design-to-production time across 200+ projects." / **Attribution:** "Internal metrics, Q4 2025" -- Data-Dense (data as testimonial)
+5. **Frame:** "In their words" / **Quote:** "Elegant is overused. This is the real thing." / **Attribution:** "Julia Santos, Creative Director, Studio Forma" -- Luxury (curated voice, industry credibility)
+6. **Frame:** "What people actually say" / **Quote:** "I showed my team and they literally applauded. That never happens." / **Attribution:** "Dev, Founder of Stackblitz" -- Playful (authentic enthusiasm, relatable)
+
+### PIVOT-About (FULL)
+
+**Formula:** [Reframe statement] + [origin/values narrative] + [vision statement]. About sections pivot from product to people/mission. The reframe headline signals the shift. The narrative is 2-4 short paragraphs (not a wall of text). The vision statement looks forward.
+
+**Archetype modifier:** Conservative archetypes use understated professionalism ("Our story"). Moderate archetypes balance personal and professional ("Why we built this"). Bold archetypes make the about section a manifesto ("We got tired of bad software").
+
+**Worked examples:**
+
+1. **Reframe:** "Why we built this" / **Narrative:** Origin story in 3 paragraphs, team photo, mission statement -- Neo-Corporate
+2. **Reframe:** "The boring part (we promise it is not)" / **Narrative:** Conversational founder story, team personality shots -- Playful
+3. **Reframe:** "A studio, not a factory" / **Narrative:** Craft philosophy, process images, values as design principles -- Warm Artisan
+4. **Reframe:** [No headline -- the typography IS the section] / **Narrative:** Single statement of purpose in oversized type -- Brutalist
+5. **Reframe:** "Chapter One" / **Narrative:** Literary-style founding story with cultural references -- Dark Academia
+
+### CLOSE-CTA (FULL)
+
+**Formula:** [Reinforcement headline] + [urgency or value sub-line] + [primary CTA] + [friction reducer]. The close must feel like the natural conclusion of the page's emotional arc. Never introduce new information. Echo the HOOK's energy with added confidence.
+
+**Archetype modifier:** Conservative archetypes close with authority and professionalism. Moderate archetypes close with warmth and invitation. Bold archetypes close with personality and provocation.
+
+**Worked examples:**
+
+1. "Ready to ship?" / "Start free. Upgrade when you need to." / [Start Building] / "No credit card required" -- Neo-Corporate
+2. "Use it." / [single oversized button, no supporting text] -- Brutalist
+3. "Your best work starts here." / "Join 12,000 teams already building." / [Get Started Free] / "2-minute setup. No meetings." -- Playful
+4. "Begin." / [Discover] / [no friction reducer -- exclusivity IS the friction reducer] -- Luxury
+5. "The tools exist. The moment is now." / "Start your practice." / [Enter the Archive] -- Dark Academia
+6. "Ready to make something real?" / "Every great product started with a first commit." / [Start Building] / "Free forever for personal projects" -- Warm Artisan
+
+### Template-Only Cells (Quick Reference)
+
+Each template provides a formula and 1-2 examples. Builders generate project-specific copy on-demand using the formula + their section's Copy Specification.
+
+**TEASE-Hero:**
+Formula: [Credibility signal] in [minimal format].
+Example: "Trusted by Linear, Vercel, and Raycast." (Logo bar + one-line proof)
+Archetype note: Conservative archetypes use company names. Bold archetypes use unexpected metrics: "47,000 deploys last Tuesday."
+
+**TEASE-Features:**
+Formula: [Curiosity gap] about [capability].
+Example: "There is a faster way to ship." (Provocation that the features section will resolve)
+Archetype note: Bold archetypes can use provocation: "Your current tool is lying to you."
+
+**REVEAL-CTA:**
+Formula: [See/Experience] + [the product].
+Example: "See it in action." / "Watch the 2-minute demo."
+Archetype note: Luxury says "Discover." Retro-Future says "> demo --live". Data-Dense says "View live dashboard."
+
+**REVEAL-Pricing:**
+Formula: [Transparent/Simple] + [pricing framing].
+Example: "Simple pricing. No surprises." / "One plan. Everything included."
+Archetype note: Brutalist just shows numbers. No framing needed.
+
+**BUILD-Testimonial:**
+Formula: [Specific result quote] embedded mid-feature.
+Example: Mini-testimonial card between feature rows: "This cut our review time in half." -- brief, specific, positioned as evidence.
+Archetype note: Data-Dense uses metrics as testimonials: "87% of users complete onboarding in under 3 minutes."
+
+**BUILD-CTA:**
+Formula: [Action verb] + [specific destination].
+Example: "Explore all integrations" / "Browse the component library" (secondary CTA linking to deeper content)
+Archetype note: Never "Learn More." Always specify what the user will find.
+
+**BUILD-About:**
+Formula: [Team identity] + [credibility signal].
+Example: "Built by engineers who got tired of waiting for deploys." / "A team of 12 in Berlin, shipping since 2021."
+Archetype note: Warm Artisan goes personal: "Hi, I'm [name]. I made this because..."
+
+**PEAK-Hero:**
+Formula: [Maximum-intensity version of HOOK formula] -- same structural pattern, elevated scale and drama.
+Example: Full-viewport: "The future of [X] is here." / "This changes everything."
+Archetype note: Japanese Minimal PEAK is a single word. Brutalist PEAK is oversized raw type.
+
+**PEAK-Features:**
+Formula: [Hero-feature spotlight] with cinematic treatment.
+Example: Single feature gets full-viewport showcase with interactive demo, scroll-driven reveal, or video.
+Archetype note: Data-Dense peaks with an animated data visualization. Ethereal peaks with ambient particle effects.
+
+**PEAK-CTA:**
+Formula: [Emotional peak] + [conversion opportunity].
+Example: "This is the moment." + [Primary CTA] / "You have seen enough." + [CTA]
+Archetype note: Luxury omits CTA at peak -- the product speaks. Kinetic makes the CTA itself animated.
+
+**BREATHE-Testimonial:**
+Formula: [Single powerful quote] with generous whitespace.
+Example: Pull quote centered on screen, 70-80% whitespace, nothing else competing for attention.
+Archetype note: Editorial uses literary-quality quotes. Brutalist uses raw text, no quotation marks.
+
+**BREATHE-About:**
+Formula: [Single value statement] with maximum whitespace.
+Example: "We believe software should feel human." (Centered, large type, nothing else)
+Archetype note: Japanese Minimal can use a single word. Editorial uses a literary quotation.
+
+**TENSION-Features:**
+Formula: [Problem framing] contrasted with [solution preview].
+Example: "The old way: 47 clicks to deploy. The new way: one." / "You spend 3 hours a week on this. You should spend zero."
+Archetype note: Bold archetypes dramatize the problem. Conservative archetypes use data to create tension.
+
+**PROOF-CTA:**
+Formula: [Social proof metric] + [conversion action].
+Example: "Join 10,000+ teams already shipping faster." + [Start Building Free]
+Archetype note: Proof-backed CTAs work best for moderate archetypes. Bold archetypes may skip proof at CTA.
+
+**PROOF-Pricing:**
+Formula: [Customer result] validates [price point].
+Example: "Teams using [product] save an average of 12 hours per week." / "Pays for itself in the first month."
+Archetype note: Data-Dense leads with ROI metrics. Warm Artisan uses customer stories.
+
+**PIVOT-CTA:**
+Formula: [Perspective shift] + [invitation to new frame].
+Example: "But we are not just a tool. We are a community." + [Join Us] / "The product is only half the story."
+Archetype note: Editorial pivots with a dramatic typographic shift. Kinetic pivots with motion.
+
+**CLOSE-Pricing:**
+Formula: [Final price anchor] with [reassurance].
+Example: "Free to start. Grows with you." / "Plans from $0/month. No hidden fees."
+Archetype note: Luxury never shows pricing in close. Brutalist shows exact numbers, nothing else.
+
+### Content Bank Usage Protocol
+
+When generating copy for any section, follow this sequence:
+
+1. **Identify the cell** -- What beat type is this section? What section type? Find the cell in the coverage matrix
+2. **Read the formula** -- If FULL cell, use the complete formula + archetype modifier. If template cell, use the template formula
+3. **Apply archetype personality** -- Read the archetype voice profile from the table above. Apply personality adjectives, sentence style, punctuation rules, and vocabulary character to the formula output
+4. **Check the Copy Specification** -- The section PLAN.md has a Copy Specification with extracted voice rules. The output must match the specified tone position, sentence constraints, and density rules
+5. **Validate against banned phrases** -- Run output through the hard-banned and discouraged lists. If any match, regenerate using the formula (the formula should prevent this, but validate)
+6. **Cross-reference with micro-copy** -- If the output includes buttons, CTAs, error states, or empty states, check against micro-copy skill's patterns for TSX-level implementation guidance
+
+---
+
+## Layer 3: Integration Context
+
+### Tiered Banned Phrase System
+
+Two enforcement tiers. Hard-banned phrases are automatically rejected in any output. Discouraged phrases produce warnings and require justification to keep.
+
+#### Hard-Banned Phrases (NEVER appear in any output)
+
+| Phrase | Why Banned | Write Instead |
+|--------|-----------|---------------|
+| "Click Here" | Non-descriptive, accessibility-hostile, assumes mouse input | [Describe the destination]: "View the documentation", "See our process" |
+| "Learn More" | Vague -- says nothing about what the user will learn | [Specify]: "See how it works", "Read the case study", "Explore features" |
+| "Solutions" (as noun) | Corporate emptiness -- means nothing without a modifier | [Name the actual thing]: "Our analytics platform", "The design system" |
+| "Leverage" (as verb) | Pretentious jargon that obscures meaning | "Use", "Apply", "Build on" |
+| "Synergy" | Meaningless corporate speak -- no user ever searched for synergy | [Describe the actual integration or collaboration] |
+| "Unlock" | Overused AI-slop term -- every SaaS "unlocks potential" | "Get access to", "Start using", "Enable" |
+| "Seamless" | Means nothing specific -- every product claims seamlessness | [Describe HOW it is smooth]: "No context switching", "One-click setup" |
+| "Empower" | Patronizing -- implies the user was powerless before | "Give you", "Let you", "Enable" |
+| "World-class" | Empty superlative -- unverifiable and meaningless | [Prove it with specifics]: "Used by 500 Fortune companies", "99.99% uptime" |
+| "Best-in-class" | Same as world-class -- superlative without evidence | [Provide evidence]: "Fastest in benchmark tests", "Highest-rated on G2" |
+| "Cutting-edge" | Dated cliche -- ironically the opposite of cutting-edge language | "Modern", "Current", or describe the specific innovation |
+| "Next-level" | Meaningless intensifier -- what level? | [Quantify]: "2x faster", "50% fewer steps" |
+| "Revolutionary" | Almost never true -- reserved for actual revolutions | [Describe what changed]: "The first tool that...", "Eliminates the need for..." |
+| "Game-changing" | Almost never true -- and even when true, prove it | [Show the change]: "Replaces 4 tools with 1" |
+| "Innovative" (unqualified) | Empty without specifics -- every company claims innovation | [Describe the innovation]: "Patent-pending approach to...", "First to combine..." |
+| "Disruptive" | VC-speak that means nothing to end users | [Describe user impact]: "Changes how you work by..." |
+| "Robust" | Technical filler -- robust compared to what? | [Specify]: "Handles 10M requests/sec", "Survives node failures" |
+| "Scalable" (standalone) | Meaningless without context | [Quantify]: "Scales to 1M users", "Grows from 1 to 1,000 team members" |
+
+#### Discouraged Phrases (Warning + Alternative, Override with Justification)
+
+| Phrase | Context Where Override is OK | Preferred Alternative |
+|--------|------------------------------|----------------------|
+| "Submit" | Contact forms only (user expects form submission language) | [Action + Object]: "Send Message", "Request Demo", "Place Order" |
+| "Get Started" | When truly starting a multi-step onboarding process | More specific: "Create Your First [X]", "Start Building", "Set Up Your Workspace" |
+| "Sign Up" | Registration-only flows where account creation is the sole action | "Create Account", "Join [Community Name]", "Start Free Trial" |
+| "Buy Now" | Explicit shopping carts with immediate purchase intent | "Add to Cart", "Get [Product Name]", "Order [Item]" |
+| "Enter" | Login-only contexts where entering an app is literal | "Open Dashboard", "Go to [Area]", "Launch [App Name]" |
+| "Download" | Actual file downloads (PDF, installer, asset) | "Get the [Document Type]", "Download [Specific File Name]" |
+| "Welcome to [X]" | Onboarding first-screen only (genuinely welcoming a new user) | Lead with value: "[X] helps you [benefit]", or jump to first action |
+| "We are [X]" | About page hero only (where identity introduction is the point) | Lead with what the user cares about: "[What you do] for [who]" |
+
+#### Enforcement Protocol
+
+1. **During brainstorm:** copy-intelligence generates BRAND-VOICE.md with project-specific forbidden words (hard-banned list PLUS project additions)
+2. **During section planning:** section-planner checks PLAN.md copy specifications against both lists before finalizing
+3. **During build:** builders reference micro-copy skill's banned button text list. Content bank formulas are structurally designed to never produce banned phrases
+4. **During review:** quality-reviewer runs final banned-phrase scan across all section output
+5. **Hard-banned:** automatic fail -- must be replaced before section passes review
+6. **Discouraged:** warning in review -- builder may override with written justification in SUMMARY.md (e.g., "Used 'Submit' because this is a standard contact form where users expect submission language")
+
+### Voice Extraction Protocol
+
+This protocol solves the "write-once-never-read" problem. Brand voice rules get EXTRACTED into each section's PLAN.md so builders actually use them.
+
+#### Extraction Process
+
+During section planning, the section-planner agent reads BRAND-VOICE.md and extracts relevant rules into each section's PLAN.md:
+
+1. **Read BRAND-VOICE.md** -- identify the project's archetype, personality, tone spectrum, vocabulary rules
+2. **For each section being planned, extract:**
+   - Relevant row from Per-Section Voice Variation table (matching section type)
+   - Relevant headline formula from Headline Formula Library (matching beat type)
+   - Content density rules for this section type
+   - 2-3 relevant formulas/examples from the content bank matrix (matching beat x section cell)
+   - Any project-specific vocabulary constraints
+3. **Insert extracted rules** into the section PLAN.md under a "## Copy Specification" heading
+4. **Builders read the Copy Specification** in their PLAN.md -- they NEVER read BRAND-VOICE.md directly
+
+#### Copy Specification Format (in section PLAN.md)
+
+```markdown
+## Copy Specification
+**Voice:** [tone position from spectrum, e.g., "Position 4 -- bold, declarative, concise"]
+**Personality keywords:** [3-4 adjectives from archetype voice profile]
+**Headline formula:** [from content bank -- formula + 2 archetype-matched examples]
+**CTA pattern:** [primary + secondary approach for this section]
+**Density:** [max text elements, whitespace target from voice document]
+**Sentence rules:** [max words per sentence, paragraph length, case style]
+**Banned in this section:** [project-specific banned phrases beyond global list]
+**Content bank examples:**
+- [Formula/example 1 from matching beat x section cell]
+- [Formula/example 2]
+- [Formula/example 3 if available]
+```
+
+This adds approximately 15-20 lines per section PLAN.md -- well within the 300-line spawn prompt budget established in Phase 2.
+
+#### Worked Example: Neo-Corporate HOOK Section
+
+Given: Archetype is Neo-Corporate, section is a Hero with HOOK beat type, project is a developer tool.
+
+Extracted Copy Specification for section PLAN.md:
+
+```markdown
+## Copy Specification
+**Voice:** Position 4 -- bold, declarative, concise. No softeners or hedging.
+**Personality keywords:** precise, confident, modern, clean
+**Headline formula:** HOOK-hero: [Emotional claim or outcome vision] in 4-8 words.
+  Examples: "Ship at the speed of thought." / "Deploy with confidence."
+**CTA pattern:** Primary: outcome-driven verb + object ("Start Building"). Secondary: softer exploration ("See how it works")
+**Density:** Max 4 text elements (headline, subline, primary CTA, secondary CTA). 60-70% whitespace.
+**Sentence rules:** Max 8 words for headline. Subline max 15 words. Sentence case. Periods for authority.
+**Banned in this section:** No "solutions", no "cutting-edge", no "innovative" without specifics
+**Content bank examples:**
+- "Ship at the speed of thought." (outcome vision, verb-first)
+- "Ready to ship?" / [Start Building] / "No credit card required" (CLOSE-CTA pattern for reference)
+- Feature style: "Instant deploys" / "Push to main. Live in 8 seconds." (metric-specific)
+```
+
+#### Why Builders Never Read BRAND-VOICE.md
+
+1. **Context budget:** BRAND-VOICE.md is 100+ lines. Reading it per section wastes context in every builder spawn prompt
+2. **Relevance filtering:** Each section needs only its row from the voice variation table, not the entire document
+3. **Enforcement precision:** The Copy Specification is a targeted extraction -- builders cannot misinterpret or cherry-pick from the full document
+4. **Single source of truth:** Section-planner extracts once, builders consume. No divergent readings of the same document
+
+### Pipeline Stage
+
+- **Input from:** `/modulo:start-project` brainstorm phase -- receives selected archetype, project type, industry, user preferences
+- **Output to:** `.planning/modulo/BRAND-VOICE.md` -- comprehensive voice document (100+ lines)
+- **Output to:** Section PLAN.md files -- Copy Specification section (15-20 lines per section)
+- **Output to:** Quality review checklist -- banned phrase list + voice compliance criteria
+
+### DNA Connection
+
+| DNA Token/Section | Usage in Copy Intelligence |
+|-------------------|---------------------------|
+| Archetype | Determines voice personality profile, content bank formula selection, boldness tier |
+| Signature element | PEAK and HOOK headlines should reference or complement the signature visual element |
+| Color tokens (expressive) | Tension and glow tokens can influence copy intensity -- tension sections use bolder language |
+| Type scale | Headline word count constraints align with DNA type scale levels (hero = fewer words, h4 = more words) |
+| Motion tokens | High-motion sections (PEAK, HOOK) get bolder copy; low-motion sections (BREATHE) get gentler copy |
+
+### Archetype Variants
+
+Copy intelligence behavior varies by archetype boldness tier:
+
+| Boldness Tier | Voice Document Complexity | Content Bank Usage | Banned Phrase Strictness |
+|---------------|--------------------------|-------------------|------------------------|
+| Conservative | Full document, minimal personality injection | Formulas used literally, minimal modification | Strictest -- no overrides on discouraged phrases |
+| Moderate | Full document, balanced personality | Formulas adapted with moderate personality | Standard -- discouraged phrases overridable with justification |
+| Bold | Full document, personality-saturated | Formulas heavily modified by archetype character | Relaxed on discouraged -- hard-banned still absolute |
+
+### Related Skills
+
+- **micro-copy** -- Companion skill. copy-intelligence generates the voice system; micro-copy provides per-component TSX patterns for execution
+- **design-archetypes** -- Voice profiles extend archetype personalities into copywriting domain. Each archetype's 4 personality adjectives map directly to voice profiles
+- **emotional-arc** -- Beat types form one axis of the content bank matrix. Beat energy levels influence copy intensity (HOOK = boldest, BREATHE = gentlest)
+- **anti-slop-gate** -- UX Intelligence category (U3: Generic CTA) penalizes "Learn More" / "Submit" / "Click Here". This skill's banned phrase system prevents those from ever being generated
+
+---
+
+## Layer 4: Anti-Patterns
+
+### Anti-Pattern: The Generic Fallback
+
+**What goes wrong:** When pressed for time or uncertain about voice, the builder falls back to "Learn More", "Get Started", and "Our Solutions" -- the exact copy this entire skill exists to prevent. The content bank has hundreds of formulas that produce specific, archetype-appropriate alternatives faster than defaulting to generic copy. The problem is not creativity -- it is reaching for the familiar instead of consulting the formula.
+**Instead:** Every content bank formula produces a result faster than inventing "Learn More." The CLOSE-CTA formula (reinforcement headline + urgency sub-line + specific CTA + friction reducer) generates a complete CTA block in seconds. The BUILD-Features formula (specific capability + concrete benefit verb phrase) produces a feature description without ever touching a banned phrase. Use the formulas. They are faster AND better.
+
+### Anti-Pattern: Voice Amnesia
+
+**What goes wrong:** The brand voice document is generated during brainstorm, praised by the creative director, saved to BRAND-VOICE.md... and never referenced again. Section builders revert to Claude's default copywriting tone -- professional, clean, and completely personality-free. Every section sounds the same. The Brutalist project reads like a Neo-Corporate project. The voice document was write-once, never-read.
+**Instead:** The voice extraction protocol ensures every PLAN.md has a Copy Specification section with 15-20 lines of extracted voice rules. Builders read the Copy Specification in their PLAN.md -- they cannot build without it. The quality-reviewer validates section copy against the voice document during post-build review. Voice compliance is checked, not assumed.
+
+### Anti-Pattern: One Voice Fits All
+
+**What goes wrong:** Same tone for hero, features, testimonials, and pricing. The hero is "precise and confident." The feature descriptions are "precise and confident." The testimonial framing is "precise and confident." The pricing copy is "precise and confident." The page has zero tonal variation -- it reads like a single paragraph stretched across 8 sections.
+**Instead:** The Per-Section Voice Variation table explicitly shifts tone, sentence length, formality, and energy per section type. Hero is boldest and shortest. Features are precise and medium-length. Social proof is warm and varied. CTA is urgent and short. Footer is neutral and professional. Every section has a distinct tonal register, even within the same archetype.
+
+### Anti-Pattern: Archetype-Blind Templates
+
+**What goes wrong:** Content bank formulas produce the same output regardless of archetype. "HOOK-hero: [Bold claim in 6 words]" generates "Accelerate your workflow today" for Brutalist, Ethereal, AND Neo-Corporate projects. The formula is so generic that archetype personality cannot influence it. The content bank becomes a synonym generator, not a voice system.
+**Instead:** Every content bank formula includes an archetype modifier explaining how boldness tier changes the output. The HOOK-hero formula for a Brutalist project produces "We make websites." -- three words, zero embellishment. The same formula for Ethereal produces "Find your calm." -- soft vowels, gentle imperative, atmospheric. For Data-Dense: "Real-time, always." -- functional promise, no decoration. The formula is the skeleton; the archetype modifier is the muscle.
+
+### Anti-Pattern: Banned Phrase Whack-a-Mole
+
+**What goes wrong:** "Learn More" appears in a section. Reviewer flags it. Builder replaces it with "Discover More." Reviewer flags "Discover More" as another generic alternative. Builder replaces with "Find Out More." The cycle repeats because the builder is replacing banned phrases one at a time instead of using the content bank formula that would never have produced a banned phrase in the first place.
+**Instead:** Content bank formulas are structurally designed to NEVER produce banned phrases. The CLOSE-CTA formula requires a specific action verb + specific object: "Start Building", "Enter the Archive", "Shop the Collection." None of these formulas can produce "Learn More" because the formula demands specificity. Prevention beats detection. If banned phrases keep appearing, the problem is not the review -- it is that the builder is not using the content bank.
+
+---
+
+## Machine-Readable Constraints
+
+Quality reviewers extract values from this table for automated voice compliance checking.
+
+| Parameter | Min | Max | Unit | Enforcement |
+|-----------|-----|-----|------|-------------|
+| Brand voice document sections | 8 | 8 | sections | HARD -- all 8 sections required |
+| Headline formula count | 5 | 8 | formulas per project | HARD -- minimum 5, maximum 8 |
+| Tone spectrum contexts | 8 | 8 | rows | HARD -- all 8 contexts filled |
+| Hard-banned phrases | 18 | - | phrases | HARD -- entire list enforced |
+| Discouraged phrases | 8 | - | phrases | SOFT -- warning + justification to override |
+| Copy Specification in PLAN.md | 15 | 20 | lines | SOFT -- approximate budget |
+| Headline max words (hero) | 2 | 8 | words | HARD -- archetype-dependent within range |
+| CTA max words (primary) | 2 | 4 | words | HARD -- brevity required |
+| Feature description max words | 15 | 30 | words | SOFT -- prefer concise |
+| Content density paragraphs per viewport | 1 | 3 | paragraphs | SOFT -- break with visual after 3 |
