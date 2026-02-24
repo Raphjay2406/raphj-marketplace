@@ -1,9 +1,11 @@
 ---
 name: performance-guardian
-description: "Performance budgets and rules for Core Web Vitals, font loading, images, animations, code splitting, and CSS performance. Ensures award-winning design doesn't come at the cost of speed."
+description: "Non-animation web performance: Core Web Vitals budgets, image optimization, CSS performance, bundle monitoring, and Lighthouse auditing. For animation-specific performance (code-splitting, will-change, font loading, motion budgets), see skills/performance-animation/SKILL.md."
 ---
 
-Use this skill when implementing animations, loading images, adding libraries, or during performance audits. Triggers on: performance, Core Web Vitals, Lighthouse, LCP, CLS, FID, TBT, bundle size, font loading, image optimization, code splitting, lazy loading.
+Use this skill when optimizing images, auditing bundle size, checking Lighthouse scores, or reviewing CSS performance. Triggers on: performance, Core Web Vitals, Lighthouse, LCP, CLS, TBT, bundle size, image optimization, lazy loading, SSR, caching, build output.
+
+> **Animation performance** (code-splitting, will-change, font loading, motion library budgets, reduced motion, FPS monitoring) has moved to `skills/performance-animation/SKILL.md`.
 
 You are a performance engineer who ensures that premium design ships with premium speed. A beautiful site that takes 5 seconds to load is a failed site. Performance is not optional — it's a design feature.
 
@@ -19,43 +21,6 @@ You are a performance engineer who ensures that premium design ships with premiu
 | **JS bundle (gzipped)** | < 200KB | > 300KB |
 | **First meaningful paint** | < 1.5s | > 2.5s |
 | **Time to Interactive** | < 3.0s | > 4.5s |
-
-## Font Loading Rules
-
-### Requirements
-- **Preload display fonts** — the display font appears on hero headlines. Delay = bad LCP.
-- **`font-display: swap`** — always. Never `block` (causes invisible text).
-- **Variable fonts preferred** — one file, all weights. Smaller than multiple static files.
-- **Subset fonts** when possible — Latin-only subset saves significant bytes.
-
-### Implementation
-```tsx
-// Next.js font preloading (preferred approach)
-import { DM_Sans } from 'next/font/google'
-import localFont from 'next/font/local'
-
-const displayFont = localFont({
-  src: '../public/fonts/ClashDisplay-Variable.woff2',
-  variable: '--font-display',
-  display: 'swap',
-  preload: true,
-})
-
-const bodyFont = DM_Sans({
-  subsets: ['latin'],
-  variable: '--font-body',
-  display: 'swap',
-  weight: ['400', '500', '600', '700'],
-})
-```
-
-### Font Budget
-| Font Role | Max Size (woff2) |
-|-----------|-----------------|
-| Display (variable) | < 80KB |
-| Body (variable or static) | < 60KB |
-| Mono (if used) | < 50KB |
-| **Total fonts** | < 150KB |
 
 ## Image Rules
 
@@ -106,101 +71,6 @@ import Image from 'next/image'
 />
 ```
 
-## Animation Rules
-
-### GPU-Friendly Properties ONLY
-For animations that run during scroll or user interaction:
-
-**ALLOWED (GPU composited):**
-- `transform` (translate, scale, rotate, skew)
-- `opacity`
-- `filter` (blur, brightness — with caution)
-- `clip-path`
-
-**FORBIDDEN (causes layout/paint):**
-- `width` / `height`
-- `top` / `left` / `right` / `bottom`
-- `margin` / `padding` (animated)
-- `border-width`
-- `font-size` (animated)
-- `box-shadow` (animated — use pseudo-element with opacity instead)
-
-### will-change Usage
-```tsx
-// GOOD — apply only during animation, remove after
-className="will-change-transform" // Only on elements currently animating
-
-// BAD — applied everywhere permanently
-className="will-change-auto" // Wastes GPU memory
-```
-
-**Rule:** `will-change` on max 5 elements simultaneously. Remove it after animation completes.
-
-### CSS Scroll-Driven Preferred
-When available, prefer CSS `animation-timeline: view()` over JavaScript scroll listeners:
-
-```css
-/* CSS scroll-driven — zero JS, best performance */
-.scroll-reveal {
-  animation: reveal 1s ease both;
-  animation-timeline: view();
-  animation-range: entry 0% entry 40%;
-}
-
-/* Fallback for browsers without support */
-@supports not (animation-timeline: view()) {
-  .scroll-reveal {
-    opacity: 1; /* Graceful degradation */
-  }
-}
-```
-
-### Animation Budget Per Page
-| Category | Max Count |
-|----------|-----------|
-| Concurrent scroll-driven animations | 10 |
-| GSAP ScrollTrigger instances | 5 |
-| Framer Motion `whileInView` elements | 15 |
-| CSS keyframe animations (continuous) | 5 |
-| `backdrop-blur` elements visible | 3 |
-
-## Code Splitting Rules
-
-### Dynamic Import Heavy Libraries
-```tsx
-// GOOD — GSAP only loaded when needed
-const gsap = await import('gsap')
-const ScrollTrigger = (await import('gsap/ScrollTrigger')).default
-
-// GOOD — dynamic import for below-fold sections
-const HeavyComponent = dynamic(() => import('@/components/sections/heavy'), {
-  loading: () => <SectionSkeleton />,
-  ssr: false, // If it uses browser APIs
-})
-
-// BAD — importing everything at top level
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import * as THREE from 'three' // 500KB+
-```
-
-### Lighter Framer Motion Imports
-```tsx
-// GOOD — import only what you need
-import { motion, useScroll, useTransform } from 'framer-motion'
-
-// BAD — importing the entire library
-import * as fm from 'framer-motion'
-```
-
-### Library Size Budget
-| Library | Max Budget | Notes |
-|---------|-----------|-------|
-| Framer Motion | ~40KB gzip | Tree-shakes well with named imports |
-| GSAP + ScrollTrigger | ~30KB gzip | Dynamic import only |
-| Three.js / R3F | 150KB+ gzip | MUST dynamic import, ssr: false |
-| Lottie | ~50KB gzip | Dynamic import for below-fold |
-
 ## CSS Performance
 
 ### Backdrop-Blur Limits
@@ -239,11 +109,10 @@ Use `contain` on sections to limit browser repaint scope:
 Before building, verify:
 
 1. [ ] No `import *` from large libraries
-2. [ ] GSAP/Three.js dynamically imported
-3. [ ] Images use `next/image` with proper sizes
-4. [ ] Fonts preloaded with `font-display: swap`
-5. [ ] No inline base64 images > 4KB
-6. [ ] CSS `backdrop-blur` limited to 3 per viewport
+2. [ ] Images use `next/image` with proper sizes
+3. [ ] No inline base64 images > 4KB
+4. [ ] CSS `backdrop-blur` limited to 3 per viewport
+5. [ ] Animation-specific checks in `performance-animation` skill applied
 
 ### Build Output Check
 After build, verify:
@@ -269,25 +138,3 @@ npx lighthouse http://localhost:3000 --output=json --quiet
 # - TBT < 200ms
 ```
 
-## Performance-Safe Wow Moments
-
-Some wow moments are inherently expensive. Use these guidelines:
-
-| Wow Moment | Performance Impact | Mitigation |
-|------------|-------------------|------------|
-| Gradient mesh (ambient) | Low | CSS only, no JS |
-| Magnetic buttons | Low | Transform only |
-| Spotlight cards | Low | CSS custom properties |
-| Parallax tilt | Medium | Limit to 6 cards |
-| Text distortion | Medium | Limit to < 50 chars |
-| Particle field | High | Canvas, dynamic import, ssr: false |
-| 3D product viewer | High | Dynamic import, loading skeleton |
-| Image sequence | Very High | Preload frames, IntersectionObserver |
-| GSAP ScrollTrigger | Medium | Max 5 instances, dynamic import |
-
-## Reduced Motion Performance Bonus
-When `prefers-reduced-motion: reduce` is active, skip all animations. This:
-- Reduces JS execution (no Framer Motion re-renders)
-- Eliminates GPU compositing overhead
-- Improves battery life on mobile
-- Is an accessibility AND performance win
