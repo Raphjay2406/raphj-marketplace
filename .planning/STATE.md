@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-23)
 ## Current Position
 
 Phase: 8 of 9 (Experience & Frameworks)
-Plan: 3 of 8 in current phase
+Plan: 4 of 8 in current phase
 Status: In progress
-Last activity: 2026-02-24 -- Completed 08-03-PLAN.md (accessibility skill)
+Last activity: 2026-02-24 -- Completed 08-04-PLAN.md (dark/light mode skill)
 
-Progress: [████████░░] 83% (43/52 plans)
+Progress: [████████░░] 85% (44/52 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 42
+- Total plans completed: 44
 - Average duration: 4 min
-- Total execution time: 168 min
+- Total execution time: 174 min
 
 **By Phase:**
 
@@ -36,8 +36,8 @@ Progress: [████████░░] 83% (43/52 plans)
 | 7. Asset & Specialist Skills | 6/6 | 26 min | 4 min |
 
 **Recent Trend:**
-- Last 5 plans: 07-01 (6 min), 07-02 (5 min), 07-06 (4 min), 07-03 (4 min), 07-04 (4 min)
-- Trend: Phase 7 complete at 26 min total (avg 4 min/plan)
+- Last 5 plans: 08-01 (4 min), 08-02 (3 min), 08-03 (3 min), 08-04 (3 min)
+- Trend: Phase 8 in progress at 13 min so far (avg 3 min/plan)
 
 *Updated after each plan completion*
 
@@ -236,6 +236,9 @@ Recent decisions affecting current work:
 - [Phase 8-03]: Focus indicators use dual CSS data-archetype selectors + Tailwind archetypeFocusClass Record
 - [Phase 8-03]: Focus trap uses inert attribute (Baseline 2023) instead of manual Tab key interception
 - [Phase 8-03]: Reduced-motion uses 4 entrance types (instant/opacity-only/slow-fade/very-slow-fade) per archetype personality
+- [Phase 8-04]: 743 lines exceeds 500-600 target but all content substantive (19 archetype transitions with 3 full CSS implementations, 7 code patterns, dual depth model, accessible toggle component)
+- [Phase 8-04]: View Transitions API (Baseline 2024) as primary transition mechanism with CSS fallback -- progressive enhancement
+- [Phase 8-04]: Positional transitions (Organic, Glassmorphism) use --toggle-x/--toggle-y CSS custom properties set from click event
 
 ### Pending Todos
 
@@ -251,5 +254,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-24
-Stopped at: Completed 08-03-PLAN.md (accessibility skill)
+Stopped at: Completed 08-04-PLAN.md (dark/light mode skill)
 Resume file: None
