@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-23)
 
 **Core value:** Every output must be award-winning by default (Awwwards SOTD 8.0+) -- not as a stretch goal, but as the baseline.
-**Current focus:** Phase 5 - Motion & Design Skills (ready to plan)
+**Current focus:** Phase 5 - Motion & Design Skills (in progress)
 
 ## Current Position
 
 Phase: 5 of 9 (Motion & Design Skills)
-Plan: 0 of 6 in current phase
-Status: Phase 4 VERIFIED ✓ — ready to plan Phase 5
-Last activity: 2026-02-24 -- Phase 4 executed (5/5 plans), verified (5/5 must-haves passed)
+Plan: 5 of 6 in current phase
+Status: In progress
+Last activity: 2026-02-24 -- Completed 05-05-PLAN.md (performance-aware animation skill)
 
-Progress: [█████░░░░░] 48% (25/52 plans)
+Progress: [█████░░░░░] 58% (30/52 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 24
+- Total plans completed: 30
 - Average duration: 3 min
-- Total execution time: 71 min
+- Total execution time: 91 min
 
 **By Phase:**
 
@@ -31,10 +31,11 @@ Progress: [█████░░░░░] 48% (25/52 plans)
 | 2. Pipeline Architecture | 7/7 | 24 min | 3 min |
 | 3. Command System | 6/6 | 10 min | 2 min |
 | 4. Quality Enforcement | 5/5 | 15 min | 3 min |
+| 5. Motion & Design Skills | 5/6 | 20 min | 4 min |
 
 **Recent Trend:**
-- Last 5 plans: 04-01 (5 min), 04-03 (3 min), 04-05 (4 min), 04-04 (3 min), 03-06 (3 min)
-- Trend: Phase 4 complete at 15 min total (avg 3 min/plan)
+- Last 5 plans: 05-05 (4 min), 05-04 (4 min), 05-03 (5 min), 05-02 (4 min), 05-01 (3 min)
+- Trend: Phase 5 on track at 20 min for 5/6 plans (avg 4 min/plan)
 
 *Updated after each plan completion*
 
@@ -147,6 +148,11 @@ Recent decisions affecting current work:
 - [Phase 4-03]: 695 lines exceeds 400-500 target but all content substantive (19 archetype addenda + 8 universal categories)
 - [Phase 4-03]: Machine-readable constraints table with 10 enforcement parameters (hover duration, touch target, noise opacity, etc.)
 - [Phase 4-03]: 7 anti-patterns in Layer 4 to thoroughly address checkbox exercise failure mode
+- [Phase 5-05]: performance-animation is core tier (always loaded) -- animation performance is fundamental to every build
+- [Phase 5-05]: will-change budget: max 10 active elements (up from v6.1.0's 5) based on modern GPU capabilities
+- [Phase 5-05]: Font loading moved entirely to performance-animation (not duplicated in performance-guardian)
+- [Phase 5-05]: Total animation JS budget: < 80 KB gzipped initial load (excludes on-demand code-split chunks)
+- [Phase 5-05]: 537 lines exceeds 350-450 target but all content substantive (code-splitting patterns need complete examples)
 - [Phase 5]: Motion intensity, wow moment count, tension mandate all archetype-driven (user decision)
 - [Phase 5]: Scroll-driven animations are beat-dependent -- HOOK/PEAK get continuous, others entrance-only
 - [Phase 5]: Hybrid motion presets -- archetype base family + DNA parameter tweaks
@@ -190,5 +196,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-24
-Stopped at: Phase 4 complete and verified — ready for Phase 5 planning
+Stopped at: Completed 05-05-PLAN.md (performance-aware animation skill)
 Resume file: None
