@@ -86,6 +86,11 @@ Recent decisions affecting current work:
 - [Phase 2-01]: Spawn prompt template has 9 sections covering all builder context needs
 - [Phase 2-01]: builder_type field in PLAN.md frontmatter routes to correct specialist agent
 - [Phase 2-01]: Beat validation + layout diversity + background progression rules embedded in section-planner (no runtime skill reads)
+- [Phase 2-05]: Specialists are enhanced section-builders -- same I/O contract (spawn prompt + PLAN.md in, code + SUMMARY.md out), plus domain expertise
+- [Phase 2-05]: Animation decision tree defaults to CSS scroll-driven -- 10-item flowchart, JS only when CSS cannot achieve the effect
+- [Phase 2-05]: Content specialist expanded banned list to 8 items and includes brand voice "swap test" for headline quality
+- [Phase 2-05]: 3D specialist FPS monitoring auto-downgrades to static image after 2s sustained below 30fps
+- [Phase 2-05]: Parallax intensity mapped to archetype personality (subtle/medium/strong tiers)
 - [Phase 2-03]: No fallback file reads -- builder with missing spawn prompt STOPs immediately (no fallback to reading DESIGN-DNA.md)
 - [Phase 2-03]: 10-item auto-polish checklist mandatory on every section (expanded from v6.1.0's 5 items)
 - [Phase 2-03]: Machine-readable SUMMARY.md with beat_compliance, anti_slop_self_check booleans, and reusable_components proposals
