@@ -26,8 +26,8 @@
 - [x] **BILD-02**: Design System Scaffold from DNA -- typed utilities, section templates per beat type, motion presets, color utilities that prevent arbitrary hex values. Makes it harder to produce slop than quality.
 - [x] **BILD-03**: Context Rot Prevention -- radical context minimization, pre-compiled DNA snapshots (~20 values per section), automated drift detection comparing output against DNA tokens, mandatory session boundaries.
 - [x] **BILD-04**: Live Browser Testing -- auto screenshot at 4 breakpoints (375, 768, 1024, 1440px), Lighthouse audit with hard fail at score <80, animation FPS monitoring (flag <30fps), axe-core accessibility audit.
-- [ ] **BILD-05**: Figma Integration -- read Figma designs via MCP tools, translate to code following project Design DNA, support as design intent source for visual QA comparison.
-- [ ] **BILD-06**: Design System Export -- export generated design system as Storybook components and design tokens package for handoff to design teams.
+- [x] **BILD-05**: Figma Integration -- read Figma designs via MCP tools, translate to code following project Design DNA, support as design intent source for visual QA comparison.
+- [x] **BILD-06**: Design System Export -- export generated design system as Storybook components and design tokens package for handoff to design teams.
 
 ### Content & Assets
 
@@ -79,8 +79,8 @@
 ### Developer Experience
 
 - [x] **DEVX-01**: Guided flow -- plugin tells user exactly what to do next at every step. Impossible to get lost.
-- [ ] **DEVX-02**: Multi-level progress -- real-time agent status updates, wave summaries with screenshots, milestone checkpoints with user review.
-- [ ] **DEVX-03**: Error recovery -- diagnose problems, propose solutions, user approves before applying. Clean resume from any failure state.
+- [x] **DEVX-02**: Multi-level progress -- real-time agent status updates, wave summaries with screenshots, milestone checkpoints with user review.
+- [x] **DEVX-03**: Error recovery -- diagnose problems, propose solutions, user approves before applying. Clean resume from any failure state.
 - [x] **DEVX-04**: Framework support -- Next.js (App Router), Astro (Islands), React/Vite, Tauri (desktop-aware), Electron (desktop-aware). Detect target and adapt patterns.
 - [x] **DEVX-05**: Code quality standards -- TypeScript strict mode, clean component structure, proper file organization, consistent naming conventions in target projects.
 
@@ -129,8 +129,8 @@
 | BILD-02 | Phase 5: Motion & Design Skills | Complete |
 | BILD-03 | Phase 2: Pipeline Architecture | Complete |
 | BILD-04 | Phase 4: Quality Enforcement | Complete |
-| BILD-05 | Phase 9: Integration & Polish | Pending |
-| BILD-06 | Phase 9: Integration & Polish | Pending |
+| BILD-05 | Phase 9: Integration & Polish | Complete |
+| BILD-06 | Phase 9: Integration & Polish | Complete |
 | CONT-01 | Phase 6: Brainstorming & Content | Complete |
 | CONT-02 | Phase 7: Asset & Specialist Skills | Complete |
 | CONT-03 | Phase 7: Asset & Specialist Skills | Complete |
@@ -161,8 +161,8 @@
 | SKIL-03 | Phase 1: Foundation | Complete |
 | SKIL-04 | Phase 8: Experience & Frameworks | Complete |
 | DEVX-01 | Phase 3: Command System | Complete |
-| DEVX-02 | Phase 9: Integration & Polish | Pending |
-| DEVX-03 | Phase 9: Integration & Polish | Pending |
+| DEVX-02 | Phase 9: Integration & Polish | Complete |
+| DEVX-03 | Phase 9: Integration & Polish | Complete |
 | DEVX-04 | Phase 8: Experience & Frameworks | Complete |
 | DEVX-05 | Phase 8: Experience & Frameworks | Complete |
 | BRNS-01 | Phase 6: Brainstorming & Content | Complete |
@@ -178,4 +178,4 @@
 
 ---
 *Requirements defined: 2026-02-23*
-*Last updated: 2026-02-24 — Phase 8 requirements marked Complete*
+*Last updated: 2026-02-24 — Phase 9 requirements marked Complete, all requirements done*

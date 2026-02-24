@@ -20,7 +20,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 6: Brainstorming & Content** - Research-first ideation and copy intelligence engine
 - [ ] **Phase 7: Asset & Specialist Skills** - Shape generation, 3D/WebGL, component marketplace, Remotion, Spline, image prompts
 - [x] **Phase 8: Experience & Frameworks** - Responsive, accessibility, multi-page, dark/light mode, framework support, skill rewrites
-- [ ] **Phase 9: Integration & Polish** - Figma integration, design system export, progress reporting, error recovery
+- [x] **Phase 9: Integration & Polish** - Figma integration, design system export, progress reporting, error recovery
 
 ## Phase Details
 
@@ -197,10 +197,10 @@ Plans:
 **Plans**: 4 plans
 
 Plans:
-- [ ] 09-01-PLAN.md -- Figma Integration skill: MCP tool decision tree, DNA-Figma hybrid token resolution, PLAN.md generation from Figma, visual QA overlay diff, agent rewrite
-- [ ] 09-02-PLAN.md -- Design System Export skill: Storybook 10 CSF Factories stories, W3C DTCG tokens via Style Dictionary 5, multi-format output (CSS/JSON/Figma)
-- [ ] 09-03-PLAN.md -- Progress Reporting skill: 4-tier reporting (task/section/wave/milestone), STATE.md extensions, review gates, screenshot protocol
-- [ ] 09-04-PLAN.md -- Error Recovery skill: severity classification (MINOR/MAJOR/CRITICAL), structured diagnosis, checkpoint resume, failure pattern escalation
+- [x] 09-01-PLAN.md -- Figma Integration skill: MCP tool decision tree, DNA-Figma hybrid token resolution, PLAN.md generation from Figma, visual QA overlay diff, agent rewrite
+- [x] 09-02-PLAN.md -- Design System Export skill: Storybook 10 CSF Factories stories, W3C DTCG tokens via Style Dictionary 5, multi-format output (CSS/JSON/Figma)
+- [x] 09-03-PLAN.md -- Progress Reporting skill: 4-tier reporting (task/section/wave/milestone), STATE.md extensions, review gates, screenshot protocol
+- [x] 09-04-PLAN.md -- Error Recovery skill: severity classification (MINOR/MAJOR/CRITICAL), structured diagnosis, checkpoint resume, failure pattern escalation
 
 ## Progress
 
@@ -218,8 +218,8 @@ Note: Phases 3 and 4 both depend on Phase 2. Phases 5, 6, 7, 8 can partially ove
 | 6. Brainstorming & Content | 4/4 | Complete | 2026-02-24 |
 | 7. Asset & Specialist Skills | 6/6 | Complete | 2026-02-24 |
 | 8. Experience & Frameworks | 8/8 | Complete | 2026-02-24 |
-| 9. Integration & Polish | 0/4 | Planned | - |
+| 9. Integration & Polish | 4/4 | Complete | 2026-02-24 |
 
 ---
 *Roadmap created: 2026-02-23*
-*Last updated: 2026-02-24 — Phase 8 complete*
+*Last updated: 2026-02-24 — Phase 9 complete, all phases done*
