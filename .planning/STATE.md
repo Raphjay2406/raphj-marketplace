@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-23)
 
 **Core value:** Every output must be award-winning by default (Awwwards SOTD 8.0+) -- not as a stretch goal, but as the baseline.
-**Current focus:** Phase 3 - Command System (executing)
+**Current focus:** Phase 3 - Command System (COMPLETE)
 
 ## Current Position
 
-Phase: 3 of 9 (Command System)
-Plan: 5 of 6 in current phase (03-01, 03-02, 03-03, 03-04, 03-05 complete)
-Status: In progress
-Last activity: 2026-02-24 -- Completed 03-05-PLAN.md (iterate & bug-fix commands)
+Phase: 3 of 9 (Command System) -- COMPLETE
+Plan: 6 of 6 in current phase (all complete)
+Status: Phase complete
+Last activity: 2026-02-24 -- Completed 03-06-PLAN.md (utility commands & cleanup)
 
-Progress: [████░░░░░░] 37% (19/52 plans)
+Progress: [████░░░░░░] 38% (20/52 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 19
+- Total plans completed: 20
 - Average duration: 3 min
-- Total execution time: 53 min
+- Total execution time: 56 min
 
 **By Phase:**
 
@@ -29,11 +29,11 @@ Progress: [████░░░░░░] 37% (19/52 plans)
 |-------|-------|-------|----------|
 | 1. Foundation | 6/6 | 22 min | 4 min |
 | 2. Pipeline Architecture | 7/7 | 24 min | 3 min |
-| 3. Command System | 5/6 | 7 min | 1 min |
+| 3. Command System | 6/6 | 10 min | 2 min |
 
 **Recent Trend:**
-- Last 5 plans: 03-05 (2 min), 03-03 (2 min), 03-01 (2 min), 03-04 (1 min), 02-07 (3 min)
-- Trend: Accelerating; command plans completing in 1-2 min
+- Last 5 plans: 03-06 (3 min), 03-05 (2 min), 03-03 (2 min), 03-01 (2 min), 03-04 (1 min)
+- Trend: Phase 3 complete at 10 min total (avg 2 min/plan)
 
 *Updated after each plan completion*
 
@@ -123,6 +123,10 @@ Recent decisions affecting current work:
 - [Phase 3-05]: Two distinct brainstorm types: iterate uses creative approaches (2-3 ASCII mockups), bug-fix uses diagnostic hypotheses (root cause analysis)
 - [Phase 3-05]: change-plan.md merged into iterate.md -- plan modifications are a type of iteration
 - [Phase 3-05]: GAP-FIX.md --from-gaps flag skips brainstorm since gaps are already diagnosed by quality-reviewer
+- [Phase 3-06]: status.md is read-only (no Rules section) -- only command without Rules
+- [Phase 3-06]: audit.md absorbs 4 v6.1.0 commands into 4 parallel audit tracks (visual, performance, accessibility, content)
+- [Phase 3-06]: generate-tests.md deferred to Phase 8; update.md removed (v6.1.0 changelog no longer accurate)
+- [Phase 3-06]: Plugin manifest version set to 2.0.0-dev; complete v2.0 command surface: 8 commands, all under 155 lines
 - [Phase 5]: Motion intensity, wow moment count, tension mandate all archetype-driven (user decision)
 - [Phase 5]: Scroll-driven animations are beat-dependent -- HOOK/PEAK get continuous, others entrance-only
 - [Phase 5]: Hybrid motion presets -- archetype base family + DNA parameter tweaks
@@ -166,5 +170,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-24
-Stopped at: Completed 03-05-PLAN.md (iterate & bug-fix commands)
+Stopped at: Completed 03-06-PLAN.md (utility commands & cleanup) -- Phase 3 COMPLETE
 Resume file: None
