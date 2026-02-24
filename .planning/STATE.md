@@ -153,6 +153,9 @@ Recent decisions affecting current work:
 - [Phase 5-05]: Font loading moved entirely to performance-animation (not duplicated in performance-guardian)
 - [Phase 5-05]: Total animation JS budget: < 80 KB gzipped initial load (excludes on-demand code-split chunks)
 - [Phase 5-05]: 537 lines exceeds 350-450 target but all content substantive (code-splitting patterns need complete examples)
+- [Phase 5-04]: 690 lines exceeds 400-500 target but all content substantive (6 patterns + 19 archetype choreography + 7 anti-patterns)
+- [Phase 5-04]: GSAP Flip included for complex multi-element choreography beyond AnimatePresence capabilities
+- [Phase 5-04]: Directional navigation detection pattern included to enforce back-vs-forward spatial model
 - [Phase 5]: Motion intensity, wow moment count, tension mandate all archetype-driven (user decision)
 - [Phase 5]: Scroll-driven animations are beat-dependent -- HOOK/PEAK get continuous, others entrance-only
 - [Phase 5]: Hybrid motion presets -- archetype base family + DNA parameter tweaks
