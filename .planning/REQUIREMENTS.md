@@ -25,7 +25,7 @@
 - [x] **BILD-01**: Stateless Wave System -- all context pre-extracted into spawn prompts (<200 lines total). No builder reads STATE.md or cross-references other builders' output.
 - [ ] **BILD-02**: Design System Scaffold from DNA -- typed utilities, section templates per beat type, motion presets, color utilities that prevent arbitrary hex values. Makes it harder to produce slop than quality.
 - [x] **BILD-03**: Context Rot Prevention -- radical context minimization, pre-compiled DNA snapshots (~20 values per section), automated drift detection comparing output against DNA tokens, mandatory session boundaries.
-- [ ] **BILD-04**: Live Browser Testing -- auto screenshot at 4 breakpoints (375, 768, 1024, 1440px), Lighthouse audit with hard fail at score <80, animation FPS monitoring (flag <30fps), axe-core accessibility audit.
+- [x] **BILD-04**: Live Browser Testing -- auto screenshot at 4 breakpoints (375, 768, 1024, 1440px), Lighthouse audit with hard fail at score <80, animation FPS monitoring (flag <30fps), axe-core accessibility audit.
 - [ ] **BILD-05**: Figma Integration -- read Figma designs via MCP tools, translate to code following project Design DNA, support as design intent source for visual QA comparison.
 - [ ] **BILD-06**: Design System Export -- export generated design system as Storybook components and design tokens package for handoff to design teams.
 
@@ -41,10 +41,10 @@
 
 ### Quality Mechanisms
 
-- [ ] **QUAL-01**: Reference-based building -- each section has a real-world quality target (URL/screenshot of award-winning work) that sets the bar for builder output.
-- [ ] **QUAL-02**: Polish pass -- dedicated post-build pass adding micro-details (noise textures, gradient borders, custom selection color, hover micro-interactions, cursor effects).
-- [ ] **QUAL-03**: Compositional diversity enforcement -- no two adjacent sections share the same layout pattern. Structurally enforced via PLAN.md pre-assignment.
-- [ ] **QUAL-04**: Real-time Creative Director review -- each section reviewed against DNA and creative vision before acceptance. Drift caught immediately, not at end.
+- [x] **QUAL-01**: Reference-based building -- each section has a real-world quality target (URL/screenshot of award-winning work) that sets the bar for builder output.
+- [x] **QUAL-02**: Polish pass -- dedicated post-build pass adding micro-details (noise textures, gradient borders, custom selection color, hover micro-interactions, cursor effects).
+- [x] **QUAL-03**: Compositional diversity enforcement -- no two adjacent sections share the same layout pattern. Structurally enforced via PLAN.md pre-assignment.
+- [x] **QUAL-04**: Real-time Creative Director review -- each section reviewed against DNA and creative vision before acceptance. Drift caught immediately, not at end.
 
 ### Experience & Frameworks
 
@@ -128,7 +128,7 @@
 | BILD-01 | Phase 2: Pipeline Architecture | Complete |
 | BILD-02 | Phase 5: Motion & Design Skills | Pending |
 | BILD-03 | Phase 2: Pipeline Architecture | Complete |
-| BILD-04 | Phase 4: Quality Enforcement | Pending |
+| BILD-04 | Phase 4: Quality Enforcement | Complete |
 | BILD-05 | Phase 9: Integration & Polish | Pending |
 | BILD-06 | Phase 9: Integration & Polish | Pending |
 | CONT-01 | Phase 6: Brainstorming & Content | Pending |
@@ -138,10 +138,10 @@
 | CONT-05 | Phase 7: Asset & Specialist Skills | Pending |
 | CONT-06 | Phase 7: Asset & Specialist Skills | Pending |
 | CONT-07 | Phase 7: Asset & Specialist Skills | Pending |
-| QUAL-01 | Phase 4: Quality Enforcement | Pending |
-| QUAL-02 | Phase 4: Quality Enforcement | Pending |
-| QUAL-03 | Phase 4: Quality Enforcement | Pending |
-| QUAL-04 | Phase 4: Quality Enforcement | Pending |
+| QUAL-01 | Phase 4: Quality Enforcement | Complete |
+| QUAL-02 | Phase 4: Quality Enforcement | Complete |
+| QUAL-03 | Phase 4: Quality Enforcement | Complete |
+| QUAL-04 | Phase 4: Quality Enforcement | Complete |
 | EXPR-01 | Phase 8: Experience & Frameworks | Pending |
 | EXPR-02 | Phase 8: Experience & Frameworks | Pending |
 | EXPR-03 | Phase 8: Experience & Frameworks | Pending |
@@ -178,4 +178,4 @@
 
 ---
 *Requirements defined: 2026-02-23*
-*Last updated: 2026-02-24 — Phase 1 requirements marked Complete*
+*Last updated: 2026-02-24 — Phase 4 requirements marked Complete*
