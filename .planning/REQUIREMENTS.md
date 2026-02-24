@@ -48,10 +48,10 @@
 
 ### Experience & Frameworks
 
-- [ ] **EXPR-01**: Responsive Design enforced -- mobile-first, 375px as hard constraint, clamp() typography, container queries for component responsiveness.
-- [ ] **EXPR-02**: Accessibility baked in -- WCAG 2.1 AA in every component template, ARIA attributes, keyboard navigation, focus management, motion-safe/motion-reduce variants, automated axe-core audit.
-- [ ] **EXPR-03**: Multi-page architecture -- site-level DNA, page-type templates (landing, about, pricing, blog, docs, contact), shared components (nav, footer, theme), per-page emotional arcs.
-- [ ] **EXPR-04**: Archetype-aware dark/light mode -- both themes hand-tuned per archetype, both award-worthy. Transition animation matches archetype personality.
+- [x] **EXPR-01**: Responsive Design enforced -- mobile-first, 375px as hard constraint, clamp() typography, container queries for component responsiveness.
+- [x] **EXPR-02**: Accessibility baked in -- WCAG 2.1 AA in every component template, ARIA attributes, keyboard navigation, focus management, motion-safe/motion-reduce variants, automated axe-core audit.
+- [x] **EXPR-03**: Multi-page architecture -- site-level DNA, page-type templates (landing, about, pricing, blog, docs, contact), shared components (nav, footer, theme), per-page emotional arcs.
+- [x] **EXPR-04**: Archetype-aware dark/light mode -- both themes hand-tuned per archetype, both award-worthy. Transition animation matches archetype personality.
 
 ### Agent Architecture
 
@@ -74,15 +74,15 @@
 - [ ] **SKIL-01**: 4-layer skill structure -- decision guidance (when/why) + award-winning examples (not basic usage) + integration context (DNA/archetype connection) + anti-patterns (common mistakes)
 - [ ] **SKIL-02**: Tiered organization -- Core (always loaded: DNA, anti-slop, typography, color, layout, motion), Domain (per project: 3D, Remotion, e-commerce, dashboard), Utility (on demand: SEO, a11y, perf, testing)
 - [ ] **SKIL-03**: Cull non-design skills -- remove backend/infrastructure skills (admin-panel, webhook-api-patterns, database-crud-ui, auth logic, CMS, payment, analytics). Target ~30-40 pure design skills.
-- [ ] **SKIL-04**: Every surviving skill rewritten to new quality standard with current library versions (Tailwind v4, Motion 12.x, GSAP 3.14, etc.)
+- [x] **SKIL-04**: Every surviving skill rewritten to new quality standard with current library versions (Tailwind v4, Motion 12.x, GSAP 3.14, etc.)
 
 ### Developer Experience
 
 - [x] **DEVX-01**: Guided flow -- plugin tells user exactly what to do next at every step. Impossible to get lost.
 - [ ] **DEVX-02**: Multi-level progress -- real-time agent status updates, wave summaries with screenshots, milestone checkpoints with user review.
 - [ ] **DEVX-03**: Error recovery -- diagnose problems, propose solutions, user approves before applying. Clean resume from any failure state.
-- [ ] **DEVX-04**: Framework support -- Next.js (App Router), Astro (Islands), React/Vite, Tauri (desktop-aware), Electron (desktop-aware). Detect target and adapt patterns.
-- [ ] **DEVX-05**: Code quality standards -- TypeScript strict mode, clean component structure, proper file organization, consistent naming conventions in target projects.
+- [x] **DEVX-04**: Framework support -- Next.js (App Router), Astro (Islands), React/Vite, Tauri (desktop-aware), Electron (desktop-aware). Detect target and adapt patterns.
+- [x] **DEVX-05**: Code quality standards -- TypeScript strict mode, clean component structure, proper file organization, consistent naming conventions in target projects.
 
 ### Brainstorming
 
@@ -142,10 +142,10 @@
 | QUAL-02 | Phase 4: Quality Enforcement | Complete |
 | QUAL-03 | Phase 4: Quality Enforcement | Complete |
 | QUAL-04 | Phase 4: Quality Enforcement | Complete |
-| EXPR-01 | Phase 8: Experience & Frameworks | Pending |
-| EXPR-02 | Phase 8: Experience & Frameworks | Pending |
-| EXPR-03 | Phase 8: Experience & Frameworks | Pending |
-| EXPR-04 | Phase 8: Experience & Frameworks | Pending |
+| EXPR-01 | Phase 8: Experience & Frameworks | Complete |
+| EXPR-02 | Phase 8: Experience & Frameworks | Complete |
+| EXPR-03 | Phase 8: Experience & Frameworks | Complete |
+| EXPR-04 | Phase 8: Experience & Frameworks | Complete |
 | AGNT-01 | Phase 2: Pipeline Architecture | Complete |
 | AGNT-02 | Phase 2: Pipeline Architecture | Complete |
 | AGNT-03 | Phase 2: Pipeline Architecture | Complete |
@@ -159,12 +159,12 @@
 | SKIL-01 | Phase 1: Foundation | Complete |
 | SKIL-02 | Phase 1: Foundation | Complete |
 | SKIL-03 | Phase 1: Foundation | Complete |
-| SKIL-04 | Phase 8: Experience & Frameworks | Pending |
+| SKIL-04 | Phase 8: Experience & Frameworks | Complete |
 | DEVX-01 | Phase 3: Command System | Complete |
 | DEVX-02 | Phase 9: Integration & Polish | Pending |
 | DEVX-03 | Phase 9: Integration & Polish | Pending |
-| DEVX-04 | Phase 8: Experience & Frameworks | Pending |
-| DEVX-05 | Phase 8: Experience & Frameworks | Pending |
+| DEVX-04 | Phase 8: Experience & Frameworks | Complete |
+| DEVX-05 | Phase 8: Experience & Frameworks | Complete |
 | BRNS-01 | Phase 6: Brainstorming & Content | Complete |
 | BRNS-02 | Phase 6: Brainstorming & Content | Complete |
 | BRNS-03 | Phase 6: Brainstorming & Content | Complete |
@@ -178,4 +178,4 @@
 
 ---
 *Requirements defined: 2026-02-23*
-*Last updated: 2026-02-24 — Phase 4 requirements marked Complete*
+*Last updated: 2026-02-24 — Phase 8 requirements marked Complete*
