@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-23)
 ## Current Position
 
 Phase: 4 of 9 (Quality Enforcement)
-Plan: 4 of 5 in current phase
+Plan: 5 of 5 in current phase (04-01 and 04-03 pending)
 Status: In progress
-Last activity: 2026-02-24 -- Completed 04-04-PLAN.md (live-testing skill)
+Last activity: 2026-02-24 -- Completed 04-05-PLAN.md (quality-gate-protocol skill)
 
-Progress: [████░░░░░░] 40% (21/52 plans)
+Progress: [████░░░░░░] 42% (22/52 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 21
+- Total plans completed: 22
 - Average duration: 3 min
-- Total execution time: 59 min
+- Total execution time: 63 min
 
 **By Phase:**
 
@@ -30,10 +30,10 @@ Progress: [████░░░░░░] 40% (21/52 plans)
 | 1. Foundation | 6/6 | 22 min | 4 min |
 | 2. Pipeline Architecture | 7/7 | 24 min | 3 min |
 | 3. Command System | 6/6 | 10 min | 2 min |
-| 4. Quality Enforcement | 1/5 | 3 min | 3 min |
+| 4. Quality Enforcement | 2/5 | 7 min | 4 min |
 
 **Recent Trend:**
-- Last 5 plans: 04-04 (3 min), 03-06 (3 min), 03-05 (2 min), 03-03 (2 min), 03-01 (2 min)
+- Last 5 plans: 04-05 (4 min), 04-04 (3 min), 03-06 (3 min), 03-05 (2 min), 03-03 (2 min)
 - Trend: Phase 4 in progress
 
 *Updated after each plan completion*
@@ -131,6 +131,10 @@ Recent decisions affecting current work:
 - [Phase 4-04]: FPS monitoring is a signal for investigation, not absolute ground truth -- automated scroll differs from real user scrolling
 - [Phase 4-04]: axe-core injected from CDN as primary, CLI fallback if CDN fails
 - [Phase 4-04]: Testing report uses 3-tier verdict: CRITICAL_FAIL / WARNINGS_ONLY / PASS
+- [Phase 4-05]: Quality gate protocol is a core skill (always loaded) -- build-orchestrator and quality-reviewer reference it on every build
+- [Phase 4-05]: 8 anti-patterns documented for enforcement mistakes (over-testing, auto-retry, alert fatigue, sequential CD/QR)
+- [Phase 4-05]: Machine-readable constraints table with 10 threshold parameters for automated checking
+- [Phase 4-05]: Findings merge protocol defines how CD and QR parallel findings are deduplicated and classified
 - [Phase 5]: Motion intensity, wow moment count, tension mandate all archetype-driven (user decision)
 - [Phase 5]: Scroll-driven animations are beat-dependent -- HOOK/PEAK get continuous, others entrance-only
 - [Phase 5]: Hybrid motion presets -- archetype base family + DNA parameter tweaks
@@ -174,5 +178,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-24
-Stopped at: Completed 04-04-PLAN.md (live-testing skill)
+Stopped at: Completed 04-05-PLAN.md (quality-gate-protocol skill)
 Resume file: None
