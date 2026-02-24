@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-23)
 
 **Core value:** Every output must be award-winning by default (Awwwards SOTD 8.0+) -- not as a stretch goal, but as the baseline.
-**Current focus:** Phase 5 - Motion & Design Skills (5/6 complete, 05-03 remaining)
+**Current focus:** Phase 5 - Motion & Design Skills (complete)
 
 ## Current Position
 
 Phase: 5 of 9 (Motion & Design Skills)
-Plan: 5 of 6 in current phase (05-03 remaining)
-Status: In progress
-Last activity: 2026-02-24 -- Completed 05-06-PLAN.md (design-system-scaffold skill)
+Plan: 6 of 6 in current phase
+Status: Phase 5 COMPLETE
+Last activity: 2026-02-24 -- Completed 05-03-PLAN.md (wow-moments skill)
 
-Progress: [██████░░░░] 56% (29/52 plans)
+Progress: [██████░░░░] 58% (30/52 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 29
-- Average duration: 3 min
-- Total execution time: 100 min
+- Total plans completed: 30
+- Average duration: 4 min
+- Total execution time: 109 min
 
 **By Phase:**
 
@@ -31,11 +31,11 @@ Progress: [██████░░░░] 56% (29/52 plans)
 | 2. Pipeline Architecture | 7/7 | 24 min | 3 min |
 | 3. Command System | 6/6 | 10 min | 2 min |
 | 4. Quality Enforcement | 5/5 | 15 min | 3 min |
-| 5. Motion & Design Skills | 5/6 | 29 min | 5 min |
+| 5. Motion & Design Skills | 6/6 | 38 min | 6 min |
 
 **Recent Trend:**
-- Last 5 plans: 05-06 (7 min), 05-02 (6 min), 05-05 (4 min), 05-04 (4 min), 05-03 (5 min)
-- Trend: Phase 5 at 29 min for 5/6 plans (avg 5 min/plan, larger skills)
+- Last 5 plans: 05-03 (9 min), 05-06 (7 min), 05-02 (6 min), 05-05 (4 min), 05-04 (4 min)
+- Trend: Phase 5 complete at 38 min total (avg 6 min/plan, largest skills in project)
 
 *Updated after each plan completion*
 
@@ -165,6 +165,9 @@ Recent decisions affecting current work:
 - [Phase 5-06]: 768 lines exceeds 600-750 target but all content substantive (6 complete scaffold templates)
 - [Phase 5-06]: --motion-* custom properties in :root (not @theme) -- JS libraries read via getComputedStyle, Tailwind does not need utilities
 - [Phase 5-06]: 10 machine-readable constraint parameters for automated scaffold quality checking
+- [Phase 5-03]: 1417 lines exceeds 800-950 target but all content substantive (35 patterns with tiered code, auto-suggestion matrix, 19 archetypes)
+- [Phase 5-03]: Archetype intensity table deduplicated -- full in Layer 1, compact summary in auto-suggestion matrix
+- [Phase 5-03]: Tier 3 patterns (WebGL, Rive, dotLottie, Physics) use setup skeletons not full implementations
 - [Phase 5]: Motion intensity, wow moment count, tension mandate all archetype-driven (user decision)
 - [Phase 5]: Scroll-driven animations are beat-dependent -- HOOK/PEAK get continuous, others entrance-only
 - [Phase 5]: Hybrid motion presets -- archetype base family + DNA parameter tweaks
@@ -208,5 +211,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-24
-Stopped at: Completed 05-06-PLAN.md (design-system-scaffold skill) -- 05-03 remaining in Phase 5
+Stopped at: Phase 5 complete (6/6 plans) -- ready for Phase 6 planning
 Resume file: None
