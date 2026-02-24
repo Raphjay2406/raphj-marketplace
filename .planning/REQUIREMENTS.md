@@ -14,16 +14,16 @@
 
 ### Motion & Creativity
 
-- [ ] **MOTN-01**: Cinematic Motion System with DNA-generated presets, motion diversity enforcement (no 3 consecutive same-direction animations), CSS scroll-driven as default path.
-- [ ] **MOTN-02**: Creative Tension with copy-paste implementations per archetype, mandatory tension moment in PEAK beats, boldness calibration that pushes further not holds back.
-- [ ] **MOTN-03**: Expanded Wow Moment Library (30+) with View Transitions API, Lottie/Rive, WebGL shaders, scroll-linked video. Auto-suggestion given archetype + beat type.
-- [ ] **MOTN-04**: Page Transition System -- View Transitions API (native browser), Framer Motion AnimatePresence, shared element transitions, per-archetype transition choreography.
-- [ ] **MOTN-05**: Performance-Aware Animation -- CWV compliance alongside heavy animation. Auto code-splitting of GSAP/Three.js. CSS scroll-driven as default. Font loading strategy baked into scaffold.
+- [x] **MOTN-01**: Cinematic Motion System with DNA-generated presets, motion diversity enforcement (no 3 consecutive same-direction animations), CSS scroll-driven as default path.
+- [x] **MOTN-02**: Creative Tension with copy-paste implementations per archetype, mandatory tension moment in PEAK beats, boldness calibration that pushes further not holds back.
+- [x] **MOTN-03**: Expanded Wow Moment Library (30+) with View Transitions API, Lottie/Rive, WebGL shaders, scroll-linked video. Auto-suggestion given archetype + beat type.
+- [x] **MOTN-04**: Page Transition System -- View Transitions API (native browser), Framer Motion AnimatePresence, shared element transitions, per-archetype transition choreography.
+- [x] **MOTN-05**: Performance-Aware Animation -- CWV compliance alongside heavy animation. Auto code-splitting of GSAP/Three.js. CSS scroll-driven as default. Font loading strategy baked into scaffold.
 
 ### Build System
 
 - [x] **BILD-01**: Stateless Wave System -- all context pre-extracted into spawn prompts (<200 lines total). No builder reads STATE.md or cross-references other builders' output.
-- [ ] **BILD-02**: Design System Scaffold from DNA -- typed utilities, section templates per beat type, motion presets, color utilities that prevent arbitrary hex values. Makes it harder to produce slop than quality.
+- [x] **BILD-02**: Design System Scaffold from DNA -- typed utilities, section templates per beat type, motion presets, color utilities that prevent arbitrary hex values. Makes it harder to produce slop than quality.
 - [x] **BILD-03**: Context Rot Prevention -- radical context minimization, pre-compiled DNA snapshots (~20 values per section), automated drift detection comparing output against DNA tokens, mandatory session boundaries.
 - [x] **BILD-04**: Live Browser Testing -- auto screenshot at 4 breakpoints (375, 768, 1024, 1440px), Lighthouse audit with hard fail at score <80, animation FPS monitoring (flag <30fps), axe-core accessibility audit.
 - [ ] **BILD-05**: Figma Integration -- read Figma designs via MCP tools, translate to code following project Design DNA, support as design intent source for visual QA comparison.
@@ -120,13 +120,13 @@
 | FOUND-02 | Phase 1: Foundation | Complete |
 | FOUND-03 | Phase 1: Foundation | Complete |
 | FOUND-04 | Phase 1: Foundation | Complete |
-| MOTN-01 | Phase 5: Motion & Design Skills | Pending |
-| MOTN-02 | Phase 5: Motion & Design Skills | Pending |
-| MOTN-03 | Phase 5: Motion & Design Skills | Pending |
-| MOTN-04 | Phase 5: Motion & Design Skills | Pending |
-| MOTN-05 | Phase 5: Motion & Design Skills | Pending |
+| MOTN-01 | Phase 5: Motion & Design Skills | Complete |
+| MOTN-02 | Phase 5: Motion & Design Skills | Complete |
+| MOTN-03 | Phase 5: Motion & Design Skills | Complete |
+| MOTN-04 | Phase 5: Motion & Design Skills | Complete |
+| MOTN-05 | Phase 5: Motion & Design Skills | Complete |
 | BILD-01 | Phase 2: Pipeline Architecture | Complete |
-| BILD-02 | Phase 5: Motion & Design Skills | Pending |
+| BILD-02 | Phase 5: Motion & Design Skills | Complete |
 | BILD-03 | Phase 2: Pipeline Architecture | Complete |
 | BILD-04 | Phase 4: Quality Enforcement | Complete |
 | BILD-05 | Phase 9: Integration & Polish | Pending |

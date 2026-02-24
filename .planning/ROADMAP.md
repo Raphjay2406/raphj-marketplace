@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 2: Pipeline Architecture** - Agent pipeline model with stateless builders and context rot prevention
 - [x] **Phase 3: Command System** - 6 user-facing commands replacing 13, with guided workflow
 - [ ] **Phase 4: Quality Enforcement** - Multi-layer quality gates from build-time to user checkpoints
-- [ ] **Phase 5: Motion & Design Skills** - Cinematic motion, creative tension, wow moments, and design system scaffold
+- [x] **Phase 5: Motion & Design Skills** - Cinematic motion, creative tension, wow moments, and design system scaffold
 - [ ] **Phase 6: Brainstorming & Content** - Research-first ideation and copy intelligence engine
 - [ ] **Phase 7: Asset & Specialist Skills** - Shape generation, 3D/WebGL, component marketplace, Remotion, Spline, image prompts
 - [ ] **Phase 8: Experience & Frameworks** - Responsive, accessibility, multi-page, dark/light mode, framework support, skill rewrites
@@ -118,12 +118,12 @@ Plans:
 **Plans**: 6 plans
 
 Plans:
-- [ ] 05-01-PLAN.md -- Cinematic Motion skill: unified motion system (CSS scroll-driven default, 19 archetype profiles, diversity enforcement, v6.1.0 library skill cull)
-- [ ] 05-02-PLAN.md -- Creative Tension skill: 5 levels with safe/aggressive ranges, 19 archetype TSX implementations, dual adjacency rules, PEAK mandate
-- [ ] 05-03-PLAN.md -- Wow Moment Library skill: 33+ tiered patterns (copy-paste/pattern/guidance), three-factor auto-suggestion matrix
-- [ ] 05-04-PLAN.md -- Page Transition skill: View Transitions API (Astro stable, Next.js experimental), AnimatePresence fallback, per-archetype choreography
-- [ ] 05-05-PLAN.md -- Performance-Aware Animation skill: CWV compliance, code-splitting patterns, font loading, performance budgets, will-change discipline
-- [ ] 05-06-PLAN.md -- Design System Scaffold skill: Tailwind v4 @theme generation, typed utilities, 10 beat templates, extension mechanism
+- [x] 05-01-PLAN.md -- Cinematic Motion skill: unified motion system (CSS scroll-driven default, 19 archetype profiles, diversity enforcement, v6.1.0 library skill cull)
+- [x] 05-02-PLAN.md -- Creative Tension skill: 5 levels with safe/aggressive ranges, 19 archetype TSX implementations, dual adjacency rules, PEAK mandate
+- [x] 05-03-PLAN.md -- Wow Moment Library skill: 33+ tiered patterns (copy-paste/pattern/guidance), three-factor auto-suggestion matrix
+- [x] 05-04-PLAN.md -- Page Transition skill: View Transitions API (Astro stable, Next.js experimental), AnimatePresence fallback, per-archetype choreography
+- [x] 05-05-PLAN.md -- Performance-Aware Animation skill: CWV compliance, code-splitting patterns, font loading, performance budgets, will-change discipline
+- [x] 05-06-PLAN.md -- Design System Scaffold skill: Tailwind v4 @theme generation, typed utilities, 10 beat templates, extension mechanism
 
 ### Phase 6: Brainstorming & Content
 **Goal**: The plugin produces genuinely creative design directions through real-world research and cross-pollination, backed by a content intelligence engine that generates brand-appropriate copy instead of generic placeholder text
@@ -214,7 +214,7 @@ Note: Phases 3 and 4 both depend on Phase 2. Phases 5, 6, 7, 8 can partially ove
 | 2. Pipeline Architecture | 7/7 | Complete | 2026-02-24 |
 | 3. Command System | 6/6 | Complete | 2026-02-24 |
 | 4. Quality Enforcement | 5/5 | Complete | 2026-02-24 |
-| 5. Motion & Design Skills | 0/6 | Planned | - |
+| 5. Motion & Design Skills | 6/6 | Complete | 2026-02-24 |
 | 6. Brainstorming & Content | 0/4 | Planned | - |
 | 7. Asset & Specialist Skills | 0/6 | Planned | - |
 | 8. Experience & Frameworks | 0/8 | Planned | - |
@@ -222,4 +222,4 @@ Note: Phases 3 and 4 both depend on Phase 2. Phases 5, 6, 7, 8 can partially ove
 
 ---
 *Roadmap created: 2026-02-23*
-*Last updated: 2026-02-24 — Phase 4 complete*
+*Last updated: 2026-02-24 — Phase 5 complete*
