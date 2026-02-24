@@ -1,0 +1,8 @@
+{
+  "name": "wavy-bavy",
+  "description": "Skill for integrating the wavy-bavy React library for seamless wave transitions between page sections",
+  "version": "1.0.0",
+  "author": {
+    "name": "raphj"
+  }
+}
