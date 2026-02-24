@@ -1,251 +1,396 @@
 ---
-name: ecommerce-ui
-description: "E-commerce UI patterns: product cards, product gallery, shopping cart drawer, checkout flow, filters/facets, wishlist, order tracking, quantity selector, size picker, review stars. Works with Next.js and Astro."
+name: "ecommerce-ui"
+description: "E-commerce UI patterns: product cards, product grids, cart UI, checkout flows, filters, wishlist -- with DNA-driven styling, container queries, and accessible interactions."
+tier: "domain"
+triggers: "ecommerce, e-commerce, product, cart, checkout, shop, store, wishlist, order, pricing, catalog"
+version: "2.0.0"
 ---
 
-Use this skill when the user mentions e-commerce, product page, shopping cart, checkout, product card, wishlist, order tracking, product gallery, or store. Triggers on: ecommerce, e-commerce, product, cart, checkout, shop, store, wishlist, order.
+## Layer 1: Decision Guidance
 
-You are an expert at building polished e-commerce UIs with shadcn/ui.
+### When to Use
 
-## Product Card
+- Project includes product catalog, shopping cart, or checkout flow
+- Any site selling physical or digital goods that needs award-caliber product presentation
+- Portfolio or agency sites with a "shop" section (merch, prints, digital downloads)
+- SaaS pricing pages that need product-like card presentation
+
+### When NOT to Use
+
+- Pure dashboard analytics with no commerce -- use `dashboard-patterns` instead
+- Blog or content-only sites -- use `blog-patterns` instead
+- Portfolio project showcases -- use `portfolio-patterns` instead
+
+### Decision Tree
+
+- Product grid layout? Use container query cards (resize to parent, not viewport)
+- Luxury/fashion archetype? Minimal grid, large imagery, restrained UI chrome
+- Data-dense products (specs, variants)? Use tabbed product detail with comparison tables
+- Quick-add pattern? Hover overlay on desktop, long-press or dedicated button on mobile
+- Multi-step checkout? Progressive disclosure with step indicator and per-step validation
+
+### Pipeline Connection
+
+- **Referenced by:** section-builder during product page, shop, and checkout section builds
+- **Consumed at:** `/modulo:execute` wave 2+ for commerce sections
+- **Related commands:** `/modulo:plan-dev` scopes product page sections
+
+## Layer 2: Award-Winning Examples
+
+### Code Patterns
+
+#### Pattern: Container Query Product Card
 
 ```tsx
-import { Card, CardContent } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Heart, ShoppingCart, Star } from 'lucide-react'
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+  originalPrice?: number;
+  image: string;
+  category: string;
+  rating: number;
+  reviewCount: number;
+}
 
-function ProductCard({ product }: { product: Product }) {
+export function ProductCard({ product }: { product: Product }) {
+  const formattedPrice = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  }).format(product.price);
+
+  const formattedOriginal = product.originalPrice
+    ? new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+      }).format(product.originalPrice)
+    : null;
+
   return (
-    <Card className="group overflow-hidden">
-      <div className="relative aspect-square overflow-hidden">
+    <article
+      className="@container group rounded-lg border border-border bg-surface overflow-hidden"
+      aria-label={`${product.name} - ${formattedPrice}`}
+    >
+      <div className="relative aspect-square overflow-hidden bg-bg">
         <img
-          src={product.images[0]}
+          src={product.image}
           alt={product.name}
-          className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
+          className="size-full object-cover motion-safe:transition-transform motion-safe:duration-500 group-hover:scale-105"
+          loading="lazy"
         />
-        {product.badge && (
-          <Badge className="absolute top-2 left-2" variant={product.badge === 'Sale' ? 'destructive' : 'secondary'}>
-            {product.badge}
-          </Badge>
+        {product.originalPrice && (
+          <span className="absolute top-2 start-2 rounded-full bg-accent px-2 py-0.5 text-xs font-semibold text-bg">
+            Sale
+          </span>
         )}
-        <Button
-          variant="ghost" size="icon"
-          className="absolute top-2 right-2 bg-background/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity"
+        <button
+          className="absolute top-2 end-2 grid size-9 place-items-center rounded-full bg-bg/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 motion-safe:transition-opacity focus:opacity-100"
+          aria-label={`Add ${product.name} to wishlist`}
         >
-          <Heart className="h-4 w-4" />
-        </Button>
+          <HeartIcon className="size-4 text-text" />
+        </button>
       </div>
-      <CardContent className="p-4">
-        <p className="text-xs text-muted-foreground">{product.category}</p>
-        <h3 className="font-medium mt-1 line-clamp-1">{product.name}</h3>
-        <div className="flex items-center gap-1 mt-1">
-          {Array.from({ length: 5 }).map((_, i) => (
-            <Star key={i} className={cn('h-3 w-3', i < product.rating ? 'fill-yellow-400 text-yellow-400' : 'text-muted')} />
+
+      <div className="p-3 @sm:p-4">
+        <p className="text-xs text-muted">{product.category}</p>
+        <h3 className="mt-1 text-sm font-medium text-text line-clamp-1 @sm:text-base">
+          {product.name}
+        </h3>
+
+        <div className="mt-1 flex items-center gap-0.5" role="img" aria-label={`${product.rating} out of 5 stars`}>
+          {Array.from({ length: 5 }, (_, i) => (
+            <StarIcon
+              key={i}
+              className={`size-3 ${i < product.rating ? "fill-accent text-accent" : "text-muted"}`}
+              aria-hidden="true"
+            />
           ))}
-          <span className="text-xs text-muted-foreground ml-1">({product.reviewCount})</span>
+          <span className="ms-1 text-xs text-muted">({product.reviewCount})</span>
         </div>
-        <div className="flex items-center justify-between mt-3">
+
+        <div className="mt-3 flex items-center justify-between @sm:mt-4">
           <div className="flex items-center gap-2">
-            <span className="font-bold">${product.price}</span>
-            {product.originalPrice && (
-              <span className="text-sm text-muted-foreground line-through">${product.originalPrice}</span>
+            <span className="font-bold text-text">{formattedPrice}</span>
+            {formattedOriginal && (
+              <span className="text-sm text-muted line-through">{formattedOriginal}</span>
             )}
           </div>
-          <Button size="sm"><ShoppingCart className="h-4 w-4 mr-1" /> Add</Button>
+          <button
+            className="grid size-9 place-items-center rounded-full bg-primary text-bg motion-safe:transition-colors hover:bg-primary/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            aria-label={`Add ${product.name} to cart`}
+          >
+            <ShoppingCartIcon className="size-4" />
+          </button>
         </div>
-      </CardContent>
-    </Card>
-  )
+      </div>
+    </article>
+  );
 }
 ```
 
-## Product Image Gallery
+#### Pattern: Responsive Product Grid
 
 ```tsx
-'use client'
-
-import { useState } from 'react'
-
-function ProductGallery({ images }: { images: string[] }) {
-  const [selected, setSelected] = useState(0)
-
+export function ProductGrid({ products }: { products: Product[] }) {
   return (
-    <div className="flex flex-col-reverse md:flex-row gap-4">
-      {/* Thumbnails */}
-      <div className="flex md:flex-col gap-2 overflow-x-auto md:overflow-y-auto md:max-h-[500px]">
-        {images.map((img, i) => (
-          <button
-            key={i}
-            onClick={() => setSelected(i)}
-            className={cn(
-              'shrink-0 rounded-md border-2 overflow-hidden w-16 h-16 md:w-20 md:h-20',
-              i === selected ? 'border-primary' : 'border-transparent'
-            )}
-          >
-            <img src={img} alt="" className="w-full h-full object-cover" />
-          </button>
+    <section aria-label="Product catalog">
+      <div className="grid grid-cols-2 gap-4 @md:grid-cols-3 @lg:grid-cols-4">
+        {products.map((product) => (
+          <ProductCard key={product.id} product={product} />
         ))}
       </div>
-      {/* Main image */}
-      <div className="flex-1 aspect-square rounded-lg overflow-hidden bg-muted">
-        <img src={images[selected]} alt="" className="w-full h-full object-cover" />
-      </div>
-    </div>
-  )
+    </section>
+  );
 }
 ```
 
-## Cart Drawer
+#### Pattern: Accessible Quantity Stepper
 
 ```tsx
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet'
-import { Separator } from '@/components/ui/separator'
-
-function CartDrawer({ open, onOpenChange }: { open: boolean; onOpenChange: (o: boolean) => void }) {
-  const { items, total, updateQuantity, removeItem } = useCart()
-
-  return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent className="flex flex-col">
-        <SheetHeader>
-          <SheetTitle>Cart ({items.length})</SheetTitle>
-        </SheetHeader>
-
-        {items.length === 0 ? (
-          <div className="flex-1 flex items-center justify-center">
-            <EmptyState icon={ShoppingCart} title="Cart is empty" description="Add items to get started." />
-          </div>
-        ) : (
-          <>
-            <div className="flex-1 overflow-y-auto space-y-4 py-4">
-              {items.map(item => (
-                <div key={item.id} className="flex gap-4">
-                  <img src={item.image} alt={item.name} className="h-20 w-20 rounded-md object-cover" />
-                  <div className="flex-1 min-w-0">
-                    <p className="font-medium text-sm truncate">{item.name}</p>
-                    <p className="text-xs text-muted-foreground">{item.variant}</p>
-                    <div className="flex items-center gap-2 mt-2">
-                      <QuantitySelector value={item.quantity} onChange={q => updateQuantity(item.id, q)} />
-                      <span className="ml-auto font-medium">${(item.price * item.quantity).toFixed(2)}</span>
-                    </div>
-                  </div>
-                  <button onClick={() => removeItem(item.id)}>
-                    <X className="h-4 w-4 text-muted-foreground" />
-                  </button>
-                </div>
-              ))}
-            </div>
-
-            <Separator />
-            <SheetFooter className="pt-4 space-y-3">
-              <div className="flex justify-between text-sm">
-                <span>Subtotal</span><span className="font-bold">${total.toFixed(2)}</span>
-              </div>
-              <Button className="w-full" size="lg">Checkout</Button>
-              <p className="text-xs text-center text-muted-foreground">Shipping calculated at checkout</p>
-            </SheetFooter>
-          </>
-        )}
-      </SheetContent>
-    </Sheet>
-  )
+interface QuantityStepperProps {
+  value: number;
+  onChange: (value: number) => void;
+  min?: number;
+  max?: number;
+  label: string;
 }
-```
 
-## Quantity Selector
-
-```tsx
-function QuantitySelector({ value, onChange, min = 1, max = 99 }: {
-  value: number; onChange: (v: number) => void; min?: number; max?: number
-}) {
+export function QuantityStepper({
+  value,
+  onChange,
+  min = 1,
+  max = 99,
+  label,
+}: QuantityStepperProps) {
   return (
-    <div className="flex items-center border rounded-md">
+    <div
+      className="inline-flex items-center rounded-md border border-border"
+      role="group"
+      aria-label={label}
+    >
       <button
-        className="px-2 py-1 text-sm hover:bg-accent disabled:opacity-50"
+        className="grid size-9 place-items-center text-text hover:bg-surface disabled:opacity-40 focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-primary rounded-s-md"
         onClick={() => onChange(Math.max(min, value - 1))}
         disabled={value <= min}
+        aria-label="Decrease quantity"
       >
-        <Minus className="h-3 w-3" />
+        <MinusIcon className="size-3.5" />
       </button>
-      <span className="px-3 py-1 text-sm font-medium min-w-[2rem] text-center">{value}</span>
+      <output
+        className="min-w-[2.5rem] px-2 text-center text-sm font-medium text-text tabular-nums"
+        aria-live="polite"
+      >
+        {value}
+      </output>
       <button
-        className="px-2 py-1 text-sm hover:bg-accent disabled:opacity-50"
+        className="grid size-9 place-items-center text-text hover:bg-surface disabled:opacity-40 focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-primary rounded-e-md"
         onClick={() => onChange(Math.min(max, value + 1))}
         disabled={value >= max}
+        aria-label="Increase quantity"
       >
-        <Plus className="h-3 w-3" />
+        <PlusIcon className="size-3.5" />
       </button>
     </div>
-  )
+  );
 }
 ```
 
-## Size Picker
+#### Pattern: Checkout Progress Indicator
 
 ```tsx
-function SizePicker({ sizes, selected, onSelect }: {
-  sizes: { label: string; available: boolean }[]; selected: string; onSelect: (s: string) => void
-}) {
+interface CheckoutProgressProps {
+  steps: string[];
+  currentStep: number;
+}
+
+export function CheckoutProgress({ steps, currentStep }: CheckoutProgressProps) {
   return (
-    <div className="flex flex-wrap gap-2">
-      {sizes.map(size => (
-        <button
-          key={size.label}
-          onClick={() => size.available && onSelect(size.label)}
-          disabled={!size.available}
-          className={cn(
-            'h-10 min-w-[2.5rem] px-3 rounded-md border text-sm font-medium transition-colors',
-            selected === size.label ? 'border-primary bg-primary text-primary-foreground' :
-            size.available ? 'hover:border-foreground' : 'opacity-30 cursor-not-allowed line-through'
+    <nav aria-label="Checkout progress">
+      <ol className="flex items-center gap-2">
+        {steps.map((step, i) => {
+          const status = i < currentStep ? "complete" : i === currentStep ? "current" : "upcoming";
+          return (
+            <li key={step} className="flex items-center gap-2">
+              <span
+                className={`grid size-8 place-items-center rounded-full text-xs font-bold ${
+                  status === "complete"
+                    ? "bg-primary text-bg"
+                    : status === "current"
+                      ? "bg-primary text-bg ring-4 ring-primary/20"
+                      : "bg-surface text-muted"
+                }`}
+                aria-current={status === "current" ? "step" : undefined}
+              >
+                {status === "complete" ? (
+                  <CheckIcon className="size-4" aria-hidden="true" />
+                ) : (
+                  i + 1
+                )}
+              </span>
+              <span className={`text-sm hidden @sm:inline ${status === "upcoming" ? "text-muted" : "text-text"}`}>
+                {step}
+              </span>
+              {i < steps.length - 1 && (
+                <div
+                  className={`h-px w-8 @sm:w-12 ${status === "complete" ? "bg-primary" : "bg-border"}`}
+                  aria-hidden="true"
+                />
+              )}
+            </li>
+          );
+        })}
+      </ol>
+    </nav>
+  );
+}
+```
+
+#### Pattern: Cart Drawer with Live Region
+
+```tsx
+export function CartDrawer({
+  open,
+  onClose,
+  items,
+}: {
+  open: boolean;
+  onClose: () => void;
+  items: CartItem[];
+}) {
+  const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const formattedTotal = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  }).format(total);
+
+  return (
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label={`Shopping cart, ${items.length} items`}
+      className={`fixed inset-y-0 end-0 z-50 w-full max-w-md bg-bg border-s border-border shadow-xl motion-safe:transition-transform ${
+        open ? "translate-x-0" : "translate-x-full"
+      }`}
+    >
+      <div className="flex h-full flex-col">
+        <div className="flex items-center justify-between border-b border-border p-4">
+          <h2 className="text-lg font-semibold text-text">
+            Cart <span className="text-muted">({items.length})</span>
+          </h2>
+          <button
+            onClick={onClose}
+            className="grid size-9 place-items-center rounded-full hover:bg-surface focus-visible:outline-2 focus-visible:outline-primary"
+            aria-label="Close cart"
+          >
+            <XIcon className="size-5 text-text" />
+          </button>
+        </div>
+
+        <div className="flex-1 overflow-y-auto p-4 space-y-4" aria-live="polite">
+          {items.length === 0 ? (
+            <p className="text-center text-muted py-12">Your cart is empty.</p>
+          ) : (
+            items.map((item) => (
+              <div key={item.id} className="flex gap-3">
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  className="size-20 rounded-md object-cover bg-surface"
+                />
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-text truncate">{item.name}</p>
+                  <p className="text-xs text-muted">{item.variant}</p>
+                  <QuantityStepper
+                    value={item.quantity}
+                    onChange={(q) => updateQuantity(item.id, q)}
+                    label={`Quantity for ${item.name}`}
+                  />
+                </div>
+              </div>
+            ))
           )}
-        >
-          {size.label}
-        </button>
-      ))}
+        </div>
+
+        {items.length > 0 && (
+          <div className="border-t border-border p-4 space-y-3">
+            <div className="flex justify-between text-sm">
+              <span className="text-muted">Subtotal</span>
+              <span className="font-bold text-text">{formattedTotal}</span>
+            </div>
+            <button className="w-full rounded-lg bg-primary py-3 text-center font-semibold text-bg hover:bg-primary/90 motion-safe:transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+              Checkout
+            </button>
+            <p className="text-xs text-center text-muted">Shipping calculated at checkout</p>
+          </div>
+        )}
+      </div>
     </div>
-  )
+  );
 }
 ```
 
-## Astro Product Page
+### Reference Sites
 
-```astro
----
-// src/pages/products/[slug].astro
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getCollection } from 'astro:content';
+- **Apple Store** (apple.com/shop) -- Minimal product cards with generous whitespace, container-aware grid that reflows beautifully, accessible quick-look modals
+- **Aesop** (aesop.com) -- Archetype reference for Luxury e-commerce: restrained palette, typography-first product pages, elegant hover reveals
+- **Rapha** (rapha.cc) -- Athletic e-commerce with bold imagery, progressive disclosure of product details, excellent mobile cart experience
 
-export async function getStaticPaths() {
-  const products = await getCollection('products');
-  return products.map(p => ({ params: { slug: p.slug }, props: { product: p } }));
-}
+## Layer 3: Integration Context
 
-const { product } = Astro.props;
----
+### DNA Connection
 
-<BaseLayout title={product.data.name} description={product.data.description}>
-  <div class="max-w-6xl mx-auto px-4 py-8 grid md:grid-cols-2 gap-8">
-    <ProductGallery client:load images={product.data.images} />
-    <div>
-      <h1 class="text-3xl font-bold">{product.data.name}</h1>
-      <p class="text-2xl font-bold mt-2">${product.data.price}</p>
-      <SizePicker client:load sizes={product.data.sizes} />
-      <AddToCartButton client:load productId={product.slug} />
-    </div>
-  </div>
-</BaseLayout>
-```
+| DNA Token | Usage in E-commerce |
+|-----------|-------------------|
+| `bg-bg` | Page and card backgrounds |
+| `bg-surface` | Elevated product cards, cart drawer background |
+| `text-text` | Product names, prices |
+| `text-muted` | Category labels, review counts, secondary info |
+| `border-border` | Card outlines, dividers, input borders |
+| `bg-primary` / `text-bg` | Add-to-cart buttons, active states, checkout CTA |
+| `bg-accent` / `text-accent` | Sale badges, star ratings, promotional highlights |
+| `--motion-duration` | Hover transitions, cart open/close, add-to-cart feedback |
+| `--motion-easing` | Card hover scale, drawer slide, progress animations |
 
-## Best Practices
+### Archetype Variants
 
-1. Product cards: hover to reveal quick actions (wishlist, add to cart)
-2. Gallery: thumbnail strip on left (desktop) / bottom (mobile), zoom on hover
-3. Cart drawer: Sheet from right, show item count in trigger badge
-4. Quantity selector: min 1, disable minus at min, disable plus at max
-5. Size picker: crossed-out unavailable sizes, selected = primary color fill
-6. Star ratings: filled yellow for rated, muted for unrated, show count
-7. Price: bold current price, line-through original price for sales
-8. Mobile: product grid 2 columns, cart as full Sheet
-9. For Astro: hydrate interactive parts (gallery, cart, size picker) as React islands
-10. Always show "Shipping calculated at checkout" to set expectations
+| Archetype | Adaptation |
+|-----------|-----------|
+| Luxury/Fashion | Minimal grid (1-2 cols), oversized imagery, restrained UI chrome, serif product names |
+| Playful/Startup | Dynamic card hover effects, vibrant sale badges, bouncy add-to-cart animation |
+| Swiss/International | Clean catalog grid, strict alignment, monospace prices, no decorative elements |
+| Neo-Corporate | Polished card shadows, subtle gradients on CTAs, professional metric displays |
+| Brutalist | Raw borders, no rounded corners, bold type for prices, stark contrast |
+| Japanese Minimal | Generous padding, quiet hover states, muted color palette, minimal badges |
+| Data-Dense | Compact cards with specs visible, comparison-table layout, tabular pricing |
+| Editorial | Magazine-style product features, large hero products, editorial copy alongside |
+
+### Related Skills
+
+- `tailwind-system` -- DNA token classes, `@container` setup, dark mode variants
+- `accessibility` -- Focus indicators, ARIA patterns, keyboard navigation for steppers and galleries
+- `cinematic-motion` -- Cart drawer slide animation, add-to-cart micro-interactions, hover effects
+- `responsive-design` -- Container query breakpoints, mobile-first grid reflow
+- `form-builder` -- Checkout form validation, address input, payment fields
+- `seo-meta` -- Product structured data (JSON-LD Product schema), Open Graph for product pages
+
+## Layer 4: Anti-Patterns
+
+### Anti-Pattern: Fixed-Width Product Grids
+
+**What goes wrong:** Using viewport media queries for product card sizing. Cards look wrong when placed in sidebars, modals, or different page layouts because they respond to the window, not their container.
+**Instead:** Use `@container` queries on the grid wrapper. Cards adapt to their actual available space: `@container (min-width: 400px) { ... }`. Every card layout works in any container width.
+
+### Anti-Pattern: Inaccessible Quantity Steppers
+
+**What goes wrong:** Stepper buttons have no accessible labels, the current value has no live region, and keyboard users cannot operate the control. Screen readers announce nothing meaningful.
+**Instead:** Use `role="group"` with `aria-label` on the wrapper, `aria-label="Decrease quantity"` / `"Increase quantity"` on buttons, and `<output aria-live="polite">` for the value display. Ensure buttons are focusable and operable with Enter/Space.
+
+### Anti-Pattern: Checkout Without Progress Indication
+
+**What goes wrong:** Multi-step checkout with no visual progress. Users cannot tell how many steps remain, cannot navigate back, and abandon the flow due to uncertainty.
+**Instead:** Persistent step indicator with `aria-current="step"` on the active step, completed steps visually distinct, and clear step count (e.g., "Step 2 of 4"). Each step validates before advancing.
+
+### Anti-Pattern: Cart Updates Without Feedback
+
+**What goes wrong:** Adding items to cart or changing quantity produces no visible or screen-reader feedback. Users are unsure if their action worked.
+**Instead:** Use `aria-live="polite"` on the cart count badge and cart contents area. Provide visual feedback (brief animation on cart icon, toast notification) gated behind `motion-safe:` to respect reduced-motion preferences.

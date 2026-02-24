@@ -1,16 +1,48 @@
-# Blog Patterns
+---
+name: "blog-patterns"
+description: "Blog and article UI patterns: post index, article typography, reading progress, table of contents, tag filtering, RSS feeds -- with DNA-driven styling, responsive reading experience, and accessible content."
+tier: "domain"
+triggers: "blog, article, post, reading, editorial, magazine, content, RSS, table of contents, TOC, reading time, tag filter"
+version: "2.0.0"
+---
 
-Blog layouts, post listings, category/tag filtering, RSS feeds, reading progress indicators, related posts, and SEO for blog content.
+## Layer 1: Decision Guidance
 
-## Blog Post Listing Page
+### When to Use
+
+- Project includes a blog, editorial section, or article-based content
+- Knowledge base, documentation hub, or news section with long-form reading
+- Any site needing post listings, tag/category filtering, and article layouts
+- Magazine-style layouts with featured posts and content grids
+
+### When NOT to Use
+
+- E-commerce product pages -- use `ecommerce-ui` instead
+- Dashboard analytics -- use `dashboard-patterns` instead
+- Portfolio project showcases -- use `portfolio-patterns` instead (case studies overlap but are structurally different)
+
+### Decision Tree
+
+- Blog index layout? Featured hero post + grid below, or uniform grid
+- Article typography? Use `prose` base with DNA token overrides for consistent reading experience
+- Table of contents? Sticky sidebar on desktop (`lg:`), collapsed accordion on mobile
+- Reading progress? Fixed progress bar at top, gated behind `motion-safe:` for reduced-motion
+- Tag filtering? URL-param-based for shareable filtered views (`/blog?tag=design`)
+- Framework? Next.js uses `generateMetadata` + RSC; Astro uses Content Collections + frontmatter
+
+### Pipeline Connection
+
+- **Referenced by:** section-builder during blog/editorial section builds
+- **Consumed at:** `/modulo:execute` wave 2+ for content-heavy sections
+- **Related commands:** `/modulo:plan-dev` for article page planning; uses `multi-page-architecture` for blog index + article page pairing
+
+## Layer 2: Award-Winning Examples
+
+### Code Patterns
+
+#### Pattern: Blog Post Card
 
 ```tsx
-// app/blog/page.tsx
-import Link from "next/link";
-import Image from "next/image";
-import { Badge } from "@/components/ui/badge";
-import { getReadingTime } from "@/lib/reading-time";
-
 interface Post {
   slug: string;
   title: string;
@@ -18,24 +50,23 @@ interface Post {
   publishedAt: string;
   coverImage: string;
   tags: string[];
-  content: string;
+  readingTime: string;
 }
 
-function PostCard({ post }: { post: Post }) {
+export function PostCard({ post }: { post: Post }) {
   return (
-    <article className="group">
-      <Link href={`/blog/${post.slug}`} className="block space-y-3">
-        <div className="overflow-hidden rounded-lg border">
-          <Image
+    <article className="@container group">
+      <a href={`/blog/${post.slug}`} className="block space-y-3">
+        <div className="overflow-hidden rounded-lg border border-border bg-surface">
+          <img
             src={post.coverImage}
-            alt={post.title}
-            width={800}
-            height={400}
-            className="aspect-[2/1] object-cover transition-transform duration-300 group-hover:scale-105"
+            alt=""
+            className="aspect-[2/1] w-full object-cover motion-safe:transition-transform motion-safe:duration-500 group-hover:scale-105"
+            loading="lazy"
           />
         </div>
         <div className="space-y-2">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <div className="flex items-center gap-2 text-xs text-muted">
             <time dateTime={post.publishedAt}>
               {new Date(post.publishedAt).toLocaleDateString("en-US", {
                 month: "long",
@@ -44,173 +75,129 @@ function PostCard({ post }: { post: Post }) {
               })}
             </time>
             <span aria-hidden="true">&middot;</span>
-            <span>{getReadingTime(post.content)}</span>
+            <span>{post.readingTime}</span>
           </div>
-          <h2 className="text-xl font-semibold tracking-tight group-hover:text-primary transition-colors">
+          <h2 className="text-base font-semibold text-text group-hover:text-primary motion-safe:transition-colors @sm:text-lg">
             {post.title}
           </h2>
-          <p className="text-muted-foreground line-clamp-2">
-            {post.description}
-          </p>
-          <div className="flex flex-wrap gap-2">
+          <p className="text-sm text-muted line-clamp-2">{post.description}</p>
+          <div className="flex flex-wrap gap-1.5">
             {post.tags.map((tag) => (
-              <Badge key={tag} variant="secondary" className="text-xs">
+              <span
+                key={tag}
+                className="rounded-full bg-surface px-2 py-0.5 text-[11px] font-medium text-muted"
+              >
                 {tag}
-              </Badge>
+              </span>
             ))}
           </div>
         </div>
-      </Link>
+      </a>
     </article>
   );
 }
-
-export default async function BlogPage() {
-  const posts = await getPosts();
-
-  return (
-    <div className="mx-auto max-w-4xl space-y-8 py-12">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Blog</h1>
-        <p className="mt-2 text-muted-foreground">
-          Insights, tutorials, and updates from the team.
-        </p>
-      </div>
-      <div className="grid gap-8 md:grid-cols-2">
-        {posts.map((post) => (
-          <PostCard key={post.slug} post={post} />
-        ))}
-      </div>
-    </div>
-  );
-}
 ```
 
-## Blog Post Layout with Author & TOC
+#### Pattern: Article Layout with Sticky TOC
 
 ```tsx
-// app/blog/[slug]/page.tsx
-import { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { MarkdownRenderer } from "@/components/markdown-renderer";
-import { TableOfContents } from "@/components/table-of-contents";
-import { RelatedPosts } from "@/components/related-posts";
-import { ReadingProgress } from "@/components/reading-progress";
-import { JsonLd } from "@/components/json-ld";
-
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
-  const { slug } = await params;
-  const post = await getPost(slug);
-  if (!post) return {};
-
-  return {
-    title: post.title,
-    description: post.description,
-    openGraph: {
-      type: "article",
-      title: post.title,
-      description: post.description,
-      images: [post.coverImage],
-      publishedTime: post.publishedAt,
-      authors: [post.author.name],
-      tags: post.tags,
-    },
-  };
+interface ArticleLayoutProps {
+  title: string;
+  description: string;
+  publishedAt: string;
+  author: { name: string; avatar: string };
+  tags: string[];
+  readingTime: string;
+  children: React.ReactNode;
+  headings: { id: string; text: string; level: number }[];
 }
 
-export default async function BlogPost({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
-  const post = await getPost(slug);
-  if (!post) notFound();
-
+export function ArticleLayout({
+  title,
+  description,
+  publishedAt,
+  author,
+  tags,
+  readingTime,
+  children,
+  headings,
+}: ArticleLayoutProps) {
   return (
-    <>
-      <ReadingProgress />
-      <JsonLd data={{
-        "@context": "https://schema.org",
-        "@type": "BlogPosting",
-        headline: post.title,
-        description: post.description,
-        image: post.coverImage,
-        datePublished: post.publishedAt,
-        author: { "@type": "Person", name: post.author.name },
-      }} />
-      <article className="mx-auto max-w-4xl py-12">
-        <header className="space-y-4">
-          <div className="flex flex-wrap gap-2">
-            {post.tags.map((tag: string) => (
-              <Badge key={tag} variant="secondary">{tag}</Badge>
-            ))}
-          </div>
-          <h1 className="text-4xl font-bold tracking-tight lg:text-5xl">
-            {post.title}
-          </h1>
-          <p className="text-lg text-muted-foreground">{post.description}</p>
+    <article className="mx-auto max-w-4xl px-4 py-12">
+      <header className="space-y-4">
+        <div className="flex flex-wrap gap-2">
+          {tags.map((tag) => (
+            <a
+              key={tag}
+              href={`/blog?tag=${encodeURIComponent(tag)}`}
+              className="rounded-full bg-surface px-2.5 py-0.5 text-xs font-medium text-muted hover:text-text motion-safe:transition-colors"
+            >
+              {tag}
+            </a>
+          ))}
+        </div>
+        <h1 className="text-3xl font-bold tracking-tight text-text lg:text-5xl">
+          {title}
+        </h1>
+        <p className="text-lg text-muted">{description}</p>
 
-          <div className="flex items-center gap-3 border-b pb-6">
-            <Avatar>
-              <AvatarImage src={post.author.avatar} alt={post.author.name} />
-              <AvatarFallback>{post.author.name[0]}</AvatarFallback>
-            </Avatar>
-            <div>
-              <p className="text-sm font-medium">{post.author.name}</p>
-              <p className="text-sm text-muted-foreground">
-                {new Date(post.publishedAt).toLocaleDateString("en-US", {
-                  month: "long", day: "numeric", year: "numeric",
-                })} &middot; {getReadingTime(post.content)}
-              </p>
-            </div>
+        <div className="flex items-center gap-3 border-b border-border pb-6">
+          <img
+            src={author.avatar}
+            alt={author.name}
+            className="size-10 rounded-full bg-surface object-cover"
+          />
+          <div>
+            <p className="text-sm font-medium text-text">{author.name}</p>
+            <p className="text-sm text-muted">
+              <time dateTime={publishedAt}>
+                {new Date(publishedAt).toLocaleDateString("en-US", {
+                  month: "long",
+                  day: "numeric",
+                  year: "numeric",
+                })}
+              </time>
+              {" "}&middot; {readingTime}
+            </p>
           </div>
-        </header>
+        </div>
+      </header>
 
-        <div className="mt-8 grid grid-cols-1 gap-12 lg:grid-cols-[1fr_220px]">
-          <div className="prose prose-neutral dark:prose-invert max-w-none">
-            <MarkdownRenderer content={post.content} />
-          </div>
-          <aside className="hidden lg:block">
-            <TableOfContents />
-          </aside>
+      <div className="mt-8 grid grid-cols-1 gap-12 lg:grid-cols-[1fr_220px]">
+        {/* Article body -- prose with DNA overrides */}
+        <div className="prose prose-neutral dark:prose-invert max-w-none prose-headings:text-text prose-p:text-text/85 prose-a:text-primary prose-strong:text-text prose-code:rounded prose-code:bg-surface prose-code:px-1.5 prose-code:py-0.5 prose-code:text-sm prose-code:before:content-none prose-code:after:content-none">
+          {children}
         </div>
 
-        <footer className="mt-16 border-t pt-8">
-          <RelatedPosts currentSlug={slug} tags={post.tags} />
-        </footer>
-      </article>
-    </>
+        {/* Sticky table of contents */}
+        <aside className="hidden lg:block" aria-label="Table of contents">
+          <nav className="sticky top-24">
+            <h2 className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted">
+              On this page
+            </h2>
+            <ul className="space-y-2 border-s border-border ps-3">
+              {headings.map((heading) => (
+                <li key={heading.id}>
+                  <a
+                    href={`#${heading.id}`}
+                    className={`block text-sm text-muted hover:text-text motion-safe:transition-colors ${
+                      heading.level === 3 ? "ps-3" : ""
+                    }`}
+                  >
+                    {heading.text}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </aside>
+      </div>
+    </article>
   );
 }
 ```
 
-## JSON-LD Component (Safe Wrapper)
-
-```tsx
-// components/json-ld.tsx
-export function JsonLd({ data }: { data: Record<string, unknown> }) {
-  return (
-    <script
-      type="application/ld+json"
-      // JSON.stringify output is safe — no HTML tags or script injection possible
-      // because JSON encoding escapes all special characters
-      suppressHydrationWarning
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
-    />
-  );
-}
-```
-
-Note: JSON-LD via `JSON.stringify` is safe because JSON encoding escapes `<`, `>`, and `&` characters, preventing script injection. This is the recommended Next.js pattern.
-
-## Reading Progress Indicator
+#### Pattern: Reading Progress Bar
 
 ```tsx
 "use client";
@@ -221,80 +208,36 @@ export function ReadingProgress() {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    function updateProgress() {
+    function update() {
       const scrollTop = window.scrollY;
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
       setProgress(docHeight > 0 ? (scrollTop / docHeight) * 100 : 0);
     }
-
-    window.addEventListener("scroll", updateProgress, { passive: true });
-    return () => window.removeEventListener("scroll", updateProgress);
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
   }, []);
 
   return (
-    <div className="fixed top-0 left-0 z-50 h-1 w-full bg-transparent">
-      <div
-        className="h-full bg-primary transition-[width] duration-150"
-        style={{ width: `${progress}%` }}
-        role="progressbar"
-        aria-valuenow={Math.round(progress)}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-label="Reading progress"
-      />
+    <div
+      className="fixed inset-x-0 top-0 z-50 h-0.5 motion-safe:transition-[width] motion-safe:duration-150"
+      role="progressbar"
+      aria-valuenow={Math.round(progress)}
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-label="Reading progress"
+    >
+      <div className="h-full bg-primary" style={{ width: `${progress}%` }} />
     </div>
   );
 }
 ```
 
-## Related Posts
-
-```tsx
-interface RelatedPostsProps {
-  currentSlug: string;
-  tags: string[];
-}
-
-export async function RelatedPosts({ currentSlug, tags }: RelatedPostsProps) {
-  const allPosts = await getPosts();
-  const related = allPosts
-    .filter((p) => p.slug !== currentSlug)
-    .map((p) => ({
-      ...p,
-      score: p.tags.filter((t: string) => tags.includes(t)).length,
-    }))
-    .sort((a, b) => b.score - a.score)
-    .slice(0, 3);
-
-  if (related.length === 0) return null;
-
-  return (
-    <section>
-      <h2 className="mb-6 text-2xl font-semibold">Related Posts</h2>
-      <div className="grid gap-6 sm:grid-cols-3">
-        {related.map((post) => (
-          <a key={post.slug} href={`/blog/${post.slug}`} className="group space-y-2">
-            <h3 className="font-medium group-hover:text-primary transition-colors line-clamp-2">
-              {post.title}
-            </h3>
-            <p className="text-sm text-muted-foreground line-clamp-2">
-              {post.description}
-            </p>
-          </a>
-        ))}
-      </div>
-    </section>
-  );
-}
-```
-
-## Tag Filter with URL State
+#### Pattern: Tag Filter with URL State
 
 ```tsx
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { Badge } from "@/components/ui/badge";
 
 export function TagFilter({ tags }: { tags: string[] }) {
   const router = useRouter();
@@ -309,100 +252,130 @@ export function TagFilter({ tags }: { tags: string[] }) {
   }
 
   return (
-    <div className="flex flex-wrap gap-2">
-      <Badge
-        variant={activeTag === null ? "default" : "outline"}
-        className="cursor-pointer"
+    <div className="flex flex-wrap gap-2" role="group" aria-label="Filter by tag">
+      <button
+        className={`rounded-full px-3 py-1 text-sm font-medium motion-safe:transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${
+          activeTag === null
+            ? "bg-primary text-bg"
+            : "bg-surface text-muted hover:text-text"
+        }`}
         onClick={() => setTag(null)}
+        aria-pressed={activeTag === null}
       >
         All
-      </Badge>
+      </button>
       {tags.map((tag) => (
-        <Badge
+        <button
           key={tag}
-          variant={activeTag === tag ? "default" : "outline"}
-          className="cursor-pointer"
+          className={`rounded-full px-3 py-1 text-sm font-medium motion-safe:transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${
+            activeTag === tag
+              ? "bg-primary text-bg"
+              : "bg-surface text-muted hover:text-text"
+          }`}
           onClick={() => setTag(tag)}
+          aria-pressed={activeTag === tag}
         >
           {tag}
-        </Badge>
+        </button>
       ))}
     </div>
   );
 }
 ```
 
-## RSS Feed
+#### Pattern: Related Posts
 
-```ts
-// app/feed.xml/route.ts
-import { NextResponse } from "next/server";
-
-export async function GET() {
-  const posts = await getPosts();
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL!;
-
-  const items = posts
-    .map(
-      (post) => `
-    <item>
-      <title>${escapeXml(post.title)}</title>
-      <link>${siteUrl}/blog/${post.slug}</link>
-      <description>${escapeXml(post.description)}</description>
-      <pubDate>${new Date(post.publishedAt).toUTCString()}</pubDate>
-      <guid isPermaLink="true">${siteUrl}/blog/${post.slug}</guid>
-    </item>`
-    )
-    .join("");
-
-  const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>My Blog</title>
-    <link>${siteUrl}</link>
-    <description>Blog posts and updates</description>
-    <atom:link href="${siteUrl}/feed.xml" rel="self" type="application/rss+xml" />
-    ${items}
-  </channel>
-</rss>`;
-
-  return new NextResponse(xml, {
-    headers: { "Content-Type": "application/xml" },
-  });
+```tsx
+interface RelatedPostsProps {
+  posts: { slug: string; title: string; description: string }[];
 }
 
-function escapeXml(str: string): string {
-  return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+export function RelatedPosts({ posts }: RelatedPostsProps) {
+  if (posts.length === 0) return null;
+
+  return (
+    <section aria-label="Related posts" className="border-t border-border pt-8 mt-16">
+      <h2 className="mb-6 text-2xl font-semibold text-text">Related Posts</h2>
+      <div className="grid gap-6 @sm:grid-cols-2 @md:grid-cols-3">
+        {posts.map((post) => (
+          <a
+            key={post.slug}
+            href={`/blog/${post.slug}`}
+            className="group space-y-2 rounded-lg p-3 -m-3 hover:bg-surface motion-safe:transition-colors"
+          >
+            <h3 className="font-medium text-text group-hover:text-primary motion-safe:transition-colors line-clamp-2">
+              {post.title}
+            </h3>
+            <p className="text-sm text-muted line-clamp-2">{post.description}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+  );
 }
 ```
 
-## Astro Blog
+### Reference Sites
 
-```astro
----
-// src/pages/blog/index.astro
-import { getCollection } from "astro:content";
-import PostCard from "../../components/PostCard.astro";
+- **Stripe Blog** (stripe.com/blog) -- Clean reading experience, excellent typography hierarchy, responsive article layout with sidebar, strong use of whitespace
+- **Vercel Blog** (vercel.com/blog) -- Award-caliber post cards with subtle hover, reading progress indicator, dark mode reading comfort, tag-based filtering
+- **iA Writer** (ia.net/topics) -- Exemplary editorial typography, distraction-free reading, perfect line length and spacing
 
-const posts = (await getCollection("blog", ({ data }) => !data.draft))
-  .sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime());
----
+## Layer 3: Integration Context
 
-<div class="mx-auto max-w-4xl space-y-8 py-12">
-  <h1 class="text-3xl font-bold tracking-tight">Blog</h1>
-  <div class="grid gap-8 md:grid-cols-2">
-    {posts.map((post) => <PostCard post={post} />)}
-  </div>
-</div>
-```
+### DNA Connection
 
-## Key Rules
+| DNA Token | Usage in Blog Patterns |
+|-----------|-------------------|
+| `bg-bg` | Article page background, reading surface |
+| `bg-surface` | Post cards, tag pills, code block backgrounds |
+| `text-text` | Article body, headings, author name |
+| `text-muted` | Dates, reading time, tag labels, TOC links |
+| `border-border` | Card outlines, header divider, TOC border |
+| `bg-primary` / `text-primary` | Active tag filter, reading progress bar, article links |
+| `--font-body` | Article body text -- reading optimized |
+| `--font-display` | Article title, section headings |
+| `--type-scale` | Article typography uses the 8-level DNA type scale |
 
-- Use `generateMetadata` with OpenGraph `article` type for blog SEO
-- Add JSON-LD `BlogPosting` schema for rich search results
-- Calculate reading time from word count (200 WPM average)
-- Related posts: score by shared tag count, show top 3
-- RSS feed: escape XML entities, include `atom:link` for self-reference
-- Tag filtering via URL searchParams for shareable filtered views
-- Reading progress: use scroll position / total document height
-- Astro: use Content Collections with `getStaticPaths` for SSG blog
+### Archetype Variants
+
+| Archetype | Adaptation |
+|-----------|-----------|
+| Editorial | Magazine-style layout: featured hero post, 3-col grid, pull quotes, drop caps |
+| Japanese Minimal | Maximum whitespace, single-column reading, quiet hover states, restrained palette |
+| Brutalist | Raw text presentation, monospace metadata, no rounded corners, stark dividers |
+| Swiss/International | Clean grid index, strict typographic hierarchy, no decorative elements |
+| Dark Academia | Warm surfaces, serif article typography, understated card borders |
+| Luxury/Fashion | Curated post presentation, large featured images, editorial photo treatments |
+| Neo-Corporate | Polished post cards, professional layout, subtle shadows, clean metadata |
+
+### Related Skills
+
+- `tailwind-system` -- Prose plugin overrides, DNA token mapping, dark mode prose styles
+- `responsive-design` -- Article typography scaling (hybrid: clamp body, stepped headings)
+- `accessibility` -- Skip-to-content link, heading hierarchy, reading progress ARIA
+- `seo-meta` -- Article JSON-LD schema, Open Graph article type, RSS feed generation
+- `multi-page-architecture` -- Blog index + article page template pairing, shared components
+- `dark-light-mode` -- Prose color inversion, reading-comfortable dark palette
+
+## Layer 4: Anti-Patterns
+
+### Anti-Pattern: Fixed-Width Article Text
+
+**What goes wrong:** Article text set to a fixed width (e.g., `width: 720px`) instead of responsive `max-w` with proper padding. On mobile, content overflows or has horizontal scroll. On ultra-wide screens, text floats in a narrow column with no context.
+**Instead:** Use `max-w-prose` or `max-w-3xl` with `px-4` for mobile padding. The container constrains on wide screens while flowing naturally on narrow ones. Let prose line length be 65-75 characters for optimal readability.
+
+### Anti-Pattern: Missing Skip-to-Content
+
+**What goes wrong:** Blog articles with long navigation bars force keyboard and screen-reader users to tab through every nav link before reaching the article content.
+**Instead:** Add a visually-hidden skip link as the first focusable element: `<a href="#content" class="sr-only focus:not-sr-only ...">Skip to content</a>`. The article container gets `id="content"`.
+
+### Anti-Pattern: No Dark Mode Reading Comfort
+
+**What goes wrong:** Dark mode simply inverts the light palette, producing harsh white text on pure black. Reading long-form content becomes fatiguing. Code blocks blend into the background.
+**Instead:** Dark mode uses off-black backgrounds (`bg-bg` maps to a dark gray, not pure black), slightly reduced text brightness (`text-text` is warm gray, not pure white), and distinct code block surfaces (`bg-surface` provides contrast against `bg-bg`).
+
+### Anti-Pattern: Inaccessible Table of Contents
+
+**What goes wrong:** TOC is a decorative list with no semantic markup, no `aria-label`, and no heading hierarchy indication. Screen readers cannot identify it as navigation or understand the nesting.
+**Instead:** Wrap in `<nav aria-label="Table of contents">`, use a `<ul>` with nested `<li>` elements, and indent H3s visually under their parent H2s. Use `<a href="#section-id">` for each entry with proper focus styles.
