@@ -232,10 +232,11 @@ Plans:
   3. Zero references to `plan-sections` in any skill (replaced with `plan-dev`)
   4. Zero references to `/modulo:verify` (replaced with `/modulo:audit`) or `/modulo:export` (removed or rewired)
   5. REFERENCES.md either produced by a command/agent or consumers updated to read the correct artifact
+**Plans**: 2 plans
 
 Plans:
-- [ ] 11-01-PLAN.md -- Systematic cross-reference repair: design-lead, start-design, plan-sections, verify/export replacements
-- [ ] 11-02-PLAN.md -- Resolve REFERENCES.md producer gap (either add production step or update consumers)
+- [ ] 11-01-PLAN.md -- Systematic cross-reference repair: design-lead, start-design, plan-sections, verify/export replacements + delete legacy discussion-protocol.md
+- [ ] 11-02-PLAN.md -- Resolve REFERENCES.md producer gap: update all consumers to read research/DESIGN-REFERENCES.md (Path B)
 
 ### Phase 12: Registry & Documentation Update
 **Goal**: SKILL-DIRECTORY.md accurately reflects the complete v2.0 skill inventory and README.md documents the correct v2.0 architecture, commands, and workflow
@@ -288,10 +289,10 @@ Phase order: 10 -> 11 -> 12 -> 13 (sequential, each depends on prior)
 | 8. Experience & Frameworks | 8/8 | Complete | 2026-02-24 |
 | 9. Integration & Polish | 4/4 | Complete | 2026-02-24 |
 | 10. Wire Quality Enforcement | 0/1 | Planned | -- |
-| 11. Fix Stale Cross-References | 0/2 | Pending | -- |
+| 11. Fix Stale Cross-References | 0/2 | Planned | -- |
 | 12. Registry & Documentation | 0/2 | Pending | -- |
 | 13. Legacy Cleanup | 0/2 | Pending | -- |
 
 ---
 *Roadmap created: 2026-02-23*
-*Last updated: 2026-02-25 -- Phase 10 planned (1 plan, 1 wave)*
+*Last updated: 2026-02-25 -- Phase 11 planned (2 plans, 1 wave)*
