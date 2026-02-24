@@ -97,45 +97,45 @@ Deferred to future release. Tracked but not in current roadmap.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| SEO-01 | TBD | Pending |
-| SEO-02 | TBD | Pending |
-| SEO-03 | TBD | Pending |
-| SEO-04 | TBD | Pending |
-| SEO-05 | TBD | Pending |
-| SEO-06 | TBD | Pending |
-| SEO-07 | TBD | Pending |
-| SEO-08 | TBD | Pending |
-| SDATA-01 | TBD | Pending |
-| SDATA-02 | TBD | Pending |
-| SDATA-03 | TBD | Pending |
-| SDATA-04 | TBD | Pending |
-| SDATA-05 | TBD | Pending |
-| SDATA-06 | TBD | Pending |
-| GEO-01 | TBD | Pending |
-| GEO-02 | TBD | Pending |
-| GEO-03 | TBD | Pending |
-| GEO-04 | TBD | Pending |
-| GEO-05 | TBD | Pending |
-| IDX-01 | TBD | Pending |
-| IDX-02 | TBD | Pending |
-| IDX-03 | TBD | Pending |
-| IDX-04 | TBD | Pending |
-| IDX-05 | TBD | Pending |
-| API-01 | TBD | Pending |
-| API-02 | TBD | Pending |
-| API-03 | TBD | Pending |
-| API-04 | TBD | Pending |
-| API-05 | TBD | Pending |
-| API-06 | TBD | Pending |
-| OG-01 | TBD | Pending |
-| OG-02 | TBD | Pending |
-| OG-03 | TBD | Pending |
+| SEO-01 | Phase 14 | Pending |
+| SEO-02 | Phase 14 | Pending |
+| SEO-03 | Phase 14 | Pending |
+| SEO-04 | Phase 14 | Pending |
+| SEO-05 | Phase 14 | Pending |
+| SEO-06 | Phase 14 | Pending |
+| SEO-07 | Phase 14 | Pending |
+| SEO-08 | Phase 14 | Pending |
+| SDATA-01 | Phase 15 | Pending |
+| SDATA-02 | Phase 15 | Pending |
+| SDATA-03 | Phase 15 | Pending |
+| SDATA-04 | Phase 15 | Pending |
+| SDATA-05 | Phase 15 | Pending |
+| SDATA-06 | Phase 15 | Pending |
+| GEO-01 | Phase 15 | Pending |
+| GEO-02 | Phase 15 | Pending |
+| GEO-03 | Phase 15 | Pending |
+| GEO-04 | Phase 15 | Pending |
+| GEO-05 | Phase 15 | Pending |
+| IDX-01 | Phase 16 | Pending |
+| IDX-02 | Phase 16 | Pending |
+| IDX-03 | Phase 16 | Pending |
+| IDX-04 | Phase 16 | Pending |
+| IDX-05 | Phase 16 | Pending |
+| API-01 | Phase 17 | Pending |
+| API-02 | Phase 17 | Pending |
+| API-03 | Phase 17 | Pending |
+| API-04 | Phase 17 | Pending |
+| API-05 | Phase 17 | Pending |
+| API-06 | Phase 17 | Pending |
+| OG-01 | Phase 18 | Pending |
+| OG-02 | Phase 18 | Pending |
+| OG-03 | Phase 18 | Pending |
 
 **Coverage:**
 - v1 requirements: 33 total
-- Mapped to phases: 0 (pending roadmap)
-- Unmapped: 33
+- Mapped to phases: 33
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-02-25*
-*Last updated: 2026-02-25 after initial definition*
+*Last updated: 2026-02-25 — all 33 requirements mapped to phases 14-18*
