@@ -1,7 +1,7 @@
 {
   "name": "modulo",
-  "description": "Premium frontend design system with 87 skills, 13 commands, and 17 agents. Features Full Quality Pipeline and 6-layer Context Rot Prevention (pre-commit hooks, CONTEXT.md anchoring, pre-extracted spawn prompts, canary checks, session boundaries, baked-in rules). Plus Design DNA identity system with 16 opinionated archetypes, creative tension system, emotional arc storytelling, cinematic motion choreography, 35-point anti-slop quality gate, and Awwwards 4-axis scoring. Creates Awwwards SOTD-competitive, production-ready websites. Works with Next.js and Astro.",
-  "version": "6.1.0",
+  "description": "Premium frontend design plugin with machine-enforceable design identity. 3-tier skill system (Core/Domain/Utility) using 4-layer skill format (Decision Guidance, Award-Winning Examples, Integration Context, Anti-Patterns). Pipeline architecture of specialized agents produces Awwwards SOTD-caliber websites through Design DNA, 19 Design Archetypes, Emotional Arc, and 35-point Anti-Slop Gate enforcement. Targets Next.js, Astro, React/Vite, Tauri, and Electron.",
+  "version": "2.0.0",
   "author": {
     "name": "raphj"
   },
