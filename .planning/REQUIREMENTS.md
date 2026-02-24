@@ -116,10 +116,10 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| FOUND-01 | Phase 1: Foundation | Pending |
-| FOUND-02 | Phase 1: Foundation | Pending |
-| FOUND-03 | Phase 1: Foundation | Pending |
-| FOUND-04 | Phase 1: Foundation | Pending |
+| FOUND-01 | Phase 1: Foundation | Complete |
+| FOUND-02 | Phase 1: Foundation | Complete |
+| FOUND-03 | Phase 1: Foundation | Complete |
+| FOUND-04 | Phase 1: Foundation | Complete |
 | MOTN-01 | Phase 5: Motion & Design Skills | Pending |
 | MOTN-02 | Phase 5: Motion & Design Skills | Pending |
 | MOTN-03 | Phase 5: Motion & Design Skills | Pending |
@@ -156,9 +156,9 @@
 | CMND-04 | Phase 3: Command System | Pending |
 | CMND-05 | Phase 3: Command System | Pending |
 | CMND-06 | Phase 3: Command System | Pending |
-| SKIL-01 | Phase 1: Foundation | Pending |
-| SKIL-02 | Phase 1: Foundation | Pending |
-| SKIL-03 | Phase 1: Foundation | Pending |
+| SKIL-01 | Phase 1: Foundation | Complete |
+| SKIL-02 | Phase 1: Foundation | Complete |
+| SKIL-03 | Phase 1: Foundation | Complete |
 | SKIL-04 | Phase 8: Experience & Frameworks | Pending |
 | DEVX-01 | Phase 3: Command System | Pending |
 | DEVX-02 | Phase 9: Integration & Polish | Pending |
@@ -178,4 +178,4 @@
 
 ---
 *Requirements defined: 2026-02-23*
-*Last updated: 2026-02-23 after roadmap creation*
+*Last updated: 2026-02-24 — Phase 1 requirements marked Complete*
