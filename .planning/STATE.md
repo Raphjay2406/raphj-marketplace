@@ -228,6 +228,10 @@ Recent decisions affecting current work:
 - [Phase 8-01]: 877 lines exceeds 500-600 target but all content substantive (7 complete code patterns, 7 anti-patterns, 10 constraints)
 - [Phase 8-01]: v3-to-v4 migration table in Layer 1 as primary decision reference -- v3 avoidance is the main decision builders face
 - [Phase 8-01]: Container query breakpoints enumerated (@xs through @5xl) for builder reference in container-vs-media decisions
+- [Phase 8-02]: 687 lines exceeds 450-550 target but all content substantive (7 code patterns with complete TSX, 7 anti-patterns, 10 constraints)
+- [Phase 8-02]: Archetype recomposition styles documented as personality expression through layout transitions, not different responsive systems
+- [Phase 8-02]: Named container queries documented for nested scenarios alongside unnamed default
+- [Phase 8-02]: Safe area insets (env()) included as Anti-Pattern 7 for modern phone compatibility
 - [Phase 8-03]: 929 lines exceeds 550-650 target but all content substantive (19 archetype CSS + Tailwind focus mappings, 6 ARIA components, 19-row reduced-motion table)
 - [Phase 8-03]: Focus indicators use dual CSS data-archetype selectors + Tailwind archetypeFocusClass Record
 - [Phase 8-03]: Focus trap uses inert attribute (Baseline 2023) instead of manual Tab key interception
