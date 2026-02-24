@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-23)
 
 **Core value:** Every output must be award-winning by default (Awwwards SOTD 8.0+) -- not as a stretch goal, but as the baseline.
-**Current focus:** Phase 5 - Motion & Design Skills (in progress)
+**Current focus:** Phase 5 - Motion & Design Skills (5/6 complete, 05-03 remaining)
 
 ## Current Position
 
 Phase: 5 of 9 (Motion & Design Skills)
-Plan: 5 of 6 in current phase (05-03 and 05-06 remaining)
+Plan: 5 of 6 in current phase (05-03 remaining)
 Status: In progress
-Last activity: 2026-02-24 -- Completed 05-02-PLAN.md (creative tension skill)
+Last activity: 2026-02-24 -- Completed 05-06-PLAN.md (design-system-scaffold skill)
 
-Progress: [██████░░░░] 58% (30/52 plans)
+Progress: [██████░░░░] 56% (29/52 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 30
+- Total plans completed: 29
 - Average duration: 3 min
-- Total execution time: 93 min
+- Total execution time: 100 min
 
 **By Phase:**
 
@@ -31,11 +31,11 @@ Progress: [██████░░░░] 58% (30/52 plans)
 | 2. Pipeline Architecture | 7/7 | 24 min | 3 min |
 | 3. Command System | 6/6 | 10 min | 2 min |
 | 4. Quality Enforcement | 5/5 | 15 min | 3 min |
-| 5. Motion & Design Skills | 5/6 | 22 min | 4 min |
+| 5. Motion & Design Skills | 5/6 | 29 min | 5 min |
 
 **Recent Trend:**
-- Last 5 plans: 05-02 (6 min), 05-05 (4 min), 05-04 (4 min), 05-03 (5 min), 05-01 (3 min)
-- Trend: Phase 5 on track at 22 min for 5/6 plans (avg 4 min/plan)
+- Last 5 plans: 05-06 (7 min), 05-02 (6 min), 05-05 (4 min), 05-04 (4 min), 05-03 (5 min)
+- Trend: Phase 5 at 29 min for 5/6 plans (avg 5 min/plan, larger skills)
 
 *Updated after each plan completion*
 
@@ -162,6 +162,9 @@ Recent decisions affecting current work:
 - [Phase 5-04]: 690 lines exceeds 400-500 target but all content substantive (6 patterns + 19 archetype choreography + 7 anti-patterns)
 - [Phase 5-04]: GSAP Flip included for complex multi-element choreography beyond AnimatePresence capabilities
 - [Phase 5-04]: Directional navigation detection pattern included to enforce back-vs-forward spatial model
+- [Phase 5-06]: 768 lines exceeds 600-750 target but all content substantive (6 complete scaffold templates)
+- [Phase 5-06]: --motion-* custom properties in :root (not @theme) -- JS libraries read via getComputedStyle, Tailwind does not need utilities
+- [Phase 5-06]: 10 machine-readable constraint parameters for automated scaffold quality checking
 - [Phase 5]: Motion intensity, wow moment count, tension mandate all archetype-driven (user decision)
 - [Phase 5]: Scroll-driven animations are beat-dependent -- HOOK/PEAK get continuous, others entrance-only
 - [Phase 5]: Hybrid motion presets -- archetype base family + DNA parameter tweaks
@@ -205,5 +208,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-24
-Stopped at: Completed 05-02-PLAN.md (creative tension skill)
+Stopped at: Completed 05-06-PLAN.md (design-system-scaffold skill) -- 05-03 remaining in Phase 5
 Resume file: None
