@@ -1,7 +1,7 @@
 {
   "name": "modulo",
-  "description": "Premium frontend design plugin with machine-enforceable design identity. 3-tier skill system (Core/Domain/Utility) using 4-layer skill format (Decision Guidance, Award-Winning Examples, Integration Context, Anti-Patterns). Pipeline architecture of specialized agents produces Awwwards SOTD-caliber websites through Design DNA, 19 Design Archetypes, Emotional Arc, and 35-point Anti-Slop Gate enforcement. Targets Next.js, Astro, React/Vite, Tauri, and Electron.",
-  "version": "2.0.0",
+  "description": "Premium frontend design system for Claude Code. 6 workflow commands + utility commands, pipeline agent architecture, Design DNA identity system with 19 archetypes, creative tension, emotional arc, cinematic motion, 35-point anti-slop gate, and Awwwards scoring. Creates award-winning, production-ready websites.",
+  "version": "2.0.0-dev",
   "author": {
     "name": "raphj"
   },
