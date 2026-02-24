@@ -148,6 +148,9 @@ Recent decisions affecting current work:
 - [Phase 4-03]: 695 lines exceeds 400-500 target but all content substantive (19 archetype addenda + 8 universal categories)
 - [Phase 4-03]: Machine-readable constraints table with 10 enforcement parameters (hover duration, touch target, noise opacity, etc.)
 - [Phase 4-03]: 7 anti-patterns in Layer 4 to thoroughly address checkbox exercise failure mode
+- [Phase 5-01]: Unified cinematic-motion skill at 705 lines subsumes css-animations (244), framer-motion (258), gsap-animations (277) -- net reduction of 74 lines, unified authority
+- [Phase 5-01]: All 19 archetype motion profiles in compact single-row table format (20 lines vs 100+ expanded)
+- [Phase 5-01]: 10 machine-readable constraint parameters for automated motion quality checking (speed-multiplier, diversity limits, beat scroll modes)
 - [Phase 5-05]: performance-animation is core tier (always loaded) -- animation performance is fundamental to every build
 - [Phase 5-05]: will-change budget: max 10 active elements (up from v6.1.0's 5) based on modern GPU capabilities
 - [Phase 5-05]: Font loading moved entirely to performance-animation (not duplicated in performance-guardian)
