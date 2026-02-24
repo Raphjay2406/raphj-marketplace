@@ -24,7 +24,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 10: Wire Quality Enforcement** - Add CD/QR invocation to build-orchestrator wave protocol (GAP-1)
 - [x] **Phase 11: Fix Stale Cross-References** - Repair all stale agent/command references across skills (GAP-2, GAP-3, ISSUE-1-3)
 - [x] **Phase 12: Registry & Documentation** - Rebuild SKILL-DIRECTORY.md and rewrite README.md (ISSUE-4-5)
-- [ ] **Phase 13: Legacy Cleanup** - Remove v6.1.0 agents/skills, fix bookkeeping, resolve duplicates
+- [x] **Phase 13: Legacy Cleanup** - Remove v6.1.0 agents/skills, fix bookkeeping, resolve duplicates
 
 ## Phase Details
 
@@ -268,8 +268,8 @@ Plans:
   7. Phase 6 brainstorm skills explicitly referenced by relevant agents
 
 Plans:
-- [ ] 13-01-PLAN.md -- Remove legacy v6.1.0 agents and resolve duplicates
-- [ ] 13-02-PLAN.md -- Remove superseded skills, fix bookkeeping, add missing constraints, wire brainstorm skills
+- [x] 13-01-PLAN.md -- Remove legacy v6.1.0 agents and resolve duplicates
+- [x] 13-02-PLAN.md -- Remove superseded skills, fix bookkeeping, add missing constraints, wire brainstorm skills
 
 ## Progress
 
@@ -291,8 +291,8 @@ Phase order: 10 -> 11 -> 12 -> 13 (sequential, each depends on prior)
 | 10. Wire Quality Enforcement | 1/1 | Complete | 2026-02-25 |
 | 11. Fix Stale Cross-References | 2/2 | Complete | 2026-02-25 |
 | 12. Registry & Documentation | 2/2 | Complete | 2026-02-25 |
-| 13. Legacy Cleanup | 0/2 | Pending | -- |
+| 13. Legacy Cleanup | 2/2 | Complete | 2026-02-25 |
 
 ---
 *Roadmap created: 2026-02-23*
-*Last updated: 2026-02-25 -- Phase 4 and Phase 7 checkboxes marked [x] (Phase 13 cleanup)*
+*Last updated: 2026-02-25 -- Phase 13 complete (2/2 plans). All 13 phases complete (63/63 plans).*
