@@ -12,27 +12,27 @@ See: .planning/PROJECT.md (updated 2026-02-23)
 Phase: 2 of 9 (Pipeline Architecture)
 Plan: 02-04 of 7 in current phase
 Status: In progress
-Last activity: 2026-02-24 -- Completed 02-04-PLAN.md (Quality Reviewer & Polisher agents)
+Last activity: 2026-02-24 -- Completed 02-01-PLAN.md (Pipeline agent definitions: researcher, section-planner, build-orchestrator)
 
-Progress: [██░░░░░░░░] 15% (8/52 plans)
+Progress: [██░░░░░░░░] 17% (9/52 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 8
+- Total plans completed: 9
 - Average duration: 4 min
-- Total execution time: 30 min
+- Total execution time: 36 min
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 1. Foundation | 6/6 | 22 min | 4 min |
-| 2. Pipeline Architecture | 2/7 | 8 min | 4 min |
+| 2. Pipeline Architecture | 3/7 | 14 min | 5 min |
 
 **Recent Trend:**
-- Last 5 plans: 02-04 (5 min), 02-02 (3 min), 01-02 (3 min), 01-05 (4 min), 01-04 (3 min)
-- Trend: Consistent fast execution
+- Last 5 plans: 02-01 (6 min), 02-04 (5 min), 02-02 (3 min), 01-02 (3 min), 01-05 (4 min)
+- Trend: Consistent execution; 02-01 slightly longer due to 3 agent definitions with embedded templates
 
 *Updated after each plan completion*
 
@@ -80,6 +80,12 @@ Recent decisions affecting current work:
 - [Phase 2-02]: Pre-build review blocking but light (~5 min); post-build review thorough after all builders complete
 - [Phase 2-02]: 8 creative dimensions: archetype personality, creative tension, emotional arc, color journey, typography drama, compositional interest, wow moment impact, transition quality
 - [Phase 2-02]: Creative direction notes use 5 fields: Overall, Strengths, Drift, Push, Calibration
+- [Phase 2-01]: 5 research tracks (expanded from v6.1.0's 4) -- added CONTENT-VOICE for brand voice analysis
+- [Phase 2-01]: Build-orchestrator reads max 5 file types (CONTEXT.md, MASTER-PLAN.md, PLANs, SUMMARYs, DESIGN-SYSTEM.md) -- not DNA/brainstorm/content directly
+- [Phase 2-01]: Full DNA embedded in every builder spawn prompt (~150 lines for DNA section) -- not compressed extract
+- [Phase 2-01]: Spawn prompt template has 9 sections covering all builder context needs
+- [Phase 2-01]: builder_type field in PLAN.md frontmatter routes to correct specialist agent
+- [Phase 2-01]: Beat validation + layout diversity + background progression rules embedded in section-planner (no runtime skill reads)
 - [Phase 5]: Motion intensity, wow moment count, tension mandate all archetype-driven (user decision)
 - [Phase 5]: Scroll-driven animations are beat-dependent -- HOOK/PEAK get continuous, others entrance-only
 - [Phase 5]: Hybrid motion presets -- archetype base family + DNA parameter tweaks
@@ -123,5 +129,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-24
-Stopped at: Completed 02-04-PLAN.md (Quality Reviewer & Polisher agents)
+Stopped at: Completed 02-01-PLAN.md (Pipeline agent definitions: researcher, section-planner, build-orchestrator)
 Resume file: None
