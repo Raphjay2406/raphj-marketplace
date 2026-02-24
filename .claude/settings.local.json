@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "WebSearch",
+      "Bash(__NEW_LINE_b758d2f088e5889d__ echo \"\")",
+      "Bash(__NEW_LINE_06e5ea07c3b3c788__ echo \"\")",
+      "Bash(__NEW_LINE_afd1cca0f5e7bd56__ echo \"\")",
+      "Bash(__NEW_LINE_363b0e7cdb2f4463__ echo \"\")",
+      "Bash(__NEW_LINE_35a4fba031c373a7__ echo \"\")",
+      "Bash(__NEW_LINE_a9470e1c1f2d7b6a__ echo \"\")",
+      "Bash(__NEW_LINE_2406c2ce2353ad68__ echo \"\")",
+      "Bash(test:*)",
+      "Skill(gsd:complete-milestone)"
+    ]
+  }
+}

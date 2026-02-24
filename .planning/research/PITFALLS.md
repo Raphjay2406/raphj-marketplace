@@ -1,543 +1,524 @@
-# Domain Pitfalls: AI-Powered Premium Frontend Design Plugin
+# Domain Pitfalls: SEO/GEO, Sitemap, IndexNow & API Integration
 
-**Domain:** AI design system / Claude Code plugin for premium frontend generation
-**Researched:** 2026-02-23
-**Confidence:** HIGH (based on direct codebase analysis of Modulo v6.1.0 + domain expertise)
-**Source:** Internal codebase analysis, architectural review, failure mode tracing
+**Domain:** SEO/GEO optimization, sitemap generation, IndexNow, and API integration for a Claude Code design plugin
+**Researched:** 2026-02-25
+**Confidence:** HIGH (SEO/sitemap/canonical), MEDIUM (IndexNow/GEO), HIGH (API security), HIGH (framework-specific), HIGH (plugin architecture)
+**Scope:** v1.5 milestone pitfalls -- what can go wrong when adding these capabilities to Modulo 2.0
 
 ---
 
 ## Critical Pitfalls
 
-Mistakes that cause rewrites, project failures, or fundamental quality collapse.
+Mistakes that cause search engine penalties, security breaches, or fundamental skill quality collapse.
 
 ---
 
-### PITFALL C1: Context Rot — The Forgetting Disease
+### PITFALL C1: Structured Data Mismatch -- Schema Claims What the Page Doesn't Show
 
-**What goes wrong:** AI agents progressively lose awareness of design decisions over extended sessions. By wave 3-4, the agent forgets the project's font, accent color, or archetype constraints. Output drifts from distinctive to generic. The first section is award-worthy; the last looks like a template.
+**What goes wrong:** JSON-LD structured data describes content that doesn't match what's visible on the page. The schema says "Product" with price "$29" but the visible page shows "$39" (price changed, schema wasn't updated). Or FAQ schema marks up questions that exist only in the JSON-LD, not in the rendered HTML. Google's policy is explicit: "Don't mark up content that is not visible to readers of the page."
 
-**Why it happens:** LLM context windows are finite. As conversation grows, early instructions (Design DNA, archetype constraints, forbidden patterns) get pushed toward the context boundary. The model begins to "approximate" rather than "follow" — substituting trained-in defaults (Inter, blue-500, rounded-lg) for project-specific tokens. This is not a bug in the model; it is a fundamental property of attention-based architectures operating near context limits.
-
-**Root cause chain:**
-1. Design DNA defined early in conversation (turn 1-5)
-2. Each wave adds 10-30K tokens of code, feedback, and state
-3. By turn 20-30, DNA is thousands of tokens back in context
-4. Model attention to DNA details degrades proportionally
-5. Builder outputs regress toward training distribution (generic patterns)
+**Why it happens in Modulo's context:** Builders generate JSON-LD from PLAN.md data and page content from CONTENT.md independently. If content changes during iteration (price update, FAQ rewrite, feature list edit), the JSON-LD is often not updated in sync. The schema is "set and forget" -- it's generated once in Wave 0-1 and never re-verified against actual page content after iterations.
 
 **Consequences:**
-- Sections built in later waves use wrong colors, wrong fonts
-- Spacing becomes uniform (`gap-4` everywhere instead of DNA scale)
-- Animations default to `fade-in-up` regardless of beat assignment
-- Archetype forbidden patterns appear (e.g., gradients in Brutalist, rounded corners > 4px)
-- Signature element disappears from later sections
-- Quality reviewer catches issues, but fixes consume another wave of context budget
+- Google manual action for "Spammy Structured Markup" -- page loses rich result eligibility
+- Rich snippets showing wrong information (wrong price, outdated hours) erodes user trust
+- Manual actions don't affect core ranking directly, but loss of rich results drops CTR significantly
+- Recovery from manual actions requires filing a reconsideration request, which takes weeks
 
 **Warning signs:**
-- Canary check failures (design-lead answers 1+ DNA questions wrong from memory)
-- Builder outputs that "look fine" individually but don't match earlier sections
-- Tailwind defaults appearing in code (`shadow-md`, `rounded-lg`, `text-gray-500`)
-- Generic copy creeping in ("Learn More", "Get Started" without archetype tone)
-- Animation easing curves reverting to `duration-300` instead of DNA easing
-
-**Prevention (v6.1.0 attempted, rebuild must strengthen):**
-1. **Session boundaries every 2 waves** — Hard limit on context accumulation. Modulo v6.1.0 implemented this but made it a soft suggestion. Rebuild should make wave 3 in the same session require explicit override.
-2. **CONTEXT.md as single source of truth** — Rewritten after every wave with full DNA identity inline. v6.1.0 implemented this correctly.
-3. **Pre-extracted spawn prompts** — Builders receive complete DNA context in their spawn prompt, never reading distant conversation history. v6.1.0 implemented this but the spawn prompt template was not always followed by the orchestrator under pressure.
-4. **Canary checks with teeth** — 5-question memory test after each wave. v6.1.0 implemented this but needs stronger consequences: 2+ wrong = mandatory session boundary, not just a warning.
-5. **Baked-in rules in agent files** — Anti-slop checks, performance rules, and beat parameters embedded directly in section-builder.md so they're never far from context. v6.1.0 did this well.
-6. **Turn-based context zones** — Green (1-20), Yellow (21-30), Red (31+). v6.1.0 implemented mandatory save at 31+ but the yellow zone had insufficient guardrails.
-
-**What the rebuild must add:**
-- Structural separation: Each builder is a separate Task invocation with its own context window, receiving only the 1-2KB of DNA it needs. Never share a conversation thread across waves.
-- Verification-before-merge: Before a builder's output is accepted, a lightweight DNA compliance grep runs automatically (not just at /verify time).
-- Context budget tracking: Explicitly count turns and context tokens, surfacing warnings proactively.
-
-**Severity:** CRITICAL
-**Phase mapping:** Must be addressed in foundational architecture (Phase 1). Every subsequent phase inherits this fix or fails.
-
----
-
-### PITFALL C2: The Generic Output Trap — "Template-Looking" Despite Style Guides
-
-**What goes wrong:** Despite having a comprehensive Design DNA document with unique fonts, colors, spacing, and archetype constraints, the AI produces output that looks like every other AI-generated site. The DNA is technically followed (correct hex codes appear in the code), but the design lacks personality, surprise, and craft.
-
-**Why it happens:** LLMs are trained on millions of examples of "good" web design. Their statistical prior is the average of all those examples — which is, by definition, generic. When given freedom within constraints, they choose the most statistically probable arrangement. This produces layouts that are technically correct but predictable:
-- Cards in a 3-column grid with equal spacing
-- Centered hero with two buttons
-- Symmetric everything
-- Same visual density across all sections
-- "Safe" animation choices (fade up, scale in)
-
-The DNA constrains tokens (colors, fonts) but doesn't constrain composition. A $90K site and a $5K template can use the same color palette — the difference is in layout courage, spatial rhythm, creative tension, and micro-details.
-
-**Root cause chain:**
-1. LLM training data distribution peaks at "safe, clean, symmetric" layouts
-2. Without explicit anti-patterns, model defaults to the statistical mode
-3. Design DNA constrains palette/type but not compositional decisions
-4. No reference quality bar for the model to match against
-5. "Write a hero section" has a very narrow range of probable outputs in LLM space
-
-**Consequences:**
-- All projects start to look similar regardless of archetype
-- Users say "this looks like v0/Lovable/Bolt output" — the exact opposite of the product promise
-- Creative tension moments are implemented timidly (small text instead of 20vw headline)
-- Wow moments are technically present but underwhelming
-- Layout diversity exists on paper but sections "feel" the same
-
-**Warning signs:**
-- "Would I screenshot this?" question answered "no" honestly
-- Anti-slop gate scores clustering at 25-27 (passing but not SOTD-ready)
-- All cards in a section are visually identical
-- No element on the page breaks the grid
-- Animations are smooth but predictable (everything fades up)
+- JSON-LD generated in a different wave than the page content it describes
+- No post-iteration step that re-validates schema against visible content
+- Schema contains hardcoded values instead of referencing the same data source as the UI
+- Multiple schema blocks on a page with overlapping scope
 
 **Prevention:**
-1. **Explicit anti-slop gate with teeth** — v6.1.0's 35-point gate is good. Rebuild must make the "Creative Courage" category (5 points) impossible to fake. Require specific evidence: "Which element is the screenshot moment? What makes it impossible-looking?"
-2. **Reference-based building** — Every section PLAN.md should reference a specific real-world site/section as its quality bar. The builder builds toward that reference, not toward "a hero section." v6.1.0 added REFERENCES.md but it was optional. Rebuild must make it mandatory.
-3. **Layout pattern enforcement via diversity tracker** — v6.1.0 tracks patterns but doesn't enforce minimum variety aggressively enough. Rebuild should require 5+ distinct layout patterns per page with no repeats in adjacent sections.
-4. **Boldness amplification** — When a creative tension is assigned, the PLAN.md must include specific TSX code for the tension moment, not a vague description. v6.1.0 evolved toward this (wow-moments skill has full code). Rebuild must make this universal.
-5. **Competitive benchmarking during planning** — Before planning sections, analyze 3-5 real award-winning sites in the same category. Extract what makes them distinctive. Plan sections to match or exceed that bar.
+1. **Single source of truth for schema data** -- JSON-LD and visible UI must derive from the same data object. The skill must teach: "Never hardcode values in schema that are computed or variable in the UI. Extract a shared data constant."
+2. **Post-iteration schema audit** -- Any content change that touches prices, dates, FAQs, or product details must trigger a schema re-check. Add this to the iterate command's blast radius analysis.
+3. **Validate before deploy** -- The skill must include Google's Rich Results Test URL and Schema.org Validator as mandatory pre-deployment steps, not optional suggestions.
+4. **Only mark up what's visible** -- Explicit rule in the skill: "Every `@type` in your JSON-LD must correspond to content the user can see and read on the page."
 
-**Severity:** CRITICAL
-**Phase mapping:** Architecture phase (design-lead spawn prompt design) + Section planning phase (PLAN.md format with reference patterns)
+**Phase mapping:** Core SEO skill (structured data section), iterate command (blast radius for schema)
+**Confidence:** HIGH -- Google's structured data policies are explicit and well-documented.
 
----
-
-### PITFALL C3: Iteration Breaks Adjacent Components
-
-**What goes wrong:** When fixing a gap in section 05, the fix inadvertently breaks section 04 or section 06. Shared CSS variables get changed, z-index conflicts emerge, spacing between sections shifts, or shared components are modified in ways that affect all consumers.
-
-**Why it happens:** Each section builder operates in isolation — it knows about its own section but has limited awareness of how adjacent sections depend on the same shared resources. When a gap-fix modifies a shared utility, color token, or component, all sections consuming that resource are affected. The agent performing the fix doesn't re-verify adjacent sections.
-
-**Root cause chain:**
-1. Gap-fix targets a specific section
-2. Fix modifies a shared file (globals.css, a shared component, a utility)
-3. Other sections consume the same shared file
-4. No automated regression check runs after the fix
-5. Adjacent sections break silently
-
-**Consequences:**
-- Fix-one-break-one cycle that never converges
-- Shared component modifications cascade unpredictably
-- CSS specificity conflicts when fixes add more specific selectors
-- Token modifications (adjusting a color) affect all sections using that token
-- Iteration phase takes 2-3x longer than expected
-
-**Warning signs:**
-- Gap-fix plans that modify files outside the section's own directory
-- Shared component changes without re-verification of all consumers
-- CSS variables being redefined in section-scoped styles
-- z-index values being added reactively (z-10, z-20, z-50)
-
-**Prevention:**
-1. **Immutable shared layer** — Once Wave 0/1 completes, shared components and global tokens are frozen. Any change requires explicit approval and full-page re-verification.
-2. **Section isolation** — Each section's styles are scoped. No section can modify global CSS. If a section needs a variant, it creates a local override, not a global change.
-3. **Blast radius analysis** — Before executing a gap-fix that touches shared files, grep for all consumers and list them. Present to user before executing.
-4. **Adjacent section re-verification** — After any fix, automatically re-check the sections immediately above and below the fixed section for visual continuity.
-5. **CSS containment** — Use `contain: layout style paint` on section wrappers to isolate repaints and stacking contexts.
-
-**Severity:** CRITICAL
-**Phase mapping:** Architecture phase (section isolation strategy) + Iteration phase (blast radius protocol)
+**Sources:**
+- [Google Structured Data Policies](https://developers.google.com/search/docs/appearance/structured-data/sd-policies)
+- [Fixing JSON-LD Issues in GSC](https://salt.agency/blog/fixing-common-json-ld-structured-data-issues-in-google-search-console/)
+- [Schema Markup Errors That Kill Rankings](https://robertcelt95.medium.com/common-schema-markup-errors-that-kill-your-seo-rankings-cc64a83480af)
 
 ---
 
-### PITFALL C4: Animation Reliability Failures
+### PITFALL C2: Canonical URL Misconfiguration -- Silent Duplicate Content Disaster
 
-**What goes wrong:** Animations that look correct in isolation fail when combined: scroll-triggered animations don't fire, GSAP ScrollTrigger conflicts with Framer Motion, Three.js scenes crash on mobile, animations cause layout shift (CLS), or animations work in dev but break in production due to SSR.
+**What goes wrong:** Canonical URLs are wrong, missing, or contradictory. Common failures: (a) relative canonical URLs instead of absolute, (b) canonical pointing to a different page's content, (c) paginated pages all canonicalized to page 1, (d) canonical in `<body>` instead of `<head>` (Google ignores it), (e) trailing slash inconsistency creating two "different" URLs for the same content.
 
-**Why it happens:** Frontend animation is the highest-complexity domain in web development. Three separate animation ecosystems (CSS, Framer Motion, GSAP) have different lifecycle models, cleanup requirements, and SSR compatibility. AI-generated animation code frequently has subtle bugs that only manifest under specific conditions.
-
-**Common failure modes:**
-
-| Failure | Root Cause | Frequency |
-|---------|-----------|-----------|
-| ScrollTrigger doesn't fire | Missing `gsap.registerPlugin(ScrollTrigger)` or wrong `start`/`end` values | Very common |
-| Animations replay on route change | Missing `viewport={{ once: true }}` or ScrollTrigger not cleaned up | Common |
-| Hydration mismatch | Animation library used in server component (missing `'use client'`) | Very common |
-| Layout shift (CLS) | Animating `height`, `width`, `margin` instead of `transform`/`opacity` | Common |
-| GSAP + Framer Motion conflict | Both trying to animate the same element | Occasional |
-| Mobile jank | Too many `backdrop-blur` elements, too many concurrent animations | Common |
-| Three.js crash on mobile | WebGL context limits, shader complexity, memory exhaustion | Common |
-| Animation doesn't clean up | Missing `ctx.revert()` in GSAP, missing cleanup in `useEffect` | Very common |
-| `useRef` is null | Animation runs before DOM is ready (ref not yet attached) | Common |
-| Production build breaks | GSAP imported statically instead of dynamically, tree-shaking removes needed modules | Occasional |
+**Why it happens in Modulo's context:** The current `seo-meta` skill shows canonical URL patterns, but builders often hardcode canonical URLs as strings rather than generating them dynamically. When routes change during iteration, stale canonicals persist. Multi-page sites with similar content (product variants, localized pages) are especially vulnerable. Additionally, framework differences in URL handling (Next.js uses `metadataBase` + relative, Astro uses `Astro.url.href`, React/Vite has no built-in canonical) create inconsistency.
 
 **Consequences:**
-- CLS violations fail Core Web Vitals
-- Memory leaks from uncleaned animations cause page crashes on longer sessions
-- Mobile users get broken/janky experience
-- SSR errors in production that weren't visible in dev mode
-- Animation conflicts cause visual glitches that are hard to reproduce
+- Google indexes the wrong URL version, splitting link equity
+- Duplicate content dilutes ranking signals -- Google picks one "preferred" version and may ignore the other
+- Crawl budget wasted on duplicate URLs
+- Bing December 2025 research confirms: duplicate content hurts both traditional SEO and AI search visibility
 
 **Warning signs:**
-- Any animation using `width`, `height`, `top`, `left`, `margin`, `padding`, or `box-shadow` as animated properties
-- Missing `'use client'` directive on animation components
-- GSAP imported at top level instead of dynamically
-- No `return () => ctx.revert()` in GSAP useEffect hooks
-- More than 3 `backdrop-blur` elements visible simultaneously
-- No `prefers-reduced-motion` handling
+- Canonical URLs using relative paths (`href="/about"` instead of full URL)
+- Multiple `<link rel="canonical">` tags on one page
+- Canonical URL doesn't match the actual page URL
+- Trailing slash handled inconsistently across routes
+- No `metadataBase` set in Next.js root layout
 
 **Prevention:**
-1. **Embed animation rules directly in builder agent** — v6.1.0 does this well with embedded performance rules. Rebuild must maintain this.
-2. **Animation library isolation** — One library per section. Never mix GSAP and Framer Motion in the same component. Choose one per section in the PLAN.md.
-3. **Mandatory cleanup patterns** — Every GSAP section uses `gsap.context()` + `ctx.revert()`. Every Framer Motion component uses proper cleanup. These patterns should be in code templates, not just documentation.
-4. **Dynamic import enforcement** — GSAP, Three.js, and Lottie must always be dynamically imported. A lint rule or pre-commit hook should catch static imports.
-5. **Animation budget per page** — v6.1.0's performance-guardian skill defines max counts (5 GSAP ScrollTrigger, 15 Framer Motion whileInView, 3 backdrop-blur). Rebuild must enforce these at planning time, not just at verification.
-6. **Mobile-first animation testing** — Animations must be verified at 375px with CPU throttling. Not just "doesn't break" — must be smooth.
+1. **Always absolute URLs** -- The skill must enforce: "Canonical URLs must be absolute with protocol and domain. Never use relative paths."
+2. **Dynamic generation, never hardcoded** -- Canonical must be derived from the current route. Next.js: `alternates.canonical` relative to `metadataBase`. Astro: `Astro.url.href`. React/Vite: construct from `window.location.origin + pathname`.
+3. **Trailing slash policy** -- Pick one (with or without) and enforce it site-wide via framework config (`trailingSlash` in `next.config.js` and `astro.config.mjs`).
+4. **One canonical per page** -- Explicit rule: "Never have more than one `<link rel="canonical">`. If layout and page both set canonical, the page wins."
+5. **Self-referencing canonical as default** -- Every page's canonical should point to itself unless there's an explicit reason to point elsewhere.
 
-**Severity:** CRITICAL
-**Phase mapping:** Architecture phase (animation infrastructure) + Every build phase (enforcement via PLAN.md and builder rules)
+**Phase mapping:** Core SEO skill (canonical URL section), framework patterns (per-framework canonical implementation)
+**Confidence:** HIGH -- Google's canonical documentation is definitive.
+
+**Sources:**
+- [Google Canonical URL Guide](https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls)
+- [Canonical Tags Explained](https://www.straightnorth.com/blog/canonical-tags-explained-how-to-prevent-duplicate-content-and-protect-rankings/)
+- [Bing on Duplicate Content and AI Search](https://blogs.bing.com/webmaster/December-2025/Does-Duplicate-Content-Hurt-SEO-and-AI-Search-Visibility)
 
 ---
 
-### PITFALL C5: Agent Coordination Failures — Consistency Collapse
+### PITFALL C3: API Key Exposure in Client-Side Code
 
-**What goes wrong:** When 4 section-builder agents run in parallel, they make conflicting design decisions. Two sections use the same layout pattern. Adjacent sections have identical backgrounds. One builder interprets "bold typography" differently than another. The page, section by section, is fine — but as a whole, it feels disjointed.
+**What goes wrong:** Environment variables containing API keys (IndexNow keys, CRM API keys, analytics tokens) are accidentally exposed to the browser. In Next.js, any variable prefixed with `NEXT_PUBLIC_` is bundled into client JavaScript and visible to anyone viewing page source. In Astro, `PUBLIC_` prefix does the same. In React/Vite, `VITE_` prefix exposes to client. Developers prefix variables for convenience without understanding the security implications.
 
-**Why it happens:** Each parallel builder is a separate Task invocation with its own context. They cannot communicate with each other during execution. Any coordination must happen before they start (in the spawn prompt) or after they finish (in verification). If the orchestrator's spawn prompt is incomplete, builders make independent decisions that may conflict.
-
-**Root cause chain:**
-1. Design-lead spawns 4 builders simultaneously
-2. Each builder reads only its own PLAN.md + spawn prompt context
-3. No builder knows what layout pattern another builder chose
-4. No builder knows what background color an adjacent section is using
-5. Independent decisions converge to either identical (statistical mode) or clashing (random) results
+**Why it happens in Modulo's context:** Builders need API keys for IndexNow submission endpoints, CRM integrations, and external API calls. The most common mistake: putting a secret API key in `NEXT_PUBLIC_HUBSPOT_API_KEY` because the component "needs it" on the client side. Additionally, a critical CVE-2025-66478 in Next.js (CVSS 10.0) demonstrated that even server-side secrets can leak through Server Function source code exposure.
 
 **Consequences:**
-- Adjacent sections share the same layout pattern (both use 3-column card grid)
-- Adjacent sections share the same background color (no visual progression)
-- Typography scale used inconsistently across sections (one builder uses H2 where another uses H3 for similar content)
-- Transition techniques between sections don't match (one section fades out, next hard-cuts in)
-- Emotional arc feels flat because beat parameters aren't varied enough
+- API keys scraped from client bundles, used for unauthorized access
+- Rate limits exhausted by malicious actors using stolen keys
+- Financial exposure if keys have billing implications (cloud APIs, SaaS services)
+- Security breach of connected systems (CRM data, customer records)
+- Compliance violations (GDPR, SOC 2) if customer data is accessible via exposed keys
 
 **Warning signs:**
-- Layout diversity tracker shows repeated patterns in adjacent sections
-- Background color progression not documented before wave execution
-- Spawn prompts missing "Adjacent Sections" context block
-- No explicit "patterns already used" list in spawn prompt
-- Builders reporting "no instructions for transition technique"
+- Any `NEXT_PUBLIC_`, `PUBLIC_`, or `VITE_` variable containing "KEY", "SECRET", "TOKEN", or "API"
+- API calls made directly from client-side components to external services
+- `.env` files with sensitive values and public prefixes
+- No server-side proxy pattern for external API calls
 
 **Prevention:**
-1. **Complete Build Context is non-negotiable** — v6.1.0's spawn prompt template (lines 76-127 of design-lead.md) is comprehensive. Rebuild must make this the only valid invocation pattern. Any builder spawned without Complete Build Context should refuse to proceed.
-2. **Pre-planned background progression** — Before spawning Wave 2+, the design-lead must plan and document the full-page background color sequence. No builder chooses its own background independently.
-3. **Pre-assigned layout patterns** — The MASTER-PLAN should assign specific layout patterns to each section, not just beat types. Builders implement the assigned pattern, not their choice.
-4. **Sequential builder awareness** — For each wave, list which patterns have already been used. The spawn prompt for each builder must include this list and an explicit instruction to choose differently.
-5. **Post-wave coherence check** — v6.1.0 has this (design-lead Phase 3). Rebuild must make it blocking: no next wave until coherence is verified.
+1. **Server-side proxy pattern as the default** -- The skill must teach: "Never call external APIs directly from client components. Always route through server actions (Next.js), API routes (Next.js/Astro), or server endpoints (Astro). The server holds the secret; the client calls your server."
+2. **Prefix audit rule** -- Explicit checklist in the skill: "Audit every `NEXT_PUBLIC_` / `PUBLIC_` / `VITE_` variable. If it contains a secret, it MUST NOT have a public prefix."
+3. **Framework-specific env patterns** -- Provide correct patterns for each framework:
+   - Next.js: Use server actions or Route Handlers; access `process.env.SECRET` only in server code
+   - Astro: Use server endpoints (`src/pages/api/`); access `import.meta.env.SECRET` only in server code
+   - React/Vite: Use a separate backend proxy; Vite has no server-side runtime
+4. **React Taint APIs** -- For Next.js, mention `experimental_taintObjectReference` and `experimental_taintUniqueValue` as additional safeguards.
+5. **IndexNow key is NOT a secret** -- Clarify that the IndexNow API key is public by design (it's hosted in a public `.txt` file). It doesn't need the proxy pattern. This distinction prevents over-engineering.
 
-**Severity:** CRITICAL
-**Phase mapping:** Architecture phase (spawn prompt design) + Section planning phase (MASTER-PLAN format) + Execution phase (coherence checkpoints)
+**Phase mapping:** API integration skill (env handling section), IndexNow skill (key management section)
+**Confidence:** HIGH -- Next.js CVE-2025-66478 and env prefix behavior are well-documented.
+
+**Sources:**
+- [Next.js Data Security Guide](https://nextjs.org/docs/app/guides/data-security)
+- [CVE-2025-66478 Security Advisory](https://nextjs.org/blog/CVE-2025-66478)
+- [Astro Environment Variables Docs](https://docs.astro.build/en/guides/environment-variables/)
+- [Astro Issue #13960: Non-PUBLIC_ vars exposed](https://github.com/withastro/astro/issues/13960)
+
+---
+
+### PITFALL C4: React/Vite SPA Invisibility to Search Engines
+
+**What goes wrong:** A React/Vite project renders an empty `<div id="root">` to crawlers. All content, metadata, structured data, and even the `<title>` tag are injected client-side via JavaScript. Google's Web Rendering Service can execute JS, but it's a secondary crawl that happens later (sometimes days later) and is resource-constrained. Bing and AI crawlers (GPTBot, ClaudeBot) may not execute JS at all. The site is functionally invisible to search.
+
+**Why it happens in Modulo's context:** Modulo targets Next.js, Astro, and React/Vite. The first two have server rendering built in. React/Vite does not. Builders following the same patterns across frameworks will produce client-rendered metadata in Vite projects. The current `seo-meta` skill shows `react-helmet-async` for Vite, which only works client-side -- crawlers see nothing.
+
+**Consequences:**
+- Zero indexing for React/Vite projects (no content visible to crawlers)
+- SSR-indexed pages show 96% indexing stability; CSR pages are unreliable
+- JSON-LD structured data rendered client-side may not be parsed by Google
+- `react-helmet-async` meta tags are invisible until JS executes
+- Sitemap and robots.txt are fine, but linked pages have no content to index
+
+**Warning signs:**
+- React/Vite project with no pre-rendering strategy
+- View-source showing only `<div id="root"></div>` with no content
+- `react-helmet-async` used without SSR setup (no `HelmetProvider` on server)
+- No discussion of pre-rendering in the project plan
+
+**Prevention:**
+1. **Framework-specific SEO capability matrix** -- The skill must include a clear table:
+
+   | Feature | Next.js | Astro | React/Vite |
+   |---------|---------|-------|------------|
+   | Server-rendered meta tags | Yes (built-in) | Yes (built-in) | NO (requires pre-render) |
+   | Server-rendered JSON-LD | Yes | Yes | NO |
+   | Static sitemap generation | Yes (`app/sitemap.ts`) | Yes (`@astrojs/sitemap`) | Manual or build plugin |
+   | IndexNow server endpoint | Yes (Route Handler) | Yes (server endpoint) | NO (needs external service) |
+   | Dynamic OG images | Yes (`ImageResponse`) | Manual | NO |
+
+2. **Pre-rendering guidance for Vite** -- If the project is React/Vite and needs SEO, recommend: (a) switch to Astro or Next.js, or (b) add `vite-plugin-ssr` / `vite-ssg` for pre-rendering, or (c) accept that the site will have limited SEO capability.
+3. **Honest limitation disclosure** -- The skill must state plainly: "React/Vite SPAs cannot achieve full SEO parity with server-rendered frameworks. If SEO is a primary goal, use Next.js or Astro."
+4. **Tauri/Electron exemption** -- Desktop apps (Tauri, Electron) don't need SEO at all. The skill should detect this and skip SEO guidance entirely.
+
+**Phase mapping:** Core SEO skill (framework capability matrix), decision guidance layer
+**Confidence:** HIGH -- CSR SEO limitations are well-established and widely documented.
+
+**Sources:**
+- [How to Fix Technical SEO on Client-Side React Apps](https://searchengineland.com/how-to-fix-technical-seo-issues-on-client-side-react-apps-455124)
+- [React SEO Best Practices](https://ahrefs.com/blog/react-seo/)
+- [SPA SEO Optimization](https://www.wedowebapps.com/spa-seo-optimize-single-page-applications/)
 
 ---
 
 ## Major Pitfalls
 
-Mistakes that cause significant delays, rework, or technical debt.
+Mistakes that cause search engine validation failures, broken indexing, or significant rework.
 
 ---
 
-### PITFALL M1: Content Generation Produces Generic Copy
+### PITFALL M1: Sitemap XML Validation Failures
 
-**What goes wrong:** Headlines, button labels, and body copy default to generic marketing-speak. "Unlock Your Potential," "Streamline Your Workflow," "Get Started Today." The copy is grammatically correct but has no brand personality, no specificity, and no emotional resonance.
+**What goes wrong:** The generated sitemap fails GSC or Bing Webmaster Tools validation. Common failures: (a) unescaped special characters in URLs (`&` instead of `&amp;`), (b) invalid date formats (not W3C Datetime), (c) sitemap exceeds 50MB uncompressed or 50,000 URL limit, (d) including `noindex` pages in the sitemap, (e) HTTP/HTTPS protocol mismatch, (f) URLs returning 404 or 301 redirects.
 
-**Why it happens:** LLMs are trained on enormous amounts of web copy. The most common patterns in that training data are marketing cliches. Without explicit constraints, the model gravitates toward high-frequency phrases. The micro-copy skill in v6.1.0 bans specific words ("Submit," "Learn More") but doesn't provide enough positive guidance for what TO write.
+**Why it happens in Modulo's context:** The current skill shows `changeFrequency` and `priority` fields in sitemap examples, but Google and Bing have publicly stated they ignore both. This is wasted effort that signals the skill is outdated. Additionally, Next.js's `sitemap.ts` convention generates valid XML, but Astro's `@astrojs/sitemap` requires the `site` field in config -- if it's missing, the build succeeds but no sitemap is generated (silent failure). For React/Vite, there's no built-in sitemap generation at all.
 
-**Root cause chain:**
-1. Section builder needs button text or headline
-2. No approved copy exists (CONTENT.md not generated or not read)
-3. Builder generates statistically probable marketing text
-4. Generic phrasing is technically correct and passes basic checks
-5. No one catches it until final review (or not at all)
+**32% of submitted sitemaps contain errors** that prevent proper processing, according to Google Search Console data.
 
 **Consequences:**
-- All projects sound the same regardless of brand/archetype
-- Copy doesn't match archetype tone (Brutalist section has flowery language)
-- Button labels are vague ("Learn More" instead of outcome-driven text)
-- Headlines are interchangeable between competitors
-- Content review becomes a major iteration phase
+- GSC reports "Couldn't fetch" or "Sitemap has errors"
+- Pages not discovered or indexed despite being in the sitemap
+- Wasted crawl budget on 404 URLs in sitemap
+- Large sites hit the 50K limit without sitemap index splitting
 
 **Warning signs:**
-- Buttons labeled "Submit," "Learn More," "Click Here," "Get Started" without archetype-specific language
-- Headlines that could apply to any product in the category
-- Social proof using placeholder names ("John D., CEO")
-- Friction reducers missing below primary CTAs
-- Body copy that doesn't reference the specific product/service
+- Sitemap examples using `changeFrequency` or `priority` (Google/Bing ignore these)
+- `lastmod` dates set to `new Date()` (always today) instead of actual content modification date
+- No sitemap index strategy for sites with 100+ pages
+- Astro config missing `site` field
+- URLs in sitemap not matching canonical URLs
 
 **Prevention:**
-1. **CONTENT.md as mandatory pre-execution artifact** — v6.1.0 added this. Rebuild must make it blocking: no section building without approved copy in CONTENT.md.
-2. **Archetype-specific tone guide in DNA** — v6.1.0's micro-copy skill has tone-by-archetype table. Rebuild must embed this in the builder's spawn prompt, not rely on skill file reads.
-3. **Copy accuracy verification** — v6.1.0's quality-reviewer checks copy matches CONTENT.md. Rebuild must make this a per-task check, not just final verification.
-4. **Specific, verifiable social proof** — Require specific names, titles, companies in testimonials. No "Sarah K." or "Tech Company." If real data isn't available, use obviously-placeholder text that's flagged for replacement.
-5. **CTA hierarchy per viewport** — One primary per viewport. Copy must be outcome-driven. Builder self-check #6 covers this, but rebuild should make it a hard gate.
+1. **Drop `changeFrequency` and `priority`** -- The skill must not include these deprecated fields. Google explicitly ignores them. Bing "largely disregards" them. Remove from all examples.
+2. **Accurate `lastmod` only** -- Use actual content modification dates, not build dates. If the real date isn't available, omit `lastmod` entirely rather than using a fake date. Bing specifically values accurate `lastmod`.
+3. **URL escaping** -- Teach the 5 XML-required escape codes: `&` to `&amp;`, `'` to `&apos;`, `"` to `&quot;`, `<` to `&lt;`, `>` to `&gt;`. Framework sitemap generators handle this, but custom implementations often miss `&` in query strings.
+4. **Sitemap index for scale** -- If the site could grow beyond 50K URLs, generate a sitemap index from day one. The pattern is cheap and future-proof.
+5. **Canonical-sitemap alignment** -- Every URL in the sitemap must be the canonical version. No `noindex` pages. No redirecting URLs. No HTTP URLs if site is HTTPS.
+6. **Framework-specific gotchas**:
+   - Next.js: `app/sitemap.ts` works but [reported issue #75836](https://github.com/vercel/next.js/issues/75836) -- "Couldn't fetch" errors with Vercel edge functions. Test after deployment.
+   - Astro: Must set `site` in `astro.config.mjs` or sitemap silently fails. In SSR mode, the official sitemap integration can't discover dynamic content -- need a custom endpoint.
+   - React/Vite: No built-in solution. Generate static `sitemap.xml` at build time via script.
 
-**Severity:** MAJOR
-**Phase mapping:** Content planning phase (CONTENT.md generation) + Section building phase (copy accuracy checks)
+**Phase mapping:** Sitemap skill (generation patterns), framework-specific sections, verification checklist
+**Confidence:** HIGH -- Google's sitemap specification and Bing's lastmod documentation are authoritative.
+
+**Sources:**
+- [Google Build and Submit a Sitemap](https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap)
+- [Bing on Importance of lastmod](https://blogs.bing.com/webmaster/february-2023/The-Importance-of-Setting-the-lastmod-Tag-in-Your-Sitemap)
+- [Next.js Sitemap GSC Issue #75836](https://github.com/vercel/next.js/issues/75836)
+- [Fixing Astro Sitemap in SSR Mode](https://colinmcnamara.com/blog/fixing-astro-sitemap-ssr-mode)
+- [Sitemap XML Errors That Hurt SEO](https://www.gtechme.com/insights/fix-xml-sitemap-errors-for-better-seo/)
 
 ---
 
-### PITFALL M2: Skill Bloat — Knowledge Base Becomes Noise
+### PITFALL M2: IndexNow Key Management and Verification Failures
 
-**What goes wrong:** With 87 skills, the knowledge base becomes so large that skill references are unreliable. Agents don't know which skill to reference. Multiple skills contain overlapping or contradictory guidance. Important rules are buried in rarely-read skill files.
+**What goes wrong:** IndexNow submissions silently fail because: (a) the key file isn't hosted at the root of the domain, (b) the key file content doesn't exactly match the key used in API calls, (c) the key file is blocked by robots.txt or returns wrong MIME type, (d) developers treat the IndexNow key as a secret and don't host the verification file, (e) batch submissions exceed rate limits and get 429 errors without proper retry logic.
 
-**Why it happens:** Skills grow organically as new capabilities are added. Each skill is a self-contained document, but the total volume creates problems:
-- Agent context budgets can't accommodate all relevant skills
-- Overlapping skills (anti-slop-design vs quality-standards vs awwwards-scoring) create confusion about which is authoritative
-- Skill discovery depends on agent knowledge of skill names
-- Deep skills (800+ lines) are only partially read, missing critical details
-
-**Root cause chain:**
-1. New skill added for each capability area
-2. No deduplication or hierarchy review
-3. Total skill volume exceeds practical read budget
-4. Agents can't read all relevant skills per task
-5. Critical rules in unread skills are not followed
+**Why it happens in Modulo's context:** IndexNow is a newer protocol that most developers haven't used. Its verification model (public key file at domain root) is unusual -- it's the opposite of typical API key secrecy. Builders coming from a "hide all keys" mindset will either not host the verification file or put it behind authentication. Additionally, each framework has a different mechanism for serving static files from the root (Next.js `public/`, Astro `public/`, Vite `public/`) and different API route patterns for the submission endpoint.
 
 **Consequences:**
-- Contradictory guidance between overlapping skills
-- Critical rules not followed because they're in the "wrong" skill
-- Agent reads wrong skill or partial skill, gets incomplete guidance
-- Maintaining 87 skill files becomes a versioning nightmare
-- New team members can't understand the full system
+- IndexNow submissions rejected silently (no error page, just ignored)
+- URLs not indexed despite believing they were submitted
+- 429 rate limit errors with no retry logic cause permanent submission gaps
+- Key rotation without updating the hosted file breaks all future submissions
 
 **Warning signs:**
-- Multiple skills covering the same topic with different advice
-- Agents asked to "reference X skill" but reading the wrong one
-- Critical rules duplicated across 3+ skills with slight variations
-- Skills longer than 200 lines (likely trying to cover too much)
-- No clear hierarchy of which skill overrides another
+- Key file not accessible at `https://domain.com/{key}.txt`
+- Key file returning HTML instead of plain text
+- API submission endpoint on client side (exposes submission logic unnecessarily)
+- No retry logic for 429 responses
+- No `Retry-After` header handling
+- Submitting same URLs repeatedly without content changes
 
 **Prevention:**
-1. **Embed critical rules directly in agent files** — v6.1.0 already does this for section-builder.md (performance rules, anti-slop checks, beat parameters embedded directly). Rebuild must extend this to eliminate the need for builders to read any skill files during execution.
-2. **Skill hierarchy** — Define a clear precedence: agent-embedded rules > Design DNA > archetype > general skill. If rules conflict, higher-precedence source wins.
-3. **Skill consolidation** — Merge overlapping skills. anti-slop-design, quality-standards, and awwwards-scoring have significant overlap. Create one authoritative quality skill, or ensure each has a distinct scope.
-4. **Size limits** — No skill file over 300 lines. If it's longer, split into focused sub-skills.
-5. **Index file** — Maintain a SKILL-INDEX.md that maps trigger patterns to specific skills, so agents don't guess.
+1. **Verification-first setup** -- The skill must teach setup in order: (1) generate key, (2) host key file in `public/` directory, (3) verify file is accessible via browser, (4) then implement submission endpoint. Not the reverse.
+2. **Key format rules** -- Key must be 8-128 characters, hexadecimal plus dashes. The key file must be UTF-8 encoded plain text with only the key as content. Filename must be `{key}.txt` exactly.
+3. **Framework-specific file hosting**:
+   - Next.js: Place `{key}.txt` in `public/` directory. It will be served at root automatically.
+   - Astro: Place `{key}.txt` in `public/` directory. Same behavior.
+   - React/Vite: Place in `public/` directory. Vite serves it at root in dev; build copies it to `dist/`.
+4. **Submission endpoint patterns**:
+   - Next.js: Route Handler at `app/api/indexnow/route.ts` -- server-side POST
+   - Astro: Server endpoint at `src/pages/api/indexnow.ts`
+   - React/Vite: External service or build-time submission script (no server runtime)
+5. **Rate limiting discipline** -- Teach: submit only changed URLs, batch up to 10,000 per POST, wait 10+ minutes before resubmitting the same URL, implement exponential backoff on 429 responses with `Retry-After` header respect.
+6. **IndexNow key is public** -- Explicitly state: "Unlike API keys for external services, the IndexNow key is designed to be public. It's a domain ownership proof, not an authentication secret. Do NOT treat it as a secret."
 
-**Severity:** MAJOR
-**Phase mapping:** Architecture phase (skill consolidation) + All phases (skill maintenance discipline)
+**Phase mapping:** IndexNow skill (setup, submission, troubleshooting sections)
+**Confidence:** MEDIUM -- Official IndexNow documentation is authoritative but sparse on edge cases. Rate limits are "undisclosed" per search engine.
+
+**Sources:**
+- [IndexNow Official Documentation](https://www.indexnow.org/documentation)
+- [IndexNow FAQ](https://www.indexnow.org/faq)
+- [Common IndexNow Challenges](https://www.navishark.com/en/kb/6vm98r/common-challenges-and-solutions-when-adopting-indexnow)
+- [IndexNow Protocol SEO Guide](https://gracker.ai/seo-101/indexnow-protocol-seo-guide)
 
 ---
 
-### PITFALL M3: Framework Compatibility — Multi-Target Generation Failures
+### PITFALL M3: GEO Over-Optimization Cannibalizing Traditional SEO
 
-**What goes wrong:** Code generated for Next.js doesn't work in Astro. Components using React hooks are placed in non-client contexts. Server components use browser APIs. The system promises multi-framework support but the generated code is framework-specific in subtle ways that break portability.
+**What goes wrong:** In pursuit of AI search visibility (Google AI Overviews, Bing Copilot, Perplexity), content is restructured in ways that hurt traditional search rankings. Specific failures: (a) stuffing pages with statistics and citations that feel unnatural to human readers, (b) adding FAQ schemas for questions nobody actually asks, (c) restructuring content for "quotability" at the expense of readability, (d) blocking AI crawlers (GPTBot, ClaudeBot) out of fear they'll "steal" content, then wondering why the site doesn't appear in AI answers.
 
-**Why it happens:** Next.js App Router, Astro, and other frameworks have fundamentally different rendering models:
-- Next.js App Router defaults to server components; client interactivity requires `'use client'`
-- Astro defaults to zero-JS; interactivity requires explicit `client:` directives
-- Vite/Tauri/Electron have no server component concept at all
-- Each framework has different image optimization, font loading, and routing patterns
+**Why it happens in Modulo's context:** Modulo sites target premium design and brand presence. GEO optimization can clash with design intent -- adding verbose FAQ sections, citation-heavy paragraphs, and stat-laden blocks to a minimalist Brutalist or Japanese Minimal site destroys the aesthetic. The skill must balance SEO/GEO effectiveness with design integrity.
 
-**Common failure modes:**
-
-| Framework | Common Break | Root Cause |
-|-----------|-------------|-----------|
-| Next.js App Router | Missing `'use client'` on interactive components | Builder forgets directive |
-| Next.js App Router | Using `window`/`document` in server component | No SSR guard |
-| Astro | React component not hydrated | Missing `client:visible` directive |
-| Astro | Using Next.js-specific APIs (`next/image`, `next/font`) | Framework-specific code leakage |
-| Vite | Server-side API routes not available | No API layer in pure SPA |
-| All | Dynamic imports with wrong syntax | ESM vs CJS confusion |
+**The data is stark:** When AI-generated answers appear on Google, organic click-through rates dropped 61% (from 1.76% to 0.61%) as of September 2025. Being cited IN the AI answer becomes critical. But the research also shows: "Statistics Addition" and "Quotation Addition" improve visibility by 28-41%, while "Keyword Stuffing" performs worse.
 
 **Consequences:**
-- Build failures after code is generated
-- Hydration mismatches in production
-- Components render on server but not interactive on client
-- Image optimization not working (falls back to unoptimized)
-- Font loading fails (no Next.js font optimization in Astro)
+- Content restructured for AI quotability reads poorly for human visitors
+- FAQ schemas added where no real questions exist trigger spam signals
+- Blocking AI crawlers means zero AI search visibility
+- Over-optimization creates a "content farm" feel that contradicts premium brand positioning
+- Traditional SEO rankings drop because content quality degrades
 
 **Warning signs:**
-- Components using `useState`, `useEffect`, `useRef` without `'use client'`
-- `import Image from 'next/image'` in Astro project
-- `window.` or `document.` access without `typeof window !== 'undefined'` guard
-- Missing `client:visible` or `client:load` on Astro interactive components
-- Framework-specific import paths hardcoded
+- FAQ schema on pages where there are no actual FAQs in the UI (schema-only markup)
+- robots.txt blocking GPTBot, ClaudeBot, PerplexityBot
+- Content rewritten to be "AI-parseable" at the expense of brand voice
+- Statistics added to every paragraph regardless of relevance
+- GEO and SEO treated as separate strategies with different content
 
 **Prevention:**
-1. **Framework detection at project start** — Detect framework from `package.json` or config files. Lock framework context into DNA and all spawn prompts.
-2. **Framework-specific code templates** — Different code patterns for Next.js vs Astro vs Vite. Skill files should provide patterns for each target framework.
-3. **Client boundary enforcement** — In Next.js App Router, any component using hooks must have `'use client'`. This should be checked automatically after each builder task.
-4. **SSR safety wrapper** — Provide a standard `useSSRSafe` hook or `isBrowser` guard in the shared scaffold. All browser API access goes through this.
-5. **Framework-specific skill sections** — v6.1.0 has separate `nextjs-app-router` and `astro-patterns` skills. Rebuild should ensure builder spawn prompts include the correct framework-specific rules.
+1. **Unified SEO+GEO strategy** -- The skill must teach: "There is no separate GEO content. Good SEO content IS good GEO content. Clear structure, authoritative citations, and factual accuracy serve both."
+2. **Archetype-aware GEO** -- GEO elements must respect the archetype:
+   - Brutalist/Japanese Minimal: Fewer FAQ blocks, focus on clear headings and concise statements
+   - Editorial/Data-Dense: Natural fit for statistics and citations
+   - Luxury/Neo-Corporate: Case studies and testimonials serve as natural "quotable" content
+3. **Schema only for real content** -- "Never add FAQ schema unless there are actual FAQ questions visible on the page. Never add HowTo schema unless there are actual steps. The schema must describe what exists."
+4. **Allow AI crawlers by default** -- robots.txt should allow GPTBot, ClaudeBot, Google-Extended unless the client explicitly requests otherwise. Being cited in AI answers is the new backlink.
+5. **Measure both** -- Track traditional search rankings AND AI citation appearances. If traditional rankings drop after GEO changes, roll back.
 
-**Severity:** MAJOR
-**Phase mapping:** Architecture phase (framework detection + scaffold) + Every build phase (framework-specific code templates)
+**Phase mapping:** GEO optimization skill, robots.txt configuration, content strategy integration
+**Confidence:** MEDIUM -- GEO is an emerging field (the foundational paper is from 2023). Best practices are evolving rapidly. Statistics are from 2025 studies that may shift.
+
+**Sources:**
+- [GEO Research Paper (arXiv)](https://arxiv.org/pdf/2311.09735)
+- [GEO vs SEO Guide (Strapi)](https://strapi.io/blog/generative-engine-optimization-vs-traditional-seo-guide)
+- [GEO Best Practices 2026 (WordStream)](https://www.wordstream.com/blog/generative-engine-optimization)
+- [GEO Best Practices (First Page Sage)](https://firstpagesage.com/seo-blog/generative-engine-optimization-best-practices/)
+- [Mastering GEO in 2026 (Search Engine Land)](https://searchengineland.com/mastering-generative-engine-optimization-in-2026-full-guide-469142)
 
 ---
 
-### PITFALL M4: Performance vs. Aesthetics — Core Web Vitals Failure
+### PITFALL M4: Next.js Metadata API Misuse Across Router Boundaries
 
-**What goes wrong:** A beautifully animated site scores 40 on Lighthouse Performance. LCP is 5 seconds because the hero has 6 gradient orbs with backdrop-blur. CLS is 0.3 because animations shift layout. The site wins no awards because it's too slow to even load for the judges.
+**What goes wrong:** Builders use Pages Router metadata patterns (`import Head from 'next/head'`) in App Router projects, or vice versa. The `Head` component does nothing in App Router -- metadata is silently missing, pages have no title, no description, no OG tags. The page looks fine in the browser but is invisible to social sharing and has degraded SEO.
 
-**Why it happens:** Premium design techniques (glass morphism, particle systems, complex scroll animations, 3D elements) are inherently expensive. Without performance budgets enforced at planning time, builders stack expensive techniques without considering cumulative cost.
+**Additionally in Next.js 15+:** `params` became a Promise and must be awaited in `generateMetadata`. Old patterns that destructure params directly cause runtime errors. Streaming metadata (15.2+) means metadata may not be in the initial HTML for bots that don't execute JS.
 
-**Common performance killers:**
-
-| Technique | Performance Cost | Mitigation |
-|-----------|-----------------|------------|
-| `backdrop-blur` (3+ concurrent) | High GPU cost, mobile jank | Max 3 visible simultaneously |
-| Gradient mesh with many orbs | High paint cost | CSS only, limit to 3 orbs |
-| GSAP ScrollTrigger (10+ instances) | JS execution, scroll jank | Max 5 instances per page |
-| Three.js scenes | 500KB+ JS, WebGL memory | Dynamic import, ssr: false, fallback image |
-| Large font files | Render blocking, LCP delay | Preload, subset, font-display: swap |
-| Unoptimized images | LCP, bandwidth | next/image with sizes prop, AVIF/WebP |
-| CSS `will-change` everywhere | GPU memory exhaustion | Max 5 elements, remove after animation |
-| Continuous CSS animations | Battery drain, mobile heat | Pause when not in viewport |
+**Why it happens in Modulo's context:** The current `seo-meta` skill already warns about this (Layer 4, Anti-Pattern 1). But the skill needs to be updated for Next.js 15+ async params and streaming metadata behavior. Builders trained on Next.js 14 patterns will write `generateMetadata({ params: { slug } })` which fails in Next.js 15+ where params is a Promise.
 
 **Consequences:**
-- Lighthouse Performance < 80 (immediate fail for any premium project)
-- Mobile users experience lag, jank, or crashes
-- Google penalizes slow sites in search rankings
-- Award sites (Awwwards, CSS Design Awards) test performance as part of judging
-- Users abandon slow sites before seeing the design
+- Silent metadata absence (no error, just empty tags)
+- Social sharing shows blank preview or site name only
+- SEO ranking drops due to missing titles and descriptions
+- `generateMetadata` crashes with unhelpful async errors
 
 **Warning signs:**
-- More than 3 `backdrop-blur` elements on a page
-- GSAP or Three.js imported at top level (not dynamically)
-- No `sizes` prop on `next/image` components
-- Missing `prefers-reduced-motion` handling
-- Build output showing JS chunks > 200KB
-- No font preloading strategy
+- `import Head from 'next/head'` in any App Router file
+- `generateMetadata` destructuring params directly without `await`
+- No `metadataBase` set in root layout
+- Static `metadata` export used where dynamic data is needed
 
 **Prevention:**
-1. **Performance budgets in PLAN.md** — Each section's plan must declare its expected performance cost (low/medium/high). High-cost sections are limited to 2 per page.
-2. **Animation budget enforcement at planning** — v6.1.0's performance-guardian defines maximums. Rebuild must check these during section planning, not just during verification.
-3. **Dynamic import as default** — Code templates should use dynamic imports by default for heavy libraries. Static imports should require justification.
-4. **Mobile-first performance testing** — Include a performance checkpoint after Wave 2 that tests at 375px with CPU throttling.
-5. **Graduated enhancement** — Start with CSS-only animations. Add Framer Motion for scroll-triggered reveals. Use GSAP only for complex choreography. Use Three.js only for the single PEAK section.
+1. **Router detection in the skill** -- App Router: use `metadata` export or `generateMetadata`. Pages Router: use `<Head>`. Never mix.
+2. **Next.js 15+ async params pattern** -- Update all examples to: `const { slug } = await params;`
+3. **`metadataBase` as mandatory** -- Every Next.js project must set `metadataBase` in root `layout.tsx`. Without it, relative OG image URLs break.
+4. **Streaming metadata awareness** -- Note that social media bots (facebookexternalhit) can't execute JS, so metadata must be in initial HTML for social sharing. Streaming metadata works for browsers but may fail for HTML-limited bots.
+5. **Remove outdated patterns** -- The existing `seo-meta` skill shows `changeFrequency` in sitemap examples. This must be removed in the replacement skill.
 
-**Severity:** MAJOR
-**Phase mapping:** Architecture phase (performance budget system) + Section planning (cost declaration) + Verification phase (Lighthouse audit)
+**Phase mapping:** Core SEO skill (Next.js metadata section), framework-specific patterns
+**Confidence:** HIGH -- Next.js metadata API is well-documented. Streaming metadata behavior verified via official docs.
+
+**Sources:**
+- [Next.js generateMetadata Reference](https://nextjs.org/docs/app/api-reference/functions/generate-metadata)
+- [Next.js Metadata and OG Images Guide](https://nextjs.org/docs/app/getting-started/metadata-and-og-images)
+- [Streaming Metadata in Next.js 15.2](https://dev.to/melvinprince/a-comprehensive-introduction-to-streaming-metadata-in-nextjs-152-3gho)
+- [Fix Metadata Generation Errors](https://oneuptime.com/blog/post/2026-01-24-fix-nextjs-metadata-generation-errors/view)
 
 ---
 
-### PITFALL M5: User Expectation Mismatch — "This Isn't What I Had in Mind"
+### PITFALL M5: CORS Blocking and Missing Error Handling in API Integrations
 
-**What goes wrong:** The user describes wanting "a modern, clean landing page" and receives output that doesn't match their mental image. The design is technically good but stylistically wrong. The user wanted "clean" like Linear.app but got "clean" like a medical website.
+**What goes wrong:** External API calls fail silently or with cryptic CORS errors. Common failures: (a) browser-side fetch to a third-party API blocked by CORS (no `Access-Control-Allow-Origin` header), (b) API errors caught but not surfaced to the user (empty loading state forever), (c) rate limit 429 responses not handled (app keeps retrying, gets blocked), (d) network failures show blank screen instead of error state, (e) API response shape changes and TypeScript types are stale.
 
-**Why it happens:** Design vocabulary is ambiguous. "Modern," "clean," "bold," "professional," and "minimal" mean different things to different people. Without concrete visual references, the AI and the user are operating with different internal models of what the adjectives mean.
+**43% of web applications experienced security breaches due to insufficient origin checks in 2025**, per industry surveys. Over 70% of applications encounter CORS-related issues.
 
-**Root cause chain:**
-1. User provides verbal description ("I want something bold and modern")
-2. AI maps these words to its training distribution
-3. User has a specific reference in mind but doesn't share it
-4. AI generates toward statistical average of "bold and modern"
-5. Gap between user's mental model and AI output causes frustration
+**Why it happens in Modulo's context:** Modulo teaches frontend patterns. When builders add API integration (HubSpot, CRMs, payment APIs), they write `fetch('https://api.hubspot.com/...')` directly in a client component. This fails due to CORS. The fix is server-side proxying, but builders unfamiliar with API integration don't know this. Additionally, Modulo's quality gates focus on visual quality (anti-slop gate, design review) but have no gates for API reliability.
 
 **Consequences:**
-- Complete direction changes after first build (expensive)
-- Multiple iteration cycles spent aligning on taste, not improving execution
-- User loses confidence in the tool's ability to understand them
-- Good technical work is discarded because it's stylistically wrong
-- Project timeline doubles
+- API integration appears broken on the user's site
+- Blank loading states that never resolve
+- Sensitive error details (API keys, internal URLs) exposed in browser console
+- Rate-limited APIs cause cascading failures
+- Forms submit but nothing happens (silent API failure)
 
 **Warning signs:**
-- User description uses only adjectives, no concrete references
-- No competitive benchmarking or reference analysis
-- Brainstorm phase produces archetype selection without user seeing examples
-- User feedback is "it doesn't feel right" without specific critique
-- Multiple direction changes in the first 3 sessions
+- `fetch()` calls to external domains in client components
+- No `try/catch` around API calls
+- Loading states without timeout or error fallback
+- No rate limiting or retry logic
+- Error boundaries missing around API-dependent components
 
 **Prevention:**
-1. **Reference-first discovery** — v6.1.0's REFERENCES.md is a start. Rebuild must make reference collection mandatory during start-design: "Show me 3 sites you like and 3 you don't like."
-2. **Visual archetype preview** — When presenting archetypes, show real examples of each style. Don't just describe "Brutalist" — show 3 Brutalist sites.
-3. **Mood board generation** — Before committing to DNA, generate a visual mood board (color swatches, font samples, layout thumbnets) for user approval.
-4. **Incremental commitment** — Don't generate full DNA upfront. Start with color palette + typography preview. Get approval. Then layout patterns. Get approval. Then full DNA.
-5. **Taste calibration questions** — "Do you prefer the density of Linear.app or the spaciousness of Apple.com?" "Do you prefer the motion of Stripe or the stillness of Notion?" Map answers to archetype parameters.
+1. **Server-side proxy as the default pattern** -- The API integration skill must teach: "All external API calls go through your server. Client -> Your API Route -> External API. Never client -> External API directly."
+2. **Three-state UI pattern** -- Every API-dependent component must handle: loading, success, error. No component should show a permanent loading spinner. Teach timeout patterns (if no response in 10s, show error).
+3. **Error boundary wrapping** -- API-dependent sections should be wrapped in React Error Boundaries so a failed API call doesn't crash the whole page.
+4. **Typed responses** -- Generate TypeScript types from API responses. Validate response shape at runtime (Zod schemas) to catch API contract changes.
+5. **Rate limit handling** -- Teach exponential backoff with jitter for retries. Respect `Retry-After` headers. Show user-friendly "please try again" rather than infinite retry loops.
+6. **Framework-specific proxy patterns**:
+   - Next.js: Server Actions or Route Handlers (`app/api/[service]/route.ts`)
+   - Astro: Server endpoints (`src/pages/api/[service].ts`)
+   - React/Vite: Separate backend needed; `vite.config.ts` proxy for development only
 
-**Severity:** MAJOR
-**Phase mapping:** Discovery/brainstorm phase (reference-first workflow) + DNA generation phase (incremental approval)
+**Phase mapping:** API integration skill (proxy patterns, error handling, typed clients)
+**Confidence:** HIGH -- CORS behavior is well-established. Error handling patterns are standard practice.
+
+**Sources:**
+- [CORS Explained: Best Practices & Pitfalls](https://www.stackhawk.com/blog/what-is-cors/)
+- [Effective CORS Error Handling](https://moldstud.com/articles/p-effective-solutions-and-best-practices-for-handling-cors-errors-in-apis)
+- [Protecting API Keys with Next.js](https://dev.to/ivanms1/protecting-your-api-keys-with-next-js-21ej)
 
 ---
 
 ## Moderate Pitfalls
 
-Mistakes that cause delays or degrade quality without causing rewrites.
+Mistakes that cause delays, degraded functionality, or technical debt.
 
 ---
 
-### PITFALL D1: Emotional Arc Goes Flat
+### PITFALL D1: Schema Markup Over-Application -- Marking Up Everything
 
-**What goes wrong:** Despite having beat assignments (HOOK, BUILD, BREATHE, CLOSE), all sections feel the same intensity. The BREATHE section has too much content. The HOOK section is too calm. The arc exists on paper but not in the output.
+**What goes wrong:** Enthusiastic builders add structured data to everything -- Product schema on non-product pages, Article schema on landing pages, FAQ schema on every page, Organization schema duplicated on every page instead of just the homepage. Google's response to over-markup ranges from ignoring it to issuing manual actions.
+
+**Google removed support for 7 structured data types in 2025** as part of simplification. The trend is toward fewer, more meaningful schemas, not more coverage.
 
 **Prevention:**
-- Beat parameters must be HARD CONSTRAINTS in PLAN.md (v6.1.0's approach is correct)
-- Whitespace ratio is the most commonly violated parameter: BREATHE must be 70-80%, not 45%
-- Builder self-check question #1 ("Does this match its assigned beat parameters?") must include specific measurements, not just vibes
-- Quality reviewer must compare actual section height, element count, and whitespace ratio against beat specifications
+- Schema should match page purpose: Article for blog posts, Product for product pages, Organization on homepage only, FAQ only where real FAQs exist
+- Provide a decision matrix in the skill: "Page type X should use schemas Y and Z. No more."
+- One `@context` block per schema type per page maximum
+- Test with Rich Results Test before deploying -- "No result" means the schema isn't useful for that page
 
-**Warning signs:** All sections approximately the same height. BREATHE sections with 6+ elements. HOOK sections without dramatic entrance animation.
+**Warning signs:** More than 3 JSON-LD blocks on a single page. Schema types that don't match the page's primary content. Organization schema on every page.
 
-**Severity:** MODERATE
-**Phase mapping:** Section planning (beat parameter specification) + Execution (builder self-check enforcement)
+**Phase mapping:** Core SEO skill (structured data decision guidance)
+**Confidence:** HIGH
+
+**Sources:**
+- [Google Removes Structured Data Features 2025](https://www.relevantaudience.com/seo/google-removes-structured-data-2025-guide-for-websites/)
+- [Structured Data Mistakes to Avoid](https://www.searchenginejournal.com/structured-data-mistakes/276127/)
 
 ---
 
-### PITFALL D2: "Fade-In-Up" Monoculture
+### PITFALL D2: Astro Sitemap Silent Failure in SSR Mode
 
-**What goes wrong:** Every element on every section animates with the same pattern: fade in from below. The 10-direction motion vocabulary (RISE, DROP, EXPAND, CASCADE, UNFOLD, etc.) exists in the skill file but builders default to `y: 20, opacity: 0` for everything.
+**What goes wrong:** The official `@astrojs/sitemap` integration works well for static sites but fails silently in SSR mode. Dynamic routes (blog posts from a CMS, product pages from an API) are not discovered because the integration only knows about routes at build time. The sitemap generates successfully but contains only static routes, missing all dynamic content.
+
+**Additionally:** If the `site` field is not configured in `astro.config.mjs`, the sitemap integration silently produces nothing -- no error, no warning, just no sitemap file in the build output.
 
 **Prevention:**
-- Choreography defaults per beat type are already in DESIGN-DNA.md format (v6.1.0). Rebuild must include specific animation direction assignments in each section's PLAN.md.
-- PLAN.md must specify: "Headline: RISE. Cards: CASCADE with 60ms stagger. Image: ENTER-STAGE from right."
-- Anti-slop gate criterion "Directional motion story" must require 3+ distinct animation directions per page.
+- For SSR Astro sites, teach the custom sitemap endpoint pattern: a server route that queries the CMS/database and generates XML dynamically
+- Make `site` configuration a mandatory first step in any Astro SEO setup
+- Provide a verification step: "After build, check `dist/sitemap-index.xml` exists and contains expected URLs"
+- For hybrid mode, document which routes need to be pre-rendered for sitemap discovery
 
-**Warning signs:** Grep for `y: 20` or `y: 30` or `y: 40` — if this appears in more than 50% of animations, motion vocabulary is not being used.
+**Warning signs:** `@astrojs/sitemap` in config but sitemap missing from build output. Sitemap exists but contains far fewer URLs than the site has pages.
 
-**Severity:** MODERATE
-**Phase mapping:** Section planning (animation direction in PLAN.md) + Verification (motion diversity check)
+**Phase mapping:** Sitemap skill (Astro-specific section), framework patterns
+**Confidence:** MEDIUM -- Based on Astro docs and community reports, but SSR sitemap edge cases may vary.
+
+**Sources:**
+- [Astro Sitemap Integration Docs](https://docs.astro.build/en/guides/integrations-guide/sitemap/)
+- [Fixing Astro Sitemap in SSR Mode](https://colinmcnamara.com/blog/fixing-astro-sitemap-ssr-mode)
 
 ---
 
-### PITFALL D3: Responsive as Afterthought
+### PITFALL D3: OG Image Missing or Wrong Dimensions
 
-**What goes wrong:** Desktop looks premium, mobile looks like stacked desktop components with too-small text. Tablet is ignored entirely. Touch targets are too small. Horizontal overflow at certain viewport widths.
+**What goes wrong:** Pages shared on social media show: (a) no preview image, (b) a randomly scraped image from the page (usually a logo or icon), (c) an image with wrong aspect ratio (distorted or cropped), or (d) a fallback image that doesn't match the page content. This is the #1 user-visible SEO failure because it's immediately noticeable when sharing links.
 
 **Prevention:**
-- PLAN.md visual specifications must include responsive adaptations at 3 breakpoints (375px, 768px, 1440px)
-- Builder embedded rules require responsive classes on all components
-- Quality reviewer checks at multiple viewports (v6.1.0 does this at 1440px, 768px, 375px)
-- Touch target minimum 44x44px must be enforced programmatically, not just documented
+- Every page type must have a default og:image at 1200x630px (Facebook/LinkedIn standard)
+- Always set `og:image:width` and `og:image:height` meta tags for instant rendering
+- Article/blog pages should use the cover image as og:image
+- Next.js `ImageResponse` API for dynamic OG image generation (branded template with page title)
+- Astro: Manual OG image generation via `@vercel/og` or `satori` at build time
+- React/Vite: Pre-generated static OG images or external OG image service
+- Test with Facebook Sharing Debugger and Twitter Card Validator before launch
 
-**Warning signs:** No `md:` or `lg:` classes in component code. Text smaller than 14px on mobile. Buttons narrower than 44px.
+**Warning signs:** No `og:image` meta tag in page source. `og:image` pointing to a relative path without `metadataBase`. Image dimensions not 1200x630. No `og:image:width`/`og:image:height` tags.
 
-**Severity:** MODERATE
-**Phase mapping:** Section planning (responsive specifications in PLAN.md) + Verification (multi-viewport check)
+**Phase mapping:** Core SEO skill (OG image section), dynamic OG image generation pattern
+**Confidence:** HIGH
 
 ---
 
-### PITFALL D4: z-index Chaos
+### PITFALL D4: robots.txt Blocking Essential Crawlers or Paths
 
-**What goes wrong:** After 8 sections are built by different builders, z-index values are scattered: 10, 20, 50, 100, 9999. Fixed navigation conflicts with modal overlays. Sticky elements overlap each other. Scroll-triggered elements appear behind earlier sections.
+**What goes wrong:** The robots.txt is too restrictive. Common failures: (a) blocking `/_next/` in Next.js which prevents CSS/JS needed for rendering, (b) blocking `/api/` which blocks the sitemap or IndexNow endpoint, (c) blocking AI crawlers (GPTBot, ClaudeBot) when GEO visibility is a goal, (d) not referencing the sitemap URL, (e) using robots.txt to handle canonicalization (Google says don't do this).
 
 **Prevention:**
-- Define a z-index scale in Design DNA (v6.1.0 doesn't do this explicitly)
-- Recommended scale: `base: 0, raised: 10, sticky: 20, nav: 30, overlay: 40, modal: 50, toast: 60`
-- Use CSS `isolation: isolate` on section wrappers to create stacking contexts
-- Builders should never use arbitrary z-index values; only DNA-defined levels
+- Default allow-all with specific blocks only for genuinely private paths (`/admin/`, `/dashboard/`)
+- Never block static assets (`/_next/static/`, `/_astro/`) -- crawlers need these to render
+- Reference sitemap URL: `Sitemap: https://domain.com/sitemap.xml`
+- AI crawler policy: allow GPTBot, ClaudeBot, Google-Extended by default unless client requests otherwise
+- Never use robots.txt for canonicalization -- use `<link rel="canonical">` instead
+- Framework-specific paths to block:
+  - Next.js: `/api/` (if internal-only), `/_next/data/` (avoid), never `/_next/static/`
+  - Astro: Generally minimal blocking needed
+  - React/Vite: No server paths to block
 
-**Warning signs:** Any z-index value above 50 in section code. Multiple sections using different z-index values for similar purposes.
+**Warning signs:** `Disallow: /` in robots.txt (blocks everything). AI crawlers disallowed. No `Sitemap:` directive. Blocking paths that contain CSS/JS resources.
 
-**Severity:** MODERATE
-**Phase mapping:** Architecture phase (z-index scale in DNA) + Execution (enforcement via embedded rules)
+**Phase mapping:** Core SEO skill (robots.txt section)
+**Confidence:** HIGH
 
 ---
 
-### PITFALL D5: Dead Code Accumulation
+### PITFALL D5: Context7 MCP Over-Reliance and Stale Fallbacks
 
-**What goes wrong:** Over multiple iterations, unused imports, unused components, and orphaned utility functions accumulate. Bundle size grows. Components are created that duplicate existing shared components from Wave 0/1.
+**What goes wrong:** The API integration skill tells builders to "look up API docs via Context7" but Context7 may not have the library, may have an older version, or may be unavailable. Without fallback guidance, the builder either (a) halts and asks the user, breaking flow, or (b) falls back to training data and generates outdated API patterns.
 
 **Prevention:**
-- v6.1.0's builder Step 5.6 (Dead Code Prevention) is good. Rebuild must make this enforceable with automated checks.
-- Pre-commit hook that checks for unused imports
-- Builder must check shared component inventory before creating new utilities
-- Gap-fixes must not leave dead code from the previous implementation
+- Context7 is a tool, not a guarantee. The skill must provide: "If Context7 doesn't have docs for this API, use the official documentation URL directly."
+- Include curated links for common APIs (HubSpot, Stripe, Resend, etc.) as fallbacks
+- Version-pin API examples in the skill itself as a baseline, with Context7 as the freshness upgrade
+- Builder workflow: (1) Try Context7, (2) If unavailable, use skill baseline examples, (3) If API is unfamiliar, surface to user for documentation URL
 
-**Warning signs:** Multiple `import` statements that aren't used. Functions defined but never called. Components in the project that aren't rendered anywhere.
+**Warning signs:** Skill relies exclusively on Context7 with no hardcoded examples. No version information in API patterns. Builder generates API calls without checking current docs.
 
-**Severity:** MODERATE
-**Phase mapping:** Execution phase (builder self-check) + Verification phase (dead code scan)
+**Phase mapping:** API integration skill (Context7 integration strategy)
+**Confidence:** MEDIUM -- Context7 library coverage and uptime are not guaranteed.
+
+---
+
+### PITFALL D6: Skill Bloat from SEO/GEO/API Addition
+
+**What goes wrong:** Adding SEO, GEO, sitemap, IndexNow, and API integration creates 5+ new skills. Combined with the existing 70+ skills, the metadata scanning overhead grows. More critically, builders must now reference SEO skills AND design skills AND framework skills for every page, exceeding practical context budgets. Related: existing PITFALL M2 from the v1 research (Skill Bloat -- Knowledge Base Becomes Noise).
+
+**The context window is a public good.** Each skill uses approximately 100 tokens during metadata scanning. With 75+ skills, that's 7,500+ tokens just for skill discovery -- before any skill content loads.
+
+**Prevention:**
+1. **Consolidate, don't proliferate** -- Instead of separate skills for SEO meta, sitemap, robots.txt, IndexNow, and GEO, create ONE comprehensive SEO skill with clear sections. The builder loads one skill, not five.
+2. **Embed critical SEO rules in the builder agent** -- The 5 most important rules (canonical URLs, JSON-LD sync, no client-side metadata in SPAs, og:image required, sitemap validation) should be embedded directly in the section-builder spawn prompt, not require a skill read.
+3. **API integration as one skill** -- Server proxy pattern, env handling, error states, and typed clients in one skill, not four.
+4. **Tier appropriately** -- SEO and API skills should be **Utility** tier (loaded on-demand), not Core. They're not needed for every project (Tauri/Electron apps don't need SEO).
+5. **Stay under 500 lines per skill** -- The comprehensive SEO skill can be up to 500 lines with all sections. If it exceeds this, split by concern (SEO-technical vs SEO-content) not by feature (meta vs sitemap vs robots).
+
+**Warning signs:** More than 3 new skills added for this milestone. Any skill exceeding 500 lines. Builder needing to read 3+ skills for a single task.
+
+**Phase mapping:** Skill architecture phase, all skill creation phases
+**Confidence:** HIGH -- Based on Claude Code plugin architecture analysis and existing v1 pitfalls research.
+
+**Sources:**
+- [Claude Code Plugin Architecture](https://github.com/anthropics/claude-code/blob/main/plugins/README.md)
+- [Claude Agent Skills Deep Dive](https://leehanchung.github.io/blogs/2025/10/26/claude-skills-deep-dive/)
 
 ---
 
@@ -547,97 +528,100 @@ Mistakes that cause annoyance but are quickly fixable.
 
 ---
 
-### PITFALL N1: Inconsistent Import Paths
+### PITFALL N1: Missing Hreflang for Multi-Language Sites
 
-**What goes wrong:** Some sections import shared components with relative paths (`../../components/ui/button`), others use alias paths (`@/components/ui/button`). Both work in dev but alias paths may break in certain build configs.
+**What goes wrong:** Multi-language sites don't set `hreflang` alternate links. Google shows the wrong language version to users. Each language version competes with the others instead of being treated as alternates.
 
-**Prevention:** Standardize on alias paths (`@/`) in scaffold. Document in Wave 0 output.
+**Prevention:** The SEO skill should reference the existing `i18n-rtl` skill for hreflang implementation. Don't duplicate i18n guidance -- just link to the right skill.
 
-**Severity:** MINOR
-
----
-
-### PITFALL N2: Missing Accessibility Labels
-
-**What goes wrong:** Icon-only buttons, decorative images, and interactive elements lack proper ARIA labels. Screen readers can't navigate the page meaningfully.
-
-**Prevention:** Builder embedded rules include accessibility requirements. Quality reviewer checks ARIA labels. Rebuild should make this a per-task check, not just final verification.
-
-**Severity:** MINOR (fixable but important for compliance)
+**Phase mapping:** Core SEO skill (cross-reference section)
+**Confidence:** HIGH
 
 ---
 
-### PITFALL N3: Font Loading Flash (FOUT/FOIT)
+### PITFALL N2: IndexNow Submitting Unchanged URLs
 
-**What goes wrong:** Custom display fonts load visibly late, causing a flash of unstyled text (FOUT) or invisible text (FOIT). The hero headline blinks from system font to display font 1-2 seconds after page load.
+**What goes wrong:** The IndexNow endpoint fires on every deployment, submitting all URLs regardless of whether content changed. Search engines see this as spammy behavior and may throttle or ignore submissions.
 
-**Prevention:** `font-display: swap` is mandatory. Display fonts must be preloaded. Next.js `next/font` handles this well. Astro needs manual `<link rel="preload">`.
+**Prevention:** Track content hashes or `lastmod` dates. Only submit URLs where content has actually changed since the last submission. Provide a build-time diff strategy.
 
-**Severity:** MINOR
-
----
-
-### PITFALL N4: Color Contrast Failures
-
-**What goes wrong:** Accent colors on dark backgrounds fail WCAG AA contrast ratio (4.5:1 for body text, 3:1 for large text). Especially common with low-opacity text treatments (`text-[var(--color-text-tertiary)]` on dark backgrounds).
-
-**Prevention:** DNA generation must verify all text/background combinations meet WCAG AA. Quality reviewer includes contrast checking.
-
-**Severity:** MINOR (but accessibility compliance is legally required in many jurisdictions)
+**Phase mapping:** IndexNow skill (submission strategy)
+**Confidence:** MEDIUM
 
 ---
 
-### PITFALL N5: Hardcoded Strings Instead of Content Tokens
+### PITFALL N3: JSON-LD Syntax Errors from Template Interpolation
 
-**What goes wrong:** Builder generates the section with inline strings ("Welcome to the future of design") instead of referencing CONTENT.md. When copy changes, developers must find and replace strings across component files instead of updating a single content source.
+**What goes wrong:** JSON-LD strings contain unescaped quotes, newlines, or special characters from CMS content. A blog post title like `He said "hello"` breaks the JSON-LD when interpolated without escaping. `JSON.stringify()` handles this correctly, but manual template interpolation does not.
 
-**Prevention:** PLAN.md must specify exact copy from CONTENT.md. Builder self-check verifies copy accuracy. Content should be in a structured format that components reference, not inline strings.
+**Prevention:** The skill must enforce: "Always use `JSON.stringify()` to generate JSON-LD content. Never manually construct JSON strings with template literals." The current skill's `JsonLd` component pattern is correct -- keep it.
 
-**Severity:** MINOR
+**Phase mapping:** Core SEO skill (JSON-LD patterns)
+**Confidence:** HIGH
+
+---
+
+### PITFALL N4: Social Media Card Preview Caching
+
+**What goes wrong:** OG tags are updated but social media platforms show the old preview. Facebook, LinkedIn, and Twitter cache OG images and metadata. Developers think their changes are broken when they're actually just cached.
+
+**Prevention:** Include cache-busting instructions: Facebook Sharing Debugger (click "Scrape Again"), Twitter Card Validator, LinkedIn Post Inspector. Mention that cache clearing can take 24-48 hours for some platforms.
+
+**Phase mapping:** Core SEO skill (verification and debugging section)
+**Confidence:** HIGH
+
+---
+
+### PITFALL N5: Google Search Console / Bing Webmaster Verification Confusion
+
+**What goes wrong:** Site verification fails because (a) the verification meta tag is in the wrong place, (b) DNS TXT verification has propagation delays, (c) HTML file verification conflicts with framework routing, (d) developers don't realize GSC and Bing Webmaster Tools are separate systems requiring separate verification.
+
+**Prevention:** Provide a step-by-step verification checklist for both GSC and Bing Webmaster Tools. Recommend meta tag verification as the simplest method for both (Next.js `metadata.verification`, Astro `<meta>` in layout). Note that DNS verification takes 24-72 hours for propagation.
+
+**Phase mapping:** Submission workflow skill (verification section)
+**Confidence:** HIGH
 
 ---
 
 ## Phase-Specific Warnings
 
-| Phase Topic | Likely Pitfall | Mitigation |
-|-------------|---------------|------------|
-| Discovery / Brainstorm | M5: User expectation mismatch | Reference-first discovery, visual archetype preview |
-| DNA Generation | C2: Generic output trap | Archetype constraints with explicit forbidden patterns |
-| Content Planning | M1: Generic copy | CONTENT.md mandatory before execution, archetype tone guide |
-| Scaffold (Wave 0) | D4: z-index chaos, N1: Import paths | Define scales and conventions in scaffold |
-| Shared Components (Wave 1) | C3: Iteration breaks adjacent | Immutable shared layer after Wave 1 |
-| Parallel Section Building (Wave 2+) | C1: Context rot, C5: Coordination failures | Session boundaries, Complete Build Context |
-| Animation Implementation | C4: Animation reliability, D2: Fade-in-up monoculture | Library isolation, choreography in PLAN.md |
-| Verification | M4: Performance vs aesthetics | Performance budget checking before build, not just after |
-| Iteration / Gap Fixes | C3: Iteration breaks adjacent | Blast radius analysis, adjacent section re-verification |
-| Multi-page Projects | C5: Cross-page consistency | PAGE-CONSISTENCY.md, shared component freeze |
+| Phase/Topic | Likely Pitfall | Mitigation | Severity |
+|-------------|---------------|------------|----------|
+| SEO Skill Architecture | D6: Skill bloat | Consolidate into 1-2 skills, not 5+ | Major |
+| Structured Data Patterns | C1: Schema-content mismatch | Single source of truth, post-iteration audit | Critical |
+| Canonical URL Implementation | C2: Misconfigured canonicals | Dynamic generation, absolute URLs, trailing slash policy | Critical |
+| Sitemap Generation | M1: XML validation failures | Drop deprecated fields, accurate lastmod, escape characters | Major |
+| IndexNow Setup | M2: Key verification failures | Verification-first setup order, public key understanding | Major |
+| GEO Optimization | M3: Cannibalized traditional SEO | Unified strategy, archetype-aware GEO, schema-for-real-content-only | Major |
+| Next.js Metadata | M4: Router boundary confusion | Async params, metadataBase, no Head in App Router | Major |
+| API Integration | M5: CORS and error handling | Server proxy default, three-state UI, error boundaries | Major |
+| React/Vite SEO | C4: SPA invisibility | Framework capability matrix, honest limitation disclosure | Critical |
+| API Key Security | C3: Client-side key exposure | Server proxy, prefix audit, framework-specific env patterns | Critical |
+| OG Images | D3: Missing/wrong OG images | 1200x630 default, dimensions in meta, per-page images | Moderate |
+| robots.txt | D4: Over-restrictive blocking | Allow-all default, AI crawler inclusion, sitemap reference | Moderate |
+| Context7 Integration | D5: Over-reliance without fallback | Fallback chain: Context7 -> skill baseline -> user docs | Moderate |
+| Multi-language | N1: Missing hreflang | Cross-reference i18n-rtl skill | Minor |
+| IndexNow Efficiency | N2: Submitting unchanged URLs | Content hash tracking, only submit changed | Minor |
 
 ---
 
-## V6.1.0 Lessons Learned (What Worked, What Didn't)
+## Existing Skill Gap Analysis
 
-### What Worked
+The current `seo-meta` skill (v2.0.0) has the following specific issues that the replacement must fix:
 
-| Mechanism | Status | Assessment |
-|-----------|--------|------------|
-| Pre-extracted spawn prompts | Implemented | GOOD — reduces builder context needs dramatically |
-| Embedded rules in builder agent | Implemented | GOOD — critical rules are never far from context |
-| Canary checks | Implemented | PARTIAL — detection works, consequences too soft |
-| CONTEXT.md single source of truth | Implemented | GOOD — session recovery works when written correctly |
-| 35-point anti-slop gate | Implemented | PARTIAL — catches obvious slop, misses compositional blandness |
-| Beat parameter constraints | Implemented | PARTIAL — defined but not always enforced by builders |
-| Layout diversity tracker | Implemented | PARTIAL — tracked but not blocked on violations |
-
-### What Didn't Work
-
-| Mechanism | Problem | Rebuild Fix |
-|-----------|---------|-------------|
-| Skill file references during build | Builders can't/don't read all relevant skills | Embed everything needed in spawn prompt |
-| Soft session boundaries | Users override 2-wave suggestion, quality degrades | Make wave 3 in same session require explicit justification |
-| Creative tension as description | "Add a creative tension moment" without code | Provide exact TSX in PLAN.md |
-| Copy generation on the fly | Builders make up copy instead of using CONTENT.md | CONTENT.md mandatory + per-task copy verification |
-| Post-hoc performance checking | Expensive techniques stacked, caught only at verify | Performance budget at planning time |
-| Shared component modifications during iteration | Cascade failures | Freeze shared layer after Wave 1 |
+| Current Issue | Severity | Fix |
+|---------------|----------|-----|
+| Shows `changeFrequency` and `priority` in sitemap examples | Medium | Remove -- Google/Bing ignore these fields |
+| No GEO optimization guidance | High | Add AI search optimization section |
+| No IndexNow patterns | High | Add full IndexNow setup and submission |
+| No framework capability matrix | High | Add clear SEO capabilities per framework |
+| No sitemap validation guidance | Medium | Add GSC/Bing validation checklist |
+| No robots.txt AI crawler configuration | Medium | Add GPTBot/ClaudeBot allow rules |
+| No API integration patterns | High | New skill needed for server proxy, env handling |
+| No error handling for API-dependent components | High | Add three-state UI pattern |
+| Uses correct `JSON.stringify` for JSON-LD | None | Keep this pattern -- it's correct |
+| Has good framework-specific meta tag patterns | None | Keep and update for Next.js 15+ async params |
+| Warns about `next/head` in App Router | None | Keep this anti-pattern warning |
 
 ---
 
@@ -645,34 +629,46 @@ Mistakes that cause annoyance but are quickly fixable.
 
 | Area | Confidence | Reason |
 |------|------------|--------|
-| Context rot mechanisms | HIGH | Direct analysis of v6.1.0 architecture and LLM behavior patterns |
-| Animation failure modes | HIGH | Based on documented GSAP/Framer Motion patterns in codebase + known React lifecycle issues |
-| Generic output causes | HIGH | Well-understood LLM statistical behavior + v6.1.0 anti-slop evidence |
-| Agent coordination | HIGH | Direct analysis of design-lead.md spawn patterns |
-| Content generation | HIGH | micro-copy skill + known LLM copy tendencies |
-| Framework compatibility | MEDIUM | Next.js patterns well-documented in codebase; Astro coverage is thinner |
-| Performance budgets | HIGH | performance-guardian skill provides specific budgets |
-| User expectation mismatch | MEDIUM | Based on product design principles; no direct user feedback data available |
+| SEO Structured Data | HIGH | Google's official structured data policies are definitive |
+| Canonical URLs | HIGH | Google and Bing canonical documentation is authoritative |
+| Sitemap Validation | HIGH | Sitemap protocol specification is well-defined; GSC error data available |
+| IndexNow | MEDIUM | Official docs are sparse on edge cases; rate limits are "undisclosed" per engine |
+| GEO Optimization | MEDIUM | Emerging field; best practices from 2025 research may evolve |
+| API Key Security | HIGH | CVE-2025-66478, Next.js docs, and Astro issue #13960 provide concrete evidence |
+| Framework-Specific SEO | HIGH | Official framework docs for Next.js, Astro, React/Vite are well-maintained |
+| Plugin Architecture | HIGH | Direct analysis of Modulo codebase + Claude Code plugin docs |
+| CORS / Error Handling | HIGH | Well-established web standards with extensive documentation |
 
 ---
 
 ## Sources
 
-All findings based on direct analysis of:
+### Official Documentation
+- [Google Structured Data Policies](https://developers.google.com/search/docs/appearance/structured-data/sd-policies)
+- [Google Build and Submit a Sitemap](https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap)
+- [Google Canonical URL Consolidation](https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls)
+- [IndexNow Official Documentation](https://www.indexnow.org/documentation)
+- [IndexNow FAQ](https://www.indexnow.org/faq)
+- [Next.js generateMetadata Reference](https://nextjs.org/docs/app/api-reference/functions/generate-metadata)
+- [Next.js Data Security Guide](https://nextjs.org/docs/app/guides/data-security)
+- [Astro Sitemap Integration](https://docs.astro.build/en/guides/integrations-guide/sitemap/)
+- [Astro Environment Variables](https://docs.astro.build/en/guides/environment-variables/)
 
-- `agents/design-lead.md` — Orchestrator architecture, spawn prompt design, canary checks, session management
-- `agents/section-builder.md` — Builder protocol, embedded rules, self-check system
-- `agents/quality-reviewer.md` — Verification protocol, anti-slop gate, quality standards
-- `skills/anti-slop-design/SKILL.md` — 35-point quality gate, slop patterns
-- `skills/cinematic-motion/SKILL.md` — 10-direction motion vocabulary, choreography sequences
-- `skills/gsap-animations/SKILL.md` — GSAP patterns, cleanup requirements
-- `skills/framer-motion/SKILL.md` — Framer Motion patterns, SSR considerations
-- `skills/creative-tension/SKILL.md` — Tension levels, per-archetype techniques
-- `skills/emotional-arc/SKILL.md` — Beat types, sequence rules, transition techniques
-- `skills/micro-copy/SKILL.md` — Copy rules, banned text, archetype tone
-- `skills/performance-guardian/SKILL.md` — Performance budgets, animation budgets
-- `skills/design-dna/SKILL.md` — DNA format, validation rules
-- `skills/quality-standards/SKILL.md` — Quality tiers, verification protocol
-- `skills/wow-moments/SKILL.md` — Interaction patterns, performance impact
-- `skills/design-archetypes/SKILL.md` — Archetype constraints and forbidden patterns
-- `CLAUDE.md` — System overview, context rot prevention architecture
+### Security Advisories
+- [CVE-2025-66478 Next.js Security Advisory](https://nextjs.org/blog/CVE-2025-66478)
+- [Next.js Security Update December 2025](https://nextjs.org/blog/security-update-2025-12-11)
+- [Astro Issue #13960: Non-PUBLIC_ vars exposed](https://github.com/withastro/astro/issues/13960)
+
+### Research & Analysis
+- [GEO Research Paper (arXiv 2311.09735)](https://arxiv.org/pdf/2311.09735)
+- [Bing on Duplicate Content and AI Search (Dec 2025)](https://blogs.bing.com/webmaster/December-2025/Does-Duplicate-Content-Hurt-SEO-and-AI-Search-Visibility)
+- [Bing on lastmod Importance (2023)](https://blogs.bing.com/webmaster/february-2023/The-Importance-of-Setting-the-lastmod-Tag-in-Your-Sitemap)
+- [GEO vs SEO in 2025 (Strapi)](https://strapi.io/blog/generative-engine-optimization-vs-traditional-seo-guide)
+- [Mastering GEO in 2026 (Search Engine Land)](https://searchengineland.com/mastering-generative-engine-optimization-in-2026-full-guide-469142)
+
+### Community & Practical
+- [Next.js Sitemap GSC Issue #75836](https://github.com/vercel/next.js/issues/75836)
+- [Fixing Astro Sitemap in SSR Mode](https://colinmcnamara.com/blog/fixing-astro-sitemap-ssr-mode)
+- [Claude Agent Skills Deep Dive](https://leehanchung.github.io/blogs/2025/10/26/claude-skills-deep-dive/)
+- [CORS Best Practices & Pitfalls](https://www.stackhawk.com/blog/what-is-cors/)
+- [Common IndexNow Challenges](https://www.navishark.com/en/kb/6vm98r/common-challenges-and-solutions-when-adopting-indexnow)
