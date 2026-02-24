@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-23)
 ## Current Position
 
 Phase: 6 of 9 (Brainstorming & Content)
-Plan: 4 of 4 in current phase
+Plan: 4 of 4 in current phase (+ 06-01 dependency completed)
 Status: Phase 6 COMPLETE
-Last activity: 2026-02-24 -- Completed 06-04-PLAN.md (copy-intelligence)
+Last activity: 2026-02-24 -- Completed 06-01-PLAN.md (design-brainstorm rewrite)
 
-Progress: [██████░░░░] 63% (33/52 plans)
+Progress: [██████░░░░] 65% (34/52 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 33
+- Total plans completed: 34
 - Average duration: 4 min
-- Total execution time: 127 min
+- Total execution time: 134 min
 
 **By Phase:**
 
@@ -34,8 +34,8 @@ Progress: [██████░░░░] 63% (33/52 plans)
 | 5. Motion & Design Skills | 6/6 | 38 min | 6 min |
 
 **Recent Trend:**
-- Last 5 plans: 06-04 (7 min), 06-02 (6 min), 06-03 (5 min), 05-03 (9 min), 05-06 (7 min)
-- Trend: Phase 6 complete at 4 plans, avg ~6 min/plan
+- Last 5 plans: 06-01 (7 min), 06-04 (7 min), 06-02 (6 min), 06-03 (5 min), 05-03 (9 min)
+- Trend: Phase 6 fully complete (all dependencies resolved), avg ~6 min/plan
 
 *Updated after each plan completion*
 
@@ -206,6 +206,9 @@ Recent decisions affecting current work:
 - [Phase 6-04]: Voice extraction protocol produces ~15-20 line Copy Specification per section PLAN.md -- fits within 300-line spawn prompt budget
 - [Phase 6-04]: 18 hard-banned + 8 discouraged phrases with contextual override -- tiered enforcement
 - [Phase 6-04]: Content bank uses formula + archetype modifier pattern -- prevents generic output while keeping skill manageable
+- [Phase 6-01]: 615 lines within 600-800 target -- 12 verticals with 6-8 pattern-described sites each, full teardown framework, 7-phase protocol
+- [Phase 6-01]: 9 skills in reference map (design-archetypes, cross-pollination, creative-direction-format, copy-intelligence, emotional-arc, creative-tension, micro-copy, awwwards-scoring, design-dna)
+- [Phase 6-01]: Command integration references start-project (not start-design) -- verified actual command naming in commands/ directory
 
 ### Pending Todos
 
@@ -221,5 +224,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-24
-Stopped at: Phase 6 complete (4/4 plans) -- ready for Phase 7 planning
+Stopped at: Phase 6 fully complete (all plans including 06-01 dependency) -- ready for Phase 7 planning
 Resume file: None
