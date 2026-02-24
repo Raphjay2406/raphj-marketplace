@@ -91,6 +91,13 @@ Recent decisions affecting current work:
 - [Phase 8]: Dark/light mode equal parity -- both independently award-worthy, archetype signature transitions
 - [Phase 8]: Framework detection auto-detect then user-confirm, stored in DESIGN-DNA.md
 - [Phase 8]: Tailwind v4 skill rewrite is foundational -- completes before other skills reference it
+- [Phase 9]: Figma-DNA hybrid: Figma styles where present, DNA fills gaps; raw hex always flagged for user
+- [Phase 9]: Figma import produces PLAN.md files through normal execute pipeline (not direct code)
+- [Phase 9]: Visual QA overlay diff (pixelmatch) as part of verify step
+- [Phase 9]: Code Connect mappings used when available; page-by-page import for multi-page Figma files
+- [Phase 9]: Storybook 10 CSF Factories + W3C DTCG tokens via Style Dictionary 5; multi-format (CSS/JSON/Figma)
+- [Phase 9]: Progress reporting: per-task in STATE.md, review gate after every wave, screenshots after final wave only
+- [Phase 9]: Error recovery: MINOR/MAJOR/CRITICAL severity; detailed diagnosis + 2-3 fix options; failure escalation at 3+
 
 ### Pending Todos
 
