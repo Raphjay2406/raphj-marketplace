@@ -10,27 +10,27 @@ See: .planning/PROJECT.md (updated 2026-02-23)
 ## Current Position
 
 Phase: 1 of 9 (Foundation)
-Plan: 5 of 6 in current phase (COMPLETE)
+Plan: 4 of 6 in current phase (COMPLETE)
 Status: In progress -- executing Phase 1
-Last activity: 2026-02-24 -- Completed 01-05-PLAN.md (Emotional Arc skill, 10 beat types with hard constraints)
+Last activity: 2026-02-24 -- Completed 01-04-PLAN.md (Anti-Slop Gate skill, 35-point weighted scoring)
 
-Progress: [██░░░░░░░░] 6% (3/52 plans)
+Progress: [██░░░░░░░░] 8% (4/52 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 3
+- Total plans completed: 4
 - Average duration: 3 min
-- Total execution time: 9 min
+- Total execution time: 12 min
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 1. Foundation | 3/6 | 9 min | 3 min |
+| 1. Foundation | 4/6 | 12 min | 3 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (2 min), 01-02 (3 min), 01-05 (4 min)
+- Last 5 plans: 01-01 (2 min), 01-02 (3 min), 01-05 (4 min), 01-04 (3 min)
 - Trend: Consistent, fast execution for markdown-only plans
 
 *Updated after each plan completion*
@@ -52,6 +52,11 @@ Recent decisions affecting current work:
 - [Phase 1-02]: Motion tokens use :root CSS custom properties (NOT @theme) -- consumed by GSAP/motion-react, not Tailwind
 - [Phase 1-02]: @theme block includes --color-*: initial to reset Tailwind defaults -- project owns full palette
 - [Phase 1-02]: Signature element format: name: param=value -- machine-parseable, enforceable by anti-slop gate
+- [Phase 1-04]: Typography and Depth & Polish both at 6 points (17% each) -- craft quality weighted highest
+- [Phase 1-04]: UX Intelligence at 3 points (9%) -- functional quality is baseline, not differentiator
+- [Phase 1-04]: Generic CTA penalty capped at -6 (3 instances max) -- beyond 3 is systemic, covered by U3 scoring 0
+- [Phase 1-04]: Gate runs before Awwwards 4-axis scoring -- if gate FAIL, Awwwards is skipped
+- [Phase 1-04]: Max 2 remediation cycles before escalation to user
 - [Phase 1-05]: 680 lines exceeds 400-550 target but all content substantive (10 archetype templates vs. 4-5 minimum)
 - [Phase 1-05]: PEAK animation intensity set to HARD enforcement (not SOFT) -- PEAK is the designated wow moment
 - [Phase 1-05]: Added "min 3 different beat types per page" as HARD sequence validation rule
@@ -94,6 +99,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-02-24T03:37:23Z
-Stopped at: Completed 01-05-PLAN.md (Emotional Arc skill)
+Last session: 2026-02-24T03:37:00Z
+Stopped at: Completed 01-04-PLAN.md (Anti-Slop Gate skill)
 Resume file: None
