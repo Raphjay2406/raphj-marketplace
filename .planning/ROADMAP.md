@@ -21,8 +21,8 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 7: Asset & Specialist Skills** - Shape generation, 3D/WebGL, component marketplace, Remotion, Spline, image prompts
 - [x] **Phase 8: Experience & Frameworks** - Responsive, accessibility, multi-page, dark/light mode, framework support, skill rewrites
 - [x] **Phase 9: Integration & Polish** - Figma integration, design system export, progress reporting, error recovery
-- [ ] **Phase 10: Wire Quality Enforcement** - Add CD/QR invocation to build-orchestrator wave protocol (GAP-1)
-- [ ] **Phase 11: Fix Stale Cross-References** - Repair all stale agent/command references across skills (GAP-2, GAP-3, ISSUE-1-3)
+- [x] **Phase 10: Wire Quality Enforcement** - Add CD/QR invocation to build-orchestrator wave protocol (GAP-1)
+- [x] **Phase 11: Fix Stale Cross-References** - Repair all stale agent/command references across skills (GAP-2, GAP-3, ISSUE-1-3)
 - [ ] **Phase 12: Registry & Documentation** - Rebuild SKILL-DIRECTORY.md and rewrite README.md (ISSUE-4-5)
 - [ ] **Phase 13: Legacy Cleanup** - Remove v6.1.0 agents/skills, fix bookkeeping, resolve duplicates
 
@@ -219,7 +219,7 @@ Plans:
 **Plans**: 1 plan
 
 Plans:
-- [ ] 10-01-PLAN.md -- Wire CD/QR invocation into build-orchestrator wave protocol: pre-build CD review, post-wave CD+QR parallel review, findings merge, GAP-FIX remediation loop, wave review gate, running tally, execute.md update
+- [x] 10-01-PLAN.md -- Wire CD/QR invocation into build-orchestrator wave protocol: pre-build CD review, post-wave CD+QR parallel review, findings merge, GAP-FIX remediation loop, wave review gate, running tally, execute.md update
 
 ### Phase 11: Fix Stale Cross-References
 **Goal**: All agent and command references across skills point to correct v2.0 names, and the REFERENCES.md producer/consumer chain is resolved
@@ -235,8 +235,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 11-01-PLAN.md -- Systematic cross-reference repair: design-lead, start-design, plan-sections, verify/export replacements + delete legacy discussion-protocol.md
-- [ ] 11-02-PLAN.md -- Resolve REFERENCES.md producer gap: update all consumers to read research/DESIGN-REFERENCES.md (Path B)
+- [x] 11-01-PLAN.md -- Systematic cross-reference repair: design-lead, start-design, plan-sections, verify/export replacements + delete legacy discussion-protocol.md
+- [x] 11-02-PLAN.md -- Resolve REFERENCES.md producer gap: update all consumers to read research/DESIGN-REFERENCES.md (Path B)
 
 ### Phase 12: Registry & Documentation Update
 **Goal**: SKILL-DIRECTORY.md accurately reflects the complete v2.0 skill inventory and README.md documents the correct v2.0 architecture, commands, and workflow
@@ -288,11 +288,11 @@ Phase order: 10 -> 11 -> 12 -> 13 (sequential, each depends on prior)
 | 7. Asset & Specialist Skills | 6/6 | Complete | 2026-02-24 |
 | 8. Experience & Frameworks | 8/8 | Complete | 2026-02-24 |
 | 9. Integration & Polish | 4/4 | Complete | 2026-02-24 |
-| 10. Wire Quality Enforcement | 0/1 | Planned | -- |
-| 11. Fix Stale Cross-References | 0/2 | Planned | -- |
+| 10. Wire Quality Enforcement | 1/1 | Complete | 2026-02-25 |
+| 11. Fix Stale Cross-References | 2/2 | Complete | 2026-02-25 |
 | 12. Registry & Documentation | 0/2 | Pending | -- |
 | 13. Legacy Cleanup | 0/2 | Pending | -- |
 
 ---
 *Roadmap created: 2026-02-23*
-*Last updated: 2026-02-25 -- Phase 11 planned (2 plans, 1 wave)*
+*Last updated: 2026-02-25 -- Phase 11 complete (2/2 plans, all verified)*
