@@ -111,6 +111,9 @@ Recent decisions affecting current work:
 - [Phase 3-01]: Discovery phase in-command (not dispatched to agent) -- conversational UX needs direct user interaction
 - [Phase 3-01]: 4 research tracks dispatched in parallel via Task tool (trends, references, components, animation)
 - [Phase 3-01]: Content planning gated behind --skip-content flag for deferred copy workflows
+- [Phase 3-02]: lets-discuss.md is new command (no v6.1.0 predecessor) -- 143 lines, 3 interleaved conversation tracks
+- [Phase 3-02]: DISCUSSION-{phase}.md file existence serves as tracking mechanism for plan-dev auto-offer
+- [Phase 3-02]: Creative-director agent dispatched via Task tool for visual proposals with ASCII mockups
 - [Phase 3-03]: plan-dev replaces plan-sections (353 -> 121 lines) -- all domain logic in section-planner agent
 - [Phase 3-03]: Discussion auto-offer checks DISCUSSION-{phase}.md existence, offers lets-discuss if missing
 - [Phase 3-03]: Re-research is default-on, skippable via --skip-research flag
