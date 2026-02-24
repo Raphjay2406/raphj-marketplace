@@ -11,8 +11,8 @@ See: .planning/PROJECT.md (updated 2026-02-23)
 
 Phase: 12 of 13 (Registry & Documentation) -- COMPLETE
 Plan: 2 of 2 in current phase
-Status: Phase 12 complete. SKILL-DIRECTORY.md rebuilt (plan 01) and README.md rewritten (plan 02). Audit ISSUE-4 and ISSUE-5 both closed.
-Last activity: 2026-02-25 -- Completed 12-02-PLAN.md
+Status: Phase 12 complete. SKILL-DIRECTORY.md rebuilt (plan 01, SUMMARY added) and README.md rewritten (plan 02). Audit ISSUE-4 and ISSUE-5 both closed.
+Last activity: 2026-02-25 -- Added 12-01-SUMMARY.md
 
 Progress: [███████████] 97% (61/63 plans)
 Gap closure: [██████░░░░] 71% (5/7 plans)
@@ -22,7 +22,7 @@ Gap closure: [██████░░░░] 71% (5/7 plans)
 **Velocity:**
 - Total plans completed: 61
 - Average duration: 4 min
-- Total execution time: 259 min
+- Total execution time: 263 min
 
 **By Phase:**
 
@@ -40,11 +40,11 @@ Gap closure: [██████░░░░] 71% (5/7 plans)
 | 9. Integration & Polish | 4/4 | 21 min | 5 min |
 | 10. Wire Quality Enforcement | 1/1 | 4 min | 4 min |
 | 11. Fix Stale Cross-References | 2/2 | 6 min | 3 min |
-| 12. Registry & Documentation | 2/2 | 2 min | 1 min |
+| 12. Registry & Documentation | 2/2 | 6 min | 3 min |
 
 **Recent Trend:**
-- Last 5 plans: 10-01 (4 min), 11-02 (2 min), 11-01 (4 min), 12-01 (included in phase), 12-02 (2 min)
-- Phase 12 complete at 2 min total (2 plans)
+- Last 5 plans: 10-01 (4 min), 11-02 (2 min), 11-01 (4 min), 12-01 (4 min), 12-02 (2 min)
+- Phase 12 complete at 6 min total (2 plans)
 - Gap closure progress: 5/7 plans complete (71%)
 
 *Updated after each plan completion*
@@ -287,6 +287,8 @@ Recent decisions affecting current work:
 - [Phase 11-01]: design-system-export: /modulo:export replaced with post-build export workflow (user-triggered) since command does not exist
 - [Phase 11-01]: emotional-arc: beat assignment agent is section-planner (not build-orchestrator) -- section-planner is the agent that actually assigns beats
 - [Phase 11-01]: Legacy agents/discussion-protocol.md deleted (v2.0 replacement exists at agents/protocols/discussion-protocol.md)
+- [Phase 12-01]: Frontmatter tier/category field is authoritative for tier classification -- copy-intelligence and cross-pollination are Domain (not Core)
+- [Phase 12-01]: Legacy skills split into Superseded (10 with v2.0 replacements) and Unrewritten (29 for Phase 13 evaluation)
 - [Phase 12-02]: README uses compact skill summary with tier counts rather than listing all skills individually -- prevents drift, references SKILL-DIRECTORY.md for full inventory
 - [Phase 12-02]: Anti-Slop Gate table in README updated to show correct point allocations (Typography /6, Depth & Polish /6, UX Intelligence /3) matching the actual skill definition
 
@@ -304,5 +306,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-02-25
-Stopped at: Completed 12-02-PLAN.md (Phase 12 complete)
+Stopped at: Added 12-01-SUMMARY.md (Phase 12 fully documented)
 Resume file: None
