@@ -139,35 +139,25 @@ Utility skills are loaded **on-demand** when a specific technical need arises. T
 
 ## Legacy Skills
 
-39 v6.1.0 skills remain in the `skills/` directory. These have NOT been rewritten to the v2.0 4-layer format. Phase 13 (Legacy Cleanup) will handle their removal or rewriting.
+27 v6.1.0 skills remain in the `skills/` directory. These have NOT been rewritten to the v2.0 4-layer format.
 
-### Superseded by v2.0 Skills
+### Superseded by v2.0 Skills (Removed)
 
-These legacy skills have v2.0 replacements and can be removed once Phase 13 runs:
+12 superseded skills were removed in Phase 13 (accessibility-patterns, conversion-patterns, creative-sections, light-mode-patterns, micro-copy, mobile-navigation, mobile-patterns, modal-dialog-patterns, nextjs-app-router, premium-dark-ui, premium-typography, responsive-layout). One superseded skill remains:
 
 | Legacy Skill | Superseded By | Notes |
 |-------------|--------------|-------|
-| `accessibility-patterns` | `accessibility` | Full v2.0 rewrite with 19 archetype focus mappings |
-| `nextjs-app-router` | `nextjs-patterns` | v2.0 covers both App Router and Pages Router |
-| `conversion-patterns` | `copy-intelligence` | Merged into copy-intelligence |
-| `micro-copy` | `copy-intelligence` | Merged into copy-intelligence |
-| `responsive-layout` | `responsive-design` | Merged into responsive-design |
-| `mobile-patterns` | `responsive-design` | Merged into responsive-design |
-| `mobile-navigation` | `responsive-design` | Merged into responsive-design |
 | `chart-data-viz` | `dashboard-patterns` | Absorbed into dashboard-patterns |
-| `premium-dark-ui` | `dark-light-mode` | Merged into dark-light-mode |
-| `light-mode-patterns` | `dark-light-mode` | Merged into dark-light-mode |
 
 ### Unrewritten Legacy Skills
 
-These legacy skills have no direct v2.0 replacement. Phase 13 will evaluate each for rewrite, merge, or removal:
+These legacy skills have no direct v2.0 replacement:
 
 | Legacy Skill | Lines | Notes |
 |-------------|-------|-------|
 | `auth-ui` | 180 | Authentication UI patterns |
 | `awwwards-scoring` | 168 | Disposition deferred (keep separate or fold into anti-slop-gate) |
 | `context-menu` | 410 | Context menu patterns |
-| `creative-sections` | 568 | Creative section patterns |
 | `data-table` | 190 | Data table patterns |
 | `drag-and-drop` | 282 | Drag and drop interaction |
 | `email-notification-ui` | 275 | Email and notification UI |
@@ -178,13 +168,11 @@ These legacy skills have no direct v2.0 replacement. Phase 13 will evaluate each
 | `landing-page` | 405 | Landing page patterns |
 | `map-location` | 210 | Map and location UI |
 | `markdown-mdx` | 396 | Markdown and MDX rendering |
-| `modal-dialog-patterns` | 218 | Modal and dialog patterns |
 | `navigation-patterns` | 273 | Navigation layout patterns |
 | `notification-center` | 379 | Notification center UI |
 | `onboarding-tours` | 222 | Onboarding tour patterns |
 | `performance-guardian` | 140 | Non-animation performance (partially superseded by performance-animation) |
 | `performance-patterns` | 331 | Performance optimization patterns |
-| `premium-typography` | 256 | Premium typography treatments |
 | `print-pdf` | 230 | Print and PDF generation |
 | `rating-review` | 281 | Rating and review UI |
 | `search-ui` | 222 | Search interface patterns |
@@ -209,11 +197,11 @@ These legacy skills have no direct v2.0 replacement. Phase 13 will evaluate each
 | Core | 21 | All COMPLETE |
 | Domain | 21 | All COMPLETE |
 | Utility | 3 | All COMPLETE |
-| Legacy (superseded) | 10 | LEGACY -- v2.0 replacement exists |
-| Legacy (unrewritten) | 29 | LEGACY -- Phase 13 evaluation |
+| Legacy (superseded) | 1 | LEGACY -- v2.0 replacement exists (chart-data-viz) |
+| Legacy (unrewritten) | 26 | LEGACY -- evaluation pending |
 | Legacy (template) | 1 | Reference template |
 | **Total v2.0** | **46** | **45 skills + 1 template** |
-| **Total in filesystem** | **85** | **46 v2.0 + 39 legacy** |
+| **Total in filesystem** | **73** | **46 v2.0 + 27 legacy** |
 
 ---
 
@@ -317,5 +305,5 @@ All new and rewritten skills MUST follow the 4-layer format. See:
 ---
 
 *Registry version: 2.0.0*
-*Last updated: Phase 12, Plan 1*
+*Last updated: Phase 13, Plan 2 -- 12 superseded skills removed*
 *Total v2.0 skills: 46 (21 core, 21 domain, 3 utility + 1 template)*

@@ -15,10 +15,10 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Foundation** - Core identity system, skill architecture, and plugin skeleton
 - [x] **Phase 2: Pipeline Architecture** - Agent pipeline model with stateless builders and context rot prevention
 - [x] **Phase 3: Command System** - 6 user-facing commands replacing 13, with guided workflow
-- [ ] **Phase 4: Quality Enforcement** - Multi-layer quality gates from build-time to user checkpoints
+- [x] **Phase 4: Quality Enforcement** - Multi-layer quality gates from build-time to user checkpoints
 - [x] **Phase 5: Motion & Design Skills** - Cinematic motion, creative tension, wow moments, and design system scaffold
 - [x] **Phase 6: Brainstorming & Content** - Research-first ideation and copy intelligence engine
-- [ ] **Phase 7: Asset & Specialist Skills** - Shape generation, 3D/WebGL, component marketplace, Remotion, Spline, image prompts
+- [x] **Phase 7: Asset & Specialist Skills** - Shape generation, 3D/WebGL, component marketplace, Remotion, Spline, image prompts
 - [x] **Phase 8: Experience & Frameworks** - Responsive, accessibility, multi-page, dark/light mode, framework support, skill rewrites
 - [x] **Phase 9: Integration & Polish** - Figma integration, design system export, progress reporting, error recovery
 - [x] **Phase 10: Wire Quality Enforcement** - Add CD/QR invocation to build-orchestrator wave protocol (GAP-1)
@@ -295,4 +295,4 @@ Phase order: 10 -> 11 -> 12 -> 13 (sequential, each depends on prior)
 
 ---
 *Roadmap created: 2026-02-23*
-*Last updated: 2026-02-25 -- Phase 12 complete (2/2 plans, all verified)*
+*Last updated: 2026-02-25 -- Phase 4 and Phase 7 checkboxes marked [x] (Phase 13 cleanup)*

@@ -7,10 +7,10 @@
 
 ### Foundation & Identity
 
-- [ ] **FOUND-01**: Machine-enforced Design DNA -- every color, font, spacing value traces to DNA tokens. Violations are compile-time errors, not review-time catches.
-- [ ] **FOUND-02**: 16+ Design Archetypes with locked constraints + 2-3 new archetypes (Neubrutalism, AI-Native, Dark Academia). All constraints machine-enforced via code, not advisory.
-- [ ] **FOUND-03**: Anti-Slop Gate shifted from post-hoc to inline enforcement -- builders self-check before emitting code. 35-point / 7-category scoring with hard fail at 25/35.
-- [ ] **FOUND-04**: Emotional Arc with beat parameters as hard constraints -- BREATHE must have 70-80% whitespace, BUILD must have 8-12 elements, HOOK must be 90-100vh. Parameters enforced, not suggested.
+- [x] **FOUND-01**: Machine-enforced Design DNA -- every color, font, spacing value traces to DNA tokens. Violations are compile-time errors, not review-time catches.
+- [x] **FOUND-02**: 16+ Design Archetypes with locked constraints + 2-3 new archetypes (Neubrutalism, AI-Native, Dark Academia). All constraints machine-enforced via code, not advisory.
+- [x] **FOUND-03**: Anti-Slop Gate shifted from post-hoc to inline enforcement -- builders self-check before emitting code. 35-point / 7-category scoring with hard fail at 25/35.
+- [x] **FOUND-04**: Emotional Arc with beat parameters as hard constraints -- BREATHE must have 70-80% whitespace, BUILD must have 8-12 elements, HOOK must be 90-100vh. Parameters enforced, not suggested.
 
 ### Motion & Creativity
 
@@ -71,9 +71,9 @@
 
 ### Skill System
 
-- [ ] **SKIL-01**: 4-layer skill structure -- decision guidance (when/why) + award-winning examples (not basic usage) + integration context (DNA/archetype connection) + anti-patterns (common mistakes)
-- [ ] **SKIL-02**: Tiered organization -- Core (always loaded: DNA, anti-slop, typography, color, layout, motion), Domain (per project: 3D, Remotion, e-commerce, dashboard), Utility (on demand: SEO, a11y, perf, testing)
-- [ ] **SKIL-03**: Cull non-design skills -- remove backend/infrastructure skills (admin-panel, webhook-api-patterns, database-crud-ui, auth logic, CMS, payment, analytics). Target ~30-40 pure design skills.
+- [x] **SKIL-01**: 4-layer skill structure -- decision guidance (when/why) + award-winning examples (not basic usage) + integration context (DNA/archetype connection) + anti-patterns (common mistakes)
+- [x] **SKIL-02**: Tiered organization -- Core (always loaded: DNA, anti-slop, typography, color, layout, motion), Domain (per project: 3D, Remotion, e-commerce, dashboard), Utility (on demand: SEO, a11y, perf, testing)
+- [x] **SKIL-03**: Cull non-design skills -- remove backend/infrastructure skills (admin-panel, webhook-api-patterns, database-crud-ui, auth logic, CMS, payment, analytics). Target ~30-40 pure design skills.
 - [x] **SKIL-04**: Every surviving skill rewritten to new quality standard with current library versions (Tailwind v4, Motion 12.x, GSAP 3.14, etc.)
 
 ### Developer Experience
@@ -178,4 +178,4 @@
 
 ---
 *Requirements defined: 2026-02-23*
-*Last updated: 2026-02-24 — Phase 9 requirements marked Complete, all requirements done*
+*Last updated: 2026-02-25 -- FOUND-01-04 and SKIL-01-03 checkboxes marked [x] (Phase 13 cleanup)*
