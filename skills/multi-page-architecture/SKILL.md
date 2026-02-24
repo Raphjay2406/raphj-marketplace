@@ -20,7 +20,7 @@ The distinction matters: a single-page landing site can be a linear story (HOOK 
 - During `/modulo:start-project` when multi-page is detected -- generates Site Architecture section in DESIGN-DNA.md
 - During `/modulo:plan-dev` -- section planner assigns page-specific arcs per template
 - During `/modulo:execute` -- build-orchestrator ensures shared components build in Wave 1 before page-specific sections
-- During `/modulo:verify` -- quality reviewer checks cross-page consistency
+- During `/modulo:audit` -- quality reviewer checks cross-page consistency
 
 ### When NOT to Use
 
@@ -53,7 +53,7 @@ Determine the page-type mix based on project type:
 
 - **Referenced by:** `section-planner` during `/modulo:plan-dev` (creates per-page arcs in MASTER-PLAN.md)
 - **Consumed at:** `build-orchestrator` Wave 1 (shared components), Wave 2+ (page-specific sections)
-- **Verified by:** `quality-reviewer` during `/modulo:verify` (cross-page consistency check)
+- **Verified by:** `quality-reviewer` during `/modulo:audit` (cross-page consistency check)
 
 ---
 
@@ -401,7 +401,7 @@ function Breadcrumb({ items }: { items: { label: string; href?: string }[] }) {
 
 ### Pattern 4: Cross-Page Consistency Rules
 
-These rules prevent multi-page sites from feeling disjointed. Quality reviewers check these during `/modulo:verify`.
+These rules prevent multi-page sites from feeling disjointed. Quality reviewers check these during `/modulo:audit`.
 
 **Mandatory consistency (same on every page):**
 

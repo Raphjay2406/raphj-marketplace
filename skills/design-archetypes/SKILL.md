@@ -1135,7 +1135,7 @@ Each archetype has a default arc template (defined in the emotional-arc skill). 
 
 ### Archetype to Anti-Slop Gate
 
-During `/modulo:verify`, the quality reviewer checks archetype compliance:
+During `/modulo:audit`, the quality reviewer checks archetype compliance:
 
 - **Forbidden pattern found:** -5 penalty per violation (e.g., gradient background in Brutalist project)
 - **Missing signature element:** -3 penalty (signature must appear in at least one section)

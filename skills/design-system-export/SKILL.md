@@ -11,7 +11,7 @@ version: "2.0.0"
 ### When to Use
 
 - After a complete build, user wants handoff artifacts for their design/development team
-- User requests `/modulo:export` or asks for "design system export"
+- User requests design system export (post-build action)
 - Team needs to maintain the design system in Storybook for component documentation
 - Other tools or platforms need design tokens (Figma sync-back, React Native, other codebases)
 - Design team wants a living style guide with interaction testing
@@ -61,7 +61,7 @@ All tokens come from DESIGN-DNA.md. The export produces a portable representatio
 ### Pipeline Connection
 
 - **Referenced by:** quality-reviewer during export completeness verification
-- **Consumed at:** `/modulo:export` command (post-build)
+- **Consumed at:** Post-build export workflow (user-triggered)
 - **Input from:** Built components + DESIGN-DNA.md (token source) + DESIGN-SYSTEM.md (component registry)
 
 ---
