@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-23)
 ## Current Position
 
 Phase: 8 of 9 (Experience & Frameworks)
-Plan: 4 of 8 in current phase
+Plan: 5 of 8 in current phase
 Status: In progress
-Last activity: 2026-02-24 -- Completed 08-04-PLAN.md (dark/light mode skill)
+Last activity: 2026-02-24 -- Completed 08-05-PLAN.md (multi-page architecture skill)
 
-Progress: [████████░░] 85% (44/52 plans)
+Progress: [████████░░] 87% (45/52 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 44
+- Total plans completed: 45
 - Average duration: 4 min
-- Total execution time: 174 min
+- Total execution time: 178 min
 
 **By Phase:**
 
@@ -36,8 +36,8 @@ Progress: [████████░░] 85% (44/52 plans)
 | 7. Asset & Specialist Skills | 6/6 | 26 min | 4 min |
 
 **Recent Trend:**
-- Last 5 plans: 08-01 (4 min), 08-02 (3 min), 08-03 (3 min), 08-04 (3 min)
-- Trend: Phase 8 in progress at 13 min so far (avg 3 min/plan)
+- Last 5 plans: 08-01 (4 min), 08-02 (3 min), 08-03 (3 min), 08-04 (3 min), 08-05 (4 min)
+- Trend: Phase 8 in progress at 17 min so far (avg 3 min/plan)
 
 *Updated after each plan completion*
 
@@ -239,6 +239,10 @@ Recent decisions affecting current work:
 - [Phase 8-04]: 743 lines exceeds 500-600 target but all content substantive (19 archetype transitions with 3 full CSS implementations, 7 code patterns, dual depth model, accessible toggle component)
 - [Phase 8-04]: View Transitions API (Baseline 2024) as primary transition mechanism with CSS fallback -- progressive enhancement
 - [Phase 8-04]: Positional transitions (Organic, Glassmorphism) use --toggle-x/--toggle-y CSS custom properties set from click event
+- [Phase 8-05]: 637 lines exceeds 450-500 target but all content substantive (7 page-type templates with full arc tables, 3 shared component TSX patterns, 7 anti-patterns)
+- [Phase 8-05]: 7 page types instead of 6 -- blog split into Blog Index and Article as they have fundamentally different arcs and content requirements
+- [Phase 8-05]: Page transitions mapped to 13 archetypes with hierarchy-aware directional logic (down=slide-left, up=slide-right)
+- [Phase 8-05]: MASTER-PLAN.md wave structure for multi-page: Wave 0 scaffold, Wave 1 shared components, Wave 2-4 pages by priority, Wave 5 cross-page polish
 
 ### Pending Todos
 
@@ -254,5 +258,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-24
-Stopped at: Completed 08-04-PLAN.md (dark/light mode skill)
+Stopped at: Completed 08-05-PLAN.md (multi-page architecture skill)
 Resume file: None
