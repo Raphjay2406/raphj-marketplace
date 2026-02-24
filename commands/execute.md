@@ -74,12 +74,16 @@ Dispatch to `build-orchestrator` agent with:
 
 The build-orchestrator handles ALL execution logic:
 - Wave ordering and dependency checking
+- Pre-build Creative Director review per wave (light, blocking)
 - Parallel builder spawning via Task tool
+- Post-wave CD + QR parallel quality review
+- Findings merge and severity classification
+- GAP-FIX remediation loop (polisher, max 2 cycles)
+- Wave review gate (CRITICAL blocks, WARNING tallies)
 - Post-wave canary checks and CONTEXT.md rewriting
-- Creative Director review per wave
+- Running tally maintenance in STATE.md
 - Session boundary management (2-wave soft suggestion)
-- Layout diversity enforcement
-- Real-time status updates
+- After-final-wave: full polish pass, Layer 3 live testing, Layer 4 user checkpoint
 
 ## Post-Execution Handling
 
@@ -89,6 +93,7 @@ Build-orchestrator returns control after one of three conditions:
 
 ```
 All [N] waves complete. [X] sections built.
+Quality: [anti-slop average]/35 ([rating])
 
 Next step: /modulo:iterate
   Review the build and request design improvements.
