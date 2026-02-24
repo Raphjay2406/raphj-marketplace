@@ -24,7 +24,7 @@ Before starting any Figma import:
 
 1. **Figma MCP server must be connected.** If not connected, STOP and tell the user:
    "Figma MCP server is not connected. Run: `claude mcp add figma -- npx -y figma-developer-mcp --stdio` to add it."
-2. **DESIGN-DNA.md must exist.** Run `/modulo:start-design` first to generate the design identity. DNA provides motion tokens, archetype rules, forbidden patterns, and the signature element -- none of which exist in Figma.
+2. **DESIGN-DNA.md must exist.** Run `/modulo:start-project` first to generate the design identity. DNA provides motion tokens, archetype rules, forbidden patterns, and the signature element -- none of which exist in Figma.
 3. **User must provide the Figma file URL.** Extract the `fileKey` from the URL format: `https://www.figma.com/design/{fileKey}/...`
 
 ## Workflow
@@ -66,7 +66,7 @@ Apply the **4-priority hybrid resolution protocol** (embedded below for fast acc
 
 ### Step 5: Capture Visual References
 
-Call `get_screenshot` for each section to capture the design as-rendered. Save screenshots to `.planning/modulo/figma-references/[section-name].png`. These serve as the reference targets for visual QA during `/modulo:verify`.
+Call `get_screenshot` for each section to capture the design as-rendered. Save screenshots to `.planning/modulo/figma-references/[section-name].png`. These serve as the reference targets for visual QA during `/modulo:audit`.
 
 ### Step 6: Check Code Connect Mappings
 
@@ -95,7 +95,7 @@ For each section, generate a PLAN.md at `.planning/modulo/sections/{section-name
 
 ## Visual QA Mode
 
-When invoked during `/modulo:verify` (not during import), run the overlay diff workflow:
+When invoked during `/modulo:audit` (not during import), run the overlay diff workflow:
 
 1. **Get Figma reference:** Call `get_screenshot` for the target section (or reuse saved screenshot from import)
 2. **Get built page screenshot:** Use Playwright MCP to screenshot the built page at the same viewport dimensions as the Figma frame

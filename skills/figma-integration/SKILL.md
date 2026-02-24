@@ -11,14 +11,14 @@ version: "2.0.0"
 ### When to Use
 
 - **User has a Figma design to implement** -- Use this skill to import the design through Figma MCP tools and translate it into PLAN.md files for the normal execute pipeline
-- **`/modulo:start-design --figma` is invoked** -- The entry point for Figma-based projects; this skill drives the entire import workflow
-- **Figma is the visual reference for QA** -- During `/modulo:verify`, use this skill's visual QA overlay diff to compare the built page against the original Figma design
+- **User provides a Figma URL during `/modulo:start-project` discovery** -- The entry point for Figma-based projects; this skill drives the entire import workflow
+- **Figma is the visual reference for QA** -- During `/modulo:audit`, use this skill's visual QA overlay diff to compare the built page against the original Figma design
 - **Code Connect components exist in the project** -- Use this skill to detect existing component mappings and reuse them instead of generating new code
 - **Multi-page Figma files** -- Use this skill's page-by-page import protocol to handle complex Figma files with multiple pages or frames
 
 ### When NOT to Use
 
-- **Building from scratch (no Figma file)** -- Use the normal `/modulo:start-design` flow with research agents, archetype selection, and DNA generation
+- **Building from scratch (no Figma file)** -- Use the normal `/modulo:start-project` flow with research agents, archetype selection, and DNA generation
 - **Figma file is a rough wireframe** -- If there is no visual styling (just boxes and text placeholders), treat the wireframe as inspiration input to the normal discovery flow, not as an import source
 - **Updating existing sections** -- Once code is built, use `/modulo:iterate` for changes. Only re-import from Figma if the design has fundamentally changed
 
@@ -92,8 +92,8 @@ Start: "I have a Figma file URL"
 - **Referenced by:** `figma-translator` agent during the Figma import workflow
 - **Referenced by:** `quality-reviewer` agent during visual QA verify step (overlay diff)
 - **Referenced by:** `section-planner` agent when generating PLAN.md files from Figma data
-- **Consumed at:** `/modulo:start-design --figma` workflow steps 4-8
-- **Consumed at:** `/modulo:verify` visual QA overlay diff step
+- **Consumed at:** `/modulo:start-project` discovery flow (when user provides a Figma URL)
+- **Consumed at:** `/modulo:audit` visual QA overlay diff step
 
 ### Critical Rule
 
@@ -247,7 +247,7 @@ Parameters:
 
 ### Usage
 - Referenced in each section's PLAN.md as the visual target
-- Used during /modulo:verify for overlay diff comparison
+- Used during /modulo:audit for overlay diff comparison
 - Named with numeric prefix to match section ordering
 ```
 
@@ -481,7 +481,7 @@ Compare at 1440px viewport width for desktop accuracy.
 
 ### Pattern 4: Visual QA Overlay Diff
 
-The overlay diff workflow compares the built page against the Figma design at pixel level. This runs during the `/modulo:verify` step, not during import.
+The overlay diff workflow compares the built page against the Figma design at pixel level. This runs during the `/modulo:audit` step, not during import.
 
 #### Workflow
 
@@ -684,7 +684,7 @@ The relationship between Figma data and DNA tokens is hybrid: Figma provides whe
 
 ### Archetype Relationship
 
-The Figma import does NOT change or select the archetype. The archetype is set during `/modulo:start-design` (before Figma import or alongside it). The import workflow respects the archetype:
+The Figma import does NOT change or select the archetype. The archetype is set during `/modulo:start-project` (before Figma import or alongside it). The import workflow respects the archetype:
 
 - **Figma visual elements that match archetype**: Proceed normally
 - **Figma visual elements that conflict with archetype forbidden patterns**: FLAG for user -- "Your Figma design uses a carousel, but the Editorial archetype forbids carousels. Options: (a) Remove carousel, use editorial scroll layout instead (b) Override archetype rule for this element (tension override with documented rationale)"
@@ -695,8 +695,8 @@ The Figma import does NOT change or select the archetype. The archetype is set d
 ```
 Input:
   - Figma file URL (from user)
-  - DESIGN-DNA.md (from /modulo:start-design)
-  - Design archetype (selected during start-design)
+  - DESIGN-DNA.md (from /modulo:start-project)
+  - Design archetype (selected during start-project)
 
 Process:
   - Figma MCP tools extract design data
@@ -706,7 +706,7 @@ Process:
 
 Output:
   - PLAN.md files (one per section, standard format for /modulo:execute)
-  - Figma reference screenshots (for visual QA during /modulo:verify)
+  - Figma reference screenshots (for visual QA during /modulo:audit)
   - Unmapped color flags (for user decision before execution)
   - Code Connect mapping report (what's reused vs. generated)
 ```

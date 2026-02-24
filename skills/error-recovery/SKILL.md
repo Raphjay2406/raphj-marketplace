@@ -57,8 +57,8 @@ This aligns with the Phase 2 design decision: "Build failures bubble to user (no
 
 ### Pipeline Connection
 
-- **Referenced by:** `design-lead` agent for wave-level error handling and crash recovery
-- **Referenced by:** `build-orchestrator` agent (via design-lead) for detecting builder failures
+- **Referenced by:** `build-orchestrator` agent for wave-level error handling and crash recovery
+- **Referenced by:** `build-orchestrator` agent for detecting builder failures
 - **Referenced by:** `section-builder` agent for task-level error handling and SUMMARY.md failure format
 - **Consumed at:** Any point during `/modulo:execute` when an error occurs
 - **Output to:** FAILURE-LOG.md (detailed), STATE.md (compact summary), CONTEXT.md (session continuity)
@@ -167,7 +167,7 @@ Reply with option number (1, 2, or 3) to proceed.
 
 ### Pattern 2: SUMMARY.md Failure Format (Section Builder Output)
 
-When a section builder encounters a failure, its SUMMARY.md MUST include failure details and checkpoint state. This is how the design-lead detects and handles builder failures.
+When a section builder encounters a failure, its SUMMARY.md MUST include failure details and checkpoint state. This is how the build-orchestrator detects and handles builder failures.
 
 **Status values for SUMMARY.md:**
 - `COMPLETE` -- All tasks finished successfully
@@ -216,7 +216,7 @@ failure_type: type-error
 3. Switch to Motion useScroll approach (alternative animation method)
 ```
 
-**Design-lead/build-orchestrator detection protocol after each builder:**
+**Build-orchestrator detection protocol after each builder:**
 
 | SUMMARY.md State | Builder State | Action |
 |-----------------|---------------|--------|
@@ -287,11 +287,11 @@ When more than 5 failures exist, the oldest entries are removed from STATE.md (t
 
 ### Pattern 4: Checkpoint Resume Protocol
 
-For resuming after session interruption or crash. This protocol is used by the design-lead agent when `/modulo:execute resume` is invoked.
+For resuming after session interruption or crash. This protocol is used by the build-orchestrator agent when `/modulo:execute resume` is invoked.
 
-**Step 1: Pre-wave checkpoint (design-lead writes BEFORE spawning builders):**
+**Step 1: Pre-wave checkpoint (build-orchestrator writes BEFORE spawning builders):**
 
-The design-lead MUST write this checkpoint to STATE.md before spawning any builder in a wave. This enables crash recovery.
+The build-orchestrator MUST write this checkpoint to STATE.md before spawning any builder in a wave. This enables crash recovery.
 
 ```markdown
 ## Active Wave Checkpoint
@@ -304,7 +304,7 @@ The design-lead MUST write this checkpoint to STATE.md before spawning any build
 
 If the session crashes after this checkpoint is written, the resume flow knows exactly which sections were being built.
 
-**Step 2: Detection after interruption (design-lead runs on resume):**
+**Step 2: Detection after interruption (build-orchestrator runs on resume):**
 
 For each section in the interrupted wave, check in this order:
 
@@ -414,7 +414,7 @@ in remaining sections.
 
 ### Pattern 6: Common Failure Types Reference
 
-Quick reference for classifying and diagnosing failures. Design-lead and section-builder agents use this table for initial classification.
+Quick reference for classifying and diagnosing failures. Build-orchestrator and section-builder agents use this table for initial classification.
 
 | Type | Typical Cause | Default Severity | Typical Fix | Cascade Risk |
 |------|---------------|-----------------|-------------|--------------|
@@ -452,7 +452,7 @@ When a failure occurs during a wave with multiple parallel builders:
 - Diagnose the common cause (likely a Wave 0/1 issue affecting all sections)
 
 **If the wave is blocked by a dependency from a previous wave:**
-- This should never happen (design-lead verifies dependencies before spawning)
+- This should never happen (build-orchestrator verifies dependencies before spawning)
 - If it does: CRITICAL -- indicates a MASTER-PLAN.md dependency error
 
 ---
@@ -466,12 +466,12 @@ Error recovery is not directly tied to specific DNA tokens, but certain failure 
 | Failure Type | DNA Relevance |
 |-------------|---------------|
 | style-drift | Builder used raw hex values instead of DNA color tokens, wrong fonts, wrong spacing |
-| context-rot | Canary check detected DNA knowledge degradation -- design-lead forgot token values |
+| context-rot | Canary check detected DNA knowledge degradation -- build-orchestrator forgot token values |
 | build-error (shared) | Wave 0/1 shared component using wrong DNA tokens affects all consumers |
 
 **DNA-related failures are always MAJOR minimum** because they risk cascading quality issues. If a shared component in Wave 0 has wrong tokens, every section consuming it inherits the error.
 
-Style drift detection: After each section build, the quality-reviewer agent (or design-lead during coherence check) greps the output for:
+Style drift detection: After each section build, the quality-reviewer agent (or build-orchestrator during coherence check) greps the output for:
 - Raw hex values not in the DNA palette
 - Font families not in the DNA spec
 - Tailwind default classes (shadow-md, rounded-lg, gap-4) that should be DNA tokens
@@ -509,7 +509,7 @@ Builders are the primary source of errors. The integration contract:
 
 1. **Builders write SUMMARY.md** with explicit status: `COMPLETE | FAILED | PARTIAL`
 2. **FAILED SUMMARY.md includes:** Checkpoint state (which tasks completed), failure details, files modified (safe to keep vs. partial), and suggested recovery options
-3. **Design-lead checks SUMMARY.md** after EVERY builder finishes -- this is mandatory, not optional
+3. **Build-orchestrator checks SUMMARY.md** after EVERY builder finishes -- this is mandatory, not optional
 4. **Missing SUMMARY.md** after a builder was spawned = treat as potential failure (INTERRUPTED state)
 5. **Builder MINOR auto-fixes** are logged in SUMMARY.md notes section and FAILURE-LOG.md but do not pause the build
 
@@ -535,7 +535,7 @@ Builders are the primary source of errors. The integration contract:
 
 ### Anti-Pattern 3: Ignoring Failed Builders
 
-**What goes wrong:** The design-lead/orchestrator marks a wave as complete without checking every builder's SUMMARY.md status. A builder that crashed silently (no SUMMARY.md) is missed. The build proceeds to the next wave with an incomplete section.
+**What goes wrong:** The build-orchestrator marks a wave as complete without checking every builder's SUMMARY.md status. A builder that crashed silently (no SUMMARY.md) is missed. The build proceeds to the next wave with an incomplete section.
 
 **Why this is wrong:** Silent failures compound. The next wave may depend on the failed section's components. By the time the gap is discovered, multiple waves of work may need to be revisited.
 
