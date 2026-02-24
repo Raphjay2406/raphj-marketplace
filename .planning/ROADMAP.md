@@ -153,15 +153,15 @@ Plans:
   3. Component Marketplace skill provides a when-to-use matrix per archetype + beat for Aceternity UI, Magic UI, 21st.dev, and Framer marketplace, with restyling guidance for DNA token integration
   4. Remotion and Spline skills provide integration patterns for video content generation and 3D scene embedding with proper performance handling
   5. Image Prompt Generation skill produces prompts for AI image tools (Midjourney, DALL-E, Flux) that match project DNA palette, style, and archetype personality
-**Plans**: TBD
+**Plans**: 6 plans
 
 Plans:
-- [ ] 07-01: Shape & Asset Generation skill (procedural patterns, archetype palettes, DNA tokens)
-- [ ] 07-02: 3D/WebGL Effects skill (R3F, shaders, scroll-driven, progressive enhancement)
-- [ ] 07-03: Component Marketplace skill (when-to-use matrix, restyling guidance)
-- [ ] 07-04: Remotion skill (video content patterns)
-- [ ] 07-05: Spline Integration skill (3D scene embedding, performance)
-- [ ] 07-06: Image Prompt Generation skill (DNA-matched prompts for AI image tools)
+- [ ] 07-01-PLAN.md -- Shape & Asset Generation skill: procedural patterns, archetype palettes, DNA tokens, SVG animation suite, v6.1.0 geometry-shapes cull
+- [ ] 07-02-PLAN.md -- 3D/WebGL Effects skill: R3F v9, shader building blocks, three-tier responsive, scroll-driven 3D, WebGPU forward-looking, v6.1.0 three-js-webgl cull
+- [ ] 07-03-PLAN.md -- Component Marketplace skill: category-level when-to-use matrix, 4-step restyling protocol, 30% hard cap, Framer as reference
+- [ ] 07-04-PLAN.md -- Remotion skill: DNA-aware video compositions, core API, hero/product/social templates, licensing, @remotion/player
+- [ ] 07-05-PLAN.md -- Spline Integration skill: embedding, DNA color mapping, event handling, R3F bridge, performance, scene creation guidance
+- [ ] 07-06-PLAN.md -- Image Prompt Generation skill: DNA-to-prompt translation, category templates, negative prompts, archetype image stance
 
 ### Phase 8: Experience & Frameworks
 **Goal**: Every generated site works correctly across all target frameworks, is responsive from 375px up, meets WCAG 2.1 AA, supports multi-page architecture, and has award-worthy dark/light modes
@@ -216,7 +216,7 @@ Note: Phases 3 and 4 both depend on Phase 2. Phases 5, 6, 7, 8 can partially ove
 | 4. Quality Enforcement | 0/5 | Planned | - |
 | 5. Motion & Design Skills | 0/6 | Planned | - |
 | 6. Brainstorming & Content | 0/4 | Planned | - |
-| 7. Asset & Specialist Skills | 0/6 | Not started | - |
+| 7. Asset & Specialist Skills | 0/6 | Planned | - |
 | 8. Experience & Frameworks | 0/8 | Not started | - |
 | 9. Integration & Polish | 0/4 | Not started | - |
 
