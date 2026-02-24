@@ -207,7 +207,7 @@ Plans:
 - [x] 09-04-PLAN.md -- Error Recovery skill: severity classification (MINOR/MAJOR/CRITICAL), structured diagnosis, checkpoint resume, failure pattern escalation
 
 ### Phase 10: Wire Quality Enforcement into Build Pipeline
-**Goal**: Quality enforcement (CD + QR review after every wave) fires automatically during `/execute`, completing the build-time → post-wave → end-of-build → user-checkpoint quality chain
+**Goal**: Quality enforcement (CD + QR review after every wave) fires automatically during `/execute`, completing the build-time -> post-wave -> end-of-build -> user-checkpoint quality chain
 **Depends on**: Phase 2, Phase 4
 **Requirements**: GAP-1 (CRITICAL), Flow 1 (partial), Flow 3 (broken)
 **Gap Closure**: Closes audit GAP-1 + Flow 3 + Flow 1 partial
@@ -216,9 +216,10 @@ Plans:
   2. Build-orchestrator `tools:` frontmatter includes CD and QR agent references
   3. GAP-FIX.md from QR triggers polisher automatically, then re-review loop runs
   4. Wave review gate blocks next wave until CD/QR findings are addressed or user approves proceeding
+**Plans**: 1 plan
 
 Plans:
-- [ ] 10-01-PLAN.md -- Add CD/QR invocation to build-orchestrator wave protocol, update tools, wire GAP-FIX → polisher → re-review
+- [ ] 10-01-PLAN.md -- Wire CD/QR invocation into build-orchestrator wave protocol: pre-build CD review, post-wave CD+QR parallel review, findings merge, GAP-FIX remediation loop, wave review gate, running tally, execute.md update
 
 ### Phase 11: Fix Stale Cross-References
 **Goal**: All agent and command references across skills point to correct v2.0 names, and the REFERENCES.md producer/consumer chain is resolved
@@ -286,11 +287,11 @@ Phase order: 10 -> 11 -> 12 -> 13 (sequential, each depends on prior)
 | 7. Asset & Specialist Skills | 6/6 | Complete | 2026-02-24 |
 | 8. Experience & Frameworks | 8/8 | Complete | 2026-02-24 |
 | 9. Integration & Polish | 4/4 | Complete | 2026-02-24 |
-| 10. Wire Quality Enforcement | 0/1 | Pending | -- |
+| 10. Wire Quality Enforcement | 0/1 | Planned | -- |
 | 11. Fix Stale Cross-References | 0/2 | Pending | -- |
 | 12. Registry & Documentation | 0/2 | Pending | -- |
 | 13. Legacy Cleanup | 0/2 | Pending | -- |
 
 ---
 *Roadmap created: 2026-02-23*
-*Last updated: 2026-02-25 — Gap closure phases 10-13 added from v1 milestone audit*
+*Last updated: 2026-02-25 -- Phase 10 planned (1 plan, 1 wave)*
