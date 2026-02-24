@@ -425,6 +425,7 @@ This skill references and is referenced by other skills at specific phases. Thes
 | `emotional-arc` | Phase 5 (direction generation) | Beat types (HOOK, BUILD, REVEAL, BREATHE, PEAK, PROOF, CLOSE, etc.), sequence rules, archetype arc templates |
 | `creative-tension` | Phase 5 (direction generation) | 5 tension types, archetype frequency table (HIGH/MEDIUM/MODERATE/LOW groups) |
 | `micro-copy` | Phase 5 (direction generation) | Beat-specific headline patterns for sample headlines per direction |
+| `awwwards-scoring` | Phase 3 (competitive teardown) | Scoring framework for competitive benchmarking -- reference when assessing competitor quality levels |
 | `design-dna` | Phase 6 (locking final direction) | DESIGN-DNA.md template structure, 12 color tokens, font format, motion token format |
 
 ### BRAINSTORM.md Output Format
