@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-23)
 ## Current Position
 
 Phase: 8 of 9 (Experience & Frameworks)
-Plan: 5 of 8 in current phase
+Plan: 6 of 8 in current phase
 Status: In progress
-Last activity: 2026-02-24 -- Completed 08-05-PLAN.md (multi-page architecture skill)
+Last activity: 2026-02-24 -- Completed 08-06-PLAN.md (Next.js & Astro framework skills)
 
-Progress: [████████░░] 87% (45/52 plans)
+Progress: [████████░░] 88% (46/52 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 45
+- Total plans completed: 46
 - Average duration: 4 min
-- Total execution time: 178 min
+- Total execution time: 184 min
 
 **By Phase:**
 
@@ -36,8 +36,8 @@ Progress: [████████░░] 87% (45/52 plans)
 | 7. Asset & Specialist Skills | 6/6 | 26 min | 4 min |
 
 **Recent Trend:**
-- Last 5 plans: 08-01 (4 min), 08-02 (3 min), 08-03 (3 min), 08-04 (3 min), 08-05 (4 min)
-- Trend: Phase 8 in progress at 17 min so far (avg 3 min/plan)
+- Last 5 plans: 08-02 (3 min), 08-03 (3 min), 08-04 (3 min), 08-05 (4 min), 08-06 (6 min)
+- Trend: Phase 8 in progress at 23 min so far (avg 4 min/plan)
 
 *Updated after each plan completion*
 
@@ -243,6 +243,9 @@ Recent decisions affecting current work:
 - [Phase 8-05]: 7 page types instead of 6 -- blog split into Blog Index and Article as they have fundamentally different arcs and content requirements
 - [Phase 8-05]: Page transitions mapped to 13 archetypes with hierarchy-aware directional logic (down=slide-left, up=slide-right)
 - [Phase 8-05]: MASTER-PLAN.md wave structure for multi-page: Wave 0 scaffold, Wave 1 shared components, Wave 2-4 pages by priority, Wave 5 cross-page polish
+- [Phase 8-06]: Next.js skill at 619 lines exceeds 500-600 target but all content substantive (both routers with distinct patterns, React 19.2 features, 8 constraints)
+- [Phase 8-06]: Astro skill at 570 lines exceeds 400-500 target but all content substantive (Content Layer API with full examples, Server Islands, hybrid rendering)
+- [Phase 8-06]: New `skills/nextjs-patterns/` directory replaces old `nextjs-app-router/` -- name reflects both-router coverage
 
 ### Pending Todos
 
@@ -258,5 +261,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-24
-Stopped at: Completed 08-05-PLAN.md (multi-page architecture skill)
+Stopped at: Completed 08-06-PLAN.md (Next.js & Astro framework skills)
 Resume file: None
