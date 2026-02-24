@@ -5,32 +5,32 @@
 See: .planning/PROJECT.md (updated 2026-02-23)
 
 **Core value:** Every output must be award-winning by default (Awwwards SOTD 8.0+) -- not as a stretch goal, but as the baseline.
-**Current focus:** Phase 1 - Foundation (executing)
+**Current focus:** Phase 1 - Foundation (COMPLETE)
 
 ## Current Position
 
-Phase: 1 of 9 (Foundation)
-Plan: 5 of 6 in current phase (COMPLETE)
-Status: In progress -- executing Phase 1
-Last activity: 2026-02-24 -- Completed 01-03-PLAN.md (Design Archetypes skill, 19 archetypes)
+Phase: 1 of 9 (Foundation) -- COMPLETE
+Plan: 6 of 6 in current phase (COMPLETE)
+Status: Phase 1 complete -- ready for Phase 2
+Last activity: 2026-02-24 -- Completed 01-06-PLAN.md (Skill Directory and Cleanup)
 
-Progress: [██░░░░░░░░] 10% (5/52 plans)
+Progress: [██░░░░░░░░] 12% (6/52 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 5
+- Total plans completed: 6
 - Average duration: 4 min
-- Total execution time: 19 min
+- Total execution time: 22 min
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 1. Foundation | 5/6 | 19 min | 4 min |
+| 1. Foundation | 6/6 | 22 min | 4 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (2 min), 01-02 (3 min), 01-05 (4 min), 01-04 (3 min), 01-03 (7 min)
+- Last 5 plans: 01-02 (3 min), 01-05 (4 min), 01-04 (3 min), 01-03 (7 min), 01-06 (3 min)
 - Trend: Consistent fast execution; 01-03 longer due to 19 archetype definitions
 
 *Updated after each plan completion*
@@ -63,6 +63,9 @@ Recent decisions affecting current work:
 - [Phase 1-05]: 680 lines exceeds 400-550 target but all content substantive (10 archetype templates vs. 4-5 minimum)
 - [Phase 1-05]: PEAK animation intensity set to HARD enforcement (not SOFT) -- PEAK is the designated wow moment
 - [Phase 1-05]: Added "min 3 different beat types per page" as HARD sequence validation rule
+- [Phase 1-06]: SKILL-DIRECTORY.md is a registry document (not a skill) -- no YAML frontmatter, agents reference explicitly
+- [Phase 1-06]: 27 culled skill directories removed from filesystem; surviving v6.1.0 skills retained as reference until rewrite
+- [Phase 1-06]: awwwards-scoring disposition deferred to Phase 4/8 (keep separate or fold into anti-slop-gate)
 - [Phase 2]: Spawn prompt budget increased to ~300 lines to fit full Design DNA document (user decision)
 - [Phase 2]: CD has real authority -- can request changes, reviews both plans and output per wave
 - [Phase 2]: Build failures bubble to user (no auto-retry)
@@ -102,6 +105,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-02-24T03:40:30Z
-Stopped at: Completed 01-03-PLAN.md (Design Archetypes skill, 19 archetypes)
+Last session: 2026-02-24T03:45:26Z
+Stopped at: Completed 01-06-PLAN.md (Skill Directory and Cleanup) -- Phase 1 COMPLETE
 Resume file: None
