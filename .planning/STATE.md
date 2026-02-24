@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-02-23)
 ## Current Position
 
 Phase: 2 of 9 (Pipeline Architecture)
-Plan: 02-02 of 7 in current phase
+Plan: 02-04 of 7 in current phase
 Status: In progress
-Last activity: 2026-02-24 -- Completed 02-02-PLAN.md (Creative Director agent)
+Last activity: 2026-02-24 -- Completed 02-04-PLAN.md (Quality Reviewer & Polisher agents)
 
-Progress: [██░░░░░░░░] 13% (7/52 plans)
+Progress: [██░░░░░░░░] 15% (8/52 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 7
+- Total plans completed: 8
 - Average duration: 4 min
-- Total execution time: 25 min
+- Total execution time: 30 min
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 1. Foundation | 6/6 | 22 min | 4 min |
-| 2. Pipeline Architecture | 1/7 | 3 min | 3 min |
+| 2. Pipeline Architecture | 2/7 | 8 min | 4 min |
 
 **Recent Trend:**
-- Last 5 plans: 02-02 (3 min), 01-02 (3 min), 01-05 (4 min), 01-04 (3 min), 01-03 (7 min)
+- Last 5 plans: 02-04 (5 min), 02-02 (3 min), 01-02 (3 min), 01-05 (4 min), 01-04 (3 min)
 - Trend: Consistent fast execution
 
 *Updated after each plan completion*
@@ -71,6 +71,10 @@ Recent decisions affecting current work:
 - [Phase 2]: CD has real authority -- can request changes, reviews both plans and output per wave
 - [Phase 2]: Build failures bubble to user (no auto-retry)
 - [Phase 2]: Subagents cannot spawn subagents -- build-orchestrator is the only spawner
+- [Phase 2-04]: Quality reviewer embeds full anti-slop scoring inline -- zero-cost enforcement, no runtime skill reads
+- [Phase 2-04]: Polisher reads exactly 3 things (GAP-FIX.md + code files + DNA) -- minimal context by design
+- [Phase 2-04]: Scope discipline absolute -- polisher NEVER changes unlisted code, new gaps documented not fixed
+- [Phase 2-04]: Lessons learned format includes DESIGN_SYSTEM_PROPOSALS for design system growth
 - [Phase 2-02]: CD has APPROVE/FLAG/PUSH authority -- FLAG creates GAP-FIX.md, PUSH provides boldness opportunities
 - [Phase 2-02]: 9 creative domains for CD, 4 technical domains for QR, zero overlap
 - [Phase 2-02]: Pre-build review blocking but light (~5 min); post-build review thorough after all builders complete
@@ -119,5 +123,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-24
-Stopped at: Completed 02-02-PLAN.md (Creative Director agent)
+Stopped at: Completed 02-04-PLAN.md (Quality Reviewer & Polisher agents)
 Resume file: None
