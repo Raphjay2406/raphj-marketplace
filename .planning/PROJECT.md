@@ -39,12 +39,23 @@ Every output must be award-winning by default — not as a stretch goal, but as 
 
 ### Active
 
-(None — planning next milestone)
+**v1.5 — SEO/GEO & API Integration**
+
+- [ ] Comprehensive SEO skill replacing seo-meta (meta tags, OG, Twitter Cards, canonical URLs, hreflang, JSON-LD structured data)
+- [ ] GEO optimization for AI search engines (Google AI Overviews, Bing Copilot, ChatGPT search)
+- [ ] XML sitemap generation + sitemap index for multi-page sites, validated for GSC and Bing Webmaster Tools
+- [ ] robots.txt generation with sitemap references
+- [ ] Full GSC/Bing submission workflow with verification instructions
+- [ ] IndexNow full auto-setup: API key generation, verification file, framework-specific submission endpoint (Next.js API route, Astro endpoint, etc.)
+- [ ] Context7 MCP integration for live API documentation lookup during builds
+- [ ] Full-stack API integration patterns: server actions, API routes, middleware, env handling
+- [ ] Typed client generation for external APIs (HubSpot, CRMs, etc.)
+- [ ] Frontend data-fetching layer with loading/error states for API integrations
 
 ### Out of Scope
 
-- Backend logic / API development — Modulo is frontend design only
-- Database / ORM integration — not a full-stack framework
+- Backend logic beyond API integration — Modulo handles API routes/server actions for external API wiring, but not custom backend business logic, databases, or ORMs
+- Database / ORM integration — API integration connects to external services, not local databases
 - Authentication logic — UI patterns only, not auth implementation
 - Mobile native (React Native, Flutter) — web tech only (including in Tauri/Electron shells)
 - Hosting / deployment automation — build output only, not deploy infra
@@ -55,6 +66,8 @@ Every output must be award-winning by default — not as a stretch goal, but as 
 ## Context
 
 **Current state:** Modulo 2.0 v1 shipped with 45 v2.0 skills, 14 agents (7 pipeline + 3 specialist + 4 protocols), 8 commands, and 1 Figma translator agent. 43,547 lines across 99 files. Plugin version 2.0.0-dev.
+
+**v1.5 motivation:** Sites built with Modulo look award-worthy but perform poorly in search — missing structured data, no valid sitemaps, no indexing automation. Additionally, there's no systematic way to wire up external APIs (CRMs, SaaS tools) into the frontend. v1.5 addresses both gaps: comprehensive SEO/GEO best practices with submittable sitemaps and IndexNow, plus full-stack API integration patterns with Context7 MCP for live doc lookup.
 
 **v6.1.0 pain points — all resolved:**
 1. ~~Output quality drops over extended sessions~~ → 6-layer context rot prevention
@@ -95,5 +108,10 @@ Every output must be award-winning by default — not as a stretch goal, but as 
 | Severity-based build enforcement | Critical blocks, minor queues — balances quality with velocity | ✓ Good — findings merge with CRITICAL/WARNING/INFO |
 | All design intent sources (Figma + references) | Different projects have different sources | ✓ Good — Figma MCP + reference benchmarking |
 
+| Expand into full-stack API patterns (server actions, API routes) | External API integration requires server-side code; frontend-only fetch is insufficient for auth flows, webhooks, env secrets | — Pending |
+| Replace seo-meta with comprehensive SEO/GEO skill | Existing skill too shallow; sites rank poorly despite looking great | — Pending |
+| IndexNow auto-setup per framework | Instant indexing on deploy; passive sitemap discovery is too slow | — Pending |
+| Context7 MCP for live API doc lookup | API docs change frequently; training data goes stale | — Pending |
+
 ---
-*Last updated: 2026-02-25 after v1 milestone*
+*Last updated: 2026-02-25 after v1.5 milestone planning*
