@@ -23,7 +23,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 9: Integration & Polish** - Figma integration, design system export, progress reporting, error recovery
 - [x] **Phase 10: Wire Quality Enforcement** - Add CD/QR invocation to build-orchestrator wave protocol (GAP-1)
 - [x] **Phase 11: Fix Stale Cross-References** - Repair all stale agent/command references across skills (GAP-2, GAP-3, ISSUE-1-3)
-- [ ] **Phase 12: Registry & Documentation** - Rebuild SKILL-DIRECTORY.md and rewrite README.md (ISSUE-4-5)
+- [x] **Phase 12: Registry & Documentation** - Rebuild SKILL-DIRECTORY.md and rewrite README.md (ISSUE-4-5)
 - [ ] **Phase 13: Legacy Cleanup** - Remove v6.1.0 agents/skills, fix bookkeeping, resolve duplicates
 
 ## Phase Details
@@ -250,8 +250,8 @@ Plans:
   4. README.md version matches plugin manifest version
 
 Plans:
-- [ ] 12-01-PLAN.md -- Rebuild SKILL-DIRECTORY.md from actual skill inventory
-- [ ] 12-02-PLAN.md -- Rewrite README.md for v2.0
+- [x] 12-01-PLAN.md -- Rebuild SKILL-DIRECTORY.md from actual skill inventory
+- [x] 12-02-PLAN.md -- Rewrite README.md for v2.0
 
 ### Phase 13: Legacy Cleanup
 **Goal**: Remove all legacy v6.1.0 artifacts that conflict with or shadow v2.0 definitions, fix remaining bookkeeping, and ensure clean repository state
@@ -290,9 +290,9 @@ Phase order: 10 -> 11 -> 12 -> 13 (sequential, each depends on prior)
 | 9. Integration & Polish | 4/4 | Complete | 2026-02-24 |
 | 10. Wire Quality Enforcement | 1/1 | Complete | 2026-02-25 |
 | 11. Fix Stale Cross-References | 2/2 | Complete | 2026-02-25 |
-| 12. Registry & Documentation | 0/2 | Pending | -- |
+| 12. Registry & Documentation | 2/2 | Complete | 2026-02-25 |
 | 13. Legacy Cleanup | 0/2 | Pending | -- |
 
 ---
 *Roadmap created: 2026-02-23*
-*Last updated: 2026-02-25 -- Phase 11 complete (2/2 plans, all verified)*
+*Last updated: 2026-02-25 -- Phase 12 complete (2/2 plans, all verified)*
