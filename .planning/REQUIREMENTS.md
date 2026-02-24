@@ -32,12 +32,12 @@
 ### Content & Assets
 
 - [x] **CONT-01**: Copy Intelligence Engine -- brand voice document generated during brainstorm, content bank of pre-generated headlines/CTAs/descriptions, copy validation gates (no "Submit"/"Learn More"/"Click Here" survives the build), archetype-aware micro-copy.
-- [ ] **CONT-02**: Shape & Asset Generation -- geometric patterns, organic shapes, isometric objects, custom illustrations, ASCII art, dot matrix patterns, animated SVG paths, per-archetype shape palettes. All shapes use DNA color tokens. Intentional, not random.
-- [ ] **CONT-03**: 3D & WebGL Effects -- React Three Fiber integration, shader effects (noise displacement, liquid distortion, holographic), scroll-driven 3D scenes, progressive enhancement with static image fallback, mobile detection and downgrade.
-- [ ] **CONT-04**: Component Marketplace Knowledge -- Aceternity UI, Magic UI, 21st.dev, Framer marketplace. When-to-use matrix per archetype + beat. Restyling guidance for DNA token integration. Research, suggest, implement with user approval.
-- [ ] **CONT-05**: Remotion Integration -- video content generation for hero animations, product showcases, social media assets, micro-interactions. Used when video-based animation is the right approach.
-- [ ] **CONT-06**: Spline Integration -- embed Spline 3D scenes, configure for project needs, proper loading and performance handling.
-- [ ] **CONT-07**: Image Prompt Generation -- generate high-quality prompts for AI image tools (Midjourney, DALL-E, Flux) matching project DNA palette, style, and archetype personality.
+- [x] **CONT-02**: Shape & Asset Generation -- geometric patterns, organic shapes, isometric objects, custom illustrations, ASCII art, dot matrix patterns, animated SVG paths, per-archetype shape palettes. All shapes use DNA color tokens. Intentional, not random.
+- [x] **CONT-03**: 3D & WebGL Effects -- React Three Fiber integration, shader effects (noise displacement, liquid distortion, holographic), scroll-driven 3D scenes, progressive enhancement with static image fallback, mobile detection and downgrade.
+- [x] **CONT-04**: Component Marketplace Knowledge -- Aceternity UI, Magic UI, 21st.dev, Framer marketplace. When-to-use matrix per archetype + beat. Restyling guidance for DNA token integration. Research, suggest, implement with user approval.
+- [x] **CONT-05**: Remotion Integration -- video content generation for hero animations, product showcases, social media assets, micro-interactions. Used when video-based animation is the right approach.
+- [x] **CONT-06**: Spline Integration -- embed Spline 3D scenes, configure for project needs, proper loading and performance handling.
+- [x] **CONT-07**: Image Prompt Generation -- generate high-quality prompts for AI image tools (Midjourney, DALL-E, Flux) matching project DNA palette, style, and archetype personality.
 
 ### Quality Mechanisms
 
@@ -132,12 +132,12 @@
 | BILD-05 | Phase 9: Integration & Polish | Pending |
 | BILD-06 | Phase 9: Integration & Polish | Pending |
 | CONT-01 | Phase 6: Brainstorming & Content | Complete |
-| CONT-02 | Phase 7: Asset & Specialist Skills | Pending |
-| CONT-03 | Phase 7: Asset & Specialist Skills | Pending |
-| CONT-04 | Phase 7: Asset & Specialist Skills | Pending |
-| CONT-05 | Phase 7: Asset & Specialist Skills | Pending |
-| CONT-06 | Phase 7: Asset & Specialist Skills | Pending |
-| CONT-07 | Phase 7: Asset & Specialist Skills | Pending |
+| CONT-02 | Phase 7: Asset & Specialist Skills | Complete |
+| CONT-03 | Phase 7: Asset & Specialist Skills | Complete |
+| CONT-04 | Phase 7: Asset & Specialist Skills | Complete |
+| CONT-05 | Phase 7: Asset & Specialist Skills | Complete |
+| CONT-06 | Phase 7: Asset & Specialist Skills | Complete |
+| CONT-07 | Phase 7: Asset & Specialist Skills | Complete |
 | QUAL-01 | Phase 4: Quality Enforcement | Complete |
 | QUAL-02 | Phase 4: Quality Enforcement | Complete |
 | QUAL-03 | Phase 4: Quality Enforcement | Complete |

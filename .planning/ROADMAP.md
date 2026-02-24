@@ -156,12 +156,12 @@ Plans:
 **Plans**: 6 plans
 
 Plans:
-- [ ] 07-01-PLAN.md -- Shape & Asset Generation skill: procedural patterns, archetype palettes, DNA tokens, SVG animation suite, v6.1.0 geometry-shapes cull
-- [ ] 07-02-PLAN.md -- 3D/WebGL Effects skill: R3F v9, shader building blocks, three-tier responsive, scroll-driven 3D, WebGPU forward-looking, v6.1.0 three-js-webgl cull
-- [ ] 07-03-PLAN.md -- Component Marketplace skill: category-level when-to-use matrix, 4-step restyling protocol, 30% hard cap, Framer as reference
-- [ ] 07-04-PLAN.md -- Remotion skill: DNA-aware video compositions, core API, hero/product/social templates, licensing, @remotion/player
-- [ ] 07-05-PLAN.md -- Spline Integration skill: embedding, DNA color mapping, event handling, R3F bridge, performance, scene creation guidance
-- [ ] 07-06-PLAN.md -- Image Prompt Generation skill: DNA-to-prompt translation, category templates, negative prompts, archetype image stance
+- [x] 07-01-PLAN.md -- Shape & Asset Generation skill: procedural patterns, archetype palettes, DNA tokens, SVG animation suite, v6.1.0 geometry-shapes cull
+- [x] 07-02-PLAN.md -- 3D/WebGL Effects skill: R3F v9, shader building blocks, three-tier responsive, scroll-driven 3D, WebGPU forward-looking, v6.1.0 three-js-webgl cull
+- [x] 07-03-PLAN.md -- Component Marketplace skill: category-level when-to-use matrix, 4-step restyling protocol, 30% hard cap, Framer as reference
+- [x] 07-04-PLAN.md -- Remotion skill: DNA-aware video compositions, core API, hero/product/social templates, licensing, @remotion/player
+- [x] 07-05-PLAN.md -- Spline Integration skill: embedding, DNA color mapping, event handling, R3F bridge, performance, scene creation guidance
+- [x] 07-06-PLAN.md -- Image Prompt Generation skill: DNA-to-prompt translation, category templates, negative prompts, archetype image stance
 
 ### Phase 8: Experience & Frameworks
 **Goal**: Every generated site works correctly across all target frameworks, is responsive from 375px up, meets WCAG 2.1 AA, supports multi-page architecture, and has award-worthy dark/light modes
@@ -216,10 +216,10 @@ Note: Phases 3 and 4 both depend on Phase 2. Phases 5, 6, 7, 8 can partially ove
 | 4. Quality Enforcement | 5/5 | Complete | 2026-02-24 |
 | 5. Motion & Design Skills | 6/6 | Complete | 2026-02-24 |
 | 6. Brainstorming & Content | 4/4 | Complete | 2026-02-24 |
-| 7. Asset & Specialist Skills | 0/6 | Planned | - |
+| 7. Asset & Specialist Skills | 6/6 | Complete | 2026-02-24 |
 | 8. Experience & Frameworks | 0/8 | Planned | - |
 | 9. Integration & Polish | 0/4 | Planned | - |
 
 ---
 *Roadmap created: 2026-02-23*
-*Last updated: 2026-02-24 — Phase 6 complete*
+*Last updated: 2026-02-24 — Phase 7 complete*
