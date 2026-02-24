@@ -5,34 +5,34 @@
 See: .planning/PROJECT.md (updated 2026-02-23)
 
 **Core value:** Every output must be award-winning by default (Awwwards SOTD 8.0+) -- not as a stretch goal, but as the baseline.
-**Current focus:** Phase 2 - Pipeline Architecture (executing)
+**Current focus:** Phase 2 - Pipeline Architecture (complete)
 
 ## Current Position
 
 Phase: 2 of 9 (Pipeline Architecture)
-Plan: 02-06 of 7 in current phase
-Status: In progress
-Last activity: 2026-02-24 -- Completed 02-06-PLAN.md (Context rot prevention protocols)
+Plan: 02-07 of 7 in current phase
+Status: Phase complete
+Last activity: 2026-02-24 -- Completed 02-07-PLAN.md (Agent memory & discussion protocol)
 
-Progress: [██░░░░░░░░] 21% (11/52 plans)
+Progress: [██░░░░░░░░] 23% (12/52 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 11
+- Total plans completed: 12
 - Average duration: 4 min
-- Total execution time: 43 min
+- Total execution time: 46 min
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 1. Foundation | 6/6 | 22 min | 4 min |
-| 2. Pipeline Architecture | 5/7 | 21 min | 4 min |
+| 2. Pipeline Architecture | 7/7 | 24 min | 3 min |
 
 **Recent Trend:**
-- Last 5 plans: 02-06 (4 min), 02-03 (3 min), 02-01 (6 min), 02-04 (5 min), 02-02 (3 min)
-- Trend: Consistent execution; protocol documents complete in 4 min
+- Last 5 plans: 02-07 (3 min), 02-06 (4 min), 02-03 (3 min), 02-01 (6 min), 02-04 (5 min)
+- Trend: Consistent execution; Phase 2 complete at 3 min average
 
 *Updated after each plan completion*
 
@@ -95,6 +95,12 @@ Recent decisions affecting current work:
 - [Phase 2-06]: Canary scoring 3-tier: HEALTHY (5/5), DEGRADING (3-4/5), ROT_DETECTED (0-2/5 triggers session boundary)
 - [Phase 2-06]: Session boundaries: soft (2 waves), hard (turn 31+), canary-triggered (score 0-2)
 - [Phase 2-06]: Anti-gaming: orchestrator answers 5 canary questions from memory BEFORE reading any files
+- [Phase 2-07]: 3 memory layers: CONTEXT.md (short-term, rewritten per wave), DESIGN-SYSTEM.md (medium-term, grows per wave), reviewer platform memory (cross-session)
+- [Phase 2-07]: Design system growth has no approval gate -- builder proposes in SUMMARY.md, orchestrator collects automatically
+- [Phase 2-07]: Feedback loop sized at 10 lines per destination (CONTEXT.md, spawn prompts), last 2 waves only
+- [Phase 2-07]: Platform memory supplements (not replaces) file-based feedback -- file-based is primary, platform memory is secondary
+- [Phase 2-07]: Discussion protocol: 6 decision gates, 4 participating agents, builders explicitly exempt
+- [Phase 2-07]: Protocol violations handled through quality review feedback loop, not hard errors
 - [Phase 5]: Motion intensity, wow moment count, tension mandate all archetype-driven (user decision)
 - [Phase 5]: Scroll-driven animations are beat-dependent -- HOOK/PEAK get continuous, others entrance-only
 - [Phase 5]: Hybrid motion presets -- archetype base family + DNA parameter tweaks
@@ -138,5 +144,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-24
-Stopped at: Completed 02-06-PLAN.md (Context rot prevention protocols)
+Stopped at: Completed 02-07-PLAN.md (Agent memory & discussion protocol) -- Phase 2 complete
 Resume file: None
