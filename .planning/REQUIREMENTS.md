@@ -22,9 +22,9 @@
 
 ### Build System
 
-- [ ] **BILD-01**: Stateless Wave System -- all context pre-extracted into spawn prompts (<200 lines total). No builder reads STATE.md or cross-references other builders' output.
+- [x] **BILD-01**: Stateless Wave System -- all context pre-extracted into spawn prompts (<200 lines total). No builder reads STATE.md or cross-references other builders' output.
 - [ ] **BILD-02**: Design System Scaffold from DNA -- typed utilities, section templates per beat type, motion presets, color utilities that prevent arbitrary hex values. Makes it harder to produce slop than quality.
-- [ ] **BILD-03**: Context Rot Prevention -- radical context minimization, pre-compiled DNA snapshots (~20 values per section), automated drift detection comparing output against DNA tokens, mandatory session boundaries.
+- [x] **BILD-03**: Context Rot Prevention -- radical context minimization, pre-compiled DNA snapshots (~20 values per section), automated drift detection comparing output against DNA tokens, mandatory session boundaries.
 - [ ] **BILD-04**: Live Browser Testing -- auto screenshot at 4 breakpoints (375, 768, 1024, 1440px), Lighthouse audit with hard fail at score <80, animation FPS monitoring (flag <30fps), axe-core accessibility audit.
 - [ ] **BILD-05**: Figma Integration -- read Figma designs via MCP tools, translate to code following project Design DNA, support as design intent source for visual QA comparison.
 - [ ] **BILD-06**: Design System Export -- export generated design system as Storybook components and design tokens package for handoff to design teams.
@@ -55,10 +55,10 @@
 
 ### Agent Architecture
 
-- [ ] **AGNT-01**: Pipeline model -- Researcher -> Designer -> Builder -> Reviewer -> Polisher, each with defined input/output contracts and limited context scope.
-- [ ] **AGNT-02**: Creative Director agent -- dedicated vision owner, actively reviews output against DNA and creative brief, proposes bold directions, catches drift immediately.
-- [ ] **AGNT-03**: Domain specialist builders -- 3D/Spline specialist, animation specialist (GSAP/Motion), layout specialist, content specialist. Each deeply expert in their domain.
-- [ ] **AGNT-04**: 3-layer agent memory -- living context file capturing patterns/decisions, growing design system shared across builders, reviewer feedback loop informing future work.
+- [x] **AGNT-01**: Pipeline model -- Researcher -> Designer -> Builder -> Reviewer -> Polisher, each with defined input/output contracts and limited context scope.
+- [x] **AGNT-02**: Creative Director agent -- dedicated vision owner, actively reviews output against DNA and creative brief, proposes bold directions, catches drift immediately.
+- [x] **AGNT-03**: Domain specialist builders -- 3D/Spline specialist, animation specialist (GSAP/Motion), layout specialist, content specialist. Each deeply expert in their domain.
+- [x] **AGNT-04**: 3-layer agent memory -- living context file capturing patterns/decisions, growing design system shared across builders, reviewer feedback loop informing future work.
 
 ### Command System
 
@@ -125,9 +125,9 @@
 | MOTN-03 | Phase 5: Motion & Design Skills | Pending |
 | MOTN-04 | Phase 5: Motion & Design Skills | Pending |
 | MOTN-05 | Phase 5: Motion & Design Skills | Pending |
-| BILD-01 | Phase 2: Pipeline Architecture | Pending |
+| BILD-01 | Phase 2: Pipeline Architecture | Complete |
 | BILD-02 | Phase 5: Motion & Design Skills | Pending |
-| BILD-03 | Phase 2: Pipeline Architecture | Pending |
+| BILD-03 | Phase 2: Pipeline Architecture | Complete |
 | BILD-04 | Phase 4: Quality Enforcement | Pending |
 | BILD-05 | Phase 9: Integration & Polish | Pending |
 | BILD-06 | Phase 9: Integration & Polish | Pending |
@@ -146,10 +146,10 @@
 | EXPR-02 | Phase 8: Experience & Frameworks | Pending |
 | EXPR-03 | Phase 8: Experience & Frameworks | Pending |
 | EXPR-04 | Phase 8: Experience & Frameworks | Pending |
-| AGNT-01 | Phase 2: Pipeline Architecture | Pending |
-| AGNT-02 | Phase 2: Pipeline Architecture | Pending |
-| AGNT-03 | Phase 2: Pipeline Architecture | Pending |
-| AGNT-04 | Phase 2: Pipeline Architecture | Pending |
+| AGNT-01 | Phase 2: Pipeline Architecture | Complete |
+| AGNT-02 | Phase 2: Pipeline Architecture | Complete |
+| AGNT-03 | Phase 2: Pipeline Architecture | Complete |
+| AGNT-04 | Phase 2: Pipeline Architecture | Complete |
 | CMND-01 | Phase 3: Command System | Pending |
 | CMND-02 | Phase 3: Command System | Pending |
 | CMND-03 | Phase 3: Command System | Pending |
