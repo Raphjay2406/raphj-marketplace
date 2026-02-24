@@ -404,7 +404,7 @@ During `/modulo:start-project`, the researcher agent runs a REFERENCES track tha
 2. **Extract quality attributes** -- for each reference, extract the same 6 attributes (Layout, Typography, Color, Motion, Depth, Micro-detail) for key sections
 3. **Map to archetype** -- note which archetype each reference most closely matches and where it deviates
 4. **Capture screenshots** -- save section screenshots to `.planning/modulo/references/` with descriptive filenames
-5. **Output format** -- write findings to `.planning/modulo/REFERENCES.md` using the same attribute structure as the curated library
+5. **Output format** -- write findings to `.planning/modulo/research/DESIGN-REFERENCES.md` using the same attribute structure as the curated library
 6. **Freshness matters** -- prioritize references from the last 6 months. Flag any reference older than 18 months as potentially stale
 
 **What the researcher does NOT do:**
@@ -426,10 +426,12 @@ researcher agent           section-planner agent         builder agent          
   industry winners           library (this skill)         reference_target           reference_target
       |                          |                            |                            |
   Extract 6                  + researcher's               See quality bar            Read built code
-  quality attributes         REFERENCES.md                before building           (or screenshot)
+  quality attributes         research/                    before building           (or screenshot)
+                             DESIGN-REFERENCES.md
       |                          |                            |                            |
   Save to                    Generate                     Build to match             Compare each of
-  REFERENCES.md              reference_target             or exceed                  6 attributes
+  research/                  reference_target             or exceed                  6 attributes
+  DESIGN-REFERENCES.md
                              in PLAN.md                                                   |
                                                                                     Write verdict
                                                                                     per attribute
@@ -509,7 +511,7 @@ This judgment is inherently subjective. The quality-reviewer should:
 
 ### Pipeline Stage
 
-- **Input from:** Researcher agent (per-project REFERENCES.md), section-planner (combines curated + research references)
+- **Input from:** Researcher agent (per-project research/DESIGN-REFERENCES.md), section-planner (combines curated + research references)
 - **Output to:** PLAN.md files (reference_target frontmatter + quality target blocks), quality-reviewer (comparison verdicts)
 
 ---

@@ -22,7 +22,7 @@ You are the Build Orchestrator for a Modulo 2.0 project. You coordinate wave-bas
 - DESIGN-DNA.md directly (DNA identity comes from CONTEXT.md)
 - BRAINSTORM.md (creative direction comes from CONTEXT.md)
 - CONTENT.md (content is pre-extracted into PLAN.md files by the section-planner)
-- REFERENCES.md (reference quality bar is embedded in PLAN.md files)
+- research/DESIGN-REFERENCES.md (reference data is available in research/DESIGN-REFERENCES.md and embedded in section PLAN.md files by section-planner)
 - Any skill files (all rules you need are embedded below)
 - Any source code (coherence checks use grep, not full reads)
 
@@ -122,7 +122,7 @@ After collecting results (Step 6), spawn BOTH review agents simultaneously via T
 - Agent: quality-reviewer
 - Instruction: "Post-wave verification for Wave [N]"
 - Input: current wave section names
-- QR reads its own contracted files (DESIGN-DNA.md, PLAN.md files, SUMMARY.md files, built code, CONTENT.md, REFERENCES.md, CONTEXT.md)
+- QR reads its own contracted files (DESIGN-DNA.md, PLAN.md files, SUMMARY.md files, built code, CONTENT.md, research/DESIGN-REFERENCES.md, CONTEXT.md)
 - Expected output: verification report, anti-slop scores, GAP-FIX.md for failing sections, lessons learned
 
 Both agents run in parallel. Wait for BOTH to complete before proceeding to Step 6.6.

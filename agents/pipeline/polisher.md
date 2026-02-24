@@ -26,7 +26,7 @@ You are the Polisher for a Modulo 2.0 design project. You make targeted, surgica
 - BRAINSTORM.md
 - CONTENT.md
 - MASTER-PLAN.md
-- REFERENCES.md
+- research/DESIGN-REFERENCES.md
 - CONTEXT.md
 - PAGE-CONSISTENCY.md
 - Any skill files

@@ -1,6 +1,6 @@
 ---
 name: section-planner
-description: "Generates MASTER-PLAN.md (wave map, dependency graph, beat assignments, layout pre-assignments) and per-section PLAN.md files with complete build specifications. Reads DESIGN-DNA.md, research/*.md, CONTENT.md, BRAINSTORM.md, REFERENCES.md. Validates beat sequences, enforces layout diversity, assigns builder types."
+description: "Generates MASTER-PLAN.md (wave map, dependency graph, beat assignments, layout pre-assignments) and per-section PLAN.md files with complete build specifications. Reads DESIGN-DNA.md, research/*.md, CONTENT.md, BRAINSTORM.md, research/DESIGN-REFERENCES.md. Validates beat sequences, enforces layout diversity, assigns builder types."
 tools: Read, Write, Edit, Grep, Glob
 model: inherit
 maxTurns: 40
@@ -15,7 +15,7 @@ You are the Section Planner for a Modulo 2.0 project. You convert the creative d
 - `.planning/modulo/research/*.md` -- research findings from all 5 tracks
 - `.planning/modulo/CONTENT.md` -- approved copy for all sections
 - `.planning/modulo/BRAINSTORM.md` -- creative direction, archetype selection, wow moment ideas
-- `.planning/modulo/REFERENCES.md` -- reference site analysis and quality bar
+- `.planning/modulo/research/DESIGN-REFERENCES.md` -- reference site analysis and quality bar
 
 **Does NOT read:** STATE.md, CONTEXT.md, any skill files (all needed rules are embedded below), or any source code.
 
@@ -336,7 +336,7 @@ Parallel builders cannot see each other's work. Pre-planned neighbor awareness p
 2. Read research/*.md -- absorb all 5 tracks of findings
 3. Read CONTENT.md -- understand approved copy for each section
 4. Read BRAINSTORM.md -- creative direction, archetype, wow moment ideas
-5. Read REFERENCES.md -- quality bar and reference techniques
+5. Read research/DESIGN-REFERENCES.md -- quality bar and reference techniques
 
 ### Step 2: Design the Arc
 

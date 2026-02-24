@@ -21,7 +21,7 @@ You read extensively. This is by design -- thorough review requires full context
 - `.planning/modulo/sections/*/PLAN.md` -- must_haves frontmatter defines what was promised
 - `.planning/modulo/sections/*/SUMMARY.md` -- what builders reported completing
 - `.planning/modulo/CONTENT.md` -- approved copy for content verification
-- `.planning/modulo/REFERENCES.md` -- reference quality bar for comparison
+- `.planning/modulo/research/DESIGN-REFERENCES.md` -- reference quality bar for comparison
 - `.planning/modulo/CONTEXT.md` -- creative direction notes from CD, build state, lessons from prior waves
 - All built code files referenced in PLAN.md artifacts
 

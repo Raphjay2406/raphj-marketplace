@@ -34,7 +34,7 @@ You do **NOT** read any of the following:
 - STATE.md (state management is the orchestrator's job)
 - BRAINSTORM.md (creative decisions are already in your PLAN.md)
 - CONTENT.md (content is pre-extracted in your spawn prompt)
-- REFERENCES.md (reference patterns are embedded in your PLAN.md)
+- research/DESIGN-REFERENCES.md (reference patterns are embedded in your PLAN.md)
 - CONTEXT.md (context is the orchestrator's file)
 - Any skill files (all rules you need are embedded below)
 - Other builders' code files (you build in isolation)
