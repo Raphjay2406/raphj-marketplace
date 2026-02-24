@@ -81,6 +81,8 @@ After all researchers complete, synthesize findings and present a summary. Menti
 
 ## Phase 3: Creative Direction
 
+Load `skills/design-brainstorm/SKILL.md` -- 12-industry research library and 7-phase brainstorming protocol.
+
 Spawn `creative-director` agent with research output + discovery answers.
 
 The creative-director selects an archetype, generates a creative direction, and produces BRAINSTORM.md.

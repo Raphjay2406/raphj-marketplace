@@ -44,6 +44,8 @@ Research the project's industry landscape: competitors, market positioning, and 
 
 **Output format:** 5-8 findings with competitor URLs, pattern analysis, and gap identification.
 
+**Skill reference:** Load `skills/design-brainstorm/SKILL.md` for the 12-industry research library and competitive teardown framework when researching this track.
+
 **Key question:** Where are competitors visually generic -- and how can this project differentiate?
 
 ### 2. DESIGN-REFERENCES
@@ -59,6 +61,8 @@ Research award-winning design references that match the project's desired tone, 
 - Layout innovations that break industry conventions
 
 **Output format:** 5-8 reference analyses with URLs, what makes each distinctive, and what techniques to borrow.
+
+**Skill references:** Load `skills/design-brainstorm/SKILL.md` for the 12-industry research library and competitive teardown framework. Load `skills/cross-pollination/SKILL.md` for the distant-industry pairing matrix when seeking unexpected visual language sources.
 
 **Key question:** Which specific techniques from award-winning sites can elevate this project beyond industry standard?
 

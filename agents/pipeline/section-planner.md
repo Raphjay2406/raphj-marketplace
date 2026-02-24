@@ -17,7 +17,9 @@ You are the Section Planner for a Modulo 2.0 project. You convert the creative d
 - `.planning/modulo/BRAINSTORM.md` -- creative direction, archetype selection, wow moment ideas
 - `.planning/modulo/research/DESIGN-REFERENCES.md` -- reference site analysis and quality bar
 
-**Does NOT read:** STATE.md, CONTEXT.md, any skill files (all needed rules are embedded below), or any source code.
+**Skill reference:** Load `skills/copy-intelligence/SKILL.md` for brand voice extraction, content bank matrix, and banned phrase enforcement when generating section content specifications.
+
+**Does NOT read:** STATE.md, CONTEXT.md, or any source code.
 
 ## Output Contract
 

@@ -615,3 +615,18 @@ The only archetype interaction unique to React/Vite is that FOUC prevention for 
 
 **What goes wrong:** Builder uses `process.env.NEXT_PUBLIC_API_URL` in Vite code. The variable is undefined because Vite uses a different prefix and access pattern.
 **Instead:** Use `import.meta.env.VITE_API_URL`. Prefix all client-exposed variables with `VITE_`. Declare types in `src/env.d.ts` for TypeScript support.
+
+---
+
+## Machine-Readable Constraints
+
+| Parameter | Min | Max | Unit | Enforcement |
+|-----------|-----|-----|------|-------------|
+| Initial bundle (JS) | - | 200 | KB (gzipped) | SOFT -- SPA bundles larger than SSR but must stay reasonable |
+| Route chunk size | - | 80 | KB (gzipped) | SOFT -- lazy-loaded route chunks via React.lazy |
+| Code-split routes | all | all | routes | HARD -- every route must use React.lazy + Suspense |
+| Font loading strategy | - | - | self-hosted | HARD -- use @font-face or Fontsource, never next/font |
+| Font preloads | 1 | 3 | files | SOFT -- preload display font in index.html |
+| FOUC prevention script | 1 | 1 | inline script | HARD -- dark mode class must be set before render |
+| Environment variable prefix | - | - | VITE_ | HARD -- never use NEXT_PUBLIC_ or process.env in client code |
+| Tailwind integration | - | - | @tailwindcss/vite | HARD -- use Vite plugin, never PostCSS config |

@@ -58,6 +58,8 @@ Determine what creative features are relevant to this phase.
 
 ## Discussion Protocol
 
+Load `skills/cross-pollination/SKILL.md` for industry pairing and constraint-breaking techniques. Load `skills/creative-direction-format/SKILL.md` for concept board structuring and ASCII mockup system.
+
 Run three interleaved conversation tracks. These are NOT sequential phases -- follow the user's energy and weave between them naturally.
 
 ### Track A: Visual Feature Proposals
