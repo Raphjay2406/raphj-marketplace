@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-23)
 ## Current Position
 
 Phase: 7 of 9 (Asset & Specialist Skills)
-Plan: 4 of 6 in current phase
-Status: In progress (07-01, 07-02 remaining)
-Last activity: 2026-02-24 -- Completed 07-06-PLAN.md (Image Prompt Generation skill)
+Plan: 5 of 6 in current phase
+Status: In progress (07-01 remaining)
+Last activity: 2026-02-24 -- Completed 07-02-PLAN.md (3D/WebGL Effects skill)
 
-Progress: [███████░░░] 73% (38/52 plans)
+Progress: [███████░░░] 75% (39/52 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 38
+- Total plans completed: 39
 - Average duration: 4 min
-- Total execution time: 149 min
+- Total execution time: 154 min
 
 **By Phase:**
 
@@ -33,10 +33,10 @@ Progress: [███████░░░] 73% (38/52 plans)
 | 4. Quality Enforcement | 5/5 | 15 min | 3 min |
 | 5. Motion & Design Skills | 6/6 | 38 min | 6 min |
 | 6. Brainstorming & Content | 4/4 | 25 min | 6 min |
-| 7. Asset & Specialist Skills | 4/6 | 15 min | 4 min |
+| 7. Asset & Specialist Skills | 5/6 | 20 min | 4 min |
 
 **Recent Trend:**
-- Last 5 plans: 07-06 (4 min), 07-03 (4 min), 07-04 (4 min), 07-05 (3 min), 06-01 (7 min)
+- Last 5 plans: 07-02 (5 min), 07-06 (4 min), 07-03 (4 min), 07-04 (4 min), 07-05 (3 min)
 - Trend: Phase 7 progressing at 4 min avg/plan
 
 *Updated after each plan completion*
@@ -220,6 +220,9 @@ Recent decisions affecting current work:
 - [Phase 7-06]: 453 lines slightly below 500-600 target but above 400 minimum -- all content substantive, all verification criteria met
 - [Phase 7-06]: Tool-agnostic approach: no tool-specific syntax in main templates, VOLATILE appendix for tool parameters
 - [Phase 7-06]: 14 automatic negative prompt generation rules from DNA constraints + universal + quality negatives
+- [Phase 7-02]: 1138 lines exceeds 800-1000 target but all content substantive (full simplex noise GLSL, 5 scroll-driven patterns, 12 archetype variants)
+- [Phase 7-02]: Complete simplex noise GLSL implementation included inline -- builders need copy-paste ready shader code
+- [Phase 7-02]: Post-processing archetype mapping table (8 archetypes x 4 effects) for direct builder reference
 
 ### Pending Todos
 
@@ -235,5 +238,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-24
-Stopped at: Completed 07-06-PLAN.md (Image Prompt Generation skill)
+Stopped at: Completed 07-02-PLAN.md (3D/WebGL Effects skill)
 Resume file: None
