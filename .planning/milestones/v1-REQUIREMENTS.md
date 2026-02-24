@@ -1,3 +1,13 @@
+# Requirements Archive: v1 Modulo 2.0
+
+**Archived:** 2026-02-25
+**Status:** SHIPPED
+
+This is the archived requirements specification for v1.
+For current requirements, see `.planning/REQUIREMENTS.md` (created for next milestone).
+
+---
+
 # Requirements: Modulo 2.0
 
 **Defined:** 2026-02-23
@@ -92,10 +102,6 @@
 - [x] **BRNS-04**: 2 refined creative directions with ASCII mockup prototyping, motion identity included in each direction.
 - [x] **BRNS-05**: Competitive Benchmarking -- category-specific baseline knowledge, "avoid these" lists per category, opportunity mapping for underused techniques.
 
-## v2 Requirements
-
-(None -- all items moved to v1)
-
 ## Out of Scope
 
 | Feature | Reason |
@@ -173,9 +179,17 @@
 
 **Coverage:**
 - v1 requirements: 54 total
-- Mapped to phases: 54
-- Unmapped: 0
+- Shipped: 54 (100%)
+- Dropped: 0
+- Adjusted: 0
 
 ---
-*Requirements defined: 2026-02-23*
-*Last updated: 2026-02-25 -- FOUND-01-04 and SKIL-01-03 checkboxes marked [x] (Phase 13 cleanup)*
+
+## Milestone Summary
+
+**Shipped:** 54 of 54 v1 requirements
+**Adjusted:** FOUND-03 scope clarified during Phase 1 — anti-slop gate is post-review enforcement (per CONTEXT.md override), not inline self-check as originally worded. The requirement was satisfied as refined.
+**Dropped:** None
+
+---
+*Archived: 2026-02-25 as part of v1 milestone completion*

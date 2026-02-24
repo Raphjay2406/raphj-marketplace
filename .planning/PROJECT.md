@@ -2,7 +2,7 @@
 
 ## What This Is
 
-A ground-up rebuild of the Modulo Claude Code plugin — the world's most complete frontend design system. Modulo 2.0 produces award-caliber (Awwwards SOTD 8.0+) websites through intelligent human-AI collaboration, with a pipeline architecture of specialized agents, multi-layer quality enforcement, and full-stack design capabilities spanning layout, shapes, 3D, animation, content, and motion identity. It targets Next.js, Astro, React/Vite, Tauri, and Electron with desktop-aware design patterns.
+A Claude Code plugin for premium frontend design — the world's most complete design system for AI-assisted web development. Modulo 2.0 produces award-caliber (Awwwards SOTD 8.0+) websites through intelligent human-AI collaboration, with a pipeline architecture of specialized agents, multi-layer quality enforcement, and full-stack design capabilities spanning layout, shapes, 3D, animation, content, and motion identity. Targets Next.js, Astro, React/Vite, Tauri, and Electron with desktop-aware design patterns.
 
 ## Core Value
 
@@ -12,80 +12,34 @@ Every output must be award-winning by default — not as a stretch goal, but as 
 
 ### Validated
 
-(None yet — ship to validate)
+- ✓ 8-command guided workflow (start-project, lets-discuss, plan-dev, execute, iterate, bug-fix, status, audit) — v1
+- ✓ Pipeline architecture (researcher → creative-director → section-planner → build-orchestrator → section-builder → quality-reviewer → polisher) — v1
+- ✓ 19 design archetypes with machine-enforceable constraints + custom builder — v1
+- ✓ Design DNA system (12 color tokens, type/spacing/motion, Tailwind v4 @theme) — v1
+- ✓ 35-point Anti-Slop Gate across 7 categories with post-review enforcement — v1
+- ✓ Emotional Arc (10 beat types with hard parameter constraints) — v1
+- ✓ 45 skills in 4-layer format (Decision Guidance, Examples, Integration, Anti-Patterns) — v1
+- ✓ 3-tier skill organization (Core/Domain/Utility) — v1
+- ✓ Cinematic motion system with CSS scroll-driven default and diversity enforcement — v1
+- ✓ Creative tension system (5 levels, per-archetype TSX implementations) — v1
+- ✓ 35+ wow moment patterns with auto-suggestion matrix — v1
+- ✓ Design system scaffold auto-generated from DNA — v1
+- ✓ Multi-layer quality enforcement wired into build pipeline (CD + QR after every wave) — v1
+- ✓ Content intelligence engine (brand voice, content bank, banned phrases) — v1
+- ✓ Research-first brainstorming with cross-pollination and constraint-breaking — v1
+- ✓ Shape & asset generation, 3D/WebGL, Remotion, Spline, image prompts — v1
+- ✓ Responsive design (375px floor), accessibility (WCAG 2.1 AA), multi-page architecture — v1
+- ✓ Dark/light mode with archetype-aware transitions — v1
+- ✓ Framework support: Next.js 16, Astro 5/6, React/Vite, Tauri v2, Electron — v1
+- ✓ Figma integration via MCP tools with DNA-Figma hybrid token resolution — v1
+- ✓ Design system export (Storybook 10 + W3C DTCG tokens via Style Dictionary 5) — v1
+- ✓ 6-layer context rot prevention with canary checks and session boundaries — v1
+- ✓ Error recovery with severity classification and checkpoint resume — v1
+- ✓ Guided flow (user always knows what to do next) — v1
 
 ### Active
 
-**Command System (6 focused commands replacing 13):**
-- [ ] `/modulo:Start-Project` — Questioning (design direction, archetype, animation style/intensity, brand voice) → Research (parallel agents studying award-winning design, best practices, competitors) → Requirements (milestone/MVP/v1/v2 boundaries) → Roadmap (phases mapped to requirements)
-- [ ] `/modulo:lets-discuss` — Per-phase creative deep dive: visual features (propose award-winning ideas with choices), content systems (brand voice suggestions), task organization (auto-organize by priority)
-- [ ] `/modulo:plan-dev` — Re-research focused on the phase sector, plan in context-rot-safe chunks, verification questions
-- [ ] `/modulo:execute` — Run plans sequentially or parallel as defined in planning/master plan
-- [ ] `/modulo:iterate` — Design changes with user verification, brainstorming and discussion before changes, marketplace component sourcing
-- [ ] `/modulo:bug-fix` — Fix issues with user verification, brainstorming before fixes, diagnosis + proposed solutions
-
-**Agent Architecture (Pipeline Model):**
-- [ ] Creative Director agent — Owns creative vision, actively reviews output, proposes bold directions, catches drift early
-- [ ] Pipeline stages: Researcher → Designer → Builder → Reviewer → Polisher (each adds their layer)
-- [ ] Domain specialist builders: 3D/Spline specialist, animation specialist (GSAP/Framer), layout specialist, content specialist
-- [ ] 3-layer agent memory: living context file + growing design system + reviewer feedback loop
-
-**Quality System (Multi-Layer Enforcement):**
-- [ ] Build-time DNA compliance — hard block on critical deviations (wrong colors, wrong fonts), queue minor issues
-- [ ] Visual QA — screenshot comparison against design intent (Figma, AI mockups, reference sites)
-- [ ] Creative audit (post-wave) — tension moments, emotional arc, wow factor scoring + specific improvement actions
-- [ ] Full verification (end of phase) — 4-axis Awwwards scoring + anti-slop gate, pass/fail with gap-closure plan
-- [ ] User checkpoints — strategic approval gates before proceeding
-- [ ] Severity-based enforcement: critical violations block, minor issues queued for batch fix
-
-**Capabilities:**
-- [ ] Shape & asset generation — geometric patterns, organic shapes, isometric/3D shapes, custom illustrations, ASCII art, dot matrix art. Intentional shapes, not random blobs.
-- [ ] 3D & Spline integration — context-dependent: simple Three.js scenes by default, complex scenes (custom shaders, physics, post-processing) when design demands it. Spline embeds supported.
-- [ ] Advanced animation system — GSAP ScrollTrigger, Framer Motion choreography, page transitions, Remotion video content (hero animations, product showcases, social media assets, micro-interactions). Natural language generation ("parallax hero with floating 3D objects") backed by a recipe library.
-- [ ] Component marketplace integration — research, suggest, and implement (with user approval) from 21st.dev, Aceternity UI, Magic UI, Framer marketplace
-
-**Design Brainstorming:**
-- [ ] Real-world research first — study actual Awwwards winners, Dribbble, competitor sites for the specific industry
-- [ ] Cross-pollination — borrow from unrelated industries for unexpected visual language
-- [ ] Constraint-breaking — identify industry "rules" and propose breaking specific ones
-- [ ] Visual prototyping via ASCII mockups before committing to code
-- [ ] 2 refined creative directions (less quantity, more depth)
-- [ ] Motion identity as part of Design DNA (easing curves, timing, entrance styles, scroll behavior)
-
-**Content System:**
-- [ ] Brand voice system — detailed voice guide (vocabulary, sentence structure, do/don't phrases) + pre-generated content bank
-- [ ] Content strategy — planned narrative arc across the page, what story each section tells
-- [ ] Content generation — real, usable copy, never lorem ipsum or placeholder
-- [ ] Copy approval flow — user reviews generated content before it enters sections
-
-**Skill Architecture:**
-- [ ] 4-layer skill structure: decision guidance (when/why) + award-winning examples + integration context (DNA/archetype connection) + anti-patterns
-- [ ] Tiered organization: Core (always loaded) + Domain (per project) + Utility (on demand)
-- [ ] Cull non-design skills (admin-panel, webhook-api-patterns, database-crud-ui, etc.)
-- [ ] Every skill rewritten to the new quality standard
-
-**Developer Experience:**
-- [ ] Guided flow — plugin tells you exactly what to do next, impossible to get lost
-- [ ] Conversational — feels like working with a design partner, not a tool
-- [ ] Transparent execution — multi-level progress (real-time agent status, wave summaries, milestone checkpoints)
-- [ ] Error recovery — diagnose + propose solutions (user approves before applying)
-- [ ] Clean context rot handling — session boundaries, canary checks, seamless resume
-
-**Testing & QA:**
-- [ ] Visual verification — screenshots match at all 4 breakpoints (375, 768, 1024, 1440px)
-- [ ] Animation verification — smooth triggers, correct behavior, no jank
-- [ ] Performance verification — Core Web Vitals green (LCP < 2.5s, CLS < 0.1, INP < 200ms)
-- [ ] Accessibility verification — WCAG 2.1 AA (keyboard nav, screen reader, contrast, focus states)
-- [ ] Automated Playwright tests — layout, animation, interaction, CI-ready
-- [ ] Visual snapshot comparison — automated screenshots against reference
-- [ ] Guided manual sign-off — plugin opens browser, guides user through checklist
-
-**Framework Support:**
-- [ ] Next.js (App Router, React Server Components)
-- [ ] Astro (Islands, View Transitions)
-- [ ] React/Vite (plain React, no meta-framework)
-- [ ] Tauri (detect target, desktop-native UI patterns: title bars, system tray, window management)
-- [ ] Electron (detect target, desktop-native UI patterns)
+(None — planning next milestone)
 
 ### Out of Scope
 
@@ -94,17 +48,20 @@ Every output must be award-winning by default — not as a stretch goal, but as 
 - Authentication logic — UI patterns only, not auth implementation
 - Mobile native (React Native, Flutter) — web tech only (including in Tauri/Electron shells)
 - Hosting / deployment automation — build output only, not deploy infra
+- Template gallery / pre-built pages — antithesis of unique design
+- Sound design / audio — too niche, controversial in web design
+- Excessive archetype count (>19) — quality per archetype > quantity
 
 ## Context
 
-**Current state:** Modulo v6.1.0 exists with 87 skills, 13 commands, 17 agents. The architecture works but produces inconsistent quality. Section builders ignore Design DNA over time, animations are unreliable, copy is generic, and the command structure is bloated with niche commands.
+**Current state:** Modulo 2.0 v1 shipped with 45 v2.0 skills, 14 agents (7 pipeline + 3 specialist + 4 protocols), 8 commands, and 1 Figma translator agent. 43,547 lines across 99 files. Plugin version 2.0.0-dev.
 
-**Critical pain points to solve:**
-1. Output quality drops over extended sessions (context rot)
-2. Agents gradually ignore design direction (DNA drift)
-3. Animations break or default to fade-in-up (no animation specialization)
-4. Iteration breaks adjacent components (no impact analysis)
-5. Generated copy is generic despite micro-copy skill (no brand voice integration)
+**v6.1.0 pain points — all resolved:**
+1. ~~Output quality drops over extended sessions~~ → 6-layer context rot prevention
+2. ~~Agents gradually ignore design direction~~ → Creative Director with real authority + canary checks
+3. ~~Animations break or default to fade-in-up~~ → Animation specialist + cinematic motion system
+4. ~~Iteration breaks adjacent components~~ → Blast radius checking in iterate command
+5. ~~Generated copy is generic~~ → Content intelligence engine with brand voice
 
 **Competitive landscape:**
 - v0 (Vercel) — fast but generic, no design intelligence, one-shot generation
@@ -125,18 +82,18 @@ Every output must be award-winning by default — not as a stretch goal, but as 
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Ground-up rewrite (not incremental improvement) | Current architecture has fundamental quality enforcement gaps that can't be patched | -- Pending |
-| 6 commands replacing 13 | Current command set is bloated with niche commands (admin-panel, etc.), unclear flow | -- Pending |
-| Pipeline agent model (researcher → designer → builder → reviewer → polisher) | Current flat model (one builder does everything) produces inconsistent quality | -- Pending |
-| Creative Director as dedicated agent | Design-lead is currently too thin — coordinates but doesn't direct creative vision | -- Pending |
-| Domain specialist builders (3D, animation, layout, content) | Generic builders can't be expert at everything — specialization produces better output | -- Pending |
-| Multi-layer quality enforcement (build-time + visual + creative + verification) | Current verify-at-end approach catches problems too late, rework is expensive | -- Pending |
-| Tiered skill organization (core/domain/utility) | 87 flat skills is overwhelming, many aren't core to frontend design | -- Pending |
-| 4-layer skill structure (guidance + examples + integration + anti-patterns) | Current skills are code snippet libraries — they don't teach agents when/why to use techniques | -- Pending |
-| ASCII mockups for design prototyping | Immediate, no-tooling-required visualization before committing to code | -- Pending |
-| Brand voice + content bank system | Current micro-copy templates produce generic output regardless of project personality | -- Pending |
-| Severity-based build enforcement | Hard block on critical DNA violations, queue minor issues — balances quality with velocity | -- Pending |
-| All design intent sources (Figma + AI mockups + reference sites) | Different projects have different sources; supporting all maximizes flexibility | -- Pending |
+| Ground-up rewrite (not incremental improvement) | v6.1.0 had fundamental quality enforcement gaps that can't be patched | ✓ Good — v2.0 shipped with all 54 requirements met |
+| 8 commands replacing 13 (expanded from original 6) | Clear workflow with utility commands (status, audit) for observability | ✓ Good — guided flow works, no dead ends |
+| Pipeline agent model with stateless builders | Specialization + context isolation prevents quality drift | ✓ Good — spawn prompts keep builders focused |
+| Creative Director as dedicated agent with real authority | APPROVE/FLAG/PUSH authority catches drift immediately | ✓ Good — two-checkpoint review (pre-build + post-wave) |
+| Domain specialist builders (3D, animation, content) | Generic builders can't be expert at everything | ✓ Good — routing via builder_type in PLAN.md |
+| Multi-layer quality enforcement (4 layers) | Progressive enforcement catches problems where cheapest to fix | ✓ Good — wired into every wave via Steps 3.5/6.5-6.8 |
+| 4-layer skill structure + 3-tier organization | Skills teach when/why, not just code snippets | ✓ Good — 45 skills with machine-readable constraints |
+| CSS scroll-driven animations as default | Performance + progressive enhancement | ✓ Good — JS only when CSS cannot achieve the effect |
+| 6-layer context rot prevention | Structural prevention, not advisory guidelines | ✓ Good — canary checks with real consequences |
+| Brand voice + content bank system | Copy quality is design quality | ✓ Good — 19 archetype voice profiles, banned phrase enforcement |
+| Severity-based build enforcement | Critical blocks, minor queues — balances quality with velocity | ✓ Good — findings merge with CRITICAL/WARNING/INFO |
+| All design intent sources (Figma + references) | Different projects have different sources | ✓ Good — Figma MCP + reference benchmarking |
 
 ---
-*Last updated: 2026-02-23 after initialization*
+*Last updated: 2026-02-25 after v1 milestone*
