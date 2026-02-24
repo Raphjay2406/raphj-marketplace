@@ -62,12 +62,12 @@
 
 ### Command System
 
-- [ ] **CMND-01**: `/modulo:Start-Project` -- Questioning (design direction, archetype, animation style/intensity, brand voice) -> Research (parallel agents) -> Requirements -> Roadmap
-- [ ] **CMND-02**: `/modulo:lets-discuss` -- Per-phase creative deep dive: visual features with choices, content systems with brand voice, auto-organized task list
-- [ ] **CMND-03**: `/modulo:plan-dev` -- Re-research focused on phase sector, plan in context-rot-safe chunks, verification questions before execution
-- [ ] **CMND-04**: `/modulo:execute` -- Run plans sequential or parallel per planning/master plan definition
-- [ ] **CMND-05**: `/modulo:iterate` -- Design changes with user verification, brainstorming before changes, marketplace component sourcing from 21st.dev/Aceternity/Magic UI
-- [ ] **CMND-06**: `/modulo:bug-fix` -- Diagnose + propose solutions, user approval before fixing, brainstorming to ensure best approach
+- [x] **CMND-01**: `/modulo:Start-Project` -- Questioning (design direction, archetype, animation style/intensity, brand voice) -> Research (parallel agents) -> Requirements -> Roadmap
+- [x] **CMND-02**: `/modulo:lets-discuss` -- Per-phase creative deep dive: visual features with choices, content systems with brand voice, auto-organized task list
+- [x] **CMND-03**: `/modulo:plan-dev` -- Re-research focused on phase sector, plan in context-rot-safe chunks, verification questions before execution
+- [x] **CMND-04**: `/modulo:execute` -- Run plans sequential or parallel per planning/master plan definition
+- [x] **CMND-05**: `/modulo:iterate` -- Design changes with user verification, brainstorming before changes, marketplace component sourcing from 21st.dev/Aceternity/Magic UI
+- [x] **CMND-06**: `/modulo:bug-fix` -- Diagnose + propose solutions, user approval before fixing, brainstorming to ensure best approach
 
 ### Skill System
 
@@ -78,7 +78,7 @@
 
 ### Developer Experience
 
-- [ ] **DEVX-01**: Guided flow -- plugin tells user exactly what to do next at every step. Impossible to get lost.
+- [x] **DEVX-01**: Guided flow -- plugin tells user exactly what to do next at every step. Impossible to get lost.
 - [ ] **DEVX-02**: Multi-level progress -- real-time agent status updates, wave summaries with screenshots, milestone checkpoints with user review.
 - [ ] **DEVX-03**: Error recovery -- diagnose problems, propose solutions, user approves before applying. Clean resume from any failure state.
 - [ ] **DEVX-04**: Framework support -- Next.js (App Router), Astro (Islands), React/Vite, Tauri (desktop-aware), Electron (desktop-aware). Detect target and adapt patterns.
@@ -150,17 +150,17 @@
 | AGNT-02 | Phase 2: Pipeline Architecture | Complete |
 | AGNT-03 | Phase 2: Pipeline Architecture | Complete |
 | AGNT-04 | Phase 2: Pipeline Architecture | Complete |
-| CMND-01 | Phase 3: Command System | Pending |
-| CMND-02 | Phase 3: Command System | Pending |
-| CMND-03 | Phase 3: Command System | Pending |
-| CMND-04 | Phase 3: Command System | Pending |
-| CMND-05 | Phase 3: Command System | Pending |
-| CMND-06 | Phase 3: Command System | Pending |
+| CMND-01 | Phase 3: Command System | Complete |
+| CMND-02 | Phase 3: Command System | Complete |
+| CMND-03 | Phase 3: Command System | Complete |
+| CMND-04 | Phase 3: Command System | Complete |
+| CMND-05 | Phase 3: Command System | Complete |
+| CMND-06 | Phase 3: Command System | Complete |
 | SKIL-01 | Phase 1: Foundation | Complete |
 | SKIL-02 | Phase 1: Foundation | Complete |
 | SKIL-03 | Phase 1: Foundation | Complete |
 | SKIL-04 | Phase 8: Experience & Frameworks | Pending |
-| DEVX-01 | Phase 3: Command System | Pending |
+| DEVX-01 | Phase 3: Command System | Complete |
 | DEVX-02 | Phase 9: Integration & Polish | Pending |
 | DEVX-03 | Phase 9: Integration & Polish | Pending |
 | DEVX-04 | Phase 8: Experience & Frameworks | Pending |

@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Foundation** - Core identity system, skill architecture, and plugin skeleton
 - [x] **Phase 2: Pipeline Architecture** - Agent pipeline model with stateless builders and context rot prevention
-- [ ] **Phase 3: Command System** - 6 user-facing commands replacing 13, with guided workflow
+- [x] **Phase 3: Command System** - 6 user-facing commands replacing 13, with guided workflow
 - [ ] **Phase 4: Quality Enforcement** - Multi-layer quality gates from build-time to user checkpoints
 - [ ] **Phase 5: Motion & Design Skills** - Cinematic motion, creative tension, wow moments, and design system scaffold
 - [ ] **Phase 6: Brainstorming & Content** - Research-first ideation and copy intelligence engine
@@ -79,12 +79,12 @@ Plans:
 **Plans**: 6 plans
 
 Plans:
-- [ ] 03-01-PLAN.md -- Start-Project command: thin router for discovery, parallel research, DNA generation, content planning (~120-150 lines)
-- [ ] 03-02-PLAN.md -- Lets-Discuss command: per-phase creative deep dive with visual proposals, voice refinement, DISCUSSION-{phase}.md output (~100-130 lines)
-- [ ] 03-03-PLAN.md -- Plan-Dev command: phase-scoped re-research, discussion integration, context-rot-safe PLAN.md generation (~100-140 lines)
-- [ ] 03-04-PLAN.md -- Execute command: thin wrapper around build-orchestrator with session resume, flags, canary checks (~80-120 lines)
-- [ ] 03-05-PLAN.md -- Iterate + Bug-Fix commands: brainstorm-first design changes (creative) and diagnostic root cause analysis (bugs)
-- [ ] 03-06-PLAN.md -- Utility commands (status, audit), v6.1.0 cleanup, plugin manifest update, guided flow consistency verification
+- [x] 03-01-PLAN.md -- Start-Project command: thin router for discovery, parallel research, DNA generation, content planning (~120-150 lines)
+- [x] 03-02-PLAN.md -- Lets-Discuss command: per-phase creative deep dive with visual proposals, voice refinement, DISCUSSION-{phase}.md output (~100-130 lines)
+- [x] 03-03-PLAN.md -- Plan-Dev command: phase-scoped re-research, discussion integration, context-rot-safe PLAN.md generation (~100-140 lines)
+- [x] 03-04-PLAN.md -- Execute command: thin wrapper around build-orchestrator with session resume, flags, canary checks (~80-120 lines)
+- [x] 03-05-PLAN.md -- Iterate + Bug-Fix commands: brainstorm-first design changes (creative) and diagnostic root cause analysis (bugs)
+- [x] 03-06-PLAN.md -- Utility commands (status, audit), v6.1.0 cleanup, plugin manifest update, guided flow consistency verification
 
 ### Phase 4: Quality Enforcement
 **Goal**: Design quality is enforced progressively through 4 layers (build-time, post-wave, end-of-build, user checkpoint) so problems are caught where they are cheapest to fix
@@ -212,7 +212,7 @@ Note: Phases 3 and 4 both depend on Phase 2. Phases 5, 6, 7, 8 can partially ove
 |-------|----------------|--------|-----------|
 | 1. Foundation | 6/6 | Complete | 2026-02-24 |
 | 2. Pipeline Architecture | 7/7 | Complete | 2026-02-24 |
-| 3. Command System | 0/6 | Planned | - |
+| 3. Command System | 6/6 | Complete | 2026-02-24 |
 | 4. Quality Enforcement | 0/5 | Planned | - |
 | 5. Motion & Design Skills | 0/6 | Planned | - |
 | 6. Brainstorming & Content | 0/4 | Planned | - |
@@ -222,4 +222,4 @@ Note: Phases 3 and 4 both depend on Phase 2. Phases 5, 6, 7, 8 can partially ove
 
 ---
 *Roadmap created: 2026-02-23*
-*Last updated: 2026-02-24 — Phase 2 complete*
+*Last updated: 2026-02-24 — Phase 3 complete*
