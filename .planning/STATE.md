@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-23)
 ## Current Position
 
 Phase: 3 of 9 (Command System)
-Plan: 3 of 6 in current phase (03-01, 03-03, 03-04 complete)
+Plan: 5 of 6 in current phase (03-01, 03-02, 03-03, 03-04, 03-05 complete)
 Status: In progress
-Last activity: 2026-02-24 -- Completed 03-03-PLAN.md (plan-dev command)
+Last activity: 2026-02-24 -- Completed 03-05-PLAN.md (iterate & bug-fix commands)
 
-Progress: [███░░░░░░░] 31% (16/52 plans)
+Progress: [████░░░░░░] 37% (19/52 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 16
+- Total plans completed: 19
 - Average duration: 3 min
-- Total execution time: 51 min
+- Total execution time: 53 min
 
 **By Phase:**
 
@@ -29,10 +29,10 @@ Progress: [███░░░░░░░] 31% (16/52 plans)
 |-------|-------|-------|----------|
 | 1. Foundation | 6/6 | 22 min | 4 min |
 | 2. Pipeline Architecture | 7/7 | 24 min | 3 min |
-| 3. Command System | 3/6 | 5 min | 2 min |
+| 3. Command System | 5/6 | 7 min | 1 min |
 
 **Recent Trend:**
-- Last 5 plans: 03-03 (2 min), 03-01 (2 min), 03-04 (1 min), 02-07 (3 min), 02-06 (4 min)
+- Last 5 plans: 03-05 (2 min), 03-03 (2 min), 03-01 (2 min), 03-04 (1 min), 02-07 (3 min)
 - Trend: Accelerating; command plans completing in 1-2 min
 
 *Updated after each plan completion*
@@ -117,6 +117,9 @@ Recent decisions affecting current work:
 - [Phase 3-04]: Execute command is thinnest core command at 127 lines -- all wave/builder/diversity logic in build-orchestrator
 - [Phase 3-04]: Auto-detection: CONTEXT.md with incomplete state auto-triggers resume mode
 - [Phase 3-04]: Backward compatibility: bare word 'resume' treated as --resume flag
+- [Phase 3-05]: Two distinct brainstorm types: iterate uses creative approaches (2-3 ASCII mockups), bug-fix uses diagnostic hypotheses (root cause analysis)
+- [Phase 3-05]: change-plan.md merged into iterate.md -- plan modifications are a type of iteration
+- [Phase 3-05]: GAP-FIX.md --from-gaps flag skips brainstorm since gaps are already diagnosed by quality-reviewer
 - [Phase 5]: Motion intensity, wow moment count, tension mandate all archetype-driven (user decision)
 - [Phase 5]: Scroll-driven animations are beat-dependent -- HOOK/PEAK get continuous, others entrance-only
 - [Phase 5]: Hybrid motion presets -- archetype base family + DNA parameter tweaks
@@ -160,5 +163,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-24
-Stopped at: Completed 03-03-PLAN.md (plan-dev command)
+Stopped at: Completed 03-05-PLAN.md (iterate & bug-fix commands)
 Resume file: None
