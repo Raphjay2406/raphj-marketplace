@@ -5,14 +5,14 @@
 See: .planning/PROJECT.md (updated 2026-02-23)
 
 **Core value:** Every output must be award-winning by default (Awwwards SOTD 8.0+) -- not as a stretch goal, but as the baseline.
-**Current focus:** Phase 5 - Motion & Design Skills (planned, ready to execute)
+**Current focus:** Phase 7 - Asset & Specialist Skills (planned, ready to execute)
 
 ## Current Position
 
-Phase: 5 of 9 (Motion & Design Skills)
+Phase: 7 of 9 (Asset & Specialist Skills)
 Plan: 0 of 6 in current phase
 Status: Planned — ready to execute
-Last activity: 2026-02-24 -- Phase 5 discussed, researched, planned (6 plans in 1 wave), verified
+Last activity: 2026-02-24 -- Phase 7 discussed, researched, planned (6 plans in 1 wave), verified
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -56,6 +56,12 @@ Recent decisions affecting current work:
 - [Phase 5]: GSAP now 100% free (all plugins) — Webflow acquisition. No premium caveats
 - [Phase 5]: Motion library rebranded to `motion/react` imports (not `framer-motion`)
 - [Phase 5]: CSS scroll-driven animations are production default, `@supports` for progressive enhancement
+- [Phase 7]: Shapes serve both atmospheric and foreground roles; beat-aware shape intensity
+- [Phase 7]: 3D available throughout (not just heroes); three-tier responsive (full/reduced/static)
+- [Phase 7]: Marketplace components capped at ~30% of visual elements; category-level recommendations (not specific components)
+- [Phase 7]: Tool-agnostic AI image prompts with full DNA translation and DNA-derived negative prompts
+- [Phase 7]: WebGPU ~95% browser support; R3F v9 stable target, v10 alpha forward-looking
+- [Phase 7]: GSAP MorphSVG + DrawSVG now free -- include in shape skill freely
 
 ### Pending Todos
 
@@ -70,5 +76,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-24
-Stopped at: Phase 5 planned (6 plans, 1 wave), verified, ready to execute
+Stopped at: Phase 7 planned (6 plans, 1 wave), verified, ready to execute
 Resume file: None
