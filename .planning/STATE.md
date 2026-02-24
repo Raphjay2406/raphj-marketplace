@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-23)
 
 **Core value:** Every output must be award-winning by default (Awwwards SOTD 8.0+) -- not as a stretch goal, but as the baseline.
-**Current focus:** Phase 4 - Quality Enforcement (in progress)
+**Current focus:** Phase 4 - Quality Enforcement (complete)
 
 ## Current Position
 
 Phase: 4 of 9 (Quality Enforcement)
-Plan: 4 of 5 in current phase (04-01 pending)
-Status: In progress
-Last activity: 2026-02-24 -- Completed 04-03-PLAN.md (polish-pass skill)
+Plan: 5 of 5 in current phase
+Status: Phase 4 complete
+Last activity: 2026-02-24 -- Completed 04-01-PLAN.md (reference-benchmarking skill)
 
-Progress: [████░░░░░░] 44% (23/52 plans)
+Progress: [█████░░░░░] 46% (24/52 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 23
+- Total plans completed: 24
 - Average duration: 3 min
-- Total execution time: 66 min
+- Total execution time: 71 min
 
 **By Phase:**
 
@@ -30,11 +30,11 @@ Progress: [████░░░░░░] 44% (23/52 plans)
 | 1. Foundation | 6/6 | 22 min | 4 min |
 | 2. Pipeline Architecture | 7/7 | 24 min | 3 min |
 | 3. Command System | 6/6 | 10 min | 2 min |
-| 4. Quality Enforcement | 3/5 | 10 min | 3 min |
+| 4. Quality Enforcement | 5/5 | 15 min | 3 min |
 
 **Recent Trend:**
-- Last 5 plans: 04-03 (3 min), 04-05 (4 min), 04-04 (3 min), 03-06 (3 min), 03-05 (2 min)
-- Trend: Phase 4 nearing completion (04-01 remaining)
+- Last 5 plans: 04-01 (5 min), 04-03 (3 min), 04-05 (4 min), 04-04 (3 min), 03-06 (3 min)
+- Trend: Phase 4 complete at 15 min total (avg 3 min/plan)
 
 *Updated after each plan completion*
 
@@ -128,6 +128,10 @@ Recent decisions affecting current work:
 - [Phase 3-06]: audit.md absorbs 4 v6.1.0 commands into 4 parallel audit tracks (visual, performance, accessibility, content)
 - [Phase 3-06]: generate-tests.md deferred to Phase 8; update.md removed (v6.1.0 changelog no longer accurate)
 - [Phase 3-06]: Plugin manifest version set to 2.0.0-dev; complete v2.0 command surface: 8 commands, all under 155 lines
+- [Phase 4-02]: 18 patterns in 6 visual groups (A-F) provides sufficient diversity for pages up to 12 sections
+- [Phase 4-02]: Group C exception: bento-grid adjacent to masonry OK, uniform-grid adjacent to either NOT OK
+- [Phase 4-02]: Background alternation enforced alongside layout diversity using bg-primary/secondary/tertiary/accent tokens
+- [Phase 4-02]: Archetype variants expressed as pattern preferences, not hard constraints
 - [Phase 4-04]: FPS monitoring is a signal for investigation, not absolute ground truth -- automated scroll differs from real user scrolling
 - [Phase 4-04]: axe-core injected from CDN as primary, CLI fallback if CDN fails
 - [Phase 4-04]: Testing report uses 3-tier verdict: CRITICAL_FAIL / WARNINGS_ONLY / PASS
