@@ -128,6 +128,11 @@ Recent decisions affecting current work:
 - [Phase 3-06]: audit.md absorbs 4 v6.1.0 commands into 4 parallel audit tracks (visual, performance, accessibility, content)
 - [Phase 3-06]: generate-tests.md deferred to Phase 8; update.md removed (v6.1.0 changelog no longer accurate)
 - [Phase 3-06]: Plugin manifest version set to 2.0.0-dev; complete v2.0 command surface: 8 commands, all under 155 lines
+- [Phase 4-01]: 6 quality attributes (Layout, Typography, Color, Motion, Depth, Micro-detail) as standard reference target specification
+- [Phase 4-01]: Key beats only get reference targets (HOOK, PEAK, CLOSE, high-tension); supporting beats rely on DNA + archetype
+- [Phase 4-01]: Top 5 archetypes (Neo-Corporate, Kinetic, Ethereal, Editorial, Luxury) get full curated reference sets; others get quality personality definitions
+- [Phase 4-01]: Reference comparison produces WARNING verdicts (not CRITICAL) -- aspirational quality bar, not blocking gate
+- [Phase 4-01]: REVEAL beat gets conditional reference target (YES if product showcase, No if supporting)
 - [Phase 4-02]: 18 patterns in 6 visual groups (A-F) provides sufficient diversity for pages up to 12 sections
 - [Phase 4-02]: Group C exception: bento-grid adjacent to masonry OK, uniform-grid adjacent to either NOT OK
 - [Phase 4-02]: Background alternation enforced alongside layout diversity using bg-primary/secondary/tertiary/accent tokens
@@ -185,5 +190,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-24
-Stopped at: Completed 04-03-PLAN.md (polish-pass skill)
+Stopped at: Phase 4 complete (5/5 plans) -- ready for Phase 5
 Resume file: None
