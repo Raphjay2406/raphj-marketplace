@@ -10,29 +10,29 @@ See: .planning/PROJECT.md (updated 2026-02-23)
 ## Current Position
 
 Phase: 2 of 9 (Pipeline Architecture)
-Plan: 02-04 of 7 in current phase
+Plan: 02-03 of 7 in current phase
 Status: In progress
-Last activity: 2026-02-24 -- Completed 02-01-PLAN.md (Pipeline agent definitions: researcher, section-planner, build-orchestrator)
+Last activity: 2026-02-24 -- Completed 02-03-PLAN.md (Section builder agent with stateless spawn prompt pattern)
 
-Progress: [██░░░░░░░░] 17% (9/52 plans)
+Progress: [██░░░░░░░░] 19% (10/52 plans)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 9
+- Total plans completed: 10
 - Average duration: 4 min
-- Total execution time: 36 min
+- Total execution time: 39 min
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 1. Foundation | 6/6 | 22 min | 4 min |
-| 2. Pipeline Architecture | 3/7 | 14 min | 5 min |
+| 2. Pipeline Architecture | 4/7 | 17 min | 4 min |
 
 **Recent Trend:**
-- Last 5 plans: 02-01 (6 min), 02-04 (5 min), 02-02 (3 min), 01-02 (3 min), 01-05 (4 min)
-- Trend: Consistent execution; 02-01 slightly longer due to 3 agent definitions with embedded templates
+- Last 5 plans: 02-03 (3 min), 02-01 (6 min), 02-04 (5 min), 02-02 (3 min), 01-02 (3 min)
+- Trend: Consistent execution; single-file plans complete in 3 min
 
 *Updated after each plan completion*
 
@@ -86,6 +86,10 @@ Recent decisions affecting current work:
 - [Phase 2-01]: Spawn prompt template has 9 sections covering all builder context needs
 - [Phase 2-01]: builder_type field in PLAN.md frontmatter routes to correct specialist agent
 - [Phase 2-01]: Beat validation + layout diversity + background progression rules embedded in section-planner (no runtime skill reads)
+- [Phase 2-03]: No fallback file reads -- builder with missing spawn prompt STOPs immediately (no fallback to reading DESIGN-DNA.md)
+- [Phase 2-03]: 10-item auto-polish checklist mandatory on every section (expanded from v6.1.0's 5 items)
+- [Phase 2-03]: Machine-readable SUMMARY.md with beat_compliance, anti_slop_self_check booleans, and reusable_components proposals
+- [Phase 2-03]: Anti-context-rot DNA checks: 3-question after every task, 7-question every 3rd task
 - [Phase 5]: Motion intensity, wow moment count, tension mandate all archetype-driven (user decision)
 - [Phase 5]: Scroll-driven animations are beat-dependent -- HOOK/PEAK get continuous, others entrance-only
 - [Phase 5]: Hybrid motion presets -- archetype base family + DNA parameter tweaks
@@ -129,5 +133,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-24
-Stopped at: Completed 02-01-PLAN.md (Pipeline agent definitions: researcher, section-planner, build-orchestrator)
+Stopped at: Completed 02-03-PLAN.md (Section builder agent with stateless spawn prompt pattern)
 Resume file: None
