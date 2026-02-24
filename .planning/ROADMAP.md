@@ -17,7 +17,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 3: Command System** - 6 user-facing commands replacing 13, with guided workflow
 - [ ] **Phase 4: Quality Enforcement** - Multi-layer quality gates from build-time to user checkpoints
 - [x] **Phase 5: Motion & Design Skills** - Cinematic motion, creative tension, wow moments, and design system scaffold
-- [ ] **Phase 6: Brainstorming & Content** - Research-first ideation and copy intelligence engine
+- [x] **Phase 6: Brainstorming & Content** - Research-first ideation and copy intelligence engine
 - [ ] **Phase 7: Asset & Specialist Skills** - Shape generation, 3D/WebGL, component marketplace, Remotion, Spline, image prompts
 - [ ] **Phase 8: Experience & Frameworks** - Responsive, accessibility, multi-page, dark/light mode, framework support, skill rewrites
 - [ ] **Phase 9: Integration & Polish** - Figma integration, design system export, progress reporting, error recovery
@@ -138,10 +138,10 @@ Plans:
 **Plans**: 4 plans
 
 Plans:
-- [ ] 06-01-PLAN.md -- Research-first brainstorming protocol: complete design-brainstorm rewrite with 7-phase process, curated 12-industry library, competitive teardown framework
-- [ ] 06-02-PLAN.md -- Cross-pollination skill: industry rule catalogs, distant-industry pairing matrix, constraint-breaking protocol, double coherence guardrails
-- [ ] 06-03-PLAN.md -- Creative direction format skill: full concept board template, ASCII mockup system, distinctness validation, free mixing protocol
-- [ ] 06-04-PLAN.md -- Copy Intelligence Engine skill: brand voice template, archetype voice profiles, content bank matrix, tiered banned phrases, voice extraction protocol
+- [x] 06-01-PLAN.md -- Research-first brainstorming protocol: complete design-brainstorm rewrite with 7-phase process, curated 12-industry library, competitive teardown framework
+- [x] 06-02-PLAN.md -- Cross-pollination skill: industry rule catalogs, distant-industry pairing matrix, constraint-breaking protocol, double coherence guardrails
+- [x] 06-03-PLAN.md -- Creative direction format skill: full concept board template, ASCII mockup system, distinctness validation, free mixing protocol
+- [x] 06-04-PLAN.md -- Copy Intelligence Engine skill: brand voice template, archetype voice profiles, content bank matrix, tiered banned phrases, voice extraction protocol
 
 ### Phase 7: Asset & Specialist Skills
 **Goal**: The plugin can generate or integrate rich visual assets -- procedural shapes, 3D scenes, marketplace components, video content, Spline embeds, and AI image prompts -- all constrained to project DNA
@@ -215,11 +215,11 @@ Note: Phases 3 and 4 both depend on Phase 2. Phases 5, 6, 7, 8 can partially ove
 | 3. Command System | 6/6 | Complete | 2026-02-24 |
 | 4. Quality Enforcement | 5/5 | Complete | 2026-02-24 |
 | 5. Motion & Design Skills | 6/6 | Complete | 2026-02-24 |
-| 6. Brainstorming & Content | 0/4 | Planned | - |
+| 6. Brainstorming & Content | 4/4 | Complete | 2026-02-24 |
 | 7. Asset & Specialist Skills | 0/6 | Planned | - |
 | 8. Experience & Frameworks | 0/8 | Planned | - |
 | 9. Integration & Polish | 0/4 | Planned | - |
 
 ---
 *Roadmap created: 2026-02-23*
-*Last updated: 2026-02-24 — Phase 5 complete*
+*Last updated: 2026-02-24 — Phase 6 complete*

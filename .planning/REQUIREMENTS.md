@@ -31,7 +31,7 @@
 
 ### Content & Assets
 
-- [ ] **CONT-01**: Copy Intelligence Engine -- brand voice document generated during brainstorm, content bank of pre-generated headlines/CTAs/descriptions, copy validation gates (no "Submit"/"Learn More"/"Click Here" survives the build), archetype-aware micro-copy.
+- [x] **CONT-01**: Copy Intelligence Engine -- brand voice document generated during brainstorm, content bank of pre-generated headlines/CTAs/descriptions, copy validation gates (no "Submit"/"Learn More"/"Click Here" survives the build), archetype-aware micro-copy.
 - [ ] **CONT-02**: Shape & Asset Generation -- geometric patterns, organic shapes, isometric objects, custom illustrations, ASCII art, dot matrix patterns, animated SVG paths, per-archetype shape palettes. All shapes use DNA color tokens. Intentional, not random.
 - [ ] **CONT-03**: 3D & WebGL Effects -- React Three Fiber integration, shader effects (noise displacement, liquid distortion, holographic), scroll-driven 3D scenes, progressive enhancement with static image fallback, mobile detection and downgrade.
 - [ ] **CONT-04**: Component Marketplace Knowledge -- Aceternity UI, Magic UI, 21st.dev, Framer marketplace. When-to-use matrix per archetype + beat. Restyling guidance for DNA token integration. Research, suggest, implement with user approval.
@@ -86,11 +86,11 @@
 
 ### Brainstorming
 
-- [ ] **BRNS-01**: Research-first brainstorming -- study actual Awwwards winners, Dribbble, competitor sites for the specific industry before ideating.
-- [ ] **BRNS-02**: Cross-pollination -- borrow from unrelated industries for unexpected visual language. SaaS that borrows from fashion editorial, fintech from gaming.
-- [ ] **BRNS-03**: Constraint-breaking -- identify the "rules" for the target industry and propose breaking specific ones with intent.
-- [ ] **BRNS-04**: 2 refined creative directions with ASCII mockup prototyping, motion identity included in each direction.
-- [ ] **BRNS-05**: Competitive Benchmarking -- category-specific baseline knowledge, "avoid these" lists per category, opportunity mapping for underused techniques.
+- [x] **BRNS-01**: Research-first brainstorming -- study actual Awwwards winners, Dribbble, competitor sites for the specific industry before ideating.
+- [x] **BRNS-02**: Cross-pollination -- borrow from unrelated industries for unexpected visual language. SaaS that borrows from fashion editorial, fintech from gaming.
+- [x] **BRNS-03**: Constraint-breaking -- identify the "rules" for the target industry and propose breaking specific ones with intent.
+- [x] **BRNS-04**: 2 refined creative directions with ASCII mockup prototyping, motion identity included in each direction.
+- [x] **BRNS-05**: Competitive Benchmarking -- category-specific baseline knowledge, "avoid these" lists per category, opportunity mapping for underused techniques.
 
 ## v2 Requirements
 
@@ -131,7 +131,7 @@
 | BILD-04 | Phase 4: Quality Enforcement | Complete |
 | BILD-05 | Phase 9: Integration & Polish | Pending |
 | BILD-06 | Phase 9: Integration & Polish | Pending |
-| CONT-01 | Phase 6: Brainstorming & Content | Pending |
+| CONT-01 | Phase 6: Brainstorming & Content | Complete |
 | CONT-02 | Phase 7: Asset & Specialist Skills | Pending |
 | CONT-03 | Phase 7: Asset & Specialist Skills | Pending |
 | CONT-04 | Phase 7: Asset & Specialist Skills | Pending |
@@ -165,11 +165,11 @@
 | DEVX-03 | Phase 9: Integration & Polish | Pending |
 | DEVX-04 | Phase 8: Experience & Frameworks | Pending |
 | DEVX-05 | Phase 8: Experience & Frameworks | Pending |
-| BRNS-01 | Phase 6: Brainstorming & Content | Pending |
-| BRNS-02 | Phase 6: Brainstorming & Content | Pending |
-| BRNS-03 | Phase 6: Brainstorming & Content | Pending |
-| BRNS-04 | Phase 6: Brainstorming & Content | Pending |
-| BRNS-05 | Phase 6: Brainstorming & Content | Pending |
+| BRNS-01 | Phase 6: Brainstorming & Content | Complete |
+| BRNS-02 | Phase 6: Brainstorming & Content | Complete |
+| BRNS-03 | Phase 6: Brainstorming & Content | Complete |
+| BRNS-04 | Phase 6: Brainstorming & Content | Complete |
+| BRNS-05 | Phase 6: Brainstorming & Content | Complete |
 
 **Coverage:**
 - v1 requirements: 54 total
