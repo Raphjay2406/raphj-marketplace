@@ -130,7 +130,7 @@ Domain skills are loaded **per project** based on the project's archetype, techn
 |-------|--------|-------|-------|-------------|
 | `structured-data` | COMPLETE | 15 | 1091 | Typed JSON-LD schemas for rich results: FAQPage, Article, Product, LocalBusiness, Organization, WebSite, BreadcrumbList, HowTo, Event -- per-page recipes, @graph combinations, GEO content patterns, schema audit protocol |
 | `search-visibility` | COMPLETE | 16 | 579 | IndexNow instant indexing, AI-aware robots.txt presets, llms.txt generation, unified indexing strategy, webmaster tools submission workflows for Next.js 16 and Astro 5 |
-| `og-images` | COMPLETE | 18 | 951 | Dynamic OG image generation from Design DNA tokens: branded 1200x630 social previews using next/og ImageResponse (Next.js) and Satori + sharp (Astro), 3 archetype-influenced template types |
+| `og-images` | COMPLETE | 18 | 1252 | Dynamic OG image generation from Design DNA tokens: branded 1200x630 social previews using next/og ImageResponse (Next.js) and Satori + sharp (Astro), 3 archetype-influenced template types |
 
 ---
 
