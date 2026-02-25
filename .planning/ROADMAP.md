@@ -32,7 +32,7 @@
 
 - [x] **Phase 14: Core SEO Foundation** (2/2 plans) - Rewrite seo-meta as Core-tier skill with complete meta tag architecture, canonical URLs, sitemaps, robots.txt, and Core Web Vitals guidance — completed 2026-02-25
 - [x] **Phase 15: Structured Data & GEO** (2/2 plans) - New structured-data skill with typed JSON-LD schemas plus GEO content patterns integrated into the Emotional Arc system — completed 2026-02-25
-- [ ] **Phase 16: Indexing & Search Visibility** - New search-visibility skill with IndexNow auto-setup, llms.txt, unified indexing strategy, and GSC/Bing submission workflows
+- [x] **Phase 16: Indexing & Search Visibility** (3/3 plans) - New search-visibility skill with IndexNow auto-setup, llms.txt, unified indexing strategy, and GSC/Bing submission workflows — completed 2026-02-25
 - [ ] **Phase 17: API Integration Patterns** - New api-patterns skill with Context7 MCP integration, server-side proxy patterns, CRM forms, typed API clients, webhooks, and env management
 - [ ] **Phase 18: Dynamic OG Images & Pipeline Wiring** - DNA-integrated OG image generation for Next.js and Astro, plus agent updates wiring all v1.5 skills into the pipeline
 - [ ] **Phase 19: SSR & Dynamic Content Patterns** - New ssr-dynamic-content skill with SSR/ISR/streaming decision guidance, cache invalidation strategies, CMS-driven revalidation, auth-gated rendering, and real-time content freshness patterns for Next.js and Astro
@@ -82,9 +82,9 @@ Plans:
   4. GSC and Bing Webmaster Tools submission workflows provide step-by-step verification instructions a user can follow to get their sitemap indexed
 **Plans**: 3 plans
 Plans:
-- [ ] 16-PLAN-01.md -- SKILL.md Layers 1-2A: Decision Guidance with unified indexing strategy + IndexNow auto-setup patterns with content-hash tracking
-- [ ] 16-PLAN-02.md -- AI crawler taxonomy appendix (three-tier presets) + llms.txt appendix + SKILL.md Layer 2B (robots.txt presets and llms.txt guidance)
-- [ ] 16-PLAN-03.md -- Webmaster tools submission appendix (GSC/Bing/Yandex/Naver workflows) + SKILL.md Layers 3-4 + Machine-Readable Constraints
+- [x] 16-PLAN-01.md -- SKILL.md Layers 1-2A: Decision Guidance with unified indexing strategy + IndexNow auto-setup patterns with content-hash tracking
+- [x] 16-PLAN-02.md -- AI crawler taxonomy appendix (three-tier presets) + llms.txt appendix + SKILL.md Layer 2B (robots.txt presets and llms.txt guidance)
+- [x] 16-PLAN-03.md -- Webmaster tools submission appendix (GSC/Bing/Yandex/Naver workflows) + SKILL.md Layers 3-4 + Machine-Readable Constraints
 **Research flag**: Researched 2026-02-25. Google confirmed NOT supporting IndexNow. astro-indexnow v2.1.0 verified. Rate limits: 10k URLs/POST, daily limits unpublished.
 
 ### Phase 17: API Integration Patterns

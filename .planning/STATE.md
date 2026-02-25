@@ -9,10 +9,10 @@ See: .planning/PROJECT.md (updated 2026-02-25)
 
 ## Current Position
 
-Phase: 15 of 19 (Structured Data & GEO) -- COMPLETE
-Plan: 02 of 02 in current phase (all done)
+Phase: 16 of 19 (Indexing & Search Visibility) -- COMPLETE
+Plan: 03 of 03 in current phase (all done)
 Status: Phase complete (Phases 14, 15, 16 all complete)
-Last activity: 2026-02-25 -- Completed 15-PLAN-02.md (Layers 3-4 + constraints + archetype-to-GEO mapping)
+Last activity: 2026-02-25 -- Completed Phase 16 (3/3 plans, all verified)
 
 Progress: [████████████░░░░░░░░░░░░] v1: 100% | v1.5: ~60% (9/TBD plans)
 
@@ -86,5 +86,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-02-25
-Stopped at: Completed Phase 15 (Structured Data & GEO). Phases 14, 15, 16 all complete. Ready for Phase 17 execution.
+Stopped at: Completed Phase 16 (Indexing & Search Visibility). SEO chain (14-16) complete. Ready for Phase 17 execution.
 Resume file: None
