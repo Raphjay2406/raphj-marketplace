@@ -3,7 +3,7 @@
 ## Milestones
 
 - **v1 Modulo 2.0** — Phases 1-13 (shipped 2026-02-25) — see `milestones/v1-ROADMAP.md`
-- **v1.5 SEO/GEO & API Integration** — Phases 14-18 (in progress)
+- **v1.5 SEO/GEO & API Integration** — Phases 14-19 (in progress)
 
 ## Phases
 
@@ -35,6 +35,7 @@
 - [ ] **Phase 16: Indexing & Search Visibility** - New search-visibility skill with IndexNow auto-setup, llms.txt, unified indexing strategy, and GSC/Bing submission workflows
 - [ ] **Phase 17: API Integration Patterns** - New api-patterns skill with Context7 MCP integration, server-side proxy patterns, CRM forms, typed API clients, webhooks, and env management
 - [ ] **Phase 18: Dynamic OG Images & Pipeline Wiring** - DNA-integrated OG image generation for Next.js and Astro, plus agent updates wiring all v1.5 skills into the pipeline
+- [ ] **Phase 19: SSR & Dynamic Content Patterns** - New ssr-dynamic-content skill with SSR/ISR/streaming decision guidance, cache invalidation strategies, CMS-driven revalidation, auth-gated rendering, and real-time content freshness patterns for Next.js and Astro
 
 ## Phase Details
 
@@ -48,7 +49,10 @@
   3. XML sitemap and sitemap index generation patterns produce valid output for both Google Search Console and Bing Webmaster Tools -- using `app/sitemap.ts` (Next.js) and `@astrojs/sitemap` (Astro)
   4. robots.txt generation includes sitemap reference, crawl directives, and the complete AI crawler taxonomy distinguishing search bots (allow) from training bots (block)
   5. A framework capability matrix honestly discloses SPA limitations for React/Vite and guides users toward SSR frameworks when SEO is a primary goal
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [ ] 14-PLAN-01.md -- SKILL.md Layers 1-2: Decision Guidance with framework capability matrix + complete code patterns for all 8 requirements
+- [ ] 14-PLAN-02.md -- SKILL.md Layers 3-4 + Machine-Readable Constraints + appendix-ai-bots.md AI crawler taxonomy
 **Research flag**: Standard patterns -- framework APIs well-documented. Verify Next.js 16 `generateMetadata` async params syntax.
 
 ### Phase 15: Structured Data & GEO
@@ -101,20 +105,36 @@
 **Plans**: TBD
 **Research flag**: Standard patterns for OG images (Satori CSS limitations known -- flexbox only). Agent updates are internal wiring.
 
+### Phase 19: SSR & Dynamic Content Patterns
+**Goal**: Modulo produces sites that handle frequent content updates, authenticated pages, and real-time data through correct SSR, ISR, and streaming patterns -- not just static landing pages
+**Depends on**: Phase 18 (pipeline wiring complete)
+**Requirements**: TBD (to be defined during planning)
+**Success Criteria** (what must be TRUE):
+  1. A new `ssr-dynamic-content` skill (Domain tier) provides clear decision guidance for when to use SSG, SSR, ISR, or streaming -- with framework-specific implementation patterns for Next.js 16 (App Router) and Astro 5/6 (hybrid/server mode)
+  2. ISR and on-demand revalidation patterns cover `revalidatePath`/`revalidateTag` (Next.js) and on-demand builder invalidation (Astro) with CMS webhook triggers, so content updates appear within seconds without full rebuilds
+  3. Streaming SSR patterns use React Suspense boundaries and Astro's streaming response to progressively render pages with slow data sources, preventing blank-screen TTFB penalties
+  4. Auth-gated content patterns provide server-side session checks (middleware + layout), partial pre-rendering for mixed public/private pages, and honest guidance on which rendering strategies work with authentication
+  5. Cache strategy guidance covers CDN cache headers (Cache-Control, s-maxage, stale-while-revalidate), framework-level caching (Next.js Data Cache, fetch cache options), and cache invalidation patterns that prevent stale content
+  6. CMS integration patterns document the publish-revalidate-verify loop for headless CMS platforms (Sanity, Contentful, Strapi) including webhook setup, draft preview mode, and content freshness signals for SEO
+  7. Database-driven page patterns cover dynamic route generation from DB queries, pagination with SSR, and connection pooling best practices for serverless environments
+**Plans**: TBD
+**Research flag**: Needs research. Next.js 16 PPR (Partial Pre-Rendering) status, Astro server mode maturity, edge runtime limitations for SSR. Verify streaming SSR browser support matrix.
+
 ## Progress
 
 **Execution Order:**
-Phases 14-16 are sequential (SEO dependency chain). Phase 17 is independent of 14-16. Phase 18 depends on 14, 15, and 17.
+Phases 14-16 are sequential (SEO dependency chain). Phase 17 is independent of 14-16. Phase 18 depends on 14, 15, and 17. Phase 19 depends on 18 (full pipeline).
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
 | 1-13 | v1 | 63/63 | Complete | 2026-02-25 |
-| 14. Core SEO Foundation | v1.5 | 0/TBD | Not started | - |
+| 14. Core SEO Foundation | v1.5 | 0/2 | Planned | - |
 | 15. Structured Data & GEO | v1.5 | 0/TBD | Not started | - |
 | 16. Indexing & Search Visibility | v1.5 | 0/TBD | Not started | - |
 | 17. API Integration Patterns | v1.5 | 0/TBD | Not started | - |
 | 18. Dynamic OG Images & Pipeline Wiring | v1.5 | 0/TBD | Not started | - |
+| 19. SSR & Dynamic Content Patterns | v1.5 | 0/TBD | Not started | - |
 
 ---
 *Roadmap created: 2026-02-23*
-*Last updated: 2026-02-25 — v1.5 milestone phases added (14-18)*
+*Last updated: 2026-02-25 — Phase 14 planned (2 plans in 2 waves)*
