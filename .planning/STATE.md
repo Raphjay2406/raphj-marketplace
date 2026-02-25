@@ -10,19 +10,19 @@ See: .planning/PROJECT.md (updated 2026-02-25)
 ## Current Position
 
 Phase: 18 of 19 (Dynamic OG Images & Pipeline Wiring)
-Plan: 03 of 04 in current phase
+Plan: 03 of 04 in current phase (01, 03 complete; 02, 04 remaining)
 Status: In progress
-Last activity: 2026-02-25 -- Completed 18-PLAN-03 (pipeline wiring for v1.5 SEO skills)
+Last activity: 2026-02-25 -- Completed 18-PLAN-01 (og-images SKILL.md Layers 1-2)
 
-Progress: [█████████████████░░░░░░░] v1: 100% | v1.5: ~80% (12/TBD plans)
+Progress: [█████████████████░░░░░░░] v1: 100% | v1.5: ~82% (13/TBD plans)
 
 ## Performance Metrics
 
 **Velocity:**
 - Total plans completed: 63 (v1)
-- v1.5 plans completed: 12
-- Average duration: 4m 16s
-- Total execution time: 51m 33s
+- v1.5 plans completed: 13
+- Average duration: 4m 15s
+- Total execution time: 55m 33s
 
 **By Phase:**
 
@@ -32,7 +32,7 @@ Progress: [█████████████████░░░░░░
 | 15 | 2 | 10m 00s | 5m 00s |
 | 16 | 3 | 11m 00s | 3m 40s |
 | 17 | 2 | 8m 57s | 4m 29s |
-| 18 | 1 (of 4) | 3m 25s | 3m 25s |
+| 18 | 2 (of 4) | 7m 25s | 3m 43s |
 | 19 | TBD | - | - |
 
 *Updated after each plan completion*
@@ -78,6 +78,10 @@ Recent decisions affecting current work:
 - 18-03: SEO verification checklist is advisory (does not block anti-slop gate)
 - 18-03: Context7 fallback chain: Context7 -> WebFetch -> WebSearch
 - 18-03: GEO patterns conditional on content-heavy sections with schema_type set
+- 18-01: og-images SKILL.md Layers 1-2 at 951 lines -- 17 patterns across 7 sections justify the length
+- 18-01: Sharp recommended over resvg-js for Astro (no Vite config, broader ecosystem)
+- 18-01: Font loading documented first in Layer 2 (the #1 Satori pain point)
+- 18-01: 5 signature element patterns all verified against Satori CSS constraints
 
 ### Pending Todos
 
@@ -96,9 +100,10 @@ None.
 - structured-data SKILL.md at 1091 lines (all 4 layers complete) -- Layers 3-4 added only ~150 lines; no appendix extraction needed since growth was modest
 - search-visibility SKILL.md at 579 lines (all 4 layers complete) + 3 appendices -- well within target, no bloat concern
 - api-patterns SKILL.md at 1600 lines (all 4 layers complete) -- largest skill but justified by 22 patterns across 6 API requirements; Layers 3-4 growth was modest (124 lines)
+- og-images SKILL.md at 951 lines (Layers 1-2 complete) -- 17 patterns across both frameworks; Plan 02 will add Layers 3-4
 
 ## Session Continuity
 
 Last session: 2026-02-25
-Stopped at: Completed 18-PLAN-03 (pipeline wiring for v1.5 SEO skills). Phase 18 Plan 04 next.
+Stopped at: Completed 18-PLAN-01 (og-images SKILL.md Layers 1-2). Phase 18 Plans 02 and 04 remaining.
 Resume file: None
