@@ -28,7 +28,7 @@ Apply this skill when the project goes beyond fully static pages. Specific trigg
 - **Client-side data fetching (SWR, TanStack Query)** -- Deferred to v2. This skill covers server-side rendering strategies only. Client-side fetching is a complementary pattern, not a replacement.
 - **API endpoint creation** -- Use `api-patterns` skill. This skill covers how PAGES render, not how API routes work. Webhook Route Handlers are the exception (they bridge CMS to cache invalidation).
 - **Authentication UX (login, signup, sessions)** -- Use `auth-ui` skill (future). This skill covers how auth state affects RENDERING decisions, not auth flows themselves.
-- **CMS data modeling or content fetching** -- Use `cms-integration` skill (future). This skill covers the REVALIDATION pipeline after CMS content changes, not how to fetch CMS data.
+- **CMS data modeling or content fetching** -- Out of scope (Modulo handles rendering, not data modeling). This skill covers the REVALIDATION pipeline after CMS content changes, not how to fetch CMS data.
 
 ### Rendering Strategy Decision Matrix
 
@@ -1747,7 +1747,7 @@ Remaining archetypes (Organic, Warm Artisan) should follow the closest personali
 - `api-patterns` -- Provides server-side proxy patterns, webhook signature verification, and env management. This skill USES those patterns for CMS webhook endpoints. The generic HMAC verifier and Stripe/GitHub webhook patterns are in api-patterns; the CMS-specific webhook patterns (Sanity, Contentful, Strapi, Payload, Hygraph) are in this skill.
 - `seo-meta` -- Provides sitemap generation patterns. This skill's SEO bridge calls `revalidateTag('sitemap')` to keep sitemap lastmod fresh after CMS publishes. The sitemap endpoint itself is defined by seo-meta.
 - `search-visibility` -- Provides IndexNow submission endpoint. This skill's SEO bridge fires IndexNow after CMS webhook revalidation. The IndexNow endpoint pattern is defined by search-visibility.
-- `cms-integration` -- Handles CMS data fetching and content modeling. This skill handles what happens AFTER content changes (revalidation, cache invalidation, draft preview). cms-integration handles how to FETCH the content.
+- `og-images` -- DNA-integrated OG image generation. CMS revalidation should trigger OG image cache invalidation when page content changes, ensuring social previews stay fresh.
 - `auth-ui` -- Handles authentication UX (login, signup, password reset). This skill handles how auth state affects RENDERING decisions (cached vs per-request, route protection, role-based content). auth-ui handles the user-facing auth flows.
 - `nextjs-patterns` -- Documents Next.js framework patterns at the framework level (Server Components, Route Handlers, `proxy.ts`). This skill documents how to USE those patterns for specific rendering strategies and caching.
 - `astro-patterns` -- Documents Astro framework patterns (Server Islands, hybrid mode, API endpoints). This skill documents how to USE those patterns for SSR, ISR-equivalent caching, and Server Islands.

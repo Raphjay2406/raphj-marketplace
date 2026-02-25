@@ -131,7 +131,7 @@ Domain skills are loaded **per project** based on the project's archetype, techn
 | `structured-data` | COMPLETE | 15 | 1091 | Typed JSON-LD schemas for rich results: FAQPage, Article, Product, LocalBusiness, Organization, WebSite, BreadcrumbList, HowTo, Event -- per-page recipes, @graph combinations, GEO content patterns, schema audit protocol |
 | `search-visibility` | COMPLETE | 16 | 579 | IndexNow instant indexing, AI-aware robots.txt presets, llms.txt generation, unified indexing strategy, webmaster tools submission workflows for Next.js 16 and Astro 5 |
 | `og-images` | COMPLETE | 18 | 1252 | Dynamic OG image generation from Design DNA tokens: branded 1200x630 social previews using next/og ImageResponse (Next.js) and Satori + sharp (Astro), 3 archetype-influenced template types |
-| `api-patterns` | COMPLETE | 17 | 1601 | Server-side API integration: Context7 MCP for live docs, server-side proxies with env secret protection, CRM form patterns (HubSpot, Salesforce), typed API clients with discriminated unions, webhook receivers with signature verification, Cloudflare Turnstile spam protection |
+| `api-patterns` | COMPLETE | 17 | 1600 | Server-side API integration: Context7 MCP for live docs, server-side proxies with env secret protection, CRM form patterns (HubSpot, Salesforce), typed API clients with discriminated unions, webhook receivers with signature verification, Cloudflare Turnstile spam protection |
 | `ssr-dynamic-content` | COMPLETE | 19 | 1842 | SSR/ISR/streaming decision guidance: 4-dimension rendering matrix, Cache Components (Next.js 16), Server Islands (Astro 5), CMS webhook revalidation for 5 platforms, auth-gated rendering for 4 libraries, cache invalidation strategies, loading state patterns |
 
 ---

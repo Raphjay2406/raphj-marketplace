@@ -362,7 +362,11 @@ Prefer existing shared components over creating new ones.
 ### SEO Context (include for content sections)
 Schema type: [from PLAN.md frontmatter schema_type field, or "none"]
 OG template: [from PLAN.md frontmatter og_template field, or "auto"]
+Integration type: [from PLAN.md frontmatter integration_type field, or "none"]
+Rendering strategy: [from PLAN.md frontmatter rendering_strategy field, or "static"]
 If schema_type is set: Builder should include appropriate JSON-LD script tag per structured-data skill patterns.
+If integration_type is set: Builder should follow api-patterns skill for server-side proxy, env secrets, and form handling.
+If rendering_strategy is not "static": Builder should follow ssr-dynamic-content skill for cache directives, Suspense boundaries, and loading states.
 
 ### Lessons Learned (from previous waves)
 **REPLICATE:** [patterns that reviewer praised or scored well]

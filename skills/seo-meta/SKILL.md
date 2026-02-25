@@ -853,6 +853,7 @@ However, **meta description tone** should match the project's archetype voice. T
 | `ecommerce-ui` | Product page metadata (price, availability, reviews in meta) | This skill provides base metadata patterns; `ecommerce-ui` adds commerce-specific structured data |
 | `i18n-rtl` | hreflang alternate links, locale routing, `lang` attribute | This skill covers the `<link rel="alternate" hreflang>` output; `i18n-rtl` covers locale detection, routing, and RTL layout |
 | `multi-page-architecture` | Per-page metadata templates, shared layout metadata inheritance | This skill defines the metadata API; `multi-page-architecture` defines page organization and routing |
+| `og-images` (Phase 18) | DNA-integrated Open Graph image generation for social previews | This skill defines OG meta tags (`og:image`, `twitter:image`); `og-images` generates the actual image files from Design DNA tokens |
 | `accessibility` | Both contribute to page quality; a11y and SEO share semantic HTML concerns | Complementary -- neither depends on the other, but both improve page quality signals |
 
 ## Layer 4: Anti-Patterns

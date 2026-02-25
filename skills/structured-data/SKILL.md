@@ -1012,6 +1012,7 @@ Plus BreadcrumbList (always included for multi-page sites) and any page-type-spe
 - **`seo-meta`** -- Meta tags, canonical URLs, sitemaps, robots.txt. Complementary: seo-meta handles crawlability, this skill handles extractability. Both needed for most pages. The AI crawler taxonomy lives in seo-meta's `appendix-ai-bots.md`.
 - **`emotional-arc`** -- Beat types and parameters. This skill extends emotional-arc with SEO/GEO mapping for 4 high-impact beats. Arc rules still apply (no 3+ consecutive high-energy, BREATHE after PEAK, etc.). The beat mapping table above is the integration point.
 - **`search-visibility`** (Phase 16) -- IndexNow, llms.txt, proactive indexing. This skill makes content extractable; search-visibility makes it findable. Together they complete the discovery-to-extraction pipeline.
+- **`og-images`** (Phase 18) -- DNA-integrated OG image generation. JSON-LD `image` properties (Article, Product, Organization) should reference the same URL as the generated OG image to maintain consistency between structured data and social previews.
 - **`blog-patterns`** -- Blog article structure, RSS feeds. Blog patterns use this skill's Article/BlogPosting schema and GEO content patterns for content-heavy posts.
 - **`ecommerce-ui`** -- Product pages. E-commerce uses this skill's Product schema with required `name` + `offers` for rich results.
 - **`landing-page`** -- Landing page sections. Landing pages use minimal schemas (Organization + BreadcrumbList) with GEO only if content warrants it. Do not force FAQ or BLUF on conversion-focused pages.
