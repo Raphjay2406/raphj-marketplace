@@ -1498,14 +1498,14 @@ API integration is functionally identical across archetypes -- server-side code 
 
 | Archetype Group | Form UX Tone | Error Message Voice | Success Message Voice |
 |-----------------|-------------|--------------------|-----------------------|
-| Neo-Corporate, Swiss/International | Professional, clear | "We couldn't process your request. Please try again." | "Thank you. We'll be in touch shortly." |
+| Neo-Corporate, Swiss/International, Editorial | Professional, clear | "We couldn't process your request. Please try again." | "Thank you. We'll be in touch shortly." |
 | Brutalist, Neubrutalism | Direct, minimal | "Failed. Try again." | "Sent." |
 | Luxury/Fashion, Dark Academia | Refined, understated | "We apologize for the inconvenience. Please try once more." | "Thank you for reaching out. We look forward to connecting." |
 | Playful/Startup, Vaporwave | Casual, friendly | "Oops! Something went wrong. Give it another shot?" | "Awesome! We got your message!" |
-| Japanese Minimal, Ethereal | Clean, precise | "Submission unsuccessful. Please retry." | "Received. Thank you." |
+| Japanese Minimal, Ethereal, Glassmorphism | Clean, precise | "Submission unsuccessful. Please retry." | "Received. Thank you." |
 | Data-Dense, AI-Native | Technical, specific | "Error 500: Server returned an unexpected response. Retry in 30s." | "Submission confirmed. Reference: #12345" |
 | Organic, Warm Artisan | Warm, personal | "Something didn't work. Would you mind trying once more?" | "We appreciate you reaching out. Talk soon." |
-| Kinetic, Retro-Future | Energetic, expressive | "Transmission failed. Resend?" | "Message received. Standby for response." |
+| Kinetic, Retro-Future, Neon Noir | Energetic, expressive | "Transmission failed. Resend?" | "Message received. Standby for response." |
 
 Agents should adapt the static strings in the `useActionState` component (Pattern 4) to match the project archetype. The error/success messages above are starting points -- refine based on the specific project's brand voice from Design DNA.
 
