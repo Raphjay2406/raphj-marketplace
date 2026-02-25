@@ -5,24 +5,24 @@
 See: .planning/PROJECT.md (updated 2026-02-25)
 
 **Core value:** Every output must be award-winning by default -- sites must also be discoverable and rankable.
-**Current focus:** Phase 15 - Structured Data & GEO (v1.5 milestone)
+**Current focus:** Phase 16 - Indexing & Search Visibility (v1.5 milestone)
 
 ## Current Position
 
-Phase: 15 of 19 (Structured Data & GEO)
-Plan: 01 of 02 in current phase
+Phase: 16 of 19 (Indexing & Search Visibility)
+Plan: 02 of 03 in current phase
 Status: In progress
-Last activity: 2026-02-25 -- Completed 15-PLAN-01.md (structured-data Layers 1-2)
+Last activity: 2026-02-25 -- Completed 16-PLAN-02.md (AI crawler taxonomy + llms.txt + Layer 2B)
 
-Progress: [████████████░░░░░░░░░░░░] v1: 100% | v1.5: ~27% (4/TBD plans)
+Progress: [████████████░░░░░░░░░░░░] v1: 100% | v1.5: ~33% (5/TBD plans)
 
 ## Performance Metrics
 
 **Velocity:**
 - Total plans completed: 63 (v1)
-- v1.5 plans completed: 4
-- Average duration: 4m 34s
-- Total execution time: 18m 15s
+- v1.5 plans completed: 5
+- Average duration: 4m 27s
+- Total execution time: 22m 15s
 
 **By Phase:**
 
@@ -30,7 +30,7 @@ Progress: [████████████░░░░░░░░░░░
 |-------|-------|-------|----------|
 | 14 | 2 | 8m 11s | 4m 06s |
 | 15 | 1 | 7m 04s | 7m 04s |
-| 16 | 1 | 3m 00s | 3m 00s |
+| 16 | 2 | 7m 00s | 3m 30s |
 | 17-19 | TBD | - | - |
 
 *Updated after each plan completion*
@@ -56,6 +56,9 @@ Recent decisions affecting current work:
 - 16-01: All IndexNow patterns use api.indexnow.org global endpoint (never per-engine)
 - 16-01: Content-hash tracking built into Next.js Route Handler by default
 - 16-01: astro-indexnow v2.1.0 for Astro SSG; custom endpoint for Astro SSR
+- 16-02: All three AI crawler presets presented as equal business choices (no recommended/default)
+- 16-02: llms.txt framed as forward-looking convention (no confirmed AI platform consumption)
+- 16-02: Perplexity-User included in presets despite non-compliance (flagged in taxonomy)
 - 15-01: 941 lines for Layers 1-2 (above 450-600 target) -- 25+ interfaces and 14 code patterns require space
 - 15-01: HowToSchema and WebSiteSchema interfaces created fresh (not in research)
 
@@ -78,5 +81,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-02-25
-Stopped at: Completed 15-PLAN-01.md (structured-data Layers 1-2). Phase 16 plan 01 also complete.
+Stopped at: Completed 16-PLAN-02.md (AI crawler taxonomy + llms.txt + Layer 2B)
 Resume file: None

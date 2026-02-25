@@ -137,7 +137,7 @@ Phases 14-16 are sequential (SEO dependency chain). Phase 17 is independent of 1
 | 1-13 | v1 | 63/63 | Complete | 2026-02-25 |
 | 14. Core SEO Foundation | v1.5 | 2/2 | Complete | 2026-02-25 |
 | 15. Structured Data & GEO | v1.5 | 0/2 | Planned | - |
-| 16. Indexing & Search Visibility | v1.5 | 1/3 | In progress | - |
+| 16. Indexing & Search Visibility | v1.5 | 2/3 | In progress | - |
 | 17. API Integration Patterns | v1.5 | 0/TBD | Not started | - |
 | 18. Dynamic OG Images & Pipeline Wiring | v1.5 | 0/TBD | Not started | - |
 | 19. SSR & Dynamic Content Patterns | v1.5 | 0/TBD | Not started | - |
