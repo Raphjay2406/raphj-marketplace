@@ -5,31 +5,32 @@
 See: .planning/PROJECT.md (updated 2026-02-25)
 
 **Core value:** Every output must be award-winning by default -- sites must also be discoverable and rankable.
-**Current focus:** Phase 14 - Core SEO Foundation (v1.5 milestone)
+**Current focus:** Phase 16 - Indexing & Search Visibility (v1.5 milestone)
 
 ## Current Position
 
-Phase: 14 of 19 (Core SEO Foundation)
-Plan: 02 of 02 (Phase 14 complete)
-Status: Phase complete
-Last activity: 2026-02-25 -- Completed 14-PLAN-02.md (seo-meta Layers 3-4, constraints, AI bot appendix)
+Phase: 16 of 19 (Indexing & Search Visibility)
+Plan: 01 of 03 in current phase
+Status: In progress
+Last activity: 2026-02-25 -- Completed 16-PLAN-01.md (search-visibility Layers 1-2A, IndexNow patterns)
 
-Progress: [████████████░░░░░░░░░░░░] v1: 100% | v1.5: ~10% (2/TBD plans)
+Progress: [████████████░░░░░░░░░░░░] v1: 100% | v1.5: ~20% (3/TBD plans)
 
 ## Performance Metrics
 
 **Velocity:**
 - Total plans completed: 63 (v1)
-- v1.5 plans completed: 2
-- Average duration: 4m 06s
-- Total execution time: 8m 11s
+- v1.5 plans completed: 3
+- Average duration: 3m 44s
+- Total execution time: 11m 11s
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 14 | 2 | 8m 11s | 4m 06s |
-| 15-19 | TBD | - | - |
+| 16 | 1 | 3m 00s | 3m 00s |
+| 15, 17-19 | TBD | - | - |
 
 *Updated after each plan completion*
 
@@ -51,6 +52,9 @@ Recent decisions affecting current work:
 - 14-02: 8 archetype tone variants for meta descriptions (not all 19) -- remaining map to one of the 8
 - 14-02: 13 constraint parameters (12 HARD, 1 SOFT) -- title uniqueness is SOFT
 - 14-02: Emerging bots commented-out in robots.txt template (not active rules)
+- 16-01: All IndexNow patterns use api.indexnow.org global endpoint (never per-engine)
+- 16-01: Content-hash tracking built into Next.js Route Handler by default
+- 16-01: astro-indexnow v2.1.0 for Astro SSG; custom endpoint for Astro SSR
 
 ### Pending Todos
 
@@ -63,12 +67,12 @@ None.
 ### Blockers/Concerns
 
 - GEO impact data (FAQ 3.2x figure) from single source -- re-verify during Phase 15 planning
-- Google IndexNow adoption unknown -- dual strategy (IndexNow + sitemap) mitigates this
+- Google IndexNow adoption confirmed NOT supported (Feb 2026) -- dual strategy implemented in 16-01
 - Skill bloat risk with 3 new skills -- monitor line counts, consolidate if < 300 lines
 - seo-meta SKILL.md at 928 lines (all 4 layers complete) -- manageable but near upper bound; appendix extraction kept main file focused
 
 ## Session Continuity
 
 Last session: 2026-02-25
-Stopped at: Completed 14-PLAN-02.md (Phase 14 complete)
+Stopped at: Completed 16-PLAN-01.md (search-visibility Layers 1-2A)
 Resume file: None
