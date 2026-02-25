@@ -12,7 +12,7 @@ See: .planning/PROJECT.md (updated 2026-02-25)
 Phase: 20 of 20 (Pipeline Wiring & Registry Completion)
 Plan: 02 of 02 in current phase
 Status: Phase complete -- v1.5 milestone fully closed
-Last activity: 2026-02-25 -- Completed Phase 20 gap closure (pipeline wiring + registry + documentation)
+Last activity: 2026-02-25 -- Completed 20-PLAN-01 (SKILL-DIRECTORY registration + pipeline wiring for api-patterns + ssr-dynamic-content)
 
 Progress: [████████████████████████] v1: 100% | v1.5: 100% (20/20 plans)
 
@@ -104,6 +104,8 @@ Recent decisions affecting current work:
 - 19-03: 10 HARD + 4 SOFT constraints -- experimental.ppr and middleware.ts most critical (silent failures), getSession most security-critical (auth bypass)
 - 19-03: 8 archetype groups cover all 19 archetypes for loading state personality
 - 19-03: 9 related skills with explicit boundary definitions in Layer 3
+- 20-01: Registry version bumped 2.1.0 -> 2.2.0 (api-patterns + ssr-dynamic-content registration)
+- 20-01: All pipeline wiring changes strictly additive -- follows Phase 18 precedent
 
 ### Pending Todos
 
@@ -128,5 +130,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-02-25
-Stopped at: Completed Phase 20 (pipeline wiring & registry completion). v1.5 milestone fully closed -- all gaps from v1.5-MILESTONE-AUDIT.md resolved.
+Stopped at: Completed 20-PLAN-01 (pipeline wiring + registry for api-patterns + ssr-dynamic-content). Phase 20 complete. v1.5 milestone fully closed.
 Resume file: None
