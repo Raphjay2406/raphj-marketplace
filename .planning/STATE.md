@@ -5,24 +5,24 @@
 See: .planning/PROJECT.md (updated 2026-02-25)
 
 **Core value:** Every output must be award-winning by default -- sites must also be discoverable and rankable.
-**Current focus:** Phase 19 in progress (SSR & Dynamic Content Patterns)
+**Current focus:** v1.5 roadmap complete (Phases 14-19)
 
 ## Current Position
 
 Phase: 19 of 19 (SSR & Dynamic Content Patterns)
-Plan: 02 of TBD in current phase
-Status: In progress
-Last activity: 2026-02-25 -- Completed 19-PLAN-02 (ssr-dynamic-content SKILL.md Layer 2B: CMS webhooks + auth-gated content)
+Plan: 03 of 03 in current phase
+Status: Phase complete -- v1.5 roadmap complete
+Last activity: 2026-02-25 -- Completed 19-PLAN-03 (ssr-dynamic-content SKILL.md Layers 3-4 + constraints)
 
-Progress: [████████████████████░░░░] v1: 100% | v1.5: ~94% (17/18 plans)
+Progress: [████████████████████████] v1: 100% | v1.5: 100% (18/18 plans)
 
 ## Performance Metrics
 
 **Velocity:**
 - Total plans completed: 63 (v1)
-- v1.5 plans completed: 17
-- Average duration: 4m 14s
-- Total execution time: 71m 57s
+- v1.5 plans completed: 18
+- Average duration: 4m 10s
+- Total execution time: 75m 03s
 
 **By Phase:**
 
@@ -33,7 +33,7 @@ Progress: [████████████████████░░░
 | 16 | 3 | 11m 00s | 3m 40s |
 | 17 | 2 | 8m 57s | 4m 29s |
 | 18 | 4 | 11m 44s | 2m 56s |
-| 19 | 2 | 12m 05s | 6m 03s |
+| 19 | 3 | 15m 11s | 5m 04s |
 
 *Updated after each plan completion*
 
@@ -99,6 +99,10 @@ Recent decisions affecting current work:
 - 19-02: Supabase getClaims() enforced as CRITICAL constraint -- getSession() shown as insecure anti-pattern
 - 19-02: notifySeoUpdate() reusable helper bridges CMS revalidation to sitemap + IndexNow (Phase 14-16 connection)
 - 19-02: Payload CMS uses afterChange hooks directly -- no webhook endpoint needed (runs inside Next.js process)
+- 19-03: ssr-dynamic-content SKILL.md complete at 1842 lines -- Layers 3-4 added only 136 lines to existing 1706; 10 anti-patterns, 14 constraints (10 HARD, 4 SOFT)
+- 19-03: 10 HARD + 4 SOFT constraints -- experimental.ppr and middleware.ts most critical (silent failures), getSession most security-critical (auth bypass)
+- 19-03: 8 archetype groups cover all 19 archetypes for loading state personality
+- 19-03: 9 related skills with explicit boundary definitions in Layer 3
 
 ### Pending Todos
 
@@ -118,10 +122,10 @@ None.
 - search-visibility SKILL.md at 579 lines (all 4 layers complete) + 3 appendices -- well within target, no bloat concern
 - api-patterns SKILL.md at 1600 lines (all 4 layers complete) -- largest skill but justified by 22 patterns across 6 API requirements; Layers 3-4 growth was modest (124 lines)
 - og-images SKILL.md at 1252 lines (all 4 layers complete) -- Layers 3-4 added 301 lines to existing 951; 6 anti-patterns with code examples and 10-parameter constraint table
-- ssr-dynamic-content SKILL.md at 1706 lines (Layers 1-2 complete) -- 27 patterns across 8 categories; Plan 03 adds Layers 3-4
+- ssr-dynamic-content SKILL.md at 1842 lines (all 4 layers complete) -- largest skill; 27 patterns, 10 anti-patterns, 14 constraints across 8 categories
 
 ## Session Continuity
 
 Last session: 2026-02-25
-Stopped at: Completed 19-PLAN-02 (ssr-dynamic-content SKILL.md Layer 2B: CMS webhooks + auth-gated content). Phase 19 in progress.
+Stopped at: Completed 19-PLAN-03 (ssr-dynamic-content SKILL.md Layers 3-4 + constraints). Phase 19 complete. v1.5 roadmap complete.
 Resume file: None
