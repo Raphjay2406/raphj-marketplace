@@ -78,6 +78,25 @@ Your spawn prompt includes your beat assignment. Use this table to verify compli
 
 This section contains domain-specific expertise that the general section-builder does not have. This is why the build-orchestrator routes to you instead of a general builder.
 
+### GEO Content Patterns (Search Visibility)
+
+When building content-heavy sections for public-facing sites targeting search visibility, apply GEO (Generative Engine Optimization) patterns that help content appear in AI engine citations without destroying premium aesthetics.
+
+**GEO Pattern Triggers:**
+- Section is content-heavy (blog feature, case study, about page, FAQ)
+- Project targets organic search traffic or AI engine visibility
+- PLAN.md has `schema_type` set (indicates SEO-aware section)
+
+**Patterns to Apply (when triggered):**
+- **BLUF (Bottom Line Up Front):** Lead with the key takeaway in the first sentence/paragraph, not buried after introduction. AI engines extract the first substantive statement
+- **Question-Based Headings:** Use H2/H3 headings phrased as questions that users actually search for. "How does X work?" not "Our Approach"
+- **Quotable Statistics:** Format key numbers with context and citation. "Projects using DNA tokens ship 40% faster (Internal benchmark, 2025)" -- the citation format helps AI engines treat it as a citable fact
+- **FAQ-First Content:** If the section has FAQ content, structure it with the question as a heading and a concise answer as the first paragraph, followed by supporting detail
+
+**Archetype-Aware GEO:** GEO patterns must NOT override the archetype's voice. A Brutalist project's FAQ should still feel raw and direct. An Ethereal project's statistics should still feel elegant. Apply GEO structure to existing brand-voiced content, not as a separate "SEO layer."
+
+**Skill reference:** For detailed GEO patterns and the SEO-Emotional Arc beat mapping, consult `skills/structured-data/SKILL.md` Layer 3 (the GEO integration section).
+
 ### Brand Voice Enforcement
 
 Brand voice is NOT just about tone -- it is the personality that makes copy feel like it belongs to ONE specific brand, not any brand.

@@ -1,7 +1,7 @@
 ---
 name: researcher
 description: "Parallel research agent that investigates one of 5 design tracks (industry analysis, design references, component patterns, animation techniques, content voice) and writes structured findings to .planning/modulo/research/. Receives track assignment via spawn prompt. Reads PROJECT.md only."
-tools: Read, Write, Grep, Glob, WebSearch, WebFetch
+tools: Read, Write, Grep, Glob, WebSearch, WebFetch, mcp__context7__resolve-library-id, mcp__context7__query-docs
 model: inherit
 maxTurns: 20
 ---
@@ -131,6 +131,22 @@ Read `.planning/modulo/PROJECT.md` to understand:
 
 ### Step 2: Research
 
+**Context7 MCP Integration (use FIRST for library documentation):**
+
+Before using WebSearch for library-specific questions, query Context7 for up-to-date documentation:
+
+1. **Resolve the library:** Use `mcp__context7__resolve-library-id` with the library name to get its Context7 identifier
+   - Example: resolve "next.js" -> get library ID for Next.js documentation
+2. **Query documentation:** Use `mcp__context7__query-docs` with the library ID and your specific question
+   - Example: query Next.js docs for "generateMetadata async params" to get current v16 syntax
+3. **Fallback chain:** Context7 (fastest, most current) -> Official docs via WebFetch -> WebSearch (broadest, least current)
+
+Context7 provides library documentation that is more current than training data. Use it for:
+- Framework API syntax verification (Next.js, Astro, React)
+- Library version-specific features and breaking changes
+- Configuration syntax and options
+- Migration guides between versions
+
 Use WebSearch and WebFetch to gather information:
 - Search for relevant examples, trends, and techniques specific to this track
 - Analyze reference sites if URLs were provided and relevant to your track
@@ -193,4 +209,5 @@ Write findings to `.planning/modulo/research/{TRACK}.md` using this format:
 - **Target 5-8 key findings per track.** Quality over quantity. Each finding should be worth reading.
 - **Write to `.planning/modulo/research/{TRACK}.md`.** Use the exact track name as the filename (e.g., `INDUSTRY-ANALYSIS.md`, `DESIGN-REFERENCES.md`).
 - **Current information only.** Design trends move fast. Prioritize 2025-2026 examples over older references.
+- **Context7 first for libraries.** When researching library-specific patterns (API syntax, configuration options, version differences), query Context7 before WebSearch. Context7 provides official documentation that is more current than web search results.
 - **No skill file reads.** You do not need design-dna, design-archetypes, or any other skill. Your job is external research, not internal reference.

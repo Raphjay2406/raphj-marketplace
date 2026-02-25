@@ -28,6 +28,9 @@ Every Wave 0 scaffold generates these files from DNA:
 | `lib/motion.ts` | Motion preset utilities (archetype profile, DNA-tweaked easings/durations) | DNA motion language + archetype profile |
 | `lib/beats.ts` | Beat template definitions (constraints per beat type) | Emotional arc from DNA |
 | `components/ui/section-wrapper.tsx` | Section container with beat-aware defaults | Beat templates |
+| `app/sitemap.ts` | Dynamic sitemap generation | Page routes + seo-meta skill |
+| `app/robots.ts` | Crawler directives with sitemap reference | seo-meta skill |
+| `app/opengraph-image.tsx` | Root-level default OG image | DNA tokens + og-images skill |
 
 Optional (if archetype uses them):
 | `lib/effects.ts` | Signature element utilities, texture patterns | DNA signature element |
@@ -666,7 +669,17 @@ When creating the `00-shared` section PLAN.md, include these tasks:
 - [auto] Set up font preloading in app/layout.tsx with DNA fonts
 - [auto] Install dependencies: motion, clsx, tailwind-merge
 - [auto] Verify all CSS variables resolve correctly (no missing DNA tokens)
+- [auto] Create app/sitemap.ts with dynamic sitemap generation from page routes (reference seo-meta skill)
+- [auto] Create app/robots.ts with sitemap reference and crawler directives (reference seo-meta skill)
+- [auto] Add metadataBase to app/layout.tsx metadata export (reference seo-meta skill)
+- [auto] Create app/opengraph-image.tsx root-level default OG image with DNA tokens (reference og-images skill)
 </tasks>
+
+**Astro variant:** Replace Next.js-specific files:
+- `app/sitemap.ts` -> `@astrojs/sitemap` integration in `astro.config.mjs`
+- `app/robots.ts` -> `public/robots.txt` static file
+- `app/opengraph-image.tsx` -> `src/pages/og/default.png.ts` endpoint
+- metadataBase -> BaseLayout `<head>` meta tags
 ```
 
 **Note:** `motion` package (NOT `framer-motion`). All imports use `motion/react`.
@@ -703,6 +716,9 @@ The scaffold IS the DNA made real. Every token in `DESIGN-DNA.md` becomes a CSS 
 - `cinematic-motion` -- Provides motion vocabulary that the scaffold's presets implement
 - `performance-aware-animation` -- Provides CSS-first decision tree that scaffold defaults align with
 - `design-archetypes` -- Provides archetype-specific motion profiles for `lib/motion.ts` presets
+- `seo-meta` -- Provides sitemap, robots.txt, and metadata patterns scaffolded in Wave 0
+- `og-images` -- Provides OG image generation patterns for the root-level opengraph-image.tsx
+- `structured-data` -- Section builders may need to add JSON-LD scripts per section PLAN.md schema_type
 
 ---
 
