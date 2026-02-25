@@ -1016,3 +1016,237 @@ OG image generation activates at two stages in the Modulo build pipeline:
 | `design-archetypes` | Provides the archetype personality that influences OG composition family selection. The active archetype determines whether the OG style is Bold/Maximalist, Elegant/Minimal, etc. |
 | `design-system-scaffold` | Wave 0 scaffold includes OG route setup (updated by Plan 03 of this phase). The scaffold creates the initial OG route files with DNA token integration |
 | `structured-data` | If the page has JSON-LD schema with an `image` property (Article, Product, etc.), the `og:image` URL should be consistent with the schema image. Both point to the same generated PNG |
+
+## Layer 4: Anti-Patterns
+
+Named mistakes that agents must avoid when generating OG images. Each includes the wrong approach, the correct approach, and how to detect the problem.
+
+### 1. "The WOFF2 Surprise"
+
+**Problem:** Loading a WOFF2 font file into Satori. Satori's opentype.js parser cannot decode WOFF2 (it requires uncompressed TTF/OTF or WOFF). The result: silent fallback to a system font or a `Failed to decode font` error. The OG image renders with Times New Roman instead of the project's DNA display font.
+
+**Wrong:**
+```typescript
+// WOFF2 will silently fail or crash Satori
+const font = await readFile(
+  join(process.cwd(), 'assets/fonts/DisplayFont-Bold.woff2')
+)
+```
+
+**Right:**
+```typescript
+// Convert to TTF before using in OG templates
+// During project setup: npx woff2-to-ttf DisplayFont-Bold.woff2
+const font = await readFile(
+  join(process.cwd(), 'assets/fonts/DisplayFont-Bold.ttf')
+)
+```
+
+**Detection:** Title text renders in a serif system font (Times New Roman) instead of the project's display font. Console may show `Failed to decode font` or `Invalid font data` errors.
+
+### 2. "The Invisible Flexbox"
+
+**Problem:** Forgetting `display: 'flex'` on container divs. Satori's Yoga layout engine requires explicit flex declarations on every container -- it does not default to block layout like CSS in browsers. Elements appear overlapping, collapsed, or stacked in unexpected ways.
+
+**Wrong:**
+```tsx
+<div style={{ padding: '60px', backgroundColor: '#0a0a0f' }}>
+  {/* Children will overlap or collapse -- no layout mode declared */}
+  <div style={{ fontSize: '64px' }}>{title}</div>
+  <div style={{ fontSize: '24px' }}>sitename.com</div>
+</div>
+```
+
+**Right:**
+```tsx
+<div style={{
+  display: 'flex',
+  flexDirection: 'column',
+  padding: '60px',
+  backgroundColor: '#0a0a0f',
+}}>
+  <div style={{ fontSize: '64px', display: 'flex' }}>{title}</div>
+  <div style={{ fontSize: '24px', display: 'flex' }}>sitename.com</div>
+</div>
+```
+
+**Detection:** Elements don't respect alignment or direction properties. Title and site name render on top of each other. Layout appears broken despite correct-looking styles.
+
+### 3. "The Grid Trap"
+
+**Problem:** Using CSS Grid in Satori templates. Satori only supports flexbox via its Yoga layout engine. `display: 'grid'` silently fails with no error -- the layout simply collapses. Multi-column layouts break without any warning.
+
+**Wrong:**
+```tsx
+<div style={{
+  display: 'grid',
+  gridTemplateColumns: '1fr 1fr',
+  gap: '20px',
+}}>
+  <div>{leftContent}</div>
+  <div>{rightContent}</div>
+</div>
+```
+
+**Right:**
+```tsx
+<div style={{
+  display: 'flex',
+  flexDirection: 'row',
+  gap: '20px',
+}}>
+  <div style={{ flex: 1, display: 'flex' }}>{leftContent}</div>
+  <div style={{ flex: 1, display: 'flex' }}>{rightContent}</div>
+</div>
+```
+
+**Detection:** Multi-column layouts collapse to a single column. Elements stack vertically when they should be side-by-side. No error in console -- the failure is silent.
+
+### 4. "The Metadata Merge Trap"
+
+**Problem (Next.js specific):** Defining `openGraph` in a page's `generateMetadata` causes shallow replacement of the parent's entire openGraph object, losing the `images` field set by the parent layout. This is especially dangerous when mixing `opengraph-image.tsx` file convention with manual `generateMetadata`. The file convention sets the image at the layout level, but a child page's `generateMetadata` with `openGraph: { title: '...' }` replaces the entire object.
+
+**Wrong:**
+```tsx
+// app/blog/[slug]/page.tsx
+export async function generateMetadata({ params }): Promise<Metadata> {
+  return {
+    openGraph: {
+      title: post.title,  // Shallow replaces entire parent openGraph
+      // Parent's openGraph.images is LOST
+    },
+  }
+}
+```
+
+**Right:**
+```tsx
+// Option A (PREFERRED): Use opengraph-image.tsx file convention per-route
+// Each route generates its own image -- no inheritance needed
+// app/blog/[slug]/opengraph-image.tsx handles the image
+
+// Option B: If using generateMetadata, spread parent openGraph
+export async function generateMetadata({ params }, parent): Promise<Metadata> {
+  const parentMetadata = await parent
+  return {
+    openGraph: {
+      ...parentMetadata.openGraph,  // Preserve parent's images
+      title: post.title,
+    },
+  }
+}
+```
+
+**Detection:** Social preview shows the site default image (or no image) on specific pages. Debug by checking the rendered HTML for `og:image` meta tag -- it will be missing on affected pages.
+
+### 5. "The Bloated Canvas"
+
+**Problem:** OG images with complex gradients, embedded photographs (base64), or uncompressed output exceeding 5MB. Social platforms reject, timeout, or show fallback images for oversized files. Even images that technically load may cause slow social card rendering.
+
+**Wrong:**
+```tsx
+// Embedding a full photograph as base64 in the template
+<div style={{ display: 'flex', width: '100%', height: '100%' }}>
+  <img
+    src={`data:image/jpeg;base64,${hugeBase64String}`}
+    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+  />
+  <div style={{ position: 'absolute', display: 'flex' }}>{title}</div>
+</div>
+```
+
+**Right:**
+```tsx
+// Keep OG images simple: text + solid/gradient background + small signature element
+// Sharp's png() compresses well by default -- target < 500KB
+<div style={{
+  display: 'flex',
+  flexDirection: 'column',
+  width: '100%',
+  height: '100%',
+  backgroundColor: '#0a0a0f',    /* DNA:bg -- solid or gradient, no photos */
+  padding: '60px',
+}}>
+  <div style={{ fontSize: '64px', fontWeight: 700, display: 'flex' }}>
+    {title}
+  </div>
+</div>
+```
+
+**Detection:** Slow social card loading. Platforms showing fallback image instead of the generated OG. PNG file size exceeds 500KB (check with `sharp(svg).png().toBuffer()` then `buffer.length`).
+
+### 6. "The Generic Preview"
+
+**Problem:** Using the same layout and colors for every project regardless of archetype. OG images should reinforce the project's unique visual identity -- not look like output from a generic social card generator. Every Modulo project has a distinct DNA and archetype; the OG image must reflect both.
+
+**Wrong:**
+```tsx
+// One fixed template for all projects -- always centered, always blue gradient
+<div style={{
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  background: 'linear-gradient(135deg, #667eea, #764ba2)',  // Hardcoded colors
+  width: '100%',
+  height: '100%',
+}}>
+  <div style={{ fontSize: '48px', color: 'white', display: 'flex' }}>
+    {title}
+  </div>
+</div>
+```
+
+**Right:**
+```tsx
+// Archetype-influenced composition with DNA tokens
+// Brutalist example: raw type, high contrast, thick accent bar
+<div style={{
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  padding: '60px',
+  backgroundColor: dna.bg,       // Project-specific DNA token
+  color: dna.text,               // Project-specific DNA token
+  fontFamily: 'DisplayFont',     // Project's actual display font
+  width: '100%',
+  height: '100%',
+}}>
+  {/* DNA signature element -- type matches project DNA */}
+  <div style={{
+    position: 'absolute',
+    bottom: '0',
+    left: '0',
+    width: '100%',
+    height: '8px',
+    backgroundColor: dna.primary,  // Project-specific accent
+  }} />
+  <div style={{ fontSize: '64px', fontWeight: 700, display: 'flex' }}>
+    {title}
+  </div>
+</div>
+```
+
+**Detection:** Social cards from different Modulo projects look identical. Compare OG images across 2-3 projects -- they should have distinct color palettes, signature elements, and composition approaches matching their archetypes.
+
+---
+
+## Machine-Readable Constraints
+
+Enforceable parameters for OG image generation. HARD constraints cause incorrect output if violated (broken image, wrong size, crash). SOFT constraints degrade quality but the image still generates.
+
+| Parameter | Min | Max | Unit | Enforcement |
+|-----------|-----|-----|------|-------------|
+| Image width | 1200 | 1200 | px | HARD |
+| Image height | 630 | 630 | px | HARD |
+| Image file size | -- | 500 | KB | SOFT |
+| Image format | PNG | PNG | -- | HARD |
+| Font format | TTF | OTF | -- | HARD (no WOFF2) |
+| Title font size | 48 | 72 | px | SOFT |
+| Title character limit | -- | 80 | chars | SOFT |
+| Signature element | required | required | -- | HARD |
+| Display flex on containers | required | required | -- | HARD |
+| CSS Grid usage | forbidden | forbidden | -- | HARD |
+
+**Enforcement definitions:**
+- **HARD** -- Violation causes incorrect output. Image may not render, render at wrong dimensions, crash Satori, or produce a broken PNG. Must be enforced without exception.
+- **SOFT** -- Violation degrades quality but image still generates. Oversized files load slowly, truncated titles lose meaning, suboptimal font sizes reduce readability. Should be enforced but may be relaxed with documented rationale.
