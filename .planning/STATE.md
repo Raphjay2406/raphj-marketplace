@@ -10,19 +10,19 @@ See: .planning/PROJECT.md (updated 2026-02-25)
 ## Current Position
 
 Phase: 18 of 19 (Dynamic OG Images & Pipeline Wiring)
-Plan: 03 of 04 in current phase (01, 03 complete; 02, 04 remaining)
+Plan: 04 of 04 in current phase (01, 03, 04 complete; 02 remaining)
 Status: In progress
-Last activity: 2026-02-25 -- Completed 18-PLAN-01 (og-images SKILL.md Layers 1-2)
+Last activity: 2026-02-25 -- Completed 18-PLAN-04 (SKILL-DIRECTORY v1.5 milestone update)
 
-Progress: [█████████████████░░░░░░░] v1: 100% | v1.5: ~82% (13/TBD plans)
+Progress: [█████████████████░░░░░░░] v1: 100% | v1.5: ~78% (14/18 plans)
 
 ## Performance Metrics
 
 **Velocity:**
 - Total plans completed: 63 (v1)
-- v1.5 plans completed: 13
-- Average duration: 4m 15s
-- Total execution time: 55m 33s
+- v1.5 plans completed: 14
+- Average duration: 4m 04s
+- Total execution time: 56m 55s
 
 **By Phase:**
 
@@ -32,7 +32,7 @@ Progress: [█████████████████░░░░░░
 | 15 | 2 | 10m 00s | 5m 00s |
 | 16 | 3 | 11m 00s | 3m 40s |
 | 17 | 2 | 8m 57s | 4m 29s |
-| 18 | 2 (of 4) | 7m 25s | 3m 43s |
+| 18 | 3 (of 4) | 8m 47s | 2m 56s |
 | 19 | TBD | - | - |
 
 *Updated after each plan completion*
@@ -82,6 +82,9 @@ Recent decisions affecting current work:
 - 18-01: Sharp recommended over resvg-js for Astro (no Vite config, broader ecosystem)
 - 18-01: Font loading documented first in Layer 2 (the #1 Satori pain point)
 - 18-01: 5 signature element patterns all verified against Satori CSS constraints
+- 18-04: seo-meta moved from Utility to Core tier in SKILL-DIRECTORY.md (Phase 14 rewrite, v3.0.0)
+- 18-04: 3 new Domain skills under SEO & Visibility subcategory (structured-data, search-visibility, og-images)
+- 18-04: Registry version bumped 2.0.0 -> 2.1.0 (v1.5 milestone close)
 
 ### Pending Todos
 
@@ -105,5 +108,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-02-25
-Stopped at: Completed 18-PLAN-01 (og-images SKILL.md Layers 1-2). Phase 18 Plans 02 and 04 remaining.
+Stopped at: Completed 18-PLAN-04 (SKILL-DIRECTORY v1.5 milestone update). Phase 18 Plan 02 remaining.
 Resume file: None
