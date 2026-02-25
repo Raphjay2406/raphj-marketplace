@@ -97,3 +97,317 @@ For every project, implement both paths:
 - **Consumed at:** `/modulo:execute` Wave 0 (IndexNow endpoint scaffold, key verification file, robots.txt AI rules, llms.txt), Wave 2+ (content-hash tracking on per-section publish)
 - **Input from:** `seo-meta` skill (base robots.txt directives, sitemap URL), Design DNA (site name, URL for llms.txt)
 - **Output to:** IndexNow endpoint (Route Handler or Astro endpoint), AI-aware robots.txt rules, llms.txt file, webmaster tools verification files
+
+## Layer 2: Award-Winning Examples -- Part A (IndexNow Auto-Setup)
+
+### IndexNow Auto-Setup Patterns (IDX-01)
+
+#### 1. IndexNow API Key Setup
+
+IndexNow requires an API key that is 8-128 characters long, containing only hexadecimal characters (a-f, A-F, 0-9) and hyphens. The key serves as both your submission credential and domain verification token. You must host a verification file at `/{key}.txt` for IndexNow to validate domain ownership.
+
+**Two approaches to get a key:**
+
+- **Generate via Bing Webmaster Tools** (recommended for production) -- Dashboard > Configure My Site > IndexNow > Generate Key. This registers the key with Bing immediately.
+- **Generate any valid hex string** (fine for development) -- Any 32-character hex string works. All participating engines accept any valid key as long as the verification file is accessible.
+
+**Environment variables:**
+
+```bash
+# .env.local (Next.js) or .env (Astro)
+INDEXNOW_KEY=f34f184d10c049ef99aa7637cdc4ef04
+INDEXNOW_INTERNAL_SECRET=your-random-secret-for-endpoint-auth
+```
+
+**Framework config (Next.js):**
+
+```typescript
+// next.config.ts
+const nextConfig = {
+  env: {
+    INDEXNOW_KEY: process.env.INDEXNOW_KEY,
+  },
+}
+export default nextConfig
+```
+
+**Framework config (Astro):**
+
+```javascript
+// astro.config.mjs -- env variables accessed via import.meta.env
+// No special config needed; Astro reads .env files automatically
+// Use import.meta.env.INDEXNOW_KEY in endpoints (NOT process.env)
+```
+
+#### 2. IndexNow Key Verification File
+
+IndexNow requires a static file at `/{key}.txt` on your domain to verify ownership. Without this file, submissions return 403 Forbidden.
+
+**Static approach (both frameworks -- recommended):**
+
+Place a text file in your `public/` directory. The filename must be your API key with a `.txt` extension. The file contents must be the key itself and nothing else.
+
+```
+public/f34f184d10c049ef99aa7637cdc4ef04.txt
+```
+
+File contents (the key string only):
+```
+f34f184d10c049ef99aa7637cdc4ef04
+```
+
+**Dynamic approach (Next.js only):**
+
+If you prefer not to commit the key to your repository, serve it dynamically via a Route Handler. This reads the key from the environment at runtime.
+
+```typescript
+// app/[key]/route.ts
+import { NextResponse } from 'next/server'
+
+export async function GET(
+  request: Request,
+  { params }: { params: Promise<{ key: string }> }
+) {
+  const { key } = await params
+  const indexNowKey = process.env.INDEXNOW_KEY
+
+  if (key === `${indexNowKey}.txt`) {
+    return new NextResponse(indexNowKey, {
+      headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+    })
+  }
+
+  return NextResponse.json({ error: 'Not found' }, { status: 404 })
+}
+```
+
+#### 3. Next.js 16: IndexNow Route Handler
+
+This is the primary IndexNow pattern for Next.js projects. It accepts a list of URLs via POST, filters out unchanged URLs using SHA-256 content hashing, and submits changed URLs to the global IndexNow endpoint in batches of 10,000. Internal authentication via Bearer token prevents unauthorized submissions.
+
+The in-memory `Map` persists across warm serverless invocations, providing effective deduplication during active traffic. On cold start the cache resets -- this is acceptable for most sites because a fresh submission of all URLs is harmless (just slightly wasteful). For persistent tracking across cold starts, substitute a KV store (Vercel KV, Upstash Redis) for the Map.
+
+```typescript
+// app/api/indexnow/route.ts
+import { NextRequest, NextResponse } from 'next/server'
+import { createHash } from 'crypto'
+
+const INDEXNOW_KEY = process.env.INDEXNOW_KEY!
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL!
+const INDEXNOW_ENDPOINT = 'https://api.indexnow.org/IndexNow'
+
+// In-memory hash cache (persists across requests in serverless warm starts)
+const submittedHashes = new Map<string, string>()
+
+function contentHash(url: string, content: string): string {
+  return createHash('sha256').update(`${url}:${content}`).digest('hex').slice(0, 16)
+}
+
+export async function POST(request: NextRequest) {
+  // Verify internal auth -- prevent unauthorized submissions
+  const authHeader = request.headers.get('authorization')
+  if (authHeader !== `Bearer ${process.env.INDEXNOW_INTERNAL_SECRET}`) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
+  const { urls } = await request.json() as {
+    urls: Array<{ url: string; contentHash?: string }>
+  }
+
+  // Filter out unchanged URLs using content-hash tracking
+  const changedUrls = urls.filter(({ url, contentHash: hash }) => {
+    if (!hash) return true // No hash provided, submit anyway
+    const previous = submittedHashes.get(url)
+    if (previous === hash) return false // Content unchanged
+    submittedHashes.set(url, hash)
+    return true
+  })
+
+  if (changedUrls.length === 0) {
+    return NextResponse.json({ submitted: 0, message: 'No changed URLs' })
+  }
+
+  // Batch in groups of 10,000 (IndexNow limit per POST)
+  const batches: Array<{ url: string; contentHash?: string }[]> = []
+  for (let i = 0; i < changedUrls.length; i += 10_000) {
+    batches.push(changedUrls.slice(i, i + 10_000))
+  }
+
+  const results: Array<{ status: number; count: number }> = []
+  for (const batch of batches) {
+    const response = await fetch(INDEXNOW_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json; charset=utf-8' },
+      body: JSON.stringify({
+        host: new URL(SITE_URL).hostname,
+        key: INDEXNOW_KEY,
+        keyLocation: `${SITE_URL}/${INDEXNOW_KEY}.txt`,
+        urlList: batch.map(u => u.url),
+      }),
+    })
+    results.push({ status: response.status, count: batch.length })
+  }
+
+  return NextResponse.json({
+    submitted: changedUrls.length,
+    batches: results,
+  })
+}
+```
+
+**Calling the endpoint** (from a CMS webhook handler, ISR callback, or deploy script):
+
+```typescript
+// Example: trigger IndexNow after content publish
+await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/indexnow`, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${process.env.INDEXNOW_INTERNAL_SECRET}`,
+  },
+  body: JSON.stringify({
+    urls: [
+      { url: 'https://example.com/blog/new-post', contentHash: 'a1b2c3d4e5f6' },
+      { url: 'https://example.com/blog/updated-post', contentHash: 'f6e5d4c3b2a1' },
+    ],
+  }),
+})
+```
+
+#### 4. Astro SSR: IndexNow API Endpoint
+
+For Astro projects running in SSR or hybrid mode with dynamic content updates. This endpoint follows the same submission pattern as the Next.js handler but uses Astro's `APIRoute` type and `import.meta.env` for configuration. Simpler than the Next.js pattern because SSR Astro sites typically handle fewer dynamic URLs -- content-hash tracking can be added following the same `Map` approach if needed.
+
+```typescript
+// src/pages/api/indexnow.ts
+import type { APIRoute } from 'astro'
+
+const INDEXNOW_KEY = import.meta.env.INDEXNOW_KEY
+const SITE_URL = import.meta.env.SITE
+
+export const POST: APIRoute = async ({ request }) => {
+  // Verify internal auth
+  const auth = request.headers.get('authorization')
+  if (auth !== `Bearer ${import.meta.env.INDEXNOW_INTERNAL_SECRET}`) {
+    return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+      status: 401,
+      headers: { 'Content-Type': 'application/json' },
+    })
+  }
+
+  const { urls } = await request.json() as { urls: string[] }
+
+  const response = await fetch('https://api.indexnow.org/IndexNow', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json; charset=utf-8' },
+    body: JSON.stringify({
+      host: new URL(SITE_URL).hostname,
+      key: INDEXNOW_KEY,
+      keyLocation: `${SITE_URL}/${INDEXNOW_KEY}.txt`,
+      urlList: urls,
+    }),
+  })
+
+  return new Response(JSON.stringify({
+    submitted: urls.length,
+    status: response.status,
+  }), {
+    status: 200,
+    headers: { 'Content-Type': 'application/json' },
+  })
+}
+```
+
+#### 5. Astro SSG: astro-indexnow Integration
+
+For static Astro sites deployed via CI/CD. The `astro-indexnow` integration (v2.1.0) runs at build time, hashes all HTML output, compares against the previous build's cache, and submits only changed URLs. This is the recommended approach for static sites because it handles change detection, batching, and caching automatically.
+
+```bash
+npm install astro-indexnow
+```
+
+```javascript
+// astro.config.mjs
+import { defineConfig } from 'astro/config'
+import indexnow from 'astro-indexnow'
+
+export default defineConfig({
+  site: 'https://example.com',
+  integrations: [
+    indexnow({
+      // API key -- generate via Bing WMT or use any valid hex string
+      key: process.env.INDEXNOW_KEY,
+      // Cache file stores URL-to-hash mappings between builds
+      cacheDir: process.cwd(),
+    }),
+  ],
+})
+```
+
+**Built-in features:**
+- HTML output hashing (SHA-256 of rendered page content)
+- Automatic batching (respects 10,000 URL limit per POST)
+- Cache file (`.astro-indexnow-cache.json`) for cross-build change detection
+- CI/CD compatible -- no runtime server required
+
+**CI/CD persistence:** Commit `.astro-indexnow-cache.json` to git so the cache persists across CI/CD builds. Without this, every build submits all URLs as "new."
+
+**Limitation:** Build-time only. NOT suitable for Astro SSR sites with runtime content updates. For SSR Astro, use the API endpoint pattern in section 4 above.
+
+#### 6. Content-Hash Tracking Approaches
+
+Content-hash tracking prevents resubmitting unchanged URLs to IndexNow. Without it, every deployment or publish event wastes API quota and may trigger spam protections (HTTP 429 responses).
+
+| Approach | Best For | Pros | Cons |
+|----------|----------|------|------|
+| In-memory Map | Next.js serverless | Simple, no external deps, zero latency | Lost on cold start; OK for edge/serverless warm instances |
+| File-based JSON cache | Astro SSG (CI/CD) | Persists between builds if committed to git | Not suitable for runtime/SSR |
+| KV store (Redis, Vercel KV) | High-traffic SSR sites | Persistent, shared across instances, survives deploys | External dependency, added cost |
+| Database column | CMS-driven sites | Content hash computed on save, already in the data model | Requires schema change, tightly coupled |
+
+**`astro-indexnow` reference implementation (5-step process):**
+
+1. Scan HTML output directory after build
+2. SHA-256 hash each page's rendered HTML content
+3. Compare hashes against `.astro-indexnow-cache.json` from previous build
+4. Submit only new or changed URLs to `api.indexnow.org`
+5. Update cache file with current hashes
+
+**Next.js recommended approach:**
+
+- For most sites: In-memory `Map<string, string>` in the Route Handler module scope (see pattern 3 above)
+- Content hash computed at publish time (CMS webhook payload includes content hash, or compute from ISR page content)
+- For persistent tracking across cold starts: Vercel KV, Upstash Redis, or a `content_hash` column in your database
+
+#### 7. IndexNow Monitoring
+
+Track IndexNow submission health to catch issues before they affect indexing speed.
+
+**Logging:** Log every submission with URL count, response status, and timestamp. A successful submission returns HTTP 200 (URLs accepted) or 202 (URLs accepted, processing). Any other status indicates a problem.
+
+**429 handling:** If IndexNow returns HTTP 429 (Too Many Requests), implement exponential backoff. Check the `Retry-After` response header for the engine's requested wait time. As a baseline, wait at least 5 minutes before resubmitting the same URLs.
+
+**Rate limit awareness:**
+- 10,000 URLs per POST request (firm limit, documented by IndexNow)
+- Daily limits per engine are not published -- vary by engine
+- Best practice: minimum 5 minutes between resubmissions of the same URL
+- Never submit unchanged URLs (content-hash tracking handles this)
+
+**Response status reference:**
+
+| Status | Meaning | Action |
+|--------|---------|--------|
+| 200 | URLs submitted successfully | Log success |
+| 202 | URLs accepted, processing | Log success (normal for some engines) |
+| 400 | Invalid request body | Check JSON format, urlList structure |
+| 403 | Key verification failed | Verify `public/{key}.txt` is accessible |
+| 422 | Invalid URLs in batch | Check URL format (must be fully qualified) |
+| 429 | Rate limited | Backoff with Retry-After header |
+
+### Reference Sites
+
+- **Bing Webmaster Tools** (bing.com/webmasters) -- Reference implementation of IndexNow with dashboard monitoring, key generation, and submission history. The canonical source for IndexNow API keys.
+- **IndexNow.org** (indexnow.org) -- Official protocol documentation, participating engine registry (`searchengines.json`), API specification, and test tool for validating submissions.
+- **Cloudflare Pages** (pages.cloudflare.com) -- Built-in IndexNow support for deployed sites, demonstrating how hosting platforms can automate IndexNow on every deploy without custom endpoints.
+
+<!-- Layer 2 Part B (AI crawlers, llms.txt) added by Plan 02 -->
