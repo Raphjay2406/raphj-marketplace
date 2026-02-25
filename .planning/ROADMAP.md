@@ -112,8 +112,13 @@ Plans:
   2. Multiple OG template patterns exist (article, landing page, product) that automatically pull DNA tokens so every page has a branded social preview without manual design work
   3. Agent updates wire v1.5 skills into the pipeline: section-planner assigns schemas in PLAN.md, content-specialist references GEO patterns, build-orchestrator adds Wave 0 SEO scaffold items, quality-reviewer adds SEO checklist, researcher gets Context7 tools
   4. SKILL-DIRECTORY.md is updated with all new and modified skills from the v1.5 milestone
-**Plans**: TBD
-**Research flag**: Standard patterns for OG images (Satori CSS limitations known -- flexbox only). Agent updates are internal wiring.
+**Plans**: 4 plans
+Plans:
+- [ ] 18-PLAN-01.md -- OG images SKILL.md Layers 1-2: Decision Guidance with framework decision tree + complete code patterns for Next.js and Astro, 3 template types, font loading, signature elements
+- [ ] 18-PLAN-02.md -- OG images SKILL.md Layers 3-4: DNA connection, archetype composition families, pipeline position + anti-patterns + machine-readable constraints
+- [ ] 18-PLAN-03.md -- Agent pipeline wiring: section-planner (schema assignment), quality-reviewer (SEO checklist), build-orchestrator (Wave 0 SEO), researcher (Context7 MCP), content-specialist (GEO patterns), design-system-scaffold (SEO scaffold items)
+- [ ] 18-PLAN-04.md -- SKILL-DIRECTORY.md v1.5 milestone update: correct seo-meta tier, add structured-data + search-visibility + og-images, update counts
+**Research flag**: Researched 2026-02-25. Next.js opengraph-image.tsx file convention, Satori CSS limitations (flexbox only, no WOFF2), Astro Satori + sharp patterns verified. Agent wiring is internal markdown edits.
 
 ### Phase 19: SSR & Dynamic Content Patterns
 **Goal**: Modulo produces sites that handle frequent content updates, authenticated pages, and real-time data through correct SSR, ISR, and streaming patterns -- not just static landing pages
@@ -142,9 +147,9 @@ Phases 14-16 are sequential (SEO dependency chain). Phase 17 is independent of 1
 | 15. Structured Data & GEO | v1.5 | 2/2 | Complete | 2026-02-25 |
 | 16. Indexing & Search Visibility | v1.5 | 3/3 | Complete | 2026-02-25 |
 | 17. API Integration Patterns | v1.5 | 0/2 | Planned | - |
-| 18. Dynamic OG Images & Pipeline Wiring | v1.5 | 0/TBD | Not started | - |
+| 18. Dynamic OG Images & Pipeline Wiring | v1.5 | 0/4 | Planned | - |
 | 19. SSR & Dynamic Content Patterns | v1.5 | 0/TBD | Not started | - |
 
 ---
 *Roadmap created: 2026-02-23*
-*Last updated: 2026-02-25 — Phase 15 complete (2/2 plans), Phase 16 complete (3/3 plans)*
+*Last updated: 2026-02-25 -- Phase 18 planned (4 plans in 2 waves)*
