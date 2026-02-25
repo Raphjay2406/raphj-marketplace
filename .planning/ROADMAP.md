@@ -80,8 +80,12 @@ Plans:
   2. A unified indexing strategy documents the dual approach: IndexNow for Bing/Yandex/Naver instant indexing plus sitemap submission and ping for Google -- with honest disclosure that Google does not support IndexNow
   3. AI-aware robots.txt patterns extend Phase 14's taxonomy with separate rule blocks for training bots vs search bots, ready to copy into any project
   4. GSC and Bing Webmaster Tools submission workflows provide step-by-step verification instructions a user can follow to get their sitemap indexed
-**Plans**: TBD
-**Research flag**: Needs research. Google IndexNow adoption status should be rechecked. `astro-indexnow` package version to verify. Rate limit behavior undisclosed.
+**Plans**: 3 plans
+Plans:
+- [ ] 16-PLAN-01.md -- SKILL.md Layers 1-2A: Decision Guidance with unified indexing strategy + IndexNow auto-setup patterns with content-hash tracking
+- [ ] 16-PLAN-02.md -- AI crawler taxonomy appendix (three-tier presets) + llms.txt appendix + SKILL.md Layer 2B (robots.txt presets and llms.txt guidance)
+- [ ] 16-PLAN-03.md -- Webmaster tools submission appendix (GSC/Bing/Yandex/Naver workflows) + SKILL.md Layers 3-4 + Machine-Readable Constraints
+**Research flag**: Researched 2026-02-25. Google confirmed NOT supporting IndexNow. astro-indexnow v2.1.0 verified. Rate limits: 10k URLs/POST, daily limits unpublished.
 
 ### Phase 17: API Integration Patterns
 **Goal**: Modulo projects can securely connect to external services (CRMs, webhooks, third-party APIs) through server-side patterns that never expose secrets to the client
@@ -133,11 +137,11 @@ Phases 14-16 are sequential (SEO dependency chain). Phase 17 is independent of 1
 | 1-13 | v1 | 63/63 | Complete | 2026-02-25 |
 | 14. Core SEO Foundation | v1.5 | 0/2 | Planned | - |
 | 15. Structured Data & GEO | v1.5 | 0/2 | Planned | - |
-| 16. Indexing & Search Visibility | v1.5 | 0/TBD | Not started | - |
+| 16. Indexing & Search Visibility | v1.5 | 0/3 | Planned | - |
 | 17. API Integration Patterns | v1.5 | 0/TBD | Not started | - |
 | 18. Dynamic OG Images & Pipeline Wiring | v1.5 | 0/TBD | Not started | - |
 | 19. SSR & Dynamic Content Patterns | v1.5 | 0/TBD | Not started | - |
 
 ---
 *Roadmap created: 2026-02-23*
-*Last updated: 2026-02-25 — Phase 15 planned (2 plans in 2 waves)*
+*Last updated: 2026-02-25 — Phase 16 planned (3 plans in 3 waves)*
