@@ -36,7 +36,7 @@
 - [x] **Phase 17: API Integration Patterns** (2/2 plans) - New api-patterns skill with Context7 MCP integration, server-side proxy patterns, CRM forms, typed API clients, webhooks, and env management — completed 2026-02-25
 - [x] **Phase 18: Dynamic OG Images & Pipeline Wiring** (4/4 plans) - DNA-integrated OG image generation for Next.js and Astro, plus agent updates wiring all v1.5 skills into the pipeline — completed 2026-02-25
 - [x] **Phase 19: SSR & Dynamic Content Patterns** (3/3 plans) - New ssr-dynamic-content skill with SSR/ISR/streaming decision guidance, cache invalidation strategies, CMS-driven revalidation, auth-gated rendering, and real-time content freshness patterns for Next.js and Astro — completed 2026-02-25
-- [ ] **Phase 20: Pipeline Wiring & Registry Completion** (0/2 plans) - Close 5 integration gaps from milestone audit: register api-patterns + ssr-dynamic-content in SKILL-DIRECTORY, expand build-orchestrator Wave 0, wire both skills into section-planner + quality-reviewer, embed schema audit protocol, update REQUIREMENTS.md
+- [x] **Phase 20: Pipeline Wiring & Registry Completion** (2/2 plans) - Close 5 integration gaps from milestone audit: register api-patterns + ssr-dynamic-content in SKILL-DIRECTORY, expand build-orchestrator Wave 0, wire both skills into section-planner + quality-reviewer, embed schema audit protocol, update REQUIREMENTS.md
 
 ## Phase Details
 
@@ -153,8 +153,8 @@ Plans:
   6. Emotional-arc skill has a back-reference to structured-data's SEO beat mapping
 **Plans**: 2 plans
 Plans:
-- [ ] 20-PLAN-01.md -- Agent pipeline wiring: build-orchestrator (Wave 0 expansion), section-planner (api-patterns + ssr-dynamic-content triggers), quality-reviewer (env secrets, SSR anti-patterns, schema audit) + SKILL-DIRECTORY.md registration + emotional-arc back-reference
-- [ ] 20-PLAN-02.md -- Documentation cleanup: REQUIREMENTS.md traceability update (API/OG/SSR status), STATE.md update, ROADMAP.md completion
+- [x] 20-PLAN-01.md -- Agent pipeline wiring: build-orchestrator (Wave 0 expansion), section-planner (api-patterns + ssr-dynamic-content triggers), quality-reviewer (env secrets, SSR anti-patterns, schema audit) + SKILL-DIRECTORY.md registration + emotional-arc back-reference
+- [x] 20-PLAN-02.md -- Documentation cleanup: REQUIREMENTS.md traceability update (API/OG/SSR status), STATE.md update, ROADMAP.md completion
 **Research flag**: None -- all changes are additive markdown edits to existing files using patterns established in Phase 18.
 
 ## Progress
@@ -171,8 +171,8 @@ Phases 14-16 are sequential (SEO dependency chain). Phase 17 is independent of 1
 | 17. API Integration Patterns | v1.5 | 2/2 | Complete | 2026-02-25 |
 | 18. Dynamic OG Images & Pipeline Wiring | v1.5 | 4/4 | Complete | 2026-02-25 |
 | 19. SSR & Dynamic Content Patterns | v1.5 | 3/3 | Complete | 2026-02-25 |
-| 20. Pipeline Wiring & Registry Completion | v1.5 | 0/2 | Planned | -- |
+| 20. Pipeline Wiring & Registry Completion | v1.5 | 2/2 | Complete | 2026-02-25 |
 
 ---
 *Roadmap created: 2026-02-23*
-*Last updated: 2026-02-25 -- Phase 20 added to close v1.5 milestone audit gaps.*
+*Last updated: 2026-02-25 -- Phase 20 complete. v1.5 milestone fully closed.*
