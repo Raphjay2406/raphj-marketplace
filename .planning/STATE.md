@@ -5,24 +5,24 @@
 See: .planning/PROJECT.md (updated 2026-02-25)
 
 **Core value:** Every output must be award-winning by default -- sites must also be discoverable and rankable.
-**Current focus:** Phases 14-16 complete (SEO chain done), Phase 17 planned and ready for execution (v1.5 milestone)
+**Current focus:** Phase 17 in progress (API Integration Patterns), Plan 01 complete (v1.5 milestone)
 
 ## Current Position
 
-Phase: 16 of 19 (Indexing & Search Visibility) -- COMPLETE
-Plan: 03 of 03 in current phase (all done)
-Status: Phase complete (Phases 14, 15, 16 all complete)
-Last activity: 2026-02-25 -- Completed Phase 16 (3/3 plans, all verified)
+Phase: 17 of 19 (API Integration Patterns) -- IN PROGRESS
+Plan: 01 of 02 in current phase
+Status: In progress
+Last activity: 2026-02-25 -- Completed 17-PLAN-01 (api-patterns SKILL.md Layers 1-2)
 
-Progress: [████████████░░░░░░░░░░░░] v1: 100% | v1.5: ~60% (9/TBD plans)
+Progress: [█████████████░░░░░░░░░░░] v1: 100% | v1.5: ~65% (10/TBD plans)
 
 ## Performance Metrics
 
 **Velocity:**
 - Total plans completed: 63 (v1)
-- v1.5 plans completed: 9
-- Average duration: 4m 22s
-- Total execution time: 39m 11s
+- v1.5 plans completed: 10
+- Average duration: 4m 31s
+- Total execution time: 45m 03s
 
 **By Phase:**
 
@@ -31,7 +31,8 @@ Progress: [████████████░░░░░░░░░░░
 | 14 | 2 | 8m 11s | 4m 06s |
 | 15 | 2 | 10m 00s | 5m 00s |
 | 16 | 3 | 11m 00s | 3m 40s |
-| 17-19 | TBD | - | - |
+| 17 | 1/2 | 5m 52s | 5m 52s |
+| 18-19 | TBD | - | - |
 
 *Updated after each plan completion*
 
@@ -65,6 +66,10 @@ Recent decisions affecting current work:
 - 15-01: 941 lines for Layers 1-2 (above 450-600 target) -- 25+ interfaces and 14 code patterns require space
 - 15-01: HowToSchema and WebSiteSchema interfaces created fresh (not in research)
 - 15-02: 1091 total lines for complete SKILL.md (Layers 3-4 added only ~150 lines to existing 941)
+- 17-01: api-patterns SKILL.md Layers 1-2 at 1476 lines -- 22 patterns across 6 requirements justify the length
+- 17-01: Resend as primary email recommendation, SendGrid as alternative
+- 17-01: Cloudflare Turnstile as sole spam protection (privacy-first, no reCAPTCHA)
+- 17-01: createApiClient factory pattern with discriminated union ApiResult<T>
 
 ### Pending Todos
 
@@ -82,9 +87,10 @@ None.
 - seo-meta SKILL.md at 928 lines (all 4 layers complete) -- manageable but near upper bound; appendix extraction kept main file focused
 - structured-data SKILL.md at 1091 lines (all 4 layers complete) -- Layers 3-4 added only ~150 lines; no appendix extraction needed since growth was modest
 - search-visibility SKILL.md at 579 lines (all 4 layers complete) + 3 appendices -- well within target, no bloat concern
+- api-patterns SKILL.md at 1476 lines (Layers 1-2 only) -- Plan 02 will add Layers 3-4 (~150-200 more lines)
 
 ## Session Continuity
 
 Last session: 2026-02-25
-Stopped at: Completed Phase 16 (Indexing & Search Visibility). SEO chain (14-16) complete. Ready for Phase 17 execution.
+Stopped at: Completed 17-PLAN-01 (api-patterns SKILL.md Layers 1-2). Ready for 17-PLAN-02 (Layers 3-4 and constraints).
 Resume file: None
