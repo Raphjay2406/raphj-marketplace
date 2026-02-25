@@ -5,24 +5,24 @@
 See: .planning/PROJECT.md (updated 2026-02-25)
 
 **Core value:** Every output must be award-winning by default -- sites must also be discoverable and rankable.
-**Current focus:** Phase 17 complete (API Integration Patterns), ready for Phase 18 (v1.5 milestone)
+**Current focus:** Phase 18 in progress (Dynamic OG Images & Pipeline Wiring)
 
 ## Current Position
 
-Phase: 17 of 19 (API Integration Patterns) -- COMPLETE
-Plan: 02 of 02 in current phase (phase complete)
-Status: Phase complete
-Last activity: 2026-02-25 -- Completed 17-PLAN-02 (api-patterns SKILL.md Layers 3-4 + constraints)
+Phase: 18 of 19 (Dynamic OG Images & Pipeline Wiring)
+Plan: 03 of 04 in current phase
+Status: In progress
+Last activity: 2026-02-25 -- Completed 18-PLAN-03 (pipeline wiring for v1.5 SEO skills)
 
-Progress: [██████████████░░░░░░░░░░] v1: 100% | v1.5: ~73% (11/TBD plans)
+Progress: [█████████████████░░░░░░░] v1: 100% | v1.5: ~80% (12/TBD plans)
 
 ## Performance Metrics
 
 **Velocity:**
 - Total plans completed: 63 (v1)
-- v1.5 plans completed: 11
-- Average duration: 4m 22s
-- Total execution time: 48m 08s
+- v1.5 plans completed: 12
+- Average duration: 4m 16s
+- Total execution time: 51m 33s
 
 **By Phase:**
 
@@ -32,7 +32,8 @@ Progress: [██████████████░░░░░░░░░
 | 15 | 2 | 10m 00s | 5m 00s |
 | 16 | 3 | 11m 00s | 3m 40s |
 | 17 | 2 | 8m 57s | 4m 29s |
-| 18-19 | TBD | - | - |
+| 18 | 1 (of 4) | 3m 25s | 3m 25s |
+| 19 | TBD | - | - |
 
 *Updated after each plan completion*
 
@@ -73,6 +74,10 @@ Recent decisions affecting current work:
 - 17-02: 1600 total lines for complete skill -- Layers 3-4 added only 124 lines to existing 1476
 - 17-02: 8 archetype voice groups (all 19 archetypes covered) -- added Organic/Warm Artisan and Kinetic/Retro-Future
 - 17-02: 13 machine-readable constraints (9 HARD, 4 SOFT) -- env secret prefix is highest priority
+- 18-03: All pipeline wiring changes strictly additive -- no existing behavior removed
+- 18-03: SEO verification checklist is advisory (does not block anti-slop gate)
+- 18-03: Context7 fallback chain: Context7 -> WebFetch -> WebSearch
+- 18-03: GEO patterns conditional on content-heavy sections with schema_type set
 
 ### Pending Todos
 
@@ -95,5 +100,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-02-25
-Stopped at: Completed 17-PLAN-02 (api-patterns SKILL.md Layers 3-4 + constraints). Phase 17 complete. Ready for Phase 18.
+Stopped at: Completed 18-PLAN-03 (pipeline wiring for v1.5 SEO skills). Phase 18 Plan 04 next.
 Resume file: None
