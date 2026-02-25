@@ -795,4 +795,134 @@ export default defineConfig({
 - **Linear** (linear.app) -- Clean meta tags with dynamic OG image generation, consistent canonical structure, minimal and precise meta descriptions
 - **Astro Docs** (docs.astro.build) -- Reference Astro SEO implementation: `SEOHead` component pattern, `@astrojs/sitemap` integration, clean hreflang for multi-language docs
 
-<!-- END LAYER 2 -- Plan 02 will append Layer 3 (Integration Context) and Layer 4 (Anti-Patterns) below this line -->
+<!-- END LAYER 2 -->
+
+## Layer 3: Integration Context
+
+### DNA Connection
+
+SEO metadata draws from the project's Design DNA in specific, measurable ways. The quality reviewer validates these connections.
+
+| DNA Token | SEO Usage |
+|---|---|
+| Brand name | `og:site_name` value, title template suffix (`%s | Brand`), `publisher.name` in JSON-LD (when `structured-data` skill adds Article schema) |
+| Brand description | Default `meta description` fallback when no page-specific description exists, `og:description` fallback for pages without custom copy |
+| `bg-primary` color | OG image brand accent color -- used as background or accent bar in dynamic OG image generation (Phase 18 scope) |
+| `--font-display` | OG image headline font -- rendered via Satori/`next/og` for visual consistency between site and social previews (Phase 18 scope) |
+| `signature-element` | OG image brand motif -- the project's signature visual element embedded in OG image templates for brand recognition (Phase 18 scope) |
+| Domain / site URL | `metadataBase` value (Next.js), `site` config (Astro), canonical URL base, sitemap URL prefix |
+
+**Phase 18 note:** The `bg-primary`, `--font-display`, and `signature-element` connections become active when dynamic OG image generation is implemented. This skill defines the metadata hooks; Phase 18 wires the visual rendering pipeline.
+
+### Archetype Variants
+
+SEO metadata is functionally identical across all 19 archetypes -- search engines parse structure, not style. The HTML output (`<title>`, `<meta>`, `<link>`) does not change between Brutalist and Luxury.
+
+However, **meta description tone** should match the project's archetype voice. The meta description is the snippet shown in search results, and its tone affects click-through rate. Write descriptions that feel consistent with the site's personality:
+
+| Archetype | Meta Description Tone | Example Snippet |
+|---|---|---|
+| Neo-Corporate | Professional, benefit-focused, clear value proposition | "Streamline your workflow with enterprise-grade tools built for modern teams." |
+| Brutalist | Direct, minimal, no marketing fluff | "Design tools. No bloat." |
+| Luxury / Fashion | Refined, aspirational, sensory language | "Discover meticulously crafted pieces for the discerning eye." |
+| Playful / Startup | Energetic, conversational, action-oriented | "Build something awesome today -- your next big idea starts here." |
+| Japanese Minimal | Clean, precise, understated | "Thoughtfully designed instruments for focused work." |
+| Data-Dense / AI-Native | Technical, authoritative, specific | "Real-time analytics across 40M+ data points with sub-200ms query response." |
+| Editorial | Story-driven, evocative, editorial voice | "Long-form stories that explore the ideas shaping our world." |
+| Warm Artisan | Personal, handcrafted feel, human warmth | "Small-batch ceramics made with care in our Portland studio." |
+
+**OG image styling** should also match the archetype (background color, typography, layout density), but this is Phase 18 scope -- dynamic OG image generation.
+
+### Pipeline Stage
+
+- **Input from:** `/modulo:start-project` (brand name, brand description, domain, target audience), Design DNA (colors, fonts, signature element), page content (titles, excerpts, featured images from CMS or markdown frontmatter)
+- **Output to:** HTML `<head>` tags (title, meta, link, og, twitter), `sitemap.xml` (or `sitemap-index.xml`), `robots.txt`, `<link rel="alternate">` hreflang tags
+- **Pipeline position:**
+  - **Wave 0** -- Root layout metadata defaults (`metadataBase`, `title.template`, default OG image, robots config), `robots.ts` / `robots.txt`, `sitemap.ts` scaffold
+  - **Wave 1** -- Shared UI components that consume metadata (nav with `<title>` awareness, footer with sitemap link)
+  - **Wave 2+** -- Per-page metadata via `generateMetadata` (Next.js) or layout props (Astro) for each section
+
+### Related Skills
+
+| Skill | Relationship | Boundary |
+|---|---|---|
+| `structured-data` (Phase 15) | JSON-LD schemas (Article, FAQ, Product, BreadcrumbList) build on the meta foundation | This skill handles `<meta>` and `<link>` tags; `structured-data` handles `<script type="application/ld+json">` |
+| `search-visibility` (Phase 16) | IndexNow submission, `llms.txt`, Google Search Console workflows | This skill handles discoverability fundamentals (sitemaps, robots.txt); `search-visibility` handles proactive indexing and AI search optimization |
+| `performance-guardian` | Deep Core Web Vitals optimization (LCP strategies, INP reduction, CLS prevention) | This skill covers CWV SEO impact framing; `performance-guardian` covers implementation techniques |
+| `blog-patterns` | Article page metadata templates, RSS feed `<link>` tag | This skill provides the `generateMetadata` pattern; `blog-patterns` defines blog-specific content structures |
+| `ecommerce-ui` | Product page metadata (price, availability, reviews in meta) | This skill provides base metadata patterns; `ecommerce-ui` adds commerce-specific structured data |
+| `i18n-rtl` | hreflang alternate links, locale routing, `lang` attribute | This skill covers the `<link rel="alternate" hreflang>` output; `i18n-rtl` covers locale detection, routing, and RTL layout |
+| `multi-page-architecture` | Per-page metadata templates, shared layout metadata inheritance | This skill defines the metadata API; `multi-page-architecture` defines page organization and routing |
+| `accessibility` | Both contribute to page quality; a11y and SEO share semantic HTML concerns | Complementary -- neither depends on the other, but both improve page quality signals |
+
+## Layer 4: Anti-Patterns
+
+Common SEO metadata mistakes that cause real damage. Each anti-pattern describes what goes wrong and how to fix it.
+
+### Anti-Pattern: Legacy Head Component in App Router
+
+**What goes wrong:** Using `import Head from 'next/head'` in a Next.js App Router project. The Pages Router `Head` component is silently ignored in App Router -- it produces zero metadata output. No error, no warning. View source shows an empty `<head>` with no title or meta tags. The site appears to work in the browser (client-side navigation sets document.title via JavaScript), but search engine crawlers see nothing.
+
+**Instead:** Use the `metadata` export for static metadata or `generateMetadata` for dynamic metadata. These are the only metadata APIs that work in App Router. If migrating from Pages Router, search the codebase for `import.*from 'next/head'` and replace every instance.
+
+### Anti-Pattern: Hardcoded Canonical URLs
+
+**What goes wrong:** Writing canonical URLs as literal strings (`<link rel="canonical" href="https://example.com/about" />`). When routes change, the canonical becomes stale and points to a non-existent page. This splits link equity and creates duplicate content signals. Worse, the sitemap (which is dynamically generated) produces different URLs than the hardcoded canonicals, triggering a Google Search Console Error (upgraded from Notice, November 2025).
+
+**Instead:** Generate canonicals dynamically from the current route. In Next.js, use `metadataBase` + relative path (`alternates: { canonical: '/about' }`). In Astro, use `Astro.url.href`. In React/Vite, construct from the site URL environment variable and `window.location.pathname`. The canonical and sitemap should share the same URL construction logic.
+
+### Anti-Pattern: Synchronous Params in Next.js 16
+
+**What goes wrong:** Accessing `params.slug` directly in `generateMetadata` without `await`. Next.js 16 removed the synchronous fallback that existed in Next.js 15 -- `params` is now strictly `Promise<{ slug: string }>`. Synchronous access throws a runtime error that breaks the entire page, not just the metadata.
+
+**Instead:** Always destructure with await: `const { slug } = await params`. This applies to `generateMetadata`, `generateStaticParams`, page components, and layout components. The same applies to `searchParams`. Run `npx next typegen` to get auto-generated type helpers that enforce this pattern.
+
+### Anti-Pattern: Missing og:image
+
+**What goes wrong:** Pages without an `og:image` share on social media with a blank or generic preview. Social platforms (LinkedIn, Twitter/X, Facebook, Slack) show a small text-only card instead of a large visual card. Click-through rates from social shares drop significantly -- the large image card format gets substantially more engagement than text-only cards.
+
+**Instead:** Every page type must have a default 1200x630 OG image. Set it in the root layout metadata (Next.js) or base layout component (Astro) so it inherits to all pages. For content pages (blog posts, products), override with a content-specific image. Always include `width: 1200` and `height: 630` attributes -- social platforms use these to determine card format before fetching the image.
+
+### Anti-Pattern: Blanket AI Bot Blocking
+
+**What goes wrong:** Copying a "block all AI bots" robots.txt snippet hides the site from AI-powered search results (ChatGPT search, Perplexity, DuckAssist, Bing Copilot). The site may rank well in traditional Google search but be invisible in the growing AI search channel. As of 2025-2026, AI-powered search is a significant and increasing traffic source.
+
+**Instead:** Separate search bots (allow for visibility) from training bots (block to protect content). Search bots like `OAI-SearchBot`, `ChatGPT-User`, and `PerplexityBot` surface your content in AI search results. Training bots like `GPTBot`, `ClaudeBot`, and `CCBot` use your content for model training. Block training bots by default; allow search bots. See `appendix-ai-bots.md` for the complete taxonomy with per-bot rationale.
+
+### Anti-Pattern: Non-Canonical URLs in Sitemap
+
+**What goes wrong:** Sitemap URLs differ from canonical URLs due to trailing slash mismatch (`/about` vs `/about/`), www inconsistency (`www.example.com` vs `example.com`), or protocol difference (`http` vs `https`). Google Search Console upgraded this from a Notice to an **Error** in November 2025. Non-canonical URLs in sitemaps now actively hurt indexing -- Google may deprioritize the entire sitemap.
+
+**Instead:** Use a single source of truth for URL format. In Next.js, `metadataBase` controls the base URL for both canonicals and sitemaps. In Astro, the `site` config in `astro.config.mjs` combined with the `trailingSlash` setting controls all URL generation. Validate by comparing sitemap output against canonical tags: every URL in the sitemap must exactly match the canonical URL of that page.
+
+### Anti-Pattern: Multiple Title Tags in React 19
+
+**What goes wrong:** Multiple components in the React tree render `<title>` tags, and React 19 hoists ALL of them to `<head>`. Unlike `react-helmet-async` which deduplicates by tag type, React 19 native hoisting does not deduplicate. The browser sees multiple `<title>` elements and behavior is undefined -- it may show the first, the last, or concatenate them. Search engines may index any of the duplicates.
+
+**Instead:** Designate a single `<SEOMeta>` component per route that owns all metadata. Only that component renders `<title>`, `<meta>`, and `<link>` tags. Other components in the tree must not render metadata elements. For route changes in SPAs, ensure the previous route's `<SEOMeta>` unmounts before the new one mounts (React 19 does not guarantee cleanup of hoisted elements on unmount).
+
+### Anti-Pattern: Static lastmod in Sitemap
+
+**What goes wrong:** All sitemap entries use `new Date()` at build time, making every page appear "just updated." Google quickly learns that the `lastmod` signal is unreliable for this site and stops trusting it. The `lastmod` field is supposed to help Google prioritize re-crawling pages that have genuinely changed -- fake dates waste crawl budget and reduce re-crawl priority for pages that actually changed.
+
+**Instead:** Use actual content modification dates. For CMS-backed pages, use the `updatedAt` timestamp from the content record. For static pages, use a manually maintained date that reflects real content changes. For git-tracked content, extract the last commit date for each file. If you cannot provide accurate `lastmod` dates, omit the field entirely -- an absent `lastmod` is better than a misleading one.
+
+## Machine-Readable Constraints
+
+These SEO parameters are enforced by the quality reviewer during `/modulo:iterate` and verification passes. Agents extract values from this table for automated checking.
+
+| Parameter | Min | Max | Unit | Enforcement |
+|---|---|---|---|---|
+| title length | 30 | 60 | chars | HARD -- reject if outside range |
+| meta description length | 70 | 160 | chars | HARD -- reject if outside range |
+| og:image width | 1200 | 1200 | px | HARD -- must be exactly 1200px |
+| og:image height | 630 | 630 | px | HARD -- must be exactly 630px |
+| og:image alt text | 1 | - | present | HARD -- must have alt text |
+| canonical URL format | - | - | absolute URL (https://) | HARD -- reject relative URLs |
+| metadataBase | - | - | required in root layout | HARD -- reject if missing (Next.js) |
+| sitemap URLs per file | - | 50000 | entries | HARD -- split if exceeded |
+| sitemap URL = canonical | - | - | boolean match | HARD -- must match exactly |
+| hreflang bidirectional | - | - | all alternates reciprocal | HARD -- reject one-way links |
+| hreflang x-default | - | - | required if hreflang present | HARD -- reject if missing |
+| title uniqueness per page | - | - | no duplicate titles across pages | SOFT -- warn if duplicates detected |
+| robots.txt sitemap reference | - | - | Sitemap: directive present | HARD -- reject if missing |
