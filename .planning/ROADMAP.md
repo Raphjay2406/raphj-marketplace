@@ -3,7 +3,7 @@
 ## Milestones
 
 - **v1 Modulo 2.0** — Phases 1-13 (shipped 2026-02-25) — see `milestones/v1-ROADMAP.md`
-- **v1.5 SEO/GEO & API Integration** — Phases 14-19 (in progress)
+- **v1.5 SEO/GEO & API Integration** — Phases 14-19 (completed 2026-02-25)
 
 ## Phases
 
@@ -35,7 +35,7 @@
 - [x] **Phase 16: Indexing & Search Visibility** (3/3 plans) - New search-visibility skill with IndexNow auto-setup, llms.txt, unified indexing strategy, and GSC/Bing submission workflows — completed 2026-02-25
 - [x] **Phase 17: API Integration Patterns** (2/2 plans) - New api-patterns skill with Context7 MCP integration, server-side proxy patterns, CRM forms, typed API clients, webhooks, and env management — completed 2026-02-25
 - [x] **Phase 18: Dynamic OG Images & Pipeline Wiring** (4/4 plans) - DNA-integrated OG image generation for Next.js and Astro, plus agent updates wiring all v1.5 skills into the pipeline — completed 2026-02-25
-- [ ] **Phase 19: SSR & Dynamic Content Patterns** - New ssr-dynamic-content skill with SSR/ISR/streaming decision guidance, cache invalidation strategies, CMS-driven revalidation, auth-gated rendering, and real-time content freshness patterns for Next.js and Astro
+- [x] **Phase 19: SSR & Dynamic Content Patterns** (3/3 plans) - New ssr-dynamic-content skill with SSR/ISR/streaming decision guidance, cache invalidation strategies, CMS-driven revalidation, auth-gated rendering, and real-time content freshness patterns for Next.js and Astro — completed 2026-02-25
 
 ## Phase Details
 
@@ -134,9 +134,9 @@ Plans:
   7. Database-driven page patterns cover dynamic route generation from DB queries, pagination with SSR, and connection pooling best practices for serverless environments
 **Plans**: 3 plans
 Plans:
-- [ ] 19-PLAN-01.md -- SKILL.md frontmatter + Layer 1 (Decision Guidance with 4-dimension rendering matrix, 10 scenario recipes, Next.js 4-layer cache breakdown, Edge/Node constraints) + Layer 2A (core rendering patterns: Cache Components, Server Islands, streaming SSR, Draft Mode, connection pooling, Cache-Control headers)
-- [ ] 19-PLAN-02.md -- SKILL.md Layer 2B: CMS webhook revalidation for 5 platforms (Sanity, Contentful, Strapi, Payload, Hygraph) with HMAC verification + SEO bridge (sitemap + IndexNow) + auth-gated rendering for 4 libraries (Auth.js v5, Clerk, Supabase, Better Auth) with 3 mixed-page approaches + proxy.ts route protection + reference sites
-- [ ] 19-PLAN-03.md -- SKILL.md Layers 3-4: DNA connection (loading states), archetype skeleton/shimmer variants, 9 related skills + 10 anti-patterns (PPR config, unstable_cache, Edge+Cache, middleware.ts, getSession, Lucia, etc.) + machine-readable constraints (10 HARD, 4 SOFT)
+- [x] 19-PLAN-01.md -- SKILL.md frontmatter + Layer 1 (Decision Guidance with 4-dimension rendering matrix, 10 scenario recipes, Next.js 4-layer cache breakdown, Edge/Node constraints) + Layer 2A (core rendering patterns: Cache Components, Server Islands, streaming SSR, Draft Mode, connection pooling, Cache-Control headers)
+- [x] 19-PLAN-02.md -- SKILL.md Layer 2B: CMS webhook revalidation for 5 platforms (Sanity, Contentful, Strapi, Payload, Hygraph) with HMAC verification + SEO bridge (sitemap + IndexNow) + auth-gated rendering for 4 libraries (Auth.js v5, Clerk, Supabase, Better Auth) with 3 mixed-page approaches + proxy.ts route protection + reference sites
+- [x] 19-PLAN-03.md -- SKILL.md Layers 3-4: DNA connection (loading states), archetype skeleton/shimmer variants, 9 related skills + 10 anti-patterns (PPR config, unstable_cache, Edge+Cache, middleware.ts, getSession, Lucia, etc.) + machine-readable constraints (10 HARD, 4 SOFT)
 **Research flag**: Researched 2026-02-25. Next.js 16 Cache Components (replaces PPR), cacheLife/cacheTag/updateTag APIs, proxy.ts (replaces middleware.ts), Astro Server Islands, 5 CMS webhook patterns, 4 auth libraries (Better Auth replaces Lucia) -- all verified with official docs.
 
 ## Progress
@@ -152,8 +152,8 @@ Phases 14-16 are sequential (SEO dependency chain). Phase 17 is independent of 1
 | 16. Indexing & Search Visibility | v1.5 | 3/3 | Complete | 2026-02-25 |
 | 17. API Integration Patterns | v1.5 | 2/2 | Complete | 2026-02-25 |
 | 18. Dynamic OG Images & Pipeline Wiring | v1.5 | 4/4 | Complete | 2026-02-25 |
-| 19. SSR & Dynamic Content Patterns | v1.5 | 0/3 | Planned | - |
+| 19. SSR & Dynamic Content Patterns | v1.5 | 3/3 | Complete | 2026-02-25 |
 
 ---
 *Roadmap created: 2026-02-23*
-*Last updated: 2026-02-25 -- Phase 18 complete (4/4 plans verified)*
+*Last updated: 2026-02-25 -- Phase 19 complete (3/3 plans verified). v1.5 milestone complete.*
