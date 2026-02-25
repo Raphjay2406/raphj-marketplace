@@ -5,32 +5,33 @@
 See: .planning/PROJECT.md (updated 2026-02-25)
 
 **Core value:** Every output must be award-winning by default -- sites must also be discoverable and rankable.
-**Current focus:** Phase 16 - Indexing & Search Visibility (v1.5 milestone)
+**Current focus:** Phase 15 - Structured Data & GEO (v1.5 milestone)
 
 ## Current Position
 
-Phase: 16 of 19 (Indexing & Search Visibility)
-Plan: 01 of 03 in current phase
+Phase: 15 of 19 (Structured Data & GEO)
+Plan: 01 of 02 in current phase
 Status: In progress
-Last activity: 2026-02-25 -- Phase 14 executed (2/2 plans) and verified (5/5 must-haves passed)
+Last activity: 2026-02-25 -- Completed 15-PLAN-01.md (structured-data Layers 1-2)
 
-Progress: [████████████░░░░░░░░░░░░] v1: 100% | v1.5: ~20% (3/TBD plans)
+Progress: [████████████░░░░░░░░░░░░] v1: 100% | v1.5: ~27% (4/TBD plans)
 
 ## Performance Metrics
 
 **Velocity:**
 - Total plans completed: 63 (v1)
-- v1.5 plans completed: 3
-- Average duration: 3m 44s
-- Total execution time: 11m 11s
+- v1.5 plans completed: 4
+- Average duration: 4m 34s
+- Total execution time: 18m 15s
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 14 | 2 | 8m 11s | 4m 06s |
+| 15 | 1 | 7m 04s | 7m 04s |
 | 16 | 1 | 3m 00s | 3m 00s |
-| 15, 17-19 | TBD | - | - |
+| 17-19 | TBD | - | - |
 
 *Updated after each plan completion*
 
@@ -55,6 +56,8 @@ Recent decisions affecting current work:
 - 16-01: All IndexNow patterns use api.indexnow.org global endpoint (never per-engine)
 - 16-01: Content-hash tracking built into Next.js Route Handler by default
 - 16-01: astro-indexnow v2.1.0 for Astro SSG; custom endpoint for Astro SSR
+- 15-01: 941 lines for Layers 1-2 (above 450-600 target) -- 25+ interfaces and 14 code patterns require space
+- 15-01: HowToSchema and WebSiteSchema interfaces created fresh (not in research)
 
 ### Pending Todos
 
@@ -66,13 +69,14 @@ None.
 
 ### Blockers/Concerns
 
-- GEO impact data (FAQ 3.2x figure) from single source -- re-verify during Phase 15 planning
+- GEO impact data: specific multiplier claims avoided in skill; using "significantly higher rates" per research recommendation
 - Google IndexNow adoption confirmed NOT supported (Feb 2026) -- dual strategy implemented in 16-01
 - Skill bloat risk with 3 new skills -- monitor line counts, consolidate if < 300 lines
 - seo-meta SKILL.md at 928 lines (all 4 layers complete) -- manageable but near upper bound; appendix extraction kept main file focused
+- structured-data SKILL.md at 941 lines (Layers 1-2 only) -- will grow with Layers 3-4 in Plan 02; may need appendix extraction like seo-meta
 
 ## Session Continuity
 
 Last session: 2026-02-25
-Stopped at: Phase 14 complete and verified. Phase 16 plan 01 also complete (from previous session).
+Stopped at: Completed 15-PLAN-01.md (structured-data Layers 1-2). Phase 16 plan 01 also complete.
 Resume file: None
