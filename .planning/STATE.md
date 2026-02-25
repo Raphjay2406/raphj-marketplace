@@ -10,19 +10,19 @@ See: .planning/PROJECT.md (updated 2026-02-25)
 ## Current Position
 
 Phase: 19 of 19 (SSR & Dynamic Content Patterns)
-Plan: 01 of TBD in current phase
+Plan: 02 of TBD in current phase
 Status: In progress
-Last activity: 2026-02-25 -- Completed 19-PLAN-01 (ssr-dynamic-content SKILL.md Layers 1-2A)
+Last activity: 2026-02-25 -- Completed 19-PLAN-02 (ssr-dynamic-content SKILL.md Layer 2B: CMS webhooks + auth-gated content)
 
-Progress: [███████████████████░░░░░] v1: 100% | v1.5: ~89% (16/18 plans)
+Progress: [████████████████████░░░░] v1: 100% | v1.5: ~94% (17/18 plans)
 
 ## Performance Metrics
 
 **Velocity:**
 - Total plans completed: 63 (v1)
-- v1.5 plans completed: 16
+- v1.5 plans completed: 17
 - Average duration: 4m 14s
-- Total execution time: 67m 47s
+- Total execution time: 71m 57s
 
 **By Phase:**
 
@@ -33,7 +33,7 @@ Progress: [███████████████████░░░░
 | 16 | 3 | 11m 00s | 3m 40s |
 | 17 | 2 | 8m 57s | 4m 29s |
 | 18 | 4 | 11m 44s | 2m 56s |
-| 19 | 1 | 7m 55s | 7m 55s |
+| 19 | 2 | 12m 05s | 6m 03s |
 
 *Updated after each plan completion*
 
@@ -93,6 +93,12 @@ Recent decisions affecting current work:
 - 19-01: Better Auth noted as Lucia replacement but not given full code patterns (deferred to Plan 02 auth section)
 - 19-01: 10 named scenarios (full range used) -- covers blog, PDP, dashboard, marketing, profile, feed, pricing, docs, marketplace, event
 - 19-01: Astro draft preview uses cookie-based mechanism (no built-in Draft Mode in Astro)
+- 19-02: ssr-dynamic-content SKILL.md Layers 1-2 complete at 1706 lines -- 27 patterns across 8 categories justify length above 900-1300 target
+- 19-02: Cache Components + Auth Boundary as recommended mixed-page approach (over server-side conditional and client-side auth gate)
+- 19-02: Better Auth marked MEDIUM confidence -- API newer, may evolve; Auth.js v5 and Clerk are higher-confidence
+- 19-02: Supabase getClaims() enforced as CRITICAL constraint -- getSession() shown as insecure anti-pattern
+- 19-02: notifySeoUpdate() reusable helper bridges CMS revalidation to sitemap + IndexNow (Phase 14-16 connection)
+- 19-02: Payload CMS uses afterChange hooks directly -- no webhook endpoint needed (runs inside Next.js process)
 
 ### Pending Todos
 
@@ -112,10 +118,10 @@ None.
 - search-visibility SKILL.md at 579 lines (all 4 layers complete) + 3 appendices -- well within target, no bloat concern
 - api-patterns SKILL.md at 1600 lines (all 4 layers complete) -- largest skill but justified by 22 patterns across 6 API requirements; Layers 3-4 growth was modest (124 lines)
 - og-images SKILL.md at 1252 lines (all 4 layers complete) -- Layers 3-4 added 301 lines to existing 951; 6 anti-patterns with code examples and 10-parameter constraint table
-- ssr-dynamic-content SKILL.md at 978 lines (Layers 1-2A) -- Plan 02 adds CMS revalidation + auth patterns, Plan 03 adds Layers 3-4
+- ssr-dynamic-content SKILL.md at 1706 lines (Layers 1-2 complete) -- 27 patterns across 8 categories; Plan 03 adds Layers 3-4
 
 ## Session Continuity
 
 Last session: 2026-02-25
-Stopped at: Completed 19-PLAN-01 (ssr-dynamic-content SKILL.md Layers 1-2A). Phase 19 in progress.
+Stopped at: Completed 19-PLAN-02 (ssr-dynamic-content SKILL.md Layer 2B: CMS webhooks + auth-gated content). Phase 19 in progress.
 Resume file: None
