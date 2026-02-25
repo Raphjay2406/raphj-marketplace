@@ -287,3 +287,692 @@ Use custom profiles when the 7 presets do not match your content update frequenc
 - **Consumed at:** `/modulo:plan-dev` for rendering strategy selection per section, `/modulo:execute` Wave 0 for `next.config.ts` cache setup and Wave 2+ for section-specific rendering patterns
 - **Input from:** `/modulo:start-project` (project requirements identify data freshness, CMS platform, auth needs). Design DNA provides no direct tokens -- this is a server-side concern.
 - **Output to:** Page components with appropriate cache directives, webhook Route Handlers, `next.config.ts` cache configuration, Astro page files with prerender/SSR settings
+
+## Layer 2: Award-Winning Examples
+
+Copy-paste-ready code patterns for the core rendering strategies. Each pattern includes a brief explanation of the principle followed by the implementation. CMS-specific revalidation webhooks and auth-gated content patterns are in Layer 2B (added by Plan 02).
+
+### A. Next.js 16 Cache Components Setup
+
+#### Pattern 1: next.config.ts with Cache Components Enabled
+
+Enable Cache Components with one config flag. Optionally define custom `cacheLife` profiles for content types that do not match the 7 built-in presets.
+
+```typescript
+// next.config.ts
+import type { NextConfig } from 'next'
+
+const nextConfig: NextConfig = {
+  cacheComponents: true,
+
+  // Optional: custom cacheLife profiles
+  cacheLife: {
+    'cms-content': {
+      stale: 300,       // 5 min -- client serves cached without server check
+      revalidate: 900,  // 15 min -- server serves stale while regenerating
+      expire: 86400,    // 1 day -- hard expiry, forces regeneration
+    },
+    'product-inventory': {
+      stale: 30,        // 30s client cache
+      revalidate: 60,   // 1 min server SWR window
+      expire: 3600,     // 1 hour hard expiry
+    },
+  },
+}
+
+export default nextConfig
+```
+
+**Key rules:**
+- `cacheComponents: true` replaces the old `experimental: { ppr: true }` -- do NOT use the experimental flag
+- Custom profiles are referenced by name: `cacheLife('cms-content')`
+- The 7 built-in profiles (`seconds`, `minutes`, `hours`, `days`, `weeks`, `max`, `default`) are always available without configuration
+
+#### Pattern 2: Cache Components Hybrid Page
+
+The canonical Cache Components pattern: a page with three rendering zones. The static shell (header, layout) is prerendered at build time. Cached dynamic content uses `"use cache"` with a `cacheLife` profile and `cacheTag` for invalidation. Per-request content streams via `<Suspense>` for user-specific data.
+
+```tsx
+// app/blog/page.tsx
+import { Suspense } from 'react'
+import { cookies } from 'next/headers'
+import { cacheLife, cacheTag } from 'next/cache'
+import { db } from '@/lib/db'
+import { PostCard } from '@/components/post-card'
+import { UserPreferencesSkeleton } from '@/components/skeletons'
+
+// Page component -- the shell is static, rendered at build time
+export default function BlogPage() {
+  return (
+    <>
+      {/* Zone 1: Static shell -- prerendered into HTML at build time */}
+      <header>
+        <h1>Our Blog</h1>
+        <p>Thoughts on design, engineering, and building for the web.</p>
+      </header>
+
+      {/* Zone 2: Cached dynamic content -- shared across all visitors */}
+      <BlogPosts />
+
+      {/* Zone 3: Per-request content -- streams at request time */}
+      <Suspense fallback={<UserPreferencesSkeleton />}>
+        <UserPreferences />
+      </Suspense>
+    </>
+  )
+}
+
+// CACHED: Everyone sees the same posts. Revalidated hourly via cacheLife,
+// or on-demand via revalidateTag('blog-posts', 'max') from a CMS webhook.
+async function BlogPosts() {
+  'use cache'
+  cacheLife('hours')
+  cacheTag('blog-posts')
+
+  const posts = await db.post.findMany({
+    orderBy: { publishedAt: 'desc' },
+    take: 10,
+    select: { id: true, title: true, excerpt: true, slug: true, publishedAt: true },
+  })
+
+  return (
+    <section className="grid gap-6 md:grid-cols-2">
+      {posts.map((post) => (
+        <PostCard key={post.id} post={post} />
+      ))}
+    </section>
+  )
+}
+
+// PER-REQUEST: Reads cookies (personalized), cannot be cached.
+// Streams after the static shell and cached posts are already visible.
+async function UserPreferences() {
+  const cookieStore = await cookies()
+  const theme = cookieStore.get('theme')?.value ?? 'light'
+  const fontSize = cookieStore.get('font-size')?.value ?? 'base'
+
+  return (
+    <aside className="rounded-lg border p-4">
+      <p>Your reading preferences: {theme} theme, {fontSize} text</p>
+    </aside>
+  )
+}
+```
+
+**Critical rules:**
+- `"use cache"` CANNOT access `cookies()`, `headers()`, or `searchParams` -- read them outside the cached function and pass as arguments
+- `cacheLife` accepts preset profiles: `'seconds'`, `'minutes'`, `'hours'`, `'days'`, `'weeks'`, `'max'`
+- `cacheTag` enables on-demand invalidation via `revalidateTag` (SWR) or `updateTag` (immediate)
+- Cache Components requires **Node.js runtime** -- Edge is NOT supported
+- The cache key is auto-generated from the function identity + serialized arguments + build ID
+
+#### Pattern 3: On-Demand Invalidation (Server Action vs Route Handler)
+
+Two companion patterns for cache invalidation. Use `updateTag` in Server Actions for read-your-own-writes (editor sees their change immediately). Use `revalidateTag` with `'max'` in Route Handlers for webhook-triggered stale-while-revalidate (next visitor gets fresh content while current visitors see stale briefly).
+
+```typescript
+// app/actions/content.ts -- Server Action: immediate invalidation
+'use server'
+
+import { updateTag } from 'next/cache'
+import { redirect } from 'next/navigation'
+import { db } from '@/lib/db'
+
+export async function updateBlogPost(formData: FormData) {
+  const id = formData.get('id') as string
+  const title = formData.get('title') as string
+  const content = formData.get('content') as string
+
+  await db.post.update({
+    where: { id },
+    data: { title, content, updatedAt: new Date() },
+  })
+
+  // updateTag: IMMEDIATE expiry -- the editor will see their change on redirect
+  updateTag('blog-posts')
+  updateTag(`post-${id}`)
+
+  redirect(`/blog/${id}`)
+}
+```
+
+```typescript
+// app/api/revalidate/route.ts -- Route Handler: SWR invalidation
+import { revalidateTag } from 'next/cache'
+import { createHmac, timingSafeEqual } from 'crypto'
+
+function verifySignature(payload: string, signature: string, secret: string): boolean {
+  const expected = createHmac('sha256', secret).update(payload).digest('hex')
+  try {
+    return timingSafeEqual(Buffer.from(signature), Buffer.from(expected))
+  } catch {
+    return false
+  }
+}
+
+export async function POST(request: Request) {
+  const body = await request.text()
+  const signature = request.headers.get('x-webhook-signature')
+
+  if (!signature || !verifySignature(body, signature, process.env.CMS_WEBHOOK_SECRET!)) {
+    return new Response('Unauthorized', { status: 401 })
+  }
+
+  const payload = JSON.parse(body) as { collection: string; slug: string }
+
+  // revalidateTag with 'max': STALE-WHILE-REVALIDATE
+  // Serves stale content to current visitors while regenerating in background.
+  // Next NEW request after regeneration gets fresh content.
+  revalidateTag(payload.collection, 'max')
+  revalidateTag(`${payload.collection}-${payload.slug}`, 'max')
+
+  // SEO bridge: also revalidate sitemap (see search-visibility skill)
+  revalidateTag('sitemap', 'max')
+
+  return Response.json({ revalidated: true, collection: payload.collection })
+}
+```
+
+**Key difference:**
+- `updateTag(tag)` = **immediate expiry**. Cache entry is removed. Next request regenerates from scratch. Use in Server Actions where the user needs to see their own change.
+- `revalidateTag(tag, 'max')` = **stale-while-revalidate**. Cache entry is marked stale. Current request gets stale content. Background regeneration starts. Next request gets fresh content. Use in Route Handlers for webhook-triggered updates where brief staleness is acceptable.
+
+### B. Astro Server Islands and SSR
+
+#### Pattern 4: Astro Server Island Component
+
+A component that runs server-side per-request within a static page. Server Islands are fetched as separate requests after the static shell loads -- they do NOT stream in the initial response like React Suspense.
+
+```astro
+---
+// src/components/UserGreeting.astro
+// This component runs on the server PER REQUEST (not at build time)
+import { getSession } from '@/lib/auth'
+
+const session = await getSession(Astro.cookies)
+---
+
+{session ? (
+  <div class="flex items-center gap-2">
+    <img src={session.user.avatar} alt="" class="h-8 w-8 rounded-full" />
+    <p>Welcome back, {session.user.name}</p>
+  </div>
+) : (
+  <a href="/login" class="text-primary underline">Sign in</a>
+)}
+```
+
+#### Pattern 5: Astro Static Page with Server Islands
+
+A product page that is statically generated at build time, but defers two components to server-side per-request rendering. The static shell (product name, description, images) loads instantly. The Server Islands (user greeting, reviews) load shortly after as separate HTTP requests.
+
+```astro
+---
+// src/pages/product/[id].astro
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import UserGreeting from '@/components/UserGreeting.astro'
+import ProductReviews from '@/components/ProductReviews.astro'
+import { getProduct } from '@/lib/products'
+
+export const prerender = true // Static page in hybrid mode
+
+const { id } = Astro.params
+const product = await getProduct(id!)
+if (!product) return Astro.redirect('/404')
+---
+
+<BaseLayout title={product.name}>
+  {/* Static shell -- rendered at build time, cached by CDN */}
+  <h1 class="text-4xl font-bold">{product.name}</h1>
+  <p class="text-lg text-muted">{product.description}</p>
+  <img src={product.image} alt={product.name} width={800} height={600} />
+  <p class="text-2xl font-semibold">${product.price}</p>
+
+  {/* Server Island: fetched per-request after static shell loads */}
+  <UserGreeting server:defer>
+    <p slot="fallback" class="animate-pulse text-muted">Loading...</p>
+  </UserGreeting>
+
+  {/* Server Island: fetched per-request, shows fresh reviews */}
+  <ProductReviews server:defer productId={product.id}>
+    <div slot="fallback" class="animate-pulse space-y-4">
+      <div class="h-20 rounded bg-surface" />
+      <div class="h-20 rounded bg-surface" />
+    </div>
+  </ProductReviews>
+</BaseLayout>
+```
+
+**Key differences from Next.js Cache Components:**
+- Server Islands are fetched as **separate HTTP requests** after the static shell loads (NOT streamed in a single response like Suspense)
+- No built-in `cacheLife` profiles -- caching is done via CDN `Cache-Control` headers
+- No built-in tag-based revalidation -- use CDN purge APIs or full rebuild
+- `server:defer` is the directive; `slot="fallback"` provides the loading state
+
+#### Pattern 6: Astro ISR-Equivalent via Cache-Control Headers
+
+Astro does NOT have built-in ISR. ISR-like behavior is achieved by setting `Cache-Control` headers on SSR pages, which instructs the CDN to cache and revalidate. This is a standard HTTP caching pattern that works with any CDN (Vercel, Cloudflare, Netlify).
+
+```astro
+---
+// src/pages/blog/[slug].astro
+export const prerender = false // SSR page (not static)
+
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import { db } from '@/lib/db'
+
+const { slug } = Astro.params
+const post = await db.post.findUnique({ where: { slug } })
+
+if (!post) return new Response(null, { status: 404 })
+
+// ISR-equivalent: CDN caches for 1 hour, serves stale for 24 hours while revalidating
+Astro.response.headers.set(
+  'Cache-Control',
+  'public, s-maxage=3600, stale-while-revalidate=86400'
+)
+---
+
+<BaseLayout title={post.title}>
+  <article>
+    <h1>{post.title}</h1>
+    <time datetime={post.publishedAt.toISOString()}>
+      {post.publishedAt.toLocaleDateString()}
+    </time>
+    <div set:html={post.content} />
+  </article>
+</BaseLayout>
+```
+
+**Important:** `s-maxage` controls CDN cache duration (shared cache). `max-age` controls browser cache duration. For ISR-equivalent behavior, use `s-maxage` (CDN) with `stale-while-revalidate` (background refresh). Do NOT set long `max-age` values on dynamic content -- the browser will not check for updates.
+
+### C. Streaming SSR
+
+#### Pattern 7: Streaming SSR with Suspense Boundaries (Next.js)
+
+A dashboard page demonstrating strategic Suspense boundary placement. The static header arrives immediately. Fast data (user info) streams in one boundary. Slow data (external API analytics) streams in another with a skeleton fallback. Place boundaries around data-fetching components, not around static UI.
+
+```tsx
+// app/dashboard/page.tsx
+import { Suspense } from 'react'
+import { auth } from '@/auth'
+import { redirect } from 'next/navigation'
+import {
+  UserInfoSkeleton,
+  AnalyticsSkeleton,
+  NotificationsSkeleton,
+} from '@/components/skeletons'
+
+export default async function DashboardPage() {
+  const session = await auth()
+  if (!session) redirect('/login')
+
+  return (
+    <div className="space-y-8">
+      {/* Static: renders immediately, no data fetching */}
+      <header>
+        <h1>Dashboard</h1>
+        <p>Welcome back, {session.user.name}</p>
+      </header>
+
+      {/* Suspense boundary 1: Fast data (database query, ~50ms) */}
+      <Suspense fallback={<UserInfoSkeleton />}>
+        <UserInfo userId={session.user.id} />
+      </Suspense>
+
+      <div className="grid gap-6 md:grid-cols-2">
+        {/* Suspense boundary 2: Slow external API (~800ms) */}
+        <Suspense fallback={<AnalyticsSkeleton />}>
+          <AnalyticsOverview userId={session.user.id} />
+        </Suspense>
+
+        {/* Suspense boundary 3: Medium speed (~200ms) */}
+        <Suspense fallback={<NotificationsSkeleton />}>
+          <RecentNotifications userId={session.user.id} />
+        </Suspense>
+      </div>
+    </div>
+  )
+}
+
+// Fast: direct database query
+async function UserInfo({ userId }: { userId: string }) {
+  const user = await db.user.findUnique({
+    where: { id: userId },
+    select: { plan: true, usage: true, billingDate: true },
+  })
+  return (
+    <section className="rounded-lg border p-6">
+      <h2>Account</h2>
+      <p>Plan: {user?.plan} | Usage: {user?.usage}%</p>
+      <p>Next billing: {user?.billingDate?.toLocaleDateString()}</p>
+    </section>
+  )
+}
+
+// Slow: external analytics API
+async function AnalyticsOverview({ userId }: { userId: string }) {
+  const data = await fetch(`https://analytics.example.com/api/overview?user=${userId}`, {
+    cache: 'no-store', // Always fresh for dashboards
+  }).then((r) => r.json())
+
+  return (
+    <section className="rounded-lg border p-6">
+      <h2>Analytics</h2>
+      <p>Page views: {data.pageViews.toLocaleString()}</p>
+      <p>Visitors: {data.visitors.toLocaleString()}</p>
+    </section>
+  )
+}
+
+// Medium: database query with join
+async function RecentNotifications({ userId }: { userId: string }) {
+  const notifications = await db.notification.findMany({
+    where: { userId, read: false },
+    orderBy: { createdAt: 'desc' },
+    take: 5,
+  })
+  return (
+    <section className="rounded-lg border p-6">
+      <h2>Notifications ({notifications.length})</h2>
+      <ul>
+        {notifications.map((n) => (
+          <li key={n.id}>{n.message}</li>
+        ))}
+      </ul>
+    </section>
+  )
+}
+```
+
+**Alternative: Route-level loading state.** Instead of per-component Suspense, create `app/dashboard/loading.tsx` for a route-level skeleton that shows while the entire page loads. Use this for simpler pages; use per-component Suspense for pages with mixed-speed data sources.
+
+```tsx
+// app/dashboard/loading.tsx
+export default function DashboardLoading() {
+  return (
+    <div className="animate-pulse space-y-8">
+      <div className="h-10 w-48 rounded bg-surface" />
+      <div className="h-40 rounded bg-surface" />
+      <div className="grid gap-6 md:grid-cols-2">
+        <div className="h-40 rounded bg-surface" />
+        <div className="h-40 rounded bg-surface" />
+      </div>
+    </div>
+  )
+}
+```
+
+### D. Draft Preview Mode
+
+#### Pattern 8: Next.js 16 Draft Mode -- Enable Route
+
+Route Handler that validates a CMS preview secret, verifies the slug exists in the CMS, enables draft mode, and redirects to the page. In Next.js 16, `draftMode()` is **async** -- always `await` it.
+
+```typescript
+// app/api/draft/route.ts
+import { draftMode } from 'next/headers'
+import { redirect } from 'next/navigation'
+import { cmsClient } from '@/lib/cms'
+
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url)
+  const secret = searchParams.get('secret')
+  const slug = searchParams.get('slug')
+
+  // 1. Validate the preview secret
+  if (secret !== process.env.CMS_PREVIEW_SECRET || !slug) {
+    return new Response('Invalid token', { status: 401 })
+  }
+
+  // 2. Verify the slug exists in CMS (prevents open redirect)
+  const page = await cmsClient.getPageBySlug(slug)
+  if (!page) {
+    return new Response('Invalid slug', { status: 404 })
+  }
+
+  // 3. Enable Draft Mode (ASYNC in Next.js 16)
+  const draft = await draftMode()
+  draft.enable()
+
+  // 4. Redirect to the page -- use the CMS-returned slug, NOT the query param
+  redirect(page.slug)
+}
+```
+
+#### Pattern 9: Next.js 16 Draft Mode -- Disable Route
+
+Simple Route Handler to exit draft mode. Link to this from the draft mode banner in the UI.
+
+```typescript
+// app/api/draft/disable/route.ts
+import { draftMode } from 'next/headers'
+import { redirect } from 'next/navigation'
+
+export async function GET() {
+  const draft = await draftMode()
+  draft.disable()
+  redirect('/')
+}
+```
+
+#### Pattern 10: Draft-Aware Server Component
+
+A blog post page that checks draft mode status and fetches draft or published content accordingly. Includes a visible banner when in draft mode so editors know they are previewing unpublished content.
+
+```tsx
+// app/blog/[slug]/page.tsx
+import { draftMode } from 'next/headers'
+import { cacheLife, cacheTag } from 'next/cache'
+import { cmsClient } from '@/lib/cms'
+import { notFound } from 'next/navigation'
+
+export default async function BlogPost({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}) {
+  const { slug } = await params
+  const { isEnabled: isDraft } = await draftMode()
+
+  // Draft mode: fetch unpublished content, no caching
+  // Published mode: fetch published content, cached
+  const post = isDraft
+    ? await cmsClient.getDraft(slug)
+    : await getCachedPost(slug)
+
+  if (!post) notFound()
+
+  return (
+    <>
+      {isDraft && (
+        <div className="bg-yellow-100 border-b border-yellow-300 px-4 py-2 text-sm text-yellow-900">
+          <strong>Draft Mode</strong> -- You are viewing unpublished content.{' '}
+          <a href="/api/draft/disable" className="underline">
+            Exit preview
+          </a>
+        </div>
+      )}
+      <article className="prose mx-auto">
+        <h1>{post.title}</h1>
+        <time dateTime={post.publishedAt}>{post.publishedAt}</time>
+        {/* CMS content is trusted HTML -- sanitized by CMS before storage */}
+        <div>{post.contentHtml}</div>
+      </article>
+    </>
+  )
+}
+
+// Cached version for published content
+async function getCachedPost(slug: string) {
+  'use cache'
+  cacheLife('hours')
+  cacheTag(`post-${slug}`)
+
+  return cmsClient.getPublished(slug)
+}
+```
+
+#### Pattern 11: Astro Draft Preview Pattern
+
+Astro does not have built-in Draft Mode. Use a cookie-based preview mechanism: (a) a preview API endpoint sets a cookie and redirects, (b) pages check the cookie to decide draft vs published, (c) an exit-preview endpoint clears the cookie.
+
+```typescript
+// src/pages/api/preview.ts -- Enable preview (Astro API route)
+import type { APIRoute } from 'astro'
+import { cmsClient } from '@/lib/cms'
+
+export const GET: APIRoute = async ({ url, cookies, redirect }) => {
+  const secret = url.searchParams.get('secret')
+  const slug = url.searchParams.get('slug')
+
+  if (secret !== import.meta.env.CMS_PREVIEW_SECRET || !slug) {
+    return new Response('Invalid token', { status: 401 })
+  }
+
+  const page = await cmsClient.getPageBySlug(slug)
+  if (!page) {
+    return new Response('Invalid slug', { status: 404 })
+  }
+
+  // Set preview cookie (httpOnly, secure, 1 hour expiry)
+  cookies.set('preview-mode', 'true', {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'lax',
+    path: '/',
+    maxAge: 3600,
+  })
+
+  return redirect(page.slug)
+}
+```
+
+```typescript
+// src/pages/api/preview-exit.ts -- Disable preview
+import type { APIRoute } from 'astro'
+
+export const GET: APIRoute = async ({ cookies, redirect }) => {
+  cookies.delete('preview-mode', { path: '/' })
+  return redirect('/')
+}
+```
+
+```astro
+---
+// src/pages/blog/[slug].astro -- Draft-aware page
+export const prerender = false // Must be SSR for cookie access
+
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import { cmsClient } from '@/lib/cms'
+
+const { slug } = Astro.params
+const isDraft = Astro.cookies.get('preview-mode')?.value === 'true'
+
+const post = isDraft
+  ? await cmsClient.getDraft(slug!)
+  : await cmsClient.getPublished(slug!)
+
+if (!post) return new Response(null, { status: 404 })
+
+// No caching for draft content; cache published content
+if (!isDraft) {
+  Astro.response.headers.set(
+    'Cache-Control',
+    'public, s-maxage=3600, stale-while-revalidate=86400'
+  )
+}
+---
+
+<BaseLayout title={post.title}>
+  {isDraft && (
+    <div class="bg-yellow-100 border-b border-yellow-300 px-4 py-2 text-sm text-yellow-900">
+      <strong>Draft Mode</strong> -- You are viewing unpublished content.
+      <a href="/api/preview-exit" class="underline">Exit preview</a>
+    </div>
+  )}
+  <article class="prose mx-auto">
+    <h1>{post.title}</h1>
+    <time datetime={post.publishedAt}>{post.publishedAt}</time>
+    <div set:html={post.content} />
+  </article>
+</BaseLayout>
+```
+
+### E. Connection Pooling for Serverless
+
+#### Pattern 12: Neon Serverless Connection (HTTP-based)
+
+Neon provides a native HTTP-based driver for serverless environments. The pooled connection string uses a hostname with `-pooler` suffix. No TCP connection overhead -- each query is an HTTP request.
+
+```typescript
+// lib/db.ts -- Neon with Drizzle ORM (recommended for serverless)
+import { neon } from '@neondatabase/serverless'
+import { drizzle } from 'drizzle-orm/neon-http'
+import * as schema from './schema'
+
+// Connection string uses pooled hostname: *.us-east-2.aws.neon.tech
+// The -pooler suffix routes through Neon's built-in connection pooler
+const sql = neon(process.env.DATABASE_URL!)
+export const db = drizzle(sql, { schema })
+
+// Usage in Server Components or Route Handlers:
+// const posts = await db.query.posts.findMany({ limit: 10 })
+```
+
+**Key rule:** The `DATABASE_URL` must include the `-pooler` hostname suffix (e.g., `ep-cool-name-123456-pooler.us-east-2.aws.neon.tech`). Without `-pooler`, each serverless invocation opens a direct connection, exhausting the 100-connection limit within seconds under load.
+
+#### Pattern 13: Prisma with Dual Connection URLs
+
+Prisma requires two connection URLs for serverless: a pooled URL for runtime queries (via `url`) and a direct URL for migrations (via `directUrl`). The pooled URL routes through a connection pooler; the direct URL connects to the database directly.
+
+```prisma
+// prisma/schema.prisma
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")    // Pooled: used at runtime (serverless)
+  directUrl = env("DIRECT_URL")      // Direct: used for migrations only
+}
+```
+
+```bash
+# .env
+# Pooled connection (Neon pooler, Prisma Accelerate, or Supabase PgBouncer)
+DATABASE_URL="postgresql://user:pass@ep-cool-name-123456-pooler.us-east-2.aws.neon.tech/dbname?sslmode=require"
+
+# Direct connection (for prisma migrate, prisma db push)
+DIRECT_URL="postgresql://user:pass@ep-cool-name-123456.us-east-2.aws.neon.tech/dbname?sslmode=require"
+```
+
+**Notice:** The only difference between the two URLs is the `-pooler` suffix in the hostname. The pooled URL goes through the connection pooler; the direct URL connects to the database instance directly.
+
+#### Pattern 14: Connection Pooling Decision Rule
+
+If deploying to serverless (Vercel, Netlify, Cloudflare Workers), ALWAYS use a connection pooler. Serverless functions spin up and tear down rapidly -- each invocation that opens a direct database connection consumes one connection slot. Under traffic spikes, this exhausts the connection limit (typically 100 for managed Postgres) and causes connection errors. Options: **Neon pooler** (built-in, `-pooler` hostname suffix), **Prisma Accelerate** (managed pool for any database), **Supabase pooler** (built-in PgBouncer on port 6543). For long-running servers (VPS, Docker, dedicated hosting), pooling is still recommended but not as critical since the process reuses connections.
+
+### F. Cache-Control Header Patterns
+
+#### Pattern 15: Standard Cache-Control Headers for Common Page Types
+
+Reference table mapping page types to recommended `Cache-Control` header values. In Next.js 16 with Cache Components, explicit `Cache-Control` headers are rarely needed -- the framework manages caching via `cacheLife`. These headers are primarily for Astro SSR pages and Next.js Route Handlers where manual cache control is appropriate.
+
+| Page Type | Cache-Control | Rationale |
+|-----------|--------------|-----------|
+| Static marketing | `public, max-age=31536000, immutable` | Fully static, versioned by deploy hash |
+| Blog post (ISR) | `public, s-maxage=3600, stale-while-revalidate=86400` | Fresh hourly at CDN, stale OK for 24h |
+| E-commerce PDP | `public, s-maxage=300, stale-while-revalidate=3600` | Fresh every 5min (price/stock changes), stale OK for 1h |
+| Dashboard (SSR) | `private, no-store` | User-specific, never cache at CDN or browser |
+| API response (public) | `public, s-maxage=60, stale-while-revalidate=300` | Short CDN cache, quick revalidation for API consumers |
+| API response (auth) | `private, no-cache` | User-specific, revalidate every time but allow conditional requests |
+
+**Header glossary:**
+- `public` -- CDN and browser can cache
+- `private` -- Only the user's browser can cache (no CDN)
+- `s-maxage` -- CDN cache duration (shared cache), overrides `max-age` for CDNs
+- `max-age` -- Browser cache duration
+- `stale-while-revalidate` -- CDN serves stale while fetching fresh in background
+- `no-store` -- Do not cache anywhere, ever
+- `no-cache` -- Cache but revalidate with server before serving (allows 304 Not Modified)
+- `immutable` -- Content will never change at this URL (use with hashed filenames)
+
+<!-- END OF LAYER 2A -- Plan 02 will append CMS revalidation, auth-gated content, and reference sites -->
