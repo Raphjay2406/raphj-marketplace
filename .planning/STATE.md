@@ -5,24 +5,24 @@
 See: .planning/PROJECT.md (updated 2026-02-25)
 
 **Core value:** Every output must be award-winning by default -- sites must also be discoverable and rankable.
-**Current focus:** Phase 17 in progress (API Integration Patterns), Plan 01 complete (v1.5 milestone)
+**Current focus:** Phase 17 complete (API Integration Patterns), ready for Phase 18 (v1.5 milestone)
 
 ## Current Position
 
-Phase: 17 of 19 (API Integration Patterns) -- IN PROGRESS
-Plan: 01 of 02 in current phase
-Status: In progress
-Last activity: 2026-02-25 -- Completed 17-PLAN-01 (api-patterns SKILL.md Layers 1-2)
+Phase: 17 of 19 (API Integration Patterns) -- COMPLETE
+Plan: 02 of 02 in current phase (phase complete)
+Status: Phase complete
+Last activity: 2026-02-25 -- Completed 17-PLAN-02 (api-patterns SKILL.md Layers 3-4 + constraints)
 
-Progress: [█████████████░░░░░░░░░░░] v1: 100% | v1.5: ~65% (10/TBD plans)
+Progress: [██████████████░░░░░░░░░░] v1: 100% | v1.5: ~73% (11/TBD plans)
 
 ## Performance Metrics
 
 **Velocity:**
 - Total plans completed: 63 (v1)
-- v1.5 plans completed: 10
-- Average duration: 4m 31s
-- Total execution time: 45m 03s
+- v1.5 plans completed: 11
+- Average duration: 4m 22s
+- Total execution time: 48m 08s
 
 **By Phase:**
 
@@ -31,7 +31,7 @@ Progress: [█████████████░░░░░░░░░░
 | 14 | 2 | 8m 11s | 4m 06s |
 | 15 | 2 | 10m 00s | 5m 00s |
 | 16 | 3 | 11m 00s | 3m 40s |
-| 17 | 1/2 | 5m 52s | 5m 52s |
+| 17 | 2 | 8m 57s | 4m 29s |
 | 18-19 | TBD | - | - |
 
 *Updated after each plan completion*
@@ -70,6 +70,9 @@ Recent decisions affecting current work:
 - 17-01: Resend as primary email recommendation, SendGrid as alternative
 - 17-01: Cloudflare Turnstile as sole spam protection (privacy-first, no reCAPTCHA)
 - 17-01: createApiClient factory pattern with discriminated union ApiResult<T>
+- 17-02: 1600 total lines for complete skill -- Layers 3-4 added only 124 lines to existing 1476
+- 17-02: 8 archetype voice groups (all 19 archetypes covered) -- added Organic/Warm Artisan and Kinetic/Retro-Future
+- 17-02: 13 machine-readable constraints (9 HARD, 4 SOFT) -- env secret prefix is highest priority
 
 ### Pending Todos
 
@@ -87,10 +90,10 @@ None.
 - seo-meta SKILL.md at 928 lines (all 4 layers complete) -- manageable but near upper bound; appendix extraction kept main file focused
 - structured-data SKILL.md at 1091 lines (all 4 layers complete) -- Layers 3-4 added only ~150 lines; no appendix extraction needed since growth was modest
 - search-visibility SKILL.md at 579 lines (all 4 layers complete) + 3 appendices -- well within target, no bloat concern
-- api-patterns SKILL.md at 1476 lines (Layers 1-2 only) -- Plan 02 will add Layers 3-4 (~150-200 more lines)
+- api-patterns SKILL.md at 1600 lines (all 4 layers complete) -- largest skill but justified by 22 patterns across 6 API requirements; Layers 3-4 growth was modest (124 lines)
 
 ## Session Continuity
 
 Last session: 2026-02-25
-Stopped at: Completed 17-PLAN-01 (api-patterns SKILL.md Layers 1-2). Ready for 17-PLAN-02 (Layers 3-4 and constraints).
+Stopped at: Completed 17-PLAN-02 (api-patterns SKILL.md Layers 3-4 + constraints). Phase 17 complete. Ready for Phase 18.
 Resume file: None
