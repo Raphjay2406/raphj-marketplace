@@ -97,8 +97,11 @@ Plans:
   3. CRM form integration patterns cover HubSpot Forms API submission, Salesforce Web-to-Lead, and generic webhook POST -- all server-side with proper error handling and three-state UI (loading, success, error)
   4. Typed API client generation patterns include proper TypeScript interfaces, error handling with discriminated unions, retry logic with exponential backoff, and rate limit awareness
   5. Webhook receiver patterns provide Next.js API route and Astro endpoint templates for incoming webhook payloads with signature verification
-**Plans**: TBD
-**Research flag**: Needs research for CRM integration. HubSpot Forms API v3 endpoint, Salesforce Web-to-Lead limits, rate limiting per provider.
+**Plans**: 2 plans
+Plans:
+- [ ] 17-PLAN-01.md -- SKILL.md Layers 1-2: Decision Guidance with integration type decision tree, Context7 MCP subsection + complete code patterns for server-side proxies, CRM forms, email, Turnstile, webhooks, typed clients, and env management
+- [ ] 17-PLAN-02.md -- SKILL.md Layers 3-4: DNA connection, archetype voice variants for form UX, related skills + anti-patterns + machine-readable constraints
+**Research flag**: Researched 2026-02-25. HubSpot Forms API v3, Salesforce Web-to-Lead and REST API v66.0, Resend 6.9.x, Stripe webhooks, GitHub webhooks, Cloudflare Turnstile -- all verified with official docs.
 
 ### Phase 18: Dynamic OG Images & Pipeline Wiring
 **Goal**: Every Modulo project has branded social preview images generated from Design DNA tokens, and all v1.5 skills are wired into the agent pipeline so they activate automatically during builds
@@ -138,10 +141,10 @@ Phases 14-16 are sequential (SEO dependency chain). Phase 17 is independent of 1
 | 14. Core SEO Foundation | v1.5 | 2/2 | Complete | 2026-02-25 |
 | 15. Structured Data & GEO | v1.5 | 0/2 | Planned | - |
 | 16. Indexing & Search Visibility | v1.5 | 2/3 | In progress | - |
-| 17. API Integration Patterns | v1.5 | 0/TBD | Not started | - |
+| 17. API Integration Patterns | v1.5 | 0/2 | Planned | - |
 | 18. Dynamic OG Images & Pipeline Wiring | v1.5 | 0/TBD | Not started | - |
 | 19. SSR & Dynamic Content Patterns | v1.5 | 0/TBD | Not started | - |
 
 ---
 *Roadmap created: 2026-02-23*
-*Last updated: 2026-02-25 — Phase 14 complete (2/2 plans, verified)*
+*Last updated: 2026-02-25 — Phase 17 planned (2 plans in 2 waves)*
