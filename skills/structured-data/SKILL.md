@@ -1017,4 +1017,75 @@ Plus BreadcrumbList (always included for multi-page sites) and any page-type-spe
 - **`landing-page`** -- Landing page sections. Landing pages use minimal schemas (Organization + BreadcrumbList) with GEO only if content warrants it. Do not force FAQ or BLUF on conversion-focused pages.
 - **`copy-intelligence`** -- Content writing. GEO patterns (BLUF, question headings, quotable stats) inform copy-intelligence about content structure for AI visibility. Copy-intelligence provides the content; this skill structures it for extraction.
 
-<!-- END Layer 3 -- Layer 4 and Machine-Readable Constraints follow -->
+## Layer 4: Anti-Patterns
+
+### Anti-Pattern: Schema-Content Mismatch
+
+**What goes wrong:** JSON-LD claims data (prices, dates, FAQ answers) not visible on the page. Google issues manual actions, losing rich result eligibility across the entire site. This is the #1 structured data violation. Especially dangerous after `/modulo:iterate` edits -- content changes but JSON-LD is not updated to match.
+
+**Instead:** Run the schema audit protocol (Layer 2 SDATA-06) on every quality-reviewer pass -- after both `/modulo:execute` and `/modulo:iterate`. Every JSON-LD claim must have a visible counterpart. Content is the source of truth; schema follows content. The auto-fix protocol updates JSON-LD to match current visible content and notifies the user of changes.
+
+### Anti-Pattern: Fabricated FAQ Schema
+
+**What goes wrong:** FAQPage schema added with questions and answers that do not appear anywhere on the page. Google treats invisible structured data as spam. Even partially invisible FAQ content (visible questions with hidden answers, or answers truncated in schema) triggers penalties.
+
+**Instead:** The same data array must drive BOTH the visible FAQ section AND the JSON-LD. If there is no visible FAQ section, do not add FAQPage schema. The pattern in Layer 2 (SDATA-02) enforces this by using a shared `faqs` array for both the component and the schema builder.
+
+### Anti-Pattern: HowTo Schema Expecting Rich Results
+
+**What goes wrong:** Builder implements HowTo schema for tutorial content and expects step-by-step rich results in Google search. Nothing appears -- Google fully deprecated HowTo rich results (mobile Aug 2023, desktop Sep 2023). Client expectations are misset, and effort is wasted chasing non-existent rich results.
+
+**Instead:** Use Article schema as the PRIMARY schema for tutorial pages. Include HowTo schema alongside Article in the `@graph` ONLY for AI engine extraction value. Set correct expectations upfront: no Google visual rich results from HowTo. See Layer 2 (SDATA-03) for the correct Article + HowTo pattern.
+
+### Anti-Pattern: Over-Optimizing Emotional Beats
+
+**What goes wrong:** FAQ sections, keyword-stuffed headings, and statistic callouts added to BREATHE, PEAK, and other purely emotional beats. The page looks like an SEO farm. Anti-Slop Gate "Creative Courage" score drops. The emotional arc is destroyed -- every section feels the same weight, eliminating the contrast that makes high-impact beats effective.
+
+**Instead:** Only HOOK, TENSION, PROOF, and CLOSE beats carry required SEO elements (see Layer 3 beat mapping table). The remaining 6 beats are purely emotional by design. This restraint is what separates award-winning SEO from generic optimization. If a beat is not in the 4 high-impact list, do not add SEO elements to it.
+
+### Anti-Pattern: Blanket AI Bot Content Blocking
+
+**What goes wrong:** All AI bots blocked indiscriminately in robots.txt. Site becomes invisible in ChatGPT search, Perplexity, and AI answer engines. Even well-structured JSON-LD and GEO patterns are wasted if bots cannot reach the content. The structured data exists but no AI engine can read it.
+
+**Instead:** Block training bots (GPTBot, ClaudeBot, Google-Extended) to protect content from unauthorized model training. Allow search bots (OAI-SearchBot, PerplexityBot, Claude-SearchBot) for AI search visibility. See `seo-meta` skill's `appendix-ai-bots.md` for the complete taxonomy with user-agent strings and recommended rules.
+
+### Anti-Pattern: Duplicate @context in @graph
+
+**What goes wrong:** Each schema object inside the `@graph` array includes its own `"@context": "https://schema.org"`. Validators warn, some parsers behave unexpectedly, and the JSON-LD is larger than necessary. This typically happens when copy-pasting individual schema examples into an `@graph` without cleanup.
+
+**Instead:** Declare `@context` exactly once at the root level of the `@graph` wrapper. Individual entries within `@graph` must NOT include `@context`. See Layer 2 (SDATA-01) `@graph` combination pattern for the correct structure.
+
+### Anti-Pattern: GEO Patterns on Every Page
+
+**What goes wrong:** BLUF formatting, question headings, statistical callouts, and FAQ sections applied to every page regardless of content type. Portfolio pages, landing pages, and minimal-content pages look over-optimized and generic. The site loses its premium character -- every page reads like a blog post regardless of its actual purpose.
+
+**Instead:** Apply GEO patterns based on page type AND archetype intensity tier (see Layer 3 archetype table). Content-heavy pages (blog, article, documentation) get Full or Moderate GEO. Landing pages get Minimal or none. Portfolios get none. The archetype intensity tier prescribes the correct level -- never exceed it.
+
+### Anti-Pattern: Ignoring Schema Audit After Iteration
+
+**What goes wrong:** JSON-LD is correct after initial `/modulo:execute` but becomes stale after `/modulo:iterate` changes page content. Prices change, dates shift, FAQ answers are rewritten, but schema still claims old values. Google detects the mismatch and removes rich results. Worse, AI engines extract outdated information and cite it in generated answers.
+
+**Instead:** Schema audit runs on EVERY quality-reviewer pass -- after execute AND iterate. The auto-fix protocol (Layer 2 SDATA-06) updates JSON-LD to match current visible content and notifies the user of changes. Never assume JSON-LD is still valid after content edits.
+
+## Machine-Readable Constraints
+
+| Parameter | Min | Max | Unit | Enforcement |
+|-----------|-----|-----|------|-------------|
+| @context declarations per page | 1 | 1 | count | HARD -- reject if more than one or missing |
+| FAQ visible-to-schema match | 100 | 100 | % | HARD -- every FAQ in schema must appear on page |
+| Article headline length | 1 | 110 | chars | HARD -- reject if empty or excessively long |
+| Article datePublished format | - | - | ISO 8601 | HARD -- reject non-ISO dates |
+| Article dateModified | - | - | not before datePublished | HARD -- reject if modified date precedes published |
+| Organization logo | - | - | valid URL | HARD -- reject if 404 or missing |
+| Product name | 1 | - | present | HARD -- reject if missing (required for rich results) |
+| Event startDate | - | - | ISO 8601, future date | HARD -- reject past dates for upcoming events |
+| Event location | - | - | present | HARD -- reject if missing (required for rich results) |
+| BreadcrumbList position sequence | 1 | - | sequential integers | HARD -- reject gaps or duplicates |
+| Schema-content headline match | - | - | schema headline = visible H1 | HARD -- reject mismatch |
+| Schema audit run | - | - | every quality-reviewer pass | HARD -- reject if audit skipped |
+| SEO elements on HOOK beat | - | - | H1 + primary keyword present | HARD -- reject if missing |
+| SEO elements on TENSION beat | - | - | FAQ section present when beat assigned | HARD -- reject if missing |
+| SEO elements on PROOF beat | - | - | statistics or author credentials present | HARD -- reject if missing |
+| SEO elements on CLOSE beat | - | - | CTA + Organization schema present | HARD -- reject if missing |
+| GEO intensity matches archetype tier | - | - | consistent with Layer 3 mapping | SOFT -- warn if mismatched |
+| @id cross-references | - | - | all @id refs point to defined entities | SOFT -- warn if orphaned |
