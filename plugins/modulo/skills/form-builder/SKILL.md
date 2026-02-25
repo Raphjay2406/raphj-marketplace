@@ -1,231 +1,437 @@
 ---
-name: form-builder
-description: "Build complex forms with react-hook-form, zod validation, and shadcn/ui form components."
+name: "form-builder"
+description: "Form UI patterns: accessible form layouts, validation feedback, multi-step forms, DNA-styled inputs, error states with ARIA live regions, container query layouts -- using react-hook-form, zod, and native HTML validation."
+tier: "utility"
+triggers: "form, input, validation, zod, react-hook-form, error state, multi-step, checkout form, contact form, signup, login"
+version: "2.0.0"
 ---
 
-Use this skill when the user mentions forms, form validation, zod schemas, react-hook-form, input validation, or form building.
+## Layer 1: Decision Guidance
 
-You are an expert at building production-grade forms with react-hook-form, zod, and shadcn/ui.
+### When to Use
 
-## Setup Pattern
+- Any page with user input: contact forms, signup/login, checkout, settings, search filters
+- Multi-step flows: onboarding wizards, checkout processes, profile setup
+- Complex validation needs: conditional fields, cross-field validation, async validation
+
+### When NOT to Use
+
+- Search/filter controls embedded in dashboards -- simpler inline patterns, though still reference this skill for accessible input patterns
+- CMS content editing -- typically uses the CMS's built-in editor, not custom forms
+
+### Decision Tree
+
+- Form library? `react-hook-form` with `zod` resolver for React/Next.js; native HTML validation for Astro static forms
+- Multi-step? Use `form.trigger(stepFields)` for per-step validation before advancing
+- Server validation? Combine client-side zod with server action validation; show server errors alongside client errors
+- File upload? `z.instanceof(File)` with size/type refinements; show preview before submit
+- Form layout? Container query forms adapt to their parent width (sidebar vs full-width)
+
+### Pipeline Connection
+
+- **Referenced by:** section-builder for contact, signup, checkout, and settings sections
+- **Consumed at:** `/modulo:execute` wave 2+ for form-heavy sections
+- **Related commands:** `/modulo:plan-dev` for form section planning; uses `ecommerce-ui` for checkout form patterns
+
+## Layer 2: Award-Winning Examples
+
+### Code Patterns
+
+#### Pattern: Accessible Form with Validation
 
 ```tsx
-'use client'
+"use client";
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { Button } from "@/components/ui/button"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
-const formSchema = z.object({
-  username: z.string().min(2, "Username must be at least 2 characters"),
-  email: z.string().email("Invalid email address"),
-})
+const contactSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  email: z.string().email("Please enter a valid email address"),
+  message: z.string().min(10, "Message must be at least 10 characters"),
+});
 
-type FormValues = z.infer<typeof formSchema>
+type ContactForm = z.infer<typeof contactSchema>;
 
-export default function Component() {
-  const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
-    defaultValues: { username: "", email: "" },
-  })
+export function ContactForm() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<ContactForm>({
+    resolver: zodResolver(contactSchema),
+  });
 
-  function onSubmit(values: FormValues) {
-    console.log(values)
+  async function onSubmit(data: ContactForm) {
+    await submitContactForm(data);
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="@container space-y-6"
+      noValidate
+    >
+      <div className="grid gap-6 @sm:grid-cols-2">
         <FormField
-          control={form.control}
-          name="username"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Username</FormLabel>
-              <FormControl>
-                <Input placeholder="johndoe" {...field} />
-              </FormControl>
-              <FormDescription>Your public display name.</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit">Submit</Button>
-      </form>
-    </Form>
-  )
-}
-```
+          label="Name"
+          error={errors.name?.message}
+          required
+        >
+          <input
+            {...register("name")}
+            type="text"
+            autoComplete="name"
+            aria-invalid={!!errors.name}
+            aria-describedby={errors.name ? "name-error" : "name-description"}
+            className="w-full rounded-md border border-border bg-bg px-3 py-2 text-sm text-text placeholder:text-muted focus-visible:outline-2 focus-visible:outline-primary aria-[invalid=true]:border-red-500"
+            placeholder="Your name"
+          />
+        </FormField>
 
-## Common Zod Schemas
-
-```tsx
-// String validations
-z.string().min(1, "Required")
-z.string().email("Invalid email")
-z.string().url("Invalid URL")
-z.string().regex(/^[a-z]+$/, "Lowercase only")
-
-// Number
-z.coerce.number().min(0).max(100)
-
-// Date
-z.coerce.date().min(new Date(), "Must be in the future")
-
-// Enum / Select
-z.enum(["admin", "user", "guest"], { required_error: "Select a role" })
-
-// Optional
-z.string().optional()
-z.string().nullable()
-
-// Conditional / Refinement
-z.object({
-  password: z.string().min(8),
-  confirmPassword: z.string(),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Passwords don't match",
-  path: ["confirmPassword"],
-})
-
-// Array
-z.array(z.string()).min(1, "Select at least one item")
-
-// File upload
-z.instanceof(File).refine((f) => f.size < 5_000_000, "Max 5MB")
-```
-
-## Field Types with shadcn
-
-### Select
-```tsx
-<FormField control={form.control} name="role" render={({ field }) => (
-  <FormItem>
-    <FormLabel>Role</FormLabel>
-    <Select onValueChange={field.onChange} defaultValue={field.value}>
-      <FormControl><SelectTrigger><SelectValue placeholder="Select a role" /></SelectTrigger></FormControl>
-      <SelectContent>
-        <SelectItem value="admin">Admin</SelectItem>
-        <SelectItem value="user">User</SelectItem>
-      </SelectContent>
-    </Select>
-    <FormMessage />
-  </FormItem>
-)} />
-```
-
-### Checkbox
-```tsx
-<FormField control={form.control} name="terms" render={({ field }) => (
-  <FormItem className="flex items-center space-x-2">
-    <FormControl><Checkbox checked={field.value} onCheckedChange={field.onChange} /></FormControl>
-    <FormLabel className="font-normal">Accept terms and conditions</FormLabel>
-    <FormMessage />
-  </FormItem>
-)} />
-```
-
-### Textarea
-```tsx
-<FormField control={form.control} name="bio" render={({ field }) => (
-  <FormItem>
-    <FormLabel>Bio</FormLabel>
-    <FormControl><Textarea placeholder="Tell us about yourself" {...field} /></FormControl>
-    <FormMessage />
-  </FormItem>
-)} />
-```
-
-### Switch
-```tsx
-<FormField control={form.control} name="notifications" render={({ field }) => (
-  <FormItem className="flex items-center justify-between rounded-lg border p-4">
-    <div className="space-y-0.5">
-      <FormLabel>Notifications</FormLabel>
-      <FormDescription>Receive email notifications</FormDescription>
-    </div>
-    <FormControl><Switch checked={field.value} onCheckedChange={field.onChange} /></FormControl>
-  </FormItem>
-)} />
-```
-
-### Date Picker
-```tsx
-<FormField control={form.control} name="date" render={({ field }) => (
-  <FormItem className="flex flex-col">
-    <FormLabel>Date</FormLabel>
-    <Popover>
-      <PopoverTrigger asChild>
-        <FormControl>
-          <Button variant="outline" className={cn("w-full pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>
-            {field.value ? format(field.value, "PPP") : "Pick a date"}
-            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-          </Button>
-        </FormControl>
-      </PopoverTrigger>
-      <PopoverContent className="w-auto p-0">
-        <Calendar mode="single" selected={field.value} onSelect={field.onChange} />
-      </PopoverContent>
-    </Popover>
-    <FormMessage />
-  </FormItem>
-)} />
-```
-
-## Multi-Step Forms
-
-```tsx
-const [step, setStep] = useState(1)
-
-return (
-  <Form {...form}>
-    <form onSubmit={form.handleSubmit(onSubmit)}>
-      {step === 1 && <PersonalInfoFields control={form.control} />}
-      {step === 2 && <AddressFields control={form.control} />}
-      {step === 3 && <ReviewStep values={form.getValues()} />}
-
-      <div className="flex justify-between mt-6">
-        {step > 1 && <Button type="button" variant="outline" onClick={() => setStep(s => s - 1)}>Back</Button>}
-        {step < 3 ? (
-          <Button type="button" onClick={async () => {
-            const valid = await form.trigger(stepFields[step])
-            if (valid) setStep(s => s + 1)
-          }}>Next</Button>
-        ) : (
-          <Button type="submit">Submit</Button>
-        )}
+        <FormField
+          label="Email"
+          error={errors.email?.message}
+          required
+        >
+          <input
+            {...register("email")}
+            type="email"
+            autoComplete="email"
+            aria-invalid={!!errors.email}
+            aria-describedby={errors.email ? "email-error" : undefined}
+            className="w-full rounded-md border border-border bg-bg px-3 py-2 text-sm text-text placeholder:text-muted focus-visible:outline-2 focus-visible:outline-primary aria-[invalid=true]:border-red-500"
+            placeholder="you@example.com"
+          />
+        </FormField>
       </div>
+
+      <FormField
+        label="Message"
+        error={errors.message?.message}
+        description="Tell us how we can help."
+        required
+      >
+        <textarea
+          {...register("message")}
+          rows={4}
+          aria-invalid={!!errors.message}
+          aria-describedby={
+            [errors.message && "message-error", "message-description"]
+              .filter(Boolean)
+              .join(" ") || undefined
+          }
+          className="w-full rounded-md border border-border bg-bg px-3 py-2 text-sm text-text placeholder:text-muted focus-visible:outline-2 focus-visible:outline-primary aria-[invalid=true]:border-red-500 resize-y"
+          placeholder="Your message..."
+        />
+      </FormField>
+
+      <button
+        type="submit"
+        disabled={isSubmitting}
+        className="inline-flex items-center justify-center rounded-md bg-primary px-6 py-2.5 text-sm font-semibold text-bg hover:bg-primary/90 disabled:opacity-50 motion-safe:transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+      >
+        {isSubmitting ? (
+          <>
+            <LoaderIcon className="me-2 size-4 animate-spin" aria-hidden="true" />
+            Sending...
+          </>
+        ) : (
+          "Send Message"
+        )}
+      </button>
     </form>
-  </Form>
-)
+  );
+}
 ```
 
-## Submission States
+#### Pattern: Reusable Form Field Wrapper
 
 ```tsx
-const [isPending, startTransition] = useTransition()
-
-function onSubmit(values: FormValues) {
-  startTransition(async () => {
-    await submitForm(values)
-    toast.success("Form submitted!")
-  })
+interface FormFieldProps {
+  label: string;
+  error?: string;
+  description?: string;
+  required?: boolean;
+  children: React.ReactNode;
 }
 
-<Button type="submit" disabled={isPending}>
-  {isPending ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Submitting...</> : "Submit"}
-</Button>
+export function FormField({
+  label,
+  error,
+  description,
+  required,
+  children,
+}: FormFieldProps) {
+  const id = label.toLowerCase().replace(/\s+/g, "-");
+
+  return (
+    <div className="space-y-1.5">
+      <label
+        htmlFor={id}
+        className="text-sm font-medium text-text"
+      >
+        {label}
+        {required && <span className="text-red-500 ms-0.5" aria-hidden="true">*</span>}
+        {required && <span className="sr-only">(required)</span>}
+      </label>
+
+      {/* Clone child to inject id */}
+      <div>{children}</div>
+
+      {description && !error && (
+        <p id={`${id}-description`} className="text-xs text-muted">
+          {description}
+        </p>
+      )}
+
+      {error && (
+        <p
+          id={`${id}-error`}
+          className="text-xs text-red-600 dark:text-red-400"
+          role="alert"
+          aria-live="polite"
+        >
+          {error}
+        </p>
+      )}
+    </div>
+  );
+}
 ```
 
-## Best Practices
+#### Pattern: Multi-Step Form with Progress
 
-1. Always use `zodResolver` for type-safe validation
-2. Set `defaultValues` for all fields to avoid uncontrolled-to-controlled warnings
-3. Use `FormMessage` on every field for error display
-4. Use `form.trigger()` for per-step validation in multi-step forms
-5. Show loading state on submit button with `useTransition`
-6. Use `FormDescription` to guide users on expected input
-7. Use `z.infer<typeof schema>` for type derivation - never duplicate types
+```tsx
+"use client";
+
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+
+const step1Schema = z.object({
+  name: z.string().min(2, "Name is required"),
+  email: z.string().email("Valid email required"),
+});
+
+const step2Schema = z.object({
+  address: z.string().min(5, "Address is required"),
+  city: z.string().min(2, "City is required"),
+  zip: z.string().min(4, "ZIP code is required"),
+});
+
+const fullSchema = step1Schema.merge(step2Schema);
+type FormData = z.infer<typeof fullSchema>;
+
+const stepSchemas = [step1Schema, step2Schema] as const;
+const stepLabels = ["Personal Info", "Address", "Review"];
+
+export function MultiStepForm() {
+  const [step, setStep] = useState(0);
+  const form = useForm<FormData>({
+    resolver: zodResolver(fullSchema),
+    mode: "onTouched",
+  });
+
+  async function goNext() {
+    const schema = stepSchemas[step];
+    if (!schema) return;
+    const fields = Object.keys(schema.shape) as (keyof FormData)[];
+    const valid = await form.trigger(fields);
+    if (valid) setStep((s) => s + 1);
+  }
+
+  return (
+    <div className="mx-auto max-w-lg">
+      {/* Step indicator */}
+      <nav aria-label="Form progress" className="mb-8">
+        <ol className="flex items-center gap-2">
+          {stepLabels.map((label, i) => {
+            const status = i < step ? "complete" : i === step ? "current" : "upcoming";
+            return (
+              <li key={label} className="flex items-center gap-2">
+                <span
+                  className={`grid size-8 place-items-center rounded-full text-xs font-bold ${
+                    status === "complete"
+                      ? "bg-primary text-bg"
+                      : status === "current"
+                        ? "bg-primary text-bg ring-4 ring-primary/20"
+                        : "bg-surface text-muted"
+                  }`}
+                  aria-current={status === "current" ? "step" : undefined}
+                >
+                  {status === "complete" ? (
+                    <CheckIcon className="size-4" aria-hidden="true" />
+                  ) : (
+                    i + 1
+                  )}
+                </span>
+                <span className={`text-sm hidden sm:inline ${status === "upcoming" ? "text-muted" : "text-text"}`}>
+                  {label}
+                </span>
+                {i < stepLabels.length - 1 && (
+                  <div className={`h-px w-8 ${status === "complete" ? "bg-primary" : "bg-border"}`} aria-hidden="true" />
+                )}
+              </li>
+            );
+          })}
+        </ol>
+      </nav>
+
+      <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
+        {step === 0 && <Step1Fields register={form.register} errors={form.formState.errors} />}
+        {step === 1 && <Step2Fields register={form.register} errors={form.formState.errors} />}
+        {step === 2 && <ReviewStep values={form.getValues()} />}
+
+        <div className="mt-6 flex justify-between">
+          {step > 0 && (
+            <button
+              type="button"
+              className="rounded-md border border-border px-4 py-2 text-sm text-text hover:bg-surface motion-safe:transition-colors focus-visible:outline-2 focus-visible:outline-primary"
+              onClick={() => setStep((s) => s - 1)}
+            >
+              Back
+            </button>
+          )}
+          {step < 2 ? (
+            <button
+              type="button"
+              className="ms-auto rounded-md bg-primary px-4 py-2 text-sm font-semibold text-bg hover:bg-primary/90 motion-safe:transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              onClick={goNext}
+            >
+              Next
+            </button>
+          ) : (
+            <button
+              type="submit"
+              disabled={form.formState.isSubmitting}
+              className="ms-auto inline-flex items-center rounded-md bg-primary px-6 py-2 text-sm font-semibold text-bg hover:bg-primary/90 disabled:opacity-50 motion-safe:transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            >
+              {form.formState.isSubmitting ? (
+                <>
+                  <LoaderIcon className="me-2 size-4 animate-spin" aria-hidden="true" />
+                  Submitting...
+                </>
+              ) : (
+                "Submit"
+              )}
+            </button>
+          )}
+        </div>
+      </form>
+    </div>
+  );
+}
+```
+
+#### Pattern: DNA-Styled Input Components
+
+```tsx
+// Base input styles using DNA tokens
+const inputStyles =
+  "w-full rounded-md border border-border bg-bg px-3 py-2 text-sm text-text placeholder:text-muted focus-visible:outline-2 focus-visible:outline-primary disabled:opacity-50 disabled:cursor-not-allowed aria-[invalid=true]:border-red-500";
+
+const labelStyles = "text-sm font-medium text-text";
+
+const descriptionStyles = "text-xs text-muted";
+
+const errorStyles = "text-xs text-red-600 dark:text-red-400";
+
+// Select input
+export function SelectField({
+  label,
+  options,
+  error,
+  ...props
+}: {
+  label: string;
+  options: { value: string; label: string }[];
+  error?: string;
+} & React.SelectHTMLAttributes<HTMLSelectElement>) {
+  const id = label.toLowerCase().replace(/\s+/g, "-");
+  return (
+    <div className="space-y-1.5">
+      <label htmlFor={id} className={labelStyles}>{label}</label>
+      <select
+        id={id}
+        className={inputStyles}
+        aria-invalid={!!error}
+        aria-describedby={error ? `${id}-error` : undefined}
+        {...props}
+      >
+        <option value="">Select...</option>
+        {options.map((opt) => (
+          <option key={opt.value} value={opt.value}>{opt.label}</option>
+        ))}
+      </select>
+      {error && (
+        <p id={`${id}-error`} className={errorStyles} role="alert" aria-live="polite">{error}</p>
+      )}
+    </div>
+  );
+}
+```
+
+### Reference Sites
+
+- **Linear** (linear.app) -- Clean form design with immediate validation feedback, DNA-consistent styling, excellent keyboard navigation
+- **Stripe Checkout** (stripe.com) -- Best-in-class multi-step form: clear progress, per-step validation, accessible error announcements, loading states
+- **Typeform** (typeform.com) -- One-question-at-a-time pattern with smooth transitions, strong focus management, engaging validation feedback
+
+## Layer 3: Integration Context
+
+### DNA Connection
+
+| DNA Token | Usage in Forms |
+|-----------|---------------|
+| `bg-bg` | Input field backgrounds |
+| `bg-surface` | Form card containers, selected/hover states |
+| `text-text` | Labels, input text, button text |
+| `text-muted` | Placeholders, descriptions, helper text |
+| `border-border` | Input borders, form card outlines |
+| `bg-primary` / `text-bg` | Submit buttons, active radio/checkbox fills |
+| `--motion-duration` | Validation fade-in, step transition, button loading spin |
+| `--motion-easing` | Form field focus ring transition |
+
+### Archetype Variants
+
+| Archetype | Adaptation |
+|-----------|-----------|
+| Swiss/International | Clean aligned forms, generous spacing, no decorative elements, strict label positioning |
+| Brutalist | Raw unstyled inputs, no border-radius, bold labels, stark error colors |
+| Luxury/Fashion | Minimal floating labels, thin borders, refined typography, subtle focus rings |
+| Playful/Startup | Rounded inputs, colorful focus rings, bouncy validation feedback |
+| Neo-Corporate | Polished inputs with subtle shadows, professional spacing, clean step indicators |
+| Japanese Minimal | Quiet inputs, generous whitespace, understated validation states |
+
+### Related Skills
+
+- `tailwind-system` -- DNA token classes for input styling, container queries for form layout
+- `accessibility` -- Label association, error announcements, focus management, keyboard operation
+- `ecommerce-ui` -- Checkout form patterns, address inputs, payment field layouts
+- `i18n-rtl` -- Logical properties for RTL form layouts, `dir="auto"` on text inputs
+- `cinematic-motion` -- Form step transitions, validation micro-animations (gated behind `motion-safe:`)
+
+## Layer 4: Anti-Patterns
+
+### Anti-Pattern: Placeholder as Label
+
+**What goes wrong:** Input fields use placeholder text as the only label. When the user starts typing, the label disappears. Users with cognitive disabilities, screen readers without placeholder support, and anyone who tabs away forget what the field is for.
+**Instead:** Always use a visible `<label>` associated with `htmlFor`/`id`. Placeholders provide examples only (e.g., label: "Email", placeholder: "you@example.com"). If space is constrained, use floating labels that animate above the input on focus.
+
+### Anti-Pattern: Error Messages Without ARIA Live
+
+**What goes wrong:** Validation errors appear visually but screen readers do not announce them. Users relying on assistive technology submit the form repeatedly without knowing what's wrong.
+**Instead:** Error messages use `role="alert"` and `aria-live="polite"` so screen readers announce them immediately. Connect errors to fields with `aria-describedby`. The input itself has `aria-invalid="true"` when in error state.
+
+### Anti-Pattern: Color-Only Error Indication
+
+**What goes wrong:** Errors indicated only by a red border or red text color. Users with color blindness (protanopia, deuteranopia) cannot distinguish error states from normal states.
+**Instead:** Combine color with at least one other indicator: error icon, error text message, `aria-invalid` attribute. The error message itself provides the information, not just the color change.
+
+### Anti-Pattern: Submit Button Without Loading State
+
+**What goes wrong:** Submit button has no disabled state or loading indicator during submission. Users click multiple times, creating duplicate submissions. No feedback on progress.
+**Instead:** Disable the button during submission (`disabled={isSubmitting}`), show a spinner with descriptive text ("Sending..."), and use `opacity-50` + `cursor-not-allowed` for visual disabled state. Announce loading state to screen readers.

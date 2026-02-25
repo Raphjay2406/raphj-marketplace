@@ -131,7 +131,7 @@ Based on the benchmark, set minimum scores per axis:
 - Content: 7+ (content quality often forgotten — competitive advantage)
 
 ### Step 4: Score During Verification
-During `/modulo:verify`, run the full 4-axis scoring on the completed site. Report each axis score, overall average, and SOTD prediction.
+During `/modulo:audit`, run the full 4-axis scoring on the completed site. Report each axis score, overall average, and SOTD prediction.
 
 ## Scoring Report Template
 

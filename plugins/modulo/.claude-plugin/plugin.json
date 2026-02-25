@@ -1,7 +1,7 @@
 {
   "name": "modulo",
-  "description": "Premium frontend design system with 87 skills, 13 commands, and 17 agents. Features Full Quality Pipeline and 6-layer Context Rot Prevention (pre-commit hooks, CONTEXT.md anchoring, pre-extracted spawn prompts, canary checks, session boundaries, baked-in rules). Plus Design DNA identity system with 16 opinionated archetypes, creative tension system, emotional arc storytelling, cinematic motion choreography, 35-point anti-slop quality gate, and Awwwards 4-axis scoring. Creates Awwwards SOTD-competitive, production-ready websites. Works with Next.js and Astro.",
-  "version": "6.1.0",
+  "description": "Premium frontend design system for Claude Code. 6 workflow commands + utility commands, pipeline agent architecture, Design DNA identity system with 19 archetypes, creative tension, emotional arc, cinematic motion, 35-point anti-slop gate, and Awwwards scoring. Creates award-winning, production-ready websites.",
+  "version": "1.5.0",
   "author": {
     "name": "raphj"
   },
