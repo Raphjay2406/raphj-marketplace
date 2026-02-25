@@ -9,10 +9,10 @@ Modulo organizes skills into a **3-tier loading system** that controls context w
 | Tier | Loading | When | Context Budget | Skills |
 |------|---------|------|----------------|--------|
 | **Core** | Always loaded | Every Modulo session | ~10,000 lines total | 22 skills |
-| **Domain** | Per-project | Agent decides based on project type, archetype, and current task | Only relevant subset | 24 skills |
+| **Domain** | Per-project | Agent decides based on project type, archetype, and current task | Only relevant subset | 26 skills |
 | **Utility** | On-demand | Explicit reference when specific need arises | Only when needed | 2 skills |
 
-**Why tiers matter:** Loading all 48 skills into every session wastes thousands of lines of context on skills that may never apply. Tier-based loading keeps Core skills available for every decision while deferring Domain and Utility skills until they are actually needed.
+**Why tiers matter:** Loading all 50 skills into every session wastes thousands of lines of context on skills that may never apply. Tier-based loading keeps Core skills available for every decision while deferring Domain and Utility skills until they are actually needed.
 
 ### 4-Layer Format Standard
 
@@ -131,6 +131,8 @@ Domain skills are loaded **per project** based on the project's archetype, techn
 | `structured-data` | COMPLETE | 15 | 1091 | Typed JSON-LD schemas for rich results: FAQPage, Article, Product, LocalBusiness, Organization, WebSite, BreadcrumbList, HowTo, Event -- per-page recipes, @graph combinations, GEO content patterns, schema audit protocol |
 | `search-visibility` | COMPLETE | 16 | 579 | IndexNow instant indexing, AI-aware robots.txt presets, llms.txt generation, unified indexing strategy, webmaster tools submission workflows for Next.js 16 and Astro 5 |
 | `og-images` | COMPLETE | 18 | 1252 | Dynamic OG image generation from Design DNA tokens: branded 1200x630 social previews using next/og ImageResponse (Next.js) and Satori + sharp (Astro), 3 archetype-influenced template types |
+| `api-patterns` | COMPLETE | 17 | 1601 | Server-side API integration: Context7 MCP for live docs, server-side proxies with env secret protection, CRM form patterns (HubSpot, Salesforce), typed API clients with discriminated unions, webhook receivers with signature verification, Cloudflare Turnstile spam protection |
+| `ssr-dynamic-content` | COMPLETE | 19 | 1842 | SSR/ISR/streaming decision guidance: 4-dimension rendering matrix, Cache Components (Next.js 16), Server Islands (Astro 5), CMS webhook revalidation for 5 platforms, auth-gated rendering for 4 libraries, cache invalidation strategies, loading state patterns |
 
 ---
 
@@ -203,13 +205,13 @@ These legacy skills have no direct v2.0 replacement:
 | Category | Count | Status |
 |----------|-------|--------|
 | Core | 22 | All COMPLETE |
-| Domain | 24 | All COMPLETE |
+| Domain | 26 | All COMPLETE |
 | Utility | 2 | All COMPLETE |
 | Legacy (superseded) | 1 | LEGACY -- v2.0 replacement exists (chart-data-viz) |
 | Legacy (unrewritten) | 26 | LEGACY -- evaluation pending |
 | Legacy (template) | 1 | Reference template |
-| **Total v2.0** | **49** | **48 skills + 1 template** |
-| **Total in filesystem** | **76** | **49 v2.0 + 27 legacy** |
+| **Total v2.0** | **51** | **50 skills + 1 template** |
+| **Total in filesystem** | **78** | **51 v2.0 + 27 legacy** |
 
 ---
 
@@ -312,6 +314,6 @@ All new and rewritten skills MUST follow the 4-layer format. See:
 
 ---
 
-*Registry version: 2.1.0*
-*Last updated: Phase 18, Plan 4 -- v1.5 milestone registry update*
-*Total v2.0 skills: 49 (22 core, 24 domain, 2 utility + 1 template)*
+*Registry version: 2.2.0*
+*Last updated: Phase 20, Plan 1 -- v1.5 gap closure (api-patterns + ssr-dynamic-content registration)*
+*Total v2.0 skills: 51 (22 core, 26 domain, 2 utility + 1 template)*

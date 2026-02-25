@@ -616,6 +616,7 @@ Archetypes modify emotional arc in three ways:
 - **anti-slop-gate** -- Layout diversity check (category L1) validates consecutive sections have different layouts -- beat variation enables this
 - **creative-tension** -- PEAK beats are where tension techniques belong; tension placement should align with PEAK or TENSION beats
 - **cinematic-motion** -- Animation intensity per beat maps to motion skill's intensity tiers
+- **structured-data** -- SEO beat mapping: HOOK = H1 + primary keyword schema, PROOF = statistics + schema markup, TENSION = FAQ + FAQPage schema; consult structured-data skill Layer 3 for the full beat-to-schema mapping table
 
 ---
 
