@@ -1,7 +1,7 @@
 {
   "name": "modulo",
   "description": "Premium frontend design system for Claude Code. 6 workflow commands + utility commands, pipeline agent architecture, Design DNA identity system with 19 archetypes, creative tension, emotional arc, cinematic motion, 35-point anti-slop gate, and Awwwards scoring. Creates award-winning, production-ready websites.",
-  "version": "2.0.0-dev",
+  "version": "1.5.0",
   "author": {
     "name": "raphj"
   },
