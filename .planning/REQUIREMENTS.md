@@ -20,28 +20,28 @@ Requirements for v1.5 milestone. Each maps to roadmap phases.
 
 ### Structured Data
 
-- [ ] **SDATA-01**: Typed JSON-LD generation using `schema-dts` (TypeScript types, zero runtime, devDependency)
-- [ ] **SDATA-02**: FAQ schema with proper Question/Answer markup — validated against Google Rich Results test
-- [ ] **SDATA-03**: HowTo schema for tutorial/guide content with step-by-step structured markup
-- [ ] **SDATA-04**: Article schema (NewsArticle, BlogPosting) with author, datePublished, dateModified
-- [ ] **SDATA-05**: Organization schema with logo, contact, social profiles
-- [ ] **SDATA-06**: Post-iteration schema audit protocol to prevent structured data drift from visible content
+- [x] **SDATA-01**: Typed JSON-LD generation using plain TypeScript interfaces (zero runtime, no schema-dts dependency)
+- [x] **SDATA-02**: FAQ schema with proper Question/Answer markup — validated against Google Rich Results test
+- [x] **SDATA-03**: HowTo schema for tutorial/guide content with step-by-step structured markup
+- [x] **SDATA-04**: Article schema (NewsArticle, BlogPosting) with author, datePublished, dateModified
+- [x] **SDATA-05**: Organization schema with logo, contact, social profiles
+- [x] **SDATA-06**: Post-iteration schema audit protocol to prevent structured data drift from visible content
 
 ### Generative Engine Optimization (GEO)
 
-- [ ] **GEO-01**: Content structuring patterns for AI search visibility (Google AI Overviews, Bing Copilot, ChatGPT search)
-- [ ] **GEO-02**: BLUF (Bottom Line Up Front) formatting with statistical evidence and citation-friendly content blocks
-- [ ] **GEO-03**: FAQ-first content patterns — FAQ schema drives 3.2x higher AI Overview appearance rate
-- [ ] **GEO-04**: AI crawler taxonomy: distinguish training bots (GPTBot, Google-Extended, ClaudeBot — block) from search bots (OAI-SearchBot, PerplexityBot — allow)
-- [ ] **GEO-05**: SEO-Emotional Arc integration — GEO-optimized content blocks placed at strategic beat positions
+- [x] **GEO-01**: Content structuring patterns for AI search visibility (Google AI Overviews, Bing Copilot, ChatGPT search)
+- [x] **GEO-02**: BLUF (Bottom Line Up Front) formatting with statistical evidence and citation-friendly content blocks
+- [x] **GEO-03**: FAQ-first content patterns — FAQ schema drives significantly higher AI Overview appearance rates
+- [x] **GEO-04**: AI crawler taxonomy: distinguish training bots (GPTBot, Google-Extended, ClaudeBot — block) from search bots (OAI-SearchBot, PerplexityBot — allow)
+- [x] **GEO-05**: SEO-Emotional Arc integration — GEO-optimized content blocks placed at strategic beat positions
 
 ### Indexing & Visibility
 
-- [ ] **IDX-01**: IndexNow full auto-setup: API key generation, verification file, framework-specific submission endpoint (Next.js API route, Astro endpoint)
-- [ ] **IDX-02**: AI-aware robots.txt with separate rules for training bots vs search bots
-- [ ] **IDX-03**: llms.txt template generation — forward-looking convention for AI crawler guidance
-- [ ] **IDX-04**: Unified indexing strategy: IndexNow for Bing/Yandex/Naver + sitemap/ping for Google
-- [ ] **IDX-05**: GSC and Bing Webmaster Tools submission workflow with step-by-step verification instructions
+- [x] **IDX-01**: IndexNow full auto-setup: API key generation, verification file, framework-specific submission endpoint (Next.js API route, Astro endpoint)
+- [x] **IDX-02**: AI-aware robots.txt with separate rules for training bots vs search bots
+- [x] **IDX-03**: llms.txt template generation — forward-looking convention for AI crawler guidance
+- [x] **IDX-04**: Unified indexing strategy: IndexNow for Bing/Yandex/Naver + sitemap/ping for Google
+- [x] **IDX-05**: GSC and Bing Webmaster Tools submission workflow with step-by-step verification instructions
 
 ### API Integration
 
@@ -105,22 +105,22 @@ Deferred to future release. Tracked but not in current roadmap.
 | SEO-06 | Phase 14 | Complete |
 | SEO-07 | Phase 14 | Complete |
 | SEO-08 | Phase 14 | Complete |
-| SDATA-01 | Phase 15 | Pending |
-| SDATA-02 | Phase 15 | Pending |
-| SDATA-03 | Phase 15 | Pending |
-| SDATA-04 | Phase 15 | Pending |
-| SDATA-05 | Phase 15 | Pending |
-| SDATA-06 | Phase 15 | Pending |
-| GEO-01 | Phase 15 | Pending |
-| GEO-02 | Phase 15 | Pending |
-| GEO-03 | Phase 15 | Pending |
-| GEO-04 | Phase 15 | Pending |
-| GEO-05 | Phase 15 | Pending |
-| IDX-01 | Phase 16 | Pending |
-| IDX-02 | Phase 16 | Pending |
-| IDX-03 | Phase 16 | Pending |
-| IDX-04 | Phase 16 | Pending |
-| IDX-05 | Phase 16 | Pending |
+| SDATA-01 | Phase 15 | Complete |
+| SDATA-02 | Phase 15 | Complete |
+| SDATA-03 | Phase 15 | Complete |
+| SDATA-04 | Phase 15 | Complete |
+| SDATA-05 | Phase 15 | Complete |
+| SDATA-06 | Phase 15 | Complete |
+| GEO-01 | Phase 15 | Complete |
+| GEO-02 | Phase 15 | Complete |
+| GEO-03 | Phase 15 | Complete |
+| GEO-04 | Phase 15 | Complete |
+| GEO-05 | Phase 15 | Complete |
+| IDX-01 | Phase 16 | Complete |
+| IDX-02 | Phase 16 | Complete |
+| IDX-03 | Phase 16 | Complete |
+| IDX-04 | Phase 16 | Complete |
+| IDX-05 | Phase 16 | Complete |
 | API-01 | Phase 17 | Pending |
 | API-02 | Phase 17 | Pending |
 | API-03 | Phase 17 | Pending |

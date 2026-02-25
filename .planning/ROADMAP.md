@@ -31,7 +31,7 @@
 **Milestone Goal:** Sites built with Modulo are discoverable and rankable by default -- search engines, AI engines, and social platforms all see correct metadata, structured data, and fresh content signals. External API integration patterns enable CRM forms, webhooks, and third-party services without exposing secrets.
 
 - [x] **Phase 14: Core SEO Foundation** (2/2 plans) - Rewrite seo-meta as Core-tier skill with complete meta tag architecture, canonical URLs, sitemaps, robots.txt, and Core Web Vitals guidance — completed 2026-02-25
-- [ ] **Phase 15: Structured Data & GEO** - New structured-data skill with typed JSON-LD schemas plus GEO content patterns integrated into the Emotional Arc system
+- [x] **Phase 15: Structured Data & GEO** (2/2 plans) - New structured-data skill with typed JSON-LD schemas plus GEO content patterns integrated into the Emotional Arc system — completed 2026-02-25
 - [ ] **Phase 16: Indexing & Search Visibility** - New search-visibility skill with IndexNow auto-setup, llms.txt, unified indexing strategy, and GSC/Bing submission workflows
 - [ ] **Phase 17: API Integration Patterns** - New api-patterns skill with Context7 MCP integration, server-side proxy patterns, CRM forms, typed API clients, webhooks, and env management
 - [ ] **Phase 18: Dynamic OG Images & Pipeline Wiring** - DNA-integrated OG image generation for Next.js and Astro, plus agent updates wiring all v1.5 skills into the pipeline
@@ -67,8 +67,8 @@ Plans:
   5. AI crawler guidance distinguishes training bots to block from search bots to allow, with per-bot directives and rationale
 **Plans**: 2 plans
 Plans:
-- [ ] 15-PLAN-01.md -- SKILL.md Layers 1-2: Decision Guidance with schema status matrix and per-page recipes + complete code patterns for all structured data types, GEO content patterns, and schema audit protocol
-- [ ] 15-PLAN-02.md -- SKILL.md Layers 3-4: SEO-Emotional Arc beat mapping, archetype-to-GEO intensity mapping + anti-patterns + machine-readable constraints
+- [x] 15-PLAN-01.md -- SKILL.md Layers 1-2: Decision Guidance with schema status matrix and per-page recipes + complete code patterns for all structured data types, GEO content patterns, and schema audit protocol
+- [x] 15-PLAN-02.md -- SKILL.md Layers 3-4: SEO-Emotional Arc beat mapping, archetype-to-GEO intensity mapping + anti-patterns + machine-readable constraints
 **Research flag**: Standard patterns -- framework APIs well-documented. Verify Next.js 16 `generateMetadata` async params syntax.
 
 ### Phase 16: Indexing & Search Visibility
@@ -139,12 +139,12 @@ Phases 14-16 are sequential (SEO dependency chain). Phase 17 is independent of 1
 |-------|-----------|----------------|--------|-----------|
 | 1-13 | v1 | 63/63 | Complete | 2026-02-25 |
 | 14. Core SEO Foundation | v1.5 | 2/2 | Complete | 2026-02-25 |
-| 15. Structured Data & GEO | v1.5 | 0/2 | Planned | - |
-| 16. Indexing & Search Visibility | v1.5 | 2/3 | In progress | - |
+| 15. Structured Data & GEO | v1.5 | 2/2 | Complete | 2026-02-25 |
+| 16. Indexing & Search Visibility | v1.5 | 3/3 | Complete | 2026-02-25 |
 | 17. API Integration Patterns | v1.5 | 0/2 | Planned | - |
 | 18. Dynamic OG Images & Pipeline Wiring | v1.5 | 0/TBD | Not started | - |
 | 19. SSR & Dynamic Content Patterns | v1.5 | 0/TBD | Not started | - |
 
 ---
 *Roadmap created: 2026-02-23*
-*Last updated: 2026-02-25 — Phase 17 planned (2 plans in 2 waves)*
+*Last updated: 2026-02-25 — Phase 15 complete (2/2 plans), Phase 16 complete (3/3 plans)*
