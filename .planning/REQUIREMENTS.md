@@ -54,9 +54,19 @@ Requirements for v1.5 milestone. Each maps to roadmap phases.
 
 ### Dynamic OG Images
 
-- [ ] **OG-01**: DNA-integrated OG image generation using Next.js `ImageResponse` (next/og) + Satori
-- [ ] **OG-02**: Dynamic social preview templates that pull Design DNA tokens (colors, fonts, brand elements)
-- [ ] **OG-03**: Astro-compatible OG image generation pattern (Satori + sharp/resvg)
+- [x] **OG-01**: DNA-integrated OG image generation using Next.js `ImageResponse` (next/og) + Satori
+- [x] **OG-02**: Dynamic social preview templates that pull Design DNA tokens (colors, fonts, brand elements)
+- [x] **OG-03**: Astro-compatible OG image generation pattern (Satori + sharp/resvg)
+
+### SSR & Dynamic Content
+
+- [x] **SSR-01**: SSR/ISR/streaming decision guidance with 4-dimension rendering matrix covering data freshness, auth needs, personalization, and build scalability for Next.js 16 and Astro 5/6
+- [x] **SSR-02**: ISR and on-demand revalidation patterns using revalidatePath/revalidateTag (Next.js) and on-demand builder invalidation (Astro) with CMS webhook triggers
+- [x] **SSR-03**: Streaming SSR patterns with React Suspense boundaries and Astro streaming response for progressive rendering of pages with slow data sources
+- [x] **SSR-04**: Auth-gated content patterns with server-side session checks (proxy.ts + layout), Cache Components for mixed public/private pages, support for Auth.js v5, Clerk, Supabase, and Better Auth
+- [x] **SSR-05**: Cache strategy guidance covering CDN headers (Cache-Control, s-maxage, stale-while-revalidate), Next.js 4-layer cache system with cacheLife profiles, and cache invalidation patterns
+- [x] **SSR-06**: CMS integration patterns documenting the publish-revalidate-verify loop for Sanity, Contentful, Strapi, Payload CMS, and Hygraph with webhook setup, draft preview, and content freshness signals
+- [x] **SSR-07**: Database-driven page patterns with dynamic route generation, pagination with SSR, and connection pooling for serverless environments
 
 ## v2 Requirements
 
@@ -121,21 +131,28 @@ Deferred to future release. Tracked but not in current roadmap.
 | IDX-03 | Phase 16 | Complete |
 | IDX-04 | Phase 16 | Complete |
 | IDX-05 | Phase 16 | Complete |
-| API-01 | Phase 17 | Pending |
-| API-02 | Phase 17 | Pending |
-| API-03 | Phase 17 | Pending |
-| API-04 | Phase 17 | Pending |
-| API-05 | Phase 17 | Pending |
-| API-06 | Phase 17 | Pending |
-| OG-01 | Phase 18 | Pending |
-| OG-02 | Phase 18 | Pending |
-| OG-03 | Phase 18 | Pending |
+| API-01 | Phase 17 | Complete |
+| API-02 | Phase 17 | Complete |
+| API-03 | Phase 17 | Complete |
+| API-04 | Phase 17 | Complete |
+| API-05 | Phase 17 | Complete |
+| API-06 | Phase 17 | Complete |
+| OG-01 | Phase 18 | Complete |
+| OG-02 | Phase 18 | Complete |
+| OG-03 | Phase 18 | Complete |
+| SSR-01 | Phase 19 | Complete |
+| SSR-02 | Phase 19 | Complete |
+| SSR-03 | Phase 19 | Complete |
+| SSR-04 | Phase 19 | Complete |
+| SSR-05 | Phase 19 | Complete |
+| SSR-06 | Phase 19 | Complete |
+| SSR-07 | Phase 19 | Complete |
 
 **Coverage:**
-- v1 requirements: 33 total
-- Mapped to phases: 33
+- v1.5 requirements: 40 total
+- Mapped to phases: 40
 - Unmapped: 0
 
 ---
 *Requirements defined: 2026-02-25*
-*Last updated: 2026-02-25 — all 33 requirements mapped to phases 14-18*
+*Last updated: 2026-02-25 -- Phase 20 gap closure: all 40 requirements mapped to phases 14-19, all Complete*
