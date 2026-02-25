@@ -30,7 +30,7 @@
 
 **Milestone Goal:** Sites built with Modulo are discoverable and rankable by default -- search engines, AI engines, and social platforms all see correct metadata, structured data, and fresh content signals. External API integration patterns enable CRM forms, webhooks, and third-party services without exposing secrets.
 
-- [ ] **Phase 14: Core SEO Foundation** - Rewrite seo-meta as Core-tier skill with complete meta tag architecture, canonical URLs, sitemaps, robots.txt, and Core Web Vitals guidance
+- [x] **Phase 14: Core SEO Foundation** (2/2 plans) - Rewrite seo-meta as Core-tier skill with complete meta tag architecture, canonical URLs, sitemaps, robots.txt, and Core Web Vitals guidance — completed 2026-02-25
 - [ ] **Phase 15: Structured Data & GEO** - New structured-data skill with typed JSON-LD schemas plus GEO content patterns integrated into the Emotional Arc system
 - [ ] **Phase 16: Indexing & Search Visibility** - New search-visibility skill with IndexNow auto-setup, llms.txt, unified indexing strategy, and GSC/Bing submission workflows
 - [ ] **Phase 17: API Integration Patterns** - New api-patterns skill with Context7 MCP integration, server-side proxy patterns, CRM forms, typed API clients, webhooks, and env management
@@ -51,8 +51,8 @@
   5. A framework capability matrix honestly discloses SPA limitations for React/Vite and guides users toward SSR frameworks when SEO is a primary goal
 **Plans**: 2 plans
 Plans:
-- [ ] 14-PLAN-01.md -- SKILL.md Layers 1-2: Decision Guidance with framework capability matrix + complete code patterns for all 8 requirements
-- [ ] 14-PLAN-02.md -- SKILL.md Layers 3-4 + Machine-Readable Constraints + appendix-ai-bots.md AI crawler taxonomy
+- [x] 14-PLAN-01.md -- SKILL.md Layers 1-2: Decision Guidance with framework capability matrix + complete code patterns for all 8 requirements
+- [x] 14-PLAN-02.md -- SKILL.md Layers 3-4 + Machine-Readable Constraints + appendix-ai-bots.md AI crawler taxonomy
 **Research flag**: Standard patterns -- framework APIs well-documented. Verify Next.js 16 `generateMetadata` async params syntax.
 
 ### Phase 15: Structured Data & GEO
@@ -135,7 +135,7 @@ Phases 14-16 are sequential (SEO dependency chain). Phase 17 is independent of 1
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
 | 1-13 | v1 | 63/63 | Complete | 2026-02-25 |
-| 14. Core SEO Foundation | v1.5 | 0/2 | Planned | - |
+| 14. Core SEO Foundation | v1.5 | 2/2 | Complete | 2026-02-25 |
 | 15. Structured Data & GEO | v1.5 | 0/2 | Planned | - |
 | 16. Indexing & Search Visibility | v1.5 | 1/3 | In progress | - |
 | 17. API Integration Patterns | v1.5 | 0/TBD | Not started | - |
@@ -144,4 +144,4 @@ Phases 14-16 are sequential (SEO dependency chain). Phase 17 is independent of 1
 
 ---
 *Roadmap created: 2026-02-23*
-*Last updated: 2026-02-25 — Phase 16 Plan 01 complete (search-visibility Layers 1-2A)*
+*Last updated: 2026-02-25 — Phase 14 complete (2/2 plans, verified)*

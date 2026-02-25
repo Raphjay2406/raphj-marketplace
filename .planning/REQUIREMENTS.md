@@ -9,14 +9,14 @@ Requirements for v1.5 milestone. Each maps to roadmap phases.
 
 ### Core SEO
 
-- [ ] **SEO-01**: Comprehensive meta tag generation (title, description) with framework-native patterns (Next.js `generateMetadata`, Astro `<head>`, React 19 native hoisting) — no deprecated libraries (react-helmet, next-seo)
-- [ ] **SEO-02**: Open Graph and Twitter Card meta tags with per-page customization and fallback defaults
-- [ ] **SEO-03**: Canonical URL strategy with self-referencing canonicals, cross-domain handling, and pagination rules
-- [ ] **SEO-04**: XML sitemap generation that passes Google Search Console and Bing Webmaster Tools validation — framework-native (Next.js `app/sitemap.ts`, Astro `@astrojs/sitemap`)
-- [ ] **SEO-05**: Sitemap index generation for multi-page sites with proper `<sitemapindex>` wrapper
-- [ ] **SEO-06**: robots.txt generation with sitemap references and proper crawl directives
-- [ ] **SEO-07**: Core Web Vitals SEO impact guidance — LCP, CLS, INP thresholds and their ranking effects
-- [ ] **SEO-08**: hreflang implementation for internationalized sites with x-default fallback
+- [x] **SEO-01**: Comprehensive meta tag generation (title, description) with framework-native patterns (Next.js `generateMetadata`, Astro `<head>`, React 19 native hoisting) — no deprecated libraries (react-helmet, next-seo)
+- [x] **SEO-02**: Open Graph and Twitter Card meta tags with per-page customization and fallback defaults
+- [x] **SEO-03**: Canonical URL strategy with self-referencing canonicals, cross-domain handling, and pagination rules
+- [x] **SEO-04**: XML sitemap generation that passes Google Search Console and Bing Webmaster Tools validation — framework-native (Next.js `app/sitemap.ts`, Astro `@astrojs/sitemap`)
+- [x] **SEO-05**: Sitemap index generation for multi-page sites with proper `<sitemapindex>` wrapper
+- [x] **SEO-06**: robots.txt generation with sitemap references and proper crawl directives
+- [x] **SEO-07**: Core Web Vitals SEO impact guidance — LCP, CLS, INP thresholds and their ranking effects
+- [x] **SEO-08**: hreflang implementation for internationalized sites with x-default fallback
 
 ### Structured Data
 
@@ -97,14 +97,14 @@ Deferred to future release. Tracked but not in current roadmap.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| SEO-01 | Phase 14 | Pending |
-| SEO-02 | Phase 14 | Pending |
-| SEO-03 | Phase 14 | Pending |
-| SEO-04 | Phase 14 | Pending |
-| SEO-05 | Phase 14 | Pending |
-| SEO-06 | Phase 14 | Pending |
-| SEO-07 | Phase 14 | Pending |
-| SEO-08 | Phase 14 | Pending |
+| SEO-01 | Phase 14 | Complete |
+| SEO-02 | Phase 14 | Complete |
+| SEO-03 | Phase 14 | Complete |
+| SEO-04 | Phase 14 | Complete |
+| SEO-05 | Phase 14 | Complete |
+| SEO-06 | Phase 14 | Complete |
+| SEO-07 | Phase 14 | Complete |
+| SEO-08 | Phase 14 | Complete |
 | SDATA-01 | Phase 15 | Pending |
 | SDATA-02 | Phase 15 | Pending |
 | SDATA-03 | Phase 15 | Pending |
