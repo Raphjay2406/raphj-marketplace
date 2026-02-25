@@ -938,4 +938,83 @@ AI search bots consume structured data differently from Google. Understanding th
 
 **Scope boundary:** The full bot taxonomy with `robots.txt` rules and user-agent strings lives in the `seo-meta` skill's `appendix-ai-bots.md`. This skill focuses on making content EXTRACTABLE (schema + GEO patterns). The `seo-meta` skill handles making content CRAWLABLE (robots.txt, meta robots). Both skills work together -- a page needs to be both crawlable and extractable for AI search visibility.
 
-<!-- END Layer 2 -- Plan 02 will append Layer 3 (Integration Context) and Layer 4 (Anti-Patterns) below this line -->
+## Layer 3: Integration Context
+
+### DNA Connection
+
+Structured data is invisible -- JSON-LD lives in a `<script>` tag, not in the visual design. DNA tokens (colors, fonts, spacing, motion) do NOT affect structured data output. However, brand identity tokens from Design DNA DO map to schema fields, and GEO content components (FAQ accordions, stat callouts) use DNA tokens for their visual styling (covered in Layer 2 component patterns).
+
+| DNA Token | Schema Field | Usage |
+|-----------|-------------|-------|
+| Brand name | Organization `name`, Article `publisher.name`, WebSite `name` | Brand identity flows into every schema that references the organization |
+| Brand URL (domain) | `@id` base URL, Organization `url`, canonical references | All `@id` cross-references use the brand URL as root (e.g., `https://example.com/#organization`) |
+| Brand description | Organization `description` | Site-level description for knowledge panel and AI entity recognition |
+| Brand logo | Organization `logo` (as ImageObject) | Logo URL and dimensions for knowledge panel display |
+| Social profiles | Organization `sameAs` array | Links to Twitter, LinkedIn, GitHub, Instagram, YouTube for entity disambiguation |
+| Colors, fonts, spacing, motion | **None** -- structured data is invisible | These tokens affect GEO component styling (FAQ accordion, stat callout) but NOT the JSON-LD output |
+
+### Archetype Variants -- GEO Intensity Mapping
+
+GEO pattern intensity adapts per archetype. All 19 archetypes map to one of 4 intensity tiers. The JSON-LD output is identical regardless of tier -- only the visual expression of GEO content patterns (FAQ styling, statistic presentation, heading phrasing) changes.
+
+| GEO Intensity | Archetypes | FAQ Style | Statistics | BLUF | Question Headings |
+|---------------|-----------|-----------|------------|------|-------------------|
+| **Full** | Neo-Corporate, Data-Dense, Editorial, Dark Academia | Standard accordion, visually prominent | Inline stats with source citations | Yes, lead with answer | Direct question phrasing |
+| **Moderate** | Playful/Startup, Organic, Warm Artisan, Retro-Future, Neubrutalism, AI-Native | Styled accordion matching archetype personality | Stats integrated naturally into copy | Yes, for articles/blog posts | Natural question phrasing |
+| **Subtle** | Luxury/Fashion, Japanese Minimal, Ethereal, Swiss/International, Glassmorphism | Elegant Q&A section, minimal chrome | Statistics only when content warrants | No -- Emotional Arc drives the story | Implied questions via section topics |
+| **Minimal** | Brutalist, Kinetic, Neon Noir, Vaporwave | Raw text Q&A or hidden in footer | Rare, only when central to content | No | Declarative statements preferred |
+
+**Key principle:** Same SEO signals, different visual expression. A Luxury FAQ section uses elegant typography and generous spacing. A Brutalist FAQ uses raw text blocks. Both produce identical JSON-LD underneath.
+
+**Per-archetype edge case guidance:**
+
+- **Japanese Minimal:** FAQ questions can be section headers with answers as body text (no accordion needed). The minimal chrome aesthetic benefits from inline Q&A over interactive components.
+- **Luxury/Fashion:** Statistics should be presented as editorial callouts with brand typography, never as data tables. Numbers are design elements, not spreadsheet cells.
+- **Brutalist:** FAQ can be raw text blocks with no visual hierarchy -- the content structure IS the design. No rounded corners, no shadows, no animations.
+- **Data-Dense:** Full GEO is natural -- this archetype already values information density. FAQ accordions, stat callouts, and question headings align with the archetype's character without forcing optimization.
+
+### SEO-Emotional Arc Beat Mapping (GEO-05)
+
+This is the per-beat prescriptive mapping of which SEO/GEO elements belong at each beat position. Section planners reference this during `/modulo:plan-dev` when assigning beats AND schema types simultaneously.
+
+| Beat | SEO/GEO Element | Schema Contribution | Rationale |
+|------|-----------------|---------------------|-----------|
+| **HOOK** | H1 + primary keyword in headline | `headline` field in Article schema | First heading signals topic to search engines and AI |
+| **TEASE** | No required SEO elements | None | Purely emotional beat |
+| **REVEAL** | No required SEO elements | None | Purely emotional beat |
+| **BUILD** | No required SEO elements | None | Purely emotional beat |
+| **PEAK** | No required SEO elements | None | Purely emotional beat |
+| **BREATHE** | No required SEO elements | None | Purely emotional beat |
+| **TENSION** | FAQ section + question-based heading | `FAQPage` schema from this section's Q&A content | Questions naturally create tension; FAQ schema captures them |
+| **PROOF** | Statistics with citations + author credentials | `author` details in Article; quotable stats for AI extraction | Data-backed claims signal E-E-A-T; AI engines extract cited stats |
+| **PIVOT** | No required SEO elements | None | Purely emotional beat |
+| **CLOSE** | CTA + Organization schema | `Organization` schema reinforces brand entity at conversion point | Final touchpoint ties brand identity to action |
+
+**Hard enforcement:** Quality reviewer fails builds that miss required SEO elements on HOOK, TENSION, PROOF, and CLOSE beats. These are non-negotiable -- the beat mapping is the bridge between emotional storytelling and search visibility.
+
+**Purely emotional beats** (TEASE, REVEAL, BUILD, PEAK, BREATHE, PIVOT) do NOT carry required SEO elements. This is by design -- over-optimizing every section destroys the emotional arc. The restraint on 6 of 10 beats is what separates award-winning SEO from generic optimization.
+
+**Schema assembly from beats:** Each high-impact beat prescribes which JSON-LD schema to attach. These are assembled into the page-level `@graph` array. For example, a page with HOOK + BUILD + TENSION + PROOF + CLOSE beats would produce an `@graph` containing:
+- Article (from HOOK -- headline maps to `headline` field)
+- FAQPage (from TENSION -- FAQ content maps to `mainEntity` array)
+- Organization (from CLOSE -- brand entity at conversion point)
+
+Plus BreadcrumbList (always included for multi-page sites) and any page-type-specific schemas from the recipe table in Layer 1.
+
+### Pipeline Stage
+
+- **Input from:** Section planner assigns beat types (from `emotional-arc` skill) and schema types (from this skill's recipe table). Content specialist provides page content. Design DNA provides brand info (name, logo, URL, social profiles).
+- **Output to:** JSON-LD `<script>` tags in page `<head>` (or body), GEO-structured content in page sections. Quality reviewer receives schema audit checklist.
+- **Pipeline position:** Schema types assigned during `/modulo:plan-dev` (section planning). JSON-LD generated during `/modulo:execute` Wave 2+ (per-section build). Schema audit runs during quality-reviewer pass (after execute AND iterate).
+
+### Related Skills
+
+- **`seo-meta`** -- Meta tags, canonical URLs, sitemaps, robots.txt. Complementary: seo-meta handles crawlability, this skill handles extractability. Both needed for most pages. The AI crawler taxonomy lives in seo-meta's `appendix-ai-bots.md`.
+- **`emotional-arc`** -- Beat types and parameters. This skill extends emotional-arc with SEO/GEO mapping for 4 high-impact beats. Arc rules still apply (no 3+ consecutive high-energy, BREATHE after PEAK, etc.). The beat mapping table above is the integration point.
+- **`search-visibility`** (Phase 16) -- IndexNow, llms.txt, proactive indexing. This skill makes content extractable; search-visibility makes it findable. Together they complete the discovery-to-extraction pipeline.
+- **`blog-patterns`** -- Blog article structure, RSS feeds. Blog patterns use this skill's Article/BlogPosting schema and GEO content patterns for content-heavy posts.
+- **`ecommerce-ui`** -- Product pages. E-commerce uses this skill's Product schema with required `name` + `offers` for rich results.
+- **`landing-page`** -- Landing page sections. Landing pages use minimal schemas (Organization + BreadcrumbList) with GEO only if content warrants it. Do not force FAQ or BLUF on conversion-focused pages.
+- **`copy-intelligence`** -- Content writing. GEO patterns (BLUF, question headings, quotable stats) inform copy-intelligence about content structure for AI visibility. Copy-intelligence provides the content; this skill structures it for extraction.
+
+<!-- END Layer 3 -- Layer 4 and Machine-Readable Constraints follow -->
