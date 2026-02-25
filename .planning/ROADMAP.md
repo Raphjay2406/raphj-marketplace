@@ -3,7 +3,7 @@
 ## Milestones
 
 - **v1 Modulo 2.0** — Phases 1-13 (shipped 2026-02-25) — see `milestones/v1-ROADMAP.md`
-- **v1.5 SEO/GEO & API Integration** — Phases 14-19 (completed 2026-02-25)
+- **v1.5 SEO/GEO & API Integration** — Phases 14-20
 
 ## Phases
 
@@ -36,6 +36,7 @@
 - [x] **Phase 17: API Integration Patterns** (2/2 plans) - New api-patterns skill with Context7 MCP integration, server-side proxy patterns, CRM forms, typed API clients, webhooks, and env management — completed 2026-02-25
 - [x] **Phase 18: Dynamic OG Images & Pipeline Wiring** (4/4 plans) - DNA-integrated OG image generation for Next.js and Astro, plus agent updates wiring all v1.5 skills into the pipeline — completed 2026-02-25
 - [x] **Phase 19: SSR & Dynamic Content Patterns** (3/3 plans) - New ssr-dynamic-content skill with SSR/ISR/streaming decision guidance, cache invalidation strategies, CMS-driven revalidation, auth-gated rendering, and real-time content freshness patterns for Next.js and Astro — completed 2026-02-25
+- [ ] **Phase 20: Pipeline Wiring & Registry Completion** (0/2 plans) - Close 5 integration gaps from milestone audit: register api-patterns + ssr-dynamic-content in SKILL-DIRECTORY, expand build-orchestrator Wave 0, wire both skills into section-planner + quality-reviewer, embed schema audit protocol, update REQUIREMENTS.md
 
 ## Phase Details
 
@@ -139,10 +140,27 @@ Plans:
 - [x] 19-PLAN-03.md -- SKILL.md Layers 3-4: DNA connection (loading states), archetype skeleton/shimmer variants, 9 related skills + 10 anti-patterns (PPR config, unstable_cache, Edge+Cache, middleware.ts, getSession, Lucia, etc.) + machine-readable constraints (10 HARD, 4 SOFT)
 **Research flag**: Researched 2026-02-25. Next.js 16 Cache Components (replaces PPR), cacheLife/cacheTag/updateTag APIs, proxy.ts (replaces middleware.ts), Astro Server Islands, 5 CMS webhook patterns, 4 auth libraries (Better Auth replaces Lucia) -- all verified with official docs.
 
+### Phase 20: Pipeline Wiring & Registry Completion
+**Goal**: Close all integration gaps from v1.5 milestone audit -- api-patterns and ssr-dynamic-content are fully wired into the pipeline so agents discover, load, and enforce them during builds
+**Depends on**: Phase 19 (all skills complete)
+**Gap Closure**: Closes GAP-1 through GAP-5 from v1.5-MILESTONE-AUDIT.md
+**Success Criteria** (what must be TRUE):
+  1. `api-patterns` and `ssr-dynamic-content` are registered in SKILL-DIRECTORY.md with correct line counts, tiers, and descriptions -- skill counts updated to reflect all v1.5 additions
+  2. Build-orchestrator Wave 0 scaffold list includes search-visibility items (IndexNow endpoint, key file) and ssr-dynamic-content items (next.config.ts cache setup, proxy.ts if auth, loading.tsx skeletons)
+  3. Section-planner assigns `integration_type` (from api-patterns) when a section needs form submission, API calls, or webhooks, and assigns `rendering_strategy` (from ssr-dynamic-content) when a section has dynamic data or auth
+  4. Quality-reviewer includes env secret exposure checks (from api-patterns), SSR anti-pattern checks (middleware.ts, unstable_cache, experimental.ppr from ssr-dynamic-content), and an explicit schema-content audit step (SDATA-06 from structured-data)
+  5. REQUIREMENTS.md traceability table is updated: API-01 through API-06 and OG-01 through OG-03 marked Complete, SSR-01 through SSR-07 added and marked Complete
+  6. Emotional-arc skill has a back-reference to structured-data's SEO beat mapping
+**Plans**: 2 plans
+Plans:
+- [ ] 20-PLAN-01.md -- Agent pipeline wiring: build-orchestrator (Wave 0 expansion), section-planner (api-patterns + ssr-dynamic-content triggers), quality-reviewer (env secrets, SSR anti-patterns, schema audit) + SKILL-DIRECTORY.md registration + emotional-arc back-reference
+- [ ] 20-PLAN-02.md -- Documentation cleanup: REQUIREMENTS.md traceability update (API/OG/SSR status), STATE.md update, ROADMAP.md completion
+**Research flag**: None -- all changes are additive markdown edits to existing files using patterns established in Phase 18.
+
 ## Progress
 
 **Execution Order:**
-Phases 14-16 are sequential (SEO dependency chain). Phase 17 is independent of 14-16. Phase 18 depends on 14, 15, and 17. Phase 19 depends on 18 (full pipeline).
+Phases 14-16 are sequential (SEO dependency chain). Phase 17 is independent of 14-16. Phase 18 depends on 14, 15, and 17. Phase 19 depends on 18 (full pipeline). Phase 20 depends on 19 (gap closure).
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
@@ -153,7 +171,8 @@ Phases 14-16 are sequential (SEO dependency chain). Phase 17 is independent of 1
 | 17. API Integration Patterns | v1.5 | 2/2 | Complete | 2026-02-25 |
 | 18. Dynamic OG Images & Pipeline Wiring | v1.5 | 4/4 | Complete | 2026-02-25 |
 | 19. SSR & Dynamic Content Patterns | v1.5 | 3/3 | Complete | 2026-02-25 |
+| 20. Pipeline Wiring & Registry Completion | v1.5 | 0/2 | Planned | -- |
 
 ---
 *Roadmap created: 2026-02-23*
-*Last updated: 2026-02-25 -- Phase 19 complete (3/3 plans verified). v1.5 milestone complete.*
+*Last updated: 2026-02-25 -- Phase 20 added to close v1.5 milestone audit gaps.*
