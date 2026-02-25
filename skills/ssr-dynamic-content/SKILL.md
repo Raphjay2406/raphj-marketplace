@@ -1294,3 +1294,413 @@ Astro does not have built-in on-demand revalidation like Next.js `revalidateTag`
 - **Astro SSG (static):** A CMS webhook should trigger a rebuild via the hosting platform's deploy hook (Vercel Deploy Hook, Netlify Build Hook). The entire site rebuilds with fresh CMS data. This is acceptable for sites with fewer than ~5,000 pages.
 - **Astro SSR:** The CDN cache is managed by `Cache-Control` headers. Cache purging depends on the CDN provider: Vercel's Purge API, Cloudflare's Cache Purge API, or Netlify's cache invalidation. The CMS webhook calls the CDN purge endpoint instead of `revalidateTag`.
 - **Astro with Server Islands:** The islands are fetched per-request and do not need revalidation -- they always show fresh data. The static shell is rebuilt on deploy. This is the simplest model for mixed static/dynamic Astro sites.
+
+### Auth-Gated Content Rendering
+
+Auth-gated content requires careful rendering strategy decisions. The wrong approach either exposes private data in cached HTML, shows unnecessary loading spinners for content that could be pre-rendered, or breaks caching for the entire page. This section covers 3 mixed-page approaches and 4 auth library patterns for Server Components.
+
+#### Three Mixed-Page Approaches
+
+When a page contains both public and authenticated content, choose one of these three approaches based on your UX priorities:
+
+| Approach | Caching | Loading UX | SEO | Best For |
+|----------|---------|-----------|-----|----------|
+| **Server-Side Conditional** | Cannot cache (every request hits server) | No spinner, full content on load | Public content in initial HTML | Fully personalized pages (dashboards, profiles) |
+| **Client-Side Auth Gate** | Public shell cached/static | Layout shift when auth resolves | Public shell only | Simple auth gating with static marketing shell |
+| **Cache Components + Auth Boundary** | Public content cached, auth content streams | Skeleton then content (no shift if skeleton matches) | Public content in initial HTML | Mixed pages with significant public + private zones |
+
+**1. Server-Side Conditional Rendering** -- Check auth in the Server Component, render different content based on session state. The entire page is SSR per-request. No loading spinner because the full HTML arrives in one response. Cannot be cached because every request may produce different output based on auth state. Use for fully personalized pages where most content is user-specific.
+
+**2. Client-Side Auth Gate with Skeleton** -- Pre-render the public shell as static HTML. Use a client component that checks auth and conditionally renders private content after hydration. The public shell is cached by CDN, giving fast initial load. The private content appears after a brief loading state. Downsides: layout shift when auth resolves (unless skeleton matches final dimensions), private content is not in the initial HTML (empty div until JS runs).
+
+**3. Cache Components + Auth Boundary (Recommended for mixed pages)** -- Use `"use cache"` for the public content (cached and shared across all visitors), wrap auth-dependent content in a `<Suspense>` boundary that streams per-request. The cached public content arrives instantly. The auth-dependent content streams in as the server resolves the session. This is the recommended approach for pages with significant both-public-and-private content because it gives the best of both worlds: cached shell for performance and SEO, streaming auth content without layout shift (if the skeleton matches the final layout).
+
+#### Pattern 21: Cache Components + Auth Boundary (Recommended)
+
+The recommended approach for mixed public/private pages. Product info is cached for all visitors. Personalized pricing streams per-request inside a Suspense boundary. The public content is SEO-friendly and fast; the auth content streams without blocking the initial response.
+
+```tsx
+// app/product/[id]/page.tsx
+import { Suspense } from 'react'
+import { cacheLife, cacheTag } from 'next/cache'
+import { auth } from '@/auth'
+import { db } from '@/lib/db'
+
+export default async function ProductPage({
+  params,
+}: {
+  params: Promise<{ id: string }>
+}) {
+  const { id } = await params
+
+  return (
+    <>
+      {/* Cached: everyone sees the same product info */}
+      <CachedProductInfo id={id} />
+
+      {/* Auth boundary: streams per-request, shows skeleton until resolved */}
+      <Suspense fallback={<PricingSkeleton />}>
+        <PersonalizedPricing id={id} />
+      </Suspense>
+    </>
+  )
+}
+
+// CACHED: shared across all visitors, revalidated hourly
+async function CachedProductInfo({ id }: { id: string }) {
+  'use cache'
+  cacheLife('hours')
+  cacheTag(`product-${id}`)
+
+  const product = await db.product.findUnique({
+    where: { id },
+    select: { name: true, description: true, image: true, basePrice: true },
+  })
+
+  if (!product) return null
+
+  return (
+    <div>
+      <h1 className="text-4xl font-bold">{product.name}</h1>
+      <p className="text-lg text-muted">{product.description}</p>
+      <img src={product.image} alt={product.name} width={800} height={600} />
+      <p className="text-2xl">From ${product.basePrice}</p>
+    </div>
+  )
+}
+
+// PER-REQUEST: reads session, cannot be cached
+async function PersonalizedPricing({ id }: { id: string }) {
+  const session = await auth()
+
+  if (!session) {
+    return (
+      <p className="text-muted">
+        <a href="/login" className="underline">Sign in</a> for member pricing
+      </p>
+    )
+  }
+
+  const memberPrice = await db.memberPrice.findUnique({
+    where: { productId_tier: { productId: id, tier: session.user.tier } },
+  })
+
+  return (
+    <div className="rounded-lg border border-primary/20 bg-primary/5 p-4">
+      <p className="text-sm text-muted">Member pricing ({session.user.tier})</p>
+      <p className="text-3xl font-bold">${memberPrice?.price ?? 'N/A'}</p>
+    </div>
+  )
+}
+
+function PricingSkeleton() {
+  return (
+    <div className="animate-pulse rounded-lg border p-4">
+      <div className="h-4 w-24 rounded bg-surface" />
+      <div className="mt-2 h-8 w-20 rounded bg-surface" />
+    </div>
+  )
+}
+```
+
+#### Auth Library Server Component Patterns
+
+For each auth library, the pattern shows how to check authentication in a Server Component. All auth functions are async in current versions -- always `await` them.
+
+#### Pattern 22: Auth.js v5 (NextAuth v5) Server Component
+
+Auth.js v5 exports an `auth()` function from the root config that works in Server Components, Route Handlers, `proxy.ts`, and Server Actions. The session includes user data and expiry information.
+
+```typescript
+// auth.ts -- Root config (create once, import everywhere)
+import NextAuth from 'next-auth'
+import GitHub from 'next-auth/providers/github'
+import { PrismaAdapter } from '@auth/prisma-adapter'
+import { prisma } from '@/lib/prisma'
+
+export const { auth, handlers, signIn, signOut } = NextAuth({
+  adapter: PrismaAdapter(prisma),
+  providers: [GitHub],
+  callbacks: {
+    session({ session, user }) {
+      session.user.id = user.id
+      return session
+    },
+  },
+})
+```
+
+```tsx
+// app/dashboard/page.tsx -- Protected Server Component
+import { auth } from '@/auth'
+import { redirect } from 'next/navigation'
+
+export default async function DashboardPage() {
+  const session = await auth()
+  if (!session) redirect('/login')
+
+  return (
+    <div>
+      <h1>Dashboard</h1>
+      <p>Welcome, {session.user.name}</p>
+      <p>Email: {session.user.email}</p>
+    </div>
+  )
+}
+```
+
+**Where `auth()` works:** Server Components, Route Handlers, `proxy.ts`, Server Actions. It reads the session cookie and validates the JWT or database session automatically.
+
+#### Pattern 23: Clerk Server Component
+
+Clerk provides `auth()` for lightweight session checks and `currentUser()` for full user data. Both are imported from `@clerk/nextjs/server`. Clerk's `clerkMiddleware()` (now in `proxy.ts`) can protect entire route groups declaratively.
+
+```tsx
+// app/dashboard/page.tsx -- Protected Server Component
+import { auth, currentUser } from '@clerk/nextjs/server'
+import { redirect } from 'next/navigation'
+
+export default async function DashboardPage() {
+  const { userId } = await auth()
+  if (!userId) redirect('/sign-in')
+
+  // Full user data (only fetch when needed -- adds latency)
+  const user = await currentUser()
+
+  return (
+    <div>
+      <h1>Dashboard</h1>
+      <p>Welcome, {user?.firstName} {user?.lastName}</p>
+      <p>Email: {user?.emailAddresses[0]?.emailAddress}</p>
+    </div>
+  )
+}
+```
+
+**Performance tip:** Use `auth()` for simple auth checks (fast, reads JWT). Use `currentUser()` only when you need full user data (makes an API call to Clerk's backend).
+
+#### Pattern 24: Supabase Server Component
+
+Supabase uses `@supabase/ssr` with cookie-based auth for Server Components. CRITICAL: use `getClaims()` or `getUser()` for server-side validation -- NOT `getSession()`. `getSession()` reads the JWT from cookies without verifying the signature, making it vulnerable to spoofing. `getClaims()` validates the JWT signature against Supabase's public keys.
+
+```typescript
+// lib/supabase/server.ts -- Server client factory
+import { createServerClient } from '@supabase/ssr'
+import { cookies } from 'next/headers'
+
+export async function createClient() {
+  const cookieStore = await cookies()
+
+  return createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return cookieStore.getAll()
+        },
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value, options }) =>
+            cookieStore.set(name, value, options)
+          )
+        },
+      },
+    }
+  )
+}
+```
+
+```tsx
+// app/dashboard/page.tsx -- Protected Server Component
+import { createClient } from '@/lib/supabase/server'
+import { redirect } from 'next/navigation'
+
+export default async function DashboardPage() {
+  const supabase = await createClient()
+
+  // CORRECT: getClaims() validates the JWT signature
+  const { data: claims, error } = await supabase.auth.getClaims()
+  if (error || !claims) redirect('/login')
+
+  // Fetch user profile with validated claims
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('full_name, avatar_url')
+    .eq('id', claims.sub)
+    .single()
+
+  return (
+    <div>
+      <h1>Dashboard</h1>
+      <p>Welcome, {profile?.full_name}</p>
+    </div>
+  )
+}
+```
+
+**NEVER use in Server Components:**
+```typescript
+// WRONG: getSession() does NOT validate the JWT signature
+const { data: { session } } = await supabase.auth.getSession()
+// This can be spoofed by modifying the cookie -- INSECURE for server-side checks
+```
+
+#### Pattern 25: Better Auth Server Component
+
+Better Auth is the modern replacement for Lucia (deprecated March 2025). It provides a server-side session helper that validates the session from cookies. Better Auth is self-hosted and framework-agnostic with first-class Next.js support.
+
+**MEDIUM confidence:** Better Auth's API is newer and may evolve. Auth.js v5 and Clerk are higher-confidence choices for production projects. Use Better Auth when you need self-hosted auth with a modern API and Lucia is no longer an option.
+
+```typescript
+// lib/auth.ts -- Better Auth server instance
+import { betterAuth } from 'better-auth'
+import { prismaAdapter } from 'better-auth/adapters/prisma'
+import { prisma } from '@/lib/prisma'
+
+export const authServer = betterAuth({
+  database: prismaAdapter(prisma, { provider: 'postgresql' }),
+  emailAndPassword: { enabled: true },
+})
+```
+
+```typescript
+// lib/auth-server.ts -- Server-side session helper
+import { headers } from 'next/headers'
+import { authServer } from '@/lib/auth'
+
+export async function getServerSession() {
+  const headersList = await headers()
+  const session = await authServer.api.getSession({
+    headers: headersList,
+  })
+  return session
+}
+```
+
+```tsx
+// app/dashboard/page.tsx -- Protected Server Component
+import { getServerSession } from '@/lib/auth-server'
+import { redirect } from 'next/navigation'
+
+export default async function DashboardPage() {
+  const session = await getServerSession()
+  if (!session) redirect('/login')
+
+  return (
+    <div>
+      <h1>Dashboard</h1>
+      <p>Welcome, {session.user.name}</p>
+      <p>Email: {session.user.email}</p>
+    </div>
+  )
+}
+```
+
+**Note:** Better Auth does NOT recommend Lucia patterns. Lucia was deprecated in March 2025 and is now educational resources only. Do not use Lucia for new projects.
+
+#### Pattern 26: proxy.ts Route Protection
+
+Next.js 16 renamed `middleware.ts` to `proxy.ts`. The proxy runs on every matching request BEFORE the route renders. Use it to protect entire route groups by checking auth and redirecting unauthenticated users. The proxy runs on Node.js runtime only (Edge runtime support was removed in Next.js 16).
+
+```typescript
+// proxy.ts -- Generic route protection pattern
+import { NextRequest, NextResponse } from 'next/server'
+
+// Define protected route patterns
+const protectedRoutes = ['/dashboard', '/settings', '/admin']
+const authRoutes = ['/login', '/register', '/forgot-password']
+
+export default async function proxy(request: NextRequest) {
+  const { pathname } = request.nextUrl
+  const isProtected = protectedRoutes.some((route) => pathname.startsWith(route))
+  const isAuthRoute = authRoutes.some((route) => pathname.startsWith(route))
+
+  // Check for session (implementation depends on auth library)
+  const sessionCookie = request.cookies.get('session')?.value
+  const isAuthenticated = !!sessionCookie // Replace with actual validation
+
+  // Redirect unauthenticated users away from protected routes
+  if (isProtected && !isAuthenticated) {
+    const loginUrl = new URL('/login', request.url)
+    loginUrl.searchParams.set('callbackUrl', pathname)
+    return NextResponse.redirect(loginUrl)
+  }
+
+  // Redirect authenticated users away from auth routes (already logged in)
+  if (isAuthRoute && isAuthenticated) {
+    return NextResponse.redirect(new URL('/dashboard', request.url))
+  }
+
+  return NextResponse.next()
+}
+
+export const config = {
+  matcher: ['/dashboard/:path*', '/settings/:path*', '/admin/:path*', '/login', '/register'],
+}
+```
+
+**Per-library proxy patterns:**
+
+- **Auth.js v5:** Export `auth` as the proxy wrapper -- it enriches the request with session data. Use `auth` directly: `export { auth as default } from '@/auth'` with a custom `authorized` callback.
+- **Clerk:** Use `clerkMiddleware()` with `createRouteMatcher` to define protected routes. Clerk handles session validation and enrichment automatically.
+- **Supabase:** Call `updateSession()` in the proxy to refresh auth cookies on every request. This ensures the Supabase client in Server Components always has a valid session.
+- **Better Auth:** Manual session check in proxy -- read the session cookie and validate via Better Auth's server API. No built-in proxy wrapper.
+
+#### Pattern 27: Server-Side Role-Based Rendering
+
+Render different content based on user role. Check the session in the Server Component, extract the role, and render the appropriate component tree. No client-side JavaScript needed -- the correct content is in the initial HTML.
+
+```tsx
+// app/workspace/page.tsx
+import { auth } from '@/auth'
+import { redirect } from 'next/navigation'
+import { AdminDashboard } from '@/components/admin-dashboard'
+import { MemberDashboard } from '@/components/member-dashboard'
+import { GuestView } from '@/components/guest-view'
+
+type UserRole = 'admin' | 'member' | 'guest'
+
+export default async function WorkspacePage() {
+  const session = await auth()
+
+  if (!session) {
+    return <GuestView />
+  }
+
+  const role = (session.user.role as UserRole) ?? 'member'
+
+  return (
+    <div>
+      <header>
+        <h1>Workspace</h1>
+        <p>Signed in as {session.user.name} ({role})</p>
+      </header>
+
+      {role === 'admin' && <AdminDashboard userId={session.user.id} />}
+      {role === 'member' && <MemberDashboard userId={session.user.id} />}
+    </div>
+  )
+}
+```
+
+**Where roles are stored by auth library:**
+- **Auth.js v5:** Custom field in JWT via `jwt` callback, or in the database session via adapter. Access via `session.user.role`.
+- **Clerk:** User metadata (`publicMetadata.role`). Set via Clerk Dashboard or Backend API. Access via `(await auth()).sessionClaims?.metadata?.role`.
+- **Supabase:** Custom claims in JWT via `app_metadata` or a custom `roles` table. Access via `claims.app_metadata?.role` from `getClaims()`.
+- **Better Auth:** Custom field in user model via Prisma/Drizzle schema. Access via `session.user.role` from the session helper.
+
+### Reference Sites
+
+Sites demonstrating excellent SSR, caching, and dynamic content rendering strategies. Study these for rendering architecture decisions and perceived performance benchmarks.
+
+- **Vercel.com** (vercel.com) -- Industry reference for Cache Components and ISR. The dashboard uses full SSR with streaming for project data, analytics, and deployment logs. Marketing pages use Cache Components with on-demand revalidation. The docs site demonstrates ISR with webhook revalidation from their CMS. Signature element: sub-second navigation between dashboard views with streaming data.
+
+- **Linear.app** (linear.app) -- SaaS dashboard demonstrating streaming SSR with progressive data loading. Project lists, issue boards, and activity feeds stream independently via Suspense boundaries. Excellent perceived performance despite data-heavy pages. Signature element: the entire app feels instant because the shell renders immediately while data streams in.
+
+- **Hashnode** (hashnode.dev) -- CMS-driven blog platform using ISR with webhook revalidation. Blog posts appear within seconds of publish. The editorial interface publishes to Hashnode's API, which fires webhooks to revalidate the affected blog and sitemap. Demonstrates the publish-revalidate-verify loop at scale.
+
+- **Notion** (notion.so) -- Mixed public/private pages with auth-gated rendering. Public Notion pages are cached aggressively for fast loads. Authenticated workspace pages use full SSR with streaming for databases, kanban boards, and documents. Demonstrates the Cache Components + Auth Boundary pattern at scale.
+
+- **Payload CMS website** (payloadcms.com) -- Self-referential: built on Payload CMS + Next.js, demonstrating the `afterChange` hook revalidation pattern. Content updates on the site reflect immediately because Payload's hooks call `revalidateTag` directly in the Next.js process. No external webhook infrastructure needed.
+
+<!-- END OF LAYER 2 -- Plan 03 will append Layers 3-4 and Machine-Readable Constraints -->
