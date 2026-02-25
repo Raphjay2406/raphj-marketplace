@@ -60,13 +60,16 @@ Plans:
 **Depends on**: Phase 14
 **Requirements**: SDATA-01, SDATA-02, SDATA-03, SDATA-04, SDATA-05, SDATA-06, GEO-01, GEO-02, GEO-03, GEO-04, GEO-05
 **Success Criteria** (what must be TRUE):
-  1. The new `structured-data` skill (Domain tier) provides typed JSON-LD patterns via `schema-dts` for all major page types: FAQPage, HowTo, Article/BlogPosting/NewsArticle, Organization, WebSite, BreadcrumbList -- each with a per-page-type recipe and `@graph` combination pattern
+  1. The new `structured-data` skill (Domain tier) provides typed JSON-LD patterns using plain TypeScript interfaces for all major page types: FAQPage, HowTo, Article/BlogPosting/NewsArticle, Organization, WebSite, BreadcrumbList, Product, LocalBusiness, Event -- each with a per-page-type recipe and `@graph` combination pattern
   2. GEO content structuring patterns (BLUF formatting, question-based headings, quotable statistics with citations, FAQ-first content) are documented with archetype-aware guidance that prevents over-optimization from destroying premium aesthetics
   3. The SEO-Emotional Arc integration maps each beat type to specific SEO/GEO guidance (Hook = H1 + primary keyword, Proof = statistics + schema, Tension = FAQ + FAQPage schema) so content storytelling and search visibility are unified
   4. A post-iteration schema audit protocol ensures JSON-LD claims match visible page content after edits, preventing Google manual actions for spammy structured markup
   5. AI crawler guidance distinguishes training bots to block from search bots to allow, with per-bot directives and rationale
-**Plans**: TBD
-**Research flag**: Needs research. GEO is < 3 years old. FAQ schema 3.2x impact and Speakable adoption need verification. Per-archetype GEO guidance needs creative direction input.
+**Plans**: 2 plans
+Plans:
+- [ ] 15-PLAN-01.md -- SKILL.md Layers 1-2: Decision Guidance with schema status matrix and per-page recipes + complete code patterns for all structured data types, GEO content patterns, and schema audit protocol
+- [ ] 15-PLAN-02.md -- SKILL.md Layers 3-4: SEO-Emotional Arc beat mapping, archetype-to-GEO intensity mapping + anti-patterns + machine-readable constraints
+**Research flag**: Standard patterns -- framework APIs well-documented. Verify Next.js 16 `generateMetadata` async params syntax.
 
 ### Phase 16: Indexing & Search Visibility
 **Goal**: New and updated pages are discoverable within minutes -- IndexNow pushes to Bing/Yandex/Naver instantly, sitemaps handle Google, and forward-looking standards (llms.txt) are in place
@@ -129,7 +132,7 @@ Phases 14-16 are sequential (SEO dependency chain). Phase 17 is independent of 1
 |-------|-----------|----------------|--------|-----------|
 | 1-13 | v1 | 63/63 | Complete | 2026-02-25 |
 | 14. Core SEO Foundation | v1.5 | 0/2 | Planned | - |
-| 15. Structured Data & GEO | v1.5 | 0/TBD | Not started | - |
+| 15. Structured Data & GEO | v1.5 | 0/2 | Planned | - |
 | 16. Indexing & Search Visibility | v1.5 | 0/TBD | Not started | - |
 | 17. API Integration Patterns | v1.5 | 0/TBD | Not started | - |
 | 18. Dynamic OG Images & Pipeline Wiring | v1.5 | 0/TBD | Not started | - |
@@ -137,4 +140,4 @@ Phases 14-16 are sequential (SEO dependency chain). Phase 17 is independent of 1
 
 ---
 *Roadmap created: 2026-02-23*
-*Last updated: 2026-02-25 — Phase 14 planned (2 plans in 2 waves)*
+*Last updated: 2026-02-25 — Phase 15 planned (2 plans in 2 waves)*
