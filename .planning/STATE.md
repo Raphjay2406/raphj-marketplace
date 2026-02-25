@@ -10,19 +10,19 @@ See: .planning/PROJECT.md (updated 2026-02-25)
 ## Current Position
 
 Phase: 18 of 19 (Dynamic OG Images & Pipeline Wiring)
-Plan: 04 of 04 in current phase (01, 03, 04 complete; 02 remaining)
-Status: In progress
-Last activity: 2026-02-25 -- Completed 18-PLAN-04 (SKILL-DIRECTORY v1.5 milestone update)
+Plan: 04 of 04 in current phase (all complete)
+Status: Phase complete
+Last activity: 2026-02-25 -- Completed 18-PLAN-02 (og-images SKILL.md Layers 3-4)
 
-Progress: [█████████████████░░░░░░░] v1: 100% | v1.5: ~78% (14/18 plans)
+Progress: [██████████████████░░░░░░] v1: 100% | v1.5: ~83% (15/18 plans)
 
 ## Performance Metrics
 
 **Velocity:**
 - Total plans completed: 63 (v1)
-- v1.5 plans completed: 14
-- Average duration: 4m 04s
-- Total execution time: 56m 55s
+- v1.5 plans completed: 15
+- Average duration: 3m 59s
+- Total execution time: 59m 52s
 
 **By Phase:**
 
@@ -32,7 +32,7 @@ Progress: [█████████████████░░░░░░
 | 15 | 2 | 10m 00s | 5m 00s |
 | 16 | 3 | 11m 00s | 3m 40s |
 | 17 | 2 | 8m 57s | 4m 29s |
-| 18 | 3 (of 4) | 8m 47s | 2m 56s |
+| 18 | 4 | 11m 44s | 2m 56s |
 | 19 | TBD | - | - |
 
 *Updated after each plan completion*
@@ -85,6 +85,9 @@ Recent decisions affecting current work:
 - 18-04: seo-meta moved from Utility to Core tier in SKILL-DIRECTORY.md (Phase 14 rewrite, v3.0.0)
 - 18-04: 3 new Domain skills under SEO & Visibility subcategory (structured-data, search-visibility, og-images)
 - 18-04: Registry version bumped 2.0.0 -> 2.1.0 (v1.5 milestone close)
+- 18-02: og-images SKILL.md complete at 1252 lines -- 9 DNA tokens mapped, 5 archetype composition families, 6 anti-patterns, 10 constraints (6 HARD, 4 SOFT)
+- 18-02: WOFF2 explicitly forbidden in constraint table (HARD enforcement)
+- 18-02: 5 archetype composition families covering all 19 archetypes (families guide approach, Claude decides specifics)
 
 ### Pending Todos
 
@@ -103,10 +106,10 @@ None.
 - structured-data SKILL.md at 1091 lines (all 4 layers complete) -- Layers 3-4 added only ~150 lines; no appendix extraction needed since growth was modest
 - search-visibility SKILL.md at 579 lines (all 4 layers complete) + 3 appendices -- well within target, no bloat concern
 - api-patterns SKILL.md at 1600 lines (all 4 layers complete) -- largest skill but justified by 22 patterns across 6 API requirements; Layers 3-4 growth was modest (124 lines)
-- og-images SKILL.md at 951 lines (Layers 1-2 complete) -- 17 patterns across both frameworks; Plan 02 will add Layers 3-4
+- og-images SKILL.md at 1252 lines (all 4 layers complete) -- Layers 3-4 added 301 lines to existing 951; 6 anti-patterns with code examples and 10-parameter constraint table
 
 ## Session Continuity
 
 Last session: 2026-02-25
-Stopped at: Completed 18-PLAN-04 (SKILL-DIRECTORY v1.5 milestone update). Phase 18 Plan 02 remaining.
+Stopped at: Completed 18-PLAN-02 (og-images SKILL.md Layers 3-4). Phase 18 complete (all 4 plans done).
 Resume file: None
