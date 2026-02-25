@@ -410,4 +410,64 @@ Track IndexNow submission health to catch issues before they affect indexing spe
 - **IndexNow.org** (indexnow.org) -- Official protocol documentation, participating engine registry (`searchengines.json`), API specification, and test tool for validating submissions.
 - **Cloudflare Pages** (pages.cloudflare.com) -- Built-in IndexNow support for deployed sites, demonstrating how hosting platforms can automate IndexNow on every deploy without custom endpoints.
 
-<!-- Layer 2 Part B (AI crawlers, llms.txt) added by Plan 02 -->
+### AI-Aware robots.txt Presets (IDX-02)
+
+Three robots.txt presets control how AI crawlers interact with the site: Open (maximize AI visibility), Selective (allow AI search, block AI training), and Restrictive (block all AI bots). These presets are not a spectrum from wrong to right -- each is a valid business choice with documented trade-offs. The user's business goals determine the correct preset. See `appendix-ai-crawlers.md` for the complete bot taxonomy (25+ categorized bots), full robots.txt templates for each preset, and the Next.js `robots.ts` programmatic implementation.
+
+#### Quick-Reference: What Each Preset Allows/Blocks
+
+| Preset | AI Search Bots | AI Training Bots | User-Triggered | Use Case |
+|--------|---------------|-----------------|----------------|----------|
+| **Open** | Allow | Allow | Allow | Maximum AI visibility -- open-source docs, startups, marketing sites |
+| **Selective** | Allow | Block | Allow | AI search visible, training data blocked -- most content publishers |
+| **Restrictive** | Block | Block | Block | Zero AI interaction -- premium content, paywalled publications |
+
+#### Next.js robots.ts (Abbreviated)
+
+The framework-native approach uses an environment variable to select the preset at build time:
+
+```typescript
+// app/robots.ts -- abbreviated; see appendix-ai-crawlers.md for full implementation
+import type { MetadataRoute } from 'next'
+
+type AIPreset = 'open' | 'selective' | 'restrictive'
+const AI_PRESET: AIPreset = (process.env.AI_ROBOTS_PRESET as AIPreset) ?? 'selective'
+
+// Bot arrays defined in appendix-ai-crawlers.md: AI_SEARCH_BOTS, AI_TRAINING_BOTS, AI_USER_TRIGGERED
+// Logic: 'open' = no extra rules, 'selective' = allow search + block training, 'restrictive' = block all
+```
+
+See `appendix-ai-crawlers.md` for the complete `robots.ts` implementation with all bot arrays and conditional rule generation.
+
+#### Astro robots.txt
+
+Astro uses a static `public/robots.txt` file. Copy the appropriate preset template from `appendix-ai-crawlers.md` directly into `public/robots.txt`. For Astro SSR projects that need dynamic preset switching per environment, create an API endpoint at `src/pages/robots.txt.ts` following the same conditional logic as the Next.js pattern.
+
+### llms.txt Generation (IDX-03)
+
+llms.txt is a forward-looking convention for AI discoverability proposed by Jeremy Howard in September 2024. Approximately 844,000 sites have adopted it (including Anthropic, Cloudflare, Stripe), but no major AI platform has confirmed they read these files. The low implementation effort makes it worth including; do not over-invest when basic SEO is incomplete. See `appendix-llms-txt.md` for complete templates, both generation approaches (manual + auto-generated), the llms-full.txt detailed variant, and guidance on what NOT to do.
+
+#### Quick Decision: Manual vs Auto-Generated
+
+- **Manual template** (recommended for most sites): Create `public/llms.txt` with curated content. Best for sites with fewer than 50 key pages and stable structure.
+- **Auto-generation** (Next.js Route Handler or Astro endpoint): Best for sites with many pages or frequent structural changes. Generates from a code-defined page registry with 24-hour caching.
+
+#### Minimal llms.txt Example
+
+```markdown
+# My Site
+
+> Brief description of what the site offers.
+
+## Main Pages
+
+- [Home](https://example.com/): Landing page
+- [Blog](https://example.com/blog): Articles and updates
+- [Docs](https://example.com/docs): Documentation
+
+## Optional
+
+- [Changelog](https://example.com/changelog): Release notes
+```
+
+<!-- Layer 3-4 and Constraints added by Plan 03 -->
