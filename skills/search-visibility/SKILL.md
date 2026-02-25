@@ -470,4 +470,110 @@ llms.txt is a forward-looking convention for AI discoverability proposed by Jere
 - [Changelog](https://example.com/changelog): Release notes
 ```
 
-<!-- Layer 3-4 and Constraints added by Plan 03 -->
+## Layer 3: Integration Context
+
+### DNA Connection
+
+| DNA Token | Usage in This Skill |
+|-----------|-------------------|
+| Brand name | llms.txt H1 header, webmaster tools site name, IndexNow host identification |
+| Brand description | llms.txt blockquote summary, site description in auto-generated llms.txt |
+| Site URL (`NEXT_PUBLIC_SITE_URL` / `import.meta.env.SITE`) | IndexNow host parameter, key verification URL (`/{key}.txt`), llms.txt absolute links, sitemap references in robots.txt |
+| `bg-primary` color | Not directly used by this skill (Phase 18 OG images will use for branded social previews) |
+| `--font-display` | Not directly used by this skill (Phase 18 OG images will use for branded text rendering) |
+
+### Archetype Variants
+
+Search visibility is functionally identical across all 19 archetypes. Search engines and indexing protocols do not care about visual style -- they process structured data, sitemaps, and robots.txt directives the same way regardless of whether the site uses Brutalist or Ethereal design.
+
+The only archetype-sensitive element is **llms.txt description tone**, which should match the archetype voice (same principle as meta description tone from the `seo-meta` skill):
+
+| Archetype | llms.txt Tone Adaptation |
+|-----------|-------------------------|
+| Brutalist / Neubrutalism | Direct, blunt, no-frills description |
+| Ethereal / Japanese Minimal | Understated, poetic brevity |
+| Neo-Corporate / Swiss International | Professional, precise, authoritative |
+| Playful / Vaporwave | Casual, energetic, personality-forward |
+| Luxury / Dark Academia | Refined, exclusive, sophisticated |
+| Editorial / Data-Dense | Clear, informative, content-focused |
+
+**Note:** Robots.txt preset selection (Open/Selective/Restrictive) is a business decision, not an archetype decision. IndexNow patterns are identical regardless of archetype.
+
+### Pipeline Stage
+
+- **Input from:** `seo-meta` skill (base robots.txt directives, sitemap URL), Design DNA (brand name, site URL, brand description), `/modulo:start-project` (site URL, brand description)
+- **Output to:** IndexNow endpoint files (Route Handler or Astro endpoint), robots.txt AI rules (appended to seo-meta base), llms.txt file, webmaster verification files (meta tags or uploaded files)
+- **Pipeline position:**
+  - **Wave 0 scaffold:** IndexNow endpoint, key verification file (`public/{key}.txt`), robots.txt AI presets, llms.txt generation
+  - **Wave 1:** Webmaster tools verification files (if framework-native meta tag method chosen, these go in the root layout alongside other metadata)
+  - **Post-deploy (human action):** Webmaster tools verification and sitemap submission (see `appendix-submission.md`) -- this happens after first deploy because verification files must be publicly accessible
+
+### Related Skills
+
+- **`seo-meta`** (Phase 14) -- Provides base robots.txt, sitemap generation, meta tags. This skill extends robots.txt with AI presets and provides IndexNow for proactive indexing beyond what sitemaps offer. The two skills share the same `robots.txt` / `robots.ts` file: `seo-meta` defines base crawl rules, `search-visibility` appends AI bot directives.
+- **`structured-data`** (Phase 15) -- JSON-LD schemas for rich results. Complementary: structured data improves HOW pages appear in results (rich snippets, knowledge panels), search-visibility improves WHETHER pages appear (indexing speed, crawler access). Both contribute to overall search performance.
+- **`performance-guardian`** -- Page speed affects crawl budget and indexing priority. Slow pages may be crawled less frequently by search engines, reducing the effectiveness of IndexNow submissions. Ensure Core Web Vitals pass before investing in indexing optimization.
+- **`blog-patterns`** -- Blog content benefits most from IndexNow (frequent new posts). Content-hash tracking is most valuable here because blogs have the highest publish frequency.
+- **`ecommerce-ui`** -- Product pages benefit from batch IndexNow on inventory updates. The project-type recipe for e-commerce in Layer 1 references this pattern.
+- **`multi-page-architecture`** -- Site structure affects crawl efficiency. Good architecture combined with IndexNow ensures fast discovery of new pages across the site hierarchy.
+
+## Layer 4: Anti-Patterns
+
+### Anti-Pattern: Assuming Google Supports IndexNow
+
+**What goes wrong:** Developers implement IndexNow thinking it covers Google, then wonder why Google indexing is slow. New pages appear in Bing within minutes but take days or weeks in Google. The team concludes IndexNow is "broken" when it is working exactly as designed -- just not for Google.
+
+**Instead:** Always implement the dual-path strategy: IndexNow for Bing/Yandex/Naver + sitemap/GSC submission for Google. The engine comparison matrix in Layer 1 makes this explicit. Google was announced as "testing" IndexNow in 2022 but never adopted it. The official `searchengines.json` registry at indexnow.org lists 7 engines -- Google is not among them.
+
+### Anti-Pattern: Resubmitting Unchanged URLs
+
+**What goes wrong:** Every deployment submits ALL URLs to IndexNow, not just changed ones. Search engines rate-limit the submissions (HTTP 429 responses) or flag the domain as spam. API quota is wasted on URLs whose content has not changed.
+
+**Instead:** Implement content-hash tracking. For Next.js: in-memory `Map` or KV store (see Layer 2A, pattern 6). For Astro SSG: use `astro-indexnow` with its built-in cache file. Only submit URLs where the content hash has actually changed since the last submission.
+
+### Anti-Pattern: Blocking AI Search Bots When Blocking Training Bots
+
+**What goes wrong:** Using blanket AI bot blocks (e.g., blocking `GPTBot` to stop training) also kills visibility in ChatGPT search, Perplexity, and DuckAssist. Site disappears from AI-powered search results. Blocking `Google-Extended` for training does not affect Google Search, but blocking all AI-prefixed bots indiscriminately removes the site from emerging AI search experiences.
+
+**Instead:** Use the Selective preset: explicitly allow search bots (`OAI-SearchBot`, `PerplexityBot`, `Claude-SearchBot`, `DuckAssistBot`, `Gemini-Deep-Research`) before blocking training bots (`GPTBot`, `Google-Extended`, `ClaudeBot`, `CCBot`, etc.). See `appendix-ai-crawlers.md` for the complete three-tier taxonomy and preset templates.
+
+### Anti-Pattern: Missing IndexNow Key Verification File
+
+**What goes wrong:** IndexNow submissions return 403 Forbidden. Key validation shows as pending (202 that never resolves to 200). The endpoint appears to work locally but fails in production because the key verification file is not deployed.
+
+**Instead:** Place `public/{YOUR_KEY}.txt` containing only the key string. The filename must match the key exactly (e.g., `public/f34f184d10c049ef99aa7637cdc4ef04.txt`). Verify it is accessible at `https://yoursite.com/{key}.txt` after deploy. Both Next.js and Astro serve files from `public/` at the site root.
+
+### Anti-Pattern: Using Google Sitemap Ping (Deprecated)
+
+**What goes wrong:** Code pings `google.com/ping?sitemap=...` which has returned 404 since June 2023. No harm is done, but no benefit either -- and developers falsely believe Google is being notified of sitemap updates. Old tutorials, WordPress plugins, and LLM training data still reference this endpoint.
+
+**Instead:** For Google: submit sitemap via Google Search Console + reference in `robots.txt` with the `Sitemap:` directive. That is the only path. Remove any sitemap ping code from build scripts and deploy hooks.
+
+### Anti-Pattern: Overselling llms.txt Impact
+
+**What goes wrong:** Over-investing in llms.txt optimization (spending hours on content curation, A/B testing descriptions, monitoring "AI SEO rankings") while basic SEO (meta tags, sitemaps, structured data) is incomplete. No measurable ranking impact because no AI platform has confirmed reading these files.
+
+**Instead:** Implement llms.txt as a low-effort, forward-looking convention. Spend 15-30 minutes max. The format is simple (H1 + blockquote + page links). Prioritize the `seo-meta` and `structured-data` skills first -- those have confirmed, measurable search impact. See `appendix-llms-txt.md` for templates.
+
+### Anti-Pattern: Submitting Sitemaps Before Verification
+
+**What goes wrong:** Sitemap submission fails silently or is ignored because site ownership is not verified. Developer navigates to the sitemap section, enters the URL, and sees no error -- but the sitemap is not being processed. Days later, no pages are indexed.
+
+**Instead:** Follow the `appendix-submission.md` workflow: verify ownership FIRST, then submit sitemap. All four platforms (GSC, Bing, Yandex, Naver) require verified ownership before accepting and processing sitemap submissions. Verification methods are documented for each platform with step-by-step instructions.
+
+## Machine-Readable Constraints
+
+| Parameter | Min | Max | Unit | Enforcement |
+|-----------|-----|-----|------|-------------|
+| IndexNow batch size | 1 | 10000 | URLs per POST | HARD -- reject if exceeded |
+| IndexNow key length | 8 | 128 | chars | HARD -- reject if outside range |
+| IndexNow key characters | - | - | a-z, A-Z, 0-9, - only | HARD -- reject invalid chars |
+| IndexNow key verification file | - | - | present at `/{key}.txt` | HARD -- reject if missing |
+| IndexNow submission endpoint | - | - | `api.indexnow.org` | HARD -- reject per-engine endpoints |
+| robots.txt AI preset selection | - | - | one of: open, selective, restrictive | HARD -- must choose a preset |
+| robots.txt sitemap reference | - | - | present | HARD -- reject if missing |
+| llms.txt H1 header | - | - | present (site name) | SOFT -- warn if missing |
+| llms.txt file location | - | - | `/llms.txt` at site root | SOFT -- warn if wrong path |
+| Webmaster tools verification | - | - | at least GSC + Bing verified | SOFT -- warn if unverified |
+| Content-hash tracking | - | - | implemented for sites with 100+ URLs | SOFT -- warn if missing for large sites |
+| Google sitemap ping | - | - | must NOT be present | HARD -- reject (deprecated June 2023) |
