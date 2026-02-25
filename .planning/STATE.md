@@ -5,24 +5,24 @@
 See: .planning/PROJECT.md (updated 2026-02-25)
 
 **Core value:** Every output must be award-winning by default -- sites must also be discoverable and rankable.
-**Current focus:** Phase 18 in progress (Dynamic OG Images & Pipeline Wiring)
+**Current focus:** Phase 19 in progress (SSR & Dynamic Content Patterns)
 
 ## Current Position
 
-Phase: 18 of 19 (Dynamic OG Images & Pipeline Wiring)
-Plan: 04 of 04 in current phase (all complete)
-Status: Phase complete
-Last activity: 2026-02-25 -- Completed 18-PLAN-02 (og-images SKILL.md Layers 3-4)
+Phase: 19 of 19 (SSR & Dynamic Content Patterns)
+Plan: 01 of TBD in current phase
+Status: In progress
+Last activity: 2026-02-25 -- Completed 19-PLAN-01 (ssr-dynamic-content SKILL.md Layers 1-2A)
 
-Progress: [██████████████████░░░░░░] v1: 100% | v1.5: ~83% (15/18 plans)
+Progress: [███████████████████░░░░░] v1: 100% | v1.5: ~89% (16/18 plans)
 
 ## Performance Metrics
 
 **Velocity:**
 - Total plans completed: 63 (v1)
-- v1.5 plans completed: 15
-- Average duration: 3m 59s
-- Total execution time: 59m 52s
+- v1.5 plans completed: 16
+- Average duration: 4m 14s
+- Total execution time: 67m 47s
 
 **By Phase:**
 
@@ -33,7 +33,7 @@ Progress: [██████████████████░░░░░
 | 16 | 3 | 11m 00s | 3m 40s |
 | 17 | 2 | 8m 57s | 4m 29s |
 | 18 | 4 | 11m 44s | 2m 56s |
-| 19 | TBD | - | - |
+| 19 | 1 | 7m 55s | 7m 55s |
 
 *Updated after each plan completion*
 
@@ -88,6 +88,11 @@ Recent decisions affecting current work:
 - 18-02: og-images SKILL.md complete at 1252 lines -- 9 DNA tokens mapped, 5 archetype composition families, 6 anti-patterns, 10 constraints (6 HARD, 4 SOFT)
 - 18-02: WOFF2 explicitly forbidden in constraint table (HARD enforcement)
 - 18-02: 5 archetype composition families covering all 19 archetypes (families guide approach, Claude decides specifics)
+- 19-01: ssr-dynamic-content SKILL.md Layers 1-2A at 978 lines -- 15 patterns across 6 categories justify length above 500-800 target
+- 19-01: Cache Components presented as PPR replacement (not alongside it) -- Next.js 16 graduated PPR to Cache Components
+- 19-01: Better Auth noted as Lucia replacement but not given full code patterns (deferred to Plan 02 auth section)
+- 19-01: 10 named scenarios (full range used) -- covers blog, PDP, dashboard, marketing, profile, feed, pricing, docs, marketplace, event
+- 19-01: Astro draft preview uses cookie-based mechanism (no built-in Draft Mode in Astro)
 
 ### Pending Todos
 
@@ -107,9 +112,10 @@ None.
 - search-visibility SKILL.md at 579 lines (all 4 layers complete) + 3 appendices -- well within target, no bloat concern
 - api-patterns SKILL.md at 1600 lines (all 4 layers complete) -- largest skill but justified by 22 patterns across 6 API requirements; Layers 3-4 growth was modest (124 lines)
 - og-images SKILL.md at 1252 lines (all 4 layers complete) -- Layers 3-4 added 301 lines to existing 951; 6 anti-patterns with code examples and 10-parameter constraint table
+- ssr-dynamic-content SKILL.md at 978 lines (Layers 1-2A) -- Plan 02 adds CMS revalidation + auth patterns, Plan 03 adds Layers 3-4
 
 ## Session Continuity
 
 Last session: 2026-02-25
-Stopped at: Completed 18-PLAN-02 (og-images SKILL.md Layers 3-4). Phase 18 complete (all 4 plans done).
+Stopped at: Completed 19-PLAN-01 (ssr-dynamic-content SKILL.md Layers 1-2A). Phase 19 in progress.
 Resume file: None
