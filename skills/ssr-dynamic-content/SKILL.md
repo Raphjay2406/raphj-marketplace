@@ -1703,4 +1703,53 @@ Sites demonstrating excellent SSR, caching, and dynamic content rendering strate
 
 - **Payload CMS website** (payloadcms.com) -- Self-referential: built on Payload CMS + Next.js, demonstrating the `afterChange` hook revalidation pattern. Content updates on the site reflect immediately because Payload's hooks call `revalidateTag` directly in the Next.js process. No external webhook infrastructure needed.
 
-<!-- END OF LAYER 2 -- Plan 03 will append Layers 3-4 and Machine-Readable Constraints -->
+## Layer 3: Integration Context
+
+How this skill connects to the rest of the Modulo system. SSR/dynamic content has lighter DNA coupling than visual skills -- the primary touchpoints are loading state aesthetics (skeletons/shimmers should use DNA colors) and draft mode banner styling. Rendering strategies, caching, and revalidation are server-side concerns with no visual dependency on DNA tokens.
+
+### DNA Connection
+
+| DNA Token | Usage in This Skill |
+|-----------|-------------------|
+| Domain / `metadataBase` | Webhook callback URLs in CMS configuration, draft preview redirect base URL, IndexNow notification URLs |
+| `--color-bg` / `--color-surface` | Skeleton/shimmer loading state background colors (must match page background to avoid flash) |
+| `--color-border` | Skeleton placeholder border and divider colors for loading states |
+| `--color-muted` | Shimmer animation highlight color, loading text color |
+| `--font-body` | Draft mode banner font family (visual consistency during preview) |
+| Brand name | Draft mode banner text (e.g., "Draft Mode -- [Brand Name] Preview"), CMS webhook identification |
+
+### Archetype Variants
+
+SSR rendering logic is identical across archetypes -- server-side code does not change with visual style. However, loading states and skeleton UIs should match archetype personality. These variants apply to Suspense fallback components, Server Island fallback slots, draft mode banners, and `loading.tsx` special files. The section-builder should adapt loading state JSX to match the project archetype.
+
+| Archetype Group | Loading State Style | Skeleton Pattern | Draft Banner Style |
+|-----------------|--------------------|-----------------|--------------------|
+| Neo-Corporate, Swiss/International | Clean shimmer, subtle pulse | Geometric block placeholders, sharp edges | Minimal banner with muted background |
+| Brutalist, Neubrutalism | Static gray blocks, no animation | Bold rectangular blocks, thick borders | High-contrast banner, monospace text |
+| Luxury/Fashion, Dark Academia | Elegant fade-in, slow shimmer | Refined line placeholders, thin dividers | Understated banner with serif text |
+| Playful/Startup, Vaporwave | Bouncing dots or colorful pulse | Rounded placeholders with brand accent | Colorful banner with playful text |
+| Japanese Minimal, Ethereal | Subtle opacity pulse, minimal | Thin line placeholders, generous whitespace | Near-invisible banner, light text |
+| Data-Dense, AI-Native | Progressive skeleton with data structure hints | Table/grid skeleton matching final layout | Technical banner showing preview metadata |
+| Glassmorphism, Neon Noir | Glass blur effect on loading, glow pulse | Frosted glass placeholder cards | Glassmorphic banner with backdrop blur |
+| Kinetic, Retro-Future | Animated scanning line effect | Wireframe skeleton with motion hints | Retro-styled banner with animation |
+
+Remaining archetypes (Organic, Warm Artisan) should follow the closest personality match -- Warm Artisan aligns with Luxury/Fashion (elegant, refined loading), Organic with Japanese Minimal (subtle, nature-inspired).
+
+### Pipeline Stage
+
+- **Input from:** `/modulo:start-project` discovers content update frequency, CMS platform, auth requirements, and real-time data needs. `/modulo:plan-dev` section planner assigns rendering strategies per section based on the decision matrix. Design DNA provides domain and brand tokens for webhook URLs and loading states.
+- **Output to:** Page components with cache directives (`"use cache"`, `cacheLife`, `cacheTag`), Server Components with auth checks, webhook Route Handlers (`app/api/revalidate/route.ts`), `next.config.ts` cache configuration, Astro page files with `prerender` settings and `server:defer` components, `proxy.ts` route protection, and `loading.tsx` skeleton components.
+- **Pipeline position:** Wave 0 scaffold includes `next.config.ts` cache setup (`cacheComponents: true`), `proxy.ts` auth protection, and skeleton `loading.tsx` files. Wave 1 establishes shared webhook handler and SEO bridge utility. Wave 2+ sections implement specific rendering strategies per the decision matrix.
+- **Cross-phase integration:** CMS webhook handlers call the SEO bridge to update sitemap (`seo-meta` skill) and fire IndexNow (`search-visibility` skill). Draft mode integrates with CMS preview URLs. Auth patterns reference `auth-ui` skill for the login/signup UX.
+
+### Related Skills
+
+- `api-patterns` -- Provides server-side proxy patterns, webhook signature verification, and env management. This skill USES those patterns for CMS webhook endpoints. The generic HMAC verifier and Stripe/GitHub webhook patterns are in api-patterns; the CMS-specific webhook patterns (Sanity, Contentful, Strapi, Payload, Hygraph) are in this skill.
+- `seo-meta` -- Provides sitemap generation patterns. This skill's SEO bridge calls `revalidateTag('sitemap')` to keep sitemap lastmod fresh after CMS publishes. The sitemap endpoint itself is defined by seo-meta.
+- `search-visibility` -- Provides IndexNow submission endpoint. This skill's SEO bridge fires IndexNow after CMS webhook revalidation. The IndexNow endpoint pattern is defined by search-visibility.
+- `cms-integration` -- Handles CMS data fetching and content modeling. This skill handles what happens AFTER content changes (revalidation, cache invalidation, draft preview). cms-integration handles how to FETCH the content.
+- `auth-ui` -- Handles authentication UX (login, signup, password reset). This skill handles how auth state affects RENDERING decisions (cached vs per-request, route protection, role-based content). auth-ui handles the user-facing auth flows.
+- `nextjs-patterns` -- Documents Next.js framework patterns at the framework level (Server Components, Route Handlers, `proxy.ts`). This skill documents how to USE those patterns for specific rendering strategies and caching.
+- `astro-patterns` -- Documents Astro framework patterns (Server Islands, hybrid mode, API endpoints). This skill documents how to USE those patterns for SSR, ISR-equivalent caching, and Server Islands.
+- `performance-guardian` -- Cache strategy directly affects Core Web Vitals (LCP, TTFB). Streaming SSR improves TTFB. Proper cache headers reduce server response time. This skill's cacheLife profiles and Cache-Control headers align with performance-guardian's thresholds.
+- `emotional-arc` -- Loading states (Suspense fallbacks, Server Island fallbacks) are part of the page's emotional pacing. A well-designed skeleton maintains the arc's rhythm; a blank screen or jarring spinner disrupts it.
