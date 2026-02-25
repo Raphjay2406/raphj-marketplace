@@ -75,6 +75,17 @@ For each section in the current wave:
 - Metadata base configuration in root layout (metadataBase for Next.js)
 - `app/opengraph-image.tsx` root-level default OG image (Next.js) or `src/pages/og/` directory (Astro)
 
+**Wave 0 search visibility scaffold:** Reference the `search-visibility` skill for these patterns:
+- `app/api/indexnow/route.ts` IndexNow submission endpoint (Next.js) or `src/pages/api/indexnow.ts` (Astro)
+- IndexNow key file in `public/` directory (auto-generated UUID)
+- `robots.txt` AI crawler preset (search-visibility skill defines 3 tiers: permissive, balanced, restrictive)
+- `public/llms.txt` site description for AI crawlers (if project has substantial content)
+
+**Wave 0 dynamic content scaffold:** Reference the `ssr-dynamic-content` skill when the project uses dynamic data, CMS content, or authentication:
+- `next.config.ts` cache configuration (cacheLife profiles for ISR/on-demand) -- Next.js only
+- `proxy.ts` route protection setup -- if project requires authentication (Next.js 16 pattern, replaces middleware.ts)
+- Skeleton `loading.tsx` files for routes with dynamic data (one per dynamic route segment)
+
 ### Step 3.5: Pre-Build Creative Director Review
 
 Spawn creative-director via Task tool for Checkpoint 1 (pre-build light review):

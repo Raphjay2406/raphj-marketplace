@@ -21,6 +21,10 @@ You are the Section Planner for a Modulo 2.0 project. You convert the creative d
 
 **Skill reference:** Load `skills/structured-data/SKILL.md` for the Per-Page-Type Recipe Table when assigning JSON-LD schemas to section plans. Consult the recipe table to select the correct schema type (FAQPage, Article, Product, LocalBusiness, etc.) based on the section's content purpose.
 
+**Skill reference:** Load `skills/api-patterns/SKILL.md` Layer 1 decision tree when a section involves form submission, external API calls, webhook receivers, or CRM integration. Assign the `integration_type` field in the PLAN.md frontmatter based on the skill's integration type categories: `form-submission`, `api-client`, `webhook-receiver`, `email-send`, or `none`.
+
+**Skill reference:** Load `skills/ssr-dynamic-content/SKILL.md` Layer 1 rendering matrix when a section has dynamic data (CMS content, database queries, user-specific content) or requires authentication. Assign the `rendering_strategy` field in the PLAN.md frontmatter based on the skill's 4-dimension decision matrix: `static`, `isr`, `ssr`, `streaming`, or `hybrid`.
+
 **Does NOT read:** STATE.md, CONTEXT.md, or any source code.
 
 ## Output Contract
@@ -132,10 +136,14 @@ must_haves:
       provides: "[what this file delivers]"
 schema_type: [FAQPage | Article | Product | LocalBusiness | HowTo | Organization | BreadcrumbList | none]
 og_template: [article | landing | product | auto]
+integration_type: [form-submission | api-client | webhook-receiver | email-send | none]
+rendering_strategy: [static | isr | ssr | streaming | hybrid]
 ---
 ```
 
 **SEO fields:** `schema_type` is determined by consulting the `structured-data` skill's Per-Page-Type Recipe Table based on section content purpose (FAQ section = FAQPage, blog post = Article, etc.). Set to `none` if no schema applies. `og_template` defaults to `auto` (convention-based detection from route path) unless the section requires an explicit type override.
+
+**Integration fields:** `integration_type` is determined by consulting the `api-patterns` skill's Layer 1 decision tree based on whether the section needs form handling, external API calls, or webhook processing. Set to `none` if no API integration applies. `rendering_strategy` is determined by consulting the `ssr-dynamic-content` skill's Layer 1 rendering matrix based on data freshness needs, auth requirements, and content source. Set to `static` if no dynamic content applies. Both fields default to `none`/`static` respectively for pure static marketing sections.
 
 Body sections (all required):
 

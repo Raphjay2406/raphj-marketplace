@@ -117,6 +117,55 @@ Run this checklist AFTER the 3-level verification and BEFORE anti-slop scoring. 
 
 **Skill references for SEO validation values:** Consult `seo-meta` skill constraint table for title/description length ranges. Consult `structured-data` skill for valid schema types per page type.
 
+### Environment Secret Exposure Check
+
+After the SEO checklist, verify env variable security on all sections with `integration_type` set (from PLAN.md frontmatter). This check is CRITICAL -- exposed secrets are a security vulnerability, not a style issue.
+
+- [ ] No `NEXT_PUBLIC_` prefixed variables contain API secrets (Stripe secret key, database URLs, webhook signing secrets)
+- [ ] No `PUBLIC_` (Astro) or `VITE_` (Vite) prefixed variables contain server-only secrets
+- [ ] All external API calls route through server-side handlers (server actions, API routes, Astro endpoints) -- never direct client-side fetch to external APIs with auth headers
+- [ ] `.env.example` exists documenting required variables without actual values
+- [ ] Webhook signature verification is present on all webhook receiver endpoints (HMAC or provider-specific method)
+
+**Skill reference for validation:** Consult `api-patterns` skill Layer 4 anti-patterns for the complete list of env exposure failure modes.
+
+### SSR Anti-Pattern Check
+
+For sections with `rendering_strategy` set (from PLAN.md frontmatter), verify correct SSR/caching implementation. These checks catch silent failures that produce no errors but serve stale or incorrect content.
+
+**CRITICAL (silent failure patterns):**
+- [ ] No `experimental.ppr` in next.config.ts (deprecated in Next.js 16 -- use Cache Components instead)
+- [ ] No `unstable_cache` usage (removed in Next.js 16 -- use `cacheLife`/`cacheTag`/`updateTag` instead)
+- [ ] No auth checks in `middleware.ts` (Next.js 16 uses `proxy.ts` for route protection -- middleware.ts auth causes redirect loops)
+- [ ] No `getSession()` for auth validation (use `getClaims()` or equivalent server-side token verification -- `getSession()` trusts client JWT without server verification)
+
+**WARNING (suboptimal patterns):**
+- [ ] Cache headers include `stale-while-revalidate` for ISR pages
+- [ ] Loading skeletons exist for routes with `rendering_strategy: ssr` or `streaming`
+- [ ] Draft mode / preview mode properly isolated from production cache
+
+**Skill reference for validation:** Consult `ssr-dynamic-content` skill Layer 4 anti-patterns for the complete list of deprecated patterns and their replacements.
+
+### Schema-Content Consistency Audit (SDATA-06)
+
+After SEO and security checks, run the schema-content audit on every page with JSON-LD structured data. This prevents Google manual actions for mismatched schema claims. Load the `structured-data` skill and execute SDATA-06 protocol.
+
+**CRITICAL (Google manual action risk):**
+- [ ] Every `name` field in JSON-LD matches visible page heading text
+- [ ] Every `description` field in JSON-LD matches visible page description or meta description
+- [ ] FAQPage `acceptedAnswer` text matches visible answer content on the page
+- [ ] Product `price` and `availability` match visible product information
+- [ ] Article `datePublished` and `dateModified` match visible date displays
+- [ ] No schema types claimed that have zero visible content (e.g., FAQPage schema on a page with no FAQ section)
+- [ ] `@graph` combinations do not double-declare the same entity
+
+**WARNING:**
+- [ ] Organization schema `logo` URL resolves to an actual image
+- [ ] BreadcrumbList matches the visible breadcrumb navigation
+- [ ] Review/Rating `ratingValue` matches visible star display
+
+**How to use:** Run this audit AFTER the SEO checklist and BEFORE anti-slop scoring. Schema-content mismatches are CRITICAL findings that generate GAP-FIX.md entries. This audit runs on every quality-reviewer pass, not just the final review.
+
 ---
 
 ## Anti-Slop 35-Point Scoring
