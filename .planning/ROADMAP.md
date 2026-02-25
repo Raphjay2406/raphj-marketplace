@@ -33,7 +33,7 @@
 - [x] **Phase 14: Core SEO Foundation** (2/2 plans) - Rewrite seo-meta as Core-tier skill with complete meta tag architecture, canonical URLs, sitemaps, robots.txt, and Core Web Vitals guidance — completed 2026-02-25
 - [x] **Phase 15: Structured Data & GEO** (2/2 plans) - New structured-data skill with typed JSON-LD schemas plus GEO content patterns integrated into the Emotional Arc system — completed 2026-02-25
 - [x] **Phase 16: Indexing & Search Visibility** (3/3 plans) - New search-visibility skill with IndexNow auto-setup, llms.txt, unified indexing strategy, and GSC/Bing submission workflows — completed 2026-02-25
-- [ ] **Phase 17: API Integration Patterns** - New api-patterns skill with Context7 MCP integration, server-side proxy patterns, CRM forms, typed API clients, webhooks, and env management
+- [x] **Phase 17: API Integration Patterns** (2/2 plans) - New api-patterns skill with Context7 MCP integration, server-side proxy patterns, CRM forms, typed API clients, webhooks, and env management — completed 2026-02-25
 - [ ] **Phase 18: Dynamic OG Images & Pipeline Wiring** - DNA-integrated OG image generation for Next.js and Astro, plus agent updates wiring all v1.5 skills into the pipeline
 - [ ] **Phase 19: SSR & Dynamic Content Patterns** - New ssr-dynamic-content skill with SSR/ISR/streaming decision guidance, cache invalidation strategies, CMS-driven revalidation, auth-gated rendering, and real-time content freshness patterns for Next.js and Astro
 
@@ -99,8 +99,8 @@ Plans:
   5. Webhook receiver patterns provide Next.js API route and Astro endpoint templates for incoming webhook payloads with signature verification
 **Plans**: 2 plans
 Plans:
-- [ ] 17-PLAN-01.md -- SKILL.md Layers 1-2: Decision Guidance with integration type decision tree, Context7 MCP subsection + complete code patterns for server-side proxies, CRM forms, email, Turnstile, webhooks, typed clients, and env management
-- [ ] 17-PLAN-02.md -- SKILL.md Layers 3-4: DNA connection, archetype voice variants for form UX, related skills + anti-patterns + machine-readable constraints
+- [x] 17-PLAN-01.md -- SKILL.md Layers 1-2: Decision Guidance with integration type decision tree, Context7 MCP subsection + complete code patterns for server-side proxies, CRM forms, email, Turnstile, webhooks, typed clients, and env management
+- [x] 17-PLAN-02.md -- SKILL.md Layers 3-4: DNA connection, archetype voice variants for form UX, related skills + anti-patterns + machine-readable constraints
 **Research flag**: Researched 2026-02-25. HubSpot Forms API v3, Salesforce Web-to-Lead and REST API v66.0, Resend 6.9.x, Stripe webhooks, GitHub webhooks, Cloudflare Turnstile -- all verified with official docs.
 
 ### Phase 18: Dynamic OG Images & Pipeline Wiring
@@ -146,10 +146,10 @@ Phases 14-16 are sequential (SEO dependency chain). Phase 17 is independent of 1
 | 14. Core SEO Foundation | v1.5 | 2/2 | Complete | 2026-02-25 |
 | 15. Structured Data & GEO | v1.5 | 2/2 | Complete | 2026-02-25 |
 | 16. Indexing & Search Visibility | v1.5 | 3/3 | Complete | 2026-02-25 |
-| 17. API Integration Patterns | v1.5 | 0/2 | Planned | - |
+| 17. API Integration Patterns | v1.5 | 2/2 | Complete | 2026-02-25 |
 | 18. Dynamic OG Images & Pipeline Wiring | v1.5 | 0/4 | Planned | - |
 | 19. SSR & Dynamic Content Patterns | v1.5 | 0/TBD | Not started | - |
 
 ---
 *Roadmap created: 2026-02-23*
-*Last updated: 2026-02-25 -- Phase 18 planned (4 plans in 2 waves)*
+*Last updated: 2026-02-25 -- Phase 17 complete (2/2 plans verified)*

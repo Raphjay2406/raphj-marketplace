@@ -45,12 +45,12 @@ Requirements for v1.5 milestone. Each maps to roadmap phases.
 
 ### API Integration
 
-- [ ] **API-01**: Context7 MCP integration for live API documentation lookup during researcher and specialist agent workflows
-- [ ] **API-02**: Server-side proxy patterns: Next.js server actions, Astro API endpoints — secure external API calls with env secret protection
-- [ ] **API-03**: CRM form integration patterns: HubSpot Forms API (v2 submission), Salesforce Web-to-Lead, generic webhook POST
-- [ ] **API-04**: Typed API client generation with proper error handling, retry logic, and rate limit awareness
-- [ ] **API-05**: Webhook receiver patterns: Next.js API routes and Astro endpoints for incoming webhook payloads
-- [ ] **API-06**: Environment variable management: framework-specific prefix rules (NEXT_PUBLIC_, PUBLIC_, VITE_) with server-side secret protection
+- [x] **API-01**: Context7 MCP integration for live API documentation lookup during researcher and specialist agent workflows
+- [x] **API-02**: Server-side proxy patterns: Next.js server actions, Astro API endpoints — secure external API calls with env secret protection
+- [x] **API-03**: CRM form integration patterns: HubSpot Forms API (v2 submission), Salesforce Web-to-Lead, generic webhook POST
+- [x] **API-04**: Typed API client generation with proper error handling, retry logic, and rate limit awareness
+- [x] **API-05**: Webhook receiver patterns: Next.js API routes and Astro endpoints for incoming webhook payloads
+- [x] **API-06**: Environment variable management: framework-specific prefix rules (NEXT_PUBLIC_, PUBLIC_, VITE_) with server-side secret protection
 
 ### Dynamic OG Images
 
