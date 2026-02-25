@@ -123,17 +123,21 @@ Plans:
 ### Phase 19: SSR & Dynamic Content Patterns
 **Goal**: Modulo produces sites that handle frequent content updates, authenticated pages, and real-time data through correct SSR, ISR, and streaming patterns -- not just static landing pages
 **Depends on**: Phase 18 (pipeline wiring complete)
-**Requirements**: TBD (to be defined during planning)
+**Requirements**: SSR-01 through SSR-07 (defined by success criteria below)
 **Success Criteria** (what must be TRUE):
   1. A new `ssr-dynamic-content` skill (Domain tier) provides clear decision guidance for when to use SSG, SSR, ISR, or streaming -- with framework-specific implementation patterns for Next.js 16 (App Router) and Astro 5/6 (hybrid/server mode)
   2. ISR and on-demand revalidation patterns cover `revalidatePath`/`revalidateTag` (Next.js) and on-demand builder invalidation (Astro) with CMS webhook triggers, so content updates appear within seconds without full rebuilds
   3. Streaming SSR patterns use React Suspense boundaries and Astro's streaming response to progressively render pages with slow data sources, preventing blank-screen TTFB penalties
-  4. Auth-gated content patterns provide server-side session checks (middleware + layout), partial pre-rendering for mixed public/private pages, and honest guidance on which rendering strategies work with authentication
-  5. Cache strategy guidance covers CDN cache headers (Cache-Control, s-maxage, stale-while-revalidate), framework-level caching (Next.js Data Cache, fetch cache options), and cache invalidation patterns that prevent stale content
-  6. CMS integration patterns document the publish-revalidate-verify loop for headless CMS platforms (Sanity, Contentful, Strapi) including webhook setup, draft preview mode, and content freshness signals for SEO
+  4. Auth-gated content patterns provide server-side session checks (proxy.ts + layout), Cache Components for mixed public/private pages, and honest guidance on which rendering strategies work with authentication
+  5. Cache strategy guidance covers CDN cache headers (Cache-Control, s-maxage, stale-while-revalidate), framework-level caching (Next.js 4-layer cache system, cacheLife profiles), and cache invalidation patterns that prevent stale content
+  6. CMS integration patterns document the publish-revalidate-verify loop for headless CMS platforms (Sanity, Contentful, Strapi, Payload CMS, Hygraph) including webhook setup, draft preview mode, and content freshness signals for SEO
   7. Database-driven page patterns cover dynamic route generation from DB queries, pagination with SSR, and connection pooling best practices for serverless environments
-**Plans**: TBD
-**Research flag**: Needs research. Next.js 16 PPR (Partial Pre-Rendering) status, Astro server mode maturity, edge runtime limitations for SSR. Verify streaming SSR browser support matrix.
+**Plans**: 3 plans
+Plans:
+- [ ] 19-PLAN-01.md -- SKILL.md frontmatter + Layer 1 (Decision Guidance with 4-dimension rendering matrix, 10 scenario recipes, Next.js 4-layer cache breakdown, Edge/Node constraints) + Layer 2A (core rendering patterns: Cache Components, Server Islands, streaming SSR, Draft Mode, connection pooling, Cache-Control headers)
+- [ ] 19-PLAN-02.md -- SKILL.md Layer 2B: CMS webhook revalidation for 5 platforms (Sanity, Contentful, Strapi, Payload, Hygraph) with HMAC verification + SEO bridge (sitemap + IndexNow) + auth-gated rendering for 4 libraries (Auth.js v5, Clerk, Supabase, Better Auth) with 3 mixed-page approaches + proxy.ts route protection + reference sites
+- [ ] 19-PLAN-03.md -- SKILL.md Layers 3-4: DNA connection (loading states), archetype skeleton/shimmer variants, 9 related skills + 10 anti-patterns (PPR config, unstable_cache, Edge+Cache, middleware.ts, getSession, Lucia, etc.) + machine-readable constraints (10 HARD, 4 SOFT)
+**Research flag**: Researched 2026-02-25. Next.js 16 Cache Components (replaces PPR), cacheLife/cacheTag/updateTag APIs, proxy.ts (replaces middleware.ts), Astro Server Islands, 5 CMS webhook patterns, 4 auth libraries (Better Auth replaces Lucia) -- all verified with official docs.
 
 ## Progress
 
@@ -148,8 +152,8 @@ Phases 14-16 are sequential (SEO dependency chain). Phase 17 is independent of 1
 | 16. Indexing & Search Visibility | v1.5 | 3/3 | Complete | 2026-02-25 |
 | 17. API Integration Patterns | v1.5 | 2/2 | Complete | 2026-02-25 |
 | 18. Dynamic OG Images & Pipeline Wiring | v1.5 | 0/4 | Planned | - |
-| 19. SSR & Dynamic Content Patterns | v1.5 | 0/TBD | Not started | - |
+| 19. SSR & Dynamic Content Patterns | v1.5 | 0/3 | Planned | - |
 
 ---
 *Roadmap created: 2026-02-23*
-*Last updated: 2026-02-25 -- Phase 17 complete (2/2 plans verified)*
+*Last updated: 2026-02-25 -- Phase 19 planned (3 plans in 3 waves)*
