@@ -1526,3 +1526,75 @@ Agents should adapt the static strings in the `useActionState` component (Patter
 - **`performance-guardian`** -- API call latency directly affects Core Web Vitals scores. This skill's timeout defaults (5s for form submissions, 10s for CRM calls) align with performance-guardian's LCP and INP guidance. If API calls exceed timeout thresholds, performance-guardian flags the degradation.
 - **`nextjs-patterns` / `astro-patterns`** -- Framework-specific skills that document Server Actions, Route Handlers, and API endpoints at the framework level (syntax, configuration, deployment). This skill documents how to USE those framework features for specific API integrations (CRM, webhooks, email). api-patterns is the domain knowledge; framework skills are the platform knowledge.
 - **`accessibility`** -- Form accessibility (ARIA roles, error announcements, focus management) is shared between form-builder and accessibility skills. This skill's three-state form pattern (Pattern 4) uses `role="status"` and `role="alert"` per accessibility requirements. Ensure all form states are screen-reader accessible.
+
+## Layer 4: Anti-Patterns
+
+### Anti-Pattern 1: Client-Side Secret Exposure
+
+**What goes wrong:** Developer puts API keys in `NEXT_PUBLIC_*`, `PUBLIC_*`, or `VITE_*` environment variables. Secrets appear in the client JavaScript bundle, visible in browser DevTools Network tab and source maps. Anyone can extract and abuse the key -- sending emails from your account, accessing your CRM data, or making API calls billed to your account. This is the most dangerous API integration mistake because the damage is immediate and often irreversible (leaked keys must be rotated).
+
+**Instead:** ALL secrets use unprefixed env var names (`RESEND_API_KEY`, `STRIPE_SECRET_KEY`, `SF_PRIVATE_KEY`). Access them only in server-side code: `'use server'` files, Route Handlers, Astro API endpoints with `prerender = false`. If the code runs in the browser, it cannot access the secret. Validation rule: if any env var with a public prefix (`NEXT_PUBLIC_`, `PUBLIC_`, `VITE_`) contains "KEY", "SECRET", "TOKEN", or "PASSWORD" in its name, it is a critical error. The only exception is Turnstile site key (`NEXT_PUBLIC_TURNSTILE_SITE_KEY`) which is explicitly designed to be public. See Pattern 20 (Environment Variable Convention) and the complete env var reference table.
+
+### Anti-Pattern 2: JSON-Parsing Webhook Body Before Verification
+
+**What goes wrong:** Developer calls `request.json()` before verifying the webhook signature. The parsed JavaScript object is re-serialized differently than the original raw payload (key ordering, whitespace, Unicode escaping), so the HMAC digest computed against the re-serialized string does not match the provider's signature. Verification fails on every real webhook. This often works in local testing because test payloads may be simpler or the developer is skipping verification entirely during development.
+
+**Instead:** Always use `request.text()` first to get the raw body string exactly as the provider sent it. Verify the signature against this raw string. Parse JSON only AFTER verification succeeds. This applies to Stripe (`stripe.webhooks.constructEvent` requires raw body as first argument -- Pattern 13), GitHub (HMAC-SHA256 against raw payload -- Pattern 14), and any HMAC-based verification (Pattern 16). The raw body preservation is the single most important step in webhook security.
+
+### Anti-Pattern 3: String Comparison for Webhook Signatures
+
+**What goes wrong:** Developer uses `===` to compare HMAC signatures. This is vulnerable to timing attacks -- an attacker can determine the correct signature byte by byte by measuring response time differences. When the first byte matches, the comparison takes slightly longer before returning false. Over many requests, an attacker can reconstruct the entire signature without knowing the secret.
+
+**Instead:** Always use `crypto.timingSafeEqual(Buffer.from(computed), Buffer.from(received))`. This compares in constant time regardless of where the signatures differ -- every comparison takes the same duration. Wrap in a try/catch because `timingSafeEqual` throws a `TypeError` if the buffers have different byte lengths (which indicates an invalid signature format). See Pattern 14 (GitHub webhook) and Pattern 16 (generic HMAC verifier) for correct implementations.
+
+### Anti-Pattern 4: Unbounded Retries Without Backoff
+
+**What goes wrong:** Retry loop without delay or max attempts. When the upstream API is down, this hammers it with requests at full speed, potentially triggering IP bans, rate limit blocks, or account suspensions. It also blocks the user's request indefinitely -- the form spinner never stops. In the worst case, thousands of concurrent users all retry simultaneously, creating a thundering herd that makes recovery impossible even after the upstream service comes back.
+
+**Instead:** Cap at 3 retries with exponential backoff (1s, 2s, 4s base delay + random jitter to prevent synchronized retries). Never retry 4xx errors (except 429 Too Many Requests). For 429 responses, read and respect the `retry-after` header -- wait the indicated duration before retrying. For 5xx errors, retry with backoff. For network errors and timeouts, retry with backoff. See Pattern 19 (Typed API Client) for the complete `fetchWithRetry` implementation with all these behaviors built in.
+
+### Anti-Pattern 5: HubSpot Missing objectTypeId
+
+**What goes wrong:** HubSpot Forms API v3 submission fails with a 400 validation error because `objectTypeId` is not included in field objects. The submission payload looks correct -- it has field names and values -- but HubSpot rejects it. Many tutorials, StackOverflow answers, and older examples omit `objectTypeId` because it was not required in the v2 API. Developers waste hours debugging what appears to be a correct payload.
+
+**Instead:** Always include `objectTypeId: "0-1"` for Contact properties in every field object in the submission array. The `"0-1"` identifier is the Contact object type in HubSpot's internal type system. This is required by the v3 API even though it was not required in v2. See Pattern 5 (HubSpot Forms API v3 Submission) where every field entry includes `objectTypeId: '0-1'` in the map function.
+
+### Anti-Pattern 6: Salesforce Web-to-Lead JSON Parsing
+
+**What goes wrong:** Developer expects a JSON response from Salesforce Web-to-Lead and calls `response.json()`. Gets a `SyntaxError: Unexpected token '<'` because Salesforce returns HTML or a 302 redirect, not JSON. The form handler crashes on every successful submission. This is especially confusing because the request itself was correct -- it is the response handling that breaks.
+
+**Instead:** Set `redirect: 'manual'` in fetch options to prevent the fetch API from following the redirect. Check for 200 or 302 status code as success indicators. Do NOT attempt to parse the response body as JSON. Salesforce Web-to-Lead is a redirect-based form handler from the early 2000s -- it predates JSON APIs entirely. The server-side proxy absorbs this redirect behavior and returns a clean JSON response to the client form. See Pattern 6 (Salesforce Web-to-Lead).
+
+### Anti-Pattern 7: Turnstile Token Reuse
+
+**What goes wrong:** Form retries or double-submissions send the same Turnstile token twice. The second server-side validation fails with the `timeout-or-duplicate` error code because Turnstile tokens are single-use -- once validated by the siteverify endpoint, the token is consumed and cannot be used again. The user sees a cryptic "verification failed" error on their second attempt even though they already completed the challenge.
+
+**Instead:** After every form submission (whether success or failure), reset the Turnstile widget using the ref's `.reset()` method to generate a fresh token. Tokens also expire after 300 seconds (5 minutes), so handle the `onExpire` callback to auto-reset the widget before the user submits with an expired token. See Pattern 12 (Turnstile Client Widget) for the ref setup and reset pattern, and Pattern 11 (Turnstile Server Validation) for the error codes reference.
+
+### Anti-Pattern 8: Context7 Over-Reliance Without Baseline
+
+**What goes wrong:** A skill or agent relies exclusively on Context7 MCP for API documentation, but Context7 may not have the library indexed, may have an outdated version cached, or the MCP server may be temporarily unavailable. The build fails because the agent has no fallback patterns to use. Alternatively, the agent produces incorrect code based on stale Context7 results, and there is no baseline to compare against for validation.
+
+**Instead:** This skill contains hardcoded, version-pinned baseline patterns for every integration (Patterns 1-22). Context7 is a freshness upgrade, not the primary source. The fallback chain is: (1) Try Context7 MCP for current docs, (2) Use skill baseline patterns (verified and version-pinned), (3) Use official documentation URLs via WebFetch, (4) Flag to user with specific guidance. An agent should never produce output that says "use Context7 to look up the API" without also providing a working baseline. See Layer 1 Context7 MCP Integration section for the complete fallback chain and curated library list.
+
+## Machine-Readable Constraints
+
+Enforceable parameters for quality-reviewer automated checking. HARD constraints cause rejection. SOFT constraints produce warnings.
+
+| Parameter | Min | Max | Unit | Enforcement |
+|-----------|-----|-----|------|-------------|
+| env secret prefix | - | - | must NOT use NEXT_PUBLIC_, PUBLIC_, VITE_ for secrets | HARD -- reject if secret uses public prefix |
+| webhook body access | - | - | must use request.text() before signature verify | HARD -- reject if request.json() precedes verification |
+| signature comparison | - | - | must use crypto.timingSafeEqual | HARD -- reject if using === for HMAC comparison |
+| retry max attempts | - | 3 | attempts | HARD -- reject if > 3 retries |
+| retry base delay | 1000 | - | ms | HARD -- reject if no delay between retries |
+| retry 4xx behavior | - | - | must NOT retry 4xx (except 429) | HARD -- reject if retrying client errors |
+| form submission timeout | - | 10000 | ms | SOFT -- warn if timeout > 10s for form submissions |
+| CRM API timeout | - | 30000 | ms | SOFT -- warn if timeout > 30s for CRM calls |
+| HubSpot objectTypeId | - | - | required on every field in submission | HARD -- reject if missing |
+| Turnstile token reuse | - | - | must NOT validate same token twice | HARD -- reject if no widget reset after submission |
+| .env.example generation | - | - | must exist if project uses env vars | SOFT -- warn if .env.example missing |
+| Server Action directive | - | - | must have 'use server' at top of file | HARD -- reject if missing in server action files |
+| Astro prerender | - | - | must set export const prerender = false for API endpoints | HARD -- reject if missing in Astro API routes |
+
+**Constraint priority:** The env secret prefix constraint is the most critical -- a single exposed API key is a security incident that requires immediate key rotation and audit. The webhook body access and signature comparison constraints are second priority -- broken webhook verification means unverified payloads are processed. All other HARD constraints prevent common integration bugs.
