@@ -1473,4 +1473,56 @@ Reference implementations demonstrating API integration patterns in production. 
 - **Resend** (resend.com) -- Reference email API integration with TypeScript-first DX. Example of how a simple SDK can wrap a complex API surface
 - **Cal.com** (cal.com) -- Open-source Next.js application with comprehensive webhook and CRM integration patterns. Source code available for studying production server-side proxy implementations
 
-<!-- END OF LAYER 2 -- Plan 02 will append Layer 3 (Integration Context) and Layer 4 (Anti-Patterns) below this line -->
+<!-- END OF LAYER 2 -->
+
+## Layer 3: Integration Context
+
+### DNA Connection
+
+API integration patterns have lighter DNA coupling than visual skills. The primary touchpoints are email templates and brand identification in CRM submissions -- server-side code does not render visual components.
+
+| DNA Token | Usage in This Skill |
+|-----------|-------------------|
+| Brand name | Email `from` display name (e.g., `Acme Inc <hello@acme.com>`), webhook identification headers, CRM lead source attribution |
+| Brand description | Default email subject line context, CRM lead source field, meta description fallback for confirmation pages |
+| `--color-primary` / `bg-primary` | Email template accent color when using React Email with Resend (button backgrounds, header bars, link colors) |
+| `--font-body` | Email template body font family (web-safe fallback required -- email clients have limited font support) |
+| `--font-display` | Email template headline font family (web-safe fallback required) |
+| Domain / `metadataBase` | Webhook callback URLs (must be publicly accessible), Turnstile site verification domain, email link URLs (confirmation links, unsubscribe links) |
+
+**Note:** Unlike visual skills where DNA tokens drive every component, api-patterns uses DNA tokens only at the boundary between server logic and user-facing output (emails, confirmation messages, CRM brand fields). The server-side proxy code itself is DNA-agnostic.
+
+### Archetype Variants
+
+API integration is functionally identical across archetypes -- server-side code (Server Actions, Route Handlers, API endpoints) does not change with visual style. However, form UX messaging and error/success copy should match the project's archetype voice. These variants apply to the three-state form UI pattern (Pattern 4 in Layer 2).
+
+| Archetype Group | Form UX Tone | Error Message Voice | Success Message Voice |
+|-----------------|-------------|--------------------|-----------------------|
+| Neo-Corporate, Swiss/International | Professional, clear | "We couldn't process your request. Please try again." | "Thank you. We'll be in touch shortly." |
+| Brutalist, Neubrutalism | Direct, minimal | "Failed. Try again." | "Sent." |
+| Luxury/Fashion, Dark Academia | Refined, understated | "We apologize for the inconvenience. Please try once more." | "Thank you for reaching out. We look forward to connecting." |
+| Playful/Startup, Vaporwave | Casual, friendly | "Oops! Something went wrong. Give it another shot?" | "Awesome! We got your message!" |
+| Japanese Minimal, Ethereal | Clean, precise | "Submission unsuccessful. Please retry." | "Received. Thank you." |
+| Data-Dense, AI-Native | Technical, specific | "Error 500: Server returned an unexpected response. Retry in 30s." | "Submission confirmed. Reference: #12345" |
+| Organic, Warm Artisan | Warm, personal | "Something didn't work. Would you mind trying once more?" | "We appreciate you reaching out. Talk soon." |
+| Kinetic, Retro-Future | Energetic, expressive | "Transmission failed. Resend?" | "Message received. Standby for response." |
+
+Agents should adapt the static strings in the `useActionState` component (Pattern 4) to match the project archetype. The error/success messages above are starting points -- refine based on the specific project's brand voice from Design DNA.
+
+### Pipeline Stage
+
+- **Input from:** `/modulo:start-project` discovers which external services are needed (CRM platform, email provider, webhook sources). `/modulo:plan-dev` section planner flags sections requiring API integration (contact forms, newsletter signups, webhook receivers). Design DNA provides brand tokens for email templates and form messaging voice.
+- **Output to:** Server actions (`app/actions/*.ts`), route handlers (`app/api/**/*.ts`), Astro endpoints (`src/pages/api/*.ts`), utility libraries (`lib/api/*.ts`, `lib/crm/*.ts`, `lib/email/*.ts`, `lib/webhooks/*.ts`, `lib/security/*.ts`), and `.env.example` file.
+- **Pipeline position:** Wave 0 scaffold includes `.env.example` generation and utility library setup (`lib/api/client.ts`, `lib/env.ts`). Wave 1 shared UI may include the Turnstile widget component. Wave 2+ sections implement specific form submissions, webhook handlers, and API integrations.
+- **Context7 integration:** Available to design-researcher (Track 3 Component Library) and specialist agents during build for API documentation freshness checks. Quality-reviewer uses Context7 post-build to verify API pattern currency against current SDK versions.
+
+### Related Skills
+
+- **`form-builder`** -- Provides client-side form validation, multi-step form UX, field types, and accessible form markup. This skill provides the SERVER-SIDE submission pipeline that form-builder's forms connect to. They are complementary: form-builder handles the UI, api-patterns handles the server action behind it. Shared concern: Zod schemas may be defined once and used in both client validation (form-builder) and server validation (api-patterns).
+- **`auth-ui`** -- Handles authentication UX (login, signup, password reset, session management). This skill handles server-side API proxying for non-auth use cases. If a form requires authentication before submission, auth-ui handles the session check and api-patterns handles the submission logic.
+- **`cms-integration`** -- Handles CMS data fetching (Sanity, Contentful, Strapi) and content modeling. This skill handles external API endpoints for form submissions and webhooks. If a webhook triggers CMS revalidation (e.g., Stripe payment triggers content unlock), both skills are involved: api-patterns receives the webhook, cms-integration handles the revalidation call.
+- **`seo-meta`** -- Shares environment variable conventions (both use unprefixed secrets on the server). seo-meta's sitemap and robots.txt patterns may share the same `.env.example` file. Both skills enforce the Modulo unprefixed-secrets convention.
+- **`error-recovery`** -- Provides client-side error recovery UX patterns (retry buttons, fallback states, error boundaries). This skill provides server-side error handling (retry logic, typed `ApiError` discriminated unions, timeout management). error-recovery handles how the UI presents those server errors to users.
+- **`performance-guardian`** -- API call latency directly affects Core Web Vitals scores. This skill's timeout defaults (5s for form submissions, 10s for CRM calls) align with performance-guardian's LCP and INP guidance. If API calls exceed timeout thresholds, performance-guardian flags the degradation.
+- **`nextjs-patterns` / `astro-patterns`** -- Framework-specific skills that document Server Actions, Route Handlers, and API endpoints at the framework level (syntax, configuration, deployment). This skill documents how to USE those framework features for specific API integrations (CRM, webhooks, email). api-patterns is the domain knowledge; framework skills are the platform knowledge.
+- **`accessibility`** -- Form accessibility (ARIA roles, error announcements, focus management) is shared between form-builder and accessibility skills. This skill's three-state form pattern (Pattern 4) uses `role="status"` and `role="alert"` per accessibility requirements. Ensure all form states are screen-reader accessible.
