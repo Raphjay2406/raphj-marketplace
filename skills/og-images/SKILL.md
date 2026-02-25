@@ -948,4 +948,71 @@ All major platforms converge on the same standard. Generate one image at 1200x63
 
 **Universal standard:** 1200 x 630 pixels, PNG format, under 500KB for fast loading across all platforms. This is what every OG template generates.
 
-<!-- Layers 3-4 and Machine-Readable Constraints added by Plan 02 -->
+## Layer 3: Integration Context
+
+How the OG image skill connects to the broader Modulo system -- DNA tokens, design archetypes, pipeline stages, and related skills.
+
+### DNA Connection
+
+OG images are a direct expression of Design DNA. Every token maps to a specific element on the 1200x630 canvas:
+
+| DNA Token | OG Image Element | Usage |
+|-----------|-----------------|-------|
+| `--color-bg` | Canvas background | Main background color of the 1200x630 image |
+| `--color-primary` | Signature element, accent gradients | Brand mark color, gradient start point |
+| `--color-text` | Title text, site name | All text rendered on the OG image |
+| `--color-accent` | Gradient end, glow effects | Secondary gradient color (Ethereal, Neon Noir) |
+| `--color-glow` | Glow effects | Neon Noir neon glow, AI-Native luminance (sparingly) |
+| `--color-surface` | Secondary background areas | Optional card or overlay backgrounds within the image |
+| Display font | Title text (64px) | Loaded as TTF/OTF into Satori -- the project's actual DNA display font |
+| Body font | Site name, metadata text (24px) | Small secondary text elements |
+| Signature element | Brand mark | Always present on every OG image -- orb, slash, bar, corner, or dots |
+
+The OG image is a miniature expression of the project's visual identity. If the DNA says "diagonal slash in primary color," the OG image gets a diagonal slash in primary color. No exceptions.
+
+### Archetype-to-OG Composition Mapping
+
+The 19 design archetypes group into 5 OG composition families. These are starting points -- Claude decides the specific per-archetype layout composition based on the project's DNA and context.
+
+| Composition Family | Archetypes | OG Characteristics |
+|-------------------|------------|-------------------|
+| **Bold/Maximalist** | Brutalist, Neubrutalism, Kinetic | Raw centered type, high contrast, minimal decoration, large title dominating the canvas, thick accent bars, monochromatic or near-monochromatic palette |
+| **Elegant/Minimal** | Ethereal, Japanese Minimal, Swiss/International, Luxury/Fashion | Generous whitespace (40%+ padding), subtle signature element at low opacity, refined typography with careful letter-spacing, soft gradients or solid backgrounds |
+| **Expressive/Dynamic** | Neon Noir, Vaporwave, AI-Native, Glassmorphism | Gradient backgrounds (multi-stop), glow effects via box-shadow, bold color usage with accent/glow tokens, signature element as luminous focal point |
+| **Editorial/Structured** | Editorial, Dark Academia, Neo-Corporate, Data-Dense | Asymmetric layout (left-aligned title), strong typographic hierarchy with weight contrast, structured grid feel via flexbox, rule lines or accent borders as framing devices |
+| **Warm/Organic** | Warm Artisan, Organic, Playful/Startup, Retro-Future | Warm color palette from DNA tokens, rounded signature elements (orbs, soft corners), approachable typography sizing, textured feel achieved through layered color blocks |
+
+**Important:** These families guide the composition APPROACH, not exact layouts. A Brutalist article template and a Brutalist landing template will differ in layout but share the Bold/Maximalist characteristics (raw type, high contrast, minimal decoration). Claude adapts the specific element placement, sizing, and signature element treatment per project.
+
+### Pipeline Position
+
+OG image generation activates at two stages in the Modulo build pipeline:
+
+**Wave 0 (Scaffold):**
+- Build-orchestrator creates OG route files alongside design tokens and globals.css
+- Next.js: `app/opengraph-image.tsx` (root-level default using landing template)
+- Astro: `src/pages/og/index.png.ts` (root-level default)
+- Font file copied/converted to TTF if needed during scaffold
+- Template loads DNA token values from the project's design system
+
+**Wave 2+ (Per-Section):**
+- Section-planner determines whether a section creates new routes that need OG images
+- Blog/article sections get `opengraph-image.tsx` (Next.js) or `og/[slug].png.ts` (Astro) with the article template
+- E-commerce sections get product template OG generation
+- Single-page sections (hero, features, testimonials) rely on the root-level default -- no per-section OG needed
+
+**Quality Review:**
+- Quality-reviewer checks `og:image` meta tag presence via the seo-meta checklist
+- Verifies OG image route exists and returns a valid PNG response
+- Checks that DNA signature element is visible in the generated image
+- Advisory only -- does not block the anti-slop gate
+
+### Related Skills
+
+| Skill | Relationship |
+|-------|-------------|
+| `seo-meta` | Handles meta tag wiring (`og:title`, `og:description`, `twitter:card`). For Next.js file convention, Next.js auto-generates the `og:image` tag, but seo-meta handles everything else. For Astro, seo-meta provides the `<meta property="og:image">` tag pointing to the `/og/[slug].png` endpoint |
+| `design-dna` | Provides all token values consumed by OG templates -- colors, display font, signature element type. The OG image is a direct visual derivative of the DNA |
+| `design-archetypes` | Provides the archetype personality that influences OG composition family selection. The active archetype determines whether the OG style is Bold/Maximalist, Elegant/Minimal, etc. |
+| `design-system-scaffold` | Wave 0 scaffold includes OG route setup (updated by Plan 03 of this phase). The scaffold creates the initial OG route files with DNA token integration |
+| `structured-data` | If the page has JSON-LD schema with an `image` property (Article, Product, etc.), the `og:image` URL should be consistent with the schema image. Both point to the same generated PNG |
