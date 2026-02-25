@@ -8,11 +8,11 @@ Modulo organizes skills into a **3-tier loading system** that controls context w
 
 | Tier | Loading | When | Context Budget | Skills |
 |------|---------|------|----------------|--------|
-| **Core** | Always loaded | Every Modulo session | ~10,000 lines total | 21 skills |
-| **Domain** | Per-project | Agent decides based on project type, archetype, and current task | Only relevant subset | 21 skills |
-| **Utility** | On-demand | Explicit reference when specific need arises | Only when needed | 3 skills |
+| **Core** | Always loaded | Every Modulo session | ~10,000 lines total | 22 skills |
+| **Domain** | Per-project | Agent decides based on project type, archetype, and current task | Only relevant subset | 24 skills |
+| **Utility** | On-demand | Explicit reference when specific need arises | Only when needed | 2 skills |
 
-**Why tiers matter:** Loading all 45 skills into every session wastes thousands of lines of context on skills that may never apply. Tier-based loading keeps Core skills available for every decision while deferring Domain and Utility skills until they are actually needed.
+**Why tiers matter:** Loading all 48 skills into every session wastes thousands of lines of context on skills that may never apply. Tier-based loading keeps Core skills available for every decision while deferring Domain and Utility skills until they are actually needed.
 
 ### 4-Layer Format Standard
 
@@ -60,6 +60,7 @@ Core skills are loaded in **every** Modulo session. They define the identity, qu
 | `progress-reporting` | COMPLETE | 9 | 539 | Multi-level progress reporting: 4-tier (task/section/wave/milestone), STATE.md budget, wave review hard gates |
 | `error-recovery` | COMPLETE | 9 | 594 | Structured error diagnosis: 3-severity classification, checkpoint resume, FAILURE-LOG.md, pre-wave checkpoints |
 | `live-testing` | COMPLETE | 9 | 526 | Automated browser testing via Playwright MCP: visual QA overlay diff (pixelmatch), 3-tier verdict system |
+| `seo-meta` | COMPLETE | 14 | 928 | Core SEO patterns: meta tags, canonical URLs, sitemaps, robots.txt, hreflang, Open Graph, Twitter Cards, Core Web Vitals -- framework-native for Next.js 16, Astro 5, React 19 |
 
 ---
 
@@ -123,6 +124,14 @@ Domain skills are loaded **per project** based on the project's archetype, techn
 | `figma-integration` | COMPLETE | 9 | 785 | Figma design import via MCP tools: 13 tools (7 primary + 6 secondary), pixelmatch visual QA, token resolution protocol |
 | `design-system-export` | COMPLETE | 9 | 881 | Storybook 10 CSF Factories + W3C DTCG design tokens: Style Dictionary 5, 3 export platforms (CSS/JSON/Figma) |
 
+### SEO & Visibility
+
+| Skill | Status | Phase | Lines | Description |
+|-------|--------|-------|-------|-------------|
+| `structured-data` | COMPLETE | 15 | 1091 | Typed JSON-LD schemas for rich results: FAQPage, Article, Product, LocalBusiness, Organization, WebSite, BreadcrumbList, HowTo, Event -- per-page recipes, @graph combinations, GEO content patterns, schema audit protocol |
+| `search-visibility` | COMPLETE | 16 | 579 | IndexNow instant indexing, AI-aware robots.txt presets, llms.txt generation, unified indexing strategy, webmaster tools submission workflows for Next.js 16 and Astro 5 |
+| `og-images` | COMPLETE | 18 | 951 | Dynamic OG image generation from Design DNA tokens: branded 1200x630 social previews using next/og ImageResponse (Next.js) and Satori + sharp (Astro), 3 archetype-influenced template types |
+
 ---
 
 ## Utility Skills
@@ -132,7 +141,6 @@ Utility skills are loaded **on-demand** when a specific technical need arises. T
 | Skill | Status | Phase | Lines | Description |
 |-------|--------|-------|-------|-------------|
 | `form-builder` | COMPLETE | 8 | 437 | Form UI patterns: react-hook-form, zod validation, accessible form components |
-| `seo-meta` | COMPLETE | 8 | 398 | SEO and metadata patterns: meta tags, structured data, Open Graph, performance SEO |
 | `i18n-rtl` | COMPLETE | 8 | 305 | Internationalization and RTL layout: locale-aware formatting, bidirectional text patterns |
 
 ---
@@ -194,14 +202,14 @@ These legacy skills have no direct v2.0 replacement:
 
 | Category | Count | Status |
 |----------|-------|--------|
-| Core | 21 | All COMPLETE |
-| Domain | 21 | All COMPLETE |
-| Utility | 3 | All COMPLETE |
+| Core | 22 | All COMPLETE |
+| Domain | 24 | All COMPLETE |
+| Utility | 2 | All COMPLETE |
 | Legacy (superseded) | 1 | LEGACY -- v2.0 replacement exists (chart-data-viz) |
 | Legacy (unrewritten) | 26 | LEGACY -- evaluation pending |
 | Legacy (template) | 1 | Reference template |
-| **Total v2.0** | **46** | **45 skills + 1 template** |
-| **Total in filesystem** | **73** | **46 v2.0 + 27 legacy** |
+| **Total v2.0** | **49** | **48 skills + 1 template** |
+| **Total in filesystem** | **76** | **49 v2.0 + 27 legacy** |
 
 ---
 
@@ -304,6 +312,6 @@ All new and rewritten skills MUST follow the 4-layer format. See:
 
 ---
 
-*Registry version: 2.0.0*
-*Last updated: Phase 13, Plan 2 -- 12 superseded skills removed*
-*Total v2.0 skills: 46 (21 core, 21 domain, 3 utility + 1 template)*
+*Registry version: 2.1.0*
+*Last updated: Phase 18, Plan 4 -- v1.5 milestone registry update*
+*Total v2.0 skills: 49 (22 core, 24 domain, 2 utility + 1 template)*
