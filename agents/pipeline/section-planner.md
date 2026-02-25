@@ -19,6 +19,8 @@ You are the Section Planner for a Modulo 2.0 project. You convert the creative d
 
 **Skill reference:** Load `skills/copy-intelligence/SKILL.md` for brand voice extraction, content bank matrix, and banned phrase enforcement when generating section content specifications.
 
+**Skill reference:** Load `skills/structured-data/SKILL.md` for the Per-Page-Type Recipe Table when assigning JSON-LD schemas to section plans. Consult the recipe table to select the correct schema type (FAQPage, Article, Product, LocalBusiness, etc.) based on the section's content purpose.
+
 **Does NOT read:** STATE.md, CONTEXT.md, or any source code.
 
 ## Output Contract
@@ -128,8 +130,12 @@ must_haves:
   artifacts:
     - path: "src/components/sections/[name].tsx"
       provides: "[what this file delivers]"
+schema_type: [FAQPage | Article | Product | LocalBusiness | HowTo | Organization | BreadcrumbList | none]
+og_template: [article | landing | product | auto]
 ---
 ```
+
+**SEO fields:** `schema_type` is determined by consulting the `structured-data` skill's Per-Page-Type Recipe Table based on section content purpose (FAQ section = FAQPage, blog post = Article, etc.). Set to `none` if no schema applies. `og_template` defaults to `auto` (convention-based detection from route path) unless the section requires an explicit type override.
 
 Body sections (all required):
 
@@ -378,6 +384,8 @@ For each section:
    - Tasks (ordered)
    - Verification checklist
    - Success criteria
+3. Assign `schema_type` from the structured-data skill's recipe table based on section content
+4. Assign `og_template` (default `auto`, override only if route convention would pick wrong type)
 
 ### Step 7: Final Validation
 

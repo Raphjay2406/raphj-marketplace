@@ -90,6 +90,35 @@ Additionally verify:
 
 ---
 
+## SEO Verification Checklist
+
+After Level 3 (Wired) verification, run the SEO checklist on every public-facing page. This is ADVISORY -- SEO items do not block the anti-slop gate. Items are classified by severity.
+
+### CRITICAL (must fix before ship)
+
+- [ ] Every page has a `<title>` tag (Next.js: in generateMetadata, Astro: in <head>)
+- [ ] Every page has a canonical URL (not hardcoded, generated from route)
+- [ ] Every page has an `og:image` (via opengraph-image.tsx file convention or explicit meta tag)
+- [ ] JSON-LD schema syntax is valid (no broken brackets, all required fields present)
+- [ ] No duplicate `<title>` tags across different pages
+- [ ] robots.txt exists and references sitemap URL
+
+### WARNING (recommended fix, not blocking)
+
+- [ ] Meta description length is 120-160 characters
+- [ ] og:image alt text is descriptive (not "image" or empty)
+- [ ] Schema type matches page content (FAQPage on FAQ section, Article on blog, etc.)
+- [ ] Heading hierarchy is sequential (H1 -> H2 -> H3, no skipped levels)
+- [ ] Images have descriptive alt text (not just "photo" or "image")
+
+### How to Use
+
+Run this checklist AFTER the 3-level verification and BEFORE anti-slop scoring. Report SEO findings in the verification report under a separate "SEO Status" heading. CRITICAL items should be included in GAP-FIX.md if they fail. WARNING items are logged but do not generate GAP-FIX entries.
+
+**Skill references for SEO validation values:** Consult `seo-meta` skill constraint table for title/description length ranges. Consult `structured-data` skill for valid schema types per page type.
+
+---
+
 ## Anti-Slop 35-Point Scoring
 
 After the 3-level verification, score each section (and the page holistically) against the full anti-slop gate. The scoring system uses weighted categories -- Typography and Depth & Polish carry the highest weight (6 points each) because craft fundamentals are the most visible quality indicators.

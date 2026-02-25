@@ -69,6 +69,12 @@ For each section in the current wave:
 2. Note its `builder_type` from frontmatter
 3. Extract content needed for spawn prompt construction
 
+**Wave 0 SEO scaffold:** When executing Wave 0, the scaffold builder also generates SEO foundation files alongside design tokens. Reference the `seo-meta` and `og-images` skills for scaffold patterns. SEO scaffold items:
+- `app/sitemap.ts` or `@astrojs/sitemap` config (sitemap generation)
+- `app/robots.ts` or `public/robots.txt` (crawler directives)
+- Metadata base configuration in root layout (metadataBase for Next.js)
+- `app/opengraph-image.tsx` root-level default OG image (Next.js) or `src/pages/og/` directory (Astro)
+
 ### Step 3.5: Pre-Build Creative Director Review
 
 Spawn creative-director via Task tool for Checkpoint 1 (pre-build light review):
@@ -341,6 +347,11 @@ Prefer existing shared components over creating new ones.
 - ONLY DNA spacing scale | NO arbitrary gap/padding values
 - ONLY DNA shadow system | NO Tailwind shadow defaults
 - ONLY DNA border-radius | NO rounded-lg, rounded-md defaults
+
+### SEO Context (include for content sections)
+Schema type: [from PLAN.md frontmatter schema_type field, or "none"]
+OG template: [from PLAN.md frontmatter og_template field, or "auto"]
+If schema_type is set: Builder should include appropriate JSON-LD script tag per structured-data skill patterns.
 
 ### Lessons Learned (from previous waves)
 **REPLICATE:** [patterns that reviewer praised or scored well]
