@@ -1753,3 +1753,90 @@ Remaining archetypes (Organic, Warm Artisan) should follow the closest personali
 - `astro-patterns` -- Documents Astro framework patterns (Server Islands, hybrid mode, API endpoints). This skill documents how to USE those patterns for SSR, ISR-equivalent caching, and Server Islands.
 - `performance-guardian` -- Cache strategy directly affects Core Web Vitals (LCP, TTFB). Streaming SSR improves TTFB. Proper cache headers reduce server response time. This skill's cacheLife profiles and Cache-Control headers align with performance-guardian's thresholds.
 - `emotional-arc` -- Loading states (Suspense fallbacks, Server Island fallbacks) are part of the page's emotional pacing. A well-designed skeleton maintains the arc's rhythm; a blank screen or jarring spinner disrupts it.
+
+## Layer 4: Anti-Patterns
+
+The 10 most dangerous SSR/caching mistakes. Each produces silent failures, security vulnerabilities, or production cache invalidation bugs that are extremely difficult to debug after deployment.
+
+### Anti-Pattern 1: Using `experimental: { ppr: true }` in Next.js 16
+
+**What goes wrong:** Config references the experimental PPR flag from Next.js 14-15. In Next.js 16, PPR graduated to "Cache Components" with a completely different API. The old config is silently ignored -- no caching behavior is applied. Pages that should be partially cached render as full SSR per-request, destroying performance and increasing server costs.
+
+**Instead:** Use `cacheComponents: true` in `next.config.ts`. Use `"use cache"` directive + `cacheLife` + `cacheTag` in components and functions. Cache Components is the production-ready successor to PPR. See Pattern 1 for the correct `next.config.ts` setup.
+
+### Anti-Pattern 2: Using `unstable_cache` Instead of `"use cache"`
+
+**What goes wrong:** Code imports `unstable_cache` from `next/cache` for data caching. This is the legacy API, deprecated in Next.js 16. It requires manual cache key management and has a different invalidation model. The `unstable_` prefix signals it was never intended as a stable API -- breaking changes are expected.
+
+**Instead:** Use the `"use cache"` directive at file, component, or function level. The compiler auto-generates cache keys from function ID + serialized arguments + build ID. Combined with `cacheLife` for TTL and `cacheTag` for on-demand invalidation, this replaces `unstable_cache` entirely. See Pattern 2 for the correct Cache Components pattern.
+
+### Anti-Pattern 3: Calling Runtime APIs Inside `"use cache"` Scope
+
+**What goes wrong:** Code calls `cookies()`, `headers()`, or accesses `searchParams` inside a function or component marked with `"use cache"`. Build either hangs (timeout after 50s) or fails with `next-request-in-use-cache` error. Runtime APIs need a request context that does not exist at build time when the cache is being populated.
+
+**Instead:** Read runtime data OUTSIDE the cached scope, then pass values as serialized arguments to cached functions. The argument becomes part of the cache key, so different cookie values produce different cache entries. See Pattern 2 where `UserPreferences` reads cookies outside the cached `BlogPosts` function.
+
+### Anti-Pattern 4: Edge Runtime with Cache Components
+
+**What goes wrong:** Route or page uses `runtime = 'edge'` alongside Cache Components. Build fails or cache behavior silently does not apply. Cache Components requires Node.js runtime -- Edge Runtime does NOT support `"use cache"`, ISR, or on-demand revalidation. The Edge constraint table in Layer 1 lists 8 capabilities unavailable on Edge.
+
+**Instead:** Remove `runtime = 'edge'` from any route using Cache Components. Also note: `proxy.ts` runs on Node.js only in Next.js 16 (Edge runtime support was removed for proxy). Edge is only appropriate for simple Route Handlers doing fetch-based proxying. See the Edge vs Node.js Runtime Constraints table in Layer 1.
+
+### Anti-Pattern 5: Using `middleware.ts` Instead of `proxy.ts`
+
+**What goes wrong:** Developer creates `middleware.ts` for route protection or request manipulation. In Next.js 16, the file was renamed to `proxy.ts` with `export default function proxy()`. The old `middleware.ts` file is NOT executed -- routes are unprotected, redirects do not fire, and request manipulation is silently skipped.
+
+**Instead:** Create `proxy.ts` at the project root. Export `default function proxy(request)` (not `function middleware`). The API is similar but the file name and export name have changed. See Pattern 26 for the correct `proxy.ts` route protection pattern.
+
+### Anti-Pattern 6: Supabase `getSession()` for Server-Side Auth
+
+**What goes wrong:** Server-side code uses `supabase.auth.getSession()` to check authentication. This reads the session from cookies WITHOUT validating the JWT signature. An attacker can forge a session cookie and bypass auth checks entirely. This is a critical security vulnerability that allows unauthorized access to protected routes and data.
+
+**Instead:** Use `supabase.auth.getClaims()` or `supabase.auth.getUser()` in Server Components, Route Handlers, and Server Actions. Both validate the JWT signature against Supabase's public keys. `getClaims()` is cheaper (no network call -- validates locally); `getUser()` always hits Supabase servers (more expensive but guarantees up-to-date user data). See Pattern 24 for the correct Supabase auth pattern and the explicit "NEVER use" warning.
+
+### Anti-Pattern 7: Recommending Lucia Auth for New Projects
+
+**What goes wrong:** Code uses Lucia Auth patterns for session management. Lucia was deprecated in March 2025 and is now "educational resources only." No security patches, no new features, no community support. Using Lucia in a new project means building on an unmaintained auth foundation that will accumulate unpatched vulnerabilities.
+
+**Instead:** For self-hosted auth, use Better Auth (modern Lucia replacement) or Auth.js v5. For managed auth, use Clerk. For BaaS, use Supabase Auth. Better Auth has growing adoption but mark it as MEDIUM confidence; Auth.js v5 and Clerk are the highest-confidence choices. See Patterns 22-25 for all four auth library patterns.
+
+### Anti-Pattern 8: Single-Argument `revalidateTag` in Webhook Handlers
+
+**What goes wrong:** Code calls `revalidateTag('products')` with one argument in a Route Handler. This uses the deprecated immediate-expiry behavior. Content briefly goes blank (or shows a 404/error) while regenerating, instead of showing stale content during background revalidation. Users see a broken page for the regeneration duration.
+
+**Instead:** Always use `revalidateTag('tag-name', 'max')` for stale-while-revalidate behavior in Route Handlers (webhook endpoints). Use `updateTag('tag-name')` for immediate expiry only in Server Actions where the editor needs to see their own changes instantly. See Pattern 3 for the correct invalidation API comparison.
+
+### Anti-Pattern 9: Expecting Astro to Have Built-In ISR
+
+**What goes wrong:** Developer looks for a `revalidate` export in Astro pages or expects `getStaticPaths` to auto-revalidate. Astro does NOT have built-in ISR. SSG pages are static until the next build. SSR pages are per-request with no built-in background revalidation. The developer either adds non-existent exports (silently ignored) or gives up and uses full SSR (unnecessary server load).
+
+**Instead:** For ISR-equivalent behavior in Astro, set `Cache-Control: public, s-maxage=3600, stale-while-revalidate=86400` on SSR page responses. This is a CDN feature, not an Astro feature. The CDN serves stale content while re-fetching from the Astro server in the background. Platform-specific adapters (Vercel, Netlify) may provide ISR-like features at the adapter level. See Pattern 6 for the correct Astro ISR-equivalent setup.
+
+### Anti-Pattern 10: JSON-Parsing CMS Webhook Body Before Signature Verification
+
+**What goes wrong:** CMS webhook handler calls `request.json()` before verifying the HMAC signature. JSON serialization may differ from the raw payload (whitespace, key ordering, Unicode escaping), causing the HMAC digest to not match the expected value. Signature verification fails on every real webhook, and the developer either disables verification (security vulnerability) or spends hours debugging serialization differences.
+
+**Instead:** Always use `request.text()` first. Verify the HMAC signature against the raw string. Parse JSON with `JSON.parse(body)` only AFTER verification succeeds. This applies to all CMS webhooks using HMAC-SHA256 verification (Contentful, Strapi, Hygraph). Sanity uses a library (`@sanity/webhook`) that handles this internally. Payload CMS does not use webhooks (direct hooks). See Patterns 16-20 for the correct raw-body-first verification flow.
+
+## Machine-Readable Constraints
+
+Enforceable parameters for the quality-reviewer agent. HARD constraints cause rejection -- the code is incorrect and will fail or be insecure. SOFT constraints produce warnings -- the code works but may have suboptimal behavior.
+
+| Parameter | Min | Max | Unit | Enforcement |
+|-----------|-----|-----|------|-------------|
+| Next.js cache config | - | - | must use `cacheComponents: true`, NOT `experimental.ppr` | HARD -- reject if PPR config present |
+| Cache directive | - | - | must use `"use cache"`, NOT `unstable_cache` | HARD -- reject if unstable_cache import found |
+| Runtime APIs in cache scope | - | - | must NOT call cookies()/headers()/searchParams inside `"use cache"` | HARD -- reject if runtime API in cached scope |
+| Edge + Cache Components | - | - | must NOT use `runtime = 'edge'` with `"use cache"` | HARD -- reject if Edge with Cache Components |
+| Proxy file name | - | - | must be `proxy.ts`, NOT `middleware.ts` | HARD -- reject if middleware.ts exists in Next.js 16 project |
+| Supabase server auth | - | - | must use `getClaims()` or `getUser()`, NOT `getSession()` | HARD -- reject if getSession() in server-side code |
+| Auth library currency | - | - | must NOT recommend Lucia for new projects | HARD -- reject if Lucia auth patterns in new project |
+| revalidateTag form | - | - | must use two-arg `revalidateTag(tag, 'max')` in Route Handlers | HARD -- reject if single-arg revalidateTag in webhook handler |
+| Webhook body access | - | - | must use `request.text()` before HMAC verification | HARD -- reject if request.json() precedes verification |
+| Signature comparison | - | - | must use `crypto.timingSafeEqual` or official verification library | HARD -- reject if using === for HMAC comparison |
+| cacheLife profiles | - | - | must use preset or custom cacheLife, NOT route segment `revalidate` | SOFT -- warn if numeric revalidate used with Cache Components |
+| Astro ISR mechanism | - | - | must use Cache-Control headers, NOT expect built-in ISR | SOFT -- warn if looking for revalidate export in Astro |
+| Connection pooling | - | - | must use pooler for serverless deployments (Vercel, Netlify) | SOFT -- warn if direct database URL in serverless |
+| Router Cache awareness | - | - | should note Router Cache 30s minimum stale time in user-facing content | SOFT -- warn if no router.refresh() guidance after server invalidation |
+
+**Enforcement notes:** SOFT constraints produce warnings. HARD constraints cause rejection. The `experimental.ppr` and `middleware.ts` constraints are the most critical -- they indicate the code was written for an older Next.js version and will silently fail in Next.js 16. The `getSession()` constraint is the most security-critical -- it creates an auth bypass vulnerability.
