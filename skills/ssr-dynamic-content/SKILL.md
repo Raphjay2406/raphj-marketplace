@@ -975,4 +975,322 @@ Reference table mapping page types to recommended `Cache-Control` header values.
 - `no-cache` -- Cache but revalidate with server before serving (allows 304 Not Modified)
 - `immutable` -- Content will never change at this URL (use with hashed filenames)
 
-<!-- END OF LAYER 2A -- Plan 02 will append CMS revalidation, auth-gated content, and reference sites -->
+### B2. CMS Webhook Revalidation
+
+The publish-revalidate-verify loop is the core workflow for CMS-driven content freshness. When an editor publishes content, a webhook fires to the Next.js backend, which verifies the signature, invalidates relevant cache tags, and optionally bridges to SEO (sitemap update + IndexNow submission). Every CMS webhook handler MUST verify the signature using HMAC or a platform-specific verification library before processing -- never trust raw payloads.
+
+**Critical security rule:** Always read the raw body with `request.text()` BEFORE parsing JSON. Signature verification operates on the raw string, not the parsed object. Parse JSON only after verification succeeds.
+
+#### Pattern 16: Sanity Webhook Revalidation
+
+Sanity provides the `@sanity/webhook` package with `isValidSignature()` for signature verification. The signature is sent in the `sanity-webhook-signature` header. Sanity payloads include `_type` (content type) and `slug.current` for per-entry identification.
+
+```typescript
+// app/api/revalidate/sanity/route.ts
+import { revalidateTag } from 'next/cache'
+import { isValidSignature, SIGNATURE_HEADER_NAME } from '@sanity/webhook'
+import { notifySeoUpdate } from '@/lib/seo-bridge'
+
+export async function POST(request: Request) {
+  const body = await request.text()
+  const signature = request.headers.get(SIGNATURE_HEADER_NAME) ?? ''
+
+  if (!isValidSignature(body, signature, process.env.SANITY_WEBHOOK_SECRET!)) {
+    return new Response('Invalid signature', { status: 401 })
+  }
+
+  const payload = JSON.parse(body) as {
+    _type: string
+    slug?: { current: string }
+  }
+
+  // Revalidate by content type and optionally by slug
+  revalidateTag(payload._type, 'max')
+  if (payload.slug?.current) {
+    revalidateTag(`${payload._type}-${payload.slug.current}`, 'max')
+  }
+
+  // SEO bridge: update sitemap + notify search engines
+  if (payload.slug?.current) {
+    await notifySeoUpdate([`/${payload._type}/${payload.slug.current}`])
+  }
+
+  return Response.json({ revalidated: true, type: payload._type })
+}
+```
+
+#### Pattern 17: Contentful Webhook Revalidation
+
+Contentful uses manual HMAC-SHA256 verification. The signature is sent in the `x-contentful-signature` header. The webhook signing secret is configured in Contentful's webhook settings. Production deployments should use the canonical string method from Contentful's official verification docs; the pattern below uses simplified HMAC for consistency with other CMS examples.
+
+```typescript
+// app/api/revalidate/contentful/route.ts
+import { revalidateTag } from 'next/cache'
+import { createHmac, timingSafeEqual } from 'crypto'
+import { notifySeoUpdate } from '@/lib/seo-bridge'
+
+function verifyContentfulSignature(
+  body: string,
+  signature: string,
+  secret: string
+): boolean {
+  const expected = createHmac('sha256', secret).update(body).digest('hex')
+  try {
+    return timingSafeEqual(Buffer.from(signature), Buffer.from(expected))
+  } catch {
+    return false
+  }
+}
+
+export async function POST(request: Request) {
+  const body = await request.text()
+  const signature = request.headers.get('x-contentful-signature')
+
+  if (
+    !signature ||
+    !verifyContentfulSignature(body, signature, process.env.CONTENTFUL_WEBHOOK_SECRET!)
+  ) {
+    return new Response('Unauthorized', { status: 401 })
+  }
+
+  const payload = JSON.parse(body) as {
+    sys: {
+      contentType: { sys: { id: string } }
+    }
+    fields?: { slug?: { 'en-US'?: string } }
+  }
+
+  const contentType = payload.sys.contentType.sys.id
+  const slug = payload.fields?.slug?.['en-US']
+
+  revalidateTag(contentType, 'max')
+  if (slug) {
+    revalidateTag(`${contentType}-${slug}`, 'max')
+    await notifySeoUpdate([`/${contentType}/${slug}`])
+  }
+
+  return Response.json({ revalidated: true, contentType })
+}
+```
+
+**Note:** Contentful's canonical verification method uses a combination of the HTTP method, path, headers, and body to construct the signing string. For production webhooks handling sensitive content operations, consider using `@contentful/node-apps-toolkit` for full canonical string verification.
+
+#### Pattern 18: Strapi Webhook Revalidation
+
+Strapi v5 webhooks are configured at Settings > Webhooks. Use a shared secret with HMAC-SHA256 signing via a custom `x-strapi-signature` header. Strapi payloads include `model` (collection name) and `entry` with the full entry data including `slug`.
+
+```typescript
+// app/api/revalidate/strapi/route.ts
+import { revalidateTag } from 'next/cache'
+import { createHmac, timingSafeEqual } from 'crypto'
+import { notifySeoUpdate } from '@/lib/seo-bridge'
+
+function verifyStrapiSignature(
+  body: string,
+  signature: string,
+  secret: string
+): boolean {
+  const expected = createHmac('sha256', secret).update(body).digest('hex')
+  try {
+    return timingSafeEqual(Buffer.from(signature), Buffer.from(expected))
+  } catch {
+    return false
+  }
+}
+
+export async function POST(request: Request) {
+  const body = await request.text()
+  const signature = request.headers.get('x-strapi-signature')
+
+  if (
+    !signature ||
+    !verifyStrapiSignature(body, signature, process.env.STRAPI_WEBHOOK_SECRET!)
+  ) {
+    return new Response('Unauthorized', { status: 401 })
+  }
+
+  const payload = JSON.parse(body) as {
+    model: string
+    entry?: { slug?: string }
+  }
+
+  const collection = payload.model // e.g., 'article', 'page'
+  const slug = payload.entry?.slug
+
+  // Revalidate by collection and optionally by specific entry
+  revalidateTag(collection, 'max')
+  if (slug) {
+    revalidateTag(`${collection}-${slug}`, 'max')
+    await notifySeoUpdate([`/${collection}/${slug}`])
+  }
+
+  return Response.json({ revalidated: true, collection })
+}
+```
+
+#### Pattern 19: Payload CMS Revalidation (afterChange Hooks)
+
+Payload CMS is fundamentally different from the other 4 platforms: it runs INSIDE the Next.js process. There is no webhook endpoint needed. Instead, use `afterChange` and `afterDelete` collection hooks that directly call `revalidateTag`. This is the simplest revalidation pattern because Payload shares the Next.js runtime -- no HTTP requests, no signature verification, no separate Route Handler.
+
+```typescript
+// payload.config.ts -- Collection hooks for on-demand revalidation
+import { buildConfig } from 'payload'
+import { revalidateTag } from 'next/cache'
+
+async function revalidateAfterChange({ doc, collection }: {
+  doc: { slug?: string }
+  collection: { slug: string }
+}) {
+  revalidateTag(collection.slug, 'max')
+  if (doc.slug) {
+    revalidateTag(`${collection.slug}-${doc.slug}`, 'max')
+  }
+
+  // SEO bridge: update sitemap
+  revalidateTag('sitemap', 'max')
+
+  // Fire IndexNow for the updated URL
+  if (doc.slug && process.env.SITE_URL) {
+    fetch(`${process.env.SITE_URL}/api/indexnow`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        urls: [`/${collection.slug}/${doc.slug}`],
+      }),
+    }).catch(() => {
+      // IndexNow is best-effort -- do not block content save
+    })
+  }
+}
+
+export default buildConfig({
+  collections: [
+    {
+      slug: 'posts',
+      hooks: {
+        afterChange: [
+          async ({ doc }) => {
+            revalidateTag('posts', 'max')
+            revalidateTag(`post-${doc.slug}`, 'max')
+            revalidateTag('sitemap', 'max')
+          },
+        ],
+        afterDelete: [
+          async ({ doc }) => {
+            revalidateTag('posts', 'max')
+            revalidateTag('sitemap', 'max')
+          },
+        ],
+      },
+      // ... fields config
+    },
+  ],
+})
+```
+
+**Key advantage:** No webhook infrastructure to maintain. No signature verification needed (the hook runs in the same trusted process). No network latency between CMS and revalidation. Payload CMS is the zero-overhead revalidation pattern.
+
+#### Pattern 20: Hygraph Webhook Revalidation
+
+Hygraph provides the `@hygraph/utils` package with `verifyWebhookSignature()` for signature verification. The signature is sent in the `gcms-signature` header. Hygraph payloads include `data.__typename` (the GraphQL type name) for content type identification.
+
+```typescript
+// app/api/revalidate/hygraph/route.ts
+import { revalidateTag } from 'next/cache'
+import { verifyWebhookSignature } from '@hygraph/utils'
+import { notifySeoUpdate } from '@/lib/seo-bridge'
+
+export async function POST(request: Request) {
+  const body = await request.text()
+  const signature = request.headers.get('gcms-signature') ?? ''
+
+  const { isValid } = verifyWebhookSignature({
+    body,
+    signature,
+    secret: process.env.HYGRAPH_WEBHOOK_SECRET!,
+  })
+
+  if (!isValid) {
+    return new Response('Unauthorized', { status: 401 })
+  }
+
+  const payload = JSON.parse(body) as {
+    data: {
+      __typename: string
+      slug?: string
+    }
+  }
+
+  const contentType = payload.data.__typename.toLowerCase()
+  const slug = payload.data.slug
+
+  revalidateTag(contentType, 'max')
+  if (slug) {
+    revalidateTag(`${contentType}-${slug}`, 'max')
+    await notifySeoUpdate([`/${contentType}/${slug}`])
+  }
+
+  return Response.json({ revalidated: true, contentType })
+}
+```
+
+#### SEO Bridge: Revalidation to Sitemap + IndexNow
+
+After any CMS webhook triggers cache revalidation, the SEO bridge ensures search engines learn about the content change. This utility connects Phase 19 (rendering/caching) to Phase 14 (seo-meta: sitemap lastmod) and Phase 16 (search-visibility: IndexNow submission). Every CMS webhook handler above calls this helper after successful revalidation.
+
+```typescript
+// lib/seo-bridge.ts
+import { revalidateTag } from 'next/cache'
+
+/**
+ * Notify SEO systems of content changes after cache revalidation.
+ *
+ * 1. Revalidates the sitemap cache tag so the next sitemap.xml request
+ *    reflects the updated lastmod timestamp (connects to seo-meta skill).
+ * 2. Fires IndexNow to push updated URLs to search engines immediately
+ *    (connects to search-visibility skill).
+ *
+ * Call this AFTER revalidateTag for the content itself.
+ * IndexNow is best-effort -- failures are logged but do not throw.
+ */
+export async function notifySeoUpdate(urls: string[]): Promise<void> {
+  // 1. Revalidate sitemap so lastmod reflects the content change
+  revalidateTag('sitemap', 'max')
+
+  // 2. Fire IndexNow for immediate search engine notification
+  // The /api/indexnow endpoint pattern comes from the search-visibility skill (Phase 16)
+  if (process.env.SITE_URL && urls.length > 0) {
+    const absoluteUrls = urls.map((url) =>
+      url.startsWith('http') ? url : `${process.env.SITE_URL}${url}`
+    )
+
+    try {
+      await fetch(`${process.env.SITE_URL}/api/indexnow`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ urls: absoluteUrls }),
+      })
+    } catch (error) {
+      // IndexNow is best-effort -- log but do not block the webhook response
+      console.error('[SEO Bridge] IndexNow notification failed:', error)
+    }
+  }
+}
+```
+
+**Usage in any CMS webhook handler:**
+
+```typescript
+import { notifySeoUpdate } from '@/lib/seo-bridge'
+
+// After revalidateTag calls succeed:
+await notifySeoUpdate([`/blog/${slug}`, `/blog`])
+```
+
+#### Astro CMS Revalidation Note
+
+Astro does not have built-in on-demand revalidation like Next.js `revalidateTag`. The approach depends on the rendering mode:
+
+- **Astro SSG (static):** A CMS webhook should trigger a rebuild via the hosting platform's deploy hook (Vercel Deploy Hook, Netlify Build Hook). The entire site rebuilds with fresh CMS data. This is acceptable for sites with fewer than ~5,000 pages.
+- **Astro SSR:** The CDN cache is managed by `Cache-Control` headers. Cache purging depends on the CDN provider: Vercel's Purge API, Cloudflare's Cache Purge API, or Netlify's cache invalidation. The CMS webhook calls the CDN purge endpoint instead of `revalidateTag`.
+- **Astro with Server Islands:** The islands are fetched per-request and do not need revalidation -- they always show fresh data. The static shell is rebuilt on deploy. This is the simplest model for mixed static/dynamic Astro sites.
