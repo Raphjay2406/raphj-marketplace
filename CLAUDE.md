@@ -4,7 +4,7 @@ This file provides guidance to Claude Code when working with the Genorah plugin 
 
 ## Project Overview
 
-**Genorah v2.0** is a Claude Code plugin for premium frontend design. It produces award-caliber websites (Awwwards SOTD 8.0+ baseline) through a pipeline of 15 specialized agents, machine-enforceable design identity, a 72-point quality gate across 12 categories, and a Visual Companion for localhost delivery. It is NOT a template generator -- every project gets a unique visual identity enforced through Design DNA, 19 Design Archetypes, Emotional Arc storytelling, and the 72-point Quality Gate. Covers 12 design domains with 90+ skills.
+**Genorah v2.0** is a Claude Code plugin for premium frontend design. It produces award-caliber websites (Awwwards SOTD 8.0+ baseline) through a pipeline of 15 specialized agents, machine-enforceable design identity, a 72-point quality gate across 12 categories, and a Visual Companion for localhost delivery. It is NOT a template generator -- every project gets a unique visual identity enforced through Design DNA, 19 Design Archetypes, Emotional Arc storytelling, and the 72-point Quality Gate. Covers 12 design domains with 96+ skills.
 
 This repository contains only markdown definitions and a plugin manifest -- there is no application code, build system, or test suite. Targets Next.js, Astro, React/Vite, Tauri, and Electron.
 
@@ -17,7 +17,7 @@ commands/ (11 commands -- user-facing pipeline stages)
     | invoke
 agents/ (15 agents -- 7 pipeline + 4 specialists + 4 protocols)
     | reference
-skills/ (3-tier, 4-layer SKILL.md files -- 90+ modular knowledge bases)
+skills/ (3-tier, 4-layer SKILL.md files -- 96+ modular knowledge bases)
 ```
 
 **Plugin manifest:** `.claude-plugin/plugin.json`

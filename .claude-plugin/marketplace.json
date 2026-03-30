@@ -12,7 +12,7 @@
       "name": "genorah",
       "source": "./plugins/genorah",
       "description": "Premium frontend design system for Claude Code. 11 workflow commands, 15-agent pipeline architecture, Design DNA identity system with 19 archetypes, creative tension, emotional arc, cinematic motion, 72-point quality gate across 12 categories, visual companion for localhost delivery, and integration skills for HubSpot, Stripe, Shopify, WooCommerce, and Propstack. Creates award-winning, production-ready websites.",
-      "version": "2.0.0-dev",
+      "version": "2.0.0",
       "author": {
         "name": "raphj"
       },

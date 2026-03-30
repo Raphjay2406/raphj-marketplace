@@ -8,11 +8,12 @@ Genorah organizes skills into a **3-tier loading system** that controls context 
 
 | Tier | Loading | When | Context Budget | Skills |
 |------|---------|------|----------------|--------|
-| **Core** | Always loaded | Every Genorah session | ~10,000 lines total | 22 skills |
-| **Domain** | Per-project | Agent decides based on project type, archetype, and current task | Only relevant subset | 26 skills |
-| **Utility** | On-demand | Explicit reference when specific need arises | Only when needed | 2 skills |
+| **Core** | Always loaded | Every Genorah session | ~10,000 lines total | 26 skills |
+| **Domain** | Per-project | Agent decides based on project type, archetype, and current task | Only relevant subset | 38 skills |
+| **Utility** | On-demand | Explicit reference when specific need arises | Only when needed | 4 skills |
+| **Data** | On-demand | Catalog lookups for palettes, fonts, charts, industry rules | Only when needed | 4 catalogs |
 
-**Why tiers matter:** Loading all 50 skills into every session wastes thousands of lines of context on skills that may never apply. Tier-based loading keeps Core skills available for every decision while deferring Domain and Utility skills until they are actually needed.
+**Why tiers matter:** Loading all 96 skills into every session wastes thousands of lines of context on skills that may never apply. Tier-based loading keeps Core skills available for every decision while deferring Domain and Utility skills until they are actually needed.
 
 ### 4-Layer Format Standard
 
@@ -61,6 +62,10 @@ Core skills are loaded in **every** Genorah session. They define the identity, q
 | `error-recovery` | COMPLETE | 9 | 594 | Structured error diagnosis: 3-severity classification, checkpoint resume, FAILURE-LOG.md, pre-wave checkpoints |
 | `live-testing` | COMPLETE | 9 | 526 | Automated browser testing via Playwright MCP: visual QA overlay diff (pixelmatch), 3-tier verdict system |
 | `seo-meta` | COMPLETE | 14 | 928 | Core SEO patterns: meta tags, canonical URLs, sitemaps, robots.txt, hreflang, Open Graph, Twitter Cards, Core Web Vitals -- framework-native for Next.js 16, Astro 5, React 19 |
+| `ux-intelligence` | COMPLETE | 20 | — | 12 enforceable design intelligence domains: cognitive load, hierarchy clarity, affordance signals, feedback loops, error prevention, progressive disclosure, spatial consistency, micro-copy intelligence, onboarding flow, trust signals, accessibility intelligence, interaction responsiveness |
+| `quality-gate-v2` | COMPLETE | 20 | — | 72-point quality gate reference: 12 scoring categories, named tiers (Pass 50+, Strong 58+, SOTD-Ready 63+, Honoree-Level 68+), penalty system, per-category rubrics, remediation protocol |
+| `baked-in-defaults` | COMPLETE | 20 | — | Motion/responsive/compatibility templates for planner: animation-mandatory defaults, 4-breakpoint responsive scaffold (375/768/1280/1920px), browser compatibility tiers, override protocol |
+| `component-consistency` | COMPLETE | 20 | — | Component registry enforcement rules: naming conventions, prop interface standards, DNA token usage compliance, variant pattern requirements, component audit checklist |
 
 ---
 
@@ -134,6 +139,24 @@ Domain skills are loaded **per project** based on the project's archetype, techn
 | `api-patterns` | COMPLETE | 17 | 1600 | Server-side API integration: Context7 MCP for live docs, server-side proxies with env secret protection, CRM form patterns (HubSpot, Salesforce), typed API clients with discriminated unions, webhook receivers with signature verification, Cloudflare Turnstile spam protection |
 | `ssr-dynamic-content` | COMPLETE | 19 | 1842 | SSR/ISR/streaming decision guidance: 4-dimension rendering matrix, Cache Components (Next.js 16), Server Islands (Astro 5), CMS webhook revalidation for 5 platforms, auth-gated rendering for 4 libraries, cache invalidation strategies, loading state patterns |
 
+### Platform Integrations
+
+| Skill | Status | Phase | Lines | Description |
+|-------|--------|-------|-------|-------------|
+| `hubspot-integration` | COMPLETE | 20 | — | HubSpot CRM, Marketing Hub, and CMS integration patterns: form submission to CRM, contact sync, marketing automation hooks, DNA-themed HubSpot embed components |
+| `stripe-integration` | COMPLETE | 20 | — | Stripe payment integration patterns: Checkout Sessions, Payment Element theming with DNA tokens, subscription flows, webhook handling, server-side proxy patterns |
+| `shopify-integration` | COMPLETE | 20 | — | Shopify headless e-commerce patterns: Storefront API, cart state management, product display components, checkout redirect, DNA-themed storefront UI |
+| `woocommerce-integration` | COMPLETE | 20 | — | WooCommerce headless patterns: REST API product grids, cart and order flows, authentication, DNA-themed product cards and checkout components |
+| `propstack-integration` | COMPLETE | 20 | — | Propstack real estate CRM integration: property listing sync, search UI, contact/lead capture, map integration hooks, DNA-themed listing cards |
+
+### AI Product Design
+
+| Skill | Status | Phase | Lines | Description |
+|-------|--------|-------|-------|-------------|
+| `ai-ui-patterns` | COMPLETE | 20 | — | AI product design pattern catalog: 8 patterns (streaming text, thinking indicators, confidence display, model selector, prompt builder, result comparison, feedback loop, error/fallback) with DNA-themed implementations |
+| `ai-pipeline-features` | COMPLETE | 20 | — | AI features within Genorah pipeline: when to invoke AI-UI agents, pattern selection matrix, archetype-to-AI-style mappings, quality gate criteria for AI components |
+| `ai-ui-components` | COMPLETE | 20 | — | AI Elements integration guide: component library selection, installation patterns, DNA token mapping to AI component props, customization boundaries, accessibility requirements |
+
 ---
 
 ## Utility Skills
@@ -144,6 +167,21 @@ Utility skills are loaded **on-demand** when a specific technical need arises. T
 |-------|--------|-------|-------|-------------|
 | `form-builder` | COMPLETE | 8 | 437 | Form UI patterns: react-hook-form, zod validation, accessible form components |
 | `i18n-rtl` | COMPLETE | 8 | 305 | Internationalization and RTL layout: locale-aware formatting, bidirectional text patterns |
+| `visual-companion-screens` | COMPLETE | 20 | — | HTML fragment templates for Visual Companion: viewport harness, DNA token overlays, Emotional Arc indicators, quality gate score panels, annotation layers |
+| `obsidian-integration` | COMPLETE | 20 | — | Obsidian vault integration and sync: vault-to-project knowledge linking, dataview query patterns, canvas layout export, plugin compatibility, sync hooks |
+
+---
+
+## Data Catalogs
+
+Data catalogs are on-demand reference indexes loaded when agents need curated reference data. They are not skills in the 4-layer sense but follow the same frontmatter convention.
+
+| Catalog | Status | Phase | Entries | Description |
+|---------|--------|-------|---------|-------------|
+| `data/palettes` | COMPLETE | 20 | 54 | 54 color palettes organized by industry vertical: SaaS, finance, healthcare, real estate, e-commerce, hospitality, tech, creative, and more |
+| `data/font-pairings` | COMPLETE | 20 | 33 | 33 typography pairings: display + body + mono combinations with archetype affinity ratings and usage notes |
+| `data/chart-types` | COMPLETE | 20 | 25 | 25 chart type recommendations: selection criteria by data shape, audience, and archetype; implementation library guidance |
+| `data/industry-rules` | COMPLETE | 20 | 52 | 52 industry reasoning rules: sector-specific design constraints, regulatory considerations, trust signals, and conversion patterns |
 
 ---
 
@@ -204,14 +242,15 @@ These legacy skills have no direct v2.0 replacement:
 
 | Category | Count | Status |
 |----------|-------|--------|
-| Core | 22 | All COMPLETE |
-| Domain | 26 | All COMPLETE |
-| Utility | 2 | All COMPLETE |
+| Core | 26 | All COMPLETE |
+| Domain | 38 | All COMPLETE |
+| Utility | 4 | All COMPLETE |
+| Data Catalogs | 4 | All COMPLETE |
 | Legacy (superseded) | 1 | LEGACY -- v2.0 replacement exists (chart-data-viz) |
 | Legacy (unrewritten) | 26 | LEGACY -- evaluation pending |
 | Legacy (template) | 1 | Reference template |
-| **Total v2.0** | **51** | **50 skills + 1 template** |
-| **Total in filesystem** | **78** | **51 v2.0 + 27 legacy** |
+| **Total v2.0** | **73** | **72 skills + 4 data catalogs + 1 template** |
+| **Total in filesystem** | **100** | **73 v2.0 + 4 catalogs + 27 legacy** |
 
 ---
 
@@ -314,6 +353,6 @@ All new and rewritten skills MUST follow the 4-layer format. See:
 
 ---
 
-*Registry version: 2.2.0*
-*Last updated: Phase 20, Plan 1 -- v1.5 gap closure (api-patterns + ssr-dynamic-content registration)*
-*Total v2.0 skills: 51 (22 core, 26 domain, 2 utility + 1 template)*
+*Registry version: 2.3.0*
+*Last updated: Phase 20, Plans 3-4 -- v2.0.0 release (ux-intelligence, quality-gate-v2, baked-in-defaults, component-consistency, integration skills, AI-UI skills, utility skills, data catalogs)*
+*Total v2.0 skills: 73 (26 core, 38 domain, 4 utility) + 4 data catalogs + 1 template*
