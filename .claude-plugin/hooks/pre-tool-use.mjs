@@ -161,6 +161,41 @@ try {
     });
   }
 
+  /**
+   * Parse restricted_paths from a skill's constraints frontmatter block.
+   * Returns an array of path patterns, or empty array if none found.
+   */
+  function parseConstraintPaths(content) {
+    const fmMatch = content.match(/^---\n([\s\S]*?)\n---/);
+    if (!fmMatch) return [];
+
+    const yaml = fmMatch[1];
+    const constraintsMatch = yaml.match(/^constraints:\s*\n((?:\s{2,}.+\n?)*)/m);
+    if (!constraintsMatch) return [];
+
+    const block = constraintsMatch[1];
+    const rpMatch = block.match(/restricted_paths:\s*\[([^\]]*)\]/);
+    if (rpMatch) {
+      // Inline array format: ["path1", "path2"]
+      return rpMatch[1]
+        .split(',')
+        .map(s => s.trim().replace(/^["']|["']$/g, ''))
+        .filter(Boolean);
+    }
+
+    // YAML list format
+    const rpListMatch = block.match(/restricted_paths:\s*\n((?:\s+-\s+.+\n?)*)/);
+    if (rpListMatch) {
+      return rpListMatch[1]
+        .split('\n')
+        .map(line => line.match(/^\s+-\s+['"]?(.+?)['"]?\s*$/))
+        .filter(Boolean)
+        .map(m => m[1]);
+    }
+
+    return [];
+  }
+
   // Collect matching skills
   const matched = [];
 
@@ -196,6 +231,28 @@ try {
   // Sort by priority (higher first), cap at MAX_SKILLS
   matched.sort((a, b) => b.priority - a.priority);
   const selected = matched.slice(0, MAX_SKILLS);
+
+  // --- Resource constraint enforcement (restricted_paths) ---
+  if ((tool_name === 'Write' || tool_name === 'Edit') && targetPath) {
+    for (const skill of matched) {
+      const restrictedPaths = parseConstraintPaths(skill.content);
+      if (restrictedPaths.length > 0) {
+        const normalizedTarget = targetPath.replace(/\\/g, '/');
+        for (const rp of restrictedPaths) {
+          const rpRegex = globToRegex(rp);
+          const targetBase = basename(targetPath);
+          if (rpRegex.test(targetBase) || rpRegex.test(normalizedTarget)) {
+            const blockResponse = {
+              decision: 'block',
+              reason: `Resource constraint: path restricted by ${skill.name} skill`
+            };
+            process.stdout.write(JSON.stringify(blockResponse));
+            process.exit(0);
+          }
+        }
+      }
+    }
+  }
 
   // Build additionalContext within byte budget
   let additionalContext = '';

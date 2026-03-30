@@ -27,6 +27,9 @@ if [ -z "$STAGED_FILES" ]; then
   exit 0
 fi
 
+# Exclude test fixtures from PII scanning
+PII_FILES=$(echo "$STAGED_FILES" | grep -v '__fixtures__\|__mocks__\|\.test\.\|\.spec\.\|\.example' || true)
+
 check_pattern() {
   local pattern="$1"
   local message="$2"
@@ -115,6 +118,30 @@ check_pattern 'container-type:\s*inline-size' "Using container queries -- ensure
 check_pattern ':has(' "Using :has() selector -- ensure fallback for Broad/Legacy tiers"
 check_pattern 'oklch(' "Using oklch() colors -- ensure hsl() fallback for Broad/Legacy tiers"
 check_pattern 'subgrid' "Using subgrid -- ensure fallback for Broad/Legacy tiers"
+
+# --- PII / Secret Detection (BLOCK severity) ---
+# Uses PII_FILES (excludes test fixtures, mocks, and example files)
+check_pii_pattern() {
+  local pattern="$1"
+  local message="$2"
+  local matches
+
+  if [ -z "$PII_FILES" ]; then return; fi
+
+  matches=$(echo "$PII_FILES" | xargs grep -Hn "$pattern" 2>/dev/null || true)
+  if [ -n "$matches" ]; then
+    VIOLATIONS="${VIOLATIONS}\n[BLOCK] ${message}\n${matches}\n"
+    VIOLATION_COUNT=$((VIOLATION_COUNT + 1))
+  fi
+}
+
+check_pii_pattern 'sk_live_[a-zA-Z0-9]' "Stripe LIVE secret key detected in source code"
+check_pii_pattern 'sk_test_[a-zA-Z0-9]' "Stripe TEST secret key detected -- use env var STRIPE_SECRET_KEY"
+check_pii_pattern 'AKIA[0-9A-Z]\{16\}' "AWS access key detected in source code"
+check_pii_pattern 'ghp_[a-zA-Z0-9]\{36\}' "GitHub personal access token detected"
+check_pii_pattern 'gho_[a-zA-Z0-9]\{36\}' "GitHub OAuth token detected"
+check_pii_pattern 'xox[bpars]-[a-zA-Z0-9]' "Slack token detected in source code"
+check_pii_pattern 'glpat-[a-zA-Z0-9_-]' "GitLab personal access token detected"
 
 # --- Report ---
 
