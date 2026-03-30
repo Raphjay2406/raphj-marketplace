@@ -59,13 +59,13 @@ Push HTML screens at key moments so the user can track progress visually:
 
 **You read ONLY these files:**
 
-1. **`.planning/modulo/MASTER-PLAN.md`** — wave map, section assignments, dependency graph, beat assignments, layout pre-assignments, background progression
-2. **`.planning/modulo/DESIGN-DNA.md`** — full visual identity (colors, fonts, spacing, motion tokens, compat tier)
-3. **`.planning/modulo/CONTEXT.md`** — build state, creative direction notes, lessons learned, next wave instructions
-4. **`.planning/modulo/STATE.md`** — current execution state (phase, wave, section statuses)
-5. **`.planning/modulo/DESIGN-SYSTEM.md`** — shared component inventory (to include in spawn prompts)
-6. **Current wave's PLAN.md files** — `.planning/modulo/sections/{name}/PLAN.md` for sections in the active wave
-7. **Completed SUMMARY.md files** — `.planning/modulo/sections/{name}/SUMMARY.md` from finished sections
+1. **`.planning/genorah/MASTER-PLAN.md`** — wave map, section assignments, dependency graph, beat assignments, layout pre-assignments, background progression
+2. **`.planning/genorah/DESIGN-DNA.md`** — full visual identity (colors, fonts, spacing, motion tokens, compat tier)
+3. **`.planning/genorah/CONTEXT.md`** — build state, creative direction notes, lessons learned, next wave instructions
+4. **`.planning/genorah/STATE.md`** — current execution state (phase, wave, section statuses)
+5. **`.planning/genorah/DESIGN-SYSTEM.md`** — shared component inventory (to include in spawn prompts)
+6. **Current wave's PLAN.md files** — `.planning/genorah/sections/{name}/PLAN.md` for sections in the active wave
+7. **Completed SUMMARY.md files** — `.planning/genorah/sections/{name}/SUMMARY.md` from finished sections
 
 **You do NOT read:**
 - Individual source code files (builders do that)
@@ -80,9 +80,9 @@ Push HTML screens at key moments so the user can track progress visually:
 ## Output Contract
 
 **WRITES:**
-- `.planning/modulo/STATE.md` — updated after every wave
-- `.planning/modulo/CONTEXT.md` — artifact registry + creative notes, rewritten (not appended) after every wave
-- `.planning/modulo/DESIGN-SYSTEM.md` — component registry, maintained during Wave 0-1 and updated after subsequent waves
+- `.planning/genorah/STATE.md` — updated after every wave
+- `.planning/genorah/CONTEXT.md` — artifact registry + creative notes, rewritten (not appended) after every wave
+- `.planning/genorah/DESIGN-SYSTEM.md` — component registry, maintained during Wave 0-1 and updated after subsequent waves
 
 **UPDATES:**
 - TodoWrite tasks — created per wave, updated as builders complete, marked done after wave review
@@ -120,10 +120,10 @@ TodoWrite([
 
 ### Step 3: Read State and Verify Dependencies
 
-1. Read `.planning/modulo/CONTEXT.md` — internalize build state, creative notes, lessons learned
-2. Read `.planning/modulo/MASTER-PLAN.md` — find current wave sections and dependencies
-3. Read `.planning/modulo/DESIGN-DNA.md` — extract full DNA for spawn prompts
-4. Read `.planning/modulo/DESIGN-SYSTEM.md` — note available shared components
+1. Read `.planning/genorah/CONTEXT.md` — internalize build state, creative notes, lessons learned
+2. Read `.planning/genorah/MASTER-PLAN.md` — find current wave sections and dependencies
+3. Read `.planning/genorah/DESIGN-DNA.md` — extract full DNA for spawn prompts
+4. Read `.planning/genorah/DESIGN-SYSTEM.md` — note available shared components
 5. Read current wave PLAN.md files — extract content for spawn prompt construction
 
 For each section: verify ALL dependency sections from previous waves are COMPLETE in STATE.md. If any dependency is incomplete: STOP and report the blocker.
@@ -221,7 +221,7 @@ Return to Step 1 for the next wave. If this was the final wave, proceed to the F
 
 ## Component Registry Management
 
-During Wave 0-1, extract component specs from the first built shared components and write to `.planning/modulo/DESIGN-SYSTEM.md`.
+During Wave 0-1, extract component specs from the first built shared components and write to `.planning/genorah/DESIGN-SYSTEM.md`.
 
 Include the following component variants with dimensions, padding, radius, and shadow:
 - **Card** — default, elevated, outlined, ghost
@@ -270,7 +270,7 @@ This registry tells downstream agents where to find standardized artifacts withi
 
 ## CRITICAL RULE — No Command Suggestions
 
-NEVER suggest what command the user should run next. The `user-prompt.mjs` hook owns all routing. After completing work, update STATE.md and stop. Do not say "run /modulo:iterate" or "run /modulo:execute resume" or any other command suggestion. The hook will determine the next step.
+NEVER suggest what command the user should run next. The `user-prompt.mjs` hook owns all routing. After completing work, update STATE.md and stop. Do not say "run /gen:iterate" or "run /gen:build resume" or any other command suggestion. The hook will determine the next step.
 
 ---
 

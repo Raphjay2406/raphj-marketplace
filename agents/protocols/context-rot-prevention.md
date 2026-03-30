@@ -59,9 +59,9 @@ Context rot is the single biggest threat to output quality in multi-wave builds.
 | **Consequence** | Users cannot accidentally invoke commands that contradict current build state |
 
 **How it works:**
-1. UserPromptSubmit hook intercepts slash commands (e.g., `/modulo:execute`, `/modulo:iterate`)
+1. UserPromptSubmit hook intercepts slash commands (e.g., `/gen:execute`, `/gen:iterate`)
 2. Hook validates command against current build state (read from STATE.md or CONTEXT.md)
-3. If command is inappropriate for current state (e.g., `/modulo:execute` when no plan exists), hook injects a redirect suggestion
+3. If command is inappropriate for current state (e.g., `/gen:execute` when no plan exists), hook injects a redirect suggestion
 4. Prevents the agent from attempting to execute a command with stale or missing prerequisites
 
 **Why this is Layer 0c:** It prevents context rot at the input level -- before the agent even begins processing a user request, the hook ensures the request is valid for the current project state.
