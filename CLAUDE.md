@@ -4,7 +4,7 @@ This file provides guidance to Claude Code when working with the Genorah plugin 
 
 ## Project Overview
 
-**Genorah 2.0** is a Claude Code plugin for premium frontend design. It produces award-caliber websites (Awwwards SOTD 8.0+ baseline) through a pipeline of specialized agents, machine-enforceable design identity, and multi-layer quality gates. It is NOT a template generator -- every project gets a unique visual identity enforced through Design DNA, 19 Design Archetypes, Emotional Arc storytelling, and a 35-point Anti-Slop Gate.
+**Genorah v2.0** is a Claude Code plugin for premium frontend design. It produces award-caliber websites (Awwwards SOTD 8.0+ baseline) through a pipeline of 15 specialized agents, machine-enforceable design identity, a 72-point quality gate across 12 categories, and a Visual Companion for localhost delivery. It is NOT a template generator -- every project gets a unique visual identity enforced through Design DNA, 19 Design Archetypes, Emotional Arc storytelling, and the 72-point Quality Gate. Covers 12 design domains with 90+ skills.
 
 This repository contains only markdown definitions and a plugin manifest -- there is no application code, build system, or test suite. Targets Next.js, Astro, React/Vite, Tauri, and Electron.
 
@@ -13,11 +13,11 @@ This repository contains only markdown definitions and a plugin manifest -- ther
 Three-tier system where commands are entry points, agents orchestrate work, and skills provide domain knowledge:
 
 ```
-commands/ (6 commands -- user-facing pipeline stages)
+commands/ (11 commands -- user-facing pipeline stages)
     | invoke
-agents/ (pipeline agents -- researcher, creative director, builder, reviewer, polisher)
+agents/ (15 agents -- 7 pipeline + 4 specialists + 4 protocols)
     | reference
-skills/ (3-tier, 4-layer SKILL.md files -- modular knowledge bases)
+skills/ (3-tier, 4-layer SKILL.md files -- 90+ modular knowledge bases)
 ```
 
 **Plugin manifest:** `.claude-plugin/plugin.json`
@@ -27,8 +27,35 @@ skills/ (3-tier, 4-layer SKILL.md files -- modular knowledge bases)
 - **Skills:** `skills/{skill-name}/SKILL.md` -- 4-layer format with YAML frontmatter (name, description, tier, triggers, version)
 - **Agents:** `agents/{agent-name}.md` -- role definition, input/output contracts, context budget
 - **Commands:** `commands/{command-name}.md` -- description, argument-hint, numbered workflow steps
-- **Hooks:** `.claude-plugin/hooks/` -- DNA compliance pre-commit check
+- **Hooks:** `.claude-plugin/hooks/` -- 4 hooks: `session-start.mjs`, `pre-tool-use.mjs`, `user-prompt.mjs`, `dna-compliance-check.sh`
 - **Template:** `skills/_skill-template/SKILL.md` -- canonical 4-layer format reference
+
+## Agents (15 total)
+
+### Pipeline Agents (7)
+Researcher, Creative Director, Builder, Reviewer, Polisher, Auditor, Coordinator
+
+### Specialist Agents (4)
+Integration Specialist, AI-UI Specialist, Performance Specialist, Accessibility Specialist
+
+### Protocol Agents (4)
+Visual Companion, Knowledge Sync, Export Coordinator, Status Reporter
+
+## Commands (11)
+
+| Command | Purpose |
+|---------|---------|
+| `/gen:start-project` | Discovery, research, archetype selection, Design DNA generation |
+| `/gen:discuss` | Per-phase creative deep dive, visual feature proposals, brand voice |
+| `/gen:plan` | Phase-scoped re-research, context-rot-safe PLAN.md generation |
+| `/gen:build` | Wave-based implementation with real-time status |
+| `/gen:iterate` | Brainstorm-first design changes or bug diagnosis with approval |
+| `/gen:bugfix` | Diagnostic root cause analysis with proposed solutions |
+| `/gen:audit` | Full quality gate audit across 12 categories, 72 points |
+| `/gen:status` | Current pipeline state, wave progress, section statuses |
+| `/gen:sync-knowledge` | Refresh skill knowledge base from latest sources |
+| `/gen:companion` | Launch/interact with Visual Companion on localhost |
+| `/gen:export` | Export deliverables, design tokens, and build artifacts |
 
 ## Skill Tiers
 
@@ -36,8 +63,8 @@ Skills are organized into three tiers with different loading behaviors:
 
 | Tier | Loading | Examples |
 |------|---------|----------|
-| **Core** | Always loaded | design-dna, design-archetypes, anti-slop-gate, emotional-arc, typography, color-system |
-| **Domain** | Per project type | 3d-webgl, remotion, ecommerce-ui, dashboard-patterns |
+| **Core** | Always loaded | design-dna, design-archetypes, quality-gate, emotional-arc, typography, color-system |
+| **Domain** | Per project type | 3d-webgl, remotion, ecommerce-ui, dashboard-patterns, ai-ui |
 | **Utility** | On-demand | accessibility, seo, performance, responsive-design |
 
 Every skill uses the **4-layer format**: Layer 1 (Decision Guidance) explains when and why to use it. Layer 2 (Award-Winning Examples) provides copy-paste TSX and reference site annotations. Layer 3 (Integration Context) maps to DNA tokens, archetypes, and pipeline stages. Layer 4 (Anti-Patterns) lists common mistakes with corrections. Skills with enforceable parameters include a machine-readable constraint table (Parameter/Min/Max/Unit/Enforcement).
@@ -45,16 +72,16 @@ Every skill uses the **4-layer format**: Layer 1 (Decision Guidance) explains wh
 ## Core Workflow
 
 ```
-/gen:start-project -> /gen:lets-discuss -> /gen:plan-dev -> /gen:execute -> /gen:iterate
+/gen:start-project -> /gen:discuss -> /gen:plan -> /gen:build -> /gen:iterate
 ```
 
 1. **start-project** -- Discovery questions, parallel research agents, competitive benchmarking, archetype selection, Design DNA generation, content planning
-2. **lets-discuss** -- Per-phase creative deep dive with visual feature proposals, brand voice refinement, and auto-organized task output
-3. **plan-dev** -- Phase-scoped re-research, context-rot-safe PLAN.md generation with verification questions
-4. **execute** -- Wave-based implementation (parallel or sequential per master plan) with real-time status
+2. **discuss** -- Per-phase creative deep dive with visual feature proposals, brand voice refinement, and auto-organized task output
+3. **plan** -- Phase-scoped re-research, context-rot-safe PLAN.md generation with verification questions
+4. **build** -- Wave-based implementation (parallel or sequential per master plan) with real-time status
 5. **iterate** -- Brainstorm-first design changes or bug diagnosis with user approval before applying
 
-Additional: `/gen:bug-fix` for diagnostic root cause analysis with proposed solutions.
+Additional: `/gen:bugfix` for diagnostic root cause analysis with proposed solutions. `/gen:audit` for standalone quality gate runs. `/gen:companion` for Visual Companion interaction.
 
 ## Key Concepts
 
@@ -66,11 +93,37 @@ Additional: `/gen:bug-fix` for diagnostic root cause analysis with proposed solu
 
 **Emotional Arc** -- 10 beat types (Hook, Tease, Reveal, Build, Peak, Breathe, Tension, Proof, Pivot, Close) with hard parameter constraints (whitespace %, element count, viewport height). Archetype-specific arc templates. Invalid sequences auto-rejected.
 
-**Anti-Slop Gate** -- 35-point weighted scoring across 7 categories (Colors, Typography, Layout, Depth & Polish, Motion, Creative Courage, UX Intelligence). Design quality categories weighted highest. Post-review enforcement during `/gen:iterate` and verification. Named tiers: Pass (25+), Strong (28+), SOTD-Ready (30+), Honoree-Level (33+). Penalties: missing signature element (-3), forbidden pattern (-5), no creative tension (-5).
+**Quality Gate** -- 72-point weighted scoring across 12 categories (Colors, Typography, Layout, Depth & Polish, Motion, Creative Courage, UX Intelligence, Performance, Accessibility, Integration Correctness, AI-UI Fidelity, Responsiveness). Named tiers: Pass (50+), Strong (58+), SOTD-Ready (63+), Honoree-Level (68+). Penalties: missing signature element (-3), forbidden pattern (-5), no creative tension (-5).
 
 **Awwwards 4-Axis Scoring** -- Design, Usability, Creativity, Content each scored /10. SOTD target: 8.0+ average, no axis below 7.
 
 **Wave System** -- Wave 0: scaffold and design tokens. Wave 1: shared UI (nav, footer, theme). Wave 2+: independent sections in parallel (max 4 per wave). Higher waves for dependent sections.
+
+## Visual Companion
+
+The Visual Companion is a localhost-delivered design review interface available at every pipeline stage. It renders the current build in an opinionated viewport harness with DNA token overlays, Emotional Arc position indicators, and real-time quality gate scores. Invoked via `/gen:companion`. The Visual Companion agent coordinates screenshot capture, annotation, and feedback routing back into the pipeline.
+
+## Integration Skills
+
+Genorah v2.0 ships baked-in integration skills for major platforms:
+
+| Integration | Scope |
+|-------------|-------|
+| **HubSpot** | CRM forms, contact sync, marketing automation hooks |
+| **Stripe** | Checkout, subscriptions, payment element theming |
+| **Shopify** | Storefront API, cart, product display, checkout |
+| **WooCommerce** | REST API, product grids, cart, order flows |
+| **Propstack** | Real estate listings, property search, CRM sync |
+
+Each integration skill follows the 4-layer format and maps to DNA tokens for consistent visual theming of third-party UI components.
+
+## Baked-In Defaults
+
+These behaviors are active by default on every project and require explicit override to disable:
+
+- **Animation mandatory** -- Every section must have at least one intentional motion element. Static pages fail the quality gate.
+- **4-breakpoint responsive** -- Mobile (375px), Tablet (768px), Desktop (1280px), Wide (1920px). All four must pass layout review.
+- **Browser compatibility tiers** -- Tier 1: Chrome/Edge/Firefox/Safari latest-2. Tier 2: graceful degradation for older. No IE support.
 
 ## Managed Artifacts
 
