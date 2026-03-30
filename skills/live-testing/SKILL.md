@@ -100,7 +100,7 @@ Capture full-page screenshots at the 4 standard breakpoints to verify responsive
 2. Playwright_navigate: load http://localhost:[port]
 3. Wait 2 seconds for animations and lazy-loaded content to settle
 4. Playwright_screenshot: capture full-page screenshot
-5. Save to .planning/modulo/audit/screenshot-{breakpoint}.png
+5. Save to .planning/genorah/audit/screenshot-{breakpoint}.png
 ```
 
 **Screenshot Visual Comparison Protocol:**
@@ -129,7 +129,7 @@ Run Lighthouse to get objective performance, accessibility, and best practices s
 ```bash
 npx lighthouse http://localhost:[port] \
   --output=json \
-  --output-path=.planning/modulo/audit/lighthouse.json \
+  --output-path=.planning/genorah/audit/lighthouse.json \
   --chrome-flags="--headless --no-sandbox" \
   --only-categories=performance,accessibility,best-practices
 ```
@@ -288,10 +288,10 @@ After all 4 tests complete, produce the structured testing report.
 
 | Breakpoint | File | Key Issues |
 |-----------|------|------------|
-| 375px (Mobile) | .planning/modulo/audit/screenshot-375.png | [none / issues] |
-| 768px (Tablet) | .planning/modulo/audit/screenshot-768.png | [none / issues] |
-| 1024px (Desktop) | .planning/modulo/audit/screenshot-1024.png | [none / issues] |
-| 1440px (Wide) | .planning/modulo/audit/screenshot-1440.png | [none / issues] |
+| 375px (Mobile) | .planning/genorah/audit/screenshot-375.png | [none / issues] |
+| 768px (Tablet) | .planning/genorah/audit/screenshot-768.png | [none / issues] |
+| 1024px (Desktop) | .planning/genorah/audit/screenshot-1024.png | [none / issues] |
+| 1440px (Wide) | .planning/genorah/audit/screenshot-1440.png | [none / issues] |
 
 ### Section Visual Comparison
 
@@ -367,9 +367,9 @@ After all 4 tests complete, produce the structured testing report.
 - No critical fails but one or more WARNINGs --> **WARNINGS_ONLY** (add to running tally, mandatory user checkpoint)
 - No critical fails and no warnings --> **PASS** (clean build, auto-proceed)
 
-**Report location:** `.planning/modulo/audit/TESTING-REPORT.md`
+**Report location:** `.planning/genorah/audit/TESTING-REPORT.md`
 
-Screenshots saved alongside: `.planning/modulo/audit/screenshot-{breakpoint}.png`
+Screenshots saved alongside: `.planning/genorah/audit/screenshot-{breakpoint}.png`
 
 ### Graceful Degradation Protocol
 
@@ -443,7 +443,7 @@ The build-orchestrator reads the overall verdict from the testing report and act
 
 ### Audit Artifacts
 
-All testing artifacts are saved to `.planning/modulo/audit/` for user review:
+All testing artifacts are saved to `.planning/genorah/audit/` for user review:
 
 | File | Content |
 |------|---------|

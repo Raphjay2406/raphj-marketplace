@@ -6,7 +6,7 @@
 
 ## Summary
 
-This phase has two distinct halves. The first is a new `skills/og-images/SKILL.md` that teaches Modulo agents how to generate branded social preview images from Design DNA tokens using `next/og` ImageResponse (Next.js) and Satori + sharp/resvg (Astro). The second is pipeline wiring -- updating existing agent `.md` files so v1.5 skills (seo-meta, structured-data, search-visibility, and the upcoming og-images) are referenced at the correct pipeline stages.
+This phase has two distinct halves. The first is a new `skills/og-images/SKILL.md` that teaches Genorah agents how to generate branded social preview images from Design DNA tokens using `next/og` ImageResponse (Next.js) and Satori + sharp/resvg (Astro). The second is pipeline wiring -- updating existing agent `.md` files so v1.5 skills (seo-meta, structured-data, search-visibility, and the upcoming og-images) are referenced at the correct pipeline stages.
 
 The OG image generation stack is well-established and stable. Next.js provides `ImageResponse` from `next/og` which wraps Satori + resvg internally. Astro requires manual wiring of Satori + a PNG converter (sharp or @resvg/resvg-js) in an API endpoint. The critical constraint is that Satori uses **flexbox-only layout** (Yoga WASM engine) and supports only **TTF, OTF, and WOFF fonts** (no WOFF2). All styles must be inline -- no CSS selectors, no `<style>` tags, no hooks.
 

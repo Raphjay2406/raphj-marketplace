@@ -33,8 +33,8 @@ version: "2.0.0"
 ### Pipeline Connection
 
 - **Referenced by:** section-builder during dashboard/admin section builds
-- **Consumed at:** `/modulo:execute` wave 2+ for dashboard layouts
-- **Related commands:** `/modulo:plan-dev` for dashboard section planning
+- **Consumed at:** `/gen:execute` wave 2+ for dashboard layouts
+- **Related commands:** `/gen:plan-dev` for dashboard section planning
 
 ## Layer 2: Award-Winning Examples
 

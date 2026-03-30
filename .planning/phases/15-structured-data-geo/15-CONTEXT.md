@@ -6,7 +6,7 @@
 <domain>
 ## Phase Boundary
 
-New `structured-data` skill (Domain tier) providing typed JSON-LD schemas for all major page types, plus GEO-optimized content patterns integrated into the Emotional Arc system. Sites built with Modulo appear in Google rich results and AI engine citations. Creating new skills or modifying existing agents beyond structured data and GEO is out of scope.
+New `structured-data` skill (Domain tier) providing typed JSON-LD schemas for all major page types, plus GEO-optimized content patterns integrated into the Emotional Arc system. Sites built with Genorah appear in Google rich results and AI engine citations. Creating new skills or modifying existing agents beyond structured data and GEO is out of scope.
 
 </domain>
 

@@ -10,7 +10,7 @@ version: "1.0.0"
 
 ### When to Use
 
-This skill applies to any Modulo project that connects to external services. Load it when the project includes any of these:
+This skill applies to any Genorah project that connects to external services. Load it when the project includes any of these:
 
 - **Contact or lead forms submitting to a CRM** -- HubSpot Forms API, Salesforce Web-to-Lead, or Salesforce REST API submissions
 - **Incoming webhooks from external services** -- Stripe payment events, GitHub repository events, or any provider that pushes data to your application via HTTP POST
@@ -58,7 +58,7 @@ Use this tree to select the correct pattern from Layer 2.
 
 ### Server-Side Proxy Principle
 
-All external API calls in Modulo projects go through server-side code. Secrets never reach the client bundle. This is not optional -- it is a security requirement enforced by the framework's environment variable system. Server-side code (Server Actions, Route Handlers, API endpoints) accesses secrets via unprefixed environment variables that the bundler excludes from client output. Client components can only access values with the framework's public prefix, which is reserved for truly public values like widget site keys.
+All external API calls in Genorah projects go through server-side code. Secrets never reach the client bundle. This is not optional -- it is a security requirement enforced by the framework's environment variable system. Server-side code (Server Actions, Route Handlers, API endpoints) accesses secrets via unprefixed environment variables that the bundler excludes from client output. Client components can only access values with the framework's public prefix, which is reserved for truly public values like widget site keys.
 
 **Framework prefix rules:**
 
@@ -68,7 +68,7 @@ All external API calls in Modulo projects go through server-side code. Secrets n
 | Astro | `PUBLIC_` | `import.meta.env.SECRET_NAME` | `PUBLIC_TURNSTILE_SITE_KEY` |
 | Vite/React | `VITE_` | `process.env.SECRET_NAME` (server only) | `VITE_TURNSTILE_SITE_KEY` |
 
-**Modulo convention:** ALL secrets use unprefixed env var names (`RESEND_API_KEY`, `STRIPE_SECRET_KEY`, `SF_PRIVATE_KEY`). Only truly public values (like Turnstile site key) use the framework public prefix. If a value contains KEY, SECRET, TOKEN, or PASSWORD in its name, it MUST NOT use a public prefix.
+**Genorah convention:** ALL secrets use unprefixed env var names (`RESEND_API_KEY`, `STRIPE_SECRET_KEY`, `SF_PRIVATE_KEY`). Only truly public values (like Turnstile site key) use the framework public prefix. If a value contains KEY, SECRET, TOKEN, or PASSWORD in its name, it MUST NOT use a public prefix.
 
 ### Context7 MCP Integration
 
@@ -95,7 +95,7 @@ Context7 is an MCP server that provides live API documentation lookup via two to
 Agents should invoke Context7 when any of these conditions are met:
 
 1. **Version-specific API question** -- "What is the current syntax for X in library Y?"
-2. **Unfamiliar SDK encountered** -- Project uses a library not covered by Modulo skills
+2. **Unfamiliar SDK encountered** -- Project uses a library not covered by Genorah skills
 3. **Deprecated pattern detected** -- Agent recognizes a pattern that may be outdated
 4. **Rate limit or constraint question** -- "What are the current limits for API X?"
 
@@ -122,8 +122,8 @@ Agents should invoke Context7 when any of these conditions are met:
 
 - **Referenced by:** section-builder (when generating forms and API integrations), specialist agents (when integrating external services mid-build)
 - **Context7 access:** design-researcher (Track 3 Component Library), specialist agents, quality-reviewer
-- **Consumed at:** `/modulo:execute` Wave 2+ for form sections and API integration sections
-- **Input from:** `/modulo:start-project` (project requirements identify needed integrations), `/modulo:plan-dev` (sections flagged for API integration)
+- **Consumed at:** `/gen:execute` Wave 2+ for form sections and API integration sections
+- **Input from:** `/gen:start-project` (project requirements identify needed integrations), `/gen:plan-dev` (sections flagged for API integration)
 - **Output to:** Server actions, API route handlers, API endpoints, utility libraries, `.env.example`
 
 ### Timeout Defaults
@@ -664,7 +664,7 @@ export const POST: APIRoute = async ({ request }) => {
 
 #### Pattern 9: Resend Email Sending
 
-Resend is the primary recommendation for Modulo projects -- TypeScript-first SDK with modern API design and JSX email template support. The `resend.emails.send()` method accepts both `html` (raw HTML string) and `react` (JSX element from `@react-email/components`) for email content.
+Resend is the primary recommendation for Genorah projects -- TypeScript-first SDK with modern API design and JSX email template support. The `resend.emails.send()` method accepts both `html` (raw HTML string) and `react` (JSX element from `@react-email/components`) for email content.
 
 Rate limit: 2 requests per second per team (across all API keys). Response headers include `ratelimit-limit`, `ratelimit-remaining`, `ratelimit-reset`, and `retry-after`.
 
@@ -1285,7 +1285,7 @@ export function createApiClient(config: ApiClientConfig) {
 
 #### Pattern 20: Environment Variable Convention
 
-The Modulo convention for environment variables: all secrets use unprefixed names. Only truly public values (like client-side widget keys) use the framework public prefix. The `requireEnv()` helper provides fail-fast behavior during server startup rather than silent `undefined` at runtime.
+The Genorah convention for environment variables: all secrets use unprefixed names. Only truly public values (like client-side widget keys) use the framework public prefix. The `requireEnv()` helper provides fail-fast behavior during server startup rather than silent `undefined` at runtime.
 
 **RULE:** If an env var name contains KEY, SECRET, TOKEN, or PASSWORD, it MUST NOT use a public prefix (`NEXT_PUBLIC_`, `PUBLIC_`, `VITE_`).
 
@@ -1335,7 +1335,7 @@ Agents auto-generate this file when a project uses API patterns. All values are 
 
 ```bash
 # .env.example
-# Auto-generated by Modulo. Copy to .env.local and fill in real values.
+# Auto-generated by Genorah. Copy to .env.local and fill in real values.
 # NEVER commit .env.local to version control.
 
 # ──────────────────────────────────────────────
@@ -1511,7 +1511,7 @@ Agents should adapt the static strings in the `useActionState` component (Patter
 
 ### Pipeline Stage
 
-- **Input from:** `/modulo:start-project` discovers which external services are needed (CRM platform, email provider, webhook sources). `/modulo:plan-dev` section planner flags sections requiring API integration (contact forms, newsletter signups, webhook receivers). Design DNA provides brand tokens for email templates and form messaging voice.
+- **Input from:** `/gen:start-project` discovers which external services are needed (CRM platform, email provider, webhook sources). `/gen:plan-dev` section planner flags sections requiring API integration (contact forms, newsletter signups, webhook receivers). Design DNA provides brand tokens for email templates and form messaging voice.
 - **Output to:** Server actions (`app/actions/*.ts`), route handlers (`app/api/**/*.ts`), Astro endpoints (`src/pages/api/*.ts`), utility libraries (`lib/api/*.ts`, `lib/crm/*.ts`, `lib/email/*.ts`, `lib/webhooks/*.ts`, `lib/security/*.ts`), and `.env.example` file.
 - **Pipeline position:** Wave 0 scaffold includes `.env.example` generation and utility library setup (`lib/api/client.ts`, `lib/env.ts`). Wave 1 shared UI may include the Turnstile widget component. Wave 2+ sections implement specific form submissions, webhook handlers, and API integrations.
 - **Context7 integration:** Available to design-researcher (Track 3 Component Library) and specialist agents during build for API documentation freshness checks. Quality-reviewer uses Context7 post-build to verify API pattern currency against current SDK versions.
@@ -1521,7 +1521,7 @@ Agents should adapt the static strings in the `useActionState` component (Patter
 - **`form-builder`** -- Provides client-side form validation, multi-step form UX, field types, and accessible form markup. This skill provides the SERVER-SIDE submission pipeline that form-builder's forms connect to. They are complementary: form-builder handles the UI, api-patterns handles the server action behind it. Shared concern: Zod schemas may be defined once and used in both client validation (form-builder) and server validation (api-patterns).
 - **`auth-ui`** -- Handles authentication UX (login, signup, password reset, session management). This skill handles server-side API proxying for non-auth use cases. If a form requires authentication before submission, auth-ui handles the session check and api-patterns handles the submission logic.
 - **`cms-integration`** -- Handles CMS data fetching (Sanity, Contentful, Strapi) and content modeling. This skill handles external API endpoints for form submissions and webhooks. If a webhook triggers CMS revalidation (e.g., Stripe payment triggers content unlock), both skills are involved: api-patterns receives the webhook, cms-integration handles the revalidation call.
-- **`seo-meta`** -- Shares environment variable conventions (both use unprefixed secrets on the server). seo-meta's sitemap and robots.txt patterns may share the same `.env.example` file. Both skills enforce the Modulo unprefixed-secrets convention.
+- **`seo-meta`** -- Shares environment variable conventions (both use unprefixed secrets on the server). seo-meta's sitemap and robots.txt patterns may share the same `.env.example` file. Both skills enforce the Genorah unprefixed-secrets convention.
 - **`error-recovery`** -- Provides client-side error recovery UX patterns (retry buttons, fallback states, error boundaries). This skill provides server-side error handling (retry logic, typed `ApiError` discriminated unions, timeout management). error-recovery handles how the UI presents those server errors to users.
 - **`performance-guardian`** -- API call latency directly affects Core Web Vitals scores. This skill's timeout defaults (5s for form submissions, 10s for CRM calls) align with performance-guardian's LCP and INP guidance. If API calls exceed timeout thresholds, performance-guardian flags the degradation.
 - **`nextjs-patterns` / `astro-patterns`** -- Framework-specific skills that document Server Actions, Route Handlers, and API endpoints at the framework level (syntax, configuration, deployment). This skill documents how to USE those framework features for specific API integrations (CRM, webhooks, email). api-patterns is the domain knowledge; framework skills are the platform knowledge.

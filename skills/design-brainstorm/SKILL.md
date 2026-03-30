@@ -16,7 +16,7 @@ This is a prescriptive 7-phase protocol. Execute phases sequentially. Do NOT ski
 
 ### Phase 1: Brief Extraction
 
-Before any research, extract from the project context (discovery output from `/modulo:start-project` Phase 1):
+Before any research, extract from the project context (discovery output from `/gen:start-project` Phase 1):
 
 | Field | Source | Purpose |
 |-------|--------|---------|
@@ -36,7 +36,7 @@ If any field is missing from the discovery output, ASK the user before proceedin
 3. If web search is available: supplement with 2-3 CURRENT award winners from Awwwards/SOTD in the same industry. Search for "[industry] site of the day awwwards 2025 2026"
 4. Include 2-3 references from OUTSIDE the industry -- pull from the `cross-pollination` skill's pairing suggestions for this vertical. These outside-industry references are NOT optional; they are where differentiation begins
 5. For each reference site, run the Competitive Teardown (Phase 3)
-6. Output: structured research findings in `.planning/modulo/research/DESIGN-REFERENCES.md`
+6. Output: structured research findings in `.planning/genorah/research/DESIGN-REFERENCES.md`
 
 **Multi-industry projects** (e.g., "a SaaS product for restaurants"):
 - Identify primary and secondary verticals
@@ -133,7 +133,7 @@ After direction is selected and locked, generate the brand voice document. This 
    - The content strategy patterns observed during competitive teardown
    - The direction's tone (from the concept board's typography and headline samples)
 3. Generate the complete BRAND-VOICE.md document (all sections required per the template)
-4. Save to `.planning/modulo/BRAND-VOICE.md`
+4. Save to `.planning/genorah/BRAND-VOICE.md`
 5. This runs as the FINAL step of brainstorm, before section planning begins
 6. Confirm generation in BRAINSTORM.md: `Brand Voice: Generated -- see BRAND-VOICE.md`
 
@@ -430,7 +430,7 @@ This skill references and is referenced by other skills at specific phases. Thes
 
 ### BRAINSTORM.md Output Format
 
-The complete artifact saved to `.planning/modulo/BRAINSTORM.md` after the brainstorm session. Every section below is REQUIRED.
+The complete artifact saved to `.planning/genorah/BRAINSTORM.md` after the brainstorm session. Every section below is REQUIRED.
 
 ```markdown
 # Brainstorm: [Project Name]
@@ -529,7 +529,7 @@ Generated: [date]
 ## Brand Voice
 
 Generated: [yes/no]
-Document: `.planning/modulo/BRAND-VOICE.md`
+Document: `.planning/genorah/BRAND-VOICE.md`
 ```
 
 ### Command Integration
@@ -539,7 +539,7 @@ This skill is invoked by the `start-project` command during Phase 3 (Creative Di
 1. `start-project` Phase 1 (Discovery) produces PROJECT.md with user answers
 2. `start-project` Phase 2 (Research) spawns researcher agents for trend/reference/component/animation research
 3. `start-project` Phase 3 invokes the creative-director agent, which uses THIS SKILL to run the full 7-phase brainstorm protocol
-4. Output: BRAINSTORM.md + BRAND-VOICE.md saved to `.planning/modulo/`
+4. Output: BRAINSTORM.md + BRAND-VOICE.md saved to `.planning/genorah/`
 5. `start-project` Phase 3.5 uses the Final Direction Summary's DNA Seed Values to generate DESIGN-DNA.md
 6. This skill does NOT generate DESIGN-DNA.md directly -- it produces the seed that start-project Phase 3.5 converts into the full DNA document via the `design-dna` skill's template
 
@@ -595,7 +595,7 @@ This skill is invoked by the `start-project` command during Phase 3 (Creative Di
 
 **What goes wrong:** Generating great creative directions and selecting one, but skipping brand voice generation. The brainstorm ends with a visual direction but no copy personality. Section builders later default to generic copy because no voice document exists.
 
-**Instead:** Phase 7 (brand voice generation via `copy-intelligence` skill) is MANDATORY. Brainstorm is incomplete until BRAND-VOICE.md exists alongside BRAINSTORM.md in `.planning/modulo/`. The BRAINSTORM.md document itself includes a "Brand Voice: Generated" confirmation. If this field says "no," the brainstorm is not finished.
+**Instead:** Phase 7 (brand voice generation via `copy-intelligence` skill) is MANDATORY. Brainstorm is incomplete until BRAND-VOICE.md exists alongside BRAINSTORM.md in `.planning/genorah/`. The BRAINSTORM.md document itself includes a "Brand Voice: Generated" confirmation. If this field says "no," the brainstorm is not finished.
 
 ---
 

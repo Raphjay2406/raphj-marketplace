@@ -1,6 +1,6 @@
 # Discussion Protocol (v2.0)
 
-Human-in-the-loop enforcement for critical decision points in the Modulo pipeline. This protocol ensures users maintain control over creative and structural decisions while allowing automated work to proceed uninterrupted within approved plans.
+Human-in-the-loop enforcement for critical decision points in the Genorah pipeline. This protocol ensures users maintain control over creative and structural decisions while allowing automated work to proceed uninterrupted within approved plans.
 
 **Principle:** Discussion-first is the default. Automation proceeds only within explicitly approved scope.
 
@@ -172,12 +172,12 @@ A protocol violation does not invalidate the work done, but it erodes trust. The
 
 | Command/Agent | Applies? | Notes |
 |---------------|----------|-------|
-| `/modulo:start-project` | NO | Discovery and research are exploratory, not code-modifying |
-| `/modulo:lets-discuss` | NO | This IS the discussion -- user is already engaged |
-| `/modulo:plan-dev` | Partial | Master plan requires approval (Gate 1); individual plan generation is automated |
-| `/modulo:execute` | YES | Wave start (Gate 2); CD flags (Gate 3); failures (Gate 4) |
-| `/modulo:iterate` | YES | Show exact diff preview before any change |
-| `/modulo:bug-fix` | YES | Show diagnosis + fix plan before applying |
+| `/gen:start-project` | NO | Discovery and research are exploratory, not code-modifying |
+| `/gen:lets-discuss` | NO | This IS the discussion -- user is already engaged |
+| `/gen:plan-dev` | Partial | Master plan requires approval (Gate 1); individual plan generation is automated |
+| `/gen:execute` | YES | Wave start (Gate 2); CD flags (Gate 3); failures (Gate 4) |
+| `/gen:iterate` | YES | Show exact diff preview before any change |
+| `/gen:bug-fix` | YES | Show diagnosis + fix plan before applying |
 | Build-orchestrator | YES | Gates 2, 4, 5, 6 |
 | Creative Director | YES | Gate 3 (section flags) |
 | Section-planner | YES | Gate 1 (master plan) |

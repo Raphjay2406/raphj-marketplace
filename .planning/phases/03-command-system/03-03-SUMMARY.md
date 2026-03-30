@@ -9,9 +9,9 @@ requires:
   - phase: 02-pipeline-architecture
     provides: researcher and section-planner agent definitions (dispatch targets)
 provides:
-  - /modulo:plan-dev command (v2.0 replacement for plan-sections)
+  - /gen:plan-dev command (v2.0 replacement for plan-sections)
   - Phase-scoped re-research before planning
-  - DISCUSSION-{phase}.md integration with auto-offer of /modulo:lets-discuss
+  - DISCUSSION-{phase}.md integration with auto-offer of /gen:lets-discuss
   - Per-section user approval flow with GSD frontmatter PLAN.md generation
 affects: [03-04, 04-quality-gates, 06-brainstorming-content]
 
@@ -20,7 +20,7 @@ tech-stack:
   added: []
   patterns:
     - "Command-as-router: dispatches to researcher + section-planner, zero domain logic"
-    - "Discussion integration: auto-offers /modulo:lets-discuss when no DISCUSSION-{phase}.md exists"
+    - "Discussion integration: auto-offers /gen:lets-discuss when no DISCUSSION-{phase}.md exists"
     - "Per-section approval: each section plan individually presented and approved"
 
 key-files:
@@ -57,7 +57,7 @@ completed: 2026-02-24
 ## Accomplishments
 
 - Created `commands/plan-dev.md` (121 lines) as thin router dispatching to researcher and section-planner agents
-- Implemented discussion integration: auto-checks for DISCUSSION-{phase}.md and offers /modulo:lets-discuss if missing
+- Implemented discussion integration: auto-checks for DISCUSSION-{phase}.md and offers /gen:lets-discuss if missing
 - Removed v6.1.0 `commands/plan-sections.md` (353 lines, 85% embedded domain logic)
 
 ## Task Commits
@@ -75,7 +75,7 @@ Each task was committed atomically:
 ## Decisions Made
 
 - **plan-dev at 121 lines** -- well within 100-140 target. All domain logic (beat assignment, wow moment selection, tension placement, wave rules) stays in section-planner agent.
-- **Discussion auto-offer uses file existence check** -- checks for `.planning/modulo/DISCUSSION-{phase}.md`. Simple, no extra state tracking needed.
+- **Discussion auto-offer uses file existence check** -- checks for `.planning/genorah/DISCUSSION-{phase}.md`. Simple, no extra state tracking needed.
 - **Re-research is default-on** -- phase-scoped re-research runs by default; `--skip-research` flag to bypass. This ensures fresh design intelligence per phase.
 
 ## Deviations from Plan

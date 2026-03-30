@@ -17,14 +17,14 @@ The distinction matters: a single-page landing site can be a linear story (HOOK 
 ### When to Use
 
 - Any project with 2+ distinct pages -- this skill defines the architecture
-- During `/modulo:start-project` when multi-page is detected -- generates Site Architecture section in DESIGN-DNA.md
-- During `/modulo:plan-dev` -- section planner assigns page-specific arcs per template
-- During `/modulo:execute` -- build-orchestrator ensures shared components build in Wave 1 before page-specific sections
-- During `/modulo:audit` -- quality reviewer checks cross-page consistency
+- During `/gen:start-project` when multi-page is detected -- generates Site Architecture section in DESIGN-DNA.md
+- During `/gen:plan-dev` -- section planner assigns page-specific arcs per template
+- During `/gen:execute` -- build-orchestrator ensures shared components build in Wave 1 before page-specific sections
+- During `/gen:audit` -- quality reviewer checks cross-page consistency
 
 ### When NOT to Use
 
-- Single-page projects (standard Modulo workflow, no multi-page skill needed)
+- Single-page projects (standard Genorah workflow, no multi-page skill needed)
 - Single-page apps where "pages" are client-side views within one page -- use framework-specific routing patterns instead
 - For emotional arc beat definitions -- use `emotional-arc` skill (this skill references beats but does not redefine them)
 
@@ -51,9 +51,9 @@ Determine the page-type mix based on project type:
 
 ### Pipeline Connection
 
-- **Referenced by:** `section-planner` during `/modulo:plan-dev` (creates per-page arcs in MASTER-PLAN.md)
+- **Referenced by:** `section-planner` during `/gen:plan-dev` (creates per-page arcs in MASTER-PLAN.md)
 - **Consumed at:** `build-orchestrator` Wave 1 (shared components), Wave 2+ (page-specific sections)
-- **Verified by:** `quality-reviewer` during `/modulo:audit` (cross-page consistency check)
+- **Verified by:** `quality-reviewer` during `/gen:audit` (cross-page consistency check)
 
 ---
 
@@ -61,7 +61,7 @@ Determine the page-type mix based on project type:
 
 ### Pattern 1: Site-Level DNA Extensions
 
-Multi-page projects extend the standard DESIGN-DNA.md with a Site Architecture section. This is generated during `/modulo:start-project` when the discovery phase identifies multi-page scope.
+Multi-page projects extend the standard DESIGN-DNA.md with a Site Architecture section. This is generated during `/gen:start-project` when the discovery phase identifies multi-page scope.
 
 ```markdown
 ## Site Architecture (appended to DESIGN-DNA.md)
@@ -401,7 +401,7 @@ function Breadcrumb({ items }: { items: { label: string; href?: string }[] }) {
 
 ### Pattern 4: Cross-Page Consistency Rules
 
-These rules prevent multi-page sites from feeling disjointed. Quality reviewers check these during `/modulo:audit`.
+These rules prevent multi-page sites from feeling disjointed. Quality reviewers check these during `/gen:audit`.
 
 **Mandatory consistency (same on every page):**
 

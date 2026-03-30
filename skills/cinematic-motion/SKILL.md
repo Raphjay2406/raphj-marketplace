@@ -8,7 +8,7 @@ version: "2.0.0"
 
 ## Layer 1: Decision Guidance
 
-This skill is the single authority on motion design in Modulo 2.0. It covers CSS animations, the Motion library (ex-Framer Motion), and GSAP in one unified system. Motion is not decoration -- it communicates hierarchy, draws attention, creates emotion, and guides the eye. Every animation must answer: "What story does this motion tell?"
+This skill is the single authority on motion design in Genorah 2.0. It covers CSS animations, the Motion library (ex-Framer Motion), and GSAP in one unified system. Motion is not decoration -- it communicates hierarchy, draws attention, creates emotion, and guides the eye. Every animation must answer: "What story does this motion tell?"
 
 ### CSS-First Motion Decision Tree
 

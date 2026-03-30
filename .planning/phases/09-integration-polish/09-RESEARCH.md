@@ -6,7 +6,7 @@
 
 ## Summary
 
-Phase 9 produces 4 deliverables that complete the Modulo end-to-end workflow: a Figma Integration skill for reading designs via MCP tools and translating them to the existing plan-then-execute pipeline, a Design System Export skill for producing Storybook stories and design tokens packages from built projects, a progress reporting system that extends the design-lead and build-orchestrator agents with structured status updates, and an error recovery system that extends agents with diagnosis, option presentation, and checkpoint resume capabilities.
+Phase 9 produces 4 deliverables that complete the Genorah end-to-end workflow: a Figma Integration skill for reading designs via MCP tools and translating them to the existing plan-then-execute pipeline, a Design System Export skill for producing Storybook stories and design tokens packages from built projects, a progress reporting system that extends the design-lead and build-orchestrator agents with structured status updates, and an error recovery system that extends agents with diagnosis, option presentation, and checkpoint resume capabilities.
 
 The Figma MCP server (as of Feb 2026) provides 13 tools including `get_design_context`, `get_metadata`, `get_screenshot`, `get_variable_defs`, and Code Connect tools. The recommended workflow is: get_metadata first for large designs, then get_design_context on specific nodes, get_screenshot for visual reference, and get_variable_defs for design tokens. The skill must teach Claude how to translate Figma's React+Tailwind output into project-specific DNA-compliant code, flagging non-token colors for user decision.
 
@@ -55,11 +55,11 @@ Phase 9 creates 2 new skills and extends 2 existing agent protocols:
 ```
 Phase 9 Deliverables         -> Integration Point               -> When Triggered
 ----------------------------    ---------------------------------    ----------------
-figma-integration skill      -> figma-translator agent (rewrite)  -> /modulo:start-design --figma
+figma-integration skill      -> figma-translator agent (rewrite)  -> /gen:start-design --figma
                              -> section-planner agent              -> Plan generation from Figma data
                              -> quality-reviewer agent             -> Visual QA overlay diff in verify step
 
-design-system-export skill   -> new export command or agent        -> /modulo:export (post-build)
+design-system-export skill   -> new export command or agent        -> /gen:export (post-build)
                              -> quality-reviewer agent              -> Verifying export completeness
 
 progress-reporting protocol  -> design-lead agent (extension)      -> Every task, every wave, every milestone
@@ -109,7 +109,7 @@ PLAN.md Generation:
   - Visual specification from Figma layout data
   |
   v
-Normal Execute Pipeline (/modulo:execute)
+Normal Execute Pipeline (/gen:execute)
 ```
 
 **Confidence: HIGH** -- Directly from user decisions in CONTEXT.md.
@@ -357,7 +357,7 @@ type Story = StoryObj<typeof meta>;
 **Why it happens:** Each failure with diagnosis, options, and resolution adds 10-20 lines. Multiple failures can quickly exceed limits.
 **How to avoid:** The error recovery protocol must define:
 1. STATE.md gets a compact failure summary (1 line per failure: time, section, type, resolution)
-2. Detailed diagnosis goes to a separate file: `.planning/modulo/FAILURE-LOG.md`
+2. Detailed diagnosis goes to a separate file: `.planning/genorah/FAILURE-LOG.md`
 3. STATE.md links to FAILURE-LOG.md for details
 4. Only the most recent 5 failures stay in STATE.md; older ones move to FAILURE-LOG.md
 **Warning signs:** If the protocol puts full diagnosis in STATE.md.
@@ -400,7 +400,7 @@ Map to DNA tokens using the hybrid resolution protocol.
 
 #### Step 5: Capture visual reference
 Call `get_screenshot` for each section to use as visual QA reference.
-Save to `.planning/modulo/figma-references/[section-name].png`
+Save to `.planning/genorah/figma-references/[section-name].png`
 
 #### Step 6: Check Code Connect
 Call `get_code_connect_map` to find components already mapped to codebase.
@@ -701,7 +701,7 @@ export default {
   1. Check for SUMMARY.md in each section directory
   2. No SUMMARY.md + files modified = INTERRUPTED (needs assessment)
   3. No SUMMARY.md + no files = NOT_STARTED (restart from scratch)
-  4. The `/modulo:execute resume` flow already handles this to some extent via CONTEXT.md
+  4. The `/gen:execute resume` flow already handles this to some extent via CONTEXT.md
   5. Add a pre-wave checkpoint: write STATE.md with `IN_PROGRESS` status BEFORE spawning builders
 
 **Confidence: HIGH** -- Existing CONTEXT.md session recovery covers most cases. Gap is detecting partial builder completion.
@@ -750,7 +750,7 @@ export default {
 2. **Per-section reporting:** Inline conversation highlights on section completion
 3. **Per-wave reporting:** Detailed wave summary template with scores, layout diversity check, canary check
 4. **Milestone reporting:** Full report with Awwwards scores, anti-slop gate scores, DNA compliance
-5. **Screenshot protocol:** Automatic at 4 breakpoints (375, 768, 1024, 1440px) after final wave only; on-demand via /modulo:verify mid-build
+5. **Screenshot protocol:** Automatic at 4 breakpoints (375, 768, 1024, 1440px) after final wave only; on-demand via /gen:verify mid-build
 6. **Review gates:** Wave completion pauses for user approval before next wave
 
 **Integration points:**
@@ -767,8 +767,8 @@ export default {
 **Key sections to include:**
 1. **Failure classification:** MINOR (auto-isolate, continue), MAJOR (pause, present options), CRITICAL (stop wave, present options)
 2. **Diagnosis template:** Structured format with code context, root cause, fix options, trade-offs
-3. **Checkpoint/resume protocol:** What state to capture before each wave, how to detect interrupted builders, how `/modulo:execute resume` works
-4. **Failure log:** `.planning/modulo/FAILURE-LOG.md` format, STATE.md compact summary
+3. **Checkpoint/resume protocol:** What state to capture before each wave, how to detect interrupted builders, how `/gen:execute resume` works
+4. **Failure log:** `.planning/genorah/FAILURE-LOG.md` format, STATE.md compact summary
 5. **Pattern escalation:** Track failures, escalate after 3 repeated same-type failures
 6. **Common failure types:** Build errors, type errors, dependency errors, timeout, context rot, missing files
 
@@ -776,7 +776,7 @@ export default {
 - `agents/design-lead.md` -- add error handling sections
 - `agents/section-builder.md` -- add SUMMARY.md failure format
 - STATE.md format -- add failure summary and checkpoint state
-- New file: `.planning/modulo/FAILURE-LOG.md` template
+- New file: `.planning/genorah/FAILURE-LOG.md` template
 
 **Estimated size:** 300-400 lines of agent protocol additions across multiple files
 
@@ -815,7 +815,7 @@ export default {
 - Style Dictionary 5 + DTCG: HIGH -- verified via npm, official docs, and W3C announcement
 - Visual QA overlay diff: MEDIUM -- concept verified, MCP screenshot exchange format needs runtime validation
 - Progress reporting patterns: HIGH -- extensions to existing Phase 2 STATE.md format, consistent with architecture
-- Error recovery patterns: HIGH -- based on established multi-agent patterns, adapted to Modulo's specific pipeline
+- Error recovery patterns: HIGH -- based on established multi-agent patterns, adapted to Genorah's specific pipeline
 - Figma get_variable_defs alias limitation: HIGH -- confirmed by multiple forum reports
 - Figma Code Connect integration: HIGH -- verified via official developer docs
 

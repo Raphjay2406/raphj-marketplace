@@ -6,7 +6,7 @@
 <domain>
 ## Phase Boundary
 
-Every Modulo project gets branded social preview images generated from Design DNA tokens, and all v1.5 skills are wired into the agent pipeline so they activate automatically during builds. OG image generation covers Next.js (`next/og` ImageResponse) and Astro (Satori + sharp/resvg). Pipeline wiring updates agents to reference SEO, structured data, GEO, and search visibility skills at the correct pipeline stages.
+Every Genorah project gets branded social preview images generated from Design DNA tokens, and all v1.5 skills are wired into the agent pipeline so they activate automatically during builds. OG image generation covers Next.js (`next/og` ImageResponse) and Astro (Satori + sharp/resvg). Pipeline wiring updates agents to reference SEO, structured data, GEO, and search visibility skills at the correct pipeline stages.
 
 </domain>
 

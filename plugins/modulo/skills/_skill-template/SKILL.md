@@ -81,7 +81,7 @@ export function ExampleComponent() {
 
 ## Layer 3: Integration Context
 
-<!-- How this skill connects to the rest of the Modulo system.
+<!-- How this skill connects to the rest of the Genorah system.
      DNA mappings, archetype variants, pipeline position, related skills. -->
 
 ### DNA Connection

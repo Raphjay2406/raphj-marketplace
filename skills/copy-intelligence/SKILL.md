@@ -17,7 +17,7 @@ You are a brand voice strategist and UX copywriter who generates comprehensive v
 - **During brainstorm** (after creative direction is chosen): Generate BRAND-VOICE.md alongside BRAINSTORM.md. The voice document defines the project's entire copywriting personality
 - **During section planning** (section-planner agent): Extract relevant voice rules into each section's PLAN.md under a Copy Specification heading
 - **During content review** (quality-reviewer agent): Validate section copy against voice document, banned phrase lists, and archetype voice profile
-- **During iteration** (`/modulo:iterate`): Diagnose copy quality issues, recommend voice adjustments, and validate revised copy
+- **During iteration** (`/gen:iterate`): Diagnose copy quality issues, recommend voice adjustments, and validate revised copy
 
 ### When NOT to Use
 
@@ -49,23 +49,23 @@ The two skills are **companions**: copy-intelligence generates the voice rules d
 
 ### Pipeline Stages
 
-1. **Brainstorm** (`/modulo:start-project`): Generate BRAND-VOICE.md alongside BRAINSTORM.md. Creative-director reviews voice document for archetype alignment
-2. **Section planning** (`/modulo:plan-dev`): Section-planner reads BRAND-VOICE.md and extracts relevant voice rules into each section's PLAN.md under "Copy Specification"
-3. **Execution** (`/modulo:execute`): Builders read Copy Specification in their PLAN.md. They reference micro-copy skill for TSX patterns. They NEVER read BRAND-VOICE.md directly
-4. **Content review** (`/modulo:iterate`): Quality-reviewer validates section copy against voice document, banned phrases, and content density rules
+1. **Brainstorm** (`/gen:start-project`): Generate BRAND-VOICE.md alongside BRAINSTORM.md. Creative-director reviews voice document for archetype alignment
+2. **Section planning** (`/gen:plan-dev`): Section-planner reads BRAND-VOICE.md and extracts relevant voice rules into each section's PLAN.md under "Copy Specification"
+3. **Execution** (`/gen:execute`): Builders read Copy Specification in their PLAN.md. They reference micro-copy skill for TSX patterns. They NEVER read BRAND-VOICE.md directly
+4. **Content review** (`/gen:iterate`): Quality-reviewer validates section copy against voice document, banned phrases, and content density rules
 
 ### Pipeline Connection
 
 - **Referenced by:** `creative-director` agent during brainstorm (validates voice-archetype alignment)
-- **Referenced by:** `section-planner` agent during `/modulo:plan-dev` (extracts voice rules into PLAN.md)
+- **Referenced by:** `section-planner` agent during `/gen:plan-dev` (extracts voice rules into PLAN.md)
 - **Referenced by:** `quality-reviewer` agent during post-build review (banned phrase scan, voice compliance)
-- **Consumed at:** `/modulo:start-project` workflow step 3.75 (content planning phase)
+- **Consumed at:** `/gen:start-project` workflow step 3.75 (content planning phase)
 
 ---
 
 ## Brand Voice Document Template
 
-This template gets filled per-project during brainstorm and saved to `.planning/modulo/BRAND-VOICE.md`. Every section below is REQUIRED -- a voice document missing any section is incomplete.
+This template gets filled per-project during brainstorm and saved to `.planning/genorah/BRAND-VOICE.md`. Every section below is REQUIRED -- a voice document missing any section is incomplete.
 
 ```markdown
 # Brand Voice: [Project Name]
@@ -548,8 +548,8 @@ Extracted Copy Specification for section PLAN.md:
 
 ### Pipeline Stage
 
-- **Input from:** `/modulo:start-project` brainstorm phase -- receives selected archetype, project type, industry, user preferences
-- **Output to:** `.planning/modulo/BRAND-VOICE.md` -- comprehensive voice document (100+ lines)
+- **Input from:** `/gen:start-project` brainstorm phase -- receives selected archetype, project type, industry, user preferences
+- **Output to:** `.planning/genorah/BRAND-VOICE.md` -- comprehensive voice document (100+ lines)
 - **Output to:** Section PLAN.md files -- Copy Specification section (15-20 lines per section)
 - **Output to:** Quality review checklist -- banned phrase list + voice compliance criteria
 

@@ -9,8 +9,8 @@ requires:
   - phase: 03-command-system (plans 01-05)
     provides: 6 core workflow commands with established guided flow pattern
 provides:
-  - /modulo:status utility command (project state display)
-  - /modulo:audit utility command (comprehensive quality audit absorbing 4 v6.1.0 commands)
+  - /gen:status utility command (project state display)
+  - /gen:audit utility command (comprehensive quality audit absorbing 4 v6.1.0 commands)
   - Plugin manifest updated to v2.0.0-dev
   - Complete v2.0 command surface (8 commands, consistent guided flow)
 affects: [04-quality-gates]

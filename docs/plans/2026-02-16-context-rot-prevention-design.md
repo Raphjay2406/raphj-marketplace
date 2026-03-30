@@ -6,7 +6,7 @@
 
 ## Problem Statement
 
-Context rot hits at wave 3-4 during Modulo design builds, causing:
+Context rot hits at wave 3-4 during Genorah design builds, causing:
 1. **DNA drift** — Agent falls back to Tailwind defaults (shadow-md, rounded-lg, gap-4), forgets font pairing and color tokens
 2. **Plan amnesia** — Agent forgets section plan details, wave order, emotional beat assignments
 3. **Skill overload** — Too many skills loaded at once consume context window, accelerating rot
@@ -45,7 +45,7 @@ A shell script in the plugin hooks configuration that runs before every git comm
 
 **Behavior:**
 - If violations found: block commit, output violation list with file:line references
-- The hook reads forbidden patterns from `.planning/modulo/DESIGN-DNA.md` if it exists (project-specific enforcement)
+- The hook reads forbidden patterns from `.planning/genorah/DESIGN-DNA.md` if it exists (project-specific enforcement)
 - Falls back to generic anti-slop patterns if no DNA exists
 
 ### Post-Write Validation
@@ -87,7 +87,7 @@ Replace the current multi-file context recovery (STATE.md + .continue-here.md + 
 ### Format
 
 ```markdown
-# Modulo Context (auto-rewritten after each wave)
+# Genorah Context (auto-rewritten after each wave)
 Last updated: [ISO date] | Wave: [N] completed | Session: [N]
 
 ## DNA Identity
@@ -134,10 +134,10 @@ Session recommendation: [continue / new session recommended]
 
 ### Generation
 
-- **Created during:** `/modulo:start-design` (initial version with just DNA identity)
-- **Updated during:** `/modulo:plan-sections` (adds beat sequence, section table, wave map)
+- **Created during:** `/gen:start-design` (initial version with just DNA identity)
+- **Updated during:** `/gen:plan-sections` (adds beat sequence, section table, wave map)
 - **Rewritten after:** Every wave completion by the design-lead
-- **Path:** `.planning/modulo/CONTEXT.md`
+- **Path:** `.planning/genorah/CONTEXT.md`
 
 ### Relationship to STATE.md
 
@@ -248,7 +248,7 @@ Wave [N] and [N+1] complete. [X] sections built this session.
 Recommendation: Start a new session for Wave [N+2] to ensure peak quality.
 State saved to CONTEXT.md.
 
-To continue: Run `/modulo:execute resume` in a new session.
+To continue: Run `/gen:execute resume` in a new session.
 To override: Say "continue in this session" (canary checks will still monitor fidelity).
 ```
 
@@ -258,9 +258,9 @@ To override: Say "continue in this session" (canary checks will still monitor fi
 - **Turn 21-30:** Yellow zone. Canary checks become mandatory after every wave (not just every 2).
 - **Turn 31+:** Complete current wave, then MANDATORY session save. No override.
 
-### Session Boot Protocol (for `/modulo:execute resume`)
+### Session Boot Protocol (for `/gen:execute resume`)
 
-1. Read `.planning/modulo/CONTEXT.md` (single file, complete context)
+1. Read `.planning/genorah/CONTEXT.md` (single file, complete context)
 2. Read next wave's section `PLAN.md` files
 3. Run Canary Check (verify understanding)
 4. Present wave summary to user (discussion-first protocol)

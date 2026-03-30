@@ -38,7 +38,7 @@ score: 5/5 must-haves verified
 | skills/_skill-template/SKILL.md | 4-layer template | VERIFIED (144 lines) | Complete template with frontmatter and all layers. |
 | .claude-plugin/plugin.json | Plugin manifest | VERIFIED | v2.0.0, hooks registered, architecture description. |
 | .claude-plugin/hooks/dna-compliance-check.sh | DNA compliance hook | EXISTS | Hook present and registered in plugin.json. |
-| CLAUDE.md | Project instructions | VERIFIED | References Modulo 2.0, 3-tier skills, pipeline model. |
+| CLAUDE.md | Project instructions | VERIFIED | References Genorah 2.0, 3-tier skills, pipeline model. |
 
 ### Key Link Verification
 

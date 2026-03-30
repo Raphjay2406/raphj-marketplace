@@ -2,11 +2,11 @@
 
 **Date:** 2026-02-16
 **Status:** Approved
-**Scope:** End-to-end overhaul of Modulo's planning-to-execution pipeline to produce award-winning output
+**Scope:** End-to-end overhaul of Genorah's planning-to-execution pipeline to produce award-winning output
 
 ## Problem Statement
 
-AI agents have fundamental limitations that cause quality loss during Modulo's concepting, planning, and implementation phases:
+AI agents have fundamental limitations that cause quality loss during Genorah's concepting, planning, and implementation phases:
 
 1. **Visual blindness** -- agents plan textually but can't see what they're describing
 2. **Vague specifications** -- PLAN.md tasks leave too much interpretation to builders
@@ -117,7 +117,7 @@ Section-builder becomes a "spec executor" -- translates the blueprint to working
 
 Insert between Design DNA (Phase 3.5) and Section Planning. References `micro-copy` and `conversion-patterns` skills.
 
-**Generate `.planning/modulo/CONTENT.md`:**
+**Generate `.planning/genorah/CONTENT.md`:**
 - Voice & tone definition (archetype-derived, forbidden phrases listed)
 - Per-section content: headline, subheadline, body text, CTA text, friction reducers, status badges
 - Testimonials with specific quotes, names, titles, companies
@@ -132,7 +132,7 @@ Each PLAN.md's `<visual-specification>` pulls directly from approved CONTENT.md.
 
 #### 3C. Content Quality Gates
 
-Quality reviewer verifies during `/modulo:verify`:
+Quality reviewer verifies during `/gen:verify`:
 - All approved copy present and unchanged
 - No "Submit", "Learn More", "Click Here" on any button
 - Headlines match approved text
@@ -156,11 +156,11 @@ ALL commands that modify code MUST:
 
 #### 4B. Per-Command Changes
 
-**`/modulo:execute`:** Before spawning any wave, present section summaries and wait for approval. After each section completes, show screenshot + summary.
+**`/gen:execute`:** Before spawning any wave, present section summaries and wait for approval. After each section completes, show screenshot + summary.
 
-**`/modulo:iterate`:** Before any code change, show exact diff preview (file, line, old -> new, reason). After applying, show before/after screenshot comparison.
+**`/gen:iterate`:** Before any code change, show exact diff preview (file, line, old -> new, reason). After applying, show before/after screenshot comparison.
 
-**`/modulo:bugfix`:** Before any fix, state bug, root cause, fix plan with specific diff preview and risk assessment. After fixing, verify no regression.
+**`/gen:bugfix`:** Before any fix, state bug, root cause, fix plan with specific diff preview and risk assessment. After fixing, verify no regression.
 
 #### 4C. Emergency Override
 
@@ -212,7 +212,7 @@ After each section completes (before marking complete):
 1. Start dev server if needed
 2. Take screenshots at 1440px, 768px, 375px
 3. Capture hover/interactive states if applicable
-4. Save to `.planning/modulo/sections/XX-{name}/screenshots/`
+4. Save to `.planning/genorah/sections/XX-{name}/screenshots/`
 5. Present to user: "Does this match the plan? Any adjustments needed?"
 6. User approves, requests changes, or requests rebuild
 
@@ -220,7 +220,7 @@ After each section completes (before marking complete):
 
 After each wave completes:
 1. Record scroll-through GIF of full page
-2. Save to `.planning/modulo/progress/wave-[N]-scrollthrough.gif`
+2. Save to `.planning/genorah/progress/wave-[N]-scrollthrough.gif`
 3. Present to user for holistic flow assessment
 
 #### 6C. Before/After Comparison
@@ -288,7 +288,7 @@ All mutations logged in STATE.md mutation table.
 
 #### 8C. Cross-Page Coherence
 
-New artifact: `.planning/modulo/PAGE-CONSISTENCY.md`
+New artifact: `.planning/genorah/PAGE-CONSISTENCY.md`
 - Shared elements (identical across pages): nav, footer, theme, fonts
 - Per-page variation rules: hero diversity, color intensity, animation intensity, content density
 - Pattern inventory per page
@@ -306,7 +306,7 @@ Design-lead wave cleanup: grep for unused exports, duplicate utilities, unused d
 
 At ~80% context usage:
 1. Stop all active builds
-2. Write `.planning/modulo/.session-transfer.md` with:
+2. Write `.planning/genorah/.session-transfer.md` with:
    - Session summary (waves completed, sections done/in-progress/remaining)
    - Critical context summary (DNA anchor, reference anchor, emotional arc state, layout diversity state)
    - Active decisions made during session
@@ -317,7 +317,7 @@ At ~80% context usage:
 
 All critical context lives in FILES, not conversation history:
 ```
-.planning/modulo/
+.planning/genorah/
   PROJECT.md, DESIGN-DNA.md, BRAINSTORM.md, CONTENT.md (NEW),
   REFERENCES.md (NEW), MASTER-PLAN.md, STATE.md,
   PAGE-CONSISTENCY.md (NEW), .session-transfer.md (NEW),
@@ -333,13 +333,13 @@ Conversation is coordination only. Knowledge survives compaction and session bou
 
 | Artifact | Created By | Purpose |
 |----------|-----------|---------|
-| `.planning/modulo/CONTENT.md` | start-design Phase 3.75 | All approved page copy |
-| `.planning/modulo/REFERENCES.md` | start-design Phase 2 | Reference site analysis |
-| `.planning/modulo/research/screenshots/` | design-researcher | Reference screenshots |
-| `.planning/modulo/PAGE-CONSISTENCY.md` | plan-sections | Cross-page coherence rules |
-| `.planning/modulo/.session-transfer.md` | design-lead (at 80%) | Session handoff document |
-| `.planning/modulo/sections/XX/screenshots/` | section-builder | Built section screenshots |
-| `.planning/modulo/progress/` | design-lead | Wave scroll-through GIFs |
+| `.planning/genorah/CONTENT.md` | start-design Phase 3.75 | All approved page copy |
+| `.planning/genorah/REFERENCES.md` | start-design Phase 2 | Reference site analysis |
+| `.planning/genorah/research/screenshots/` | design-researcher | Reference screenshots |
+| `.planning/genorah/PAGE-CONSISTENCY.md` | plan-sections | Cross-page coherence rules |
+| `.planning/genorah/.session-transfer.md` | design-lead (at 80%) | Session handoff document |
+| `.planning/genorah/sections/XX/screenshots/` | section-builder | Built section screenshots |
+| `.planning/genorah/progress/` | design-lead | Wave scroll-through GIFs |
 | `agents/discussion-protocol.md` | New file | Universal discussion-before-action rules |
 
 ## Files to Modify

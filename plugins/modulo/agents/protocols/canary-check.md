@@ -1,6 +1,6 @@
 # Canary Check Protocol
 
-> Protocol document for the Modulo 2.0 build pipeline. Executed by the build-orchestrator after every wave. Detects context rot before it produces bad output by testing the orchestrator's recall of key project identity and state facts.
+> Protocol document for the Genorah 2.0 build pipeline. Executed by the build-orchestrator after every wave. Detects context rot before it produces bad output by testing the orchestrator's recall of key project identity and state facts.
 
 ## Purpose
 
@@ -65,7 +65,7 @@ CANARY CHECK -- Wave [N] Complete
 
 ### Step 2: Verify Against CONTEXT.md
 
-After writing all 5 answers, the orchestrator reads `.planning/modulo/CONTEXT.md` and compares:
+After writing all 5 answers, the orchestrator reads `.planning/genorah/CONTEXT.md` and compares:
 
 - Question 1: Compare against DNA Identity > Display font
 - Question 2: Compare against DNA Identity > Colors > accent

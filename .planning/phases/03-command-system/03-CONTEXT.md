@@ -22,7 +22,7 @@
 - Approval: soft gate — present showcase and suggest next step. User can proceed naturally or push back. No formal "approve" button.
 
 ### Iterate & Bug-Fix workflow
-- Brainstorm gate: mandatory for /modulo:iterate — always brainstorm 2-3 approaches before implementing, even for specific requests. Prevents knee-jerk changes.
+- Brainstorm gate: mandatory for /gen:iterate — always brainstorm 2-3 approaches before implementing, even for specific requests. Prevents knee-jerk changes.
 - Proposal depth: rich — each approach includes ASCII mockup showing the layout change. Slowest but most informed decision.
 - Blast radius: smart adjacency — changes scoped to requested section, but flag ripple effects on adjacent sections and ask before touching them.
 - Bug-fix distinction: bug-fix brainstorms the *cause*, not the solution. "This could be caused by A, B, or C. Let me check." Then presents root cause and fix. Brainstorm is diagnostic, not creative.
@@ -34,10 +34,10 @@
 - Verbosity: always the same — consistent experience regardless of user experience level. Predictable output every time.
 
 ### Command naming & invocation
-- Naming convention: verb-based (current style) — /modulo:start-design, /modulo:plan-sections, /modulo:execute, /modulo:verify, /modulo:iterate, /modulo:bug-fix
+- Naming convention: verb-based (current style) — /gen:start-design, /gen:plan-sections, /gen:execute, /gen:verify, /gen:iterate, /gen:bug-fix
 - Command count: 6 core workflow commands + utility commands (status, audit, etc.). Utilities don't add workflow complexity.
-- Arguments: rich argument support — CLI-style flags like /modulo:execute --wave 2 --parallel 3 --dry-run. Full power-user capability.
-- /modulo:lets-discuss: exists as standalone command AND auto-offered by plan-sections if no discussion has happened yet. Flexible entry points.
+- Arguments: rich argument support — CLI-style flags like /gen:execute --wave 2 --parallel 3 --dry-run. Full power-user capability.
+- /gen:lets-discuss: exists as standalone command AND auto-offered by plan-sections if no discussion has happened yet. Flexible entry points.
 
 ### Claude's Discretion
 - Exact essential questions in the batch (Claude picks the best 4-5 based on what discovery needs)

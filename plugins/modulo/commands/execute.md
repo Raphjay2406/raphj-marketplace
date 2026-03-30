@@ -4,11 +4,11 @@ argument-hint: [--wave N] [--resume] [--dry-run] [--parallel N]
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob, Task
 ---
 
-You are the Modulo Execute orchestrator. You dispatch to the build-orchestrator agent which manages wave-based parallel execution, session boundaries, and quality gates.
+You are the Genorah Execute orchestrator. You dispatch to the build-orchestrator agent which manages wave-based parallel execution, session boundaries, and quality gates.
 
 ## Guided Flow Header
 
-Read `.planning/modulo/STATE.md` and `.planning/modulo/CONTEXT.md`.
+Read `.planning/genorah/STATE.md` and `.planning/genorah/CONTEXT.md`.
 
 Display one-line status:
 `Phase: Build | Wave: [X/Y] | Sections: [built/total] | Next: [current action]`
@@ -21,9 +21,9 @@ Required state: `PLANNING_COMPLETE` or later (or an existing wave in progress fo
 
 | Missing Artifact | Recovery |
 |-----------------|----------|
-| No STATE.md | "No Modulo project found. Run `/modulo:start-project` first." STOP. |
-| STATE.md exists, no section PLAN.md files | "No section plans found. Running plan-dev first..." Auto-chain to `/modulo:plan-dev`, then return here to execute. |
-| Plans exist, all sections COMPLETE | "All waves complete. Run `/modulo:iterate` to refine, or `/modulo:audit` for comprehensive review." STOP. |
+| No STATE.md | "No Genorah project found. Run `/gen:start-project` first." STOP. |
+| STATE.md exists, no section PLAN.md files | "No section plans found. Running plan-dev first..." Auto-chain to `/gen:plan-dev`, then return here to execute. |
+| Plans exist, all sections COMPLETE | "All waves complete. Run `/gen:iterate` to refine, or `/gen:audit` for comprehensive review." STOP. |
 
 Transparent auto-recovery: always tell the user what is being run automatically.
 
@@ -46,7 +46,7 @@ Bare word `resume` = same as `--resume` (backward compatibility).
 
 If `--resume` or auto-detected:
 
-1. Read `.planning/modulo/CONTEXT.md` -- single file has everything: DNA identity, build state, next instructions
+1. Read `.planning/genorah/CONTEXT.md` -- single file has everything: DNA identity, build state, next instructions
 2. Read next wave's section PLAN.md files (paths from CONTEXT.md)
 3. **Canary check** -- answer from memory BEFORE reading files:
    - Display font? Accent-1 hex? Forbidden patterns? Layouts used so far? Next beat type?
@@ -61,7 +61,7 @@ If `--dry-run`:
 2. Show which sections are pending, which are complete
 3. Show estimated parallel builders per wave
 4. Do NOT execute anything
-5. End with: "Run `/modulo:execute` to start building."
+5. End with: "Run `/gen:execute` to start building."
 
 ## Execution Dispatch
 
@@ -95,9 +95,9 @@ Build-orchestrator returns control after one of three conditions:
 All [N] waves complete. [X] sections built.
 Quality: [anti-slop average]/35 ([rating])
 
-Next step: /modulo:iterate
+Next step: /gen:iterate
   Review the build and request design improvements.
-  Or: /modulo:audit for comprehensive quality review.
+  Or: /gen:audit for comprehensive quality review.
 ```
 
 Update STATE.md: `phase: EXECUTION_COMPLETE`.
@@ -108,7 +108,7 @@ Update STATE.md: `phase: EXECUTION_COMPLETE`.
 Session state saved to CONTEXT.md.
 [N] waves complete, [M] remaining.
 
-Next step: /modulo:execute --resume (in a new session)
+Next step: /gen:execute --resume (in a new session)
   Picks up exactly where you left off.
 ```
 
@@ -118,8 +118,8 @@ Next step: /modulo:execute --resume (in a new session)
 Build paused due to error in [section].
 Error: [brief description]
 
-Next step: /modulo:bug-fix [section description]
-  Diagnose and fix the issue, then resume with /modulo:execute --resume.
+Next step: /gen:bug-fix [section description]
+  Diagnose and fix the issue, then resume with /gen:execute --resume.
 ```
 
 ## Rules

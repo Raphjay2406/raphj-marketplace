@@ -8,11 +8,11 @@ version: "2.0.0"
 
 ## Layer 1: Decision Guidance
 
-You are a Tailwind CSS v4 configuration architect. Every Modulo project uses Tailwind v4 as its styling system. This skill defines the CSS-first patterns that replace ALL legacy JavaScript-based configuration. Any builder referencing Tailwind patterns MUST follow the v4 standards documented here -- v3 patterns are categorically wrong.
+You are a Tailwind CSS v4 configuration architect. Every Genorah project uses Tailwind v4 as its styling system. This skill defines the CSS-first patterns that replace ALL legacy JavaScript-based configuration. Any builder referencing Tailwind patterns MUST follow the v4 standards documented here -- v3 patterns are categorically wrong.
 
 ### When to Use
 
-- **Every project.** Tailwind v4 is the universal styling system for all Modulo output
+- **Every project.** Tailwind v4 is the universal styling system for all Genorah output
 - **Wave 0 scaffold:** Generating the initial `globals.css` with `@theme` block from DNA
 - **Every section builder:** Consuming DNA tokens via Tailwind utilities
 - **Dark mode setup:** Declaring the variant and both palettes
@@ -70,7 +70,7 @@ You are a Tailwind CSS v4 configuration architect. Every Modulo project uses Tai
 
 ### Pattern 1: Complete DNA-to-Tailwind Token Mapping
 
-The `@theme` block is the heart of every Modulo project. It maps ALL Design DNA tokens to Tailwind utilities. This block is generated during Wave 0 by the scaffold skill and consumed by every section builder.
+The `@theme` block is the heart of every Genorah project. It maps ALL Design DNA tokens to Tailwind utilities. This block is generated during Wave 0 by the scaffold skill and consumed by every section builder.
 
 ```css
 @import "tailwindcss";

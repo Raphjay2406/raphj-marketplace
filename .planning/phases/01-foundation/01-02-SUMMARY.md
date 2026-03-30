@@ -76,7 +76,7 @@ Each task was committed atomically:
 
 ## Decisions Made
 
-- **12 color tokens (8+4 split):** 8 semantic tokens (bg, surface, text, border, primary, secondary, accent, muted) for functional roles + 4 expressive tokens (glow, tension, highlight, signature) for creative intent. The expressive tokens are what differentiate Modulo's palette from generic design token systems.
+- **12 color tokens (8+4 split):** 8 semantic tokens (bg, surface, text, border, primary, secondary, accent, muted) for functional roles + 4 expressive tokens (glow, tension, highlight, signature) for creative intent. The expressive tokens are what differentiate Genorah's palette from generic design token systems.
 - **Motion tokens outside @theme:** Motion tokens are CSS custom properties in `:root {}`, not in `@theme {}`, because they are consumed by JS animation libraries (GSAP, motion/react), not by Tailwind utility generation.
 - **@theme palette reset:** `--color-*: initial` in `@theme` block resets all Tailwind default colors. The project owns its complete palette through DNA -- no Tailwind defaults leak through.
 - **Signature element format:** `name: param=value, param=value` is machine-readable. The `name` is a lookup key, parameters are individually enforceable. This replaces the v6.1.0 prose description format.

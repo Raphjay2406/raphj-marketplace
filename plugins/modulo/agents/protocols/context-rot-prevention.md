@@ -1,6 +1,6 @@
 # Context Rot Prevention Protocol
 
-> Protocol document for the Modulo 2.0 build pipeline. Referenced by the build-orchestrator and all pipeline agents. Defines the 6-layer structural defense system against LLM attention degradation over extended build sessions.
+> Protocol document for the Genorah 2.0 build pipeline. Referenced by the build-orchestrator and all pipeline agents. Defines the 6-layer structural defense system against LLM attention degradation over extended build sessions.
 
 ## The Problem
 
@@ -51,7 +51,7 @@ Context rot is the single biggest threat to output quality in multi-wave builds.
 | Property | Value |
 |----------|-------|
 | **Mechanism** | Single source of truth file, rewritten after every wave |
-| **Location** | `.planning/modulo/CONTEXT.md` |
+| **Location** | `.planning/genorah/CONTEXT.md` |
 | **Target size** | 80-100 lines |
 | **Context cost** | LOW (~500 tokens when read by orchestrator) |
 | **Consequence** | Stale CONTEXT.md = stale spawn prompts = drifted output |
@@ -61,7 +61,7 @@ Context rot is the single biggest threat to output quality in multi-wave builds.
 #### CONTEXT.md Format
 
 ```markdown
-# Modulo Context
+# Genorah Context
 Last updated: [ISO date] | Wave: [N] completed | Session: [N]
 
 ## DNA Identity
@@ -198,7 +198,7 @@ The canary check is NOT a separate agent -- it is a protocol the orchestrator fo
 **Hard Boundary (turn 31+):**
 - Mandatory session save
 - Orchestrator writes CONTEXT.md with explicit resume instructions
-- Message to user: "Session boundary reached. Start a new session and run `/modulo:execute` to continue."
+- Message to user: "Session boundary reached. Start a new session and run `/gen:execute` to continue."
 - Turn count tracked by orchestrator (increment on each tool use cycle)
 - No override -- this is a structural limit, not a suggestion
 
@@ -211,8 +211,8 @@ The canary check is NOT a separate agent -- it is a protocol the orchestrator fo
 #### Resume Protocol
 
 When a new session begins (after any boundary type):
-1. Read `.planning/modulo/CONTEXT.md` -- full project state in ~80-100 lines
-2. Read `.planning/modulo/MASTER-PLAN.md` -- find next wave from Next Wave Instructions
+1. Read `.planning/genorah/CONTEXT.md` -- full project state in ~80-100 lines
+2. Read `.planning/genorah/MASTER-PLAN.md` -- find next wave from Next Wave Instructions
 3. Continue from the wave indicated in Next Wave Instructions
 4. First action: run a canary check to verify the new session has clean context
 

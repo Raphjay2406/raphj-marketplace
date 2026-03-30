@@ -55,7 +55,7 @@ Created the design-system-export skill teaching Claude how to export built desig
 
 ### skills/design-system-export/SKILL.md (881 lines)
 
-**Layer 1 (Decision Guidance):** Export curation decision tree (what to export vs. skip), story depth decision tree (visual-only vs. interaction vs. responsive), token export scope, and pipeline connection to `/modulo:export` command.
+**Layer 1 (Decision Guidance):** Export curation decision tree (what to export vs. skip), story depth decision tree (visual-only vs. interaction vs. responsive), token export scope, and pipeline connection to `/gen:export` command.
 
 **Layer 2 (Award-Winning Examples):** 8 code patterns:
 1. Storybook 10 project setup (preview.ts + main.ts with DNA theme)
@@ -100,4 +100,4 @@ None -- plan executed exactly as written.
 
 ## Next Phase Readiness
 
-This skill is referenced by the planned `/modulo:export` command. Plans 09-03 (Progress Reporting) and 09-04 (Error Recovery) are independent agent protocol extensions that can proceed without dependency on this skill.
+This skill is referenced by the planned `/gen:export` command. Plans 09-03 (Progress Reporting) and 09-04 (Error Recovery) are independent agent protocol extensions that can proceed without dependency on this skill.

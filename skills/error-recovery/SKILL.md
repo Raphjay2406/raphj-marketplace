@@ -60,7 +60,7 @@ This aligns with the Phase 2 design decision: "Build failures bubble to user (no
 - **Referenced by:** `build-orchestrator` agent for wave-level error handling and crash recovery
 - **Referenced by:** `build-orchestrator` agent for detecting builder failures
 - **Referenced by:** `section-builder` agent for task-level error handling and SUMMARY.md failure format
-- **Consumed at:** Any point during `/modulo:execute` when an error occurs
+- **Consumed at:** Any point during `/gen:execute` when an error occurs
 - **Output to:** FAILURE-LOG.md (detailed), STATE.md (compact summary), CONTEXT.md (session continuity)
 
 ---
@@ -228,7 +228,7 @@ failure_type: type-error
 
 ### Pattern 3: FAILURE-LOG.md Format
 
-Detailed failure history goes to `.planning/modulo/FAILURE-LOG.md`. This is a separate file from STATE.md to protect the 100-line STATE.md budget.
+Detailed failure history goes to `.planning/genorah/FAILURE-LOG.md`. This is a separate file from STATE.md to protect the 100-line STATE.md budget.
 
 **FAILURE-LOG.md is append-only and grows unbounded.** Each entry captures the full context needed for post-build analysis and pattern detection.
 
@@ -287,7 +287,7 @@ When more than 5 failures exist, the oldest entries are removed from STATE.md (t
 
 ### Pattern 4: Checkpoint Resume Protocol
 
-For resuming after session interruption or crash. This protocol is used by the build-orchestrator agent when `/modulo:execute resume` is invoked.
+For resuming after session interruption or crash. This protocol is used by the build-orchestrator agent when `/gen:execute resume` is invoked.
 
 **Step 1: Pre-wave checkpoint (build-orchestrator writes BEFORE spawning builders):**
 
@@ -310,7 +310,7 @@ For each section in the interrupted wave, check in this order:
 
 ```
 For section in wave_sections:
-  1. Check `.planning/modulo/sections/{section}/SUMMARY.md`
+  1. Check `.planning/genorah/sections/{section}/SUMMARY.md`
      - EXISTS + status: COMPLETE  -> Section finished, skip it
      - EXISTS + status: FAILED    -> Section failed, present failure options
      - EXISTS + status: PARTIAL   -> Section partially done, resume from checkpoint
@@ -531,7 +531,7 @@ Builders are the primary source of errors. The integration contract:
 
 **Why this is wrong:** STATE.md has a 100-line budget. It is a compact status dashboard, not a diagnostic journal. Detailed failure context belongs in a dedicated file.
 
-**Instead:** STATE.md gets a compact 1-line summary per failure (max 5 recent entries in a table). Full diagnosis, root cause, fix options, and resolution details go to `.planning/modulo/FAILURE-LOG.md`. STATE.md links to FAILURE-LOG.md with: `Details: see FAILURE-LOG.md`.
+**Instead:** STATE.md gets a compact 1-line summary per failure (max 5 recent entries in a table). Full diagnosis, root cause, fix options, and resolution details go to `.planning/genorah/FAILURE-LOG.md`. STATE.md links to FAILURE-LOG.md with: `Details: see FAILURE-LOG.md`.
 
 ### Anti-Pattern 3: Ignoring Failed Builders
 

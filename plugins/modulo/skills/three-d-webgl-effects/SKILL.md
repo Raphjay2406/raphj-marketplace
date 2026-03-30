@@ -87,7 +87,7 @@ R3F v9 is the production standard. R3F v10 alpha exists with native WebGPU/TSL s
 
 ### Pipeline Connection
 
-- **Referenced by:** section-builder agents during `/modulo:execute` for 3D-heavy sections
+- **Referenced by:** section-builder agents during `/gen:execute` for 3D-heavy sections
 - **Consumed at:** build-orchestrator routes to 3D specialist when section PLAN.md specifies `builder_type: 3d-webgl`
 - **Input:** Design DNA (color tokens, archetype, motion tokens), section PLAN.md (beat type, layout)
 - **Output:** R3F components with DNA-guided materials, three-tier responsive handling, scroll integration

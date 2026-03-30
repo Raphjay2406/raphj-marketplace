@@ -26,7 +26,7 @@ The api-patterns skill is a knowledge skill (SKILL.md), not an installable libra
 | `@sendgrid/mail` | 8.1.x | Email sending (alternative) | Industry standard, high volume, Twilio-backed |
 | `stripe` | Latest | Webhook signature verification | `stripe.webhooks.constructEvent` is the canonical pattern |
 | `@marsidev/react-turnstile` | Latest | Client-side Turnstile widget | Officially recommended by Cloudflare for React |
-| `zod` | 4.x | Request/response validation | Already in Modulo stack via form-builder skill |
+| `zod` | 4.x | Request/response validation | Already in Genorah stack via form-builder skill |
 
 ### Supporting (Used in Patterns)
 
@@ -338,7 +338,7 @@ Problems that look simple but have existing solutions:
 | Stripe event parsing | Manual JSON parse + type cast | `stripe.webhooks.constructEvent` | Handles signature verification, timestamp tolerance, event typing |
 | CAPTCHA validation | Custom challenge system | Cloudflare Turnstile | Privacy-compliant, invisible mode, no user friction, free tier |
 | JWT for Salesforce | Manual JWT construction | `jose` library | Token expiry, signature algorithms, key format handling |
-| Form validation | Manual field checking | `zod` schemas | Type inference, nested validation, custom error messages, already in Modulo stack |
+| Form validation | Manual field checking | `zod` schemas | Type inference, nested validation, custom error messages, already in Genorah stack |
 
 **Key insight:** Each API provider has specific quirks (HubSpot's objectTypeId requirement, Salesforce's redirect-based response, Stripe's raw body requirement) that are easy to get wrong. The skill must document these quirks with verified code, not leave them for builders to discover.
 
@@ -348,7 +348,7 @@ Problems that look simple but have existing solutions:
 
 **What goes wrong:** Developer puts API keys in `NEXT_PUBLIC_*` or `PUBLIC_*` env vars, exposing them in client-side JavaScript bundles.
 **Why it happens:** Developer wants to call API from a client component and does not realize env prefix rules.
-**How to avoid:** Modulo convention: ALL secrets use unprefixed env var names. Skill includes a validation rule: if any env var with `NEXT_PUBLIC_`, `PUBLIC_`, or `VITE_` prefix contains "KEY", "SECRET", "TOKEN", or "PASSWORD", it is a critical error.
+**How to avoid:** Genorah convention: ALL secrets use unprefixed env var names. Skill includes a validation rule: if any env var with `NEXT_PUBLIC_`, `PUBLIC_`, or `VITE_` prefix contains "KEY", "SECRET", "TOKEN", or "PASSWORD", it is a critical error.
 **Warning signs:** `fetch()` calls in files without `'use server'` directive, env vars with public prefix containing sensitive words.
 
 ### Pitfall 2: Parsing Webhook Body Before Signature Verification
@@ -940,7 +940,7 @@ export async function fetchWithRetry(
 // env.ts -- Auto-generated .env.example pattern
 
 /**
- * Environment variable convention for Modulo projects:
+ * Environment variable convention for Genorah projects:
  *
  * SECRETS: Always unprefixed (server-only)
  *   RESEND_API_KEY=re_xxxx
@@ -1007,7 +1007,7 @@ Context7 is an MCP server that provides two tools:
 1. **`mcp__context7__resolve-library-id`** -- Takes a library name string, returns a Context7 library ID
 2. **`mcp__context7__query-docs`** -- Takes a library ID and a query string, returns current documentation
 
-### Where Context7 Integrates in Modulo Pipeline
+### Where Context7 Integrates in Genorah Pipeline
 
 Based on existing architecture research (`.planning/research/ARCHITECTURE.md`):
 
@@ -1023,7 +1023,7 @@ Based on existing architecture research (`.planning/research/ARCHITECTURE.md`):
 The skill should document when agents should invoke Context7:
 
 1. **Version-specific API question:** "What is the current syntax for X in library Y?"
-2. **Unfamiliar SDK encountered:** Project uses a library not covered by Modulo skills
+2. **Unfamiliar SDK encountered:** Project uses a library not covered by Genorah skills
 3. **Deprecated pattern detected:** Agent recognizes a pattern that may be outdated
 4. **Rate limit or constraint question:** "What are the current limits for API X?"
 
@@ -1132,7 +1132,7 @@ Things that could not be fully resolved:
 - Resend Rate Limits -- `https://resend.com/docs/api-reference/rate-limit` (fetched 2026-02-25)
 - HubSpot Forms API v3 Submission -- `https://developers.hubspot.com/docs/api-reference/legacy/forms-v3-legacy` (fetched 2026-02-25)
 - Astro Endpoints Docs -- `https://docs.astro.build/en/guides/endpoints/` (fetched 2026-02-25)
-- Modulo Architecture Research -- `.planning/research/ARCHITECTURE.md` (local, Question 5: Context7 MCP)
+- Genorah Architecture Research -- `.planning/research/ARCHITECTURE.md` (local, Question 5: Context7 MCP)
 
 ### Secondary (MEDIUM confidence)
 

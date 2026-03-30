@@ -16,7 +16,7 @@ Builders produce higher quality when they have a concrete visual bar, not abstra
 - **During section planning** (section-planner agent): Generate `reference_target` frontmatter and `<reference_quality_target>` blocks in each key section's PLAN.md
 - **During research** (researcher agent): Supplement the curated library with per-project industry-specific references found during the research phase
 - **During quality review** (quality-reviewer agent): Compare built output against the reference targets using Claude's multimodal capability
-- **During iteration** (`/modulo:iterate`): Update reference targets if the project pivots to a different archetype or industry
+- **During iteration** (`/gen:iterate`): Update reference targets if the project pivots to a different archetype or industry
 
 ### When NOT to Use
 
@@ -46,15 +46,15 @@ Key beats only. This is a LOCKED DECISION. Supporting sections intentionally do 
 Reference targets come from TWO sources, combined:
 
 1. **Curated library** (this skill) -- per-archetype baseline references with pre-extracted quality attributes. Provides the archetype's timeless quality personality. Updated periodically.
-2. **Per-project research** (researcher agent) -- industry-specific current winners found during the research phase of `/modulo:start-project`. Provides fresh, domain-relevant references.
+2. **Per-project research** (researcher agent) -- industry-specific current winners found during the research phase of `/gen:start-project`. Provides fresh, domain-relevant references.
 
 The section-planner combines both sources when generating reference targets for PLAN.md files. Curated library provides the archetype baseline; per-project research provides industry specificity.
 
 ### Pipeline Connection
 
-- **Referenced by:** section-planner agent during `/modulo:plan-dev` (generates reference targets in PLAN.md)
+- **Referenced by:** section-planner agent during `/gen:plan-dev` (generates reference targets in PLAN.md)
 - **Referenced by:** quality-reviewer agent during post-wave verification (comparison protocol)
-- **Referenced by:** researcher agent during `/modulo:start-project` (supplements curated library)
+- **Referenced by:** researcher agent during `/gen:start-project` (supplements curated library)
 - **Consumed at:** plan-dev workflow step 3 (section planning with reference targets)
 
 ---
@@ -77,7 +77,7 @@ reference_target:
   url: "https://linear.app"
   section: "hero"
   quality_bar: "Split layout with product screenshot, gradient text at -0.04em tracking, staggered entrance reveal, 3-layer ambient depth"
-  screenshot: ".planning/modulo/references/02-hero-target.png"
+  screenshot: ".planning/genorah/references/02-hero-target.png"
 layout_pattern: "split-asymmetric"
 ---
 ```
@@ -91,7 +91,7 @@ The `<reference_quality_target>` block goes in the PLAN.md body. It specifies 6 
 ```markdown
 <reference_quality_target>
 **Reference:** [Site Name] - [Section Type]
-**Source:** [URL or .planning/modulo/references/XX-section-target.png]
+**Source:** [URL or .planning/genorah/references/XX-section-target.png]
 **Beat:** [Beat type this section is assigned]
 
 **Quality Attributes to Match or Exceed:**
@@ -396,15 +396,15 @@ For archetypes not in the top 5, the section-planner uses the quality personalit
 
 ### Researcher Agent: Supplementing the Curated Library
 
-During `/modulo:start-project`, the researcher agent runs a REFERENCES track that supplements the curated library with per-project industry-specific references.
+During `/gen:start-project`, the researcher agent runs a REFERENCES track that supplements the curated library with per-project industry-specific references.
 
 **Researcher instructions for reference supplementation:**
 
 1. **Search for current winners** -- find 3-5 Awwwards SOTD/Honoree winners in the target industry from the last 12 months
 2. **Extract quality attributes** -- for each reference, extract the same 6 attributes (Layout, Typography, Color, Motion, Depth, Micro-detail) for key sections
 3. **Map to archetype** -- note which archetype each reference most closely matches and where it deviates
-4. **Capture screenshots** -- save section screenshots to `.planning/modulo/references/` with descriptive filenames
-5. **Output format** -- write findings to `.planning/modulo/research/DESIGN-REFERENCES.md` using the same attribute structure as the curated library
+4. **Capture screenshots** -- save section screenshots to `.planning/genorah/references/` with descriptive filenames
+5. **Output format** -- write findings to `.planning/genorah/research/DESIGN-REFERENCES.md` using the same attribute structure as the curated library
 6. **Freshness matters** -- prioritize references from the last 6 months. Flag any reference older than 18 months as potentially stale
 
 **What the researcher does NOT do:**

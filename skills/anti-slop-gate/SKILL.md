@@ -8,14 +8,14 @@ version: "2.0.0"
 
 ## Layer 1: Decision Guidance
 
-The Anti-Slop Gate is a **POST-REVIEW** quality enforcement system. It does NOT run inline during building. Section builders focus on building; the gate runs during `/modulo:audit` via the quality-reviewer agent.
+The Anti-Slop Gate is a **POST-REVIEW** quality enforcement system. It does NOT run inline during building. Section builders focus on building; the gate runs during `/gen:audit` via the quality-reviewer agent.
 
 This separation is intentional: builders spending tokens on scoring during construction wastes 30%+ of their context on evaluation instead of craft. The gate runs once, thoroughly, after all sections in a wave are complete.
 
 ### When the Gate Runs
 
 - **After ALL sections in a wave are built** -- never mid-build, never per-section during construction
-- **During `/modulo:audit` command** -- the user-facing entry point for quality review
+- **During `/gen:audit` command** -- the user-facing entry point for quality review
 - **Quality-reviewer agent executes the scoring protocol** -- reads this skill, scores each category, produces the output report
 - **Results are presented to the user** with full transparency -- every point, every deduction, every reasoning
 
@@ -54,7 +54,7 @@ Seven categories with **weighted** point distribution -- not a flat 5 per catego
 
 ### Gate vs. Awwwards 4-Axis
 
-These are **separate systems** that both run during `/modulo:audit`:
+These are **separate systems** that both run during `/gen:audit`:
 
 | System | Purpose | Output | Threshold |
 |--------|---------|--------|-----------|
@@ -65,7 +65,7 @@ Gate runs first. If it fails, Awwwards scoring is skipped -- fix fundamentals be
 
 ### Pipeline Connection
 
-- **Referenced by:** quality-reviewer agent during `/modulo:audit`
+- **Referenced by:** quality-reviewer agent during `/gen:audit`
 - **Consumed at:** verify command workflow step 2 (after existence check, before Awwwards scoring)
 - **Input from:** completed section builds (HTML/TSX output, SUMMARY.md files)
 - **Output to:** user-facing score report, remediation tasks if failed

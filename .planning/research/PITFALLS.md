@@ -3,7 +3,7 @@
 **Domain:** SEO/GEO optimization, sitemap generation, IndexNow, and API integration for a Claude Code design plugin
 **Researched:** 2026-02-25
 **Confidence:** HIGH (SEO/sitemap/canonical), MEDIUM (IndexNow/GEO), HIGH (API security), HIGH (framework-specific), HIGH (plugin architecture)
-**Scope:** v1.5 milestone pitfalls -- what can go wrong when adding these capabilities to Modulo 2.0
+**Scope:** v1.5 milestone pitfalls -- what can go wrong when adding these capabilities to Genorah 2.0
 
 ---
 
@@ -17,7 +17,7 @@ Mistakes that cause search engine penalties, security breaches, or fundamental s
 
 **What goes wrong:** JSON-LD structured data describes content that doesn't match what's visible on the page. The schema says "Product" with price "$29" but the visible page shows "$39" (price changed, schema wasn't updated). Or FAQ schema marks up questions that exist only in the JSON-LD, not in the rendered HTML. Google's policy is explicit: "Don't mark up content that is not visible to readers of the page."
 
-**Why it happens in Modulo's context:** Builders generate JSON-LD from PLAN.md data and page content from CONTENT.md independently. If content changes during iteration (price update, FAQ rewrite, feature list edit), the JSON-LD is often not updated in sync. The schema is "set and forget" -- it's generated once in Wave 0-1 and never re-verified against actual page content after iterations.
+**Why it happens in Genorah's context:** Builders generate JSON-LD from PLAN.md data and page content from CONTENT.md independently. If content changes during iteration (price update, FAQ rewrite, feature list edit), the JSON-LD is often not updated in sync. The schema is "set and forget" -- it's generated once in Wave 0-1 and never re-verified against actual page content after iterations.
 
 **Consequences:**
 - Google manual action for "Spammy Structured Markup" -- page loses rich result eligibility
@@ -51,7 +51,7 @@ Mistakes that cause search engine penalties, security breaches, or fundamental s
 
 **What goes wrong:** Canonical URLs are wrong, missing, or contradictory. Common failures: (a) relative canonical URLs instead of absolute, (b) canonical pointing to a different page's content, (c) paginated pages all canonicalized to page 1, (d) canonical in `<body>` instead of `<head>` (Google ignores it), (e) trailing slash inconsistency creating two "different" URLs for the same content.
 
-**Why it happens in Modulo's context:** The current `seo-meta` skill shows canonical URL patterns, but builders often hardcode canonical URLs as strings rather than generating them dynamically. When routes change during iteration, stale canonicals persist. Multi-page sites with similar content (product variants, localized pages) are especially vulnerable. Additionally, framework differences in URL handling (Next.js uses `metadataBase` + relative, Astro uses `Astro.url.href`, React/Vite has no built-in canonical) create inconsistency.
+**Why it happens in Genorah's context:** The current `seo-meta` skill shows canonical URL patterns, but builders often hardcode canonical URLs as strings rather than generating them dynamically. When routes change during iteration, stale canonicals persist. Multi-page sites with similar content (product variants, localized pages) are especially vulnerable. Additionally, framework differences in URL handling (Next.js uses `metadataBase` + relative, Astro uses `Astro.url.href`, React/Vite has no built-in canonical) create inconsistency.
 
 **Consequences:**
 - Google indexes the wrong URL version, splitting link equity
@@ -87,7 +87,7 @@ Mistakes that cause search engine penalties, security breaches, or fundamental s
 
 **What goes wrong:** Environment variables containing API keys (IndexNow keys, CRM API keys, analytics tokens) are accidentally exposed to the browser. In Next.js, any variable prefixed with `NEXT_PUBLIC_` is bundled into client JavaScript and visible to anyone viewing page source. In Astro, `PUBLIC_` prefix does the same. In React/Vite, `VITE_` prefix exposes to client. Developers prefix variables for convenience without understanding the security implications.
 
-**Why it happens in Modulo's context:** Builders need API keys for IndexNow submission endpoints, CRM integrations, and external API calls. The most common mistake: putting a secret API key in `NEXT_PUBLIC_HUBSPOT_API_KEY` because the component "needs it" on the client side. Additionally, a critical CVE-2025-66478 in Next.js (CVSS 10.0) demonstrated that even server-side secrets can leak through Server Function source code exposure.
+**Why it happens in Genorah's context:** Builders need API keys for IndexNow submission endpoints, CRM integrations, and external API calls. The most common mistake: putting a secret API key in `NEXT_PUBLIC_HUBSPOT_API_KEY` because the component "needs it" on the client side. Additionally, a critical CVE-2025-66478 in Next.js (CVSS 10.0) demonstrated that even server-side secrets can leak through Server Function source code exposure.
 
 **Consequences:**
 - API keys scraped from client bundles, used for unauthorized access
@@ -127,7 +127,7 @@ Mistakes that cause search engine penalties, security breaches, or fundamental s
 
 **What goes wrong:** A React/Vite project renders an empty `<div id="root">` to crawlers. All content, metadata, structured data, and even the `<title>` tag are injected client-side via JavaScript. Google's Web Rendering Service can execute JS, but it's a secondary crawl that happens later (sometimes days later) and is resource-constrained. Bing and AI crawlers (GPTBot, ClaudeBot) may not execute JS at all. The site is functionally invisible to search.
 
-**Why it happens in Modulo's context:** Modulo targets Next.js, Astro, and React/Vite. The first two have server rendering built in. React/Vite does not. Builders following the same patterns across frameworks will produce client-rendered metadata in Vite projects. The current `seo-meta` skill shows `react-helmet-async` for Vite, which only works client-side -- crawlers see nothing.
+**Why it happens in Genorah's context:** Genorah targets Next.js, Astro, and React/Vite. The first two have server rendering built in. React/Vite does not. Builders following the same patterns across frameworks will produce client-rendered metadata in Vite projects. The current `seo-meta` skill shows `react-helmet-async` for Vite, which only works client-side -- crawlers see nothing.
 
 **Consequences:**
 - Zero indexing for React/Vite projects (no content visible to crawlers)
@@ -177,7 +177,7 @@ Mistakes that cause search engine validation failures, broken indexing, or signi
 
 **What goes wrong:** The generated sitemap fails GSC or Bing Webmaster Tools validation. Common failures: (a) unescaped special characters in URLs (`&` instead of `&amp;`), (b) invalid date formats (not W3C Datetime), (c) sitemap exceeds 50MB uncompressed or 50,000 URL limit, (d) including `noindex` pages in the sitemap, (e) HTTP/HTTPS protocol mismatch, (f) URLs returning 404 or 301 redirects.
 
-**Why it happens in Modulo's context:** The current skill shows `changeFrequency` and `priority` fields in sitemap examples, but Google and Bing have publicly stated they ignore both. This is wasted effort that signals the skill is outdated. Additionally, Next.js's `sitemap.ts` convention generates valid XML, but Astro's `@astrojs/sitemap` requires the `site` field in config -- if it's missing, the build succeeds but no sitemap is generated (silent failure). For React/Vite, there's no built-in sitemap generation at all.
+**Why it happens in Genorah's context:** The current skill shows `changeFrequency` and `priority` fields in sitemap examples, but Google and Bing have publicly stated they ignore both. This is wasted effort that signals the skill is outdated. Additionally, Next.js's `sitemap.ts` convention generates valid XML, but Astro's `@astrojs/sitemap` requires the `site` field in config -- if it's missing, the build succeeds but no sitemap is generated (silent failure). For React/Vite, there's no built-in sitemap generation at all.
 
 **32% of submitted sitemaps contain errors** that prevent proper processing, according to Google Search Console data.
 
@@ -221,7 +221,7 @@ Mistakes that cause search engine validation failures, broken indexing, or signi
 
 **What goes wrong:** IndexNow submissions silently fail because: (a) the key file isn't hosted at the root of the domain, (b) the key file content doesn't exactly match the key used in API calls, (c) the key file is blocked by robots.txt or returns wrong MIME type, (d) developers treat the IndexNow key as a secret and don't host the verification file, (e) batch submissions exceed rate limits and get 429 errors without proper retry logic.
 
-**Why it happens in Modulo's context:** IndexNow is a newer protocol that most developers haven't used. Its verification model (public key file at domain root) is unusual -- it's the opposite of typical API key secrecy. Builders coming from a "hide all keys" mindset will either not host the verification file or put it behind authentication. Additionally, each framework has a different mechanism for serving static files from the root (Next.js `public/`, Astro `public/`, Vite `public/`) and different API route patterns for the submission endpoint.
+**Why it happens in Genorah's context:** IndexNow is a newer protocol that most developers haven't used. Its verification model (public key file at domain root) is unusual -- it's the opposite of typical API key secrecy. Builders coming from a "hide all keys" mindset will either not host the verification file or put it behind authentication. Additionally, each framework has a different mechanism for serving static files from the root (Next.js `public/`, Astro `public/`, Vite `public/`) and different API route patterns for the submission endpoint.
 
 **Consequences:**
 - IndexNow submissions rejected silently (no error page, just ignored)
@@ -266,7 +266,7 @@ Mistakes that cause search engine validation failures, broken indexing, or signi
 
 **What goes wrong:** In pursuit of AI search visibility (Google AI Overviews, Bing Copilot, Perplexity), content is restructured in ways that hurt traditional search rankings. Specific failures: (a) stuffing pages with statistics and citations that feel unnatural to human readers, (b) adding FAQ schemas for questions nobody actually asks, (c) restructuring content for "quotability" at the expense of readability, (d) blocking AI crawlers (GPTBot, ClaudeBot) out of fear they'll "steal" content, then wondering why the site doesn't appear in AI answers.
 
-**Why it happens in Modulo's context:** Modulo sites target premium design and brand presence. GEO optimization can clash with design intent -- adding verbose FAQ sections, citation-heavy paragraphs, and stat-laden blocks to a minimalist Brutalist or Japanese Minimal site destroys the aesthetic. The skill must balance SEO/GEO effectiveness with design integrity.
+**Why it happens in Genorah's context:** Genorah sites target premium design and brand presence. GEO optimization can clash with design intent -- adding verbose FAQ sections, citation-heavy paragraphs, and stat-laden blocks to a minimalist Brutalist or Japanese Minimal site destroys the aesthetic. The skill must balance SEO/GEO effectiveness with design integrity.
 
 **The data is stark:** When AI-generated answers appear on Google, organic click-through rates dropped 61% (from 1.76% to 0.61%) as of September 2025. Being cited IN the AI answer becomes critical. But the research also shows: "Statistics Addition" and "Quotation Addition" improve visibility by 28-41%, while "Keyword Stuffing" performs worse.
 
@@ -312,7 +312,7 @@ Mistakes that cause search engine validation failures, broken indexing, or signi
 
 **Additionally in Next.js 15+:** `params` became a Promise and must be awaited in `generateMetadata`. Old patterns that destructure params directly cause runtime errors. Streaming metadata (15.2+) means metadata may not be in the initial HTML for bots that don't execute JS.
 
-**Why it happens in Modulo's context:** The current `seo-meta` skill already warns about this (Layer 4, Anti-Pattern 1). But the skill needs to be updated for Next.js 15+ async params and streaming metadata behavior. Builders trained on Next.js 14 patterns will write `generateMetadata({ params: { slug } })` which fails in Next.js 15+ where params is a Promise.
+**Why it happens in Genorah's context:** The current `seo-meta` skill already warns about this (Layer 4, Anti-Pattern 1). But the skill needs to be updated for Next.js 15+ async params and streaming metadata behavior. Builders trained on Next.js 14 patterns will write `generateMetadata({ params: { slug } })` which fails in Next.js 15+ where params is a Promise.
 
 **Consequences:**
 - Silent metadata absence (no error, just empty tags)
@@ -350,7 +350,7 @@ Mistakes that cause search engine validation failures, broken indexing, or signi
 
 **43% of web applications experienced security breaches due to insufficient origin checks in 2025**, per industry surveys. Over 70% of applications encounter CORS-related issues.
 
-**Why it happens in Modulo's context:** Modulo teaches frontend patterns. When builders add API integration (HubSpot, CRMs, payment APIs), they write `fetch('https://api.hubspot.com/...')` directly in a client component. This fails due to CORS. The fix is server-side proxying, but builders unfamiliar with API integration don't know this. Additionally, Modulo's quality gates focus on visual quality (anti-slop gate, design review) but have no gates for API reliability.
+**Why it happens in Genorah's context:** Genorah teaches frontend patterns. When builders add API integration (HubSpot, CRMs, payment APIs), they write `fetch('https://api.hubspot.com/...')` directly in a client component. This fails due to CORS. The fix is server-side proxying, but builders unfamiliar with API integration don't know this. Additionally, Genorah's quality gates focus on visual quality (anti-slop gate, design review) but have no gates for API reliability.
 
 **Consequences:**
 - API integration appears broken on the user's site
@@ -636,7 +636,7 @@ The current `seo-meta` skill (v2.0.0) has the following specific issues that the
 | GEO Optimization | MEDIUM | Emerging field; best practices from 2025 research may evolve |
 | API Key Security | HIGH | CVE-2025-66478, Next.js docs, and Astro issue #13960 provide concrete evidence |
 | Framework-Specific SEO | HIGH | Official framework docs for Next.js, Astro, React/Vite are well-maintained |
-| Plugin Architecture | HIGH | Direct analysis of Modulo codebase + Claude Code plugin docs |
+| Plugin Architecture | HIGH | Direct analysis of Genorah codebase + Claude Code plugin docs |
 | CORS / Error Handling | HIGH | Well-established web standards with extensive documentation |
 
 ---

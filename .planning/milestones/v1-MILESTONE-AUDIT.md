@@ -31,7 +31,7 @@ tech_debt:
 
 # Milestone v1 Audit Report
 
-**Milestone:** Modulo 2.0 v1
+**Milestone:** Genorah 2.0 v1
 **Audited:** 2026-02-25 (post Phase 10-13 gap closure)
 **Status:** PASSED
 **Previous audit:** gaps_found (pre Phase 10-13) — all gaps now closed

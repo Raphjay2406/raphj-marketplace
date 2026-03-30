@@ -1,8 +1,8 @@
-# Project Milestones: Modulo 2.0
+# Project Milestones: Genorah 2.0
 
 ## v1.5 SEO/GEO & API Integration (Shipped: 2026-02-25)
 
-**Delivered:** Complete SEO/GEO discoverability stack and full-stack API integration patterns — sites built with Modulo are now discoverable and rankable by default across search engines, AI engines, and social platforms.
+**Delivered:** Complete SEO/GEO discoverability stack and full-stack API integration patterns — sites built with Genorah are now discoverable and rankable by default across search engines, AI engines, and social platforms.
 
 **Phases completed:** 14-20 (18 plans total)
 
@@ -28,9 +28,9 @@
 
 ---
 
-## v1 Modulo 2.0 (Shipped: 2026-02-25)
+## v1 Genorah 2.0 (Shipped: 2026-02-25)
 
-**Delivered:** Ground-up rebuild of the Modulo Claude Code plugin — 45 skills, 14 agents, 8 commands, 19 design archetypes, pipeline architecture with multi-layer quality enforcement, all targeting award-caliber (Awwwards SOTD 8.0+) frontend design output.
+**Delivered:** Ground-up rebuild of the Genorah Claude Code plugin — 45 skills, 14 agents, 8 commands, 19 design archetypes, pipeline architecture with multi-layer quality enforcement, all targeting award-caliber (Awwwards SOTD 8.0+) frontend design output.
 
 **Phases completed:** 1-13 (63 plans total)
 

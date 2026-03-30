@@ -33,7 +33,7 @@ must_haves:
 ---
 # Phase 15: Structured Data & GEO Verification Report
 
-**Phase Goal:** Sites built with Modulo appear in Google rich results and AI engine citations through typed structured data and GEO-optimized content patterns woven into the Emotional Arc
+**Phase Goal:** Sites built with Genorah appear in Google rich results and AI engine citations through typed structured data and GEO-optimized content patterns woven into the Emotional Arc
 **Verified:** 2026-02-25T14:30:00Z
 **Status:** passed
 **Re-verification:** No -- initial verification
@@ -109,7 +109,7 @@ No blockers, warnings, or actual stub patterns found.
 
 ### 2. Schema Audit Protocol Effectiveness
 
-**Test:** After building a page with /modulo:execute, modify visible content via /modulo:iterate, then run quality reviewer.
+**Test:** After building a page with /gen:execute, modify visible content via /gen:iterate, then run quality reviewer.
 **Expected:** Quality reviewer detects schema-content mismatch and auto-fixes JSON-LD to match updated visible content.
 **Why human:** Requires end-to-end pipeline execution to verify the audit protocol works in practice.
 

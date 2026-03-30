@@ -12,7 +12,11 @@
       "Bash(__NEW_LINE_a9470e1c1f2d7b6a__ echo \"\")",
       "Bash(__NEW_LINE_2406c2ce2353ad68__ echo \"\")",
       "Bash(test:*)",
-      "Skill(gsd:complete-milestone)"
+      "Skill(gsd:complete-milestone)",
+      "Bash(git push:*)",
+      "Bash(claude plugin:*)",
+      "Bash(claude plugins:*)",
+      "Bash(gh api:*)"
     ]
   }
 }

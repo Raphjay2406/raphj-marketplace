@@ -6,9 +6,9 @@
 
 ## Summary
 
-Phase 2 defines the agent pipeline model for Modulo 2.0 -- a set of markdown agent definitions that describe how seven specialized agents (researcher, creative-director, section-planner, build-orchestrator, section-builder, quality-reviewer, polisher) plus three domain specialists collaborate through defined input/output contracts. The pipeline replaces v6.1.0's hub-and-spoke model where a single design-lead agent reads everything and coordinates everything, creating a context window bottleneck that degrades over extended sessions.
+Phase 2 defines the agent pipeline model for Genorah 2.0 -- a set of markdown agent definitions that describe how seven specialized agents (researcher, creative-director, section-planner, build-orchestrator, section-builder, quality-reviewer, polisher) plus three domain specialists collaborate through defined input/output contracts. The pipeline replaces v6.1.0's hub-and-spoke model where a single design-lead agent reads everything and coordinates everything, creating a context window bottleneck that degrades over extended sessions.
 
-Research confirms that Claude Code's plugin system (as of v2.1.50, February 2026) fully supports the architecture needed for Modulo 2.0. Subagent markdown files with YAML frontmatter define tools, model, permissions, hooks, preloaded skills, and persistent memory. The orchestrator spawns builders via the Task tool with context-injected spawn prompts. Critical new capabilities since v6.1.0's design include: the `skills` frontmatter field (preload skill content into subagent context at startup), `memory` field (persistent cross-session learning per agent), `isolation: worktree` (git worktree isolation for parallel builders), `hooks` in frontmatter (per-agent lifecycle hooks), and `maxTurns` (budget control). Agent Teams (experimental) offer an alternative coordination model but are not recommended for Modulo 2.0 due to instability.
+Research confirms that Claude Code's plugin system (as of v2.1.50, February 2026) fully supports the architecture needed for Genorah 2.0. Subagent markdown files with YAML frontmatter define tools, model, permissions, hooks, preloaded skills, and persistent memory. The orchestrator spawns builders via the Task tool with context-injected spawn prompts. Critical new capabilities since v6.1.0's design include: the `skills` frontmatter field (preload skill content into subagent context at startup), `memory` field (persistent cross-session learning per agent), `isolation: worktree` (git worktree isolation for parallel builders), `hooks` in frontmatter (per-agent lifecycle hooks), and `maxTurns` (budget control). Agent Teams (experimental) offer an alternative coordination model but are not recommended for Genorah 2.0 due to instability.
 
 The v6.1.0 codebase provides a proven foundation. The design-lead agent's "Complete Build Context" spawn prompt pattern is effective and should be preserved. The section-builder's stateless model (reads exactly 1 file, everything else in spawn prompt) is correct and matches the <200 line budget requirement. The key changes are: splitting design-lead into build-orchestrator + creative-director, adding a dedicated researcher agent, adding a polisher agent, structuring CONTEXT.md with split ownership, and hardening context rot prevention from advisory to structural.
 
@@ -25,7 +25,7 @@ This phase produces markdown files, not application code. The "stack" is the Cla
 | YAML Frontmatter | -- | Agent metadata (name, description, tools, model, skills, hooks, memory, maxTurns) | Official format per Claude Code docs |
 | Markdown System Prompts | -- | Agent behavior definitions | Official format; body of .md file becomes system prompt |
 | Task Tool | Built-in | Spawning subagents with context injection | Official mechanism for parallel agent execution |
-| File-based Artifacts | -- | Inter-agent communication via .planning/modulo/ files | Proven in v6.1.0; file system is the shared state |
+| File-based Artifacts | -- | Inter-agent communication via .planning/genorah/ files | Proven in v6.1.0; file system is the shared state |
 
 ### Supporting
 | Component | Purpose | When to Use |
@@ -187,7 +187,7 @@ skills:
 
 **Structure:**
 ```markdown
-# Modulo Context
+# Genorah Context
 Last updated: [ISO date] | Wave: [N] completed | Session: [N]
 
 ## DNA Identity (orchestrator writes, static after Phase 1)
@@ -392,7 +392,7 @@ model: inherit
 maxTurns: 30
 ---
 
-You are a Section Builder for a Modulo design project. You implement a single
+You are a Section Builder for a Genorah design project. You implement a single
 section based on its PLAN.md specification.
 
 ## Context Source
@@ -477,7 +477,7 @@ REPLICATE: [patterns reviewer praised]
 AVOID: [patterns that lost anti-slop points]
 
 ### YOUR TASK
-Read ONLY your PLAN.md at: `.planning/modulo/sections/XX-name/PLAN.md`
+Read ONLY your PLAN.md at: `.planning/genorah/sections/XX-name/PLAN.md`
 Then build the section following the plan exactly.
 ```
 
@@ -589,7 +589,7 @@ Things that couldn't be fully resolved:
 5. **Design system growth collection mechanism**
    - What we know: "Builder proposes in SUMMARY.md, orchestrator collects." Builders flag reusable components.
    - What's unclear: Where does the orchestrator store the collected design system inventory? How do subsequent builders know what's available?
-   - Recommendation: Orchestrator maintains a `DESIGN-SYSTEM.md` file in `.planning/modulo/` that grows after each wave. The "Shared Components Available" section of spawn prompts draws from this file. Format: component name, import path, usage note.
+   - Recommendation: Orchestrator maintains a `DESIGN-SYSTEM.md` file in `.planning/genorah/` that grows after each wave. The "Shared Components Available" section of spawn prompts draws from this file. Format: component name, import path, usage note.
 
 ## Sources
 
@@ -598,7 +598,7 @@ Things that couldn't be fully resolved:
 - [Claude Code Skills Documentation](https://code.claude.com/docs/en/skills) -- Skill format, invocation control, context: fork, agent integration
 - [Claude Code Plugin Reference](https://code.claude.com/docs/en/plugins-reference) -- Plugin manifest schema, agent/skill/hook packaging, directory structure
 - [Claude Code Agent Teams Documentation](https://code.claude.com/docs/en/agent-teams) -- Agent teams architecture, limitations, comparison with subagents (used to confirm: do NOT use Agent Teams)
-- Modulo v6.1.0 codebase analysis: design-lead.md (425 lines), section-builder.md (327 lines), quality-reviewer.md (311 lines), design-researcher.md (117 lines) -- Proven patterns for spawn prompts, embedded rules, artifact contracts
+- Genorah v6.1.0 codebase analysis: design-lead.md (425 lines), section-builder.md (327 lines), quality-reviewer.md (311 lines), design-researcher.md (117 lines) -- Proven patterns for spawn prompts, embedded rules, artifact contracts
 - `.planning/research/ARCHITECTURE.md` -- Comprehensive architecture analysis with pipeline model, context rot prevention, agent memory system
 - `.planning/research/SUMMARY.md` -- Stack, features, and pitfall analysis
 
@@ -621,7 +621,7 @@ Things that couldn't be fully resolved:
 - Context rot prevention: HIGH -- 6-layer defense system proven in v6.1.0, hardened with structural enforcement per user decisions
 - CD authority model: MEDIUM -- New agent (no v6.1.0 precedent), based on user decisions and architectural reasoning
 - Specialist agents: MEDIUM -- Concept is sound (domain-specific skills + same I/O contract), but invocation mechanism needs validation during planning
-- Memory system: MEDIUM -- `memory` frontmatter is new platform capability; integration with Modulo's artifact-based memory needs experimentation
+- Memory system: MEDIUM -- `memory` frontmatter is new platform capability; integration with Genorah's artifact-based memory needs experimentation
 
 **Research date:** 2026-02-23
 **Valid until:** 60 days (stable domain -- Claude Code plugin format is mature, v6.1.0 patterns are proven)

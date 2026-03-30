@@ -73,7 +73,7 @@ check_pattern 'animate-\[.*height' "Animating height — use transform instead"
 
 # --- Project-Specific DNA Patterns (if DNA exists) ---
 
-DNA_FILE=".planning/modulo/DESIGN-DNA.md"
+DNA_FILE=".planning/genorah/DESIGN-DNA.md"
 if [ -f "$DNA_FILE" ]; then
   # Check for Inter/Roboto as display font (unless DNA explicitly allows)
   if ! grep -q "Inter\|Roboto" "$DNA_FILE" 2>/dev/null; then
@@ -92,7 +92,7 @@ if [ $VIOLATION_COUNT -gt 0 ]; then
   printf '%b\n' "$VIOLATIONS"
   echo ""
   echo "Fix these violations before committing."
-  echo "Reference: .planning/modulo/DESIGN-DNA.md"
+  echo "Reference: .planning/genorah/DESIGN-DNA.md"
   echo "=========================================="
   echo ""
   echo "BLOCKED: Commit blocked by DNA compliance hook."

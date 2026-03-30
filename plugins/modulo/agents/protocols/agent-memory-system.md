@@ -12,7 +12,7 @@
 
 | Property | Value |
 |----------|-------|
-| Location | `.planning/modulo/CONTEXT.md` |
+| Location | `.planning/genorah/CONTEXT.md` |
 | Size target | 80-100 lines (hard ceiling: 120 lines) |
 | Update cadence | Full rewrite after every wave (NEVER append) |
 | Lifetime | Created after Design DNA generation; retired after final quality review |
@@ -95,7 +95,7 @@ Full rewrite after every wave prevents unbounded growth. Specific compression ru
 
 | Property | Value |
 |----------|-------|
-| Location | `.planning/modulo/DESIGN-SYSTEM.md` |
+| Location | `.planning/genorah/DESIGN-SYSTEM.md` |
 | Size target | No hard ceiling (reference document, not LLM context) |
 | Update cadence | After every wave, orchestrator appends new entries |
 | Lifetime | Created at Wave 0; grows through project lifecycle |

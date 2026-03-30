@@ -1,14 +1,14 @@
-# Modulo Skill Directory
+# Genorah Skill Directory
 
-> Authoritative registry of all Modulo skills. Agents reference this document to discover available skills, understand their loading behavior, and check which v6.1.0 skills were culled and why.
+> Authoritative registry of all Genorah skills. Agents reference this document to discover available skills, understand their loading behavior, and check which v6.1.0 skills were culled and why.
 
 ## Skill Architecture Overview
 
-Modulo organizes skills into a **3-tier loading system** that controls context window consumption:
+Genorah organizes skills into a **3-tier loading system** that controls context window consumption:
 
 | Tier | Loading | When | Context Budget | Skills |
 |------|---------|------|----------------|--------|
-| **Core** | Always loaded | Every Modulo session | ~10,000 lines total | 22 skills |
+| **Core** | Always loaded | Every Genorah session | ~10,000 lines total | 22 skills |
 | **Domain** | Per-project | Agent decides based on project type, archetype, and current task | Only relevant subset | 26 skills |
 | **Utility** | On-demand | Explicit reference when specific need arises | Only when needed | 2 skills |
 
@@ -35,7 +35,7 @@ Every skill follows the 4-layer format defined in `skills/_skill-template/SKILL.
 
 ## Core Skills
 
-Core skills are loaded in **every** Modulo session. They define the identity, quality, motion, and infrastructure systems that every builder, reviewer, and planner must reference.
+Core skills are loaded in **every** Genorah session. They define the identity, quality, motion, and infrastructure systems that every builder, reviewer, and planner must reference.
 
 | Skill | Status | Phase | Lines | Description |
 |-------|--------|-------|-------|-------------|

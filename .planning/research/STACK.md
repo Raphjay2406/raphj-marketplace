@@ -1,6 +1,6 @@
 # Technology Stack
 
-**Project:** Modulo 2.0 -- Premium Frontend Design Plugin
+**Project:** Genorah 2.0 -- Premium Frontend Design Plugin
 **Researched:** 2026-02-23
 **Research Mode:** Ecosystem (Stack dimension)
 **Overall Confidence:** HIGH (versions verified via npm registry; capabilities cross-referenced with existing v6.1.0 skill files)
@@ -31,7 +31,7 @@ The premium frontend design stack in 2025-2026 centers on three pillars:
 
 **Why GSAP is the primary animation engine:**
 - ScrollTrigger is the gold standard for scroll-driven animations -- no competitor matches its precision (pin, scrub, snap, batch)
-- Timeline orchestration enables the frame-by-frame choreography Modulo's cinematic motion system requires
+- Timeline orchestration enables the frame-by-frame choreography Genorah's cinematic motion system requires
 - SplitText plugin (Club GreenSock) enables word/character-level text reveals that define award-winning typography
 - DrawSVG and MorphSVG enable SVG line-draw and shape-morph animations
 - MotionPathPlugin for motion along bezier curves
@@ -468,7 +468,7 @@ client:only="react":  Three.js scenes (cannot SSR)
 | Performance | JIT compiler | Oxide engine (10x faster) |
 | Custom values | `[]` arbitrary values | Same, plus `@theme` inline |
 
-**CRITICAL for Modulo skills:** Skills must teach Tailwind v4 patterns, not v3. The configuration model changed fundamentally:
+**CRITICAL for Genorah skills:** Skills must teach Tailwind v4 patterns, not v3. The configuration model changed fundamentally:
 
 ```css
 /* Tailwind v4: CSS-first configuration */
@@ -492,7 +492,7 @@ client:only="react":  Three.js scenes (cannot SSR)
 - `dvh` / `svh` / `lvh` viewport units
 - `subgrid` support
 
-**Tailwind v4 compatibility note:** Tailwind v4 still supports a `tailwind.config.ts` file for JavaScript-based configuration, but the CSS-first `@theme` approach is now preferred. Modulo's Design DNA token system maps cleanly to `@theme` directives.
+**Tailwind v4 compatibility note:** Tailwind v4 still supports a `tailwind.config.ts` file for JavaScript-based configuration, but the CSS-first `@theme` approach is now preferred. Genorah's Design DNA token system maps cleanly to `@theme` directives.
 
 ### CSS Custom Properties Strategy
 
@@ -791,7 +791,7 @@ for (const bp of breakpoints) {
 | **Remotion** | Video content generation needed | Standard web animation |
 | **Spline** | Client has existing Spline scenes | New 3D from scratch |
 | **tRPC** | Full-stack TypeScript projects | Frontend-only builds |
-| **Prisma** | Backend integration needed | Modulo is frontend-only |
+| **Prisma** | Backend integration needed | Genorah is frontend-only |
 
 ---
 
@@ -871,7 +871,7 @@ How libraries work together for Awwwards output:
 | Source | What It Verified | Confidence |
 |--------|-----------------|------------|
 | npm registry (live queries) | All package versions | HIGH |
-| Existing Modulo v6.1.0 skills | API patterns, integration approaches | HIGH |
+| Existing Genorah v6.1.0 skills | API patterns, integration approaches | HIGH |
 | PROJECT.md | Requirements and framework targets | HIGH |
 | Training knowledge (May 2025) | Ecosystem positioning, when-to-use guidance | MEDIUM |
 | Training knowledge (May 2025) | Tailwind v4 breaking changes, Next.js 16 features | MEDIUM (major versions confirmed via npm, specific features from training) |

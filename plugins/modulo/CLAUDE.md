@@ -1,10 +1,10 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code when working with the Modulo plugin repository.
+This file provides guidance to Claude Code when working with the Genorah plugin repository.
 
 ## Project Overview
 
-**Modulo 2.0** is a Claude Code plugin for premium frontend design. It produces award-caliber websites (Awwwards SOTD 8.0+ baseline) through a pipeline of specialized agents, machine-enforceable design identity, and multi-layer quality gates. It is NOT a template generator -- every project gets a unique visual identity enforced through Design DNA, 19 Design Archetypes, Emotional Arc storytelling, and a 35-point Anti-Slop Gate.
+**Genorah 2.0** is a Claude Code plugin for premium frontend design. It produces award-caliber websites (Awwwards SOTD 8.0+ baseline) through a pipeline of specialized agents, machine-enforceable design identity, and multi-layer quality gates. It is NOT a template generator -- every project gets a unique visual identity enforced through Design DNA, 19 Design Archetypes, Emotional Arc storytelling, and a 35-point Anti-Slop Gate.
 
 This repository contains only markdown definitions and a plugin manifest -- there is no application code, build system, or test suite. Targets Next.js, Astro, React/Vite, Tauri, and Electron.
 
@@ -45,7 +45,7 @@ Every skill uses the **4-layer format**: Layer 1 (Decision Guidance) explains wh
 ## Core Workflow
 
 ```
-/modulo:start-project -> /modulo:lets-discuss -> /modulo:plan-dev -> /modulo:execute -> /modulo:iterate
+/gen:start-project -> /gen:lets-discuss -> /gen:plan-dev -> /gen:execute -> /gen:iterate
 ```
 
 1. **start-project** -- Discovery questions, parallel research agents, competitive benchmarking, archetype selection, Design DNA generation, content planning
@@ -54,7 +54,7 @@ Every skill uses the **4-layer format**: Layer 1 (Decision Guidance) explains wh
 4. **execute** -- Wave-based implementation (parallel or sequential per master plan) with real-time status
 5. **iterate** -- Brainstorm-first design changes or bug diagnosis with user approval before applying
 
-Additional: `/modulo:bug-fix` for diagnostic root cause analysis with proposed solutions.
+Additional: `/gen:bug-fix` for diagnostic root cause analysis with proposed solutions.
 
 ## Key Concepts
 
@@ -66,7 +66,7 @@ Additional: `/modulo:bug-fix` for diagnostic root cause analysis with proposed s
 
 **Emotional Arc** -- 10 beat types (Hook, Tease, Reveal, Build, Peak, Breathe, Tension, Proof, Pivot, Close) with hard parameter constraints (whitespace %, element count, viewport height). Archetype-specific arc templates. Invalid sequences auto-rejected.
 
-**Anti-Slop Gate** -- 35-point weighted scoring across 7 categories (Colors, Typography, Layout, Depth & Polish, Motion, Creative Courage, UX Intelligence). Design quality categories weighted highest. Post-review enforcement during `/modulo:iterate` and verification. Named tiers: Pass (25+), Strong (28+), SOTD-Ready (30+), Honoree-Level (33+). Penalties: missing signature element (-3), forbidden pattern (-5), no creative tension (-5).
+**Anti-Slop Gate** -- 35-point weighted scoring across 7 categories (Colors, Typography, Layout, Depth & Polish, Motion, Creative Courage, UX Intelligence). Design quality categories weighted highest. Post-review enforcement during `/gen:iterate` and verification. Named tiers: Pass (25+), Strong (28+), SOTD-Ready (30+), Honoree-Level (33+). Penalties: missing signature element (-3), forbidden pattern (-5), no creative tension (-5).
 
 **Awwwards 4-Axis Scoring** -- Design, Usability, Creativity, Content each scored /10. SOTD target: 8.0+ average, no axis below 7.
 
@@ -74,7 +74,7 @@ Additional: `/modulo:bug-fix` for diagnostic root cause analysis with proposed s
 
 ## Managed Artifacts
 
-All state lives under `.planning/modulo/` in the target project:
+All state lives under `.planning/genorah/` in the target project:
 
 | File | Purpose |
 |------|---------|

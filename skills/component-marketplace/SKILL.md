@@ -84,7 +84,7 @@ Do this BEFORE any other restyling. The `framer-motion` package is deprecated; `
 
 - **Referenced by:** section-builder (specialist: any) during component selection
 - **Referenced by:** build-orchestrator during spawn prompt generation (marketplace cap enforcement)
-- **Consumed at:** `/modulo:execute` Wave 2+ (section building phase)
+- **Consumed at:** `/gen:execute` Wave 2+ (section building phase)
 
 ---
 

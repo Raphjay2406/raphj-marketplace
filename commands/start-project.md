@@ -1,23 +1,23 @@
 ---
-description: Start a new Modulo project -- discovery, research, creative direction, and content planning
+description: Start a new Genorah project -- discovery, research, creative direction, and content planning
 argument-hint: [project description or path to requirements file]
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob, Task, WebFetch
 ---
 
-You are the Modulo Start-Project orchestrator. You guide users through discovery, research, and creative foundation -- feeling like a conversation with a creative director, not a form.
+You are the Genorah Start-Project orchestrator. You guide users through discovery, research, and creative foundation -- feeling like a conversation with a creative director, not a form.
 
 ## Guided Flow Header
 
-Read `.planning/modulo/STATE.md` and `.planning/modulo/CONTEXT.md`. Display one-line status:
+Read `.planning/genorah/STATE.md` and `.planning/genorah/CONTEXT.md`. Display one-line status:
 `Phase: Discovery | Project: [name or "New"]`
 
 If a project already exists (STATE.md has a completed start-project phase):
-"A Modulo project already exists. Starting over will replace existing artifacts. Continue?"
+"A Genorah project already exists. Starting over will replace existing artifacts. Continue?"
 
 ## State Check & Auto-Recovery
 
 If STATE.md already exists with `phase: CONTENT_COMPLETE` or later, offer:
-"Project already initialized. Skip to `/modulo:plan-dev`?"
+"Project already initialized. Skip to `/gen:plan-dev`?"
 
 If no STATE.md exists, proceed normally -- this is the first command.
 
@@ -64,7 +64,7 @@ Present a condensed brief and suggest proceeding:
 
 Proceed unless user pushes back. No formal approval gate.
 
-Save discovery to `.planning/modulo/PROJECT.md`.
+Save discovery to `.planning/genorah/PROJECT.md`.
 
 ## Phase 2: Research
 
@@ -120,11 +120,11 @@ User must approve content before proceeding.
 
 ## State Initialization
 
-Create/update `.planning/modulo/STATE.md`:
+Create/update `.planning/genorah/STATE.md`:
 - Set phase to `CONTENT_COMPLETE` (or `DNA_COMPLETE` if `--skip-content`)
 - Record archetype, direction, signature element
 
-Initialize `.planning/modulo/CONTEXT.md` if not already done in Phase 3.5.
+Initialize `.planning/genorah/CONTEXT.md` if not already done in Phase 3.5.
 
 ## Completion & Next Step
 
@@ -132,16 +132,16 @@ Initialize `.planning/modulo/CONTEXT.md` if not already done in Phase 3.5.
 Start-Project complete.
 
 Artifacts created:
-  .planning/modulo/PROJECT.md      -- Requirements
-  .planning/modulo/BRAINSTORM.md   -- Creative direction: [archetype]
-  .planning/modulo/DESIGN-DNA.md   -- Visual identity
-  .planning/modulo/CONTENT.md      -- Approved page copy
-  .planning/modulo/CONTEXT.md      -- Context anchor
-  .planning/modulo/STATE.md        -- Project state
+  .planning/genorah/PROJECT.md      -- Requirements
+  .planning/genorah/BRAINSTORM.md   -- Creative direction: [archetype]
+  .planning/genorah/DESIGN-DNA.md   -- Visual identity
+  .planning/genorah/CONTENT.md      -- Approved page copy
+  .planning/genorah/CONTEXT.md      -- Context anchor
+  .planning/genorah/STATE.md        -- Project state
 
-Next step: /modulo:plan-dev
+Next step: /gen:plan-dev
   Creates detailed build plans for each section with wave assignments.
-  Or: /modulo:lets-discuss to deep-dive on specific creative features first.
+  Or: /gen:lets-discuss to deep-dive on specific creative features first.
 ```
 
 ## Rules

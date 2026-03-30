@@ -100,7 +100,7 @@ None -- no external service configuration required.
 
 ## Next Phase Readiness
 
-- Quality-reviewer agent (Phase 2, Plan 02-04) can consume this skill directly to execute scoring during `/modulo:verify`
+- Quality-reviewer agent (Phase 2, Plan 02-04) can consume this skill directly to execute scoring during `/gen:verify`
 - Quality enforcement phase (Phase 4) builds on this scoring system for build-time and creative audit layers
 - Anti-Slop Gate and Awwwards 4-Axis are confirmed separate systems -- Phase 4 can implement them independently
 - No blockers for remaining Phase 1 plans (01-05 Emotional Arc, 01-06 Skill Directory)

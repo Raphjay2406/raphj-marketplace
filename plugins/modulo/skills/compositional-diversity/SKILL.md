@@ -51,7 +51,7 @@ The 6 groups represent 6 fundamentally different spatial strategies:
 - **Referenced by:** section-planner during MASTER-PLAN.md generation (primary enforcement)
 - **Referenced by:** quality-reviewer during post-build verification (safety net)
 - **Referenced by:** build-orchestrator when composing builder spawn prompts (pattern description)
-- **Consumed at:** `/modulo:plan-dev` workflow step (section planning)
+- **Consumed at:** `/gen:plan-dev` workflow step (section planning)
 
 ---
 

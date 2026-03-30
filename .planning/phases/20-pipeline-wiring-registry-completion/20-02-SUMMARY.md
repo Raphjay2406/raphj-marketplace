@@ -71,7 +71,7 @@ Each task was committed atomically:
 
 1. **Coverage count 33 to 40** -- The original REQUIREMENTS.md tracked only 33 requirements (SEO through OG). Phase 19's 7 SSR requirements were never added during Phase 19 execution. This plan closes that gap.
 
-2. **Label change from "v1" to "v1.5"** -- The coverage section previously said "v1 requirements: 33 total" but the document is titled "Requirements: Modulo 2.0 v1.5" and covers Phases 14-19. Changed to "v1.5 requirements: 40 total" for consistency.
+2. **Label change from "v1" to "v1.5"** -- The coverage section previously said "v1 requirements: 33 total" but the document is titled "Requirements: Genorah 2.0 v1.5" and covers Phases 14-19. Changed to "v1.5 requirements: 40 total" for consistency.
 
 ## Deviations from Plan
 

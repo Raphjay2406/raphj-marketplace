@@ -445,7 +445,7 @@ export function startFPSMonitor() {
       const fps = Math.round((frames * 1000) / (now - lastTime))
       if (fps < 30) {
         console.warn(
-          `[Modulo] Low FPS: ${fps}fps -- check for layout-triggering animations or excessive will-change`
+          `[Genorah] Low FPS: ${fps}fps -- check for layout-triggering animations or excessive will-change`
         )
       }
       frames = 0

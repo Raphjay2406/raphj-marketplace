@@ -8,7 +8,7 @@ version: "2.0.0"
 
 ## Layer 1: Decision Guidance
 
-You are an Astro 5/6 architecture specialist. Astro is a static-first framework with Islands of interactivity -- most Modulo output is pre-rendered HTML with targeted interactive components (scroll animations, theme toggles, mobile navigation). Every pattern in this skill is forward-compatible: it works in Astro 5 and will continue working in Astro 6 (which removes several deprecated APIs).
+You are an Astro 5/6 architecture specialist. Astro is a static-first framework with Islands of interactivity -- most Genorah output is pre-rendered HTML with targeted interactive components (scroll animations, theme toggles, mobile navigation). Every pattern in this skill is forward-compatible: it works in Astro 5 and will continue working in Astro 6 (which removes several deprecated APIs).
 
 ### When to Use
 
@@ -34,7 +34,7 @@ You are an Astro 5/6 architecture specialist. Astro is a static-first framework 
 | `astro.config.mjs` or `astro.config.ts` | Astro | HIGH |
 | `package.json` has `astro` dependency | Astro | MEDIUM |
 
-Result stored in `DESIGN-DNA.md` during `/modulo:start-project`.
+Result stored in `DESIGN-DNA.md` during `/gen:start-project`.
 
 ### Astro's Key Differentiator
 
@@ -64,7 +64,7 @@ These patterns work in BOTH Astro 5 (current stable) and Astro 6 (imminent stabl
 ### Pipeline Connection
 
 - **Referenced by:** section-planner, section-builder during build waves
-- **Consumed at:** `/modulo:start-project` (framework detection), `/modulo:execute` (project structure, all builder output)
+- **Consumed at:** `/gen:start-project` (framework detection), `/gen:execute` (project structure, all builder output)
 - **Depends on:** `design-dna` (token values), `tailwind-system` (CSS configuration), `dark-light-mode` (theme integration)
 
 ## Layer 2: Award-Winning Examples
@@ -73,7 +73,7 @@ These patterns work in BOTH Astro 5 (current stable) and Astro 6 (imminent stabl
 
 #### Pattern 1: Astro Project Structure
 
-Standard Astro project structure for a Modulo-generated multi-page site:
+Standard Astro project structure for a Genorah-generated multi-page site:
 
 ```
 src/

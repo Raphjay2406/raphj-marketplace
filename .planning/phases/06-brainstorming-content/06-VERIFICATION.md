@@ -59,7 +59,7 @@ No blocker or warning anti-patterns found. All 4 pattern matches are legitimate 
 
 ### Human Verification Required
 
-1. End-to-End Brainstorm Flow: Run /modulo:start-project and verify 7-phase protocol execution
+1. End-to-End Brainstorm Flow: Run /gen:start-project and verify 7-phase protocol execution
 2. Content Bank Quality: Assess archetype voice differentiation across worked examples
 3. ASCII Mockup Communicative Power: Verify developers can estimate implementation from annotations
 

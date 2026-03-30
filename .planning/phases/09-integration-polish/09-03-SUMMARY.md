@@ -48,7 +48,7 @@ metrics:
 
 ## What Was Built
 
-A complete progress-reporting skill (`skills/progress-reporting/SKILL.md`, 539 lines) defining the multi-level reporting protocol for Modulo's wave-based build system. The skill teaches the design-lead, build-orchestrator, and section-builder agents exactly how and when to report status at four tiers:
+A complete progress-reporting skill (`skills/progress-reporting/SKILL.md`, 539 lines) defining the multi-level reporting protocol for Genorah's wave-based build system. The skill teaches the design-lead, build-orchestrator, and section-builder agents exactly how and when to report status at four tiers:
 
 1. **Tier 1 (Task):** Machine-readable STATE.md table rows updated at task completion only. No conversation output. Max 20 rows (current wave only).
 2. **Tier 2 (Section):** Compact one-liner in conversation when all tasks in a section complete. Includes beat type and layout pattern.

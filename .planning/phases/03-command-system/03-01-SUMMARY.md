@@ -9,7 +9,7 @@ requires:
     provides: Agent definitions (researcher, creative-director, content-specialist) that commands dispatch to
 
 provides:
-  - /modulo:start-project command definition (thin router, 154 lines)
+  - /gen:start-project command definition (thin router, 154 lines)
   - Replacement of v6.1.0 start-design.md (430 lines) with start-project.md
 
 affects: [03-02 through 03-06 (remaining commands follow same thin router pattern), 04-quality-gates]
@@ -40,7 +40,7 @@ completed: 2026-02-24
 
 # Phase 3 Plan 01: Start-Project Command Summary
 
-**Thin router /modulo:start-project command (154 lines) replacing v6.1.0's 430-line monolith -- adaptive discovery, parallel research dispatch, 1-recommendation creative direction, and content planning via agent pipeline**
+**Thin router /gen:start-project command (154 lines) replacing v6.1.0's 430-line monolith -- adaptive discovery, parallel research dispatch, 1-recommendation creative direction, and content planning via agent pipeline**
 
 ## Performance
 

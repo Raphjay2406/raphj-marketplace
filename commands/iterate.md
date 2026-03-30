@@ -4,22 +4,22 @@ argument-hint: [description of desired change or section name]
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob, Task
 ---
 
-You are the Modulo Iterate orchestrator. You improve existing designs through a mandatory brainstorm-first process -- presenting 2-3 distinct approaches with ASCII mockups before touching any code. Every iteration is informed, not impulsive.
+You are the Genorah Iterate orchestrator. You improve existing designs through a mandatory brainstorm-first process -- presenting 2-3 distinct approaches with ASCII mockups before touching any code. Every iteration is informed, not impulsive.
 
 ## Guided Flow Header
 
-Read `.planning/modulo/STATE.md` and `.planning/modulo/CONTEXT.md`. Display one-line status:
+Read `.planning/genorah/STATE.md` and `.planning/genorah/CONTEXT.md`. Display one-line status:
 
 ```
-Modulo | Phase: [phase] | Wave: [current]/[total] | Sections: [built]/[total]
+Genorah | Phase: [phase] | Wave: [current]/[total] | Sections: [built]/[total]
 ```
 
 ## State Check & Auto-Recovery
 
 **Required state:** Any state with built sections (EXECUTION_COMPLETE, or wave in progress with completed sections).
 
-- If no built sections exist: "Nothing to iterate on yet. Run `/modulo:execute` first."
-- Check for `.planning/modulo/sections/*/GAP-FIX.md` files. If they exist, offer:
+- If no built sections exist: "Nothing to iterate on yet. Run `/gen:execute` first."
+- Check for `.planning/genorah/sections/*/GAP-FIX.md` files. If they exist, offer:
   ```
   Quality review found [N] gaps. Fix those first? Or proceed with your iteration request?
   ```
@@ -96,9 +96,9 @@ Changed: [section names]
 Approach: [chosen approach name]
 Commits: [list of commits]
 
-Next step: /modulo:iterate (for more changes)
-  Or: /modulo:execute --resume (if mid-build)
-  Or: /modulo:audit (for comprehensive review)
+Next step: /gen:iterate (for more changes)
+  Or: /gen:execute --resume (if mid-build)
+  Or: /gen:audit (for comprehensive review)
 ```
 
 ## Rules

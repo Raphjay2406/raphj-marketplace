@@ -33,7 +33,7 @@ must_haves:
 
 # Phase 18: Dynamic OG Images and Pipeline Wiring Verification Report
 
-**Phase Goal:** Every Modulo project has branded social preview images generated from Design DNA tokens, and all v1.5 skills are wired into the agent pipeline so they activate automatically during builds
+**Phase Goal:** Every Genorah project has branded social preview images generated from Design DNA tokens, and all v1.5 skills are wired into the agent pipeline so they activate automatically during builds
 **Verified:** 2026-02-25T23:45:00Z
 **Status:** passed
 **Re-verification:** No -- initial verification
@@ -109,9 +109,9 @@ No blocker or warning anti-patterns found.
 **Why human:** Satori runtime behavior requires actual code execution
 
 #### 3. Pipeline Agent Integration Flow
-**Test:** Run a full Modulo project build and verify section-planner outputs PLAN.md with schema_type/og_template, build-orchestrator creates Wave 0 SEO scaffold, quality-reviewer runs SEO checklist
+**Test:** Run a full Genorah project build and verify section-planner outputs PLAN.md with schema_type/og_template, build-orchestrator creates Wave 0 SEO scaffold, quality-reviewer runs SEO checklist
 **Expected:** All pipeline stages automatically reference and use v1.5 skills without manual loading
-**Why human:** End-to-end pipeline flow requires running the full Modulo command sequence
+**Why human:** End-to-end pipeline flow requires running the full Genorah command sequence
 
 ### Gaps Summary
 

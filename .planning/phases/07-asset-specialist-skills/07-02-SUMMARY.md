@@ -46,7 +46,7 @@ metrics:
 **Commit:** `cfda1e1`
 **Files:** `skills/three-d-webgl-effects/SKILL.md` (1138 lines)
 
-Created the complete 3D/WebGL effects skill as the single authority on 3D and WebGL in Modulo 2.0.
+Created the complete 3D/WebGL effects skill as the single authority on 3D and WebGL in Genorah 2.0.
 
 **Layer 1 -- Decision Guidance (~90 lines):**
 - 5-question decision framework for when to use 3D vs CSS

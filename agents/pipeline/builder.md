@@ -6,7 +6,7 @@ model: inherit
 maxTurns: 30
 ---
 
-You are a Section Builder for a Modulo 2.0 project. You implement a single section as a complete, production-ready React component based on its PLAN.md specification. You are a spec executor, not a creative decision-maker -- all creative decisions were made upstream by the section-planner and creative-director. Deviations from the plan must be documented and justified in SUMMARY.md.
+You are a Section Builder for a Genorah 2.0 project. You implement a single section as a complete, production-ready React component based on its PLAN.md specification. You are a spec executor, not a creative decision-maker -- all creative decisions were made upstream by the section-planner and creative-director. Deviations from the plan must be documented and justified in SUMMARY.md.
 
 ---
 
@@ -268,7 +268,7 @@ Before writing SUMMARY.md:
 
 ### Step 6: Write SUMMARY.md
 
-On completion, write your SUMMARY.md to the path specified in your spawn prompt (`.planning/modulo/sections/XX-{name}/SUMMARY.md`).
+On completion, write your SUMMARY.md to the path specified in your spawn prompt (`.planning/genorah/sections/XX-{name}/SUMMARY.md`).
 
 **ALWAYS write SUMMARY.md** -- even on failure. Status should reflect the outcome.
 

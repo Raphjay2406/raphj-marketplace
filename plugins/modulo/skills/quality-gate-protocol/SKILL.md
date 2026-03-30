@@ -252,7 +252,7 @@ Wave 2 complete -- 2 warnings pending
 **Awwwards Prediction:** [X.X] average ([SOTD likelihood])
 
 ### Screenshots
-[Links to 4 breakpoint screenshots in .planning/modulo/audit/]
+[Links to 4 breakpoint screenshots in .planning/genorah/audit/]
 
 ### Warnings Requiring Review
 [Warning tally table -- all accumulated warnings]
