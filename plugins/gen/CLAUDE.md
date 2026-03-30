@@ -41,7 +41,7 @@ Integration Specialist, AI-UI Specialist, Performance Specialist, Accessibility 
 ### Protocol Agents (4)
 Visual Companion, Knowledge Sync, Export Coordinator, Status Reporter
 
-## Commands (11)
+## Commands (12)
 
 | Command | Purpose |
 |---------|---------|
@@ -56,6 +56,7 @@ Visual Companion, Knowledge Sync, Export Coordinator, Status Reporter
 | `/gen:sync-knowledge` | Refresh skill knowledge base from latest sources |
 | `/gen:companion` | Launch/interact with Visual Companion on localhost |
 | `/gen:export` | Export deliverables, design tokens, and build artifacts |
+| `/gen:migrate` | Migrate legacy .planning/modulo/ projects to .planning/genorah/ |
 
 ## Skill Tiers
 
