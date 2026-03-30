@@ -1,7 +1,7 @@
 {
   "name": "gen",
   "description": "Premium frontend design system for Claude Code. Award-caliber websites through Design DNA, 19 archetypes, 72-point quality gate, emotional arc, creative tension, visual companion, and pipeline agent architecture. Next.js, Astro, React/Vite, Tauri, Electron.",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "author": {
     "name": "raphj"
   },
