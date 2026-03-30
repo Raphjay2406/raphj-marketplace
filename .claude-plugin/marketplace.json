@@ -12,7 +12,7 @@
       "name": "gen",
       "source": "./plugins/gen",
       "description": "Premium frontend design system for Claude Code. 11 workflow commands, 19-agent pipeline architecture, Design DNA identity system with 19 archetypes, creative tension, emotional arc, cinematic motion, 72-point quality gate across 12 categories, visual companion for localhost delivery, SEO/GEO intelligence (llms.txt, AI crawlers, structured data), mobile pipeline (Swift, Kotlin, React Native, Expo, Flutter, store submission), and integration skills for HubSpot, Stripe, Shopify, WooCommerce, and Propstack. Creates award-winning, production-ready websites.",
-      "version": "2.0.1",
+      "version": "2.0.2",
       "author": {
         "name": "raphj"
       },
