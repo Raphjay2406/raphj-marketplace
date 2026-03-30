@@ -33,7 +33,7 @@ Every generated site works correctly across all target frameworks (Next.js, Astr
 - Each has its own palette nuances, depth treatment, and polish
 - Signature transition per archetype — Brutalist might hard-cut, Ethereal might light-bloom, Kinetic might wipe. Transition animation is part of design identity
 - Dual asset support — dark/light variants for key visuals (logos, illustrations, decorative elements). Photos use automatic treatment (reduced brightness, slight desaturation)
-- Token mapping: hybrid — DNA generates both light and dark palettes upfront during /modulo:start-design. If user only defines one, archetype inversion rules derive the other
+- Token mapping: hybrid — DNA generates both light and dark palettes upfront during /gen:start-design. If user only defines one, archetype inversion rules derive the other
 
 ### Accessibility Depth
 - Strict WCAG 2.1 AA everywhere — no exceptions, every component, every interaction, every state

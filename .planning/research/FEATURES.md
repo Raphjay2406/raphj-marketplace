@@ -1,4 +1,4 @@
-# Feature Landscape: Modulo 2.0 Premium Frontend Design Plugin
+# Feature Landscape: Genorah 2.0 Premium Frontend Design Plugin
 
 **Domain:** AI-powered premium frontend design (Claude Code plugin)
 **Researched:** 2026-02-23
@@ -38,7 +38,7 @@ Features users expect. Missing = plugin feels incomplete compared to v6.1.0 or c
 | Aspect | Detail |
 |--------|--------|
 | **What** | 35-point / 7-category scoring system (Colors, Typography, Layout, Depth & Polish, Motion, Creative Courage, UX Intelligence) with hard fail threshold at 25/35 |
-| **Why Expected** | The defining feature of Modulo vs. competitors. Without it, output is indistinguishable from v0 or Cursor. |
+| **Why Expected** | The defining feature of Genorah vs. competitors. Without it, output is indistinguishable from v0 or Cursor. |
 | **Complexity** | Medium |
 | **v6.1.0 Status** | EXISTS but enforcement is advisory. Builders can ignore low scores. Penalties exist (-3 for missing signature element, -5 for forbidden patterns, -5 for no creative tension) but are checked post-hoc. |
 | **2.0 Requirement** | Shift from post-hoc review to inline enforcement. Each builder should self-check against slop criteria BEFORE emitting code. The gate should be structural, not just a checklist someone runs at the end. |
@@ -125,14 +125,14 @@ Features users expect. Missing = plugin feels incomplete compared to v6.1.0 or c
 
 ## Differentiators
 
-Features that set Modulo 2.0 apart from v0, Cursor, Figma AI, and other AI design tools. Not expected, but create competitive advantage.
+Features that set Genorah 2.0 apart from v0, Cursor, Figma AI, and other AI design tools. Not expected, but create competitive advantage.
 
 ### D-1: Wow Moment Library with Archetype Matching
 
 | Aspect | Detail |
 |--------|--------|
 | **What** | 30+ signature interaction patterns across 4 categories (cursor-responsive, scroll-responsive, interactive, ambient), each tagged with archetype compatibility, beat compatibility, performance impact, and reduced-motion fallback. Builders select from this library rather than inventing from scratch. |
-| **Why Differentiator** | No other AI tool has a curated library of award-caliber interactions matched to design personalities. v0 generates basic animations. Cursor generates competent but safe interactions. Modulo should generate IMPRESSIVE ones. |
+| **Why Differentiator** | No other AI tool has a curated library of award-caliber interactions matched to design personalities. v0 generates basic animations. Cursor generates competent but safe interactions. Genorah should generate IMPRESSIVE ones. |
 | **Complexity** | High |
 | **v6.1.0 Status** | EXISTS and is one of the strongest features. Magnetic buttons, spotlight grids, text distortion, parallax tilt, cursor morphing, perspective zoom, SVG line draw, sticky stack, expandable cards, terminal demos, gradient mesh, aurora effects -- all with full TSX code. |
 | **2.0 Requirement** | Expand the library. Key additions: (a) View Transitions API patterns (cross-page shared element transitions); (b) Scroll-snapped gallery patterns (like Apple product pages); (c) Lottie integration for complex illustration animations; (d) WebGL shader effects (noise displacement, liquid distortion) via R3F; (e) Scroll-linked video playback (Apple AirPods-style). The selection should be automatic -- given an archetype and beat type, the system proposes 2-3 compatible wow moments. |
@@ -168,7 +168,7 @@ Features that set Modulo 2.0 apart from v0, Cursor, Figma AI, and other AI desig
 | **Why Differentiator** | Working with existing component ecosystems rather than from scratch. Aceternity UI has ~50+ animated components (text effects, card hovers, background effects, scroll reveals) that would take weeks to build from scratch. Magic UI adds additional landing-page-specific patterns (bento grids, marquees, globe visualizations, dock navigation). The plugin should know HOW to use these libraries and when each component fits. |
 | **Complexity** | Medium |
 | **v6.1.0 Status** | PARTIAL. shadcn/ui is deeply integrated (comprehensive skill file with all components, composition patterns, custom components). But Aceternity UI, Magic UI, and 21st.dev are not referenced at all. |
-| **2.0 Requirement** | Add knowledge of premium component libraries: (a) Aceternity UI component catalog (3D cards, infinite moving cards, text generate effects, spotlight borders, meteors, background beams, aurora backgrounds, SVG mask effects, text reveal, sticky scroll, parallax scroll, direction-aware hover, lens effect); (b) Magic UI component catalog (animated beam, bento grid, blur fade, border beam, dock, globe, marquee, number ticker, orbit, particles, shine border, shimmer button, sparkles text); (c) When-to-use matrix -- given a beat type and archetype, which marketplace component fits; (d) Restyling guidance -- how to apply DNA tokens to marketplace components (override default colors/fonts/spacing). DO NOT vendor these libraries into Modulo. Teach builders how and when to install and use them. |
+| **2.0 Requirement** | Add knowledge of premium component libraries: (a) Aceternity UI component catalog (3D cards, infinite moving cards, text generate effects, spotlight borders, meteors, background beams, aurora backgrounds, SVG mask effects, text reveal, sticky scroll, parallax scroll, direction-aware hover, lens effect); (b) Magic UI component catalog (animated beam, bento grid, blur fade, border beam, dock, globe, marquee, number ticker, orbit, particles, shine border, shimmer button, sparkles text); (c) When-to-use matrix -- given a beat type and archetype, which marketplace component fits; (d) Restyling guidance -- how to apply DNA tokens to marketplace components (override default colors/fonts/spacing). DO NOT vendor these libraries into Genorah. Teach builders how and when to install and use them. |
 | **Dependencies** | TS-1, TS-2, TS-5 |
 
 ### D-5: 3D & WebGL Effects System
@@ -198,7 +198,7 @@ Features that set Modulo 2.0 apart from v0, Cursor, Figma AI, and other AI desig
 | Aspect | Detail |
 |--------|--------|
 | **What** | Automated visual quality verification: spawn browser, screenshot at multiple viewports (375px, 768px, 1024px, 1440px), run Lighthouse audit, check for horizontal overflow, verify touch target sizes, test dark/light mode, verify animation performance (FPS monitoring). |
-| **Why Differentiator** | No other AI design tool verifies its own output in a real browser. v0 generates code and hopes it works. Modulo should PROVE it works. This closes the gap between "generated code" and "shipped product." |
+| **Why Differentiator** | No other AI design tool verifies its own output in a real browser. v0 generates code and hopes it works. Genorah should PROVE it works. This closes the gap between "generated code" and "shipped product." |
 | **Complexity** | Very High |
 | **v6.1.0 Status** | PARTIAL. visual-auditor-live agent exists. Lighthouse command exists. responsive-check command exists. But integration is loose -- these are separate commands the user must invoke, not an automatic pipeline. |
 | **2.0 Requirement** | Integrate into the verify pipeline: (a) Automatic browser launch + screenshot at 4 breakpoints; (b) Lighthouse performance audit with hard fail at score < 80; (c) Visual diff between expected layout (from PLAN.md wireframe description) and actual render; (d) Animation FPS monitoring -- flag animations that drop below 30fps; (e) Accessibility audit via axe-core. This is the highest-impact differentiator possible. |
@@ -269,14 +269,14 @@ Features to explicitly NOT build. These cause bloat, reduce quality, or misalign
 
 | Aspect | Detail |
 |--------|--------|
-| **Why Avoid** | Templates are the antithesis of Modulo's mission. The entire plugin exists because templates produce generic output. A template gallery signals "pick a starting point and customize" when the correct approach is "generate a unique identity and build from it." |
+| **Why Avoid** | Templates are the antithesis of Genorah's mission. The entire plugin exists because templates produce generic output. A template gallery signals "pick a starting point and customize" when the correct approach is "generate a unique identity and build from it." |
 | **What to Do Instead** | Archetype system + Design DNA + emotional arc templates. These CONSTRAIN without PRESCRIBING. The output is unique every time because the inputs (archetype + project brief) create unique DNA. |
 
 ### AF-2: Drag-and-Drop Visual Builder
 
 | Aspect | Detail |
 |--------|--------|
-| **Why Avoid** | Modulo operates through Claude Code's CLI. Adding visual manipulation would require a fundamentally different architecture (VS Code extension, web app, Electron). It also reduces quality -- manual positioning leads to arbitrary spacing, broken grids, and inconsistent rhythm. |
+| **Why Avoid** | Genorah operates through Claude Code's CLI. Adding visual manipulation would require a fundamentally different architecture (VS Code extension, web app, Electron). It also reduces quality -- manual positioning leads to arbitrary spacing, broken grids, and inconsistent rhythm. |
 | **What to Do Instead** | Plan-based building where the AI proposes structure and the user approves/adjusts via conversation. The output is code, not a visual canvas. |
 
 ### AF-3: Real-Time Collaboration / Multiplayer
@@ -290,8 +290,8 @@ Features to explicitly NOT build. These cause bloat, reduce quality, or misalign
 
 | Aspect | Detail |
 |--------|--------|
-| **Why Avoid** | Modulo is a FRONTEND DESIGN plugin. Skills like auth-ui, database-crud-ui, payment-ui exist in v6.1.0 but dilute the focus. A plugin that tries to do everything does nothing well. These 30+ app-building skills bloat the plugin and confuse the core value proposition. |
-| **What to Do Instead** | Focus on design output (HTML, CSS, JS/TSX). Provide component shells (forms, data tables, dashboards) with world-class styling but no backend logic. If users need backend integration, other tools (v0, Cursor) handle that better. Modulo's value is making the FRONTEND beautiful, not making the full stack work. |
+| **Why Avoid** | Genorah is a FRONTEND DESIGN plugin. Skills like auth-ui, database-crud-ui, payment-ui exist in v6.1.0 but dilute the focus. A plugin that tries to do everything does nothing well. These 30+ app-building skills bloat the plugin and confuse the core value proposition. |
+| **What to Do Instead** | Focus on design output (HTML, CSS, JS/TSX). Provide component shells (forms, data tables, dashboards) with world-class styling but no backend logic. If users need backend integration, other tools (v0, Cursor) handle that better. Genorah's value is making the FRONTEND beautiful, not making the full stack work. |
 
 ### AF-5: Custom Design Tool (Figma/Sketch Clone)
 
@@ -371,7 +371,7 @@ Integration Layer:
 
 ## MVP Recommendation
 
-For Modulo 2.0 MVP, prioritize features that address the core v6.1.0 failure modes:
+For Genorah 2.0 MVP, prioritize features that address the core v6.1.0 failure modes:
 
 ### Must Ship (Phase 1-2):
 
@@ -428,17 +428,17 @@ For Modulo 2.0 MVP, prioritize features that address the core v6.1.0 failure mod
 | **Too many skills (87) cause confusion** | Skills cover everything from auth to payment to CMS. Dilutes focus. | Cull to ~30-40 pure design skills. Remove backend/infrastructure skills. |
 | **Inconsistent quality across builders** | Each builder interprets DNA differently. No structural enforcement. | Scaffold generates typed utilities. Builders import, not re-implement. |
 
-### What Awwwards SOTD Winners Do That Modulo Does Not (Yet)
+### What Awwwards SOTD Winners Do That Genorah Does Not (Yet)
 
-1. **Page transitions** -- Nearly every recent SOTD winner has smooth cross-page transitions. Modulo has no page transition system.
-2. **Scroll-linked video/animation sequences** -- Apple-style frame sequences, video scrubbing. Modulo mentions this but has no robust implementation.
-3. **Custom cursor experiences** -- Beyond basic cursor morphing: cursor trails, cursor-as-spotlight, cursor-as-eraser. Modulo has basic cursor shape morph.
-4. **Sound design** -- Subtle audio feedback on interactions. Controversial but used by top winners. NOT recommended for Modulo 2.0 (too niche).
-5. **WebGL background effects** -- Noise displacement, liquid simulations, metaball effects as section backgrounds. Modulo has basic R3F but no shader-based backgrounds.
-6. **Scroll-snap storytelling** -- Full-page scroll-snap sections with each "page" as a distinct moment. Modulo mentions scroll-snap but doesn't have deep patterns.
-7. **Variable font animation** -- Weight/width transitions creating kinetic typography. Modulo has basic variable font support but not systematic use.
+1. **Page transitions** -- Nearly every recent SOTD winner has smooth cross-page transitions. Genorah has no page transition system.
+2. **Scroll-linked video/animation sequences** -- Apple-style frame sequences, video scrubbing. Genorah mentions this but has no robust implementation.
+3. **Custom cursor experiences** -- Beyond basic cursor morphing: cursor trails, cursor-as-spotlight, cursor-as-eraser. Genorah has basic cursor shape morph.
+4. **Sound design** -- Subtle audio feedback on interactions. Controversial but used by top winners. NOT recommended for Genorah 2.0 (too niche).
+5. **WebGL background effects** -- Noise displacement, liquid simulations, metaball effects as section backgrounds. Genorah has basic R3F but no shader-based backgrounds.
+6. **Scroll-snap storytelling** -- Full-page scroll-snap sections with each "page" as a distinct moment. Genorah mentions scroll-snap but doesn't have deep patterns.
+7. **Variable font animation** -- Weight/width transitions creating kinetic typography. Genorah has basic variable font support but not systematic use.
 8. **Lottie/Rive animations** -- Complex illustration animations. Not mentioned in v6.1.0 at all.
-9. **Performance despite complexity** -- Winners achieve 90+ Lighthouse while running GSAP + R3F + video. They use aggressive code splitting, intersection observer-based lazy loading, and progressive enhancement. Modulo knows this but doesn't enforce it.
+9. **Performance despite complexity** -- Winners achieve 90+ Lighthouse while running GSAP + R3F + video. They use aggressive code splitting, intersection observer-based lazy loading, and progressive enhancement. Genorah knows this but doesn't enforce it.
 10. **Content that tells a story** -- Not just feature lists but narrative arcs with real stakes, real problems, real solutions. The emotional arc system is designed for this but execution falls short.
 
 ---
@@ -449,7 +449,7 @@ For Modulo 2.0 MVP, prioritize features that address the core v6.1.0 failure mod
 
 ### Patterns Consistently Seen in SOTD Winners
 
-| Pattern | Frequency | Modulo Support |
+| Pattern | Frequency | Genorah Support |
 |---------|-----------|----------------|
 | Custom cursor (at least morphing shape) | ~70% of SOTD | YES (wow-moments) |
 | Smooth page transitions | ~80% of SOTD | NO (critical gap) |

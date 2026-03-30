@@ -1,12 +1,12 @@
-# Modulo 2.0
+# Genorah 2.0
 
 ## What This Is
 
-A Claude Code plugin for premium frontend design — the world's most complete design system for AI-assisted web development. Modulo 2.0 produces award-caliber (Awwwards SOTD 8.0+) websites through intelligent human-AI collaboration, with a pipeline architecture of specialized agents, multi-layer quality enforcement, and full-stack design capabilities spanning layout, shapes, 3D, animation, content, motion identity, SEO/GEO discoverability, and API integration. Targets Next.js, Astro, React/Vite, Tauri, and Electron with desktop-aware design patterns. Sites are discoverable and rankable by default across search engines, AI engines, and social platforms.
+A Claude Code plugin for premium frontend design — the world's most complete design system for AI-assisted web development. Genorah 2.0 produces award-caliber (Awwwards SOTD 8.0+) websites through intelligent human-AI collaboration, with a pipeline architecture of specialized agents, multi-layer quality enforcement, and full-stack design capabilities spanning layout, shapes, 3D, animation, content, motion identity, SEO/GEO discoverability, and API integration. Targets Next.js, Astro, React/Vite, Tauri, and Electron with desktop-aware design patterns. Sites are discoverable and rankable by default across search engines, AI engines, and social platforms.
 
 ## Core Value
 
-Every output must be award-winning by default — not as a stretch goal, but as the baseline. If a site built with Modulo 2.0 wouldn't score 8.0+ on Awwwards criteria, the system has failed.
+Every output must be award-winning by default — not as a stretch goal, but as the baseline. If a site built with Genorah 2.0 wouldn't score 8.0+ on Awwwards criteria, the system has failed.
 
 ## Requirements
 
@@ -55,7 +55,7 @@ Every output must be award-winning by default — not as a stretch goal, but as 
 
 ### Out of Scope
 
-- Backend logic beyond API integration — Modulo handles API routes/server actions for external API wiring, but not custom backend business logic, databases, or ORMs
+- Backend logic beyond API integration — Genorah handles API routes/server actions for external API wiring, but not custom backend business logic, databases, or ORMs
 - Database / ORM integration — API integration connects to external services, not local databases
 - Authentication logic — UI patterns only, not auth implementation (v1.5 added auth-gated rendering patterns but not auth setup)
 - Mobile native (React Native, Flutter) — web tech only (including in Tauri/Electron shells)
@@ -63,14 +63,14 @@ Every output must be award-winning by default — not as a stretch goal, but as 
 - Template gallery / pre-built pages — antithesis of unique design
 - Sound design / audio — too niche, controversial in web design
 - Excessive archetype count (>19) — quality per archetype > quantity
-- SEO keyword research / backlink analysis — Modulo generates code, not marketing strategy
+- SEO keyword research / backlink analysis — Genorah generates code, not marketing strategy
 - Automated Rich Results testing — deferred to v2 (SEO-V2-01)
 - GEO performance measurement / A/B testing — deferred to v2 (GEO-V2-01)
 - GraphQL integration patterns — deferred to v2 (API-V2-01)
 
 ## Context
 
-**Current state:** Modulo 2.0 v1.5 shipped with 51 skills (22 Core + 26 Domain + 2 Utility + 1 template), 14 agents (7 pipeline + 3 specialist + 4 protocols), 8 commands, and 1 Figma translator agent. v1.5 added 6 new skills (seo-meta rewrite, structured-data, search-visibility, api-patterns, og-images, ssr-dynamic-content) totaling 8,433 lines plus 4 appendices. 7 agent/skill files updated with pipeline wiring. Plugin version 2.0.0-dev.
+**Current state:** Genorah 2.0 v1.5 shipped with 51 skills (22 Core + 26 Domain + 2 Utility + 1 template), 14 agents (7 pipeline + 3 specialist + 4 protocols), 8 commands, and 1 Figma translator agent. v1.5 added 6 new skills (seo-meta rewrite, structured-data, search-visibility, api-patterns, og-images, ssr-dynamic-content) totaling 8,433 lines plus 4 appendices. 7 agent/skill files updated with pipeline wiring. Plugin version 2.0.0-dev.
 
 **v6.1.0 pain points — all resolved:**
 1. ~~Output quality drops over extended sessions~~ → 6-layer context rot prevention

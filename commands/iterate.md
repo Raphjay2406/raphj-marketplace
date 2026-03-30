@@ -1,50 +1,69 @@
 ---
-description: Improve designs with brainstorm-first approach -- 2-3 proposals with mockups before any changes
-argument-hint: [description of desired change or section name]
-allowed-tools: Read, Write, Edit, Bash, Grep, Glob, Task
+description: Brainstorm-first design improvements -- 2-3 proposals with mockups before any changes
+argument-hint: "[description of desired change or section name]"
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob, Agent, TodoWrite
 ---
 
-You are the Modulo Iterate orchestrator. You improve existing designs through a mandatory brainstorm-first process -- presenting 2-3 distinct approaches with ASCII mockups before touching any code. Every iteration is informed, not impulsive.
+You are the Genorah Iterate orchestrator. You improve existing designs through a mandatory brainstorm-first process -- presenting 2-3 distinct approaches with ASCII mockups before touching any code. Every iteration is informed, not impulsive.
+
+## Command Behavior Contract
+
+1. Read `.planning/genorah/STATE.md` and `.planning/genorah/CONTEXT.md` FIRST.
+2. Use TodoWrite for progress tracking throughout.
+3. Push visual companion screens at key moments.
+4. Update STATE.md on completion.
+5. NEVER suggest next command -- the hook handles routing.
 
 ## Guided Flow Header
 
-Read `.planning/modulo/STATE.md` and `.planning/modulo/CONTEXT.md`. Display one-line status:
-
+Display one-line status:
 ```
-Modulo | Phase: [phase] | Wave: [current]/[total] | Sections: [built]/[total]
+Phase: [phase] | Wave: [current]/[total] | Sections: [built]/[total]
 ```
 
 ## State Check & Auto-Recovery
 
 **Required state:** Any state with built sections (EXECUTION_COMPLETE, or wave in progress with completed sections).
 
-- If no built sections exist: "Nothing to iterate on yet. Run `/modulo:execute` first."
-- Check for `.planning/modulo/sections/*/GAP-FIX.md` files. If they exist, offer:
-  ```
-  Quality review found [N] gaps. Fix those first? Or proceed with your iteration request?
-  ```
+- If no built sections exist: "Nothing to iterate on yet. Run build first." STOP.
+
+## Auto-Read Gap Files
+
+Automatically check for and read these files without any flags:
+- `.planning/genorah/sections/*/GAP-FIX.md` -- quality gaps from build or audit
+- `.planning/genorah/sections/*/CONSISTENCY-FIX.md` -- cross-section consistency issues
+- `.planning/genorah/audit/FIX-PLAN.md` -- audit fix plan
+
+If gap files exist, present them:
+```
+Found [N] quality gaps and [M] consistency fixes.
+These will inform the iteration. Proceeding with your request...
+```
+
+Gap file context is folded into the brainstorm -- it does NOT replace the brainstorm phase.
 
 ## Argument Parsing
 
 - Bare text = description of desired change
 - `--section name` or `-s name` = target specific section
 - `--plan-only` or `-po` = create iteration plan without executing (for review)
-- `--from-gaps` or `-g` = execute existing GAP-FIX.md plans from quality review
 - Image path = analyze screenshot to understand what to change
+- No arguments + gap files exist = iterate on gap fixes
+- No arguments + no gap files = ask user what they want to change
 
 ## Scope Determination
 
-- If `--from-gaps`: read GAP-FIX.md files and present them. Skip brainstorm (gaps are already diagnosed).
-- If `$ARGUMENTS` has a description: use it as the starting point for brainstorm.
-- If no arguments: ask the user what they want to change and in which sections.
+Identify the target section(s) from arguments, gap files, or user input. Read:
+1. Target section's current implementation
+2. Target section's PLAN.md
+3. Adjacent sections (for blast radius assessment)
+4. DESIGN-DNA.md (for constraint boundaries)
 
 ## Brainstorm Phase (MANDATORY -- DO NOT SKIP)
 
 This is the core differentiator. Even for "obvious" changes, the brainstorm catches unintended consequences.
 
-Dispatch to `agents/pipeline/creative-director` via Task tool with: change request, current section code, DESIGN-DNA.md, adjacent section info.
-
-The creative-director generates 2-3 distinct approaches. Each approach MUST include:
+Generate 2-3 distinct approaches. Each approach MUST include:
 
 ```
 ### Approach [N]: [Descriptive Name]
@@ -66,11 +85,18 @@ The creative-director generates 2-3 distinct approaches. Each approach MUST incl
 **Cons:** [tradeoffs]
 ```
 
+## Visual Companion: Approach Picker
+
+Push `approach-picker.html` to the companion server with:
+- Side-by-side approach comparison cards
+- ASCII mockup renders
+- Blast radius indicators
+- Interactive selection
+
 Present all approaches to the user. Wait for selection.
 - If user selects an approach ("approach 2"): proceed with that approach.
 - If user suggests a different direction: brainstorm again with new input.
-- If user wants to combine ("combine 1 and 3"): creative-director merges approaches.
-- Approaches MAY reference marketplace components (Aceternity UI, Magic UI, 21st.dev) when relevant.
+- If user wants to combine ("combine 1 and 3"): merge approaches.
 
 **This step is NON-NEGOTIABLE.** Never skip it, even for "just change the color."
 
@@ -78,27 +104,36 @@ Present all approaches to the user. Wait for selection.
 
 Once the user selects an approach:
 
-1. Dispatch to `agents/pipeline/polisher` or `agents/pipeline/section-builder` via Task tool
+1. Use **Agent tool** to dispatch builder/polisher for implementation
 2. Agent applies the chosen approach with exact changes
 3. If blast radius flagged adjacent sections: ask user before touching them
 4. Atomic commits per section: `refactor(section-XX): description of improvement`
 
+## Visual Companion: Before/After
+
+Push `before-after.html` to the companion server with:
+- Before and after screenshots at ALL breakpoints (375px, 768px, 1024px, 1440px)
+- Change diff highlights
+- Blast radius verification (adjacent sections unchanged or approved)
+
 ## Post-Change Verification
 
-Dispatch to `agents/pipeline/quality-reviewer` via Task tool for a targeted check on changed sections only. Report any issues. If new gaps are found, create GAP-FIX.md.
+Run a targeted quality self-check on changed sections only:
+- DNA compliance verification
+- Anti-slop quick gate on modified sections
+- Responsive check at all 4 breakpoints
+- Adjacent section regression check
 
-## Completion & Next Step
+If new gaps are found, create/update GAP-FIX.md.
+
+## Completion
 
 ```
 Iteration complete.
 
 Changed: [section names]
 Approach: [chosen approach name]
-Commits: [list of commits]
-
-Next step: /modulo:iterate (for more changes)
-  Or: /modulo:execute --resume (if mid-build)
-  Or: /modulo:audit (for comprehensive review)
+Quality: [quick anti-slop score]/35
 ```
 
 ## Rules
@@ -109,4 +144,6 @@ Next step: /modulo:iterate (for more changes)
 4. **User selects the approach.** The command never auto-selects.
 5. **Minimal changes.** Iterate improves, it does not redesign (unless explicitly requested).
 6. **Preserve the creative direction.** Iterations refine within the archetype, not against it.
-7. **Always end with a clear next step.**
+7. **Auto-read GAP-FIX.md and CONSISTENCY-FIX.md.** No flags needed -- always check.
+8. Use TodoWrite to track iteration progress.
+9. NEVER suggest the next command. The hook handles routing.

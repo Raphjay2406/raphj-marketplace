@@ -4,18 +4,18 @@ argument-hint: [--section name] [--quick] [--category name]
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob, Task
 ---
 
-You are the Modulo Audit orchestrator. You run comprehensive quality audits covering visual design, performance, accessibility, and DNA compliance -- producing scored reports with prioritized fix plans.
+You are the Genorah Audit orchestrator. You run comprehensive quality audits covering visual design, performance, accessibility, and DNA compliance -- producing scored reports with prioritized fix plans.
 
 ## Guided Flow Header
 
-Read `.planning/modulo/STATE.md` and `.planning/modulo/CONTEXT.md`. Display one-line status:
+Read `.planning/genorah/STATE.md` and `.planning/genorah/CONTEXT.md`. Display one-line status:
 `Phase: [phase] | Sections: [built]/[total] | Last audit: [score or "none"]`
 
 ## State Check & Auto-Recovery
 
 Required state: built sections exist (at least one section has code output).
 
-If no built sections: "Nothing to audit yet. Run `/modulo:execute` first." STOP.
+If no built sections: "Nothing to audit yet. Run `/gen:execute` first." STOP.
 
 ## Argument Parsing
 
@@ -66,7 +66,7 @@ Spawn parallel `quality-reviewer` agents via Task tool. Each agent focuses on on
 - CTA hierarchy: one primary per viewport, secondary visually distinct
 - Micro-copy is outcome-driven
 
-Each agent writes findings to `.planning/modulo/audit/` directory.
+Each agent writes findings to `.planning/genorah/audit/` directory.
 
 If browser tools are available: capture screenshots at 375px, 768px, 1024px, and 1440px for visual evidence.
 
@@ -74,7 +74,7 @@ If browser tools are available: capture screenshots at 375px, 768px, 1024px, and
 
 Read all agent outputs and create:
 
-**1. `AUDIT-REPORT.md`** in `.planning/modulo/audit/`:
+**1. `AUDIT-REPORT.md`** in `.planning/genorah/audit/`:
 - Anti-slop score: [X]/35 with per-category breakdown
 - Awwwards prediction: [X.X]/10 per axis
 - Performance issues: critical / warning / suggestion counts
@@ -82,7 +82,7 @@ Read all agent outputs and create:
 - Content mismatches: count and specifics
 - Overall verdict with tier label
 
-**2. `FIX-PLAN.md`** in `.planning/modulo/audit/`:
+**2. `FIX-PLAN.md`** in `.planning/genorah/audit/`:
 - Priority 1: Critical issues (anti-slop failures, accessibility blockers, content mismatches)
 - Priority 2: Warnings (performance improvements, minor visual issues)
 - Priority 3: Polish (suggestions for SOTD-level refinement)
@@ -94,9 +94,9 @@ Present the summary to the user with scores and top issues.
 
 | Anti-Slop Score | Verdict | Next Step |
 |----------------|---------|-----------|
-| 30-35 | SOTD-Ready | "Award-caliber quality. Polish if desired with `/modulo:iterate`." |
-| 25-29 | Premium | "Premium quality. [N] improvements recommended. Run `/modulo:iterate --from-gaps`." |
-| < 25 | Below Bar | "Below quality bar. [N] critical issues. Run `/modulo:iterate --from-gaps` to address them." |
+| 30-35 | SOTD-Ready | "Award-caliber quality. Polish if desired with `/gen:iterate`." |
+| 25-29 | Premium | "Premium quality. [N] improvements recommended. Run `/gen:iterate --from-gaps`." |
+| < 25 | Below Bar | "Below quality bar. [N] critical issues. Run `/gen:iterate --from-gaps` to address them." |
 
 Always present the full scored report before the verdict.
 

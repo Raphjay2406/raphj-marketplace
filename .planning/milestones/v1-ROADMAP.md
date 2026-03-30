@@ -1,4 +1,4 @@
-# Milestone v1: Modulo 2.0
+# Milestone v1: Genorah 2.0
 
 **Status:** SHIPPED 2026-02-25
 **Phases:** 1-13
@@ -6,7 +6,7 @@
 
 ## Overview
 
-Modulo 2.0 is a ground-up rebuild of the world's most complete frontend design plugin for Claude Code, transforming v6.1.0's proven design theory (archetypes, DNA, emotional arc, anti-slop gate) into structurally enforceable systems. The rebuild progresses from identity definitions through pipeline architecture, commands, quality enforcement, design skills, content intelligence, asset specialists, framework support, and finally integration polish -- each phase delivering a coherent, verifiable capability that the next phase builds upon.
+Genorah 2.0 is a ground-up rebuild of the world's most complete frontend design plugin for Claude Code, transforming v6.1.0's proven design theory (archetypes, DNA, emotional arc, anti-slop gate) into structurally enforceable systems. The rebuild progresses from identity definitions through pipeline architecture, commands, quality enforcement, design skills, content intelligence, asset specialists, framework support, and finally integration polish -- each phase delivering a coherent, verifiable capability that the next phase builds upon.
 
 ## Phases
 
@@ -40,7 +40,7 @@ Plans:
 - [x] 02-07-PLAN.md -- Agent memory system (3-layer: context file, design system, feedback loop)
 
 ### Phase 3: Command System
-**Goal**: Users interact with Modulo through 6 clear commands that route to pipeline stages, with guided flow making it impossible to get lost
+**Goal**: Users interact with Genorah through 6 clear commands that route to pipeline stages, with guided flow making it impossible to get lost
 **Depends on**: Phase 2
 **Requirements**: CMND-01, CMND-02, CMND-03, CMND-04, CMND-05, CMND-06, DEVX-01
 **Plans**: 6 plans

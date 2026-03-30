@@ -1,15 +1,15 @@
 # Project Research Summary
 
-**Project:** Modulo 2.0 v1.5 Milestone -- SEO/GEO & API Integration
+**Project:** Genorah 2.0 v1.5 Milestone -- SEO/GEO & API Integration
 **Domain:** Search engine optimization, generative engine optimization, proactive indexing, external API integration for a Claude Code design plugin
 **Researched:** 2026-02-25
 **Confidence:** HIGH
 
 ## Executive Summary
 
-The v1.5 milestone adds search engine visibility and AI search discoverability to Modulo 2.0. The central finding across all research dimensions is that the SEO/GEO stack is 95% framework-native -- unlike the v1.0 animation stack (GSAP, Motion, Three.js), this milestone requires essentially zero new runtime dependencies. Next.js provides `generateMetadata`, `app/sitemap.ts`, `app/robots.ts`, and `next/og` out of the box. Astro provides `<head>` management and `@astrojs/sitemap`. React 19 introduces native metadata hoisting that eliminates the need for `react-helmet-async` (which is now unmaintained and incompatible with React 19). The only universally recommended addition is `schema-dts` -- TypeScript types for Schema.org, installed as a devDependency with zero runtime cost. This means v1.5 is a skill content milestone, not a library integration milestone.
+The v1.5 milestone adds search engine visibility and AI search discoverability to Genorah 2.0. The central finding across all research dimensions is that the SEO/GEO stack is 95% framework-native -- unlike the v1.0 animation stack (GSAP, Motion, Three.js), this milestone requires essentially zero new runtime dependencies. Next.js provides `generateMetadata`, `app/sitemap.ts`, `app/robots.ts`, and `next/og` out of the box. Astro provides `<head>` management and `@astrojs/sitemap`. React 19 introduces native metadata hoisting that eliminates the need for `react-helmet-async` (which is now unmaintained and incompatible with React 19). The only universally recommended addition is `schema-dts` -- TypeScript types for Schema.org, installed as a devDependency with zero runtime cost. This means v1.5 is a skill content milestone, not a library integration milestone.
 
-The genuine differentiator for v1.5 is GEO -- Generative Engine Optimization. No other AI code generation tool (v0, Cursor, Bolt, etc.) has GEO awareness. With 50%+ of consumers using AI-powered search by late 2025, sites invisible to AI engines are increasingly invisible to users. The research shows that FAQ schema produces a 3.2x higher appearance rate in Google AI Overviews, making it the single highest-impact structured data type for AI search visibility. Content structuring patterns (BLUF formatting, question-based headings, quotable statistics with citations) improve visibility by 28-41%. Modulo can integrate these patterns directly into its Emotional Arc system -- each beat type gets GEO guidance, making the connection between storytelling and search visibility organic rather than bolted-on.
+The genuine differentiator for v1.5 is GEO -- Generative Engine Optimization. No other AI code generation tool (v0, Cursor, Bolt, etc.) has GEO awareness. With 50%+ of consumers using AI-powered search by late 2025, sites invisible to AI engines are increasingly invisible to users. The research shows that FAQ schema produces a 3.2x higher appearance rate in Google AI Overviews, making it the single highest-impact structured data type for AI search visibility. Content structuring patterns (BLUF formatting, question-based headings, quotable statistics with citations) improve visibility by 28-41%. Genorah can integrate these patterns directly into its Emotional Arc system -- each beat type gets GEO guidance, making the connection between storytelling and search visibility organic rather than bolted-on.
 
 The primary risks are: (1) API key exposure through framework env prefixes (`NEXT_PUBLIC_`, `VITE_`, `PUBLIC_`) -- this is the #1 security pitfall, exacerbated by CVE-2025-66478 in Next.js; (2) structured data drift where JSON-LD schemas claim content that no longer matches the visible page after iterations; (3) skill bloat from adding 5+ new skills when 1-2 well-structured skills would serve better; and (4) the critical distinction between AI training bots and AI search bots in robots.txt -- blocking all AI bots (a common copy-paste pattern) destroys AI search visibility. Each of these has a concrete prevention strategy documented in the research.
 
@@ -47,13 +47,13 @@ The SEO/GEO stack is almost entirely framework-native. The existing `seo-meta` s
 - **TS-7: Core Web Vitals SEO Connection** -- LCP < 2.5s, INP < 200ms, CLS < 0.1 as ranking signals. Link to existing `performance-patterns` skill.
 - **TS-8: Canonical URL Strategy** -- Dynamic generation from route, never hardcoded. Trailing slash consistency. `metadataBase` mandatory for Next.js.
 
-**Should have (differentiators) -- these make Modulo uniquely capable:**
+**Should have (differentiators) -- these make Genorah uniquely capable:**
 - **D-1: GEO Content Structuring** -- BLUF formatting, question-based headings, quotable statistics, FAQ sections with schema. The single biggest competitive advantage. No other AI tool has this.
 - **D-2: IndexNow Integration** -- Instant Bing/Yandex indexing on content publish. Next.js Route Handler + Astro build hook patterns.
 - **D-3: AI Bot Taxonomy** -- Nuanced robots.txt distinguishing search bots (allow for visibility) from training bots (block to protect content).
 - **D-7: CRM Form Integration** -- Server-side proxy to HubSpot Forms API, Salesforce Web-to-Lead, generic webhooks. Thin one-way push, not deep CRM backend.
 - **D-8: Advanced Schema Markup** -- HowTo, Speakable, `@graph` patterns, `sameAs` entity linking. Forward-looking for AI citation.
-- **D-10: SEO-Aware Emotional Arc** -- Per-beat-type SEO guidance: Hook = H1 + primary keyword, Proof = statistics + schema, Tension = FAQ + FAQPage schema. Uniquely Modulo.
+- **D-10: SEO-Aware Emotional Arc** -- Per-beat-type SEO guidance: Hook = H1 + primary keyword, Proof = statistics + schema, Tension = FAQ + FAQPage schema. Uniquely Genorah.
 - **TS-3: Dynamic OG Images** -- `next/og` ImageResponse with Design DNA tokens (brand colors, display font). Satori endpoint for Astro.
 
 **Defer to v2+:**
@@ -66,7 +66,7 @@ The SEO/GEO stack is almost entirely framework-native. The existing `seo-meta` s
 
 ### Architecture Approach
 
-The architecture splits the existing `seo-meta` skill into 2-3 focused skills integrated at three pipeline touchpoints: content planning (GEO formatting during `/modulo:start-project`), section planning (schema assignments in PLAN.md during `/modulo:plan-dev`), and build execution (metadata, sitemaps, robots.txt, IndexNow in waves during `/modulo:execute`). SEO quality checks fold into existing gates as a supplementary checklist, not a separate quality layer.
+The architecture splits the existing `seo-meta` skill into 2-3 focused skills integrated at three pipeline touchpoints: content planning (GEO formatting during `/gen:start-project`), section planning (schema assignments in PLAN.md during `/gen:plan-dev`), and build execution (metadata, sitemaps, robots.txt, IndexNow in waves during `/gen:execute`). SEO quality checks fold into existing gates as a supplementary checklist, not a separate quality layer.
 
 **Major components:**
 
@@ -89,7 +89,7 @@ The architecture splits the existing `seo-meta` skill into 2-3 focused skills in
 
 ### Critical Pitfalls
 
-1. **C1: Structured Data Mismatch** -- JSON-LD claims content the page does not show (price changed, FAQ rewritten, schema not updated). Google penalizes with manual action for "Spammy Structured Markup." **Prevent with:** single source of truth (JSON-LD and UI derive from same data object), post-iteration schema audit in `/modulo:iterate` blast radius analysis, mandatory Rich Results Test validation before deploy.
+1. **C1: Structured Data Mismatch** -- JSON-LD claims content the page does not show (price changed, FAQ rewritten, schema not updated). Google penalizes with manual action for "Spammy Structured Markup." **Prevent with:** single source of truth (JSON-LD and UI derive from same data object), post-iteration schema audit in `/gen:iterate` blast radius analysis, mandatory Rich Results Test validation before deploy.
 
 2. **C2: Canonical URL Misconfiguration** -- Relative URLs, trailing slash inconsistency, stale hardcoded canonicals, missing `metadataBase`. Splits link equity silently. Bing confirms duplicate content hurts both traditional SEO and AI search visibility. **Prevent with:** dynamic canonical generation from route (never hardcoded), `metadataBase` as mandatory in root layout, trailing slash policy enforced site-wide via framework config.
 
@@ -111,7 +111,7 @@ Based on combined research, the v1.5 milestone should follow 4 phases. The depen
 **Research flag:** Standard patterns. Framework APIs are well-documented. Verify Next.js 16 `generateMetadata` async params syntax against current docs.
 
 ### Phase 2: Structured Data + GEO Content Patterns
-**Rationale:** This is where the competitive advantage lives. Structured data bridges traditional SEO and GEO -- it serves both Google rich results and AI engine citation. FAQ schema's 3.2x AI Overview impact makes it the highest-priority addition. GEO content patterns connect to the Emotional Arc system, making this uniquely Modulo.
+**Rationale:** This is where the competitive advantage lives. Structured data bridges traditional SEO and GEO -- it serves both Google rich results and AI engine citation. FAQ schema's 3.2x AI Overview impact makes it the highest-priority addition. GEO content patterns connect to the Emotional Arc system, making this uniquely Genorah.
 **Delivers:** New `structured-data` skill (Domain tier). Typed JSON-LD via `schema-dts` for Article, FAQPage, Organization, WebSite, BreadcrumbList, HowTo, Product. Per-page-type schema recipes. `@graph` pattern for combining schemas. GEO content structuring (BLUF, question headings, quotable statistics). SEO-Emotional Arc integration (per-beat-type SEO guidance).
 **Addresses:** TS-4, D-1 (GEO content), D-8 (advanced schema), D-10 (SEO + Emotional Arc)
 **Avoids:** C1 (schema-content mismatch -- single source of truth rule), M3 (GEO over-optimization -- archetype-aware patterns), D1 (schema over-application -- decision matrix)
@@ -134,7 +134,7 @@ Based on combined research, the v1.5 milestone should follow 4 phases. The depen
 ### Phase Ordering Rationale
 
 - **Phase 1 first** because every downstream phase depends on correct meta tags, canonical URLs, and sitemap infrastructure. A broken foundation makes GEO and IndexNow pointless.
-- **Phase 2 second** because structured data is the bridge between traditional SEO and GEO. FAQ schema drives both rich results and AI citations. The Emotional Arc integration is what makes Modulo's approach unique.
+- **Phase 2 second** because structured data is the bridge between traditional SEO and GEO. FAQ schema drives both rich results and AI citations. The Emotional Arc integration is what makes Genorah's approach unique.
 - **Phase 3 third** because proactive indexing is a post-build/post-deploy concern. IndexNow submits URLs that must already have correct metadata and structured data.
 - **Phase 4 last** because dynamic OG images and CRM integration are enhancement features. The site functions correctly for search without them. OG images depend on DNA tokens being in place.
 - **This order avoids all critical pitfalls**: C1 (schema mismatch) addressed in Phase 2 with single-source-of-truth rule. C2 (canonicals) addressed in Phase 1 with dynamic generation. C3 (API key exposure) addressed in Phase 4 with server proxy default. C4 (SPA invisibility) addressed in Phase 1 with honest framework matrix.
@@ -201,7 +201,7 @@ After skill creation, the following agents need updates (Phase B in architecture
 - [schema-dts npm](https://www.npmjs.com/package/schema-dts) -- v1.1.5, TypeScript types for Schema.org
 - [HubSpot Developer Docs: Forms API](https://developers.hubspot.com/docs/api-reference/marketing-forms-v3/guide) -- submission endpoint, rate limits
 - Existing `seo-meta` skill analysis (398 lines, current v2.0 implementation)
-- Existing Modulo codebase (45 skills, 14 agents, 8 commands -- pipeline integration analysis)
+- Existing Genorah codebase (45 skills, 14 agents, 8 commands -- pipeline integration analysis)
 
 ### Secondary (MEDIUM confidence)
 - [Search Engine Land: Mastering GEO in 2026](https://searchengineland.com/mastering-generative-engine-optimization-in-2026-full-guide-469142) -- GEO techniques, AI Overviews optimization

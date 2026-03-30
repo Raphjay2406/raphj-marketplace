@@ -1,6 +1,6 @@
-# Architecture Patterns: SEO/GEO, Sitemap, IndexNow, and API Integration for Modulo 2.0
+# Architecture Patterns: SEO/GEO, Sitemap, IndexNow, and API Integration for Genorah 2.0
 
-**Domain:** Plugin architecture extension -- integrating search visibility, AI search optimization, and API-backed research into the Modulo pipeline
+**Domain:** Plugin architecture extension -- integrating search visibility, AI search optimization, and API-backed research into the Genorah pipeline
 **Researched:** 2026-02-25
 **Confidence:** HIGH for skill architecture and pipeline integration (based on deep analysis of 45 existing skills, 14 agents, 8 commands). MEDIUM for GEO-specific patterns (rapidly evolving field, 2025-2026 best practices still solidifying).
 
@@ -8,7 +8,7 @@
 
 ## Executive Summary
 
-The existing `seo-meta` skill (398 lines, Utility tier) already covers the core SEO code patterns: Next.js `generateMetadata`, Astro head management, JSON-LD structured data, Open Graph, sitemaps, and robots.txt. However, it is a single utility skill treating SEO as an afterthought -- "load on demand when a specific need arises." For Modulo 2.0 v1.5, the architecture needs to change: SEO/GEO should be **woven into the pipeline** rather than bolted on at the end.
+The existing `seo-meta` skill (398 lines, Utility tier) already covers the core SEO code patterns: Next.js `generateMetadata`, Astro head management, JSON-LD structured data, Open Graph, sitemaps, and robots.txt. However, it is a single utility skill treating SEO as an afterthought -- "load on demand when a specific need arises." For Genorah 2.0 v1.5, the architecture needs to change: SEO/GEO should be **woven into the pipeline** rather than bolted on at the end.
 
 This document answers six architectural questions and provides a concrete integration plan.
 
@@ -30,7 +30,7 @@ The current `seo-meta` skill conflates four distinct concerns: metadata generati
 
 ### Tier Justification
 
-**`seo-meta` promoted to Core:** Every public-facing Modulo project needs metadata. Currently Utility tier ("loaded on-demand"), but metadata generation should happen automatically for every page the section-planner creates. The `multi-page-architecture` skill (Core tier) already references page registries with URL patterns -- metadata is the technical counterpart. Promotion to Core means the section-planner and quality-reviewer always have metadata awareness.
+**`seo-meta` promoted to Core:** Every public-facing Genorah project needs metadata. Currently Utility tier ("loaded on-demand"), but metadata generation should happen automatically for every page the section-planner creates. The `multi-page-architecture` skill (Core tier) already references page registries with URL patterns -- metadata is the technical counterpart. Promotion to Core means the section-planner and quality-reviewer always have metadata awareness.
 
 **`structured-data` as Domain:** Not every project needs JSON-LD. Dashboard projects, internal tools, and desktop apps (Tauri/Electron) have no search engine concern. Domain tier means it loads when the project type indicates public-facing web content -- the same trigger logic that activates `blog-patterns`, `ecommerce-ui`, or `portfolio-patterns`.
 
@@ -43,14 +43,14 @@ A merged 1200+ line skill would exceed the 300-600 line target. More critically,
 - Metadata is per-page, generated during section builds (Wave 2+)
 - Structured data is per-page-type, assigned during section planning
 - Sitemap is site-wide, generated as a build artifact in Wave 0 and finalized post-build
-- GEO patterns affect content creation, which happens during `/modulo:start-project`
+- GEO patterns affect content creation, which happens during `/gen:start-project`
 - IndexNow fires post-deploy, outside the build pipeline entirely
 
 Combining them forces agents to load GEO content guidelines when they only need sitemap patterns, or load IndexNow integration code when they only need metadata templates.
 
 ### Why Not Keep It as One Utility Skill?
 
-The current Utility tier placement means SEO is treated as optional. But metadata is not optional for any public website -- missing og:image alone causes measurable social sharing degradation. Keeping it Utility means the section-planner never considers SEO during planning, the quality-reviewer never checks metadata, and the content-specialist never formats copy for AI search engines. SEO becomes something you remember to add at the end, which is exactly the anti-pattern the Modulo pipeline was designed to prevent.
+The current Utility tier placement means SEO is treated as optional. But metadata is not optional for any public website -- missing og:image alone causes measurable social sharing degradation. Keeping it Utility means the section-planner never considers SEO during planning, the quality-reviewer never checks metadata, and the content-specialist never formats copy for AI search engines. SEO becomes something you remember to add at the end, which is exactly the anti-pattern the Genorah pipeline was designed to prevent.
 
 ---
 
@@ -61,7 +61,7 @@ The current Utility tier placement means SEO is treated as optional. But metadat
 SEO is not a single phase -- it has distinct activities at three pipeline stages.
 
 ```
-/modulo:start-project                    /modulo:plan-dev              /modulo:execute
+/gen:start-project                    /gen:plan-dev              /gen:execute
          |                                      |                            |
    Phase 4: Content Planning              Section Planning            Wave 0 -> Wave N -> Post-Build
          |                                      |                            |
@@ -186,7 +186,7 @@ Sitemaps should be a **skill pattern** (code templates in the `search-visibility
 
 **Why not an agent protocol:** Sitemap generation is deterministic. Given a list of pages and their URL patterns (from MASTER-PLAN.md's SEO Registry), the sitemap code writes itself. No creative judgment is needed. Agent protocols are for decisions that require context -- sitemap generation is mechanical.
 
-**Why not a build-time step (external):** Modulo already generates everything as source code via section-builders. Adding an external build step (e.g., a shell script that generates sitemap.xml) breaks the pattern. The sitemap should be framework-native code that runs at request time (Next.js `app/sitemap.ts`) or build time (Astro `src/pages/sitemap.xml.ts`), generated by the Wave 0 scaffold builder.
+**Why not a build-time step (external):** Genorah already generates everything as source code via section-builders. Adding an external build step (e.g., a shell script that generates sitemap.xml) breaks the pattern. The sitemap should be framework-native code that runs at request time (Next.js `app/sitemap.ts`) or build time (Astro `src/pages/sitemap.xml.ts`), generated by the Wave 0 scaffold builder.
 
 **Why a skill pattern:** The `search-visibility` skill provides framework-specific sitemap templates. The section-builder for Wave 0 (scaffold) reads the SEO Registry from MASTER-PLAN.md and generates the appropriate sitemap code using the skill's patterns. This matches how `design-system-scaffold` provides Tailwind theme templates that the Wave 0 builder generates.
 
@@ -215,7 +215,7 @@ SPAs have limited sitemap needs (typically few routes). A static file in `public
 
 ### Large Site Handling
 
-For sites with 50k+ URLs (unlikely for Modulo-generated sites, but possible for blog-heavy projects):
+For sites with 50k+ URLs (unlikely for Genorah-generated sites, but possible for blog-heavy projects):
 - Next.js: Use `generateSitemaps()` to split into multiple sitemaps with a sitemap index
 - Astro: Use `@astrojs/sitemap` with `customPages` option
 - The `search-visibility` skill should document the 50,000 URL threshold and provide the multi-sitemap pattern
@@ -257,7 +257,7 @@ IndexNow submission happens via a CI/CD pipeline step (not in-app), since SPAs d
 
 ### Pipeline Integration Point
 
-IndexNow is a **post-deploy** concern, not a build concern. Modulo generates source code, not deployment pipelines. The integration should be:
+IndexNow is a **post-deploy** concern, not a build concern. Genorah generates source code, not deployment pipelines. The integration should be:
 
 1. **Wave 0 scaffold:** Generate the verification file and API route (framework-specific)
 2. **`search-visibility` skill:** Document the post-deploy integration patterns per hosting platform (Vercel, Netlify, Cloudflare Pages, custom)
@@ -424,7 +424,7 @@ This is reported as INFO, not WARNING or CRITICAL. GEO is an optimization, not a
 ## Component Interaction Diagram
 
 ```
-                         /modulo:start-project
+                         /gen:start-project
                                 |
                     content-specialist reads
                     search-visibility skill
@@ -433,7 +433,7 @@ This is reported as INFO, not WARNING or CRITICAL. GEO is an optimization, not a
                           CONTENT.md
                     (with SEO/GEO metadata section)
                                 |
-                         /modulo:plan-dev
+                         /gen:plan-dev
                                 |
                     section-planner reads
                     structured-data skill
@@ -442,7 +442,7 @@ This is reported as INFO, not WARNING or CRITICAL. GEO is an optimization, not a
                     MASTER-PLAN.md (with SEO Registry)
                     PLAN.md files (with metadata must_haves)
                                 |
-                         /modulo:execute
+                         /gen:execute
                                 |
             +-------------------+-------------------+
             |                   |                   |
@@ -548,7 +548,7 @@ Phase A items can be built in parallel (3 independent skills). Phase B items hav
 
 ## Framework Decision Matrix
 
-The SEO implementation varies significantly by target framework. The skills should provide framework-specific patterns for all Modulo-supported targets.
+The SEO implementation varies significantly by target framework. The skills should provide framework-specific patterns for all Genorah-supported targets.
 
 | Capability | Next.js (App Router) | Astro | React/Vite | Tauri/Electron |
 |-----------|---------------------|-------|------------|----------------|
@@ -626,7 +626,7 @@ The SEO implementation varies significantly by target framework. The skills shou
 
 ## Sources
 
-- Existing `seo-meta` skill: `D:/Modulo/Plugins/v0-ahh-skill/skills/seo-meta/SKILL.md` (398 lines, current v2.0 implementation) [HIGH confidence]
+- Existing `seo-meta` skill: `D:/Genorah/Plugins/v0-ahh-skill/skills/seo-meta/SKILL.md` (398 lines, current v2.0 implementation) [HIGH confidence]
 - Existing `multi-page-architecture` skill: page type templates, URL patterns, wave structure [HIGH confidence]
 - Existing pipeline agents: build-orchestrator, section-planner, quality-reviewer, researcher [HIGH confidence]
 - Existing quality-gate-protocol: 4-layer enforcement model [HIGH confidence]

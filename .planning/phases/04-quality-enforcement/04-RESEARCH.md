@@ -111,7 +111,7 @@ reference_target:
   url: "https://awwwards.com/sites/linear-app"
   section: "hero"
   quality_bar: "Split layout with product screenshot, gradient text, staggered reveal"
-  screenshot: ".planning/modulo/references/02-hero-target.png"
+  screenshot: ".planning/genorah/references/02-hero-target.png"
 layout_pattern: "split-hero-product"
 ---
 
@@ -210,7 +210,7 @@ Layer 4: USER CHECKPOINT (human judgment)
 
 ## Don't Hand-Roll
 
-Problems that have existing solutions within the Modulo ecosystem:
+Problems that have existing solutions within the Genorah ecosystem:
 
 | Problem | Don't Build | Use Instead | Why |
 |---------|-------------|-------------|-----|
@@ -295,7 +295,7 @@ Since Phase 4 produces markdown skills and protocols, "code examples" are skill 
 ```markdown
 <reference_quality_target>
 **Reference:** [Name] - [Section Type]
-**Source:** [URL or .planning/modulo/references/XX-target.png]
+**Source:** [URL or .planning/genorah/references/XX-target.png]
 **Beat:** [Beat type this section is assigned]
 
 **Quality Attributes to Match or Exceed:**
@@ -472,13 +472,13 @@ For each breakpoint [375, 768, 1024, 1440]:
 1. `Playwright_resize` to {width}px height 900px
 2. `Playwright_navigate` to localhost:[port]
 3. Wait 2 seconds for animations to complete
-4. `Playwright_screenshot` full page → save to .planning/modulo/audit/screenshot-{width}.png
+4. `Playwright_screenshot` full page → save to .planning/genorah/audit/screenshot-{width}.png
 5. Compare against PLAN.md expectations for each section visible at this breakpoint
 
 ### Step 2: Lighthouse Audit
 Execute via Bash tool in target project:
 ```bash
-npx lighthouse http://localhost:[port] --output=json --output-path=.planning/modulo/audit/lighthouse.json --chrome-flags="--headless --no-sandbox" --only-categories=performance,accessibility,best-practices
+npx lighthouse http://localhost:[port] --output=json --output-path=.planning/genorah/audit/lighthouse.json --chrome-flags="--headless --no-sandbox" --only-categories=performance,accessibility,best-practices
 ```
 Parse results:
 - Performance score < 80 = CRITICAL FAIL
@@ -780,7 +780,7 @@ The Microsoft Playwright MCP server (`@playwright/mcp@latest`) provides all nece
 ```bash
 npx lighthouse http://localhost:3000 \
   --output=json \
-  --output-path=.planning/modulo/audit/lighthouse.json \
+  --output-path=.planning/genorah/audit/lighthouse.json \
   --chrome-flags="--headless --no-sandbox" \
   --only-categories=performance,accessibility,best-practices
 ```
@@ -951,7 +951,7 @@ The build-orchestrator maintains a running tally of warnings across all waves:
 ## Sources
 
 ### Primary (HIGH confidence)
-- Modulo v6.1.0 skill analysis: anti-slop-design, awwwards-scoring, quality-standards, visual-auditor, creative-sections, landing-page, emotional-arc, performance-guardian -- all read directly from the codebase
+- Genorah v6.1.0 skill analysis: anti-slop-design, awwwards-scoring, quality-standards, visual-auditor, creative-sections, landing-page, emotional-arc, performance-guardian -- all read directly from the codebase
 - Phase 2 research and plans: 02-RESEARCH.md, 02-01-PLAN.md through 02-04-PLAN.md -- pipeline architecture decisions that Phase 4 builds on
 - Phase 4 CONTEXT.md -- user decisions that constrain this research
 - [Microsoft Playwright MCP server](https://github.com/microsoft/playwright-mcp) -- official repository, tool capabilities verified

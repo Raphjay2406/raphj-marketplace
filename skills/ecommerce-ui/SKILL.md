@@ -31,9 +31,9 @@ version: "2.0.0"
 
 ### Pipeline Connection
 
-- **Referenced by:** section-builder during product page, shop, and checkout section builds
-- **Consumed at:** `/modulo:execute` wave 2+ for commerce sections
-- **Related commands:** `/modulo:plan-dev` scopes product page sections
+- **Referenced by:** builder during product page, shop, and checkout section builds
+- **Consumed at:** `/gen:execute` wave 2+ for commerce sections
+- **Related commands:** `/gen:plan` scopes product page sections
 
 ## Layer 2: Award-Winning Examples
 

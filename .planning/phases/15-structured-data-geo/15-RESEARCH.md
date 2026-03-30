@@ -6,7 +6,7 @@
 
 ## Summary
 
-Phase 15 creates a new `structured-data` skill (Domain tier) providing typed JSON-LD schemas for all major page types, plus GEO-optimized content patterns integrated into Modulo's Emotional Arc system. The user has decided against `schema-dts` in favor of plain TypeScript interfaces maintained manually.
+Phase 15 creates a new `structured-data` skill (Domain tier) providing typed JSON-LD schemas for all major page types, plus GEO-optimized content patterns integrated into Genorah's Emotional Arc system. The user has decided against `schema-dts` in favor of plain TypeScript interfaces maintained manually.
 
 The research uncovered three critical findings that reshape the plan:
 
@@ -259,7 +259,7 @@ function buildPageSchema(page: BlogPost, site: SiteConfig): SchemaGraph {
 
 ### Pattern 3: Per-Page-Type Schema Recipes
 
-**What:** Prescriptive schema recipes for common Modulo page types.
+**What:** Prescriptive schema recipes for common Genorah page types.
 **When to use:** Section planners and builders reference these when generating JSON-LD.
 
 | Page Type | Schema Combination | Notes |
@@ -279,7 +279,7 @@ function buildPageSchema(page: BlogPost, site: SiteConfig): SchemaGraph {
 ### Pattern 4: SEO-Emotional Arc Integration
 
 **What:** Per-beat prescriptive mapping of which SEO/GEO elements belong at each beat position.
-**When to use:** Section planners reference this when assigning beats during `/modulo:plan-dev`.
+**When to use:** Section planners reference this when assigning beats during `/gen:plan-dev`.
 
 | Beat | SEO/GEO Element | Schema Contribution | Rationale |
 |------|-----------------|---------------------|-----------|
@@ -344,7 +344,7 @@ Problems that look simple but have existing solutions or established patterns:
 
 ### Pitfall 2: Schema-Content Mismatch After Iteration
 
-**What goes wrong:** During `/modulo:iterate`, page content changes but JSON-LD is not updated. Schema claims prices, dates, or facts that no longer match visible content.
+**What goes wrong:** During `/gen:iterate`, page content changes but JSON-LD is not updated. Schema claims prices, dates, or facts that no longer match visible content.
 **Why it happens:** JSON-LD is typically in a separate component or file from the visible content. Content edits do not automatically propagate to schema.
 **How to avoid:** Run schema audit on every quality-reviewer pass. The audit protocol checks: (1) every JSON-LD claim has a visible counterpart on the page, (2) dates are current, (3) prices match, (4) FAQ answers match displayed text.
 **Warning signs:** Google Search Console "Structured data" errors or manual action for spammy markup.
@@ -409,7 +409,7 @@ export function JsonLd({ data }: JsonLdProps) {
 // Correct: FAQ schema matches visible FAQ section
 const faqs = [
   {
-    question: "What frameworks does Modulo support?",
+    question: "What frameworks does Genorah support?",
     answer: "Next.js 16, Astro 5/6, React 19/Vite, Tauri, and Electron."
   },
   {

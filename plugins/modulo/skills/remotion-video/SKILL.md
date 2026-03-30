@@ -31,8 +31,8 @@ This skill focuses on **composition creation** -- React components + Remotion AP
 |---------|-------|------|
 | Composition (what the video looks like) | This skill | Remotion React components |
 | In-browser preview | This skill | `@remotion/player` |
-| Video export (MP4/WebM) | Outside Modulo scope | Remotion CLI or `@remotion/renderer` |
-| Server-side rendering | Outside Modulo scope | Remotion Lambda or self-hosted |
+| Video export (MP4/WebM) | Outside Genorah scope | Remotion CLI or `@remotion/renderer` |
+| Server-side rendering | Outside Genorah scope | Remotion Lambda or self-hosted |
 
 Builders create compositions. Rendering to video files is a deployment/infrastructure concern handled separately.
 
@@ -69,7 +69,7 @@ Remotion is NOT fully open source for all commercial use. Document this clearly 
 ### Pipeline Connection
 
 - **Referenced by:** Section builder (specialist: video) during execute phase
-- **Consumed at:** `/modulo:execute` when a section PLAN.md specifies `builder_type: video` or content requires Remotion composition
+- **Consumed at:** `/gen:execute` when a section PLAN.md specifies `builder_type: video` or content requires Remotion composition
 - **Input from:** Design DNA (colors, fonts, motion), section PLAN.md (content requirements)
 - **Output to:** Remotion composition files in project `src/remotion/` directory, SUMMARY.md with composition registry
 

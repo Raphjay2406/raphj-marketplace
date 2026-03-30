@@ -7,7 +7,7 @@ score: 6/6 must-haves verified
 
 # Phase 3: Command System Verification Report
 
-**Phase Goal:** Users interact with Modulo through 6 clear commands that route to pipeline stages, with guided flow making it impossible to get lost
+**Phase Goal:** Users interact with Genorah through 6 clear commands that route to pipeline stages, with guided flow making it impossible to get lost
 **Verified:** 2026-02-24T12:30:00Z
 **Status:** passed
 **Re-verification:** No -- initial verification
@@ -81,7 +81,7 @@ score: 6/6 must-haves verified
 ### Human Verification Required
 
 ### 1. End-to-end workflow walkthrough
-**Test:** Run /modulo:start-project on a real project, follow guided flow through all commands.
+**Test:** Run /gen:start-project on a real project, follow guided flow through all commands.
 **Expected:** At every step the user knows exactly what to do next with no dead ends.
 **Why human:** Guided flow depends on runtime state reading and contextual suggestions that structural verification cannot fully confirm.
 

@@ -17,15 +17,15 @@ expected: Case-insensitive search for "design-lead" across skills/, agents/pipel
 result: pass
 
 ### 2. Zero start-design and --figma references
-expected: Search for "start-design" and "--figma" across all v2.0 files returns zero matches. The figma-integration skill should describe providing a Figma URL during normal /modulo:start-project discovery instead.
+expected: Search for "start-design" and "--figma" across all v2.0 files returns zero matches. The figma-integration skill should describe providing a Figma URL during normal /gen:start-project discovery instead.
 result: pass
 
 ### 3. Zero plan-sections references
 expected: Search for "plan-sections" across all v2.0 skill and agent files returns zero matches. Replaced with "plan-dev" everywhere.
 result: pass
 
-### 4. Zero /modulo:verify and /modulo:export references
-expected: Search for "/modulo:verify" and "/modulo:export" across all v2.0 files returns zero matches. /modulo:verify replaced with /modulo:audit; /modulo:export replaced with post-build workflow description.
+### 4. Zero /gen:verify and /gen:export references
+expected: Search for "/gen:verify" and "/gen:export" across all v2.0 files returns zero matches. /gen:verify replaced with /gen:audit; /gen:export replaced with post-build workflow description.
 result: pass
 
 ### 5. Legacy discussion-protocol.md deleted

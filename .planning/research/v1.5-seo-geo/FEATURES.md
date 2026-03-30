@@ -56,7 +56,7 @@ Features to explicitly NOT build in the SEO/GEO skill.
 | Anti-Feature | Why Avoid | What to Do Instead |
 |--------------|-----------|-------------------|
 | **SEO score dashboard** | The plugin generates code, not analytics. SEO monitoring is a SaaS product concern. | Teach patterns that produce high SEO scores. Let GSC/Lighthouse measure. |
-| **Keyword research integration** | Keyword research is a pre-design activity. The plugin builds sites, not marketing strategies. | Accept keywords as input during `/modulo:start-project` discovery. |
+| **Keyword research integration** | Keyword research is a pre-design activity. The plugin builds sites, not marketing strategies. | Accept keywords as input during `/gen:start-project` discovery. |
 | **Automatic meta description generation** | LLM-generated descriptions risk generic "Learn more about..." copy. | Teach copy intelligence patterns for meta descriptions. Require human-quality descriptions. |
 | **Analytics/tracking code injection** | Analytics is not design. Covered by separate tooling (GA, Plausible, PostHog). | Provide clean `<head>` structure. Mention where to add analytics, but do not pre-install. |
 | **Server-side rendering for SPAs** | Adding SSR to React/Vite SPAs for SEO is a framework-level architectural decision, not a skill concern. | Document that SPAs have limited SEO. Recommend Next.js or Astro if SEO is critical. |

@@ -8,7 +8,7 @@ version: "1.0.0"
 
 ## Layer 1: Decision Guidance
 
-You are an OG image specialist who generates branded social preview images from Design DNA tokens. Every Modulo project gets unique social cards that reinforce the project's visual identity -- not generic placeholder images. When a page is shared on Twitter/X, Facebook, LinkedIn, Slack, Discord, or WhatsApp, the preview image is a 1200x630 PNG rendered from DNA colors, the display font, and the project's signature element.
+You are an OG image specialist who generates branded social preview images from Design DNA tokens. Every Genorah project gets unique social cards that reinforce the project's visual identity -- not generic placeholder images. When a page is shared on Twitter/X, Facebook, LinkedIn, Slack, Discord, or WhatsApp, the preview image is a 1200x630 PNG rendered from DNA colors, the display font, and the project's signature element.
 
 ### When to Use
 
@@ -100,8 +100,8 @@ Quick reference for agents generating OG image markup:
 
 ### Pipeline Connection
 
-- **Referenced by:** `build-orchestrator` at Wave 0 (OG route scaffold), `section-planner` (OG template type assignment in PLAN.md)
-- **Consumed at:** `/modulo:execute` Wave 0 (scaffold OG route files and root-level default), Wave 2+ (per-section page-specific OG images when needed)
+- **Referenced by:** `orchestrator` at Wave 0 (OG route scaffold), `planner` (OG template type assignment in PLAN.md)
+- **Consumed at:** `/gen:execute` Wave 0 (scaffold OG route files and root-level default), Wave 2+ (per-section page-specific OG images when needed)
 - **Input from:** `DESIGN-DNA.md` (colors, display font, signature element), `seo-meta` skill (meta tag wiring for non-file-convention approaches)
 - **Output to:** `opengraph-image.tsx` files (Next.js) or `og/[slug].png.ts` endpoints (Astro)
 
@@ -950,7 +950,7 @@ All major platforms converge on the same standard. Generate one image at 1200x63
 
 ## Layer 3: Integration Context
 
-How the OG image skill connects to the broader Modulo system -- DNA tokens, design archetypes, pipeline stages, and related skills.
+How the OG image skill connects to the broader Genorah system -- DNA tokens, design archetypes, pipeline stages, and related skills.
 
 ### DNA Connection
 
@@ -986,7 +986,7 @@ The 19 design archetypes group into 5 OG composition families. These are startin
 
 ### Pipeline Position
 
-OG image generation activates at two stages in the Modulo build pipeline:
+OG image generation activates at two stages in the Genorah build pipeline:
 
 **Wave 0 (Scaffold):**
 - Build-orchestrator creates OG route files alongside design tokens and globals.css
@@ -1177,7 +1177,7 @@ export async function generateMetadata({ params }, parent): Promise<Metadata> {
 
 ### 6. "The Generic Preview"
 
-**Problem:** Using the same layout and colors for every project regardless of archetype. OG images should reinforce the project's unique visual identity -- not look like output from a generic social card generator. Every Modulo project has a distinct DNA and archetype; the OG image must reflect both.
+**Problem:** Using the same layout and colors for every project regardless of archetype. OG images should reinforce the project's unique visual identity -- not look like output from a generic social card generator. Every Genorah project has a distinct DNA and archetype; the OG image must reflect both.
 
 **Wrong:**
 ```tsx
@@ -1226,7 +1226,7 @@ export async function generateMetadata({ params }, parent): Promise<Metadata> {
 </div>
 ```
 
-**Detection:** Social cards from different Modulo projects look identical. Compare OG images across 2-3 projects -- they should have distinct color palettes, signature elements, and composition approaches matching their archetypes.
+**Detection:** Social cards from different Genorah projects look identical. Compare OG images across 2-3 projects -- they should have distinct color palettes, signature elements, and composition approaches matching their archetypes.
 
 ---
 

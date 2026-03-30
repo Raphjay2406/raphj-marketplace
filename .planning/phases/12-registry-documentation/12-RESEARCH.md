@@ -312,14 +312,14 @@ These remain from v6.1.0 and are slated for removal in Phase 13:
 
 | Command | Description (from frontmatter) | Type |
 |---------|-------------------------------|------|
-| `/modulo:start-project` | Start a new Modulo project -- discovery, research, creative direction, content planning | Workflow |
-| `/modulo:lets-discuss` | Creative deep dive -- explore visual features, content direction, and design ideas | Workflow |
-| `/modulo:plan-dev` | Create detailed build plans for each section with wave assignments | Workflow |
-| `/modulo:execute` | Build sections wave by wave with parallel builders | Workflow |
-| `/modulo:iterate` | Improve designs with brainstorm-first approach | Workflow |
-| `/modulo:bug-fix` | Diagnose and fix visual bugs with root cause analysis | Workflow |
-| `/modulo:status` | Show full Modulo project status | Utility |
-| `/modulo:audit` | Comprehensive site audit | Utility |
+| `/gen:start-project` | Start a new Genorah project -- discovery, research, creative direction, content planning | Workflow |
+| `/gen:lets-discuss` | Creative deep dive -- explore visual features, content direction, and design ideas | Workflow |
+| `/gen:plan-dev` | Create detailed build plans for each section with wave assignments | Workflow |
+| `/gen:execute` | Build sections wave by wave with parallel builders | Workflow |
+| `/gen:iterate` | Improve designs with brainstorm-first approach | Workflow |
+| `/gen:bug-fix` | Diagnose and fix visual bugs with root cause analysis | Workflow |
+| `/gen:status` | Show full Genorah project status | Utility |
+| `/gen:audit` | Comprehensive site audit | Utility |
 
 ### V2.0 Workflow Sequence
 
@@ -333,7 +333,7 @@ start-project -> lets-discuss -> plan-dev -> execute -> iterate (if needed)
 
 **File:** `.claude-plugin/plugin.json`
 **Version:** `2.0.0-dev`
-**Name:** `modulo`
+**Name:** `genorah`
 
 The README version must match this exactly: `2.0.0-dev`.
 
@@ -408,7 +408,7 @@ Not applicable -- this phase produces markdown documents, not code. However, her
 ```markdown
 | Command | Description |
 |---------|-------------|
-| `/modulo:start-project` | Start a new Modulo project -- discovery, research, creative direction |
+| `/gen:start-project` | Start a new Genorah project -- discovery, research, creative direction |
 ```
 
 ### README.md Agent Pipeline Format

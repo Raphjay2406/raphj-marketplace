@@ -476,7 +476,7 @@ The final synthesized direction becomes the seed for Design DNA generation. Ever
 
 ### BRAINSTORM.md Output Format
 
-The final artifact saved to `.planning/modulo/BRAINSTORM.md` after the brainstorm session includes:
+The final artifact saved to `.planning/genorah/BRAINSTORM.md` after the brainstorm session includes:
 
 ```markdown
 # Creative Direction Brainstorm

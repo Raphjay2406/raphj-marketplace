@@ -13,9 +13,9 @@ Six categories of stale references were found across **v2.0 active files** (skil
 1. **`design-lead`** -- 30+ occurrences in 3 skill files and 3 agent files (v6.1.0 legacy agent, should be `build-orchestrator`)
 2. **`start-design`** -- 10 occurrences in 2 skill files, 3 agent files (renamed to `start-project` in Phase 3)
 3. **`plan-sections`** -- 4 occurrences in 1 skill file, 1 agent file (renamed to `plan-dev` in Phase 3)
-4. **`/modulo:verify`** -- 24 occurrences in 8 skill files, 3 agent files (renamed to `/modulo:audit`)
-5. **`/modulo:export`** -- 2 occurrences in 1 skill file (command does not exist)
-6. **REFERENCES.md producer gap** -- 5 v2.0 pipeline agents and 1 skill reference `.planning/modulo/REFERENCES.md` as a read dependency, but no command produces this file at that path
+4. **`/gen:verify`** -- 24 occurrences in 8 skill files, 3 agent files (renamed to `/gen:audit`)
+5. **`/gen:export`** -- 2 occurrences in 1 skill file (command does not exist)
+6. **REFERENCES.md producer gap** -- 5 v2.0 pipeline agents and 1 skill reference `.planning/genorah/REFERENCES.md` as a read dependency, but no command produces this file at that path
 
 Additionally, the legacy **`agents/discussion-protocol.md`** (v6.1.0) contains 5 stale command references and should be considered for removal since `agents/protocols/discussion-protocol.md` (v2.0) is the active replacement.
 
@@ -76,9 +76,9 @@ Note: Line 417 references "Design-lead and section-builder agents" in the failur
 
 | Line | Current Text | Proposed Replacement |
 |------|-------------|---------------------|
-| 56 | `**Referenced by:** \`design-lead\` during \`/modulo:plan-sections\`` | `**Referenced by:** \`section-planner\` during \`/modulo:plan-dev\`` |
+| 56 | `**Referenced by:** \`design-lead\` during \`/gen:plan-sections\`` | `**Referenced by:** \`section-planner\` during \`/gen:plan-dev\`` |
 
-Note: This line has TWO stale references -- both `design-lead` and `/modulo:plan-sections`. The correct agent is `section-planner` (the one that actually assigns beats to sections).
+Note: This line has TWO stale references -- both `design-lead` and `/gen:plan-sections`. The correct agent is `section-planner` (the one that actually assigns beats to sections).
 
 #### File: `agents/discussion-protocol.md` (v6.1.0 legacy, 1 occurrence)
 
@@ -108,11 +108,11 @@ This file IS the legacy design-lead agent. It should NOT have references fixed -
 
 | Line | Current Text | Proposed Replacement |
 |------|-------------|---------------------|
-| 14 | `**\`/modulo:start-design --figma\` is invoked**` | `**\`/modulo:start-project --figma\` is invoked**` |
-| 21 | `Use the normal \`/modulo:start-design\` flow` | `Use the normal \`/modulo:start-project\` flow` |
-| 95 | `**Consumed at:** \`/modulo:start-design --figma\` workflow steps 4-8` | `**Consumed at:** \`/modulo:start-project --figma\` workflow steps 4-8` |
-| 687 | `The archetype is set during \`/modulo:start-design\`` | `The archetype is set during \`/modulo:start-project\`` |
-| 698 | `DESIGN-DNA.md (from /modulo:start-design)` | `DESIGN-DNA.md (from /modulo:start-project)` |
+| 14 | `**\`/gen:start-design --figma\` is invoked**` | `**\`/gen:start-project --figma\` is invoked**` |
+| 21 | `Use the normal \`/gen:start-design\` flow` | `Use the normal \`/gen:start-project\` flow` |
+| 95 | `**Consumed at:** \`/gen:start-design --figma\` workflow steps 4-8` | `**Consumed at:** \`/gen:start-project --figma\` workflow steps 4-8` |
+| 687 | `The archetype is set during \`/gen:start-design\`` | `The archetype is set during \`/gen:start-project\`` |
+| 698 | `DESIGN-DNA.md (from /gen:start-design)` | `DESIGN-DNA.md (from /gen:start-project)` |
 | 699 | `Design archetype (selected during start-design)` | `Design archetype (selected during start-project)` |
 
 **IMPORTANT NOTE:** The `--figma` flag does NOT exist in `commands/start-project.md`. Lines 14 and 95 reference `--figma` which needs either:
@@ -124,19 +124,19 @@ This is a design decision for the planner, not just a rename.
 
 | Line | Current Text | Proposed Replacement |
 |------|-------------|---------------------|
-| 27 | `Run \`/modulo:start-design\` first to generate the design identity.` | `Run \`/modulo:start-project\` first to generate the design identity.` |
+| 27 | `Run \`/gen:start-design\` first to generate the design identity.` | `Run \`/gen:start-project\` first to generate the design identity.` |
 
 #### File: `agents/discussion-protocol.md` (v6.1.0 legacy, 1 occurrence)
 
 | Line | Current Text | Proposed Replacement |
 |------|-------------|---------------------|
-| 79 | `\`/modulo:start-design\` \| NO \| Discovery/research is exploratory` | Remove file OR replace with `\`/modulo:start-project\`` |
+| 79 | `\`/gen:start-design\` \| NO \| Discovery/research is exploratory` | Remove file OR replace with `\`/gen:start-project\`` |
 
 #### File: `agents/design-lead.md` (v6.1.0 legacy, 1 occurrence)
 
 | Line | Current Text | Proposed Replacement |
 |------|-------------|---------------------|
-| 23 | `Run \`/modulo:start-design\` first.` | LEGACY FILE -- remove in Phase 13 |
+| 23 | `Run \`/gen:start-design\` first.` | LEGACY FILE -- remove in Phase 13 |
 
 ---
 
@@ -148,115 +148,115 @@ This is a design decision for the planner, not just a rename.
 
 | Line | Current Text | Proposed Replacement |
 |------|-------------|---------------------|
-| 15 | `**During section planning** (\`/modulo:plan-sections\`)` | `**During section planning** (\`/modulo:plan-dev\`)` |
-| 56 | `\`design-lead\` during \`/modulo:plan-sections\`` | `\`section-planner\` during \`/modulo:plan-dev\`` |
-| 607 | `**Input from:** \`/modulo:plan-sections\` -- receives page content inventory` | `**Input from:** \`/modulo:plan-dev\` -- receives page content inventory` |
+| 15 | `**During section planning** (\`/gen:plan-sections\`)` | `**During section planning** (\`/gen:plan-dev\`)` |
+| 56 | `\`design-lead\` during \`/gen:plan-sections\`` | `\`section-planner\` during \`/gen:plan-dev\`` |
+| 607 | `**Input from:** \`/gen:plan-sections\` -- receives page content inventory` | `**Input from:** \`/gen:plan-dev\` -- receives page content inventory` |
 
 #### File: `agents/discussion-protocol.md` (v6.1.0 legacy, 1 occurrence)
 
 | Line | Current Text | Proposed Replacement |
 |------|-------------|---------------------|
-| 80 | `\`/modulo:plan-sections\` \| Partial \| Each section plan already requires user approval` | Remove file OR replace with `\`/modulo:plan-dev\`` |
+| 80 | `\`/gen:plan-sections\` \| Partial \| Each section plan already requires user approval` | Remove file OR replace with `\`/gen:plan-dev\`` |
 
 ---
 
-### Category 4: `/modulo:verify` References
+### Category 4: `/gen:verify` References
 
-**Replacement:** `/modulo:audit` (the v2.0 command that performs quality review)
+**Replacement:** `/gen:audit` (the v2.0 command that performs quality review)
 
 #### File: `skills/anti-slop-gate/SKILL.md` (4 occurrences)
 
 | Line | Current Text | Proposed Replacement |
 |------|-------------|---------------------|
-| 11 | `the gate runs during \`/modulo:verify\` via the quality-reviewer agent` | `the gate runs during \`/modulo:audit\` via the quality-reviewer agent` |
-| 18 | `**During \`/modulo:verify\` command**` | `**During \`/modulo:audit\` command**` |
-| 57 | `both run during \`/modulo:verify\`` | `both run during \`/modulo:audit\`` |
-| 68 | `quality-reviewer agent during \`/modulo:verify\`` | `quality-reviewer agent during \`/modulo:audit\`` |
+| 11 | `the gate runs during \`/gen:verify\` via the quality-reviewer agent` | `the gate runs during \`/gen:audit\` via the quality-reviewer agent` |
+| 18 | `**During \`/gen:verify\` command**` | `**During \`/gen:audit\` command**` |
+| 57 | `both run during \`/gen:verify\`` | `both run during \`/gen:audit\`` |
+| 68 | `quality-reviewer agent during \`/gen:verify\`` | `quality-reviewer agent during \`/gen:audit\`` |
 
 #### File: `skills/design-archetypes/SKILL.md` (1 occurrence)
 
 | Line | Current Text | Proposed Replacement |
 |------|-------------|---------------------|
-| 1138 | `During \`/modulo:verify\`, the quality reviewer checks archetype compliance` | `During \`/modulo:audit\`, the quality reviewer checks archetype compliance` |
+| 1138 | `During \`/gen:verify\`, the quality reviewer checks archetype compliance` | `During \`/gen:audit\`, the quality reviewer checks archetype compliance` |
 
 #### File: `skills/emotional-arc/SKILL.md` (2 occurrences)
 
 | Line | Current Text | Proposed Replacement |
 |------|-------------|---------------------|
-| 17 | `**During verify** (\`/modulo:verify\`)` | `**During audit** (\`/modulo:audit\`)` |
-| 58 | `**Verified by:** \`quality-reviewer\` during \`/modulo:verify\`` | `**Verified by:** \`quality-reviewer\` during \`/modulo:audit\`` |
+| 17 | `**During verify** (\`/gen:verify\`)` | `**During audit** (\`/gen:audit\`)` |
+| 58 | `**Verified by:** \`quality-reviewer\` during \`/gen:verify\`` | `**Verified by:** \`quality-reviewer\` during \`/gen:audit\`` |
 
 #### File: `skills/figma-integration/SKILL.md` (5 occurrences)
 
 | Line | Current Text | Proposed Replacement |
 |------|-------------|---------------------|
-| 15 | `During \`/modulo:verify\`, use this skill's visual QA overlay diff` | `During \`/modulo:audit\`, use this skill's visual QA overlay diff` |
-| 96 | `**Consumed at:** \`/modulo:verify\` visual QA overlay diff step` | `**Consumed at:** \`/modulo:audit\` visual QA overlay diff step` |
-| 250 | `Used during /modulo:verify for overlay diff comparison` | `Used during /modulo:audit for overlay diff comparison` |
-| 484 | `This runs during the \`/modulo:verify\` step, not during import.` | `This runs during the \`/modulo:audit\` step, not during import.` |
-| 709 | `for visual QA during /modulo:verify` | `for visual QA during /modulo:audit` |
+| 15 | `During \`/gen:verify\`, use this skill's visual QA overlay diff` | `During \`/gen:audit\`, use this skill's visual QA overlay diff` |
+| 96 | `**Consumed at:** \`/gen:verify\` visual QA overlay diff step` | `**Consumed at:** \`/gen:audit\` visual QA overlay diff step` |
+| 250 | `Used during /gen:verify for overlay diff comparison` | `Used during /gen:audit for overlay diff comparison` |
+| 484 | `This runs during the \`/gen:verify\` step, not during import.` | `This runs during the \`/gen:audit\` step, not during import.` |
+| 709 | `for visual QA during /gen:verify` | `for visual QA during /gen:audit` |
 
 #### File: `skills/multi-page-architecture/SKILL.md` (3 occurrences)
 
 | Line | Current Text | Proposed Replacement |
 |------|-------------|---------------------|
-| 23 | `During \`/modulo:verify\` -- quality reviewer checks cross-page consistency` | `During \`/modulo:audit\` -- quality reviewer checks cross-page consistency` |
-| 56 | `**Verified by:** \`quality-reviewer\` during \`/modulo:verify\`` | `**Verified by:** \`quality-reviewer\` during \`/modulo:audit\`` |
-| 404 | `Quality reviewers check these during \`/modulo:verify\`.` | `Quality reviewers check these during \`/modulo:audit\`.` |
+| 23 | `During \`/gen:verify\` -- quality reviewer checks cross-page consistency` | `During \`/gen:audit\` -- quality reviewer checks cross-page consistency` |
+| 56 | `**Verified by:** \`quality-reviewer\` during \`/gen:verify\`` | `**Verified by:** \`quality-reviewer\` during \`/gen:audit\`` |
+| 404 | `Quality reviewers check these during \`/gen:verify\`.` | `Quality reviewers check these during \`/gen:audit\`.` |
 
 #### File: `skills/progress-reporting/SKILL.md` (4 occurrences)
 
 | Line | Current Text | Proposed Replacement |
 |------|-------------|---------------------|
-| 248 | `Run \`/modulo:verify\` for full visual QA review.` | `Run \`/modulo:audit\` for full visual QA review.` |
-| 298 | `or via \`/modulo:verify\`` | `or via \`/modulo:audit\`` |
-| 305 | `Run \`/modulo:verify\` with browser tools for visual QA.` | `Run \`/modulo:audit\` with browser tools for visual QA.` |
-| 482 | `Mid-build screenshots available only on explicit user request via \`/modulo:verify\`.` | `Mid-build screenshots available only on explicit user request via \`/modulo:audit\`.` |
+| 248 | `Run \`/gen:verify\` for full visual QA review.` | `Run \`/gen:audit\` for full visual QA review.` |
+| 298 | `or via \`/gen:verify\`` | `or via \`/gen:audit\`` |
+| 305 | `Run \`/gen:verify\` with browser tools for visual QA.` | `Run \`/gen:audit\` with browser tools for visual QA.` |
+| 482 | `Mid-build screenshots available only on explicit user request via \`/gen:verify\`.` | `Mid-build screenshots available only on explicit user request via \`/gen:audit\`.` |
 
 #### File: `skills/awwwards-scoring/SKILL.md` (1 occurrence)
 
 | Line | Current Text | Proposed Replacement |
 |------|-------------|---------------------|
-| 134 | `During \`/modulo:verify\`, run the full 4-axis scoring` | `During \`/modulo:audit\`, run the full 4-axis scoring` |
+| 134 | `During \`/gen:verify\`, run the full 4-axis scoring` | `During \`/gen:audit\`, run the full 4-axis scoring` |
 
 #### File: `agents/figma-translator.md` (2 occurrences)
 
 | Line | Current Text | Proposed Replacement |
 |------|-------------|---------------------|
-| 69 | `reference targets for visual QA during \`/modulo:verify\`.` | `reference targets for visual QA during \`/modulo:audit\`.` |
-| 98 | `When invoked during \`/modulo:verify\` (not during import)` | `When invoked during \`/modulo:audit\` (not during import)` |
+| 69 | `reference targets for visual QA during \`/gen:verify\`.` | `reference targets for visual QA during \`/gen:audit\`.` |
+| 98 | `When invoked during \`/gen:verify\` (not during import)` | `When invoked during \`/gen:audit\` (not during import)` |
 
 #### File: `agents/discussion-protocol.md` (v6.1.0 legacy, 1 occurrence)
 
 | Line | Current Text | Proposed Replacement |
 |------|-------------|---------------------|
-| 81 | `\`/modulo:verify\` \| NO \| Verification is read-only` | Remove file OR replace with `\`/modulo:audit\`` |
+| 81 | `\`/gen:verify\` \| NO \| Verification is read-only` | Remove file OR replace with `\`/gen:audit\`` |
 
 #### File: `agents/design-lead.md` (v6.1.0 legacy, 1 occurrence)
 
 | Line | Current Text | Proposed Replacement |
 |------|-------------|---------------------|
-| 284 | `Run \`/modulo:verify\` to verify quality.` | LEGACY FILE -- remove in Phase 13 |
+| 284 | `Run \`/gen:verify\` to verify quality.` | LEGACY FILE -- remove in Phase 13 |
 
 ---
 
-### Category 5: `/modulo:export` References
+### Category 5: `/gen:export` References
 
 **Status:** This command does not exist in v2.0. The `design-system-export` skill references it.
 
 **Options:**
-- (a) Create an `/modulo:export` command (out of scope for Phase 11 -- deferred to Phase 12/13)
-- (b) Rewire the skill to describe export as a user-requested action during `/modulo:audit` or post-build
+- (a) Create an `/gen:export` command (out of scope for Phase 11 -- deferred to Phase 12/13)
+- (b) Rewire the skill to describe export as a user-requested action during `/gen:audit` or post-build
 - (c) Note it as a known future command and leave the references as aspirational
 
 #### File: `skills/design-system-export/SKILL.md` (2 occurrences)
 
 | Line | Current Text | Proposed Replacement |
 |------|-------------|---------------------|
-| 14 | `User requests \`/modulo:export\` or asks for "design system export"` | `User requests design system export (post-build action)` |
-| 64 | `**Consumed at:** \`/modulo:export\` command (post-build)` | `**Consumed at:** Post-build export workflow (user-triggered)` |
+| 14 | `User requests \`/gen:export\` or asks for "design system export"` | `User requests design system export (post-build action)` |
+| 64 | `**Consumed at:** \`/gen:export\` command (post-build)` | `**Consumed at:** Post-build export workflow (user-triggered)` |
 
-**Recommendation:** Since no `/modulo:export` command exists and creating one is out of scope for Phase 11, rewire the references to describe the export as a user-triggered action that the build-orchestrator or polisher can perform on request. The skill itself is valid -- only the command entry point reference is broken.
+**Recommendation:** Since no `/gen:export` command exists and creating one is out of scope for Phase 11, rewire the references to describe the export as a user-triggered action that the build-orchestrator or polisher can perform on request. The skill itself is valid -- only the command entry point reference is broken.
 
 ---
 
@@ -264,7 +264,7 @@ This is a design decision for the planner, not just a rename.
 
 **The Problem:**
 
-The following v2.0 pipeline agents list `.planning/modulo/REFERENCES.md` as a READ dependency:
+The following v2.0 pipeline agents list `.planning/genorah/REFERENCES.md` as a READ dependency:
 
 | Agent | File | Line | Context |
 |-------|------|------|---------|
@@ -281,17 +281,17 @@ And these specialist agents:
 | animation-specialist | `agents/specialists/animation-specialist.md` | 37 | Listed under "You do NOT need to read" |
 | content-specialist | `agents/specialists/content-specialist.md` | 38 | Listed under "You do NOT need to read" |
 
-The `reference-benchmarking` skill (`skills/reference-benchmarking/SKILL.md` line 407) explicitly instructs the researcher to write to `.planning/modulo/REFERENCES.md`.
+The `reference-benchmarking` skill (`skills/reference-benchmarking/SKILL.md` line 407) explicitly instructs the researcher to write to `.planning/genorah/REFERENCES.md`.
 
-**But:** The researcher agent (`agents/pipeline/researcher.md` line 190) writes to `.planning/modulo/research/{TRACK}.md` (e.g., `research/DESIGN-REFERENCES.md`). No command or agent consolidates research track files into a top-level `REFERENCES.md`.
+**But:** The researcher agent (`agents/pipeline/researcher.md` line 190) writes to `.planning/genorah/research/{TRACK}.md` (e.g., `research/DESIGN-REFERENCES.md`). No command or agent consolidates research track files into a top-level `REFERENCES.md`.
 
 **Additionally:** The `start-project` command makes NO mention of REFERENCES.md at all.
 
 **Two resolution paths:**
 
-**Path A: Add REFERENCES.md production step** -- Add a step to `start-project.md` or `plan-dev.md` that consolidates `research/DESIGN-REFERENCES.md` into `.planning/modulo/REFERENCES.md`. The `reference-benchmarking` skill already defines what this file should contain (line 407).
+**Path A: Add REFERENCES.md production step** -- Add a step to `start-project.md` or `plan-dev.md` that consolidates `research/DESIGN-REFERENCES.md` into `.planning/genorah/REFERENCES.md`. The `reference-benchmarking` skill already defines what this file should contain (line 407).
 
-**Path B: Update consumers to read research/*.md** -- Change the section-planner, quality-reviewer, and polisher input contracts to read `.planning/modulo/research/DESIGN-REFERENCES.md` instead of `.planning/modulo/REFERENCES.md`. This is more aligned with the v2.0 architecture where research is split by track.
+**Path B: Update consumers to read research/*.md** -- Change the section-planner, quality-reviewer, and polisher input contracts to read `.planning/genorah/research/DESIGN-REFERENCES.md` instead of `.planning/genorah/REFERENCES.md`. This is more aligned with the v2.0 architecture where research is split by track.
 
 **Recommendation:** Path B is simpler, more aligned with v2.0 architecture (research tracks are separate files), and avoids adding a consolidation step. The key consumers (section-planner, quality-reviewer) already read `research/*.md`. The explicit `REFERENCES.md` reference can be updated to `research/DESIGN-REFERENCES.md` or removed where `research/*.md` glob already covers it. Additionally, update the `reference-benchmarking` skill to instruct the researcher to write to `research/DESIGN-REFERENCES.md` (matching the researcher agent's actual output path).
 
@@ -305,12 +305,12 @@ This file at `agents/discussion-protocol.md` is the v6.1.0 version. The v2.0 rep
 
 | Line | Stale Reference | Category |
 |------|----------------|----------|
-| 75 | `/modulo:bugfix` | Should be `/modulo:bug-fix` (hyphenated in v2.0) |
-| 76 | `/modulo:change-plan` | Command removed in v2.0 (no replacement) |
+| 75 | `/gen:bugfix` | Should be `/gen:bug-fix` (hyphenated in v2.0) |
+| 76 | `/gen:change-plan` | Command removed in v2.0 (no replacement) |
 | 78 | `design-lead` | Replaced by `build-orchestrator` |
-| 79 | `/modulo:start-design` | Replaced by `/modulo:start-project` |
-| 80 | `/modulo:plan-sections` | Replaced by `/modulo:plan-dev` |
-| 81 | `/modulo:verify` | Replaced by `/modulo:audit` |
+| 79 | `/gen:start-design` | Replaced by `/gen:start-project` |
+| 80 | `/gen:plan-sections` | Replaced by `/gen:plan-dev` |
+| 81 | `/gen:verify` | Replaced by `/gen:audit` |
 
 **Recommendation:** This file should be DELETED as part of Phase 11 (or deferred to Phase 13 legacy cleanup). The v2.0 `agents/protocols/discussion-protocol.md` is the active file. Fixing the stale references in a file that should not exist is wasted effort.
 
@@ -324,7 +324,7 @@ The root-level `agents/quality-reviewer.md` is the v6.1.0 legacy file. V2.0 repl
 
 #### `agents/design-lead.md` (v6.1.0 legacy -- ENTIRE FILE)
 
-Contains `start-design` (line 23), `REFERENCES.md` (line 43), `/modulo:verify` (line 284). This entire file is the v6.1.0 agent that was replaced by `build-orchestrator`. Should be removed in Phase 13.
+Contains `start-design` (line 23), `REFERENCES.md` (line 43), `/gen:verify` (line 284). This entire file is the v6.1.0 agent that was replaced by `build-orchestrator`. Should be removed in Phase 13.
 
 #### `README.md` (v6.1.0 content -- ENTIRE FILE)
 
@@ -347,7 +347,7 @@ Shows many skills as "PLANNED" that are now complete. This is ISSUE-4 in the aud
 
 ### V2.0 Active Files Requiring Changes
 
-| File | design-lead | start-design | plan-sections | /modulo:verify | /modulo:export | REFERENCES.md | Total |
+| File | design-lead | start-design | plan-sections | /gen:verify | /gen:export | REFERENCES.md | Total |
 |------|-------------|-------------|---------------|----------------|----------------|---------------|-------|
 | skills/progress-reporting/SKILL.md | 22 | 0 | 0 | 4 | 0 | 0 | **26** |
 | skills/error-recovery/SKILL.md | 12 | 0 | 0 | 0 | 0 | 0 | **12** |
@@ -403,12 +403,12 @@ Shows many skills as "PLANNED" that are now complete. This is ISSUE-4 in the aud
 **What goes wrong:** Spending effort fixing cross-references in v6.1.0 legacy files (design-lead.md, root section-builder.md, root quality-reviewer.md) that should be deleted.
 **How to avoid:** Phase 11 should either (a) delete the legacy files, or (b) explicitly defer their deletion to Phase 13 and NOT fix their internal references.
 
-### Pitfall 4: Incomplete `/modulo:verify` Replacement
-**What goes wrong:** Replacing `/modulo:verify` with `/modulo:audit` without considering semantic differences. The v6.1.0 `verify` was specifically quality review. The v2.0 `audit` is broader (visual quality + performance + accessibility + DNA compliance).
-**How to avoid:** Most replacements are direct. But for contexts that specifically mean "quality review only" (like anti-slop-gate), confirm that `/modulo:audit` still invokes the same quality-reviewer flow.
+### Pitfall 4: Incomplete `/gen:verify` Replacement
+**What goes wrong:** Replacing `/gen:verify` with `/gen:audit` without considering semantic differences. The v6.1.0 `verify` was specifically quality review. The v2.0 `audit` is broader (visual quality + performance + accessibility + DNA compliance).
+**How to avoid:** Most replacements are direct. But for contexts that specifically mean "quality review only" (like anti-slop-gate), confirm that `/gen:audit` still invokes the same quality-reviewer flow.
 
 ### Pitfall 5: REFERENCES.md Path Confusion
-**What goes wrong:** Assuming `.planning/modulo/REFERENCES.md` and `.planning/modulo/research/DESIGN-REFERENCES.md` are the same thing.
+**What goes wrong:** Assuming `.planning/genorah/REFERENCES.md` and `.planning/genorah/research/DESIGN-REFERENCES.md` are the same thing.
 **How to avoid:** They are different. The researcher writes to `research/DESIGN-REFERENCES.md` (one of 5 research tracks). The old architecture expected a consolidated `REFERENCES.md` at the top level. The fix must pick one canonical path and update all references to match.
 
 ---
@@ -429,17 +429,17 @@ Shows many skills as "PLANNED" that are now complete. This is ISSUE-4 in the aud
 
 | v6.1.0 Name | v2.0 Name | Location |
 |-------------|-----------|----------|
-| `/modulo:start-design` | `/modulo:start-project` | `commands/start-project.md` |
-| `/modulo:plan-sections` | `/modulo:plan-dev` | `commands/plan-dev.md` |
-| `/modulo:verify` | `/modulo:audit` | `commands/audit.md` |
-| `/modulo:bugfix` | `/modulo:bug-fix` | `commands/bug-fix.md` |
-| `/modulo:change-plan` | REMOVED | No replacement |
-| `/modulo:export` | DOES NOT EXIST | No command file |
-| `/modulo:responsive-check` | REMOVED | Folded into audit |
-| `/modulo:lighthouse` | REMOVED | Folded into audit |
-| `/modulo:visual-audit` | REMOVED | Folded into audit |
-| `/modulo:generate-tests` | REMOVED | Removed |
-| `/modulo:update` | REMOVED | Removed |
+| `/gen:start-design` | `/gen:start-project` | `commands/start-project.md` |
+| `/gen:plan-sections` | `/gen:plan-dev` | `commands/plan-dev.md` |
+| `/gen:verify` | `/gen:audit` | `commands/audit.md` |
+| `/gen:bugfix` | `/gen:bug-fix` | `commands/bug-fix.md` |
+| `/gen:change-plan` | REMOVED | No replacement |
+| `/gen:export` | DOES NOT EXIST | No command file |
+| `/gen:responsive-check` | REMOVED | Folded into audit |
+| `/gen:lighthouse` | REMOVED | Folded into audit |
+| `/gen:visual-audit` | REMOVED | Folded into audit |
+| `/gen:generate-tests` | REMOVED | Removed |
+| `/gen:update` | REMOVED | Removed |
 
 ### REFERENCES.md Data Flow (Current vs Fixed)
 
@@ -475,7 +475,7 @@ build-orchestrator -> note already says "embedded in PLAN.md files" (CLARIFY)
 - **What's unclear:** Whether deleting them in Phase 11 is appropriate since they contain many of the stale references.
 - **Recommendation:** Delete `agents/discussion-protocol.md` in Phase 11 (it conflicts with the active v2.0 file at agents/protocols/). Defer other legacy file deletions to Phase 13. Do NOT fix references inside legacy files.
 
-### 3. Should `/modulo:export` be created?
+### 3. Should `/gen:export` be created?
 - **What we know:** `design-system-export` skill references it. No command file exists.
 - **What's unclear:** Whether this is Phase 11 scope or deferred.
 - **Recommendation:** Phase 11 should rewire the skill references to describe export as a user-triggered action (not a specific command). Creating the command is out of scope.

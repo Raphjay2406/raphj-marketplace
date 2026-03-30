@@ -2,7 +2,7 @@
 
 > **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
 
-**Goal:** Implement a 6-layer context rot prevention system that keeps Modulo builds at award-winning quality through wave 5+ by preventing DNA drift, eliminating redundant reads, and enforcing session boundaries.
+**Goal:** Implement a 6-layer context rot prevention system that keeps Genorah builds at award-winning quality through wave 5+ by preventing DNA drift, eliminating redundant reads, and enforcing session boundaries.
 
 **Architecture:** Hooks for zero-cost static enforcement, a single CONTEXT.md for identity anchoring, pre-extracted spawn prompts to eliminate builder file reads, canary checks for fidelity monitoring, 2-wave session boundaries, and baked-in quality rules in agent files.
 
@@ -83,7 +83,7 @@ check_pattern 'animate-\[.*height' "Animating height — use transform instead"
 
 # --- Project-Specific DNA Patterns (if DNA exists) ---
 
-DNA_FILE=".planning/modulo/DESIGN-DNA.md"
+DNA_FILE=".planning/genorah/DESIGN-DNA.md"
 if [ -f "$DNA_FILE" ]; then
   # Check for Inter/Roboto as display font (unless DNA explicitly allows)
   if ! grep -q "Inter\|Roboto" "$DNA_FILE" 2>/dev/null; then
@@ -102,7 +102,7 @@ if [ $VIOLATION_COUNT -gt 0 ]; then
   echo -e "$VIOLATIONS"
   echo ""
   echo "Fix these violations before committing."
-  echo "Reference: .planning/modulo/DESIGN-DNA.md"
+  echo "Reference: .planning/genorah/DESIGN-DNA.md"
   echo "=========================================="
   echo ""
   echo "BLOCKED: Commit blocked by DNA compliance hook."
@@ -137,7 +137,7 @@ The current plugin.json has only name, description, version, and author. Add a `
 
 ```json
 {
-  "name": "modulo",
+  "name": "genorah",
   "description": "Premium frontend design system with 87 skills, 12 commands, and 17 agents. Features Full Quality Pipeline: visual reference capture, hyper-specific blueprints, content planning, discussion-first protocol, section coherence system, live visual feedback, wow factor enforcement, and anti-context-rot session management. Plus Design DNA identity system with 16 opinionated archetypes, creative tension system, emotional arc storytelling, cinematic motion choreography, 35-point anti-slop quality gate, and Awwwards 4-axis scoring. Creates Awwwards SOTD-competitive, production-ready websites. Works with Next.js and Astro.",
   "version": "6.1.0",
   "author": {
@@ -296,12 +296,12 @@ Insert after "Phase 4: Wave Completion" section. Add a new section:
 ```markdown
 ### CONTEXT.md Management
 
-After EVERY wave completion, rewrite `.planning/modulo/CONTEXT.md` with the current state. This is the single source of truth for context recovery.
+After EVERY wave completion, rewrite `.planning/genorah/CONTEXT.md` with the current state. This is the single source of truth for context recovery.
 
 **CONTEXT.md Template:**
 
 ```markdown
-# Modulo Context (auto-rewritten after each wave)
+# Genorah Context (auto-rewritten after each wave)
 Last updated: [ISO date] | Wave: [N] completed | Session: [N]
 
 ## DNA Identity
@@ -367,7 +367,7 @@ After EVERY wave completion, BEFORE spawning the next wave, perform a canary che
 - **All 5 correct:** Context healthy. Continue building.
 - **1-2 wrong:** Re-read CONTEXT.md carefully. Continue with caution. Add `Canary: DEGRADING` to CONTEXT.md.
 - **3+ wrong:** **TRIGGER SESSION BOUNDARY.** Context rot is active. Complete CONTEXT.md write, then tell user:
-  "Context fidelity degrading. Saving state and recommending new session. Run `/modulo:execute resume` to continue with fresh context."
+  "Context fidelity degrading. Saving state and recommending new session. Run `/gen:execute resume` to continue with fresh context."
 
 **This check is MANDATORY and cannot be skipped.**
 ```
@@ -393,7 +393,7 @@ Wave [N] and [N+1] complete. [X] sections built this session.
 Recommendation: Start a new session for Wave [N+2] to ensure peak quality.
 State saved to CONTEXT.md.
 
-To continue: Run `/modulo:execute resume` in a new session.
+To continue: Run `/gen:execute resume` in a new session.
 To override: Say "continue in this session" (canary checks will still monitor fidelity).
 ```
 
@@ -405,7 +405,7 @@ When triggering a session boundary (by canary failure, 2-wave suggestion, or tur
 1. Write/update CONTEXT.md with full current state
 2. Update STATE.md with current progress
 3. Delete `.continue-here.md` and `.session-transfer.md` if they exist (CONTEXT.md replaces them)
-4. Tell user to run `/modulo:execute resume` in a new session
+4. Tell user to run `/gen:execute resume` in a new session
 ```
 
 **Step 4: Add Pre-Extracted Spawn Prompt Template**
@@ -465,7 +465,7 @@ You MUST pick a DIFFERENT pattern.
 **DNA compliance:** ONLY DNA tokens | NO raw hex outside palette | NO Tailwind defaults (shadow-md, rounded-lg, gap-4)
 
 ### YOUR TASK
-Read ONLY your PLAN.md at: `.planning/modulo/sections/XX-name/PLAN.md`
+Read ONLY your PLAN.md at: `.planning/genorah/sections/XX-name/PLAN.md`
 Then build the section following the plan exactly.
 ```
 
@@ -505,10 +505,10 @@ Replace the current "Session Resumption" section (lines ~30-34) with:
 ```markdown
 ## Session Resumption (Boot Protocol)
 
-If `$ARGUMENTS` contains "resume" or `.planning/modulo/CONTEXT.md` exists with a non-COMPLETE phase:
+If `$ARGUMENTS` contains "resume" or `.planning/genorah/CONTEXT.md` exists with a non-COMPLETE phase:
 
 **Structured Session Boot Sequence:**
-1. Read `.planning/modulo/CONTEXT.md` — This single file has everything: DNA identity, build state, latest wave results, and next instructions.
+1. Read `.planning/genorah/CONTEXT.md` — This single file has everything: DNA identity, build state, latest wave results, and next instructions.
 2. Read next wave's section PLAN.md files (paths listed in CONTEXT.md "Next Wave Instructions")
 3. Run Canary Check — Answer from memory, then verify against CONTEXT.md:
    - Display font? Accent-1 hex? Forbidden patterns? Layouts used? Next beat type?
@@ -538,7 +538,7 @@ After completing a wave:
    Recommendation: Start a new session for the next wave to maintain peak quality.
    State saved to CONTEXT.md.
 
-   To continue: Run `/modulo:execute resume` in a new session.
+   To continue: Run `/gen:execute resume` in a new session.
    To override: Say "continue" (canary checks remain active).
    ```
 4. If user overrides, continue to next wave.
@@ -560,7 +560,7 @@ When a session boundary is triggered (by canary check failure, 2-wave suggestion
 4. **Tell user:**
    ```
    Session state saved to CONTEXT.md.
-   Run `/modulo:execute resume` in a new session to continue from Wave [N].
+   Run `/gen:execute resume` in a new session to continue from Wave [N].
    ```
 ```
 
@@ -580,15 +580,15 @@ git commit -m "feat(execute): add session boot protocol, 2-wave boundaries, CONT
 
 **Step 1: Add CONTEXT.md initialization after Phase 3.5**
 
-After the "Phase 3.5: DESIGN DNA GENERATION" section (after line ~264 "Save to `.planning/modulo/DESIGN-DNA.md`."), add:
+After the "Phase 3.5: DESIGN DNA GENERATION" section (after line ~264 "Save to `.planning/genorah/DESIGN-DNA.md`."), add:
 
 ```markdown
 ### Generate Initial CONTEXT.md
 
-After saving DESIGN-DNA.md, create the initial `.planning/modulo/CONTEXT.md`:
+After saving DESIGN-DNA.md, create the initial `.planning/genorah/CONTEXT.md`:
 
 ```markdown
-# Modulo Context (auto-rewritten after each wave)
+# Genorah Context (auto-rewritten after each wave)
 Last updated: [ISO date] | Wave: -- | Session: 1
 
 ## DNA Identity
@@ -613,7 +613,7 @@ Current position: Pre-planning
 [to be populated by plan-sections]
 
 ## Next Instructions
-Run `/modulo:plan-sections` to create section plans with wave assignments.
+Run `/gen:plan-sections` to create section plans with wave assignments.
 ```
 
 This initial CONTEXT.md captures DNA identity immediately after generation, ensuring it's available from the very start.
@@ -624,7 +624,7 @@ This initial CONTEXT.md captures DNA identity immediately after generation, ensu
 In the "Completion" section, add CONTEXT.md to the artifacts list:
 
 ```
-- .planning/modulo/CONTEXT.md — Context anchor (DNA identity + state)
+- .planning/genorah/CONTEXT.md — Context anchor (DNA identity + state)
 ```
 
 **Step 3: Commit**
@@ -648,7 +648,7 @@ After "Step 6: Update STATE.md" (around line 305), add:
 ```markdown
 ### Step 7: Update CONTEXT.md
 
-Update `.planning/modulo/CONTEXT.md` with the full section table, beat sequence, wow moments, tensions, and wave map:
+Update `.planning/genorah/CONTEXT.md` with the full section table, beat sequence, wow moments, tensions, and wave map:
 
 1. Read the current CONTEXT.md (created by start-design)
 2. Update the "Emotional Arc & Creative Systems" section with:
@@ -656,7 +656,7 @@ Update `.planning/modulo/CONTEXT.md` with the full section table, beat sequence,
    - Tension assignments (section → technique)
    - Wow moment assignments (section → type)
 3. Add the full "Build State" table with all sections, waves, beats, and statuses (all PENDING)
-4. Update "Next Instructions" to: `Run /modulo:execute to start wave-based implementation.`
+4. Update "Next Instructions" to: `Run /gen:execute to start wave-based implementation.`
 5. Write the updated CONTEXT.md
 ```
 
@@ -682,14 +682,14 @@ Replace the current "Prerequisites" file read list with:
 ## Prerequisites
 
 Read these files first:
-- `.planning/modulo/CONTEXT.md` — **PRIMARY**: DNA identity, build state, emotional arc, all in one file
-- `.planning/modulo/DESIGN-DNA.md` — **FULL READ for verification** (verifier needs complete DNA, not just anchor)
-- `.planning/modulo/MASTER-PLAN.md` — what was planned
-- `.planning/modulo/BRAINSTORM.md` — chosen creative direction and archetype
+- `.planning/genorah/CONTEXT.md` — **PRIMARY**: DNA identity, build state, emotional arc, all in one file
+- `.planning/genorah/DESIGN-DNA.md` — **FULL READ for verification** (verifier needs complete DNA, not just anchor)
+- `.planning/genorah/MASTER-PLAN.md` — what was planned
+- `.planning/genorah/BRAINSTORM.md` — chosen creative direction and archetype
 - All section PLAN.md files — with `must_haves` in frontmatter
-- `.planning/modulo/REFERENCES.md` — reference quality bar for comparison (if exists)
-- `.planning/modulo/CONTENT.md` — approved copy for content verification (if exists)
-- `.planning/modulo/PAGE-CONSISTENCY.md` — cross-page coherence rules (if exists)
+- `.planning/genorah/REFERENCES.md` — reference quality bar for comparison (if exists)
+- `.planning/genorah/CONTENT.md` — approved copy for content verification (if exists)
+- `.planning/genorah/PAGE-CONSISTENCY.md` — cross-page coherence rules (if exists)
 
 Note: The quality-reviewer agent uses full DESIGN-DNA.md (not CONTEXT.md anchor) because verification requires complete detail, not compressed context. CONTEXT.md provides quick orientation to the project state.
 ```
@@ -716,14 +716,14 @@ Replace the current "Read Verification Report & State" file list with:
 ### Step 1: Read Context & Verification Report
 
 Read these files to understand what needs fixing:
-- `.planning/modulo/CONTEXT.md` — **PRIMARY**: current state, DNA identity, build progress in one file
-- `.planning/modulo/sections/*/GAP-FIX.md` — gap fix plans from `/modulo:verify` (if they exist)
-- `.planning/modulo/MASTER-PLAN.md` — wave map and dependencies
-- `.planning/modulo/BRAINSTORM.md` — chosen creative direction
-- `.planning/modulo/PROJECT.md` — original requirements
+- `.planning/genorah/CONTEXT.md` — **PRIMARY**: current state, DNA identity, build progress in one file
+- `.planning/genorah/sections/*/GAP-FIX.md` — gap fix plans from `/gen:verify` (if they exist)
+- `.planning/genorah/MASTER-PLAN.md` — wave map and dependencies
+- `.planning/genorah/BRAINSTORM.md` — chosen creative direction
+- `.planning/genorah/PROJECT.md` — original requirements
 
 If CONTEXT.md doesn't exist, fall back to reading STATE.md + DESIGN-DNA.md separately.
-If neither exists, tell the user: "No existing Modulo project found. Run `/modulo:start-design` first."
+If neither exists, tell the user: "No existing Genorah project found. Run `/gen:start-design` first."
 ```
 
 **Step 2: Commit**
@@ -759,7 +759,7 @@ Six-layer defense system to maintain award-winning quality through extended buil
 | **L5** | Baked-in rules in agent files | Zero (already in prompt) |
 
 **Key files:**
-- `.planning/modulo/CONTEXT.md` — Rewritten after every wave. Contains DNA anchor, build state, arc position, next instructions. Replaces `.continue-here.md` and `.session-transfer.md`.
+- `.planning/genorah/CONTEXT.md` — Rewritten after every wave. Contains DNA anchor, build state, arc position, next instructions. Replaces `.continue-here.md` and `.session-transfer.md`.
 - `.claude-plugin/hooks/dna-compliance-check.sh` — Greps for anti-slop violations before commits.
 
 **Session management:** Design-lead suggests new session every 2 waves. Canary checks detect context rot. Turn 31+ = mandatory session save.

@@ -32,9 +32,9 @@ version: "2.0.0"
 
 ### Pipeline Connection
 
-- **Referenced by:** section-builder during blog/editorial section builds
-- **Consumed at:** `/modulo:execute` wave 2+ for content-heavy sections
-- **Related commands:** `/modulo:plan-dev` for article page planning; uses `multi-page-architecture` for blog index + article page pairing
+- **Referenced by:** builder during blog/editorial section builds
+- **Consumed at:** `/gen:execute` wave 2+ for content-heavy sections
+- **Related commands:** `/gen:plan` for article page planning; uses `multi-page-architecture` for blog index + article page pairing
 
 ## Layer 2: Award-Winning Examples
 

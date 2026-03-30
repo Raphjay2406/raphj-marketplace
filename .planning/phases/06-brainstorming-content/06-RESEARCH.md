@@ -24,7 +24,7 @@ This phase produces markdown SKILL.md files only. There is no application code. 
 | Claude Code Plugin System | Current (2026) | Skill auto-discovery | Official Anthropic platform |
 | Markdown (SKILL.md) | N/A | Knowledge base format | Plugin system reads `skills/{name}/SKILL.md` |
 | YAML frontmatter | N/A | Skill metadata | Required for name/description/triggers |
-| 4-layer skill format | Modulo 2.0 | Skill structure standard | Established in Phase 1 |
+| 4-layer skill format | Genorah 2.0 | Skill structure standard | Established in Phase 1 |
 
 ### Skill File Format Reference
 
@@ -406,7 +406,7 @@ Problems that look simple but have existing solutions or patterns in the codebas
 ### Pitfall 6: Brand Voice Documents Being Write-Once, Never-Read
 **What goes wrong:** 100+ line voice document gets generated but builders don't reference it
 **Why it happens:** Voice document is separate from PLAN.md files that builders actually read
-**How to avoid:** The copy-intelligence skill should define how voice rules get extracted INTO each section's PLAN.md during plan-sections. The full document lives in `.planning/modulo/BRAND-VOICE.md`, but relevant excerpts go into each plan's "Exact Copy" section. Design-lead extracts voice rules into spawn prompts (per Phase 2 architecture: spawn prompt budget ~300 lines).
+**How to avoid:** The copy-intelligence skill should define how voice rules get extracted INTO each section's PLAN.md during plan-sections. The full document lives in `.planning/genorah/BRAND-VOICE.md`, but relevant excerpts go into each plan's "Exact Copy" section. Design-lead extracts voice rules into spawn prompts (per Phase 2 architecture: spawn prompt budget ~300 lines).
 **Warning signs:** Voice document exists but PLAN.md files don't reference it
 
 ## Code Examples
@@ -475,7 +475,7 @@ These are content structures that don't exist yet and must be authored in Phase 
 ## Sources
 
 ### Primary (HIGH confidence)
-- Existing skill files in `D:/Modulo/Plugins/v0-ahh-skill/skills/` -- direct codebase analysis of 8 relevant skills (design-brainstorm, micro-copy, design-archetypes, creative-tension, design-dna, emotional-arc, conversion-patterns, creative-sections)
+- Existing skill files in `D:/Genorah/Plugins/v0-ahh-skill/skills/` -- direct codebase analysis of 8 relevant skills (design-brainstorm, micro-copy, design-archetypes, creative-tension, design-dna, emotional-arc, conversion-patterns, creative-sections)
 - Existing command/agent files -- `start-design.md`, `plan-sections.md`, `design-researcher.md` analyzed for workflow integration
 - Phase CONTEXT.md at `.planning/phases/06-brainstorming-content/06-CONTEXT.md` -- user decisions
 - ROADMAP.md and STATE.md -- phase dependencies and project decisions

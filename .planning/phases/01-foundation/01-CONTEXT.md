@@ -29,7 +29,7 @@ Core identity system, skill architecture, and plugin skeleton. Delivers: Design 
 ### Anti-Slop Gate calibration
 - Weighted scoring across 7 categories (not flat 5 per category)
 - Design quality weighted highest — craft fundamentals (polish, spacing, typography, color harmony) are the top priority
-- Post-review enforcement only — builders focus on building, gate runs during /modulo:verify. No inline self-check during building
+- Post-review enforcement only — builders focus on building, gate runs during /gen:verify. No inline self-check during building
 - When gate fails: specific fix list — outputs exactly which points were lost and concrete remediation actions
 - Full 35-point breakdown visible to user during verify — transparency builds trust
 - Anti-Slop Gate and Awwwards 4-axis scoring are separate systems — gate = enforcement (pass/fail), Awwwards = aspiration (quality level)
@@ -55,7 +55,7 @@ Core identity system, skill architecture, and plugin skeleton. Delivers: Design 
 
 - Archetype constraints should be "hard rules with escape hatch" — not advisory prose, not absolute lockdown. The tension override mechanism is key: builders CAN break a rule, but must document the rationale
 - Skills should be a genuine knowledge base, not a thin reference card. 300-600 lines means room for real examples and real guidance
-- The 4 expressive color tokens (glow, tension, highlight, signature) are what separate Modulo's palette system from generic design tokens — they encode creative intent, not just functional roles
+- The 4 expressive color tokens (glow, tension, highlight, signature) are what separate Genorah's palette system from generic design tokens — they encode creative intent, not just functional roles
 - Named quality tiers (Pass/Strong/SOTD-Ready/Honoree-Level) give builders something to aim for beyond "not failing"
 
 </specifics>

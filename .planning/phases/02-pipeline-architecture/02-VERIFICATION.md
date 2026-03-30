@@ -79,7 +79,7 @@ No TODO, FIXME, placeholder, or stub patterns found in any Phase 2 artifact. All
 ### Human Verification Required
 
 #### 1. Pipeline Flow Integration Test
-**Test:** Run /modulo:execute on a real project to verify the full pipeline executes correctly.
+**Test:** Run /gen:execute on a real project to verify the full pipeline executes correctly.
 **Expected:** Build-orchestrator constructs spawn prompts, spawns builders via Task tool, builders produce code + SUMMARY.md, reviewer scores output, polisher fixes gaps.
 **Why human:** Pipeline execution requires a real project context and Claude Code Task tool infrastructure.
 

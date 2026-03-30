@@ -804,10 +804,10 @@ Three.js WebGPURenderer automatically falls back to WebGL 2 when WebGPU is unava
 - **Recommendation:** Target R3F v9 as the production recommendation. Include a "Forward-Looking: WebGPU" section that mentions Three.js `three/webgpu` import (works with v9 via raw Three.js) and R3F v10 alpha for native support. This keeps the skill production-safe while acknowledging the future.
 - **Confidence: HIGH** -- Standard approach: document stable, mention upcoming.
 
-### 4. Remotion Rendering Approach for Modulo
+### 4. Remotion Rendering Approach for Genorah
 - **What we know:** Remotion can render videos server-side (headless Chrome + FFmpeg) or generate programmatic compositions for preview. In-browser preview via `@remotion/player`.
-- **What's unclear:** Whether Modulo builders should generate full videos or just Remotion compositions for preview/further rendering.
-- **Recommendation:** The skill should focus on composition creation (React components + Remotion APIs). Rendering is a deployment concern outside Modulo's scope. Document `@remotion/player` for in-browser preview so users can see their video compositions immediately. Leave server-side rendering as a note, not a core pattern.
+- **What's unclear:** Whether Genorah builders should generate full videos or just Remotion compositions for preview/further rendering.
+- **Recommendation:** The skill should focus on composition creation (React components + Remotion APIs). Rendering is a deployment concern outside Genorah's scope. Document `@remotion/player` for in-browser preview so users can see their video compositions immediately. Leave server-side rendering as a note, not a core pattern.
 - **Confidence: MEDIUM** -- This is a scope decision that might need user input.
 
 ### 5. Framer Marketplace Component Portability

@@ -663,7 +663,7 @@ Script to read DESIGN-DNA.md and generate DTCG token files:
 
 import { readFileSync, writeFileSync, mkdirSync } from 'fs';
 
-const dna = readFileSync('.planning/modulo/DESIGN-DNA.md', 'utf-8');
+const dna = readFileSync('.planning/genorah/DESIGN-DNA.md', 'utf-8');
 
 // Extract color tokens from DNA @theme block
 function extractColors(dnaContent: string): Record<string, any> {

@@ -47,7 +47,7 @@ metrics:
 
 ## What Was Built
 
-Created `skills/reference-benchmarking/SKILL.md` (568 lines) -- a 4-layer core skill defining the complete reference benchmarking system for Modulo 2.0.
+Created `skills/reference-benchmarking/SKILL.md` (568 lines) -- a 4-layer core skill defining the complete reference benchmarking system for Genorah 2.0.
 
 ### Key Components
 

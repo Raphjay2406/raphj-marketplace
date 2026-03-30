@@ -224,7 +224,7 @@ Usage in HTML remains the same:
 ### Pattern 4: Framework Detection and Adaptation
 
 **What:** Auto-detect the target framework from project files, confirm with user, store in DESIGN-DNA.md.
-**When to use:** Framework skills, during `/modulo:start-design`.
+**When to use:** Framework skills, during `/gen:start-design`.
 **Why:** User decision: "auto-detect from project files, then confirm with user during discovery."
 
 ```markdown
@@ -515,7 +515,7 @@ const isMacOS = navigator.platform.includes('Mac');
 3. **Shared components** -- nav, footer, sidebar, breadcrumb are designed once, reused everywhere
 4. **Per-page emotional arcs** -- landing page has HOOK-BUILD-PEAK-CLOSE; about page has BUILD-PROOF-BREATHE; pricing has TENSION-PROOF-CLOSE
 
-**Confidence: MEDIUM** -- Multi-page architecture for design systems is well-understood, but applying emotional arc theory per page type is Modulo-specific and needs creative judgment.
+**Confidence: MEDIUM** -- Multi-page architecture for design systems is well-understood, but applying emotional arc theory per page type is Genorah-specific and needs creative judgment.
 
 ## Code Examples
 
@@ -733,7 +733,7 @@ export const collections = { blog }
 
 ### Reduced Motion: Archetype-Aware Alternatives
 ```tsx
-// Source: WCAG 2.1 + Modulo archetype system
+// Source: WCAG 2.1 + Genorah archetype system
 
 // Each archetype defines what "reduced motion" means for its personality
 const reducedMotionAlternatives: Record<string, ReducedMotionConfig> = {
@@ -941,7 +941,7 @@ function TitleBar() {
 - Accessibility (WCAG 2.1 AA): HIGH -- established standards
 - Dark/light mode implementation: HIGH -- Tailwind v4 docs + community patterns
 - Desktop patterns (Tauri/Electron): HIGH -- verified via official documentation
-- Multi-page architecture: MEDIUM -- well-understood patterns but Modulo-specific emotional arc application needs creative judgment
+- Multi-page architecture: MEDIUM -- well-understood patterns but Genorah-specific emotional arc application needs creative judgment
 - Surviving skill rewrite scope: MEDIUM -- depends on Phases 1-7 execution state at time of Phase 8
 - Framework detection heuristics: MEDIUM -- standard convention-based but edge cases exist
 

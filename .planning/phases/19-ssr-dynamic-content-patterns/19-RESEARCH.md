@@ -802,9 +802,9 @@ Source: Next.js 16.1.6 official docs (https://nextjs.org/docs/app/api-reference/
 - Next.js 16.1.6 Draft Mode Guide -- https://nextjs.org/docs/app/guides/draft-mode (fetched 2026-02-25)
 - Astro On-Demand Rendering Guide -- https://docs.astro.build/en/guides/on-demand-rendering/ (fetched 2026-02-25)
 - Astro Server Islands Guide -- https://docs.astro.build/en/guides/server-islands/ (fetched 2026-02-25)
-- Modulo `nextjs-patterns` skill -- `skills/nextjs-patterns/SKILL.md` (local, confirms proxy.ts, async params, Cache Components)
-- Modulo `astro-patterns` skill -- `skills/astro-patterns/SKILL.md` (local, confirms Server Islands, hybrid mode)
-- Modulo Phase 17 Research -- `.planning/phases/17-api-integration-patterns/17-RESEARCH.md` (local, webhook patterns)
+- Genorah `nextjs-patterns` skill -- `skills/nextjs-patterns/SKILL.md` (local, confirms proxy.ts, async params, Cache Components)
+- Genorah `astro-patterns` skill -- `skills/astro-patterns/SKILL.md` (local, confirms Server Islands, hybrid mode)
+- Genorah Phase 17 Research -- `.planning/phases/17-api-integration-patterns/17-RESEARCH.md` (local, webhook patterns)
 
 ### Secondary (MEDIUM confidence)
 
@@ -830,7 +830,7 @@ Source: Next.js 16.1.6 official docs (https://nextjs.org/docs/app/api-reference/
 
 **Confidence breakdown:**
 - Standard stack (Next.js 16 Cache Components): HIGH -- All APIs verified against official Next.js 16.1.6 docs (dated 2026-02-20)
-- Standard stack (Astro SSR/Server Islands): HIGH -- Verified against official Astro docs and existing Modulo astro-patterns skill
+- Standard stack (Astro SSR/Server Islands): HIGH -- Verified against official Astro docs and existing Genorah astro-patterns skill
 - Architecture patterns: HIGH -- Code examples sourced from official Next.js and Astro docs
 - CMS revalidation: MEDIUM-HIGH -- Sanity, Strapi, Payload patterns well-documented; Contentful and Hygraph verification details less clear
 - Auth libraries: MEDIUM-HIGH -- Auth.js v5 and Clerk well-documented; Supabase SSR verified; Better Auth is MEDIUM

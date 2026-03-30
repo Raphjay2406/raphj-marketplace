@@ -106,9 +106,9 @@ For deep CWV optimization (image strategies, font loading, layout stability tech
 
 ### Pipeline Connection
 
-- **Referenced by:** `section-builder` (per-page metadata generation), `build-orchestrator` (site-wide SEO scaffold at Wave 0-1), `quality-reviewer` (constraint table validation)
-- **Consumed at:** `/modulo:execute` Wave 0 for root layout metadata and site-wide files (robots.txt, sitemap), Wave 2+ for per-page metadata via `generateMetadata` or equivalent
-- **Input from:** `/modulo:start-project` captures brand name, description, and target audience used in meta descriptions and OG defaults
+- **Referenced by:** `builder` (per-page metadata generation), `orchestrator` (site-wide SEO scaffold at Wave 0-1), `quality-reviewer` (constraint table validation)
+- **Consumed at:** `/gen:execute` Wave 0 for root layout metadata and site-wide files (robots.txt, sitemap), Wave 2+ for per-page metadata via `generateMetadata` or equivalent
+- **Input from:** `/gen:start-project` captures brand name, description, and target audience used in meta descriptions and OG defaults
 - **Output to:** Quality reviewer validates constraint table values (title length, description length, OG image dimensions); `structured-data` skill (Phase 15) builds on the meta foundation with JSON-LD schemas
 
 ## Layer 2: Award-Winning Examples
@@ -835,7 +835,7 @@ However, **meta description tone** should match the project's archetype voice. T
 
 ### Pipeline Stage
 
-- **Input from:** `/modulo:start-project` (brand name, brand description, domain, target audience), Design DNA (colors, fonts, signature element), page content (titles, excerpts, featured images from CMS or markdown frontmatter)
+- **Input from:** `/gen:start-project` (brand name, brand description, domain, target audience), Design DNA (colors, fonts, signature element), page content (titles, excerpts, featured images from CMS or markdown frontmatter)
 - **Output to:** HTML `<head>` tags (title, meta, link, og, twitter), `sitemap.xml` (or `sitemap-index.xml`), `robots.txt`, `<link rel="alternate">` hreflang tags
 - **Pipeline position:**
   - **Wave 0** -- Root layout metadata defaults (`metadataBase`, `title.template`, default OG image, robots config), `robots.ts` / `robots.txt`, `sitemap.ts` scaffold
@@ -910,7 +910,7 @@ Common SEO metadata mistakes that cause real damage. Each anti-pattern describes
 
 ## Machine-Readable Constraints
 
-These SEO parameters are enforced by the quality reviewer during `/modulo:iterate` and verification passes. Agents extract values from this table for automated checking.
+These SEO parameters are enforced by the quality reviewer during `/gen:iterate` and verification passes. Agents extract values from this table for automated checking.
 
 | Parameter | Min | Max | Unit | Enforcement |
 |---|---|---|---|---|

@@ -6,16 +6,38 @@ triggers: "anti-slop, quality gate, quality check, design quality, slop check, v
 version: "2.0.0"
 ---
 
+## Genorah v2.0 Updates
+
+- **v2.0 uses the expanded 72-point quality gate** (see `quality-gate-v2` skill). The original 35-point anti-slop gate is preserved as a **quick-check subset** for builder self-review during construction.
+- Full scoring now includes **12 categories** (was 7) with weighted scoring across 72 total points.
+- **New penalty items in v2.0:**
+  - Component consistency mismatch: **-4**
+  - Animation absence: **-3**
+  - Responsive absence: **-5**
+  - CSS feature without compat fallback: **-3**
+- **Named tiers updated for v2.0:**
+  | Tier | Score Range | Meaning |
+  |------|------------|---------|
+  | SOTM-Ready | 235+ | Site of the Month competitive |
+  | Honoree | 220-234 | Awwwards Honoree territory |
+  | SOTD-Ready | 200-219 | Site of the Day competitive |
+  | Strong | 170-199 | Solid premium quality |
+  | Baseline | 140-169 | Meets minimum quality bar |
+  | Reject | <140 | Below quality standard -- mandatory rework |
+- **Cross-reference:** `skills/quality-gate-v2/SKILL.md` for full 72-point scoring reference.
+
+---
+
 ## Layer 1: Decision Guidance
 
-The Anti-Slop Gate is a **POST-REVIEW** quality enforcement system. It does NOT run inline during building. Section builders focus on building; the gate runs during `/modulo:audit` via the quality-reviewer agent.
+The Anti-Slop Gate is a **POST-REVIEW** quality enforcement system. It does NOT run inline during building. Section builders focus on building; the gate runs during `/gen:audit` via the quality-reviewer agent.
 
 This separation is intentional: builders spending tokens on scoring during construction wastes 30%+ of their context on evaluation instead of craft. The gate runs once, thoroughly, after all sections in a wave are complete.
 
 ### When the Gate Runs
 
 - **After ALL sections in a wave are built** -- never mid-build, never per-section during construction
-- **During `/modulo:audit` command** -- the user-facing entry point for quality review
+- **During `/gen:audit` command** -- the user-facing entry point for quality review
 - **Quality-reviewer agent executes the scoring protocol** -- reads this skill, scores each category, produces the output report
 - **Results are presented to the user** with full transparency -- every point, every deduction, every reasoning
 
@@ -54,7 +76,7 @@ Seven categories with **weighted** point distribution -- not a flat 5 per catego
 
 ### Gate vs. Awwwards 4-Axis
 
-These are **separate systems** that both run during `/modulo:audit`:
+These are **separate systems** that both run during `/gen:audit`:
 
 | System | Purpose | Output | Threshold |
 |--------|---------|--------|-----------|
@@ -65,7 +87,7 @@ Gate runs first. If it fails, Awwwards scoring is skipped -- fix fundamentals be
 
 ### Pipeline Connection
 
-- **Referenced by:** quality-reviewer agent during `/modulo:audit`
+- **Referenced by:** quality-reviewer agent during `/gen:audit`
 - **Consumed at:** verify command workflow step 2 (after existence check, before Awwwards scoring)
 - **Input from:** completed section builds (HTML/TSX output, SUMMARY.md files)
 - **Output to:** user-facing score report, remediation tasks if failed

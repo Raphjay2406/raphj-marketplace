@@ -4,7 +4,7 @@
 **Researched:** 2026-02-25
 **Mode:** Ecosystem
 **Overall Confidence:** HIGH (verified against official documentation and multiple current sources)
-**Context:** Modulo 2.0 plugin for premium frontend design. Existing `seo-meta` skill is shallow and needs replacement with comprehensive, framework-aware SEO/GEO knowledge.
+**Context:** Genorah 2.0 plugin for premium frontend design. Existing `seo-meta` skill is shallow and needs replacement with comprehensive, framework-aware SEO/GEO knowledge.
 
 ---
 
@@ -106,7 +106,7 @@ Features every premium site must have. Missing = site feels amateur to search en
 
 ## Differentiators
 
-Features that would make Modulo's SEO/GEO skills meaningfully better than what other AI tools produce. Not expected but create competitive advantage.
+Features that would make Genorah's SEO/GEO skills meaningfully better than what other AI tools produce. Not expected but create competitive advantage.
 
 ---
 
@@ -181,7 +181,7 @@ Features that would make Modulo's SEO/GEO skills meaningfully better than what o
 | Aspect | Detail |
 |--------|--------|
 | **What** | Patterns for connecting premium website contact/lead forms to CRM systems. Three tiers: (1) HubSpot Forms API -- submit to `https://api.hsforms.com/submissions/v3/integration/submit/:portalId/:formGuid` (still uses v2 submission endpoint despite v3 management API). (2) Salesforce Web-to-Lead -- POST to `https://www.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8` with `oid` identifier. (3) Generic webhook pattern -- POST form data to any endpoint (Zapier, Make, n8n, custom API). |
-| **Why Differentiator** | Premium sites generate leads. A beautifully designed contact form that dumps submissions into the void is a wasted opportunity. Table stakes for any business site is CRM connectivity. But most AI tools generate forms with no backend -- the form looks good but submitting it does nothing. Modulo teaching builders how to wire forms to real CRMs creates immediately useful output. |
+| **Why Differentiator** | Premium sites generate leads. A beautifully designed contact form that dumps submissions into the void is a wasted opportunity. Table stakes for any business site is CRM connectivity. But most AI tools generate forms with no backend -- the form looks good but submitting it does nothing. Genorah teaching builders how to wire forms to real CRMs creates immediately useful output. |
 | **Complexity** | Medium |
 | **Current Skill Status** | NOT covered. This is explicitly called out in the existing FEATURES.md under anti-feature AF-4 ("Backend / Database / Auth Integration"). However, CRM form submission is NOT backend logic -- it's a frontend HTTP POST to an external API. This is the same category as analytics integration -- a thin client-side or serverless bridge. |
 | **v1.5 Requirement** | Three integration patterns: (a) **Server-side proxy (recommended)** -- Next.js API route / Astro server endpoint that receives form data, validates it, and forwards to CRM. Keeps API keys server-side. Pattern: form POST -> `/api/contact` -> validate -> CRM API -> respond; (b) **Client-side direct (HubSpot only)** -- HubSpot's forms endpoint accepts CORS requests. Client can POST directly to `api.hsforms.com` without a proxy. Simpler but limited to HubSpot; (c) **Webhook relay** -- POST to Zapier/Make webhook URL that routes to any CRM. Zero CRM-specific code. Most flexible; (d) **Key patterns:** Rate limiting (HubSpot: 100 requests per 10 seconds), error handling (what to show user on CRM failure -- never lose the lead, queue locally), honeypot spam prevention, success/error UI states, GDPR consent checkbox. **Salesforce-specific:** Web-to-Lead has a 500/day limit. REST API (`/services/data/vXX/sobjects/Lead`) has no limit but requires OAuth. Recommend Web-to-Lead for simple sites, REST API for high-volume. |
@@ -213,12 +213,12 @@ Features that would make Modulo's SEO/GEO skills meaningfully better than what o
 
 | Aspect | Detail |
 |--------|--------|
-| **What** | Connecting Modulo's Emotional Arc system to SEO/GEO requirements. Each beat type gets SEO guidance: Hook sections need H1 with primary keyword, Proof sections need statistics with schema markup, FAQ sections need FAQPage JSON-LD, Close sections need clear CTA with conversion tracking. |
-| **Why Differentiator** | This is uniquely Modulo. No other tool combines emotional storytelling with SEO optimization. The emotional arc determines page structure, and SEO requirements should inform how each beat is implemented -- not as an afterthought but as a structural integration. |
+| **What** | Connecting Genorah's Emotional Arc system to SEO/GEO requirements. Each beat type gets SEO guidance: Hook sections need H1 with primary keyword, Proof sections need statistics with schema markup, FAQ sections need FAQPage JSON-LD, Close sections need clear CTA with conversion tracking. |
+| **Why Differentiator** | This is uniquely Genorah. No other tool combines emotional storytelling with SEO optimization. The emotional arc determines page structure, and SEO requirements should inform how each beat is implemented -- not as an afterthought but as a structural integration. |
 | **Complexity** | Medium |
 | **Current Skill Status** | NOT connected. Emotional arc and SEO are separate concerns in the current skill system. |
 | **v1.5 Requirement** | Per-beat-type SEO guidance: (a) **Hook** -- H1 tag with primary keyword, meta description source text, above-the-fold LCP optimization; (b) **Build** -- H2 subheadings with secondary keywords, semantic chunking for AI extraction; (c) **Proof** -- statistics in structured format, testimonial schema (Review), case study with cited metrics; (d) **Peak** -- visual content with alt text, video with VideoObject schema; (e) **Breathe** -- whitespace is SEO-neutral, use for internal linking; (f) **Tension** -- FAQ sections with FAQPage schema, quotable statements for AI citation; (g) **Close** -- CTA section, conversion-focused with clear next action; (h) **Cross-beat:** BreadcrumbList covers page hierarchy, Organization covers publisher identity, canonical covers page identity. |
-| **Confidence** | MEDIUM -- the integration concept is sound and Modulo-specific, individual SEO elements verified against official docs |
+| **Confidence** | MEDIUM -- the integration concept is sound and Genorah-specific, individual SEO elements verified against official docs |
 
 ---
 
@@ -268,7 +268,7 @@ Features to explicitly NOT build in v1.5. Common mistakes in the SEO/API integra
 
 | Anti-Feature | Why Avoid | What to Do Instead |
 |--------------|-----------|-------------------|
-| Generating SEO-optimized blog posts, landing page copy, or meta descriptions via AI | Modulo's Copy Intelligence system (D-2 in v1.0 features) handles copy generation with brand voice. Adding a separate "SEO copy generator" would create conflicting guidance. Also, Google has explicitly stated that AI-generated content is fine IF it's high quality, but churning out SEO-optimized content is a spam signal. | The GEO content structuring patterns (D-1) teach builders HOW to structure content for AI search visibility. The copy intelligence system generates brand-voice copy. The SEO skill ensures that copy is properly tagged with meta tags and schema. These three work together -- no separate SEO content generator needed. |
+| Generating SEO-optimized blog posts, landing page copy, or meta descriptions via AI | Genorah's Copy Intelligence system (D-2 in v1.0 features) handles copy generation with brand voice. Adding a separate "SEO copy generator" would create conflicting guidance. Also, Google has explicitly stated that AI-generated content is fine IF it's high quality, but churning out SEO-optimized content is a spam signal. | The GEO content structuring patterns (D-1) teach builders HOW to structure content for AI search visibility. The copy intelligence system generates brand-voice copy. The SEO skill ensures that copy is properly tagged with meta tags and schema. These three work together -- no separate SEO content generator needed. |
 
 ---
 
@@ -321,13 +321,13 @@ Addresses the most critical gaps. Every premium site needs these.
 7. **TS-7: Core Web Vitals (SEO connection)** -- ranking factor awareness
 
 ### Phase 2: GEO & Advanced SEO
-Makes Modulo's output AI-search-visible. This is the differentiator.
+Makes Genorah's output AI-search-visible. This is the differentiator.
 
 8. **D-1: GEO Content Structuring** -- the biggest differentiator
 9. **D-2: IndexNow Protocol** -- instant indexing for Bing ecosystem
 10. **D-3: AI Bot Taxonomy** -- nuanced AI crawler management
 11. **D-8: Advanced Schema Markup** -- deeper structured data for AI
-12. **D-10: SEO + Emotional Arc Integration** -- uniquely Modulo
+12. **D-10: SEO + Emotional Arc Integration** -- uniquely Genorah
 
 ### Phase 3: Integration & Polish
 External system connectivity and edge cases.
@@ -404,4 +404,4 @@ Context7 MCP is a tooling concern, not a feature of the SEO/GEO skill itself. Co
 
 **Relevance to v1.5:** Context7 can be used DURING skill authoring to verify current API documentation for Next.js metadata API, Astro sitemap integration, HubSpot Forms API, etc. It is not something the SEO skill itself needs to teach -- it's a tool the skill author uses to ensure accuracy.
 
-**Integration point:** If Modulo's agents use Context7 for real-time API doc lookup during code generation, that's an agent-level capability, not a skill-level feature. The SEO skill should contain the verified patterns; agents can use Context7 to validate those patterns against current library versions.
+**Integration point:** If Genorah's agents use Context7 for real-time API doc lookup during code generation, that's an agent-level capability, not a skill-level feature. The SEO skill should contain the verified patterns; agents can use Context7 to validate those patterns against current library versions.

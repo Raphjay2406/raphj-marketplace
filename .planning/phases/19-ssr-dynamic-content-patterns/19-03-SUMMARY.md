@@ -52,7 +52,7 @@ metrics:
 
 ## Accomplishments
 
-- Layer 3 Integration Context wiring ssr-dynamic-content into the Modulo system with DNA token mappings, archetype-specific loading state variants, pipeline positioning, and comprehensive related skill cross-references
+- Layer 3 Integration Context wiring ssr-dynamic-content into the Genorah system with DNA token mappings, archetype-specific loading state variants, pipeline positioning, and comprehensive related skill cross-references
 - Layer 4 Anti-Patterns documenting the 10 most dangerous SSR/caching mistakes with correct alternatives referencing specific Layer 2 patterns
 - Machine-Readable Constraints table with 14 enforceable parameters for quality-reviewer agent automation
 - Complete 4-layer Domain-tier skill at 1842 lines covering rendering strategy decision guidance, 27 code patterns, CMS webhook revalidation, auth-gated content, and cache strategy

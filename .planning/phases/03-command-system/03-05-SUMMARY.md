@@ -9,8 +9,8 @@ requires:
   - phase: 02-pipeline-architecture
     provides: creative-director, quality-reviewer, polisher agent definitions (dispatch targets)
 provides:
-  - /modulo:iterate command (brainstorm-first design improvements)
-  - /modulo:bug-fix command (diagnostic root cause analysis)
+  - /gen:iterate command (brainstorm-first design improvements)
+  - /gen:bug-fix command (diagnostic root cause analysis)
   - Removal of v6.1.0 bugfix.md and change-plan.md
 affects: [04-quality-gates]
 
@@ -49,7 +49,7 @@ completed: 2026-02-24
 
 # Phase 3 Plan 5: Iterate & Bug-Fix Commands Summary
 
-**Created brainstorm-first /modulo:iterate (2-3 ASCII mockup proposals) and diagnostic /modulo:bug-fix (hypothesis-test root cause analysis), replacing v6.1.0 bugfix.md and change-plan.md**
+**Created brainstorm-first /gen:iterate (2-3 ASCII mockup proposals) and diagnostic /gen:bug-fix (hypothesis-test root cause analysis), replacing v6.1.0 bugfix.md and change-plan.md**
 
 ## Performance
 

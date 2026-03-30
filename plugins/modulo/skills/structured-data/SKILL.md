@@ -44,7 +44,7 @@ Not all schemas deliver the same value. Google has deprecated or restricted seve
 
 ### Per-Page-Type Recipe Table
 
-This is the primary reference for section-planners assigning schemas during `/modulo:plan-dev`. Each page type gets a specific combination of schemas assembled into a single `@graph`.
+This is the primary reference for section-planners assigning schemas during `/gen:plan-dev`. Each page type gets a specific combination of schemas assembled into a single `@graph`.
 
 | Page Type | Schema Combination | Notes |
 |---|---|---|
@@ -106,8 +106,8 @@ GEO (Generative Engine Optimization) structures content so AI search engines (Ch
 ### Pipeline Connection
 
 - **Referenced by:** section-planner (assigns schemas per section in PLAN.md), section-builder (generates JSON-LD during implementation), content-specialist (applies GEO content patterns)
-- **Consumed at:** `/modulo:plan-dev` (schema assignment per section using the recipe table), `/modulo:execute` Wave 2+ (JSON-LD generation per section, GEO pattern implementation)
-- **Verified by:** quality-reviewer (schema audit protocol -- runs on every quality-reviewer pass, after both `/modulo:execute` and `/modulo:iterate`)
+- **Consumed at:** `/gen:plan-dev` (schema assignment per section using the recipe table), `/gen:execute` Wave 2+ (JSON-LD generation per section, GEO pattern implementation)
+- **Verified by:** quality-reviewer (schema audit protocol -- runs on every quality-reviewer pass, after both `/gen:execute` and `/gen:iterate`)
 - **Related skills:**
   - `seo-meta` -- meta tags, canonical URLs, robots.txt, OG images. This skill handles structured data. Most pages need both.
   - `emotional-arc` -- beat-to-schema mapping. TENSION beats get FAQ schema, PROOF beats get statistics + author markup, CLOSE beats get Organization schema.
@@ -491,7 +491,7 @@ interface FAQ {
 
 const faqs: FAQ[] = [
   {
-    question: "What frameworks does Modulo support?",
+    question: "What frameworks does Genorah support?",
     answer: "Next.js 16, Astro 5/6, React 19/Vite, Tauri, and Electron.",
   },
   {
@@ -688,7 +688,7 @@ function buildOrganizationSchema(site: SiteConfig): OrganizationSchema {
 
 #### SDATA-06: Schema Audit Protocol
 
-This audit runs on every quality-reviewer pass -- after `/modulo:execute` AND `/modulo:iterate`. Schema-content mismatch after iteration is the #1 cause of Google manual actions for structured data. When content changes during `/modulo:iterate`, JSON-LD must be updated to match.
+This audit runs on every quality-reviewer pass -- after `/gen:execute` AND `/gen:iterate`. Schema-content mismatch after iteration is the #1 cause of Google manual actions for structured data. When content changes during `/gen:iterate`, JSON-LD must be updated to match.
 
 **Content-Schema Consistency Checklist:**
 
@@ -769,8 +769,8 @@ function BLUFSection({
 
 // Example usage:
 // <BLUFSection
-//   heading="How long does a Modulo project take?"
-//   answer="Most Modulo sites are production-ready in 2-4 weeks,
+//   heading="How long does a Genorah project take?"
+//   answer="Most Genorah sites are production-ready in 2-4 weeks,
 //     including design discovery, build, and quality review."
 //   details={[
 //     "Week 1 covers discovery, research, and design DNA generation.",
@@ -975,7 +975,7 @@ GEO pattern intensity adapts per archetype. All 19 archetypes map to one of 4 in
 
 ### SEO-Emotional Arc Beat Mapping (GEO-05)
 
-This is the per-beat prescriptive mapping of which SEO/GEO elements belong at each beat position. Section planners reference this during `/modulo:plan-dev` when assigning beats AND schema types simultaneously.
+This is the per-beat prescriptive mapping of which SEO/GEO elements belong at each beat position. Section planners reference this during `/gen:plan-dev` when assigning beats AND schema types simultaneously.
 
 | Beat | SEO/GEO Element | Schema Contribution | Rationale |
 |------|-----------------|---------------------|-----------|
@@ -1005,7 +1005,7 @@ Plus BreadcrumbList (always included for multi-page sites) and any page-type-spe
 
 - **Input from:** Section planner assigns beat types (from `emotional-arc` skill) and schema types (from this skill's recipe table). Content specialist provides page content. Design DNA provides brand info (name, logo, URL, social profiles).
 - **Output to:** JSON-LD `<script>` tags in page `<head>` (or body), GEO-structured content in page sections. Quality reviewer receives schema audit checklist.
-- **Pipeline position:** Schema types assigned during `/modulo:plan-dev` (section planning). JSON-LD generated during `/modulo:execute` Wave 2+ (per-section build). Schema audit runs during quality-reviewer pass (after execute AND iterate).
+- **Pipeline position:** Schema types assigned during `/gen:plan-dev` (section planning). JSON-LD generated during `/gen:execute` Wave 2+ (per-section build). Schema audit runs during quality-reviewer pass (after execute AND iterate).
 
 ### Related Skills
 
@@ -1022,9 +1022,9 @@ Plus BreadcrumbList (always included for multi-page sites) and any page-type-spe
 
 ### Anti-Pattern: Schema-Content Mismatch
 
-**What goes wrong:** JSON-LD claims data (prices, dates, FAQ answers) not visible on the page. Google issues manual actions, losing rich result eligibility across the entire site. This is the #1 structured data violation. Especially dangerous after `/modulo:iterate` edits -- content changes but JSON-LD is not updated to match.
+**What goes wrong:** JSON-LD claims data (prices, dates, FAQ answers) not visible on the page. Google issues manual actions, losing rich result eligibility across the entire site. This is the #1 structured data violation. Especially dangerous after `/gen:iterate` edits -- content changes but JSON-LD is not updated to match.
 
-**Instead:** Run the schema audit protocol (Layer 2 SDATA-06) on every quality-reviewer pass -- after both `/modulo:execute` and `/modulo:iterate`. Every JSON-LD claim must have a visible counterpart. Content is the source of truth; schema follows content. The auto-fix protocol updates JSON-LD to match current visible content and notifies the user of changes.
+**Instead:** Run the schema audit protocol (Layer 2 SDATA-06) on every quality-reviewer pass -- after both `/gen:execute` and `/gen:iterate`. Every JSON-LD claim must have a visible counterpart. Content is the source of truth; schema follows content. The auto-fix protocol updates JSON-LD to match current visible content and notifies the user of changes.
 
 ### Anti-Pattern: Fabricated FAQ Schema
 
@@ -1064,7 +1064,7 @@ Plus BreadcrumbList (always included for multi-page sites) and any page-type-spe
 
 ### Anti-Pattern: Ignoring Schema Audit After Iteration
 
-**What goes wrong:** JSON-LD is correct after initial `/modulo:execute` but becomes stale after `/modulo:iterate` changes page content. Prices change, dates shift, FAQ answers are rewritten, but schema still claims old values. Google detects the mismatch and removes rich results. Worse, AI engines extract outdated information and cite it in generated answers.
+**What goes wrong:** JSON-LD is correct after initial `/gen:execute` but becomes stale after `/gen:iterate` changes page content. Prices change, dates shift, FAQ answers are rewritten, but schema still claims old values. Google detects the mismatch and removes rich results. Worse, AI engines extract outdated information and cite it in generated answers.
 
 **Instead:** Schema audit runs on EVERY quality-reviewer pass -- after execute AND iterate. The auto-fix protocol (Layer 2 SDATA-06) updates JSON-LD to match current visible content and notifies the user of changes. Never assume JSON-LD is still valid after content edits.
 

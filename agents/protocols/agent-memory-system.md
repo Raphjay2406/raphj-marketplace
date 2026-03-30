@@ -12,7 +12,7 @@
 
 | Property | Value |
 |----------|-------|
-| Location | `.planning/modulo/CONTEXT.md` |
+| Location | `.planning/genorah/CONTEXT.md` |
 | Size target | 80-100 lines (hard ceiling: 120 lines) |
 | Update cadence | Full rewrite after every wave (NEVER append) |
 | Lifetime | Created after Design DNA generation; retired after final quality review |
@@ -95,7 +95,7 @@ Full rewrite after every wave prevents unbounded growth. Specific compression ru
 
 | Property | Value |
 |----------|-------|
-| Location | `.planning/modulo/DESIGN-SYSTEM.md` |
+| Location | `.planning/genorah/DESIGN-SYSTEM.md` |
 | Size target | No hard ceiling (reference document, not LLM context) |
 | Update cadence | After every wave, orchestrator appends new entries |
 | Lifetime | Created at Wave 0; grows through project lifecycle |
@@ -312,3 +312,60 @@ Orchestrator aggregates after review cycle
 4. **File-based is primary, platform memory is secondary.** File-based memory is explicit, inspectable, and version-controlled. Platform memory supplements with cross-session persistence
 5. **Builders are stateless.** They receive everything they need in their spawn prompt. They do not read CONTEXT.md, DESIGN-SYSTEM.md, or any memory files directly
 6. **Rewrite beats append.** CONTEXT.md is rewritten (not appended) after every wave. This forces the orchestrator to synthesize current state rather than accumulate stale information
+
+---
+
+## v2.0 Additions
+
+### DECISIONS.md Format
+
+Key project decisions are tracked in `.planning/genorah/DECISIONS.md` using a structured table format:
+
+```markdown
+# Decision Log
+
+| Date | Decision | Rationale | Agent | Phase |
+|------|----------|-----------|-------|-------|
+| 2026-03-15 | Use Playfair Display as display font | Client brand guidelines specify serif display | creative-director | Phase 1 |
+| 2026-03-15 | Select Dark Academia archetype | Matches university client's identity and target audience | creative-director | Phase 1 |
+| 2026-03-16 | Split hero into 2 sub-sections | Content too dense for single HOOK beat | section-planner | Phase 3 |
+| 2026-03-17 | Replace GSAP with CSS scroll-driven | Performance budget exceeded with 3 GSAP instances | quality-reviewer | Phase 4 |
+```
+
+**Rules:**
+- One row per decision. Keep descriptions concise (under 80 characters)
+- Rationale must explain WHY, not repeat WHAT
+- Agent column identifies who made the decision (for accountability and traceability)
+- Phase column maps to pipeline phase (Phase 1: Discovery, Phase 2: Planning, Phase 3: Section Planning, Phase 4: Build, Phase 5: Review)
+- DECISIONS.md is append-only (never rewritten, unlike CONTEXT.md)
+- Maximum 50 rows. If exceeded, archive older decisions to `DECISIONS-ARCHIVE.md`
+
+### Artifact Registry in CONTEXT.md
+
+CONTEXT.md includes a standardized artifact registry section that lists all managed files with their current state:
+
+```markdown
+## Artifact Registry
+| Artifact | Path | Status |
+|----------|------|--------|
+| Design DNA | .planning/genorah/DESIGN-DNA.md | LOCKED |
+| Master Plan | .planning/genorah/MASTER-PLAN.md | ACTIVE |
+| Decision Log | .planning/genorah/DECISIONS.md | ACTIVE |
+| Design System | .planning/genorah/DESIGN-SYSTEM.md | GROWING |
+| Context | .planning/genorah/CONTEXT.md | LIVE |
+| Hero Plan | .planning/genorah/sections/hero/PLAN.md | DONE |
+| Hero Summary | .planning/genorah/sections/hero/SUMMARY.md | DONE |
+| About Plan | .planning/genorah/sections/about/PLAN.md | ACTIVE |
+```
+
+- Status values: `LOCKED` (no changes), `ACTIVE` (in use), `GROWING` (append-only), `LIVE` (rewritten each wave), `DONE` (complete), `PLANNED` (not yet created)
+- Orchestrator updates the registry as part of the CONTEXT.md rewrite after every wave
+- Agents can reference the registry to verify file paths without reading the files themselves
+
+### Decision Memory
+
+Agents should retain key decisions in working memory to avoid re-reading files:
+- The orchestrator embeds the 3-5 most recent relevant decisions in spawn prompts under a `### Key Decisions` section
+- Builders do not need to read DECISIONS.md -- the relevant decisions are pre-extracted
+- The canary check (see canary-check.md) now tests decision recall as part of context health verification
+- If an agent cannot recall a decision that affects its current task, it is a context rot signal

@@ -1,17 +1,17 @@
 ---
-description: Show full Modulo project status -- phases, waves, sections, and artifacts
+description: Show full Genorah project status -- phases, waves, sections, and artifacts
 argument-hint: [--verbose] [--section name]
 allowed-tools: Read, Glob
 ---
 
-You are the Modulo Status reporter. You display the current project state in a clear, actionable format.
+You are the Genorah Status reporter. You display the current project state in a clear, actionable format.
 
 ## Guided Flow Header
 
-Read `.planning/modulo/STATE.md` and `.planning/modulo/CONTEXT.md`.
+Read `.planning/genorah/STATE.md` and `.planning/genorah/CONTEXT.md`.
 
 If neither file exists:
-  "No Modulo project found. Run `/modulo:start-project` to begin."
+  "No Genorah project found. Run `/gen:start-project` to begin."
   STOP.
 
 ## Argument Parsing
@@ -27,10 +27,10 @@ No arguments = show overview.
 
 ## Overview Display
 
-Read MASTER-PLAN.md, section PLAN.md/SUMMARY.md files, and `.planning/modulo/sections/*/` for section state. Display:
+Read MASTER-PLAN.md, section PLAN.md/SUMMARY.md files, and `.planning/genorah/sections/*/` for section state. Display:
 
 ```
-Modulo Project Status
+Genorah Project Status
 =====================
 Phase: [current phase] | Archetype: [name] | Direction: [name]
 
@@ -62,10 +62,10 @@ End with a contextual next action based on state:
 
 | State | Suggestion |
 |-------|------------|
-| No DNA | "Next: `/modulo:start-project` to begin." |
-| DNA exists, no plans | "Next: `/modulo:plan-dev` to create section plans." |
-| Plans exist, not built | "Next: `/modulo:execute` to start building." |
-| Build in progress | "Next: `/modulo:execute --resume` to continue wave [N]." |
-| Build complete, no audit | "Next: `/modulo:audit` for comprehensive quality review." |
-| Gaps found | "Next: `/modulo:iterate --from-gaps` to fix [N] quality gaps." |
-| All complete | "Project complete. Run `/modulo:audit` for final quality check." |
+| No DNA | "Next: `/gen:start-project` to begin." |
+| DNA exists, no plans | "Next: `/gen:plan-dev` to create section plans." |
+| Plans exist, not built | "Next: `/gen:execute` to start building." |
+| Build in progress | "Next: `/gen:execute --resume` to continue wave [N]." |
+| Build complete, no audit | "Next: `/gen:audit` for comprehensive quality review." |
+| Gaps found | "Next: `/gen:iterate --from-gaps` to fix [N] quality gaps." |
+| All complete | "Project complete. Run `/gen:audit` for final quality check." |

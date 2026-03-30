@@ -52,7 +52,7 @@ Number of constraint breaks and cross-pollination distance are calibrated to arc
 ### Pipeline Connection
 
 - **Referenced by:** `design-brainstorm` skill during creative direction generation
-- **Consumed at:** `/modulo:start-project` brainstorm phase, `/modulo:lets-discuss` creative exploration
+- **Consumed at:** `/gen:start-project` brainstorm phase, `/gen:discuss` creative exploration
 - **Output feeds:** Design DNA generation (borrowed principles become DNA token decisions), creative-tension assignment (borrowed principles map to tension levels)
 
 ## Layer 2: Industry Reference Library

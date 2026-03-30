@@ -71,7 +71,7 @@ This is the critical reference table. Every difference that could lead to incorr
 
 ### Pipeline Connection
 
-- **Referenced by:** section-builder, build-orchestrator during `/modulo:execute`
+- **Referenced by:** section-builder, build-orchestrator during `/gen:execute`
 - **Consumed at:** plan-dev (framework-specific planning), execute (code generation)
 - **Loaded when:** Framework detection identifies React/Vite project
 

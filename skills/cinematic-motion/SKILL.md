@@ -6,9 +6,44 @@ triggers: "animation, motion, scroll effect, hover, transition, choreography, ci
 version: "2.0.0"
 ---
 
+## Genorah v2.0 Updates
+
+### Beat-to-Motion Tier Mapping
+
+The planner auto-assigns motion tier based on beat type + archetype. Builders execute the assigned tier -- they do not decide motion intensity.
+
+| Beat | Tier | Description |
+|------|------|-------------|
+| Hook | Heavy | Cinematic entrance, parallax, particle animation, text reveal char-by-char |
+| Tease | Medium | Scroll-triggered fade+slide, subtle parallax, icon animation |
+| Reveal | Heavy | Dramatic unveil, counter animation, image sequence, split-screen transition |
+| Build | Medium | Card stagger, progressive disclosure, scroll-linked progress |
+| Peak | Maximum | Full choreography -- 3D transforms, GSAP timeline, creative tension moment |
+| Breathe | Minimal | Gentle fade only, ambient motion (floating shapes), no scroll trigger |
+| Tension | Heavy | Unexpected motion -- scale violence, glitch, direction break |
+| Proof | Light | Testimonial carousel, logo ticker, stat count-up |
+| Pivot | Medium | Transition animation between content types, section morph |
+| Close | Medium | CTA pulse/glow, form field focus animation, footer reveal |
+
+### Baked-In Motion
+
+Animation is **mandatory in every section**. There are no static sections in Genorah 2.0. The planner auto-assigns a motion tier based on the section's beat type and the project's archetype. Builders receive the motion assignment in their section PLAN.md and execute it -- they do not choose whether to animate or what intensity to use.
+
+### Hard Gate
+
+Quality reviewer **rejects** sections that lack:
+- An entrance animation (every section must animate into view)
+- Interaction states on interactive elements (hover, focus, active)
+
+Sections without both are returned for rework. This is a blocking failure.
+
+- **Cross-reference:** `skills/baked-in-defaults/SKILL.md` for motion block templates used in section PLANs.
+
+---
+
 ## Layer 1: Decision Guidance
 
-This skill is the single authority on motion design in Modulo 2.0. It covers CSS animations, the Motion library (ex-Framer Motion), and GSAP in one unified system. Motion is not decoration -- it communicates hierarchy, draws attention, creates emotion, and guides the eye. Every animation must answer: "What story does this motion tell?"
+This skill is the single authority on motion design in Genorah 2.0. It covers CSS animations, the Motion library (ex-Framer Motion), and GSAP in one unified system. Motion is not decoration -- it communicates hierarchy, draws attention, creates emotion, and guides the eye. Every animation must answer: "What story does this motion tell?"
 
 ### CSS-First Motion Decision Tree
 
@@ -73,7 +108,7 @@ Motion monotony is the hallmark of AI-generated design. Enforce variety.
 - **No 3 consecutive same-direction animations** -- if sections 1-2 both RISE, section 3 must use a different direction (EXPAND, ENTER-STAGE, UNFOLD, etc.)
 - **No 3 consecutive same-timing animations** -- if sections 1-2 both use 0.5s ease-out, section 3 must differ in duration or easing
 - **Adjacent sections must differ** in at least ONE of: direction, timing, stagger pattern
-- **Pre-assignment:** The section-planner agent pre-assigns motion directions in MASTER-PLAN.md before builders start. Diversity is validated before build, not after
+- **Pre-assignment:** The planner agent pre-assigns motion directions in MASTER-PLAN.md before builders start. Diversity is validated before build, not after
 - **Per-page minimum:** At least 3 different animation directions per page
 
 ---
@@ -646,7 +681,7 @@ Frame 3 (ongoing): Individual card hover states active
 
 - **Input from:** Design DNA (motion tokens, archetype), Emotional Arc (beat assignments), MASTER-PLAN.md (section sequence)
 - **Output to:** Builder spawn prompts (motion profile), Section PLANs (per-section animation spec), Design System Scaffold (Tailwind motion utilities)
-- **Referenced by:** build-orchestrator (motion diversity validation), section-planner (motion pre-assignment), quality-reviewer (motion quality scoring)
+- **Referenced by:** orchestrator (motion diversity validation), planner (motion pre-assignment), quality-reviewer (motion quality scoring)
 
 ---
 

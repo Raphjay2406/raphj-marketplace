@@ -11,16 +11,16 @@ version: "2.0.0"
 ### When to Use
 
 - **User has a Figma design to implement** -- Use this skill to import the design through Figma MCP tools and translate it into PLAN.md files for the normal execute pipeline
-- **User provides a Figma URL during `/modulo:start-project` discovery** -- The entry point for Figma-based projects; this skill drives the entire import workflow
-- **Figma is the visual reference for QA** -- During `/modulo:audit`, use this skill's visual QA overlay diff to compare the built page against the original Figma design
+- **User provides a Figma URL during `/gen:start-project` discovery** -- The entry point for Figma-based projects; this skill drives the entire import workflow
+- **Figma is the visual reference for QA** -- During `/gen:audit`, use this skill's visual QA overlay diff to compare the built page against the original Figma design
 - **Code Connect components exist in the project** -- Use this skill to detect existing component mappings and reuse them instead of generating new code
 - **Multi-page Figma files** -- Use this skill's page-by-page import protocol to handle complex Figma files with multiple pages or frames
 
 ### When NOT to Use
 
-- **Building from scratch (no Figma file)** -- Use the normal `/modulo:start-project` flow with research agents, archetype selection, and DNA generation
+- **Building from scratch (no Figma file)** -- Use the normal `/gen:start-project` flow with research agents, archetype selection, and DNA generation
 - **Figma file is a rough wireframe** -- If there is no visual styling (just boxes and text placeholders), treat the wireframe as inspiration input to the normal discovery flow, not as an import source
-- **Updating existing sections** -- Once code is built, use `/modulo:iterate` for changes. Only re-import from Figma if the design has fundamentally changed
+- **Updating existing sections** -- Once code is built, use `/gen:iterate` for changes. Only re-import from Figma if the design has fundamentally changed
 
 ### MCP Tool Selection Decision Tree
 
@@ -68,7 +68,7 @@ Start: "I have a Figma file URL"
   |     |-- If response is truncated: break into child nodes, query each
   |
   |-- [2b] Call get_screenshot with nodeId
-  |     |-- Save to .planning/modulo/figma-references/[section-name].png
+  |     |-- Save to .planning/genorah/figma-references/[section-name].png
   |
   v
 [3] Call get_variable_defs (once per file, not per node)
@@ -91,13 +91,13 @@ Start: "I have a Figma file URL"
 
 - **Referenced by:** `figma-translator` agent during the Figma import workflow
 - **Referenced by:** `quality-reviewer` agent during visual QA verify step (overlay diff)
-- **Referenced by:** `section-planner` agent when generating PLAN.md files from Figma data
-- **Consumed at:** `/modulo:start-project` discovery flow (when user provides a Figma URL)
-- **Consumed at:** `/modulo:audit` visual QA overlay diff step
+- **Referenced by:** `planner` agent when generating PLAN.md files from Figma data
+- **Consumed at:** `/gen:start-project` discovery flow (when user provides a Figma URL)
+- **Consumed at:** `/gen:audit` visual QA overlay diff step
 
 ### Critical Rule
 
-**Figma import ALWAYS produces PLAN.md files.** The output of this skill is never direct code. PLAN.md files flow through the normal `/modulo:execute` pipeline where builders generate code, creative director reviews quality, and the anti-slop gate enforces standards. Skipping the plan step bypasses user review and quality enforcement.
+**Figma import ALWAYS produces PLAN.md files.** The output of this skill is never direct code. PLAN.md files flow through the normal `/gen:execute` pipeline where builders generate code, creative director reviews quality, and the anti-slop gate enforces standards. Skipping the plan step bypasses user review and quality enforcement.
 
 ---
 
@@ -105,7 +105,7 @@ Start: "I have a Figma file URL"
 
 ### Pattern 1: Complete Figma Import Workflow
 
-The full 7-step workflow for importing a Figma design into the Modulo pipeline. Each step builds on the previous step's output.
+The full 7-step workflow for importing a Figma design into the Genorah pipeline. Each step builds on the previous step's output.
 
 #### Step 1: Get Page Structure
 
@@ -238,7 +238,7 @@ Parameters:
   nodeId: "123:456"          (Hero Section)
 
 ### Save Location
-.planning/modulo/figma-references/
+.planning/genorah/figma-references/
   01-hero.png
   02-services-grid.png
   03-testimonials.png
@@ -247,7 +247,7 @@ Parameters:
 
 ### Usage
 - Referenced in each section's PLAN.md as the visual target
-- Used during /modulo:audit for overlay diff comparison
+- Used during /gen:audit for overlay diff comparison
 - Named with numeric prefix to match section ordering
 ```
 
@@ -288,7 +288,7 @@ for future imports of the same Figma file.
 ## Figma Import: Step 7 -- PLAN.md Generation
 
 For each section, generate a PLAN.md that follows the standard format
-used by the /modulo:execute pipeline.
+used by the /gen:execute pipeline.
 
 See Pattern 3 for a complete PLAN.md example.
 ```
@@ -388,7 +388,7 @@ Even when Figma provides comprehensive visual tokens, these always come from DNA
 | Interaction patterns | Figma shows states but not transition behavior |
 | Forbidden patterns | Archetype constraints live in DNA, not Figma |
 | Signature element | Per-archetype creative identity from DNA |
-| Emotional arc beats | Section sequencing is a Modulo concept, not a Figma concept |
+| Emotional arc beats | Section sequencing is a Genorah concept, not a Figma concept |
 | Creative tension | Controlled rule-breaking comes from the archetype system |
 | Anti-slop enforcement | Quality gate thresholds are DNA + archetype driven |
 
@@ -396,7 +396,7 @@ Even when Figma provides comprehensive visual tokens, these always come from DNA
 
 ### Pattern 3: PLAN.md Generation from Figma Data
 
-A complete example of a PLAN.md generated from Figma import data. This file follows the standard format consumed by `/modulo:execute`.
+A complete example of a PLAN.md generated from Figma import data. This file follows the standard format consumed by `/gen:execute`.
 
 ```markdown
 ---
@@ -404,7 +404,7 @@ section: hero
 beat: HOOK
 builder_type: section
 layout_pattern: full-bleed-split
-figma_reference: .planning/modulo/figma-references/01-hero.png
+figma_reference: .planning/genorah/figma-references/01-hero.png
 ---
 
 # Section: Hero
@@ -473,7 +473,7 @@ figma_reference: .planning/modulo/figma-references/01-hero.png
 - Visual area becomes full-width background on mobile
 
 ## Figma Reference
-Visual QA target: `.planning/modulo/figma-references/01-hero.png`
+Visual QA target: `.planning/genorah/figma-references/01-hero.png`
 Compare at 1440px viewport width for desktop accuracy.
 ```
 
@@ -481,7 +481,7 @@ Compare at 1440px viewport width for desktop accuracy.
 
 ### Pattern 4: Visual QA Overlay Diff
 
-The overlay diff workflow compares the built page against the Figma design at pixel level. This runs during the `/modulo:audit` step, not during import.
+The overlay diff workflow compares the built page against the Figma design at pixel level. This runs during the `/gen:audit` step, not during import.
 
 #### Workflow
 
@@ -490,7 +490,7 @@ Step 1: Get Figma Reference Screenshot
   |-- Tool: get_screenshot
   |-- Parameters: fileKey, nodeId (specific section)
   |-- Output: Image data for the section as designed in Figma
-  |-- Save to: .planning/modulo/figma-references/[section-name].png
+  |-- Save to: .planning/genorah/figma-references/[section-name].png
   |   (may already exist from import step)
   |
 Step 2: Get Built Page Screenshot
@@ -498,7 +498,7 @@ Step 2: Get Built Page Screenshot
   |-- Navigate to the built page URL
   |-- Set viewport to match Figma frame dimensions (e.g., 1440x900)
   |-- Capture section screenshot (scroll to section, clip to bounds)
-  |-- Save to: .planning/modulo/qa-screenshots/[section-name]-built.png
+  |-- Save to: .planning/genorah/qa-screenshots/[section-name]-built.png
   |
 Step 3: Pixel-Level Comparison
   |-- Load both images as raw pixel data
@@ -513,7 +513,7 @@ Step 3: Pixel-Level Comparison
   |
 Step 4: Generate Diff Report
   |-- Calculate diff percentage: (numDiffPixels / totalPixels) * 100
-  |-- Save diff overlay image: .planning/modulo/qa-screenshots/[section-name]-diff.png
+  |-- Save diff overlay image: .planning/genorah/qa-screenshots/[section-name]-diff.png
   |-- Classify result:
   |     < 2% diff: PASS (minor rendering differences)
   |     2-10% diff: REVIEW (notable differences, may be intentional)
@@ -593,7 +593,7 @@ Review auto-detected mapping opportunities. Accept good suggestions,
 reject false positives.
 
 ### Step 4: Register New Mappings (Post-Build)
-After /modulo:execute completes, register new component mappings:
+After /gen:execute completes, register new component mappings:
 Tool: add_code_connect_map
 Parameters:
   fileKey: "abc123XYZ"
@@ -678,13 +678,13 @@ The relationship between Figma data and DNA tokens is hybrid: Figma provides whe
 | 8-level type scale | Figma font sizes -> map to DNA scale levels | Fluid scaling behavior (clamp formulas) |
 | 5-level spacing scale | Figma spacing values -> map to DNA scale | Responsive spacing adjustments |
 | 8+ motion tokens | Nothing -- Figma is static | All motion: duration, easing, stagger, spring config |
-| Signature element | Nothing -- this is a Modulo concept | Full signature element definition and usage rules |
+| Signature element | Nothing -- this is a Genorah concept | Full signature element definition and usage rules |
 | Forbidden patterns | Nothing -- this is archetype-driven | All forbidden patterns from the selected archetype |
 | Creative tension | Nothing -- this is archetype-driven | Tension types, techniques, and placement rules |
 
 ### Archetype Relationship
 
-The Figma import does NOT change or select the archetype. The archetype is set during `/modulo:start-project` (before Figma import or alongside it). The import workflow respects the archetype:
+The Figma import does NOT change or select the archetype. The archetype is set during `/gen:start-project` (before Figma import or alongside it). The import workflow respects the archetype:
 
 - **Figma visual elements that match archetype**: Proceed normally
 - **Figma visual elements that conflict with archetype forbidden patterns**: FLAG for user -- "Your Figma design uses a carousel, but the Editorial archetype forbids carousels. Options: (a) Remove carousel, use editorial scroll layout instead (b) Override archetype rule for this element (tension override with documented rationale)"
@@ -695,7 +695,7 @@ The Figma import does NOT change or select the archetype. The archetype is set d
 ```
 Input:
   - Figma file URL (from user)
-  - DESIGN-DNA.md (from /modulo:start-project)
+  - DESIGN-DNA.md (from /gen:start-project)
   - Design archetype (selected during start-project)
 
 Process:
@@ -705,8 +705,8 @@ Process:
   - Code Connect mappings are checked for component reuse
 
 Output:
-  - PLAN.md files (one per section, standard format for /modulo:execute)
-  - Figma reference screenshots (for visual QA during /modulo:audit)
+  - PLAN.md files (one per section, standard format for /gen:execute)
+  - Figma reference screenshots (for visual QA during /gen:audit)
   - Unmapped color flags (for user decision before execution)
   - Code Connect mapping report (what's reused vs. generated)
 ```
@@ -727,9 +727,9 @@ Output:
 
 ### Anti-Pattern 1: Direct Code Generation from Figma
 
-**What goes wrong:** Generating React/TSX code directly from Figma data instead of producing PLAN.md files. This bypasses the entire Modulo quality pipeline -- no user review of the plan, no creative director assessment, no beat validation, no anti-slop gate enforcement, no layout diversity check.
+**What goes wrong:** Generating React/TSX code directly from Figma data instead of producing PLAN.md files. This bypasses the entire Genorah quality pipeline -- no user review of the plan, no creative director assessment, no beat validation, no anti-slop gate enforcement, no layout diversity check.
 
-**Instead:** Always produce PLAN.md files that flow through `/modulo:execute`. The PLAN.md includes all Figma-derived visual specifications, but code generation happens through the normal builder pipeline with all quality gates intact. The user reviews the plan before any code is written.
+**Instead:** Always produce PLAN.md files that flow through `/gen:execute`. The PLAN.md includes all Figma-derived visual specifications, but code generation happens through the normal builder pipeline with all quality gates intact. The user reviews the plan before any code is written.
 
 ### Anti-Pattern 2: Calling get_design_context on Full Pages
 
@@ -781,5 +781,5 @@ Output:
 | Code Connect check before generation | Yes | get_code_connect_map called before PLAN.md tasks | SOFT -- should check, can skip if project has no Code Connect setup |
 | Emotional arc beat assignment | Yes | Every section gets a beat in PLAN.md | HARD -- required for anti-slop gate and creative quality |
 | User page selection for multi-page | Yes | User chooses which page to import | HARD -- no auto-importing all pages |
-| Screenshot save location | Yes | .planning/modulo/figma-references/ | SOFT -- standard location, can vary |
+| Screenshot save location | Yes | .planning/genorah/figma-references/ | SOFT -- standard location, can vary |
 | Figma variable alias awareness | Yes | Treat get_variable_defs as resolved values only | HARD -- alias chains not reliable |

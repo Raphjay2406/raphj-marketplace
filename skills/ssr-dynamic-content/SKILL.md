@@ -28,7 +28,7 @@ Apply this skill when the project goes beyond fully static pages. Specific trigg
 - **Client-side data fetching (SWR, TanStack Query)** -- Deferred to v2. This skill covers server-side rendering strategies only. Client-side fetching is a complementary pattern, not a replacement.
 - **API endpoint creation** -- Use `api-patterns` skill. This skill covers how PAGES render, not how API routes work. Webhook Route Handlers are the exception (they bridge CMS to cache invalidation).
 - **Authentication UX (login, signup, sessions)** -- Use `auth-ui` skill (future). This skill covers how auth state affects RENDERING decisions, not auth flows themselves.
-- **CMS data modeling or content fetching** -- Out of scope (Modulo handles rendering, not data modeling). This skill covers the REVALIDATION pipeline after CMS content changes, not how to fetch CMS data.
+- **CMS data modeling or content fetching** -- Out of scope (Genorah handles rendering, not data modeling). This skill covers the REVALIDATION pipeline after CMS content changes, not how to fetch CMS data.
 
 ### Rendering Strategy Decision Matrix
 
@@ -283,9 +283,9 @@ Use custom profiles when the 7 presets do not match your content update frequenc
 
 ### Pipeline Connection
 
-- **Referenced by:** section-builder (when generating pages with dynamic data), specialist agents (when configuring cache and revalidation)
-- **Consumed at:** `/modulo:plan-dev` for rendering strategy selection per section, `/modulo:execute` Wave 0 for `next.config.ts` cache setup and Wave 2+ for section-specific rendering patterns
-- **Input from:** `/modulo:start-project` (project requirements identify data freshness, CMS platform, auth needs). Design DNA provides no direct tokens -- this is a server-side concern.
+- **Referenced by:** builder (when generating pages with dynamic data), specialist agents (when configuring cache and revalidation)
+- **Consumed at:** `/gen:plan` for rendering strategy selection per section, `/gen:execute` Wave 0 for `next.config.ts` cache setup and Wave 2+ for section-specific rendering patterns
+- **Input from:** `/gen:start-project` (project requirements identify data freshness, CMS platform, auth needs). Design DNA provides no direct tokens -- this is a server-side concern.
 - **Output to:** Page components with appropriate cache directives, webhook Route Handlers, `next.config.ts` cache configuration, Astro page files with prerender/SSR settings
 
 ## Layer 2: Award-Winning Examples
@@ -1705,7 +1705,7 @@ Sites demonstrating excellent SSR, caching, and dynamic content rendering strate
 
 ## Layer 3: Integration Context
 
-How this skill connects to the rest of the Modulo system. SSR/dynamic content has lighter DNA coupling than visual skills -- the primary touchpoints are loading state aesthetics (skeletons/shimmers should use DNA colors) and draft mode banner styling. Rendering strategies, caching, and revalidation are server-side concerns with no visual dependency on DNA tokens.
+How this skill connects to the rest of the Genorah system. SSR/dynamic content has lighter DNA coupling than visual skills -- the primary touchpoints are loading state aesthetics (skeletons/shimmers should use DNA colors) and draft mode banner styling. Rendering strategies, caching, and revalidation are server-side concerns with no visual dependency on DNA tokens.
 
 ### DNA Connection
 
@@ -1720,7 +1720,7 @@ How this skill connects to the rest of the Modulo system. SSR/dynamic content ha
 
 ### Archetype Variants
 
-SSR rendering logic is identical across archetypes -- server-side code does not change with visual style. However, loading states and skeleton UIs should match archetype personality. These variants apply to Suspense fallback components, Server Island fallback slots, draft mode banners, and `loading.tsx` special files. The section-builder should adapt loading state JSX to match the project archetype.
+SSR rendering logic is identical across archetypes -- server-side code does not change with visual style. However, loading states and skeleton UIs should match archetype personality. These variants apply to Suspense fallback components, Server Island fallback slots, draft mode banners, and `loading.tsx` special files. The builder should adapt loading state JSX to match the project archetype.
 
 | Archetype Group | Loading State Style | Skeleton Pattern | Draft Banner Style |
 |-----------------|--------------------|-----------------|--------------------|
@@ -1737,7 +1737,7 @@ Remaining archetypes (Organic, Warm Artisan) should follow the closest personali
 
 ### Pipeline Stage
 
-- **Input from:** `/modulo:start-project` discovers content update frequency, CMS platform, auth requirements, and real-time data needs. `/modulo:plan-dev` section planner assigns rendering strategies per section based on the decision matrix. Design DNA provides domain and brand tokens for webhook URLs and loading states.
+- **Input from:** `/gen:start-project` discovers content update frequency, CMS platform, auth requirements, and real-time data needs. `/gen:plan` section planner assigns rendering strategies per section based on the decision matrix. Design DNA provides domain and brand tokens for webhook URLs and loading states.
 - **Output to:** Page components with cache directives (`"use cache"`, `cacheLife`, `cacheTag`), Server Components with auth checks, webhook Route Handlers (`app/api/revalidate/route.ts`), `next.config.ts` cache configuration, Astro page files with `prerender` settings and `server:defer` components, `proxy.ts` route protection, and `loading.tsx` skeleton components.
 - **Pipeline position:** Wave 0 scaffold includes `next.config.ts` cache setup (`cacheComponents: true`), `proxy.ts` auth protection, and skeleton `loading.tsx` files. Wave 1 establishes shared webhook handler and SEO bridge utility. Wave 2+ sections implement specific rendering strategies per the decision matrix.
 - **Cross-phase integration:** CMS webhook handlers call the SEO bridge to update sitemap (`seo-meta` skill) and fire IndexNow (`search-visibility` skill). Draft mode integrates with CMS preview URLs. Auth patterns reference `auth-ui` skill for the login/signup UX.

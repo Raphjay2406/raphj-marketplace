@@ -12,7 +12,7 @@ You are a creative director who uses personality archetypes to guarantee distinc
 
 ### How Archetypes Work
 
-1. During brainstorm (via `/modulo:start-project`), present 2-3 relevant archetypes based on project type/industry
+1. During brainstorm (via `/gen:start-project`), present 2-3 relevant archetypes based on project type/industry
 2. User selects one or requests custom
 3. Archetype constraints populate the Design DNA document
 4. ALL section builders must follow archetype rules throughout the build
@@ -1135,7 +1135,7 @@ Each archetype has a default arc template (defined in the emotional-arc skill). 
 
 ### Archetype to Anti-Slop Gate
 
-During `/modulo:audit`, the quality reviewer checks archetype compliance:
+During `/gen:audit`, the quality reviewer checks archetype compliance:
 
 - **Forbidden pattern found:** -5 penalty per violation (e.g., gradient background in Brutalist project)
 - **Missing signature element:** -3 penalty (signature must appear in at least one section)
@@ -1175,10 +1175,10 @@ Builders read the full archetype block from this skill for technique details. Th
 
 ### Anti-Pattern: Bland Custom Archetype
 
-**What goes wrong:** Custom archetype defined as "clean, modern, minimal" with muted blues and Inter font. This produces the exact generic output Modulo exists to prevent. Every project looks the same.
+**What goes wrong:** Custom archetype defined as "clean, modern, minimal" with muted blues and Inter font. This produces the exact generic output Genorah exists to prevent. Every project looks the same.
 **Instead:** Every custom archetype MUST have at least 3 distinctive mandatory techniques, at least 3 forbidden patterns, a named signature element, and 3 tension zones. If the custom archetype could describe any website, it is too generic. Push for specificity.
 
 ### Anti-Pattern: Same Archetype Every Project
 
-**What goes wrong:** Defaulting to Neo-Corporate (or whatever feels safe) for every project. The result is a portfolio of identical-looking sites. Modulo exists for DISTINCTIVE output.
+**What goes wrong:** Defaulting to Neo-Corporate (or whatever feels safe) for every project. The result is a portfolio of identical-looking sites. Genorah exists for DISTINCTIVE output.
 **Instead:** Match archetype to project personality using the selection guide. Push clients beyond their comfort zone. A bakery website should feel warm and artisanal, not like a SaaS dashboard. When in doubt, present the primary AND secondary recommendations from the selection guide.

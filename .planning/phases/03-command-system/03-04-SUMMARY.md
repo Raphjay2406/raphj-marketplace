@@ -9,7 +9,7 @@ requires:
   - phase: 02-pipeline-architecture
     provides: build-orchestrator agent definition (dispatch target)
 provides:
-  - /modulo:execute command (v2.0 rewrite as thin wrapper)
+  - /gen:execute command (v2.0 rewrite as thin wrapper)
   - CLI flag interface for wave-based execution (--wave, --resume, --dry-run, --parallel)
   - Session resume boot sequence with canary check
 affects: [04-quality-gates, 08-framework-skills]
@@ -42,7 +42,7 @@ completed: 2026-02-24
 
 # Phase 3 Plan 4: Execute Command Summary
 
-**Rewrote /modulo:execute as 127-line thin wrapper dispatching to build-orchestrator with CLI flags, session resume boot sequence, and three exit paths**
+**Rewrote /gen:execute as 127-line thin wrapper dispatching to build-orchestrator with CLI flags, session resume boot sequence, and three exit paths**
 
 ## Performance
 

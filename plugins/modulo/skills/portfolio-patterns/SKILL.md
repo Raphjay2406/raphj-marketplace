@@ -32,8 +32,8 @@ version: "2.0.0"
 ### Pipeline Connection
 
 - **Referenced by:** section-builder during portfolio/agency section builds
-- **Consumed at:** `/modulo:execute` wave 2+ for showcase and case study sections
-- **Related commands:** `/modulo:plan-dev` for portfolio page planning; uses `emotional-arc` for case study narrative beats
+- **Consumed at:** `/gen:execute` wave 2+ for showcase and case study sections
+- **Related commands:** `/gen:plan-dev` for portfolio page planning; uses `emotional-arc` for case study narrative beats
 
 ## Layer 2: Award-Winning Examples
 

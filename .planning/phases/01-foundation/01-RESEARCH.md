@@ -6,7 +6,7 @@
 
 ## Summary
 
-Phase 1 establishes the foundational identity systems and skill architecture for Modulo 2.0. This is a restructuring phase, not an invention phase -- all core concepts (Design DNA, Archetypes, Anti-Slop Gate, Emotional Arc) exist in v6.1.0 and need to be rewritten into machine-enforceable format with the new 4-layer skill structure.
+Phase 1 establishes the foundational identity systems and skill architecture for Genorah 2.0. This is a restructuring phase, not an invention phase -- all core concepts (Design DNA, Archetypes, Anti-Slop Gate, Emotional Arc) exist in v6.1.0 and need to be rewritten into machine-enforceable format with the new 4-layer skill structure.
 
 The primary challenge is transforming advisory prose ("builders SHOULD use DNA tokens") into enforceable constraints ("BREATHE beats MUST have 70-80% whitespace"). The v6.1.0 skills contain rich domain knowledge but lack structure -- they mix decision guidance with code examples, have no anti-pattern sections, and vary wildly in length (92 to 911 lines). The new 4-layer format (Decision Guidance, Award-Winning Examples, Integration Context, Anti-Patterns) standardizes all skills at 300-600 lines with machine-readable constraint blocks.
 
@@ -39,7 +39,7 @@ This phase produces markdown files only. There is no application code, no npm pa
 
 ```json
 {
-  "name": "modulo",
+  "name": "genorah",
   "version": "2.0.0",
   "description": "Premium frontend design plugin...",
   "author": {
@@ -74,10 +74,10 @@ This phase produces markdown files only. There is no application code, no npm pa
 
 ## Architecture Patterns
 
-### Plugin Directory Structure (Modulo 2.0)
+### Plugin Directory Structure (Genorah 2.0)
 
 ```
-modulo/
+genorah/
 ├── .claude-plugin/
 │   └── plugin.json              # Manifest only -- nothing else in this dir
 ├── skills/
@@ -295,7 +295,7 @@ Problems that look simple but have existing solutions:
 **Warning signs:** If the SKILL.md exceeds 1200 lines, the format needs optimization.
 
 ### Pitfall 2: CONTEXT.md vs REQUIREMENTS Conflict on Anti-Slop Enforcement
-**What goes wrong:** FOUND-03 requirement says "inline enforcement -- builders self-check before emitting code." But the user explicitly decided in CONTEXT.md: "Post-review enforcement only -- builders focus on building, gate runs during /modulo:verify. No inline self-check during building."
+**What goes wrong:** FOUND-03 requirement says "inline enforcement -- builders self-check before emitting code." But the user explicitly decided in CONTEXT.md: "Post-review enforcement only -- builders focus on building, gate runs during /gen:verify. No inline self-check during building."
 **Why it happens:** Requirements were written before the user discussion. The discussion overrides.
 **How to avoid:** Follow CONTEXT.md (post-review only). The Anti-Slop Gate skill defines the 35-point scoring system, but enforcement happens in the quality-reviewer agent (Phase 2) and verify command (Phase 3). The gate skill itself is a KNOWLEDGE BASE, not an enforcement mechanism. Note: Success Criteria #3 in ROADMAP.md also says "inline self-check protocol" -- this should be considered superseded by the user's explicit decision.
 **Warning signs:** If the anti-slop skill contains phrases like "before emitting code, run this checklist" -- that contradicts the user decision.
@@ -340,7 +340,7 @@ This generates `bg-bg`, `bg-surface`, `text-text`, `text-primary` etc. -- note t
 **What goes wrong:** Trying to embed too many rules in CLAUDE.md makes it massive and creates duplication with skills.
 **Why it happens:** CLAUDE.md is always loaded. Temptation to put everything there.
 **How to avoid:** CLAUDE.md should contain ONLY:
-1. Project overview (what Modulo is, version, key numbers)
+1. Project overview (what Genorah is, version, key numbers)
 2. Architecture (3-tier system, directory layout, file conventions)
 3. Core workflow (command sequence, what each phase does)
 4. Key concepts (one-paragraph summaries, NOT full definitions)
@@ -761,7 +761,7 @@ Based on analysis of all 87 skills:
 ### Primary (HIGH confidence)
 - Claude Code Plugin Reference: https://code.claude.com/docs/en/plugins-reference -- Full plugin.json schema, component discovery, hook system, directory structure verified 2026-02-23
 - Tailwind CSS v4 @theme docs: https://tailwindcss.com/docs/theme -- @theme directive syntax, color/font/spacing namespaces, inline mode verified 2026-02-23
-- Modulo v6.1.0 codebase: 87 skills analyzed for line count, structure, and content. Key files: design-dna/SKILL.md (306 lines), design-archetypes/SKILL.md (911 lines), anti-slop-design/SKILL.md (275 lines), emotional-arc/SKILL.md (478 lines), creative-tension/SKILL.md (268 lines), awwwards-scoring/SKILL.md (168 lines), plan-format/SKILL.md (279 lines)
+- Genorah v6.1.0 codebase: 87 skills analyzed for line count, structure, and content. Key files: design-dna/SKILL.md (306 lines), design-archetypes/SKILL.md (911 lines), anti-slop-design/SKILL.md (275 lines), emotional-arc/SKILL.md (478 lines), creative-tension/SKILL.md (268 lines), awwwards-scoring/SKILL.md (168 lines), plan-format/SKILL.md (279 lines)
 - .claude-plugin/plugin.json: Current manifest format with PreToolUse hook for DNA compliance
 - hooks/dna-compliance-check.sh: 103-line bash script for pre-commit pattern matching
 

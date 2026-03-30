@@ -6,7 +6,7 @@
 <domain>
 ## Phase Boundary
 
-The motion vocabulary, creative tension toolkit, wow moment library, page transitions, and design system scaffold that make every Modulo-generated site feel award-winning. Covers: cinematic motion presets, creative tension TSX implementations, 30+ wow moment patterns, page transition choreography, performance-aware animation, and DNA-enforced design system scaffold generation. Does NOT include framework-specific adaptations (Phase 8), live browser testing (Phase 4), or asset generation (Phase 7).
+The motion vocabulary, creative tension toolkit, wow moment library, page transitions, and design system scaffold that make every Genorah-generated site feel award-winning. Covers: cinematic motion presets, creative tension TSX implementations, 30+ wow moment patterns, page transition choreography, performance-aware animation, and DNA-enforced design system scaffold generation. Does NOT include framework-specific adaptations (Phase 8), live browser testing (Phase 4), or asset generation (Phase 7).
 
 </domain>
 

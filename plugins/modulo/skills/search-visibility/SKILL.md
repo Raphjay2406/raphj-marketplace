@@ -94,7 +94,7 @@ For every project, implement both paths:
 ### Pipeline Connection
 
 - **Referenced by:** build-orchestrator at Wave 0-1 (IndexNow endpoint scaffold, key verification file, robots.txt AI presets, llms.txt generation), section-builder during content publish hooks
-- **Consumed at:** `/modulo:execute` Wave 0 (IndexNow endpoint scaffold, key verification file, robots.txt AI rules, llms.txt), Wave 2+ (content-hash tracking on per-section publish)
+- **Consumed at:** `/gen:execute` Wave 0 (IndexNow endpoint scaffold, key verification file, robots.txt AI rules, llms.txt), Wave 2+ (content-hash tracking on per-section publish)
 - **Input from:** `seo-meta` skill (base robots.txt directives, sitemap URL), Design DNA (site name, URL for llms.txt)
 - **Output to:** IndexNow endpoint (Route Handler or Astro endpoint), AI-aware robots.txt rules, llms.txt file, webmaster tools verification files
 
@@ -501,7 +501,7 @@ The only archetype-sensitive element is **llms.txt description tone**, which sho
 
 ### Pipeline Stage
 
-- **Input from:** `seo-meta` skill (base robots.txt directives, sitemap URL), Design DNA (brand name, site URL, brand description), `/modulo:start-project` (site URL, brand description)
+- **Input from:** `seo-meta` skill (base robots.txt directives, sitemap URL), Design DNA (brand name, site URL, brand description), `/gen:start-project` (site URL, brand description)
 - **Output to:** IndexNow endpoint files (Route Handler or Astro endpoint), robots.txt AI rules (appended to seo-meta base), llms.txt file, webmaster verification files (meta tags or uploaded files)
 - **Pipeline position:**
   - **Wave 0 scaffold:** IndexNow endpoint, key verification file (`public/{key}.txt`), robots.txt AI presets, llms.txt generation

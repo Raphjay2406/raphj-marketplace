@@ -6,7 +6,7 @@
 <domain>
 ## Phase Boundary
 
-New `api-patterns` skill (Domain tier) providing server-side API integration patterns for Modulo projects. Covers CRM form submissions, webhook receivers, typed API clients, env secret management, and Context7 MCP workflow integration. All patterns are server-side -- secrets never exposed to client. Framework coverage: Next.js (Server Actions + Route Handlers) and Astro (API endpoints).
+New `api-patterns` skill (Domain tier) providing server-side API integration patterns for Genorah projects. Covers CRM form submissions, webhook receivers, typed API clients, env secret management, and Context7 MCP workflow integration. All patterns are server-side -- secrets never exposed to client. Framework coverage: Next.js (Server Actions + Route Handlers) and Astro (API endpoints).
 
 </domain>
 
@@ -24,7 +24,7 @@ New `api-patterns` skill (Domain tier) providing server-side API integration pat
 
 ### Server-side Proxy Design
 - **Pattern progression:** Show thin fetch wrapper first, then evolve into typed client. Teaches the progression from simple to production-ready
-- **Env secret convention:** Modulo convention enforced -- all secrets use unprefixed names (never NEXT_PUBLIC_, PUBLIC_, VITE_). Skill validates this in patterns
+- **Env secret convention:** Genorah convention enforced -- all secrets use unprefixed names (never NEXT_PUBLIC_, PUBLIC_, VITE_). Skill validates this in patterns
 - **Auto-generated .env.example:** When a project uses API patterns, agents auto-generate .env.example with all required vars (commented, no real values)
 - **Next.js approach:** Equal coverage of Server Actions and Route Handlers for each use case. Developer picks based on preference. Neither is "default"
 
@@ -49,7 +49,7 @@ New `api-patterns` skill (Domain tier) providing server-side API integration pat
 ## Specific Ideas
 
 - Pattern progression approach: thin wrapper -> typed client teaches developers the "why" behind each layer
-- Turnstile over reCAPTCHA -- privacy-first choice aligns with Modulo's quality standards
+- Turnstile over reCAPTCHA -- privacy-first choice aligns with Genorah's quality standards
 - Resend as primary email provider -- modern API, good DX, aligns with the TypeScript-first ecosystem
 - Salesforce gets two levels: Web-to-Lead for simple marketing sites, REST API for programmatic use cases with OAuth
 

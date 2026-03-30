@@ -1,6 +1,6 @@
 # Technology Stack: SEO/GEO, Sitemaps, IndexNow, and External API Integration
 
-**Project:** Modulo 2.0 v1.5 Milestone -- SEO/GEO Capabilities
+**Project:** Genorah 2.0 v1.5 Milestone -- SEO/GEO Capabilities
 **Researched:** 2026-02-25
 **Research Mode:** Ecosystem (Stack dimension)
 **Overall Confidence:** HIGH (cross-referenced WebSearch findings with official documentation URLs, npm registry data, and existing skill analysis)
@@ -9,9 +9,9 @@
 
 ## Executive Summary
 
-This document maps the complete technology stack for adding SEO, GEO (Generative Engine Optimization), XML sitemap generation, IndexNow integration, AI crawler management, and external API patterns to Modulo 2.0. The existing `seo-meta` skill has solid foundations (Next.js `generateMetadata`, Astro head components, JSON-LD patterns) but needs significant expansion for 2026 realities: AI search engines now drive 50%+ of information-seeking behavior, the IndexNow protocol is production-ready for Bing/Yandex, and structured data has become critical for both traditional and AI search visibility.
+This document maps the complete technology stack for adding SEO, GEO (Generative Engine Optimization), XML sitemap generation, IndexNow integration, AI crawler management, and external API patterns to Genorah 2.0. The existing `seo-meta` skill has solid foundations (Next.js `generateMetadata`, Astro head components, JSON-LD patterns) but needs significant expansion for 2026 realities: AI search engines now drive 50%+ of information-seeking behavior, the IndexNow protocol is production-ready for Bing/Yandex, and structured data has become critical for both traditional and AI search visibility.
 
-**Key insight:** The SEO/GEO stack for Modulo is almost entirely framework-native or zero-dependency. Unlike the animation stack (GSAP, Motion, Lenis), SEO/GEO relies on built-in framework APIs, hand-crafted JSON-LD, and simple HTTP calls. The skill's value is in teaching correct patterns and avoiding pitfalls, not in library selection.
+**Key insight:** The SEO/GEO stack for Genorah is almost entirely framework-native or zero-dependency. Unlike the animation stack (GSAP, Motion, Lenis), SEO/GEO relies on built-in framework APIs, hand-crafted JSON-LD, and simple HTTP calls. The skill's value is in teaching correct patterns and avoiding pitfalls, not in library selection.
 
 **Three strategic pillars for v1.5:**
 
@@ -94,7 +94,7 @@ React 19 introduces native metadata hoisting. When you render `<title>`, `<meta>
 - Streaming SSR
 - Server Components
 
-**What this means for Modulo:**
+**What this means for Genorah:**
 
 For React/Vite (SPA) projects targeting React 19, `react-helmet-async` is no longer necessary for basic metadata. Use React's native `<title>` and `<meta>` components directly.
 
@@ -549,7 +549,7 @@ For external API integration (HubSpot, CRMs, etc.), the skill should teach:
 
 Context7 is available as an MCP tool within Claude Code sessions. It provides current, authoritative documentation for libraries.
 
-**How Modulo should teach this:** The skill doesn't need to integrate Context7 as a runtime dependency. It should:
+**How Genorah should teach this:** The skill doesn't need to integrate Context7 as a runtime dependency. It should:
 1. Reference Context7 in the research/planning agents as a documentation source
 2. Teach builders to verify library patterns against current docs
 3. Not ship Context7 as a runtime dependency (it's a dev-time tool)

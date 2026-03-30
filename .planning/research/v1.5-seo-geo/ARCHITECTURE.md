@@ -7,10 +7,10 @@
 
 ## Recommended Architecture
 
-The SEO/GEO system integrates into Modulo's existing pipeline at three touchpoints:
+The SEO/GEO system integrates into Genorah's existing pipeline at three touchpoints:
 
 ```
-/modulo:start-project          /modulo:execute              Post-Deploy
+/gen:start-project          /gen:execute              Post-Deploy
       |                              |                          |
   Discovery:                    Build-time:                 Deploy-time:
   - Brand name                  - Meta tags per section     - IndexNow POST

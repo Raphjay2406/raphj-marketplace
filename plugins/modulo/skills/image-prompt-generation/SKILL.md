@@ -98,7 +98,7 @@ Negative: No text, no logos, no watermarks, no people, no sharp edges,
 ### Pipeline Connection
 
 - **Referenced by:** section-builder agents when a section plan specifies AI-generated imagery
-- **Consumed at:** `/modulo:execute` during build phase, when builder needs to generate or describe image assets
+- **Consumed at:** `/gen:execute` during build phase, when builder needs to generate or describe image assets
 - **Input:** Design DNA document (color palette, archetype, signature element, forbidden patterns, motion language)
 - **Output:** Tool-agnostic prompt text that produces DNA-consistent imagery
 

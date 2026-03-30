@@ -17,7 +17,7 @@ Responsive design is not a review concern or a post-build check. It is a build c
 ### When to Use
 
 - Always. Responsive design is active on every build, every component, every section.
-- There is no "non-responsive" mode in Modulo.
+- There is no "non-responsive" mode in Genorah.
 
 ### When NOT to Use
 
@@ -79,7 +79,7 @@ Decision tree:
 ### Pipeline Connection
 
 - **Referenced by:** Section builders during every build (responsive is not optional)
-- **Consumed at:** `/modulo:execute` -- all builders produce responsive code by default
+- **Consumed at:** `/gen:execute` -- all builders produce responsive code by default
 - **Checked by:** Quality reviewer during post-build review (responsive failures are CRITICAL, not WARNING)
 
 ---

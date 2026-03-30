@@ -1,6 +1,6 @@
 # Context Rot Prevention Protocol
 
-> Protocol document for the Modulo 2.0 build pipeline. Referenced by the build-orchestrator and all pipeline agents. Defines the 6-layer structural defense system against LLM attention degradation over extended build sessions.
+> Protocol document for the Genorah 2.0 build pipeline. Referenced by the build-orchestrator and all pipeline agents. Defines the 9-layer structural defense system against LLM attention degradation over extended build sessions.
 
 ## The Problem
 
@@ -8,11 +8,65 @@ Context rot is the single biggest threat to output quality in multi-wave builds.
 
 **v6.1.0 approach:** Advisory measures ("remember to check DNA"). Result: by wave 3-4, output drifts to generic.
 
-**v2.0 approach:** Structural prevention. 6 layers, each with real consequences, each with measured context cost. Prevention is enforced, not suggested.
+**v2.0 approach:** Structural prevention. 9 layers (3 hook-based + 6 runtime), each with real consequences, each with measured context cost. Prevention is enforced, not suggested.
 
 ---
 
-## 6-Layer Defense System
+## 9-Layer Defense System
+
+### Layer 0a: SessionStart Hook Injection (Zero-Cost Context Refresh)
+
+| Property | Value |
+|----------|-------|
+| **Mechanism** | SessionStart hook fires when a new Claude Code session begins, injecting project context automatically |
+| **Context cost** | ZERO at decision time -- hook runs before the agent's first turn |
+| **Consequence** | Agent starts every session with fresh orientation, eliminating "cold start" context rot |
+
+**How it works:**
+1. SessionStart hook detects project type (presence of `.planning/genorah/` directory)
+2. Hook reads CONTEXT.md and injects a compact summary into the system prompt
+3. Agent receives DNA anchor tokens, current build state, and next wave instructions before its first turn
+4. No file reads required by the agent -- context is pre-loaded by the hook
+
+**Why this is Layer 0a:** It fires before any agent action, making it the earliest possible defense. The agent cannot "forget" to read CONTEXT.md because the hook does it automatically.
+
+---
+
+### Layer 0b: PreToolUse Skill Injection (Smart Skill Matching)
+
+| Property | Value |
+|----------|-------|
+| **Mechanism** | PreToolUse hook intercepts tool calls and injects relevant skill knowledge based on pattern matching |
+| **Context cost** | MINIMAL -- only matched skills are injected, not all skills |
+| **Consequence** | Agents receive domain knowledge exactly when they need it, without reading skill files |
+
+**How it works:**
+1. PreToolUse hook intercepts Write/Edit tool calls
+2. Pattern matcher analyzes the file being written/edited (file name, content patterns, imports)
+3. Matching skills are injected into the agent's context for that specific tool call
+4. Agent receives relevant domain rules (e.g., animation best practices when writing animation code) without explicitly loading the skill
+
+**Why this is Layer 0b:** It provides just-in-time skill knowledge during the build, preventing the scenario where a builder "should have read the animation skill" but did not. The hook system makes skill loading automatic.
+
+---
+
+### Layer 0c: UserPromptSubmit Routing (Stale Command Prevention)
+
+| Property | Value |
+|----------|-------|
+| **Mechanism** | UserPromptSubmit hook validates and routes user commands, preventing execution of stale or invalid commands |
+| **Context cost** | ZERO -- routing logic runs outside the agent's context window |
+| **Consequence** | Users cannot accidentally invoke commands that contradict current build state |
+
+**How it works:**
+1. UserPromptSubmit hook intercepts slash commands (e.g., `/gen:execute`, `/gen:iterate`)
+2. Hook validates command against current build state (read from STATE.md or CONTEXT.md)
+3. If command is inappropriate for current state (e.g., `/gen:execute` when no plan exists), hook injects a redirect suggestion
+4. Prevents the agent from attempting to execute a command with stale or missing prerequisites
+
+**Why this is Layer 0c:** It prevents context rot at the input level -- before the agent even begins processing a user request, the hook ensures the request is valid for the current project state.
+
+---
 
 ### Layer 0: Pre-Commit DNA Compliance Hook
 
@@ -51,7 +105,7 @@ Context rot is the single biggest threat to output quality in multi-wave builds.
 | Property | Value |
 |----------|-------|
 | **Mechanism** | Single source of truth file, rewritten after every wave |
-| **Location** | `.planning/modulo/CONTEXT.md` |
+| **Location** | `.planning/genorah/CONTEXT.md` |
 | **Target size** | 80-100 lines |
 | **Context cost** | LOW (~500 tokens when read by orchestrator) |
 | **Consequence** | Stale CONTEXT.md = stale spawn prompts = drifted output |
@@ -61,7 +115,7 @@ Context rot is the single biggest threat to output quality in multi-wave builds.
 #### CONTEXT.md Format
 
 ```markdown
-# Modulo Context
+# Genorah Context
 Last updated: [ISO date] | Wave: [N] completed | Session: [N]
 
 ## DNA Identity
@@ -198,7 +252,7 @@ The canary check is NOT a separate agent -- it is a protocol the orchestrator fo
 **Hard Boundary (turn 31+):**
 - Mandatory session save
 - Orchestrator writes CONTEXT.md with explicit resume instructions
-- Message to user: "Session boundary reached. Start a new session and run `/modulo:execute` to continue."
+- Message to user: "Session boundary reached. Start a new session and run `/gen:execute` to continue."
 - Turn count tracked by orchestrator (increment on each tool use cycle)
 - No override -- this is a structural limit, not a suggestion
 
@@ -211,8 +265,8 @@ The canary check is NOT a separate agent -- it is a protocol the orchestrator fo
 #### Resume Protocol
 
 When a new session begins (after any boundary type):
-1. Read `.planning/modulo/CONTEXT.md` -- full project state in ~80-100 lines
-2. Read `.planning/modulo/MASTER-PLAN.md` -- find next wave from Next Wave Instructions
+1. Read `.planning/genorah/CONTEXT.md` -- full project state in ~80-100 lines
+2. Read `.planning/genorah/MASTER-PLAN.md` -- find next wave from Next Wave Instructions
 3. Continue from the wave indicated in Next Wave Instructions
 4. First action: run a canary check to verify the new session has clean context
 
@@ -317,9 +371,15 @@ Regardless of user choice:
 
 ## Layer Interaction Summary
 
-The 6 layers work together as defense-in-depth. No single layer is sufficient alone.
+The 9 layers work together as defense-in-depth. No single layer is sufficient alone.
 
 ```
+Layer 0a (SessionStart Hook)  -- injects context AT SESSION START (zero-cost refresh)
+  |
+Layer 0b (PreToolUse Skills)  -- injects skills AT TOOL CALL TIME (just-in-time knowledge)
+  |
+Layer 0c (UserPromptSubmit)   -- validates commands AT INPUT TIME (stale command prevention)
+  |
 Layer 0 (Pre-Commit Hook)     -- catches violations AT COMMIT TIME (hard block)
   |
 Layer 1 (CONTEXT.md)          -- provides orientation AT SESSION START (quick reference)

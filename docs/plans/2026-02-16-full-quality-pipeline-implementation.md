@@ -2,7 +2,7 @@
 
 > **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
 
-**Goal:** Overhaul Modulo's planning-to-execution pipeline across 10 files to produce award-winning frontend output by eliminating AI agent limitations (visual blindness, vague specs, context rot, autonomous changes, weak copy, missing wow factor).
+**Goal:** Overhaul Genorah's planning-to-execution pipeline across 10 files to produce award-winning frontend output by eliminating AI agent limitations (visual blindness, vague specs, context rot, autonomous changes, weak copy, missing wow factor).
 
 **Architecture:** This is a markdown-only Claude Code plugin. Every change is to `.md` files (commands, agents, skills) or `plugin.json`. No application code, no tests, no build system. Changes cascade: the discussion-protocol agent is referenced by commands; the hyper-specific PLAN.md format is produced by plan-sections and consumed by section-builder; the content plan flows from start-design through to verify.
 
@@ -94,15 +94,15 @@ The user can grant temporary autonomy:
 
 | Command/Agent | Applies? | Notes |
 |--------------|----------|-------|
-| `/modulo:execute` | YES | Present wave summary before spawning builders |
-| `/modulo:iterate` | YES | Show exact diff preview before any change |
-| `/modulo:bugfix` | YES | Show bug diagnosis + fix plan before applying |
-| `/modulo:change-plan` | YES | Show plan diff before saving |
+| `/gen:execute` | YES | Present wave summary before spawning builders |
+| `/gen:iterate` | YES | Show exact diff preview before any change |
+| `/gen:bugfix` | YES | Show bug diagnosis + fix plan before applying |
+| `/gen:change-plan` | YES | Show plan diff before saving |
 | `section-builder` | Partial | Auto tasks proceed per plan, but deviations require discussion |
 | `design-lead` | YES | Present wave plan before spawning |
-| `/modulo:start-design` | NO | Discovery/research is exploratory, not code-modifying |
-| `/modulo:plan-sections` | Partial | Each section plan already requires user approval |
-| `/modulo:verify` | NO | Verification is read-only |
+| `/gen:start-design` | NO | Discovery/research is exploratory, not code-modifying |
+| `/gen:plan-sections` | Partial | Each section plan already requires user approval |
+| `/gen:verify` | NO | Verification is read-only |
 ```
 
 **Step 2: Commit**
@@ -410,7 +410,7 @@ When assigning wow moments, embed the FULL TSX implementation code (adapted with
 At the top of Step 3, add:
 
 ```markdown
-Before writing each PLAN.md, read `.planning/modulo/REFERENCES.md` and `.planning/modulo/CONTENT.md`. Each section plan MUST:
+Before writing each PLAN.md, read `.planning/genorah/REFERENCES.md` and `.planning/genorah/CONTENT.md`. Each section plan MUST:
 - Reference which pattern from which reference site it adapts (in `<visual-specification>`)
 - Use pre-approved copy from CONTENT.md (in the "Exact Copy" subsection)
 - Compute exact Tailwind classes from DESIGN-DNA.md tokens (not generic Tailwind defaults)
@@ -450,16 +450,16 @@ Before synthesizing research, capture visual references from the user's referenc
 **For each reference URL (max 5 sites):**
 1. Navigate to the URL, wait for page load
 2. Resize to 1440px width
-3. Take full-page screenshot → `.planning/modulo/research/screenshots/{site}-desktop-full.png`
-4. Take above-fold screenshot → `.planning/modulo/research/screenshots/{site}-desktop-fold.png`
+3. Take full-page screenshot → `.planning/genorah/research/screenshots/{site}-desktop-full.png`
+4. Take above-fold screenshot → `.planning/genorah/research/screenshots/{site}-desktop-fold.png`
 5. Resize to 375px width
-6. Take above-fold screenshot → `.planning/modulo/research/screenshots/{site}-mobile-fold.png`
-7. Scroll to ~50% and screenshot → `.planning/modulo/research/screenshots/{site}-desktop-mid.png`
-8. Scroll to bottom and screenshot → `.planning/modulo/research/screenshots/{site}-desktop-footer.png`
+6. Take above-fold screenshot → `.planning/genorah/research/screenshots/{site}-mobile-fold.png`
+7. Scroll to ~50% and screenshot → `.planning/genorah/research/screenshots/{site}-desktop-mid.png`
+8. Scroll to bottom and screenshot → `.planning/genorah/research/screenshots/{site}-desktop-footer.png`
 
 **That's 5 screenshots per site, covering:** full structure, first impression, mobile, mid-page quality, and footer/CTA.
 
-**For each reference site, analyze the screenshots and document in `.planning/modulo/research/REFERENCES.md`:**
+**For each reference site, analyze the screenshots and document in `.planning/genorah/research/REFERENCES.md`:**
 
 ```markdown
 ## Reference Analysis: [Site Name]
@@ -525,7 +525,7 @@ Screenshots: [list of screenshot file paths]
 - Ask user: "I can't capture screenshots. Please provide reference screenshots if possible."
 - Document that visual analysis was limited in REFERENCES.md
 
-Copy the REFERENCES.md to `.planning/modulo/REFERENCES.md` after synthesis.
+Copy the REFERENCES.md to `.planning/genorah/REFERENCES.md` after synthesis.
 ```
 
 **Step 2: Add Phase 3.75 (Content Planning)**
@@ -542,15 +542,15 @@ After Phase 3.5 (Design DNA Generation) section, before "## Initialize STATE.md"
 ### Step 1: Read Context
 
 Read:
-- `.planning/modulo/PROJECT.md` — what the product/service is
-- `.planning/modulo/BRAINSTORM.md` — archetype and creative direction
-- `.planning/modulo/DESIGN-DNA.md` — personality and tone
+- `.planning/genorah/PROJECT.md` — what the product/service is
+- `.planning/genorah/BRAINSTORM.md` — archetype and creative direction
+- `.planning/genorah/DESIGN-DNA.md` — personality and tone
 - Reference the `micro-copy` skill for button/CTA rules
 - Reference the `conversion-patterns` skill for persuasion structure
 
 ### Step 2: Generate Content Plan
 
-Create `.planning/modulo/CONTENT.md`:
+Create `.planning/genorah/CONTENT.md`:
 
 ```markdown
 # Content Plan: [Project Name]
@@ -601,7 +601,7 @@ Present all content for approval:
 
 **User must approve content before proceeding to section planning.**
 
-Save approved content to `.planning/modulo/CONTENT.md`.
+Save approved content to `.planning/genorah/CONTENT.md`.
 ```
 
 **Step 3: Update Initialize STATE.md**
@@ -616,7 +616,7 @@ Add `CONTENT.md` and `REFERENCES.md` to the artifacts list in the Completion sec
 
 **Step 4: Update the workflow reference**
 
-In Phase 3.5, after "Save to `.planning/modulo/DESIGN-DNA.md`.", add:
+In Phase 3.5, after "Save to `.planning/genorah/DESIGN-DNA.md`.", add:
 
 ```markdown
 **Next:** Proceed to Phase 3.75 (Content Planning) before section planning.
@@ -670,8 +670,8 @@ Replace the current body description (lines 55-61) with:
 Also add to the "Also read:" list:
 
 ```markdown
-- `.planning/modulo/CONTENT.md` — approved copy (your section's text must match exactly)
-- `.planning/modulo/REFERENCES.md` — reference quality bar (understand what we're matching)
+- `.planning/genorah/CONTENT.md` — approved copy (your section's text must match exactly)
+- `.planning/genorah/REFERENCES.md` — reference quality bar (understand what we're matching)
 - The Page Context Snapshot (provided by design-lead in the spawn prompt) — adjacent sections and coherence rules
 ```
 
@@ -744,7 +744,7 @@ If Playwright, Chrome DevTools, or Claude in Chrome MCP tools are available:
 2. Navigate to the page
 3. Take screenshots at 1440px, 768px, and 375px
 4. If the section has hover/interactive states, capture those too
-5. Save screenshots to `.planning/modulo/sections/XX-{name}/screenshots/`
+5. Save screenshots to `.planning/genorah/sections/XX-{name}/screenshots/`
 6. Report screenshot paths in SUMMARY.md
 
 If no browser tools available:
@@ -773,8 +773,8 @@ git commit -m "feat: section-builder as spec executor with task-level DNA checks
 After the Phase 1 read list (lines 36-38), add:
 
 ```markdown
-6. Read `.planning/modulo/CONTENT.md` — approved copy for all sections
-7. Read `.planning/modulo/REFERENCES.md` — reference quality bar and patterns
+6. Read `.planning/genorah/CONTENT.md` — approved copy for all sections
+7. Read `.planning/genorah/REFERENCES.md` — reference quality bar and patterns
 ```
 
 Add after line 9 (before Core Protocol):
@@ -858,7 +858,7 @@ After ALL sections in a wave are COMPLETE, before advancing to the next wave:
 7. If ANY coherence issue is found → fix it before advancing to the next wave
 
 Also: if browser tools are available, record a scroll-through GIF of the full page after each wave:
-- Save to `.planning/modulo/progress/wave-[N]-scrollthrough.gif`
+- Save to `.planning/genorah/progress/wave-[N]-scrollthrough.gif`
 - Present to user for holistic flow assessment
 ```
 
@@ -913,7 +913,7 @@ Add a new section:
 Monitor session length. When you sense the session is approaching context limits (approximately 80% capacity — you'll notice responses getting compressed, or you've been working for many turns):
 
 1. **STOP all active builds**
-2. **Write session transfer document:** `.planning/modulo/.session-transfer.md`
+2. **Write session transfer document:** `.planning/genorah/.session-transfer.md`
 
 ```markdown
 # Session Transfer
@@ -968,7 +968,7 @@ Sections remaining: [list]
 ```
 
 3. **Update STATE.md** with current progress
-4. **Tell user:** "Approaching context limit. State saved to `.session-transfer.md`. Start a new session and run `/modulo:execute resume` to continue seamlessly."
+4. **Tell user:** "Approaching context limit. State saved to `.session-transfer.md`. Start a new session and run `/gen:execute resume` to continue seamlessly."
 ```
 
 **Step 6: Commit**
@@ -992,9 +992,9 @@ git commit -m "feat: design-lead with page context snapshots, coherence system, 
 After line 6 (Read all section SUMMARY.md files), add:
 
 ```markdown
-8. Read `.planning/modulo/REFERENCES.md` — reference quality bar for comparison
-9. Read `.planning/modulo/CONTENT.md` — approved copy for content verification
-10. Read `.planning/modulo/PAGE-CONSISTENCY.md` — cross-page coherence rules (if multi-page)
+8. Read `.planning/genorah/REFERENCES.md` — reference quality bar for comparison
+9. Read `.planning/genorah/CONTENT.md` — approved copy for content verification
+10. Read `.planning/genorah/PAGE-CONSISTENCY.md` — cross-page coherence rules (if multi-page)
 ```
 
 **Step 2: Add content verification to Step 3 (Visual Audit)**
@@ -1040,7 +1040,7 @@ After the reference comparison section, add:
 ```markdown
 ### Cross-Page Coherence Check (for multi-page projects)
 
-If `.planning/modulo/PAGE-CONSISTENCY.md` exists:
+If `.planning/genorah/PAGE-CONSISTENCY.md` exists:
 - [ ] Navigation is identical across all pages
 - [ ] Footer is identical across all pages
 - [ ] Font loading is consistent (no FOUT on secondary pages)
@@ -1070,9 +1070,9 @@ git commit -m "feat: quality-reviewer with reference comparison, content verific
 After line 15 (All section PLAN.md files), add:
 
 ```markdown
-- `.planning/modulo/REFERENCES.md` — reference quality bar for comparison (if exists)
-- `.planning/modulo/CONTENT.md` — approved copy for content verification (if exists)
-- `.planning/modulo/PAGE-CONSISTENCY.md` — cross-page coherence rules (if exists)
+- `.planning/genorah/REFERENCES.md` — reference quality bar for comparison (if exists)
+- `.planning/genorah/CONTENT.md` — approved copy for content verification (if exists)
+- `.planning/genorah/PAGE-CONSISTENCY.md` — cross-page coherence rules (if exists)
 ```
 
 **Step 2: Add Content Verification section**
@@ -1082,7 +1082,7 @@ After the "## Design DNA Compliance Check" section (after line 202), add:
 ```markdown
 ## Content Verification (NEW)
 
-If `.planning/modulo/CONTENT.md` exists, verify all approved copy is faithfully implemented:
+If `.planning/genorah/CONTENT.md` exists, verify all approved copy is faithfully implemented:
 
 - [ ] All hero text matches CONTENT.md exactly (headline, subheadline, CTAs, friction reducer)
 - [ ] All section headlines match CONTENT.md
@@ -1101,7 +1101,7 @@ After the Content Verification section, add:
 ```markdown
 ## Reference Quality Comparison (NEW)
 
-If `.planning/modulo/REFERENCES.md` exists, compare each section against its reference pattern:
+If `.planning/genorah/REFERENCES.md` exists, compare each section against its reference pattern:
 
 For each section that references a specific pattern from a reference site (documented in PLAN.md `<visual-specification>`):
 
@@ -1111,7 +1111,7 @@ For each section that references a specific pattern from a reference site (docum
 4. Score each aspect as MATCH or GAP
 5. Any GAP generates a GAP-FIX.md item with specific instructions to close the quality gap
 
-If browser tools available: take a screenshot of the built section and compare visually against the reference screenshots in `.planning/modulo/research/screenshots/`.
+If browser tools available: take a screenshot of the built section and compare visually against the reference screenshots in `.planning/genorah/research/screenshots/`.
 ```
 
 **Step 4: Commit**
@@ -1136,7 +1136,7 @@ Update the version to `6.0.0` and update the description to mention the new qual
 
 ```json
 {
-  "name": "modulo",
+  "name": "genorah",
   "description": "Premium frontend design system with 87 skills, 12 commands, and 17 agents. Features Full Quality Pipeline: visual reference capture, hyper-specific blueprints, content planning, discussion-first protocol, section coherence system, live visual feedback, wow factor enforcement, and anti-context-rot session management. Plus Design DNA identity system with 16 opinionated archetypes, creative tension system, emotional arc storytelling, cinematic motion choreography, 35-point anti-slop quality gate, and Awwwards 4-axis scoring. Creates Awwwards SOTD-competitive, production-ready websites. Works with Next.js and Astro.",
   "version": "6.0.0",
   "author": {

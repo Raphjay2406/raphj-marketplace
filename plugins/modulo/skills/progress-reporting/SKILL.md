@@ -244,8 +244,8 @@ After the **final wave** completes, produce the full build report. This is the m
 2. Type mismatch in 05-proof/Task 4 (auto-resolved)
 
 **Screenshots:** Captured at 4 breakpoints (375px, 768px, 1024px, 1440px)
-Saved to: `.planning/modulo/screenshots/`
-Run `/modulo:audit` for full visual QA review.
+Saved to: `.planning/genorah/screenshots/`
+Run `/gen:audit` for full visual QA review.
 
 **Files Created:** [total count] files across [N] sections
 **Shared Components:** [list of reusable components from Wave 0/1]
@@ -269,7 +269,7 @@ Screenshots are captured at 4 mandatory breakpoints: **375px, 768px, 1024px, 144
 Playwright MCP (or equivalent browser tool) captures all 4 breakpoints for each section. Screenshots are saved to:
 
 ```
-.planning/modulo/screenshots/
+.planning/genorah/screenshots/
   01-nav-375px.png
   01-nav-768px.png
   01-nav-1024px.png
@@ -286,7 +286,7 @@ Playwright MCP (or equivalent browser tool) captures all 4 breakpoints for each 
 **Full-page scrollshots** (in addition to per-section):
 
 ```
-.planning/modulo/screenshots/
+.planning/genorah/screenshots/
   full-page-375px.png
   full-page-768px.png
   full-page-1024px.png
@@ -295,14 +295,14 @@ Playwright MCP (or equivalent browser tool) captures all 4 breakpoints for each 
 
 **Mid-build screenshots (on request only):**
 
-- Triggered only by explicit user request (e.g., "show me what the hero looks like") or via `/modulo:audit`
+- Triggered only by explicit user request (e.g., "show me what the hero looks like") or via `/gen:audit`
 - Not automatic during wave execution -- avoids performance overhead of browser automation during builds
 - When requested: capture the specific section or page at all 4 breakpoints
 
 **No-browser fallback:**
 
 If browser automation tools are not available:
-- Wave summary notes: "Screenshots unavailable (no browser tools). Run `/modulo:audit` with browser tools for visual QA."
+- Wave summary notes: "Screenshots unavailable (no browser tools). Run `/gen:audit` with browser tools for visual QA."
 - Milestone report notes: "Manual visual verification recommended."
 
 **Screenshot budget:**
@@ -347,7 +347,7 @@ STATE.md has a **100-line budget** (established in the build-orchestrator agent 
 
 **FAILURE-LOG.md format (overflow destination):**
 
-Full failure details live in `.planning/modulo/FAILURE-LOG.md`:
+Full failure details live in `.planning/genorah/FAILURE-LOG.md`:
 
 ```markdown
 # Failure Log
@@ -479,7 +479,7 @@ The only archetype-influenced aspect is the **anti-slop score** in wave summarie
 
 **Why it's harmful:** Browser automation is slow (2-5 seconds per screenshot). At 4 breakpoints per section, each wave adds 16+ screenshots taking 30-60 seconds. Captures incomplete state (later sections not yet built, page layout may shift). Wastes resources on transient states.
 
-**Instead:** Automatic screenshots only after the **final wave** (build complete). Mid-build screenshots available only on explicit user request via `/modulo:audit`. Wave summaries are text-only with quality scores -- no visual captures.
+**Instead:** Automatic screenshots only after the **final wave** (build complete). Mid-build screenshots available only on explicit user request via `/gen:audit`. Wave summaries are text-only with quality scores -- no visual captures.
 
 ### Anti-Pattern 3: Full Diagnosis in STATE.md
 

@@ -11,7 +11,7 @@ requires:
     provides: "cinematic-motion timing tokens, design-system-scaffold patterns"
 
 provides:
-  - "Tailwind v4 CSS-first configuration patterns for all Modulo builds"
+  - "Tailwind v4 CSS-first configuration patterns for all Genorah builds"
   - "DNA 12-token color mapping to @theme block"
   - "Container query patterns (built-in, no plugin)"
   - "Dark mode architecture via @custom-variant dark"

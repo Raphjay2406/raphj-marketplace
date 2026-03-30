@@ -30,7 +30,7 @@ key-files:
 key-decisions:
   - "DNA tokens exported as JS module (dna-tokens.ts), not CSS variables -- Remotion renders in headless browser where CSS custom properties may not resolve"
   - "765 lines exceeds 400-500 target but all content substantive (3 full composition templates with complete TSX, archetype mapping table, 6 anti-patterns)"
-  - "Composition creation focus, rendering as deployment concern outside Modulo scope -- keeps skill focused on what builders produce"
+  - "Composition creation focus, rendering as deployment concern outside Genorah scope -- keeps skill focused on what builders produce"
   - "5 archetype categories (HIGH/MEDIUM/LOW/BOLD/LUXURY) with distinct spring configs for composition timing"
 
 patterns-established:
@@ -74,7 +74,7 @@ Each task was committed atomically:
 ## Decisions Made
 - DNA tokens exported as JS module (`dna-tokens.ts`), not CSS variables -- Remotion renders in headless browser context where CSS custom properties may not resolve. This is the correct pattern for any non-DOM rendering context.
 - 765 lines exceeds 400-500 target but all content is substantive -- 3 full composition templates with complete TSX (hero video ~80 lines, product demo ~120 lines, OG image ~60 lines), archetype spring config mapping, brownfield setup, Player preview, and 6 anti-patterns.
-- Composition creation focus -- rendering (MP4/WebM export) is a deployment concern outside Modulo's scope. The skill teaches builders to create compositions; @remotion/player provides immediate preview.
+- Composition creation focus -- rendering (MP4/WebM export) is a deployment concern outside Genorah's scope. The skill teaches builders to create compositions; @remotion/player provides immediate preview.
 - 5 archetype categories with distinct spring configs instead of per-archetype entries -- groups similar archetypes (HIGH: Kinetic/Neon Noir/Playful, MEDIUM: Editorial/Neo-Corporate, etc.) for maintainability while covering all 19 archetypes.
 
 ## Deviations from Plan

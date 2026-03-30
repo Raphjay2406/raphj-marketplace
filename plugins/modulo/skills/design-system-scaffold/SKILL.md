@@ -14,7 +14,7 @@ You are a design system engineer who translates Design DNA into production-ready
 
 - **Wave 0 ONLY.** This is the first thing built before any section builders run
 - Triggered by the build-orchestrator agent after `DESIGN-DNA.md` and `MASTER-PLAN.md` exist
-- **Input:** `.planning/modulo/DESIGN-DNA.md` -- color tokens, type scale, spacing, motion language, signature element
+- **Input:** `.planning/genorah/DESIGN-DNA.md` -- color tokens, type scale, spacing, motion language, signature element
 - **Output:** Complete set of scaffold files in the target project (see file manifest below)
 
 ### What Gets Generated (File Manifest)

@@ -4,21 +4,21 @@ argument-hint: [bug description or path to screenshot]
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob, Task
 ---
 
-You are the Modulo Bug-Fix orchestrator. You diagnose visual bugs using a systematic hypothesis-test cycle -- brainstorming the CAUSE, not the solution. No fix is applied without understanding the root cause first.
+You are the Genorah Bug-Fix orchestrator. You diagnose visual bugs using a systematic hypothesis-test cycle -- brainstorming the CAUSE, not the solution. No fix is applied without understanding the root cause first.
 
 ## Guided Flow Header
 
-Read `.planning/modulo/STATE.md` and `.planning/modulo/CONTEXT.md`. Display one-line status:
+Read `.planning/genorah/STATE.md` and `.planning/genorah/CONTEXT.md`. Display one-line status:
 
 ```
-Modulo | Phase: [phase] | Wave: [current]/[total] | Sections: [built]/[total]
+Genorah | Phase: [phase] | Wave: [current]/[total] | Sections: [built]/[total]
 ```
 
 ## State Check & Auto-Recovery
 
 **Required state:** Any state with built sections.
 
-- If no built sections exist: "Nothing to fix yet. Run `/modulo:execute` first."
+- If no built sections exist: "Nothing to fix yet. Run `/gen:execute` first."
 
 ## Argument Parsing
 
@@ -50,7 +50,7 @@ Modulo | Phase: [phase] | Wave: [current]/[total] | Sections: [built]/[total]
 
 ## Diagnostic Brainstorm (MANDATORY)
 
-This is fundamentally different from `/modulo:iterate` -- iterate brainstorms CREATIVE APPROACHES (what could this become?), bug-fix brainstorms the ROOT CAUSE (what went wrong?).
+This is fundamentally different from `/gen:iterate` -- iterate brainstorms CREATIVE APPROACHES (what could this become?), bug-fix brainstorms the ROOT CAUSE (what went wrong?).
 
 Dispatch to `agents/pipeline/quality-reviewer` via Task tool with: bug description, section code, PLAN.md, DESIGN-DNA.md.
 
@@ -111,9 +111,9 @@ Regression: None / [description]
 ```
 Bug fixed.
 
-Next step: /modulo:bug-fix (if more bugs)
-  Or: /modulo:iterate (for design improvements)
-  Or: /modulo:execute --resume (if mid-build)
+Next step: /gen:bug-fix (if more bugs)
+  Or: /gen:iterate (for design improvements)
+  Or: /gen:execute --resume (if mid-build)
 ```
 
 ## Rules
@@ -123,4 +123,4 @@ Next step: /modulo:bug-fix (if more bugs)
 3. **One bug at a time.** Sequential diagnosis prevents confusion.
 4. **Check for regressions after every fix.**
 5. **Atomic commits.** Each bug fix gets its own commit.
-6. **If the bug reveals a plan gap**, note it but do not modify the plan -- suggest `/modulo:iterate`.
+6. **If the bug reveals a plan gap**, note it but do not modify the plan -- suggest `/gen:iterate`.

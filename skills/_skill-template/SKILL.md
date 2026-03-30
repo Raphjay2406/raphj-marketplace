@@ -81,7 +81,7 @@ export function ExampleComponent() {
 
 ## Layer 3: Integration Context
 
-<!-- How this skill connects to the rest of the Modulo system.
+<!-- How this skill connects to the rest of the Genorah system.
      DNA mappings, archetype variants, pipeline position, related skills. -->
 
 ### DNA Connection
@@ -132,6 +132,31 @@ export function ExampleComponent() {
 
 **What goes wrong:** [Description]
 **Instead:** [Correction]
+
+## Optional: Resource Constraints
+
+Skills can declare resource constraints in their YAML frontmatter to restrict what tools and paths are available when the skill is active. The `pre-tool-use` hook enforces these constraints at runtime.
+
+```yaml
+constraints:
+  allowed_tools: [Read, Write, Edit, Grep, Glob]
+  restricted_tools: [Bash]
+  max_file_ops: 50
+  allowed_paths: ["src/components/", "src/app/"]
+  restricted_paths: [".env*", "node_modules/", ".git/"]
+  timeout: 300
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `allowed_tools` | string[] | Whitelist of tools this skill permits. If set, only these tools are allowed when the skill is matched. *(Future: not yet enforced)* |
+| `restricted_tools` | string[] | Blacklist of tools this skill forbids. Blocked even if otherwise allowed. *(Future: not yet enforced)* |
+| `max_file_ops` | integer | Maximum number of Write/Edit operations per session when this skill is active. *(Future: not yet enforced)* |
+| `allowed_paths` | string[] | Glob patterns for paths that Write/Edit may target. If set, only matching paths are permitted. *(Future: not yet enforced)* |
+| `restricted_paths` | string[] | Glob patterns for paths that Write/Edit must not target. Matches are blocked with a reason message. **Enforced by `pre-tool-use.mjs`.** |
+| `timeout` | integer | Maximum seconds for any single tool invocation under this skill. *(Future: not yet enforced)* |
+
+Only `restricted_paths` is currently enforced. Other fields are parsed but reserved for future iterations.
 
 ## Machine-Readable Constraints
 

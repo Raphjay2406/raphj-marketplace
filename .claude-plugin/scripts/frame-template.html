@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Genorah Visual Companion</title>
+  <style>
+    :root {
+      --bg: #0f0f14;
+      --surface: #1a1a24;
+      --border: #2a2a3a;
+      --text: #e8e8f0;
+      --text-muted: #8888a0;
+      --accent: #a78bfa;
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f5f5f8;
+        --surface: #ffffff;
+        --border: #d8d8e0;
+        --text: #1a1a2e;
+        --text-muted: #6e6e82;
+        --accent: #7c5cbf;
+      }
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding-bottom: 64px;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 24px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-logo {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--accent);
+    }
+
+    .header-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* Main content */
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 24px;
+    }
+
+    /* Indicator bar */
+    .indicator {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 12px 24px;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-muted);
+      z-index: 100;
+    }
+
+    .indicator .selected-text {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* Subtitle */
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    /* Options (A/B/C picker) */
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    .option {
+      background: var(--surface);
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 24px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s, transform 0.15s;
+    }
+
+    .option:hover {
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .option.selected {
+      border-color: var(--accent);
+      background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+    }
+
+    .option h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .option p {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    /* Cards grid */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+      margin: 20px 0;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      transition: border-color 0.2s, transform 0.15s;
+    }
+
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .card h3 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    /* Split layout */
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin: 20px 0;
+    }
+
+    @media (max-width: 640px) {
+      .split {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Color palette */
+    .palette {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    .swatch {
+      width: 72px;
+      height: 72px;
+      border-radius: 10px;
+      border: 2px solid var(--border);
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.15s, border-color 0.2s;
+    }
+
+    .swatch:hover {
+      transform: scale(1.08);
+      border-color: var(--accent);
+    }
+
+    .swatch::after {
+      content: attr(data-label);
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 11px;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    /* Score bar */
+    .score-bar {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      height: 28px;
+      overflow: hidden;
+      margin: 8px 0;
+    }
+
+    .score-bar .fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 8px;
+      transition: width 0.6s ease;
+      display: flex;
+      align-items: center;
+      padding-left: 10px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="header-logo">Genorah</div>
+    <div class="header-label">Visual Companion</div>
+  </div>
+
+  <main>
+    <!-- CONTENT -->
+  </main>
+
+  <div class="indicator" id="indicator">
+    Select an option above, then return to the terminal to continue
+  </div>
+
+  <script src="helper.js"></script>
+</body>
+</html>

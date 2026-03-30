@@ -44,7 +44,7 @@ You are a Next.js 16 architecture specialist. This skill covers BOTH App Router 
 | Both `app/` and `pages/` directories | Hybrid (both routers) | HIGH |
 | Only `package.json` next dependency | Ask user | LOW |
 
-Result stored in `DESIGN-DNA.md` during `/modulo:start-project`.
+Result stored in `DESIGN-DNA.md` during `/gen:start-project`.
 
 ### Router Choice Decision Tree
 
@@ -72,7 +72,7 @@ Result stored in `DESIGN-DNA.md` during `/modulo:start-project`.
 ### Pipeline Connection
 
 - **Referenced by:** section-planner, section-builder during build waves
-- **Consumed at:** `/modulo:start-project` (framework detection), `/modulo:execute` (project structure, all builder output)
+- **Consumed at:** `/gen:start-project` (framework detection), `/gen:execute` (project structure, all builder output)
 - **Depends on:** `design-dna` (token values), `tailwind-system` (CSS configuration), `dark-light-mode` (theme integration)
 
 ## Layer 2: Award-Winning Examples
@@ -81,7 +81,7 @@ Result stored in `DESIGN-DNA.md` during `/modulo:start-project`.
 
 #### Pattern 1: App Router Project Structure
 
-Standard Next.js 16 App Router structure for a Modulo-generated multi-page site:
+Standard Next.js 16 App Router structure for a Genorah-generated multi-page site:
 
 ```
 app/

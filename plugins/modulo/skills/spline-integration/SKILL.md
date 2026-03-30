@@ -59,7 +59,7 @@ Spline is the Figma of 3D. R3F is the code-first approach. Both are valid -- the
 ### Pipeline Connection
 
 - **Referenced by:** Section builders when plan specifies Spline 3D scenes
-- **Consumed at:** `/modulo:execute` during section build (Wave 2+)
+- **Consumed at:** `/gen:execute` during section build (Wave 2+)
 - **Related skill:** 3D/WebGL Effects for R3F-based scenes, Performance-Aware Animation for general animation budgets
 
 ## Layer 2: Award-Winning Examples
@@ -309,7 +309,7 @@ Every Spline integration must pass this checklist before shipping:
 
 ### Scene Creation Guidance
 
-When creating Spline scenes for a Modulo project, follow these DNA-aligned guidelines to ensure the 3D scene feels integrated with the page design, not bolted on.
+When creating Spline scenes for a Genorah project, follow these DNA-aligned guidelines to ensure the 3D scene feels integrated with the page design, not bolted on.
 
 **Camera Angles (match archetype mood):**
 

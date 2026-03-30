@@ -20,7 +20,7 @@ decisions:
   - "Cloudflare Turnstile as sole spam protection approach (privacy-first, no reCAPTCHA)"
   - "Typed API client uses createApiClient factory with get/post/put/delete methods"
   - "Context7 MCP integration documented with 3 concrete workflow examples (researcher, specialist, reviewer)"
-  - "All secrets unprefixed (Modulo convention); only Turnstile site key uses public prefix"
+  - "All secrets unprefixed (Genorah convention); only Turnstile site key uses public prefix"
 metrics:
   duration: "5m 52s"
   completed: "2026-02-25"
@@ -38,7 +38,7 @@ Created `skills/api-patterns/SKILL.md` (1476 lines) containing YAML frontmatter,
 
 - **When to Use / When NOT to Use** -- 6 trigger conditions and 6 redirect-to-other-skill cases
 - **Integration Type Decision Tree** -- Branching for CRM type, webhook provider, API client complexity, spam protection, and Context7 usage
-- **Server-Side Proxy Principle** -- Framework prefix rules table (Next.js, Astro, Vite) with Modulo unprefixed secrets convention
+- **Server-Side Proxy Principle** -- Framework prefix rules table (Next.js, Astro, Vite) with Genorah unprefixed secrets convention
 - **Context7 MCP Integration** -- Agent access table, 4 explicit triggers, curated library list (7 libraries), 4-step fallback chain
 - **Pipeline Connection** -- Input from start-project/plan-dev, output to server actions and utility libraries
 - **Timeout Defaults** -- 4-category table with opinionated timeouts and retry counts
@@ -61,7 +61,7 @@ Created `skills/api-patterns/SKILL.md` (1476 lines) containing YAML frontmatter,
 
 - All webhook patterns use `request.text()` for raw body before signature verification
 - All signature comparisons use `crypto.timingSafeEqual`, never `===`
-- All secrets use unprefixed env var names (Modulo convention)
+- All secrets use unprefixed env var names (Genorah convention)
 - Only `NEXT_PUBLIC_TURNSTILE_SITE_KEY` uses public prefix (correctly -- it is not a secret)
 - HubSpot patterns include `objectTypeId: '0-1'` on every field
 - Salesforce Web-to-Lead uses `redirect: 'manual'` with 200/302 success check
@@ -80,7 +80,7 @@ None -- plan executed exactly as written.
 ## Decisions Made
 
 1. **1476 lines for Layers 1-2** -- Above the 700-1000 target, but 22 patterns with full TypeScript types, explanation paragraphs, and reference sites require space. No appendix extraction needed at this stage; Plan 02 will add Layers 3-4 (estimated ~150-200 more lines).
-2. **createApiClient factory pattern** -- The typed API client exposes a factory function returning get/post/put/delete methods rather than a class. This aligns with the functional TypeScript patterns used elsewhere in Modulo skills.
+2. **createApiClient factory pattern** -- The typed API client exposes a factory function returning get/post/put/delete methods rather than a class. This aligns with the functional TypeScript patterns used elsewhere in Genorah skills.
 3. **27 code blocks total** -- Exceeds the 20+ minimum. Several patterns show both Next.js and Astro versions, and the HubSpot pattern includes a Server Action wrapper alongside the core function.
 
 ## Next Phase Readiness

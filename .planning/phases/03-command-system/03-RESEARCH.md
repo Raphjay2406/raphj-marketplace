@@ -6,7 +6,7 @@
 
 ## Summary
 
-Phase 3 creates 6 user-facing commands that replace the existing 13 v6.1.0 commands. These commands are markdown files in the `commands/` directory that define workflows Claude Code executes when users invoke `/modulo:command-name`. This phase depends on Phase 2 (Pipeline Architecture) which defines the agents these commands dispatch to, and Phase 1 (Foundation) which defines the skills and identity system they reference.
+Phase 3 creates 6 user-facing commands that replace the existing 13 v6.1.0 commands. These commands are markdown files in the `commands/` directory that define workflows Claude Code executes when users invoke `/gen:command-name`. This phase depends on Phase 2 (Pipeline Architecture) which defines the agents these commands dispatch to, and Phase 1 (Foundation) which defines the skills and identity system they reference.
 
 The research covered: (1) the exact Claude Code plugin command format and registration mechanism, (2) the existing v6.1.0 command patterns with detailed structural analysis, (3) the pipeline architecture from Phase 2 that commands must route to, (4) state management and guided flow patterns, and (5) the CONTEXT.md discussion decisions that constrain implementation.
 
@@ -18,7 +18,7 @@ The research covered: (1) the exact Claude Code plugin command format and regist
 
 ### Core: Command File Format
 
-Commands in a Claude Code plugin are markdown files placed at `commands/{name}.md` at the plugin root. They become slash commands namespaced as `/modulo:{name}`.
+Commands in a Claude Code plugin are markdown files placed at `commands/{name}.md` at the plugin root. They become slash commands namespaced as `/gen:{name}`.
 
 | Component | Location | Purpose | Registration |
 |-----------|----------|---------|--------------|
@@ -76,7 +76,7 @@ Commands support:
 
 ### Naming Convention
 
-Plugin commands are namespaced: `commands/start-project.md` becomes `/modulo:start-project`.
+Plugin commands are namespaced: `commands/start-project.md` becomes `/gen:start-project`.
 
 Current v6.1.0 naming uses `commands/{name}.md` with names like `start-design`, `plan-sections`, `execute`, etc.
 
@@ -84,12 +84,12 @@ Current v6.1.0 naming uses `commands/{name}.md` with names like `start-design`, 
 
 | v2.0 Command | Filename | Invocation |
 |-------------|----------|------------|
-| Start-Project | `commands/start-project.md` | `/modulo:start-project` |
-| Lets-Discuss | `commands/lets-discuss.md` | `/modulo:lets-discuss` |
-| Plan-Dev | `commands/plan-dev.md` | `/modulo:plan-dev` |
-| Execute | `commands/execute.md` | `/modulo:execute` |
-| Iterate | `commands/iterate.md` | `/modulo:iterate` |
-| Bug-Fix | `commands/bug-fix.md` | `/modulo:bug-fix` |
+| Start-Project | `commands/start-project.md` | `/gen:start-project` |
+| Lets-Discuss | `commands/lets-discuss.md` | `/gen:lets-discuss` |
+| Plan-Dev | `commands/plan-dev.md` | `/gen:plan-dev` |
+| Execute | `commands/execute.md` | `/gen:execute` |
+| Iterate | `commands/iterate.md` | `/gen:iterate` |
+| Bug-Fix | `commands/bug-fix.md` | `/gen:bug-fix` |
 
 **Utility commands (Claude's discretion per CONTEXT.md):**
 
@@ -137,17 +137,17 @@ Current v6.1.0 naming uses `commands/{name}.md` with names like `start-design`, 
 ```markdown
 ## State Check
 
-Read `.planning/modulo/STATE.md` and `.planning/modulo/CONTEXT.md`.
+Read `.planning/genorah/STATE.md` and `.planning/genorah/CONTEXT.md`.
 
 ### Auto-Recovery Matrix
 
 | Missing Artifact | Auto-Recovery Action |
 |-----------------|---------------------|
-| No STATE.md at all | Tell user: "Run /modulo:start-project first" |
+| No STATE.md at all | Tell user: "Run /gen:start-project first" |
 | STATE.md exists, no DNA | Run start-project DNA generation phase |
 | DNA exists, no PLAN.md files | Run plan-dev automatically |
-| PLAN.md exists, no built code | This is expected for /modulo:execute |
-| Built code exists, no verification | Suggest /modulo:iterate or verify |
+| PLAN.md exists, no built code | This is expected for /gen:execute |
+| Built code exists, no verification | Suggest /gen:iterate or verify |
 
 Tell the user what is being auto-recovered:
 "No section plans found. Running plan-dev first, then execute."
@@ -180,14 +180,14 @@ At the END of every command, display the contextual next step:
 ```
 [Summary of what was accomplished]
 
-Next step: /modulo:[command] [suggested arguments]
+Next step: /gen:[command] [suggested arguments]
 [One sentence explaining why this is the logical next step]
 ```
 
 If warnings exist (missing artifacts, quality issues):
 ```
 [Warning emoji suppressed] Warning: [issue description]
-Suggested fix: /modulo:[command] [arguments]
+Suggested fix: /gen:[command] [arguments]
 ```
 ```
 
@@ -195,7 +195,7 @@ Suggested fix: /modulo:[command] [arguments]
 
 ### Pattern 4: Rich CLI-Style Flag Support
 
-**What:** Commands accept flags like `/modulo:execute --wave 2 --parallel 3 --dry-run`.
+**What:** Commands accept flags like `/gen:execute --wave 2 --parallel 3 --dry-run`.
 
 **Per CONTEXT.md decision:** "Arguments: rich CLI-style flag support"
 
@@ -224,10 +224,10 @@ Unknown flags: warn and ignore.
 
 ### Pattern 5: Brainstorm-Before-Action Gate
 
-**What:** `/modulo:iterate` always brainstorms 2-3 approaches before implementing. `/modulo:bug-fix` brainstorms the cause (diagnostic), not creative solutions.
+**What:** `/gen:iterate` always brainstorms 2-3 approaches before implementing. `/gen:bug-fix` brainstorms the cause (diagnostic), not creative solutions.
 
 **Per CONTEXT.md decisions:**
-- "mandatory for /modulo:iterate -- always brainstorm 2-3 approaches"
+- "mandatory for /gen:iterate -- always brainstorm 2-3 approaches"
 - "each approach includes ASCII mockup showing the layout change"
 - "bug-fix brainstorms the *cause*, not the solution"
 
@@ -281,7 +281,7 @@ argument-hint: [Expected arguments hint]
 disable-model-invocation: true
 ---
 
-You are the Modulo [Command Name] orchestrator.
+You are the Genorah [Command Name] orchestrator.
 
 ## Guided Flow Header
 
@@ -383,11 +383,11 @@ commands/
 
 ### Pitfall 4: Lets-Discuss Integration Confusion
 
-**What goes wrong:** Unclear when /modulo:lets-discuss is standalone vs. auto-offered by plan-dev.
+**What goes wrong:** Unclear when /gen:lets-discuss is standalone vs. auto-offered by plan-dev.
 
 **Per CONTEXT.md:** "exists as standalone command AND auto-offered by plan-sections if no discussion has happened yet"
 
-**How to avoid:** Plan-dev command checks if lets-discuss has been run for this phase. If not, offers it: "No creative discussion has happened for this phase. Would you like to run /modulo:lets-discuss first, or proceed directly to planning?"
+**How to avoid:** Plan-dev command checks if lets-discuss has been run for this phase. If not, offers it: "No creative discussion has happened for this phase. Would you like to run /gen:lets-discuss first, or proceed directly to planning?"
 
 **Warning signs:** Lets-discuss and plan-dev have overlapping discovery logic. No tracking of whether discussion has occurred.
 
@@ -420,10 +420,10 @@ commands/
 ```markdown
 ## State Check & Auto-Recovery
 
-Read `.planning/modulo/STATE.md` and `.planning/modulo/CONTEXT.md`.
+Read `.planning/genorah/STATE.md` and `.planning/genorah/CONTEXT.md`.
 
 If neither file exists:
-  → Tell user: "No Modulo project found. Run `/modulo:start-project` to begin."
+  → Tell user: "No Genorah project found. Run `/gen:start-project` to begin."
   → STOP.
 
 Display guided flow header:
@@ -474,16 +474,16 @@ Display completion summary:
 Start-Project complete.
 
 Artifacts created:
-  .planning/modulo/PROJECT.md      -- Requirements
-  .planning/modulo/BRAINSTORM.md   -- Creative direction: [archetype]
-  .planning/modulo/DESIGN-DNA.md   -- Visual identity
-  .planning/modulo/CONTENT.md      -- Approved page copy
-  .planning/modulo/CONTEXT.md      -- Context anchor
-  .planning/modulo/STATE.md        -- Project state
+  .planning/genorah/PROJECT.md      -- Requirements
+  .planning/genorah/BRAINSTORM.md   -- Creative direction: [archetype]
+  .planning/genorah/DESIGN-DNA.md   -- Visual identity
+  .planning/genorah/CONTENT.md      -- Approved page copy
+  .planning/genorah/CONTEXT.md      -- Context anchor
+  .planning/genorah/STATE.md        -- Project state
 
-Next step: /modulo:plan-dev
+Next step: /gen:plan-dev
   Creates detailed build plans for each section with wave assignments.
-  Or: /modulo:lets-discuss to deep-dive on specific creative features first.
+  Or: /gen:lets-discuss to deep-dive on specific creative features first.
 ```
 ```
 
@@ -551,7 +551,7 @@ Based on the answers, ask 2-3 follow-up questions that probe interesting aspects
 - If they give minimal answers → "No worries, I'll research your space. Any hard no's — things you definitely don't want?"
 
 Do NOT ask about:
-- Technical stack (Modulo decides this)
+- Technical stack (Genorah decides this)
 - Specific components (too early)
 - Color hex values (archetype handles this)
 
@@ -671,14 +671,14 @@ bug-fix dispatches:
 
 ## Lets-Discuss Command: Special Patterns
 
-`/modulo:lets-discuss` is unique because it is both a standalone command AND auto-offered by plan-dev. It enables per-phase creative deep dive.
+`/gen:lets-discuss` is unique because it is both a standalone command AND auto-offered by plan-dev. It enables per-phase creative deep dive.
 
 ### Standalone Mode
-User invokes `/modulo:lets-discuss` directly. Command reads current phase from STATE.md, then enters interactive discussion mode.
+User invokes `/gen:lets-discuss` directly. Command reads current phase from STATE.md, then enters interactive discussion mode.
 
 ### Auto-Offered Mode
 Plan-dev checks if lets-discuss has run for the current phase. If not, offers:
-"No creative discussion for this phase yet. Want to deep-dive on creative features before planning? (/modulo:lets-discuss) Or proceed directly to planning?"
+"No creative discussion for this phase yet. Want to deep-dive on creative features before planning? (/gen:lets-discuss) Or proceed directly to planning?"
 
 ### Discussion Protocol
 Per CONTEXT.md requirements (CMND-02):
@@ -691,7 +691,7 @@ The command should be a structured creative conversation that produces:
 2. **Content/voice decisions** -- Brand tone refinements, CTA style, copy direction
 3. **Organized output** -- Discussion results auto-organized into task-ready format that plan-dev can consume
 
-**Output artifact:** `.planning/modulo/DISCUSSION-{phase}.md` with structured decisions.
+**Output artifact:** `.planning/genorah/DISCUSSION-{phase}.md` with structured decisions.
 
 ---
 
@@ -787,7 +787,7 @@ The command should be a structured creative conversation that produces:
 - [Claude Code Skills Documentation](https://code.claude.com/docs/en/slash-commands) -- Verified command format, frontmatter fields, argument substitution, subagent execution
 - [Claude Code Plugins Documentation](https://code.claude.com/docs/en/plugins) -- Verified plugin structure, namespacing, manifest format
 - [Claude Code SDK Slash Commands](https://platform.claude.com/docs/en/agent-sdk/slash-commands) -- Verified command file format, preprocessing, arguments
-- v6.1.0 codebase at `D:/Modulo/Plugins/v0-ahh-skill/` -- All 13 command files, 17 agent files, plugin.json, hook script (directly read and analyzed)
+- v6.1.0 codebase at `D:/Genorah/Plugins/v0-ahh-skill/` -- All 13 command files, 17 agent files, plugin.json, hook script (directly read and analyzed)
 
 ### Secondary (MEDIUM confidence)
 - `.planning/phases/02-pipeline-architecture/02-CONTEXT.md` -- Phase 2 decisions informing command dispatch targets

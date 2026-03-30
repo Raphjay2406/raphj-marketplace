@@ -1,18 +1,86 @@
 {
-  "name": "modulo",
-  "description": "Premium frontend design system for Claude Code. 6 workflow commands + utility commands, pipeline agent architecture, Design DNA identity system with 19 archetypes, creative tension, emotional arc, cinematic motion, 35-point anti-slop gate, and Awwwards scoring. Creates award-winning, production-ready websites.",
-  "version": "1.5.0",
+  "name": "genorah",
+  "description": "Premium frontend design system for Claude Code. Award-caliber websites through Design DNA, 19 archetypes, 72-point quality gate, emotional arc, creative tension, visual companion, and pipeline agent architecture. Next.js, Astro, React/Vite, Tauri, Electron.",
+  "version": "2.0.0",
   "author": {
     "name": "raphj"
   },
   "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/session-start.mjs\""
+          }
+        ]
+      }
+    ],
     "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/pre-tool-use.mjs\""
+          }
+        ]
+      },
       {
         "matcher": "Bash",
         "hooks": [
           {
             "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/pre-tool-use.mjs\""
+          },
+          {
+            "type": "command",
             "command": "${CLAUDE_PLUGIN_ROOT}/hooks/dna-compliance-check.sh"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/user-prompt.mjs\""
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/pre-compact.mjs\""
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/session-end.mjs\""
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/post-tool-use.mjs\""
           }
         ]
       }

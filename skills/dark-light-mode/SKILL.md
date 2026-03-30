@@ -12,7 +12,7 @@ version: "2.0.0"
 
 Both light and dark modes are **independently designed, award-worthy experiences**. Dark mode is never "invert the light palette." Each mode has its own palette nuances, depth treatment, shadow strategy, and personality. The theme transition itself is a crafted design identity element -- per-archetype, purposeful, memorable.
 
-DNA generates BOTH palettes during `/modulo:start-project`:
+DNA generates BOTH palettes during `/gen:start-project`:
 - User defines the primary mode's palette (usually light)
 - Archetype inversion rules derive the alternate mode if user only defines one
 - Both palettes stored in DESIGN-DNA.md under `light` and `dark` sub-objects
@@ -56,7 +56,7 @@ The same 12 token NAMES map to different VALUES per mode. CSS custom properties 
 
 ### Pipeline Connection
 
-- **Referenced by:** build-orchestrator during scaffold generation (Wave 0), section-builders for component styling
+- **Referenced by:** orchestrator during scaffold generation (Wave 0), builders for component styling
 - **Consumed at:** design-system scaffold produces both palette sets from DNA; toggle component built in Wave 1 (navigation)
 - **Input from:** DESIGN-DNA.md provides both palettes; design-archetypes provides transition personality
 - **Output to:** Every component uses DNA tokens that automatically switch between modes

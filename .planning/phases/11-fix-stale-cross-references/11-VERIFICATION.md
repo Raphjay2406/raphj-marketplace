@@ -20,9 +20,9 @@ gaps: []
 | # | Truth | Status | Evidence |
 |---|-------|--------|----------|
 | 1 | Zero references to design-lead in any v2.0 skill or agent | VERIFIED | Case-insensitive grep across skills/, agents/pipeline/, agents/specialists/, agents/protocols/, agents/figma-translator.md returned zero matches. Only matches are in v6.1.0 legacy files at agents/ root (Phase 13 scope). |
-| 2 | Zero references to start-design in any skill or agent | VERIFIED | Grep across all v2.0 skill/agent directories returned zero matches. figma-integration/SKILL.md line 14 now reads "User provides a Figma URL during /modulo:start-project discovery". |
-| 3 | Zero references to plan-sections in any skill | VERIFIED | Grep across all v2.0 skill/agent directories returned zero matches. emotional-arc/SKILL.md lines 15, 56, 607 now reference /modulo:plan-dev. |
-| 4 | Zero references to /modulo:verify or /modulo:export | VERIFIED | Grep for both patterns across skills/, agents/pipeline/, agents/specialists/, agents/protocols/, agents/figma-translator.md, and commands/ returned zero matches. All replacements confirmed: /modulo:audit appears in anti-slop-gate (4), emotional-arc (2), multi-page-architecture (3), design-archetypes (1), awwwards-scoring (1), figma-integration (2). design-system-export uses "post-build export workflow (user-triggered)". |
+| 2 | Zero references to start-design in any skill or agent | VERIFIED | Grep across all v2.0 skill/agent directories returned zero matches. figma-integration/SKILL.md line 14 now reads "User provides a Figma URL during /gen:start-project discovery". |
+| 3 | Zero references to plan-sections in any skill | VERIFIED | Grep across all v2.0 skill/agent directories returned zero matches. emotional-arc/SKILL.md lines 15, 56, 607 now reference /gen:plan-dev. |
+| 4 | Zero references to /gen:verify or /gen:export | VERIFIED | Grep for both patterns across skills/, agents/pipeline/, agents/specialists/, agents/protocols/, agents/figma-translator.md, and commands/ returned zero matches. All replacements confirmed: /gen:audit appears in anti-slop-gate (4), emotional-arc (2), multi-page-architecture (3), design-archetypes (1), awwwards-scoring (1), figma-integration (2). design-system-export uses "post-build export workflow (user-triggered)". |
 | 5 | REFERENCES.md producer/consumer chain resolved | VERIFIED | All REFERENCES.md occurrences in v2.0 files use research/DESIGN-REFERENCES.md path. No bare REFERENCES.md remains. Verified in 10 consumer files plus the reference-benchmarking skill output instruction. Researcher.md output path was already correct. |
 
 **Score:** 5/5 truths verified
@@ -31,16 +31,16 @@ gaps: []
 
 | Artifact | Expected | Status | Details |
 |----------|----------|--------|---------|
-| skills/progress-reporting/SKILL.md | build-orchestrator refs, /modulo:audit refs | VERIFIED | 21+ occurrences of build-orchestrator, zero design-lead, zero /modulo:verify |
+| skills/progress-reporting/SKILL.md | build-orchestrator refs, /gen:audit refs | VERIFIED | 21+ occurrences of build-orchestrator, zero design-lead, zero /gen:verify |
 | skills/error-recovery/SKILL.md | build-orchestrator refs | VERIFIED | 11+ occurrences of build-orchestrator, zero design-lead |
-| skills/figma-integration/SKILL.md | start-project refs, no --figma flag | VERIFIED | Lines 14, 95 reference start-project discovery. Zero --figma, zero start-design, zero /modulo:verify |
-| skills/emotional-arc/SKILL.md | section-planner + plan-dev refs | VERIFIED | Line 56 references section-planner during /modulo:plan-dev. Lines 17, 58: /modulo:audit |
-| skills/anti-slop-gate/SKILL.md | /modulo:audit refs (4) | VERIFIED | 4 occurrences at lines 11, 18, 57, 68 |
-| skills/multi-page-architecture/SKILL.md | /modulo:audit refs (3) | VERIFIED | 3 occurrences at lines 23, 56, 404 |
-| skills/design-archetypes/SKILL.md | /modulo:audit ref (1) | VERIFIED | 1 occurrence at line 1138 |
-| skills/awwwards-scoring/SKILL.md | /modulo:audit ref (1) | VERIFIED | 1 occurrence at line 134 |
-| skills/design-system-export/SKILL.md | post-build, no /modulo:export | VERIFIED | Line 14: post-build action. Zero /modulo:export |
-| agents/figma-translator.md | start-project, audit refs | VERIFIED | Zero start-design, zero /modulo:verify |
+| skills/figma-integration/SKILL.md | start-project refs, no --figma flag | VERIFIED | Lines 14, 95 reference start-project discovery. Zero --figma, zero start-design, zero /gen:verify |
+| skills/emotional-arc/SKILL.md | section-planner + plan-dev refs | VERIFIED | Line 56 references section-planner during /gen:plan-dev. Lines 17, 58: /gen:audit |
+| skills/anti-slop-gate/SKILL.md | /gen:audit refs (4) | VERIFIED | 4 occurrences at lines 11, 18, 57, 68 |
+| skills/multi-page-architecture/SKILL.md | /gen:audit refs (3) | VERIFIED | 3 occurrences at lines 23, 56, 404 |
+| skills/design-archetypes/SKILL.md | /gen:audit ref (1) | VERIFIED | 1 occurrence at line 1138 |
+| skills/awwwards-scoring/SKILL.md | /gen:audit ref (1) | VERIFIED | 1 occurrence at line 134 |
+| skills/design-system-export/SKILL.md | post-build, no /gen:export | VERIFIED | Line 14: post-build action. Zero /gen:export |
+| agents/figma-translator.md | start-project, audit refs | VERIFIED | Zero start-design, zero /gen:verify |
 | agents/discussion-protocol.md | DELETED | VERIFIED | File does not exist. v2.0 replacement at agents/protocols/ confirmed |
 | skills/reference-benchmarking/SKILL.md | research/DESIGN-REFERENCES.md output | VERIFIED | Line 407 output path, diagram, pipeline connection all correct |
 | agents/pipeline/section-planner.md | research/DESIGN-REFERENCES.md input | VERIFIED | Lines 3, 18, 339 reference correct path |
@@ -57,8 +57,8 @@ gaps: []
 | From | To | Via | Status | Details |
 |------|----|-----|--------|---------|
 | progress-reporting/SKILL.md | build-orchestrator.md | agent name | VERIFIED | 21+ references |
-| figma-integration/SKILL.md | start-project.md | command ref | VERIFIED | 6 references to /modulo:start-project |
-| emotional-arc/SKILL.md | plan-dev.md | command ref | VERIFIED | 3 references to /modulo:plan-dev |
+| figma-integration/SKILL.md | start-project.md | command ref | VERIFIED | 6 references to /gen:start-project |
+| emotional-arc/SKILL.md | plan-dev.md | command ref | VERIFIED | 3 references to /gen:plan-dev |
 | reference-benchmarking/SKILL.md | researcher.md | output path | VERIFIED | Write path matches researcher output |
 | section-planner.md | research/DESIGN-REFERENCES.md | read dep | VERIFIED | 3 references in input contract |
 | quality-reviewer.md | research/DESIGN-REFERENCES.md | read dep | VERIFIED | In always-read list |
@@ -71,7 +71,7 @@ gaps: []
 | GAP-3: Stale v6.1.0 agent/command references | SATISFIED | Zero stale references in v2.0 scope |
 | ISSUE-1: design-lead references | SATISFIED | Zero in v2.0 files |
 | ISSUE-2: start-design/plan-sections references | SATISFIED | Zero in v2.0 files |
-| ISSUE-3: /modulo:verify and /modulo:export references | SATISFIED | Zero in v2.0 files |
+| ISSUE-3: /gen:verify and /gen:export references | SATISFIED | Zero in v2.0 files |
 
 ### Anti-Patterns Found
 

@@ -12,7 +12,7 @@ version: "2.0.0"
 
 Both light and dark modes are **independently designed, award-worthy experiences**. Dark mode is never "invert the light palette." Each mode has its own palette nuances, depth treatment, shadow strategy, and personality. The theme transition itself is a crafted design identity element -- per-archetype, purposeful, memorable.
 
-DNA generates BOTH palettes during `/modulo:start-project`:
+DNA generates BOTH palettes during `/gen:start-project`:
 - User defines the primary mode's palette (usually light)
 - Archetype inversion rules derive the alternate mode if user only defines one
 - Both palettes stored in DESIGN-DNA.md under `light` and `dark` sub-objects

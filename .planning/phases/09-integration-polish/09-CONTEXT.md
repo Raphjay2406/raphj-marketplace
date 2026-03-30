@@ -31,7 +31,7 @@ End-to-end workflow completion: Figma design import via MCP tools, design system
 
 ### Progress reporting
 - Granularity: per-task updates — every task within a section's PLAN.md shows status, user sees exactly which task each builder is on
-- Screenshots: automatic at 4 breakpoints only after the final wave; mid-build screenshots available on request via /modulo:verify
+- Screenshots: automatic at 4 breakpoints only after the final wave; mid-build screenshots available on request via /gen:verify
 - Review gates: after every wave — each wave pauses for user review before the next wave starts
 - Format: detailed status in STATE.md (machine-readable), key milestones and scores highlighted inline in conversation
 

@@ -1,4 +1,4 @@
-# Requirements Archive: v1 Modulo 2.0
+# Requirements Archive: v1 Genorah 2.0
 
 **Archived:** 2026-02-25
 **Status:** SHIPPED
@@ -8,7 +8,7 @@ For current requirements, see `.planning/REQUIREMENTS.md` (created for next mile
 
 ---
 
-# Requirements: Modulo 2.0
+# Requirements: Genorah 2.0
 
 **Defined:** 2026-02-23
 **Core Value:** Every output must be award-winning by default (Awwwards SOTD 8.0+) -- not as a stretch goal, but as the baseline.
@@ -72,12 +72,12 @@ For current requirements, see `.planning/REQUIREMENTS.md` (created for next mile
 
 ### Command System
 
-- [x] **CMND-01**: `/modulo:Start-Project` -- Questioning (design direction, archetype, animation style/intensity, brand voice) -> Research (parallel agents) -> Requirements -> Roadmap
-- [x] **CMND-02**: `/modulo:lets-discuss` -- Per-phase creative deep dive: visual features with choices, content systems with brand voice, auto-organized task list
-- [x] **CMND-03**: `/modulo:plan-dev` -- Re-research focused on phase sector, plan in context-rot-safe chunks, verification questions before execution
-- [x] **CMND-04**: `/modulo:execute` -- Run plans sequential or parallel per planning/master plan definition
-- [x] **CMND-05**: `/modulo:iterate` -- Design changes with user verification, brainstorming before changes, marketplace component sourcing from 21st.dev/Aceternity/Magic UI
-- [x] **CMND-06**: `/modulo:bug-fix` -- Diagnose + propose solutions, user approval before fixing, brainstorming to ensure best approach
+- [x] **CMND-01**: `/gen:Start-Project` -- Questioning (design direction, archetype, animation style/intensity, brand voice) -> Research (parallel agents) -> Requirements -> Roadmap
+- [x] **CMND-02**: `/gen:lets-discuss` -- Per-phase creative deep dive: visual features with choices, content systems with brand voice, auto-organized task list
+- [x] **CMND-03**: `/gen:plan-dev` -- Re-research focused on phase sector, plan in context-rot-safe chunks, verification questions before execution
+- [x] **CMND-04**: `/gen:execute` -- Run plans sequential or parallel per planning/master plan definition
+- [x] **CMND-05**: `/gen:iterate` -- Design changes with user verification, brainstorming before changes, marketplace component sourcing from 21st.dev/Aceternity/Magic UI
+- [x] **CMND-06**: `/gen:bug-fix` -- Diagnose + propose solutions, user approval before fixing, brainstorming to ensure best approach
 
 ### Skill System
 
@@ -106,7 +106,7 @@ For current requirements, see `.planning/REQUIREMENTS.md` (created for next mile
 
 | Feature | Reason |
 |---------|--------|
-| Backend / API / database logic | Frontend design only -- Modulo handles the visual layer |
+| Backend / API / database logic | Frontend design only -- Genorah handles the visual layer |
 | Template gallery / pre-built pages | Antithesis of unique design -- archetypes + DNA ensure uniqueness |
 | Drag-and-drop visual builder | CLI-based tool, code output -- different architecture entirely |
 | Real-time collaboration / multiplayer | Single session scope, CONTEXT.md enables handoff |
