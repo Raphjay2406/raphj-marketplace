@@ -108,7 +108,7 @@ Motion monotony is the hallmark of AI-generated design. Enforce variety.
 - **No 3 consecutive same-direction animations** -- if sections 1-2 both RISE, section 3 must use a different direction (EXPAND, ENTER-STAGE, UNFOLD, etc.)
 - **No 3 consecutive same-timing animations** -- if sections 1-2 both use 0.5s ease-out, section 3 must differ in duration or easing
 - **Adjacent sections must differ** in at least ONE of: direction, timing, stagger pattern
-- **Pre-assignment:** The section-planner agent pre-assigns motion directions in MASTER-PLAN.md before builders start. Diversity is validated before build, not after
+- **Pre-assignment:** The planner agent pre-assigns motion directions in MASTER-PLAN.md before builders start. Diversity is validated before build, not after
 - **Per-page minimum:** At least 3 different animation directions per page
 
 ---
@@ -681,7 +681,7 @@ Frame 3 (ongoing): Individual card hover states active
 
 - **Input from:** Design DNA (motion tokens, archetype), Emotional Arc (beat assignments), MASTER-PLAN.md (section sequence)
 - **Output to:** Builder spawn prompts (motion profile), Section PLANs (per-section animation spec), Design System Scaffold (Tailwind motion utilities)
-- **Referenced by:** build-orchestrator (motion diversity validation), section-planner (motion pre-assignment), quality-reviewer (motion quality scoring)
+- **Referenced by:** orchestrator (motion diversity validation), planner (motion pre-assignment), quality-reviewer (motion quality scoring)
 
 ---
 

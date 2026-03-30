@@ -84,8 +84,8 @@ These imports MUST use dynamic `import()`:
 
 ### Pipeline Connection
 
-- **Referenced by:** build-orchestrator during Wave 0 scaffold generation (font loading, reduced-motion baseline)
-- **Referenced by:** section-builder during implementation (code-splitting, will-change, compositor-thread)
+- **Referenced by:** orchestrator during Wave 0 scaffold generation (font loading, reduced-motion baseline)
+- **Referenced by:** builder during implementation (code-splitting, will-change, compositor-thread)
 - **Referenced by:** quality-reviewer during post-build audit (budget compliance, CWV impact)
 
 ## Layer 2: Award-Winning Examples

@@ -78,7 +78,7 @@ Before running this protocol, ALL of these must be true:
 ### Pipeline Connection
 
 - **Referenced by:** quality-reviewer agent during end-of-build verification (Layer 3)
-- **Consumed at:** build-orchestrator after polish pass, before user checkpoint (Layer 4)
+- **Consumed at:** orchestrator after polish pass, before user checkpoint (Layer 4)
 - **Results feed into:** quality-gate-protocol for severity classification and pipeline decision
 
 ---
@@ -409,7 +409,7 @@ Layer 4: USER CHECKPOINT -- human judgment on quality report
 ```
 
 - **Input from:** Polish pass complete, dev server running, all sections built
-- **Output to:** Quality gate protocol for severity classification, build-orchestrator for pipeline decision, user checkpoint (Layer 4) for human review
+- **Output to:** Quality gate protocol for severity classification, orchestrator for pipeline decision, user checkpoint (Layer 4) for human review
 
 ### Agent Integration
 
@@ -429,11 +429,11 @@ The quality-reviewer:
 2. After the polish pass, switches to live browser testing mode
 3. Follows this skill's 5-step protocol exactly
 4. Produces the testing report
-5. Passes the overall verdict to the build-orchestrator
+5. Passes the overall verdict to the orchestrator
 
 ### Build-Orchestrator Integration
 
-The build-orchestrator reads the overall verdict from the testing report and acts:
+The orchestrator reads the overall verdict from the testing report and acts:
 
 | Verdict | Action |
 |---------|--------|

@@ -11,7 +11,7 @@ version: "2.0.0"
 ### When to Use
 
 - **Every section PLAN.md** -- Motion, responsive, and compat blocks are mandatory in every section plan
-- **Plan generation** -- During `/modulo:plan-dev`, bake these blocks into each section's PLAN.md
+- **Plan generation** -- During `/gen:plan`, bake these blocks into each section's PLAN.md
 - **Builder kickoff** -- Builders check these blocks before writing any code to know motion tier, breakpoint requirements, and compat constraints
 - **Quality gate preparation** -- These blocks prevent hard gate failures in quality-gate-v2
 
@@ -31,9 +31,9 @@ version: "2.0.0"
 
 ### Pipeline Connection
 
-- **Referenced by:** planner agent during `/modulo:plan-dev`
-- **Referenced by:** builder agent during `/modulo:execute` (reads blocks from PLAN.md)
-- **Consumed at:** `/modulo:plan-dev` workflow step 4 (section plan generation)
+- **Referenced by:** planner agent during `/gen:plan`
+- **Referenced by:** builder agent during `/gen:execute` (reads blocks from PLAN.md)
+- **Consumed at:** `/gen:plan` workflow step 4 (section plan generation)
 - **Feeds into:** quality-gate-v2 hard gates (motion exists, 4-breakpoint responsive, compat tier respected)
 
 ---
@@ -505,7 +505,7 @@ See the full **Per-Archetype Motion Personality** table above. Every archetype d
 ### Pipeline Stage
 
 - **Input from:** Beat assignment (emotional-arc), archetype selection (design-archetypes), compat tier (PROJECT.md)
-- **Output to:** Section PLAN.md blocks consumed by builder agent during `/modulo:execute`
+- **Output to:** Section PLAN.md blocks consumed by builder agent during `/gen:execute`
 
 ### Related Skills
 

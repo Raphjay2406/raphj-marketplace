@@ -3,7 +3,7 @@ name: compositional-diversity
 category: core
 description: "Enforces visual variety across page sections through an 18-pattern layout taxonomy with adjacency rules. Pre-assigns layouts in MASTER-PLAN.md during planning to prevent repetition structurally."
 triggers: ["layout", "diversity", "composition", "adjacent", "repetition", "section layout", "master plan"]
-used_by: ["section-planner", "quality-reviewer", "build-orchestrator"]
+used_by: ["planner", "quality-reviewer", "orchestrator"]
 version: "2.0.0"
 ---
 
@@ -48,10 +48,10 @@ The 6 groups represent 6 fundamentally different spatial strategies:
 
 ### Pipeline Connection
 
-- **Referenced by:** section-planner during MASTER-PLAN.md generation (primary enforcement)
+- **Referenced by:** planner during MASTER-PLAN.md generation (primary enforcement)
 - **Referenced by:** quality-reviewer during post-build verification (safety net)
-- **Referenced by:** build-orchestrator when composing builder spawn prompts (pattern description)
-- **Consumed at:** `/gen:plan-dev` workflow step (section planning)
+- **Referenced by:** orchestrator when composing builder spawn prompts (pattern description)
+- **Consumed at:** `/gen:plan` workflow step (section planning)
 
 ---
 
@@ -135,7 +135,7 @@ Layered compositions hide content behind interaction -- tabs, spotlights, slider
 
 ### Adjacency Rules
 
-These rules are explicit and enforceable. The section-planner validates them during MASTER-PLAN.md generation. The quality-reviewer validates them post-build as a safety net.
+These rules are explicit and enforceable. The planner validates them during MASTER-PLAN.md generation. The quality-reviewer validates them post-build as a safety net.
 
 **Rule 1: No same-pattern adjacency.**
 No two adjacent sections use the same layout pattern. (Obvious, but stated for completeness.)
@@ -159,7 +159,7 @@ A page of N sections must use patterns from at least `ceil(N/2)` different group
 
 ### MASTER-PLAN.md Layout Assignments Format
 
-The section-planner generates this table during MASTER-PLAN.md creation. Every column is required. The "Adjacent Valid?" column documents the validation inline.
+The planner generates this table during MASTER-PLAN.md creation. Every column is required. The "Adjacent Valid?" column documents the validation inline.
 
 ```markdown
 ## Layout Assignments (Pre-Assigned, No Adjacent Repeats)
@@ -281,7 +281,7 @@ Archetypes influence pattern SELECTION (which patterns are preferred or forbidde
 | Glassmorphism | Favors: card-spotlight, bento-grid, split-overlapping. Avoids: centered-minimal | Layer effects need surfaces. Minimal patterns have nothing to blur |
 | Neo-Corporate | Favors: bento-grid, split-equal, tabbed-showcase. Avoids: scroll-storytelling | Structured, professional. Cinematic effects feel off-brand |
 
-These are preferences, not hard rules. An archetype may use any pattern with proper creative justification. The preferences guide the section-planner's default selections.
+These are preferences, not hard rules. An archetype may use any pattern with proper creative justification. The preferences guide the planner's default selections.
 
 ### Pipeline Stage
 

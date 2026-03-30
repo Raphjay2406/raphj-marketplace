@@ -40,8 +40,8 @@ version: "2.0.0"
 
 ### Pipeline Connection
 
-- **Referenced by:** researcher agent during `/modulo:start-project` -- auto-detected when payments mentioned
-- **Consumed at:** `/modulo:start-project` step 3 (discovery: "Stripe Checkout, Billing, or Connect?")
+- **Referenced by:** researcher agent during `/gen:start-project` -- auto-detected when payments mentioned
+- **Consumed at:** `/gen:start-project` step 3 (discovery: "Stripe Checkout, Billing, or Connect?")
 - **Builder enforcement:** webhook Route Handler + `STRIPE_WEBHOOK_SECRET` required before wave completion
 - **Quality gate:** token exposure check (sk_* in client code = instant fail), webhook verification check
 
@@ -404,7 +404,7 @@ export async function POST(req: Request) {
 
 ### Pipeline Stage
 
-- **Input from:** `/modulo:start-project` provides payment model choice, product catalog structure, target customer type
+- **Input from:** `/gen:start-project` provides payment model choice, product catalog structure, target customer type
 - **Output to:** Builder receives Stripe pattern selection, env var checklist, webhook event list. DESIGN-DNA.md Appearance mapping feeds into Elements theming.
 
 ### Related Skills

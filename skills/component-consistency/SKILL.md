@@ -10,7 +10,7 @@ version: "2.0.0"
 
 ### When to Use
 
-- **During plan-dev** -- Establish the component registry in DESIGN-SYSTEM.md before any building begins
+- **During plan** -- Establish the component registry in DESIGN-SYSTEM.md before any building begins
 - **During execute** -- Builders reference registered variants when implementing any component; never ad-hoc
 - **During iterate** -- Cross-section audit catches dimension mismatches introduced during building
 - **Quality gate check** -- Feeds into quality-gate-v2 hard gate #4 (component registry compliance) and Integration Quality criterion 2
@@ -32,20 +32,20 @@ version: "2.0.0"
 
 ### Pipeline Connection
 
-- **Referenced by:** builder agent during `/modulo:execute` (component dimension lookup)
+- **Referenced by:** builder agent during `/gen:execute` (component dimension lookup)
 - **Referenced by:** quality-reviewer agent during quality audit (cross-section check)
-- **Consumed at:** `/modulo:plan-dev` workflow step 3 (DESIGN-SYSTEM.md generation)
-- **Consumed at:** `/modulo:iterate` workflow step 2 (consistency audit)
+- **Consumed at:** `/gen:plan` workflow step 3 (DESIGN-SYSTEM.md generation)
+- **Consumed at:** `/gen:iterate` workflow step 2 (consistency audit)
 
 ---
 
 ## DESIGN-SYSTEM.md Format
 
-The component registry lives in `.planning/modulo/DESIGN-SYSTEM.md` and uses this structure:
+The component registry lives in `.planning/genorah/DESIGN-SYSTEM.md` and uses this structure:
 
 ```yaml
 # Component Registry
-# Generated during plan-dev, updated during execute via proposal process
+# Generated during plan, updated during execute via proposal process
 # All dimensions use the project's spacing scale and DNA tokens
 
 project: "Project Name"
@@ -290,7 +290,7 @@ All grids in the project should use spacing scale tokens, never arbitrary values
 
 ## Cross-Section Audit Process
 
-Run this audit during `/modulo:iterate` or post-build quality review:
+Run this audit during `/gen:iterate` or post-build quality review:
 
 ### Step 1: Extract All Instances
 
@@ -575,7 +575,7 @@ const gridVariants = cva("grid w-full", {
 
 ### Anti-Pattern: Design System Drift
 
-**What goes wrong:** DESIGN-SYSTEM.md is created during plan-dev but never updated. Builders add new patterns that aren't registered. By project end, the registry describes 30% of actual components.
+**What goes wrong:** DESIGN-SYSTEM.md is created during plan but never updated. Builders add new patterns that aren't registered. By project end, the registry describes 30% of actual components.
 **Instead:** Every new component variant goes through the proposal process. Orchestrator reviews proposals between waves. Cross-section audit runs at wave completion to catch drift early.
 
 ---

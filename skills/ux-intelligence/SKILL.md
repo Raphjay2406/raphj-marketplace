@@ -62,7 +62,7 @@ The quality-reviewer scores each domain on a 0-6 scale:
 
 - **Referenced by:** quality-reviewer during post-wave audit and end-of-build review
 - **Referenced by:** creative-director during creative review passes
-- **Referenced by:** section-builder during self-check (constraint tables only)
+- **Referenced by:** builder during self-check (constraint tables only)
 - **Consumed at:** `/gen:audit` workflow step 2 (UX Intelligence scoring)
 
 ### Domain Quick Reference

@@ -44,7 +44,7 @@ Not all schemas deliver the same value. Google has deprecated or restricted seve
 
 ### Per-Page-Type Recipe Table
 
-This is the primary reference for section-planners assigning schemas during `/gen:plan-dev`. Each page type gets a specific combination of schemas assembled into a single `@graph`.
+This is the primary reference for planners assigning schemas during `/gen:plan`. Each page type gets a specific combination of schemas assembled into a single `@graph`.
 
 | Page Type | Schema Combination | Notes |
 |---|---|---|
@@ -105,8 +105,8 @@ GEO (Generative Engine Optimization) structures content so AI search engines (Ch
 
 ### Pipeline Connection
 
-- **Referenced by:** section-planner (assigns schemas per section in PLAN.md), section-builder (generates JSON-LD during implementation), content-specialist (applies GEO content patterns)
-- **Consumed at:** `/gen:plan-dev` (schema assignment per section using the recipe table), `/gen:execute` Wave 2+ (JSON-LD generation per section, GEO pattern implementation)
+- **Referenced by:** planner (assigns schemas per section in PLAN.md), builder (generates JSON-LD during implementation), content-specialist (applies GEO content patterns)
+- **Consumed at:** `/gen:plan` (schema assignment per section using the recipe table), `/gen:execute` Wave 2+ (JSON-LD generation per section, GEO pattern implementation)
 - **Verified by:** quality-reviewer (schema audit protocol -- runs on every quality-reviewer pass, after both `/gen:execute` and `/gen:iterate`)
 - **Related skills:**
   - `seo-meta` -- meta tags, canonical URLs, robots.txt, OG images. This skill handles structured data. Most pages need both.
@@ -975,7 +975,7 @@ GEO pattern intensity adapts per archetype. All 19 archetypes map to one of 4 in
 
 ### SEO-Emotional Arc Beat Mapping (GEO-05)
 
-This is the per-beat prescriptive mapping of which SEO/GEO elements belong at each beat position. Section planners reference this during `/gen:plan-dev` when assigning beats AND schema types simultaneously.
+This is the per-beat prescriptive mapping of which SEO/GEO elements belong at each beat position. Section planners reference this during `/gen:plan` when assigning beats AND schema types simultaneously.
 
 | Beat | SEO/GEO Element | Schema Contribution | Rationale |
 |------|-----------------|---------------------|-----------|
@@ -1005,7 +1005,7 @@ Plus BreadcrumbList (always included for multi-page sites) and any page-type-spe
 
 - **Input from:** Section planner assigns beat types (from `emotional-arc` skill) and schema types (from this skill's recipe table). Content specialist provides page content. Design DNA provides brand info (name, logo, URL, social profiles).
 - **Output to:** JSON-LD `<script>` tags in page `<head>` (or body), GEO-structured content in page sections. Quality reviewer receives schema audit checklist.
-- **Pipeline position:** Schema types assigned during `/gen:plan-dev` (section planning). JSON-LD generated during `/gen:execute` Wave 2+ (per-section build). Schema audit runs during quality-reviewer pass (after execute AND iterate).
+- **Pipeline position:** Schema types assigned during `/gen:plan` (section planning). JSON-LD generated during `/gen:execute` Wave 2+ (per-section build). Schema audit runs during quality-reviewer pass (after execute AND iterate).
 
 ### Related Skills
 

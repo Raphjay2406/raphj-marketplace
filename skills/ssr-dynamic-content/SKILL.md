@@ -283,8 +283,8 @@ Use custom profiles when the 7 presets do not match your content update frequenc
 
 ### Pipeline Connection
 
-- **Referenced by:** section-builder (when generating pages with dynamic data), specialist agents (when configuring cache and revalidation)
-- **Consumed at:** `/gen:plan-dev` for rendering strategy selection per section, `/gen:execute` Wave 0 for `next.config.ts` cache setup and Wave 2+ for section-specific rendering patterns
+- **Referenced by:** builder (when generating pages with dynamic data), specialist agents (when configuring cache and revalidation)
+- **Consumed at:** `/gen:plan` for rendering strategy selection per section, `/gen:execute` Wave 0 for `next.config.ts` cache setup and Wave 2+ for section-specific rendering patterns
 - **Input from:** `/gen:start-project` (project requirements identify data freshness, CMS platform, auth needs). Design DNA provides no direct tokens -- this is a server-side concern.
 - **Output to:** Page components with appropriate cache directives, webhook Route Handlers, `next.config.ts` cache configuration, Astro page files with prerender/SSR settings
 
@@ -1720,7 +1720,7 @@ How this skill connects to the rest of the Genorah system. SSR/dynamic content h
 
 ### Archetype Variants
 
-SSR rendering logic is identical across archetypes -- server-side code does not change with visual style. However, loading states and skeleton UIs should match archetype personality. These variants apply to Suspense fallback components, Server Island fallback slots, draft mode banners, and `loading.tsx` special files. The section-builder should adapt loading state JSX to match the project archetype.
+SSR rendering logic is identical across archetypes -- server-side code does not change with visual style. However, loading states and skeleton UIs should match archetype personality. These variants apply to Suspense fallback components, Server Island fallback slots, draft mode banners, and `loading.tsx` special files. The builder should adapt loading state JSX to match the project archetype.
 
 | Archetype Group | Loading State Style | Skeleton Pattern | Draft Banner Style |
 |-----------------|--------------------|-----------------|--------------------|
@@ -1737,7 +1737,7 @@ Remaining archetypes (Organic, Warm Artisan) should follow the closest personali
 
 ### Pipeline Stage
 
-- **Input from:** `/gen:start-project` discovers content update frequency, CMS platform, auth requirements, and real-time data needs. `/gen:plan-dev` section planner assigns rendering strategies per section based on the decision matrix. Design DNA provides domain and brand tokens for webhook URLs and loading states.
+- **Input from:** `/gen:start-project` discovers content update frequency, CMS platform, auth requirements, and real-time data needs. `/gen:plan` section planner assigns rendering strategies per section based on the decision matrix. Design DNA provides domain and brand tokens for webhook URLs and loading states.
 - **Output to:** Page components with cache directives (`"use cache"`, `cacheLife`, `cacheTag`), Server Components with auth checks, webhook Route Handlers (`app/api/revalidate/route.ts`), `next.config.ts` cache configuration, Astro page files with `prerender` settings and `server:defer` components, `proxy.ts` route protection, and `loading.tsx` skeleton components.
 - **Pipeline position:** Wave 0 scaffold includes `next.config.ts` cache setup (`cacheComponents: true`), `proxy.ts` auth protection, and skeleton `loading.tsx` files. Wave 1 establishes shared webhook handler and SEO bridge utility. Wave 2+ sections implement specific rendering strategies per the decision matrix.
 - **Cross-phase integration:** CMS webhook handlers call the SEO bridge to update sitemap (`seo-meta` skill) and fire IndexNow (`search-visibility` skill). Draft mode integrates with CMS preview URLs. Auth patterns reference `auth-ui` skill for the login/signup UX.

@@ -30,7 +30,7 @@ version: "2.0.0"
 
 ### Pipeline Connection
 
-- **Referenced by:** section-builder when project has multiple locales; build-orchestrator for locale routing setup
+- **Referenced by:** builder when project has multiple locales; orchestrator for locale routing setup
 - **Consumed at:** `/gen:execute` wave 0 for routing/layout, wave 1+ for component localization
 - **Related commands:** `/gen:start-project` captures target languages during discovery
 

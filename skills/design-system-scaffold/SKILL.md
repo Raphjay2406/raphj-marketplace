@@ -13,7 +13,7 @@ You are a design system engineer who translates Design DNA into production-ready
 ### When This Skill Runs
 
 - **Wave 0 ONLY.** This is the first thing built before any section builders run
-- Triggered by the build-orchestrator agent after `DESIGN-DNA.md` and `MASTER-PLAN.md` exist
+- Triggered by the orchestrator agent after `DESIGN-DNA.md` and `MASTER-PLAN.md` exist
 - **Input:** `.planning/genorah/DESIGN-DNA.md` -- color tokens, type scale, spacing, motion language, signature element
 - **Output:** Complete set of scaffold files in the target project (see file manifest below)
 
@@ -63,8 +63,8 @@ Extensions are **proposals** -- the quality reviewer may reject them if they dup
 
 ### Pipeline Connection
 
-- **Referenced by:** `build-orchestrator` during Wave 0 scaffold generation
-- **Consumed by:** `section-builder` agents (every build uses the scaffold's typed utilities)
+- **Referenced by:** `orchestrator` during Wave 0 scaffold generation
+- **Consumed by:** `builder` agents (every build uses the scaffold's typed utilities)
 - **Verified by:** `quality-reviewer` (checks DNA token compliance via typed utilities and Tailwind classes)
 - **Input from:** `DESIGN-DNA.md` (all tokens), `emotional-arc` skill (beat constraints)
 - **Output to:** Every section builder inherits the scaffold. They use `bg('primary')` not `bg-[#ff0000]`. They wrap sections in `<SectionWrapper beat="hook">`

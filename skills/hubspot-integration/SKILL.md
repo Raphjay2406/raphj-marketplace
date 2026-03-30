@@ -59,9 +59,9 @@ version: "2.0.0"
 
 ### Pipeline Connection
 
-- **Auto-detected during:** `/modulo:start-project` discovery -- if client mentions HubSpot, ask which products (Marketing Hub, Sales Hub, CMS Hub, Service Hub) and tier (Free, Starter, Professional, Enterprise)
+- **Auto-detected during:** `/gen:start-project` discovery -- if client mentions HubSpot, ask which products (Marketing Hub, Sales Hub, CMS Hub, Service Hub) and tier (Free, Starter, Professional, Enterprise)
 - **Referenced by:** researcher agent for integration scoping, builder agent for implementation patterns
-- **Consumed at:** `/modulo:plan-dev` for architecture decisions, `/modulo:execute` for component generation
+- **Consumed at:** `/gen:plan` for architecture decisions, `/gen:execute` for component generation
 
 ---
 
@@ -761,7 +761,7 @@ HUBSPOT_TEAM_TABLE_ID=12345678     # For HubDB
 
 ### Pipeline Stage
 
-- **Auto-detection:** During `/modulo:start-project` discovery, if client mentions HubSpot, CRM, lead capture, or marketing automation, activate this skill. Ask follow-up: "Which HubSpot products do you use? (Marketing Hub, Sales Hub, CMS Hub, Service Hub) and what tier? (Free, Starter, Professional, Enterprise)"
+- **Auto-detection:** During `/gen:start-project` discovery, if client mentions HubSpot, CRM, lead capture, or marketing automation, activate this skill. Ask follow-up: "Which HubSpot products do you use? (Marketing Hub, Sales Hub, CMS Hub, Service Hub) and what tier? (Free, Starter, Professional, Enterprise)"
 - **Input from:** researcher agent provides HubSpot product list, tier, existing forms/properties, custom objects
 - **Output to:** builder agent receives integration pattern selection, Route Handler templates, component boilerplate
 

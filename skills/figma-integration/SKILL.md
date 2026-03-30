@@ -91,7 +91,7 @@ Start: "I have a Figma file URL"
 
 - **Referenced by:** `figma-translator` agent during the Figma import workflow
 - **Referenced by:** `quality-reviewer` agent during visual QA verify step (overlay diff)
-- **Referenced by:** `section-planner` agent when generating PLAN.md files from Figma data
+- **Referenced by:** `planner` agent when generating PLAN.md files from Figma data
 - **Consumed at:** `/gen:start-project` discovery flow (when user provides a Figma URL)
 - **Consumed at:** `/gen:audit` visual QA overlay diff step
 

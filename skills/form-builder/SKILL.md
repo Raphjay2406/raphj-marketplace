@@ -29,9 +29,9 @@ version: "2.0.0"
 
 ### Pipeline Connection
 
-- **Referenced by:** section-builder for contact, signup, checkout, and settings sections
+- **Referenced by:** builder for contact, signup, checkout, and settings sections
 - **Consumed at:** `/gen:execute` wave 2+ for form-heavy sections
-- **Related commands:** `/gen:plan-dev` for form section planning; uses `ecommerce-ui` for checkout form patterns
+- **Related commands:** `/gen:plan` for form section planning; uses `ecommerce-ui` for checkout form patterns
 
 ## Layer 2: Award-Winning Examples
 

@@ -12,7 +12,7 @@ version: "2.0.0"
 
 - **Post-build quality review** -- Score a completed section against 72 criteria across 12 categories
 - **Pre-ship audit** -- Verify the entire project meets the target tier before launch
-- **Iterate loop** -- Diagnose weak categories after a `/modulo:iterate` cycle to focus improvements
+- **Iterate loop** -- Diagnose weak categories after a `/gen:iterate` cycle to focus improvements
 - **Anti-slop enforcement** -- Catch generic, low-effort, or inconsistent output before it ships
 - **Builder self-check** -- Builders reference this during execution to avoid common penalty triggers
 
@@ -32,10 +32,10 @@ version: "2.0.0"
 
 ### Pipeline Connection
 
-- **Referenced by:** quality-reviewer agent during `/modulo:iterate` and post-build review
-- **Referenced by:** builder agent for self-check during `/modulo:execute`
-- **Consumed at:** `/modulo:iterate` workflow step 3 (quality scoring)
-- **Consumed at:** `/modulo:execute` wave completion gates
+- **Referenced by:** quality-reviewer agent during `/gen:iterate` and post-build review
+- **Referenced by:** builder agent for self-check during `/gen:execute`
+- **Consumed at:** `/gen:iterate` workflow step 3 (quality scoring)
+- **Consumed at:** `/gen:execute` wave completion gates
 
 ---
 
@@ -362,8 +362,8 @@ Final Score: 204.4 -> SOTD-Ready tier
 
 ### Pipeline Stage
 
-- **Input from:** Built sections (TSX/CSS output from `/modulo:execute`)
-- **Output to:** Fix list with prioritized category deficits -> `/modulo:iterate`
+- **Input from:** Built sections (TSX/CSS output from `/gen:execute`)
+- **Output to:** Fix list with prioritized category deficits -> `/gen:iterate`
 
 ### Related Skills
 

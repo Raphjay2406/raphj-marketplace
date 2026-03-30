@@ -18,8 +18,8 @@ The distinction matters: a single-page landing site can be a linear story (HOOK 
 
 - Any project with 2+ distinct pages -- this skill defines the architecture
 - During `/gen:start-project` when multi-page is detected -- generates Site Architecture section in DESIGN-DNA.md
-- During `/gen:plan-dev` -- section planner assigns page-specific arcs per template
-- During `/gen:execute` -- build-orchestrator ensures shared components build in Wave 1 before page-specific sections
+- During `/gen:plan` -- section planner assigns page-specific arcs per template
+- During `/gen:execute` -- orchestrator ensures shared components build in Wave 1 before page-specific sections
 - During `/gen:audit` -- quality reviewer checks cross-page consistency
 
 ### When NOT to Use
@@ -51,8 +51,8 @@ Determine the page-type mix based on project type:
 
 ### Pipeline Connection
 
-- **Referenced by:** `section-planner` during `/gen:plan-dev` (creates per-page arcs in MASTER-PLAN.md)
-- **Consumed at:** `build-orchestrator` Wave 1 (shared components), Wave 2+ (page-specific sections)
+- **Referenced by:** `planner` during `/gen:plan` (creates per-page arcs in MASTER-PLAN.md)
+- **Consumed at:** `orchestrator` Wave 1 (shared components), Wave 2+ (page-specific sections)
 - **Verified by:** `quality-reviewer` during `/gen:audit` (cross-page consistency check)
 
 ---
@@ -560,7 +560,7 @@ Archetypes influence navigation style, footer complexity, and page transition an
 ### Pipeline Stage
 
 - **Input from:** Discovery phase (page count, page types), Design DNA (tokens, archetype), `emotional-arc` skill (beat definitions and constraints)
-- **Output to:** MASTER-PLAN.md (wave structure with per-page arc), section PLAN.md files (page-specific beat assignments), build-orchestrator (Wave 1 shared component list)
+- **Output to:** MASTER-PLAN.md (wave structure with per-page arc), section PLAN.md files (page-specific beat assignments), orchestrator (Wave 1 shared component list)
 
 ### Related Skills
 

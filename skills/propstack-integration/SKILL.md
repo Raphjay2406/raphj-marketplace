@@ -41,11 +41,11 @@ version: "2.0.0"
 
 ### Pipeline Connection
 
-- **Auto-detected:** When real estate, property listings, or "Immobilien" is mentioned during `/modulo:start-project`, ask: "Which real estate CRM? Propstack, FlowFact, onOffice, or custom?"
+- **Auto-detected:** When real estate, property listings, or "Immobilien" is mentioned during `/gen:start-project`, ask: "Which real estate CRM? Propstack, FlowFact, onOffice, or custom?"
 - **Referenced by:** researcher agent during discovery (property count, category types, geographic coverage, image quality audit)
-- **Referenced by:** section-builder during property listing, detail page, and search section builds
-- **Consumed at:** `/modulo:execute` wave 0 (API client setup), wave 1 (search/filter infrastructure), wave 2+ (listing pages, detail pages, lead forms)
-- **Related commands:** `/modulo:plan-dev` scopes Propstack data requirements per section
+- **Referenced by:** builder during property listing, detail page, and search section builds
+- **Consumed at:** `/gen:execute` wave 0 (API client setup), wave 1 (search/filter infrastructure), wave 2+ (listing pages, detail pages, lead forms)
+- **Related commands:** `/gen:plan` scopes Propstack data requirements per section
 
 ## Layer 2: Award-Winning Examples
 
@@ -786,7 +786,7 @@ export function ExposeDocument({ property }: { property: Property }) {
   const floorPlan = property.images.find((i) => i.type === "floor_plan");
 
   return (
-    <Document title={`Expose - ${property.title}`} author="Powered by Modulo">
+    <Document title={`Expose - ${property.title}`} author="Powered by Genorah">
       {/* Page 1: Overview */}
       <Page size="A4" style={styles.page}>
         <View style={styles.header}>

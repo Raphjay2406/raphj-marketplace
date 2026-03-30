@@ -82,8 +82,8 @@ Do this BEFORE any other restyling. The `framer-motion` package is deprecated; `
 
 ### Pipeline Connection
 
-- **Referenced by:** section-builder (specialist: any) during component selection
-- **Referenced by:** build-orchestrator during spawn prompt generation (marketplace cap enforcement)
+- **Referenced by:** builder (specialist: any) during component selection
+- **Referenced by:** orchestrator during spawn prompt generation (marketplace cap enforcement)
 - **Consumed at:** `/gen:execute` Wave 2+ (section building phase)
 
 ---

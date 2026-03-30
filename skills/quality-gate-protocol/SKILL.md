@@ -3,7 +3,7 @@ name: quality-gate-protocol
 category: core
 description: "Defines the 4-layer progressive quality enforcement system: when each gate fires, severity classification (CRITICAL/WARNING/INFO), running tally management, and user checkpoint trigger logic."
 triggers: ["quality gate", "enforcement", "severity", "tally", "checkpoint", "quality pipeline"]
-used_by: ["build-orchestrator", "quality-reviewer", "creative-director"]
+used_by: ["orchestrator", "quality-reviewer", "creative-director"]
 version: "2.0.0"
 ---
 
@@ -59,7 +59,7 @@ Running them sequentially doubles Layer 2 latency with zero quality benefit. Run
 
 ### Pipeline Connection
 
-- **Primary consumer:** build-orchestrator -- implements enforcement timing, manages running tally, triggers checkpoints
+- **Primary consumer:** orchestrator -- implements enforcement timing, manages running tally, triggers checkpoints
 - **Severity classifier:** quality-reviewer -- classifies findings per this protocol when writing GAP-FIX.md and reports
 - **Creative classifier:** creative-director -- uses severity tiers for creative findings (below-bar = WARNING, forbidden pattern = CRITICAL)
 - **Fix executor:** polisher -- invoked between waves for gap fixes and at end-of-build for full polish pass
@@ -200,7 +200,7 @@ Every condition that triggers each severity level, organized by enforcement laye
 
 ### Running Tally Format
 
-The build-orchestrator maintains this tally in STATE.md and updates it after every wave.
+The orchestrator maintains this tally in STATE.md and updates it after every wave.
 
 ```markdown
 ## Build Quality Status
@@ -233,7 +233,7 @@ The build-orchestrator maintains this tally in STATE.md and updates it after eve
 - **CONCERNING:** No critical issues, warnings 5-10
 - **CRITICAL:** Any critical issue present (should have blocked already)
 
-**Real-time status output** (shown to user during build via build-orchestrator):
+**Real-time status output** (shown to user during build via orchestrator):
 ```
 Wave 2 complete -- 2 warnings pending
   [warn] Section 03-features: Lighthouse performance 82 (threshold: 80)
@@ -277,7 +277,7 @@ Ready to ship.
 
 ### Findings Merge Protocol
 
-When CD and QR complete their parallel reviews, the build-orchestrator merges findings:
+When CD and QR complete their parallel reviews, the orchestrator merges findings:
 
 1. **Collect** all findings from QR verification report and CD creative assessment
 2. **Deduplicate** -- if both flag the same section for the same issue, keep the more specific finding
@@ -321,7 +321,7 @@ This timeline shows exactly when each enforcement activity fires during the buil
 
 ```
 PRE-BUILD:
-  section-planner -> uses reference-benchmarking + compositional-diversity skills
+  planner -> uses reference-benchmarking + compositional-diversity skills
   MASTER-PLAN.md -> layout assignments with adjacency validation
   CD pre-build review (light, blocking) -> plan-level creative direction
 
@@ -334,7 +334,7 @@ POST-WAVE N:
   [Layer 2] QR + CD review in parallel
     QR: 3-level verification + anti-slop scoring + cross-section consistency
     CD: archetype personality + creative tension + emotional arc + color journey
-  [Layer 2] Findings merged by build-orchestrator, severity classified
+  [Layer 2] Findings merged by orchestrator, severity classified
   [Layer 2] GAP-FIX.md created for CRITICAL and WARNING findings needing fixes
 
   Polisher processes GAP-FIX.md files (if any)
@@ -368,11 +368,11 @@ AFTER ALL WAVES:
 
 | Agent | This Skill Provides |
 |-------|-------------------|
-| build-orchestrator | Enforcement timing (when to invoke each layer), tally management, checkpoint trigger logic, findings merge protocol |
+| orchestrator | Enforcement timing (when to invoke each layer), tally management, checkpoint trigger logic, findings merge protocol |
 | quality-reviewer | Severity classification for all QR findings (anti-slop, verification, live testing) |
 | creative-director | Severity classification for creative findings (archetype violations, boldness concerns) |
 | polisher | Invocation timing (between waves for gap fixes, end-of-build for full polish) |
-| section-builder | Layer 1 self-check scope (what to verify before reporting COMPLETE) |
+| builder | Layer 1 self-check scope (what to verify before reporting COMPLETE) |
 
 ### Related Skills
 
@@ -408,7 +408,7 @@ Remediation priority order:
 
 ### Anti-Pattern: Auto-Retrying on Critical Failures
 
-**What goes wrong:** The build-orchestrator detects a critical failure and automatically re-spawns the builder or polisher to fix it. This masks underlying problems (bad plan, wrong archetype application, missing content) and burns compute on repeated failures.
+**What goes wrong:** The orchestrator detects a critical failure and automatically re-spawns the builder or polisher to fix it. This masks underlying problems (bad plan, wrong archetype application, missing content) and burns compute on repeated failures.
 
 **Instead:** Critical failures escalate to user immediately with specific evidence. The user decides: retry, skip, or abort. This is a locked decision from Phase 2 -- build failures bubble to user, no autonomous retry.
 
@@ -438,13 +438,13 @@ Remediation priority order:
 
 ### Anti-Pattern: Blocking Pipeline on Warnings
 
-**What goes wrong:** The build-orchestrator treats warnings as blockers, stopping the pipeline and waiting for fixes after every wave. This turns every minor spacing inconsistency into a full remediation cycle, killing build velocity.
+**What goes wrong:** The orchestrator treats warnings as blockers, stopping the pipeline and waiting for fixes after every wave. This turns every minor spacing inconsistency into a full remediation cycle, killing build velocity.
 
 **Instead:** Warnings accumulate in the running tally and do NOT block. The pipeline continues to the next wave. Only CRITICALs block. Warnings surface at the Layer 4 user checkpoint where the user decides whether to address them.
 
 ### Anti-Pattern: User Checkpoint on Every Wave
 
-**What goes wrong:** The build-orchestrator pauses after every wave for user review. The user reviews 2-3 sections per wave, 4 waves = 8-12 review cycles. This is exhausting and counterproductive.
+**What goes wrong:** The orchestrator pauses after every wave for user review. The user reviews 2-3 sections per wave, 4 waves = 8-12 review cycles. This is exhausting and counterproductive.
 
 **Instead:** Per-wave, only CRITICALs escalate to the user (because they block the pipeline). The comprehensive user checkpoint happens ONCE at Layer 4, after all waves complete and Layer 3 testing finishes. One thorough review instead of many shallow ones.
 

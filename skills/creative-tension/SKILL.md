@@ -49,7 +49,7 @@ These rules ensure tension moments feel like deliberate punctuation, not visual 
 
 **Rule 2 -- Breathing Room:** At least 1 non-tension section must separate any two tension sections. Exception: HIGH-tension archetypes (Brutalist, Neubrutalism, Kinetic, Neon Noir) allow 2 adjacent tension sections IF they use different levels.
 
-**Validation:** The section-planner pre-assigns tension types and positions in MASTER-PLAN.md. The quality-reviewer validates adjacency rules post-build.
+**Validation:** The planner pre-assigns tension types and positions in MASTER-PLAN.md. The quality-reviewer validates adjacency rules post-build.
 
 ### Boldness Calibration
 
@@ -948,7 +948,7 @@ Tension types and positions are pre-assigned in the master plan. Format:
 | CTA | CLOSE | centered-minimal | NO | - |
 ```
 
-Builders execute the assigned tension -- they do not choose their own. The section-planner pre-validates adjacency rules during assignment.
+Builders execute the assigned tension -- they do not choose their own. The planner pre-validates adjacency rules during assignment.
 
 ## Layer 4: Anti-Patterns
 

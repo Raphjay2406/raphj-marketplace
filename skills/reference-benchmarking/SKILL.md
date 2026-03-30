@@ -3,7 +3,7 @@ name: reference-benchmarking
 description: "Defines per-section quality targets from award-winning sites. Provides curated reference library per archetype, PLAN.md reference target format, and quality comparison protocol."
 tier: core
 triggers: "reference, quality target, benchmark, quality bar, comparison, reference target, quality comparison"
-used_by: "section-planner, quality-reviewer, researcher"
+used_by: "planner, quality-reviewer, researcher"
 version: "2.0.0"
 ---
 
@@ -13,7 +13,7 @@ Builders produce higher quality when they have a concrete visual bar, not abstra
 
 ### When to Use
 
-- **During section planning** (section-planner agent): Generate `reference_target` frontmatter and `<reference_quality_target>` blocks in each key section's PLAN.md
+- **During section planning** (planner agent): Generate `reference_target` frontmatter and `<reference_quality_target>` blocks in each key section's PLAN.md
 - **During research** (researcher agent): Supplement the curated library with per-project industry-specific references found during the research phase
 - **During quality review** (quality-reviewer agent): Compare built output against the reference targets using Claude's multimodal capability
 - **During iteration** (`/gen:iterate`): Update reference targets if the project pivots to a different archetype or industry
@@ -48,14 +48,14 @@ Reference targets come from TWO sources, combined:
 1. **Curated library** (this skill) -- per-archetype baseline references with pre-extracted quality attributes. Provides the archetype's timeless quality personality. Updated periodically.
 2. **Per-project research** (researcher agent) -- industry-specific current winners found during the research phase of `/gen:start-project`. Provides fresh, domain-relevant references.
 
-The section-planner combines both sources when generating reference targets for PLAN.md files. Curated library provides the archetype baseline; per-project research provides industry specificity.
+The planner combines both sources when generating reference targets for PLAN.md files. Curated library provides the archetype baseline; per-project research provides industry specificity.
 
 ### Pipeline Connection
 
-- **Referenced by:** section-planner agent during `/gen:plan-dev` (generates reference targets in PLAN.md)
+- **Referenced by:** planner agent during `/gen:plan` (generates reference targets in PLAN.md)
 - **Referenced by:** quality-reviewer agent during post-wave verification (comparison protocol)
 - **Referenced by:** researcher agent during `/gen:start-project` (supplements curated library)
-- **Consumed at:** plan-dev workflow step 3 (section planning with reference targets)
+- **Consumed at:** plan workflow step 3 (section planning with reference targets)
 
 ---
 
@@ -375,7 +375,7 @@ Excellence in Luxury means every surface communicates exclusivity. Photography i
 
 #### Other Archetypes (Quality Personality Only)
 
-For archetypes not in the top 5, the section-planner uses the quality personality definition below combined with per-project research from the researcher agent.
+For archetypes not in the top 5, the planner uses the quality personality definition below combined with per-project research from the researcher agent.
 
 | Archetype | Quality Personality Summary | Key Quality Signals |
 |-----------|---------------------------|-------------------|
@@ -409,7 +409,7 @@ During `/gen:start-project`, the researcher agent runs a REFERENCES track that s
 
 **What the researcher does NOT do:**
 - Does not replace the curated library -- supplements it
-- Does not assign reference targets to sections -- the section-planner does that
+- Does not assign reference targets to sections -- the planner does that
 - Does not judge which sections need targets -- beat scoping rules (this skill) determine that
 
 ---
@@ -419,8 +419,8 @@ During `/gen:start-project`, the researcher agent runs a REFERENCES track that s
 ### How Reference Targets Flow Through the Pipeline
 
 ```
-researcher agent           section-planner agent         builder agent              quality-reviewer agent
-(start-project)            (plan-dev)                    (execute)                  (post-wave review)
+researcher agent           planner agent         builder agent              quality-reviewer agent
+(start-project)            (plan)                    (execute)                  (post-wave review)
       |                          |                            |                            |
   Find current               Read curated                 Read PLAN.md               Read PLAN.md
   industry winners           library (this skill)         reference_target           reference_target
@@ -454,7 +454,7 @@ Reference targets reinforce DNA compliance, not replace it. The 6 quality attrib
 
 The curated library is organized BY archetype because quality looks different for each personality. A "great hero" in Neo-Corporate (dark, precise, product-screenshot) is entirely different from a "great hero" in Ethereal (soft, spacious, atmospheric).
 
-The section-planner selects reference targets from the matching archetype's library. Cross-archetype references are only used when the project explicitly blends archetypes (documented in DESIGN-DNA.md).
+The planner selects reference targets from the matching archetype's library. Cross-archetype references are only used when the project explicitly blends archetypes (documented in DESIGN-DNA.md).
 
 ### Quality-Reviewer Comparison Protocol
 
@@ -511,7 +511,7 @@ This judgment is inherently subjective. The quality-reviewer should:
 
 ### Pipeline Stage
 
-- **Input from:** Researcher agent (per-project research/DESIGN-REFERENCES.md), section-planner (combines curated + research references)
+- **Input from:** Researcher agent (per-project research/DESIGN-REFERENCES.md), planner (combines curated + research references)
 - **Output to:** PLAN.md files (reference_target frontmatter + quality target blocks), quality-reviewer (comparison verdicts)
 
 ---
@@ -540,7 +540,7 @@ This judgment is inherently subjective. The quality-reviewer should:
 
 **What goes wrong:** An Ethereal project gets a Brutalist reference target because the Brutalist site had a "great hero." The builder tries to reconcile soft, atmospheric Ethereal design with raw, structural Brutalist layout. The result is confused and neither archetype.
 
-**Instead:** Reference targets MUST come from the project's assigned archetype (or closely related archetypes). Cross-archetype references are only valid when the project's DESIGN-DNA.md explicitly documents archetype blending. The section-planner validates archetype alignment when generating reference targets.
+**Instead:** Reference targets MUST come from the project's assigned archetype (or closely related archetypes). Cross-archetype references are only valid when the project's DESIGN-DNA.md explicitly documents archetype blending. The planner validates archetype alignment when generating reference targets.
 
 ### Anti-Pattern: Copying Instead of Competing
 

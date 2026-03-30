@@ -106,7 +106,7 @@ For deep CWV optimization (image strategies, font loading, layout stability tech
 
 ### Pipeline Connection
 
-- **Referenced by:** `section-builder` (per-page metadata generation), `build-orchestrator` (site-wide SEO scaffold at Wave 0-1), `quality-reviewer` (constraint table validation)
+- **Referenced by:** `builder` (per-page metadata generation), `orchestrator` (site-wide SEO scaffold at Wave 0-1), `quality-reviewer` (constraint table validation)
 - **Consumed at:** `/gen:execute` Wave 0 for root layout metadata and site-wide files (robots.txt, sitemap), Wave 2+ for per-page metadata via `generateMetadata` or equivalent
 - **Input from:** `/gen:start-project` captures brand name, description, and target audience used in meta descriptions and OG defaults
 - **Output to:** Quality reviewer validates constraint table values (title length, description length, OG image dimensions); `structured-data` skill (Phase 15) builds on the meta foundation with JSON-LD schemas

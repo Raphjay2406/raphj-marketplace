@@ -10,10 +10,10 @@ version: "2.0.0"
 
 ### When to Use
 
-- **During `/modulo:start-project`** -- Archetype Picker, Palette Explorer, Font Pairing Preview
-- **During `/modulo:lets-discuss`** -- Creative Directions, Emotional Arc Map, Layout Preview, Motion Preview
-- **During `/modulo:execute`** -- Build Progress tracker updated per wave
-- **During `/modulo:iterate`** -- Score Dashboard, Before/After Diff, Consistency Matrix, Diagnostic View
+- **During `/gen:start-project`** -- Archetype Picker, Palette Explorer, Font Pairing Preview
+- **During `/gen:discuss`** -- Creative Directions, Emotional Arc Map, Layout Preview, Motion Preview
+- **During `/gen:execute`** -- Build Progress tracker updated per wave
+- **During `/gen:iterate`** -- Score Dashboard, Before/After Diff, Consistency Matrix, Diagnostic View
 - **During any review** -- Breakpoint Preview for responsive audit
 
 ### When NOT to Use
@@ -34,7 +34,7 @@ version: "2.0.0"
 ### Pipeline Connection
 
 - **Referenced by:** all agents at their respective pipeline stages
-- **Consumed at:** every `/modulo:` command that presents visual output to the user
+- **Consumed at:** every `/gen:` command that presents visual output to the user
 
 ---
 
@@ -768,7 +768,7 @@ Split comparison showing two versions of a section side by side with labels.
 
 ### 13. Diagnostic View
 
-Bug description with hypothesis list and checkboxes for the `/modulo:bug-fix` command.
+Bug description with hypothesis list and checkboxes for the `/gen:bugfix` command.
 
 **CSS classes:** `.diagnostic`, `.diagnostic__bug`, `.diagnostic__hypothesis`, `.hypothesis-item`
 

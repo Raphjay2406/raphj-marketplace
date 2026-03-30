@@ -40,7 +40,7 @@ web-layer: react-vite
 - Any project using Tauri v2 -- this skill is mandatory for correct desktop-aware design
 - Any project using Electron -- this skill is mandatory for correct desktop-aware design
 - During `/gen:start-project` -- detect framework, generate desktop-specific DNA extensions
-- During `/gen:plan-dev` -- section planner accounts for titlebar offset, platform variants, keyboard shortcuts
+- During `/gen:plan` -- section planner accounts for titlebar offset, platform variants, keyboard shortcuts
 - During `/gen:execute` -- builders generate platform-aware components
 
 ### When NOT to Use
@@ -95,8 +95,8 @@ Nine concerns that web-only skills do not address:
 
 ### Pipeline Connection
 
-- **Referenced by:** section-builder, build-orchestrator during `/gen:execute`
-- **Consumed at:** plan-dev (desktop-aware planning), execute (code generation), verify (platform-specific checks)
+- **Referenced by:** builder, orchestrator during `/gen:execute`
+- **Consumed at:** plan (desktop-aware planning), execute (code generation), verify (platform-specific checks)
 - **Loaded alongside:** react-vite-patterns (web layer), tailwind-system (CSS tokens)
 
 ## Layer 2: Award-Winning Examples
@@ -707,7 +707,7 @@ For archetypes not listed: use the archetype's core aesthetic applied to a 40px 
 
 ### Pipeline Stage
 
-- **Input from:** Design DNA (tokens + archetype), section-planner (desktop-aware plans)
+- **Input from:** Design DNA (tokens + archetype), planner (desktop-aware plans)
 - **Output to:** Desktop-aware components with platform detection, titlebar, drag regions
 
 ### Related Skills

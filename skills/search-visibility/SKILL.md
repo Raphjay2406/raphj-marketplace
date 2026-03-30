@@ -93,7 +93,7 @@ For every project, implement both paths:
 
 ### Pipeline Connection
 
-- **Referenced by:** build-orchestrator at Wave 0-1 (IndexNow endpoint scaffold, key verification file, robots.txt AI presets, llms.txt generation), section-builder during content publish hooks
+- **Referenced by:** orchestrator at Wave 0-1 (IndexNow endpoint scaffold, key verification file, robots.txt AI presets, llms.txt generation), builder during content publish hooks
 - **Consumed at:** `/gen:execute` Wave 0 (IndexNow endpoint scaffold, key verification file, robots.txt AI rules, llms.txt), Wave 2+ (content-hash tracking on per-section publish)
 - **Input from:** `seo-meta` skill (base robots.txt directives, sitemap URL), Design DNA (site name, URL for llms.txt)
 - **Output to:** IndexNow endpoint (Route Handler or Astro endpoint), AI-aware robots.txt rules, llms.txt file, webmaster tools verification files

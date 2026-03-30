@@ -374,7 +374,7 @@ When creating Spline scenes for a Genorah project, follow these DNA-aligned guid
 
 - **Input from:** Section PLAN.md specifies Spline scene requirements (URL, interaction type, DNA objects)
 - **Output to:** Built section with embedded Spline scene, DNA-mapped colors, interaction handlers
-- **Builder type:** Standard section-builder or 3D specialist (when scene is the section's primary element)
+- **Builder type:** Standard builder or 3D specialist (when scene is the section's primary element)
 
 ## Layer 4: Anti-Patterns
 

@@ -100,7 +100,7 @@ Quick reference for agents generating OG image markup:
 
 ### Pipeline Connection
 
-- **Referenced by:** `build-orchestrator` at Wave 0 (OG route scaffold), `section-planner` (OG template type assignment in PLAN.md)
+- **Referenced by:** `orchestrator` at Wave 0 (OG route scaffold), `planner` (OG template type assignment in PLAN.md)
 - **Consumed at:** `/gen:execute` Wave 0 (scaffold OG route files and root-level default), Wave 2+ (per-section page-specific OG images when needed)
 - **Input from:** `DESIGN-DNA.md` (colors, display font, signature element), `seo-meta` skill (meta tag wiring for non-file-convention approaches)
 - **Output to:** `opengraph-image.tsx` files (Next.js) or `og/[slug].png.ts` endpoints (Astro)

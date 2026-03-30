@@ -71,7 +71,7 @@ Result stored in `DESIGN-DNA.md` during `/gen:start-project`.
 
 ### Pipeline Connection
 
-- **Referenced by:** section-planner, section-builder during build waves
+- **Referenced by:** planner, builder during build waves
 - **Consumed at:** `/gen:start-project` (framework detection), `/gen:execute` (project structure, all builder output)
 - **Depends on:** `design-dna` (token values), `tailwind-system` (CSS configuration), `dark-light-mode` (theme integration)
 
@@ -557,7 +557,7 @@ Archetypes do NOT change Next.js structural patterns. They change the VALUES flo
 
 - **Input from:** `DESIGN-DNA.md` (framework detection result, token values), `MASTER-PLAN.md` (page structure)
 - **Output to:** Project scaffold (Wave 0), all subsequent builder output follows these structural patterns
-- **Used by:** build-orchestrator (scaffold generation), section-builder (component patterns), section-planner (route structure)
+- **Used by:** orchestrator (scaffold generation), builder (component patterns), planner (route structure)
 
 ### Related Skills
 

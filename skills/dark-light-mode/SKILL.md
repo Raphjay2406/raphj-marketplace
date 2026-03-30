@@ -56,7 +56,7 @@ The same 12 token NAMES map to different VALUES per mode. CSS custom properties 
 
 ### Pipeline Connection
 
-- **Referenced by:** build-orchestrator during scaffold generation (Wave 0), section-builders for component styling
+- **Referenced by:** orchestrator during scaffold generation (Wave 0), builders for component styling
 - **Consumed at:** design-system scaffold produces both palette sets from DNA; toggle component built in Wave 1 (navigation)
 - **Input from:** DESIGN-DNA.md provides both palettes; design-archetypes provides transition personality
 - **Output to:** Every component uses DNA tokens that automatically switch between modes

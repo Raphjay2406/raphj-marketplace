@@ -24,7 +24,7 @@ version: "2.0.0"
 
 ### Decision Tree
 
-- **REST API v3 (headless, recommended)** -- Full control over frontend. RESTful endpoints for products, orders, customers, variations. Works with Next.js, Astro, React/Vite. Best for award-caliber custom UIs. Use this for all Modulo projects.
+- **REST API v3 (headless, recommended)** -- Full control over frontend. RESTful endpoints for products, orders, customers, variations. Works with Next.js, Astro, React/Vite. Best for award-caliber custom UIs. Use this for all Genorah projects.
 - **WPGraphQL + WooGraphQL** -- GraphQL layer on top of WooCommerce via plugins. Better DX for complex queries (e.g., product + reviews + related in one request). Requires WPGraphQL and WooGraphQL plugins installed on the WordPress backend. Use when the client already has WPGraphQL set up or the data model is deeply relational.
 - **CoCart REST API (cart management)** -- Extends WooCommerce REST API with headless cart endpoints. Handles session tokens, guest carts, and cart persistence without cookies. Required for headless cart operations since WooCommerce core cart API relies on PHP sessions.
 - **Redirect checkout** -- Simplest checkout approach: build headless catalog + cart, then redirect to WooCommerce's native checkout page for payment. Use when PCI compliance or payment gateway compatibility is a concern.
@@ -42,11 +42,11 @@ version: "2.0.0"
 
 ### Pipeline Connection
 
-- **Auto-detected:** When e-commerce or shopping is mentioned during `/modulo:start-project`, ask: "Shopify Storefront, WooCommerce, or custom backend?"
+- **Auto-detected:** When e-commerce or shopping is mentioned during `/gen:start-project`, ask: "Shopify Storefront, WooCommerce, or custom backend?"
 - **Referenced by:** researcher agent during discovery (store audit, product count, category structure, variation model)
-- **Referenced by:** section-builder during product page, category, and cart section builds
-- **Consumed at:** `/modulo:execute` wave 0 (API proxy setup), wave 1 (cart provider), wave 2+ (product pages, categories)
-- **Related commands:** `/modulo:plan-dev` scopes WooCommerce data requirements per section
+- **Referenced by:** builder during product page, category, and cart section builds
+- **Consumed at:** `/gen:execute` wave 0 (API proxy setup), wave 1 (cart provider), wave 2+ (product pages, categories)
+- **Related commands:** `/gen:plan` scopes WooCommerce data requirements per section
 
 ## Layer 2: Award-Winning Examples
 

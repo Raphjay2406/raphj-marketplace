@@ -3,7 +3,7 @@ name: polish-pass
 category: core
 description: "Defines the end-of-build polish protocol: universal micro-detail checklist, archetype-specific addenda with FORBIDDEN items, and creative license boundaries for the polisher agent."
 triggers: ["polish", "micro-details", "hover states", "textures", "finishing touches", "micro-interactions", "polish pass", "deep polish"]
-used_by: ["polisher", "quality-reviewer", "section-builder"]
+used_by: ["polisher", "quality-reviewer", "builder"]
 version: "2.0.0"
 ---
 
@@ -13,7 +13,7 @@ version: "2.0.0"
 
 The difference between a 6.0 and 8.0+ Awwwards site is micro-details -- noise textures, gradient borders, custom selection colors, hover micro-interactions, cursor effects, text balance, animation pairing, stagger choreography. These details require **page-level cohesion** that per-section building cannot achieve.
 
-Polish applied during individual section builds (by section-builders) covers basic requirements. But stagger timing across sections, shadow consistency across the full page, hover state variety, texture density rhythm, and signature element prominence all need a dedicated pass where the polisher sees the **complete page**.
+Polish applied during individual section builds (by builders) covers basic requirements. But stagger timing across sections, shadow consistency across the full page, hover state variety, texture density rhythm, and signature element prominence all need a dedicated pass where the polisher sees the **complete page**.
 
 ### When It Runs
 

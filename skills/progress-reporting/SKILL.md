@@ -10,19 +10,19 @@ version: "2.0.0"
 
 ### When to Use
 
-This skill is **always active** during every build execution. It defines the multi-level reporting protocol that the build-orchestrator and section-builder agents follow to keep users informed and maintain machine-readable state.
+This skill is **always active** during every build execution. It defines the multi-level reporting protocol that the orchestrator and builder agents follow to keep users informed and maintain machine-readable state.
 
 Progress reporting fires at four tiers. Each tier has a different format, location, and trigger condition:
 
 | Event | Tier | Format | Location | Who Reports |
 |-------|------|--------|----------|-------------|
-| Task completes | Tier 1 (task) | 1-line table row | STATE.md task table | section-builder |
-| Task fails | Tier 1 (task) | 1-line table row + link | STATE.md + FAILURE-LOG.md | section-builder |
-| Section complete | Tier 2 (section) | Compact inline highlight | Conversation | build-orchestrator |
-| Section fails | Tier 2 (section) | Inline alert + link | Conversation | build-orchestrator |
-| Wave complete | Tier 3 (wave) | Detailed summary block | Conversation + STATE.md | build-orchestrator |
-| Build complete | Tier 4 (milestone) | Full report with scores | Conversation + STATE.md | build-orchestrator |
-| User requests status | Any | Current STATE.md task table | Conversation | build-orchestrator |
+| Task completes | Tier 1 (task) | 1-line table row | STATE.md task table | builder |
+| Task fails | Tier 1 (task) | 1-line table row + link | STATE.md + FAILURE-LOG.md | builder |
+| Section complete | Tier 2 (section) | Compact inline highlight | Conversation | orchestrator |
+| Section fails | Tier 2 (section) | Inline alert + link | Conversation | orchestrator |
+| Wave complete | Tier 3 (wave) | Detailed summary block | Conversation + STATE.md | orchestrator |
+| Build complete | Tier 4 (milestone) | Full report with scores | Conversation + STATE.md | orchestrator |
+| User requests status | Any | Current STATE.md task table | Conversation | orchestrator |
 
 **Decision tree for tier selection:**
 
@@ -40,9 +40,9 @@ If a task **starts** but has not yet completed, do NOT report it in conversation
 
 ### Pipeline Connection
 
-- **Referenced by:** `build-orchestrator` agent during wave orchestration -- consumes Tier 2/3/4 templates
-- **Referenced by:** `build-orchestrator` agent during build execution -- manages STATE.md updates
-- **Consumed by:** `section-builder` agents -- contribute task-level status via SUMMARY.md frontmatter
+- **Referenced by:** `orchestrator` agent during wave orchestration -- consumes Tier 2/3/4 templates
+- **Referenced by:** `orchestrator` agent during build execution -- manages STATE.md updates
+- **Consumed by:** `builder` agents -- contribute task-level status via SUMMARY.md frontmatter
 - **Consumed at:** Every task completion, section completion, wave completion, build completion
 - **Triggers review gate:** After every wave completion -- builds pause until user approves
 
@@ -105,11 +105,11 @@ auto_fixes: 0
 ---
 ```
 
-The build-orchestrator reads each builder's SUMMARY.md and batches the updates into STATE.md.
+The orchestrator reads each builder's SUMMARY.md and batches the updates into STATE.md.
 
 ### Pattern 2: Section Completion Highlight (Tier 2)
 
-When a section completes (all tasks done + SUMMARY.md written), the build-orchestrator reports a **compact one-liner** in conversation. This is the only per-section conversation output.
+When a section completes (all tasks done + SUMMARY.md written), the orchestrator reports a **compact one-liner** in conversation. This is the only per-section conversation output.
 
 **Standard completion format:**
 
@@ -150,7 +150,7 @@ Section 06-cta complete (4/5 tasks, 1 skipped, 7m) -- PIVOT beat, centered stack
 
 ### Pattern 3: Wave Summary Template (Tier 3)
 
-After **all sections** in a wave complete, the build-orchestrator produces a detailed wave summary. This is the user's **review gate** -- builds pause here until the user approves.
+After **all sections** in a wave complete, the orchestrator produces a detailed wave summary. This is the user's **review gate** -- builds pause here until the user approves.
 
 ```markdown
 ### Wave 2 Complete
@@ -179,9 +179,9 @@ After **all sections** in a wave complete, the build-orchestrator produces a det
 **Rules for the wave summary:**
 
 1. **Always include quality checks:** Anti-slop score, DNA compliance, layout diversity. These three are mandatory on every wave summary.
-2. **Always include canary check results.** The canary check is performed by the build-orchestrator before writing the wave summary (see build-orchestrator agent protocol).
+2. **Always include canary check results.** The canary check is performed by the orchestrator before writing the wave summary (see orchestrator agent protocol).
 3. **Always show next wave preview.** Users need to know what comes next before approving.
-4. **Always end with "Awaiting user approval".** This is a HARD gate. The build-orchestrator does NOT proceed to the next wave until the user explicitly approves.
+4. **Always end with "Awaiting user approval".** This is a HARD gate. The orchestrator does NOT proceed to the next wave until the user explicitly approves.
 5. **Anti-slop score tier labels:** Pass (25+), Strong (28+), SOTD-Ready (30+), Honoree-Level (33+). Use the tier label in parentheses after the score.
 6. **If any section failed:** Include a failure summary section before the quality checks. Link to FAILURE-LOG.md for details.
 7. **If canary check degraded (3-4/5):** Add `Canary: DEGRADING -- recommend new session after this wave` warning.
@@ -314,7 +314,7 @@ If browser automation tools are not available:
 
 ### Pattern 6: STATE.md Budget Management
 
-STATE.md has a **100-line budget** (established in the build-orchestrator agent protocol). Progress reporting must stay within this budget by using compact formats and scoped data.
+STATE.md has a **100-line budget** (established in the orchestrator agent protocol). Progress reporting must stay within this budget by using compact formats and scoped data.
 
 **Line budget allocation during active builds:**
 
@@ -380,7 +380,7 @@ Full failure details live in `.planning/genorah/FAILURE-LOG.md`:
 
 ### Pattern 7: Review Gate Protocol
 
-Review gates pause execution after every wave for user approval. This is a HARD requirement -- the build-orchestrator never auto-proceeds.
+Review gates pause execution after every wave for user approval. This is a HARD requirement -- the orchestrator never auto-proceeds.
 
 **Review gate flow:**
 
@@ -405,7 +405,7 @@ USER DECISION (one of):
     +-- Specific feedback --> Apply changes, re-summarize, ask again
     |
     v
-Once approved: build-orchestrator spawns Wave N+1 builders
+Once approved: orchestrator spawns Wave N+1 builders
 ```
 
 **What counts as user approval:**
@@ -471,7 +471,7 @@ The only archetype-influenced aspect is the **anti-slop score** in wave summarie
 
 **Why it's harmful:** Fills the conversation with noise, consuming tokens that should be available for building. Users don't need task-level detail in real-time -- they need to know if the wave succeeded.
 
-**Instead:** Per-task updates go to STATE.md only (machine-readable table rows). Conversation gets per-section one-liners (Tier 2). Users who want task-level detail can ask for current STATUS and the build-orchestrator shows the STATE.md task table.
+**Instead:** Per-task updates go to STATE.md only (machine-readable table rows). Conversation gets per-section one-liners (Tier 2). Users who want task-level detail can ask for current STATUS and the orchestrator shows the STATE.md task table.
 
 ### Anti-Pattern 2: Mid-Build Automatic Screenshots
 
@@ -495,7 +495,7 @@ The only archetype-influenced aspect is the **anti-slop score** in wave summarie
 
 **Why it's harmful:** Removes user oversight at the most important decision point. Users may want to adjust direction, fix issues, or stop after seeing wave results. Auto-proceeding means changes compound across waves before the user can intervene.
 
-**Instead:** Every wave summary ends with "Awaiting user approval to proceed to Wave {N+1}." The build-orchestrator STOPS and WAITS. No next-wave spawning until explicit user approval. This is a HARD gate -- no configuration option to disable it.
+**Instead:** Every wave summary ends with "Awaiting user approval to proceed to Wave {N+1}." The orchestrator STOPS and WAITS. No next-wave spawning until explicit user approval. This is a HARD gate -- no configuration option to disable it.
 
 ### Anti-Pattern 5: Accumulating Previous Wave Data
 
@@ -515,11 +515,11 @@ The only archetype-influenced aspect is the **anti-slop score** in wave summarie
 
 ### Anti-Pattern 7: Reporting on Behalf of Builders
 
-**What goes wrong:** The build-orchestrator monitors builder progress in real-time and reports each builder's intermediate state to the user. "Builder for 03-hero is on task 3 of 5. Builder for 04-features just started task 2..."
+**What goes wrong:** The orchestrator monitors builder progress in real-time and reports each builder's intermediate state to the user. "Builder for 03-hero is on task 3 of 5. Builder for 04-features just started task 2..."
 
-**Why it's harmful:** Creates a monitoring overhead loop. The build-orchestrator should be managing the wave, not live-narrating builder progress. Intermediate states change rapidly and aren't actionable for the user.
+**Why it's harmful:** Creates a monitoring overhead loop. The orchestrator should be managing the wave, not live-narrating builder progress. Intermediate states change rapidly and aren't actionable for the user.
 
-**Instead:** Builders work autonomously. The build-orchestrator only reports when a builder finishes (section-complete one-liner) or fails (failure alert). No intermediate progress narration. Users who want real-time detail can check STATE.md task table (which builders update via SUMMARY.md after completion).
+**Instead:** Builders work autonomously. The orchestrator only reports when a builder finishes (section-complete one-liner) or fails (failure alert). No intermediate progress narration. Users who want real-time detail can check STATE.md task table (which builders update via SUMMARY.md after completion).
 
 ---
 

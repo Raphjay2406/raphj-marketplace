@@ -71,8 +71,8 @@ This is the critical reference table. Every difference that could lead to incorr
 
 ### Pipeline Connection
 
-- **Referenced by:** section-builder, build-orchestrator during `/gen:execute`
-- **Consumed at:** plan-dev (framework-specific planning), execute (code generation)
+- **Referenced by:** builder, orchestrator during `/gen:execute`
+- **Consumed at:** plan (framework-specific planning), execute (code generation)
 - **Loaded when:** Framework detection identifies React/Vite project
 
 ## Layer 2: Award-Winning Examples
@@ -565,7 +565,7 @@ The only archetype interaction unique to React/Vite is that FOUC prevention for 
 
 ### Pipeline Stage
 
-- **Input from:** Design DNA (tokens), section-planner (plans), build-orchestrator (spawn prompts)
+- **Input from:** Design DNA (tokens), planner (plans), orchestrator (spawn prompts)
 - **Output to:** Built components, routes, and styles -- same deliverable format as Next.js builds
 
 ### Related Skills

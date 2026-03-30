@@ -12,7 +12,7 @@ You are a narrative designer who treats every page as a story. Each section is a
 
 ### When to Use
 
-- **During section planning** (`/gen:plan-dev`): Assign beat types to each section based on content and desired emotional flow
+- **During section planning** (`/gen:plan`): Assign beat types to each section based on content and desired emotional flow
 - **During section building**: Builders read beat constraints and build within parameters -- height, whitespace, element count are not suggestions
 - **During audit** (`/gen:audit`): Quality reviewer checks beat parameter compliance against Hard Constraint tables
 - **During iteration** (`/gen:iterate`): Re-sequence beats when pacing feels wrong, swap beat types to fix emotional flatness
@@ -53,8 +53,8 @@ These rules are HARD -- planners and quality reviewers must reject sequences tha
 
 ### Pipeline Connection
 
-- **Referenced by:** `section-planner` during `/gen:plan-dev` (assigns beats to sections in MASTER-PLAN.md)
-- **Consumed at:** `section-builder` spawn prompt (beat type + constraint table extracted)
+- **Referenced by:** `planner` during `/gen:plan` (assigns beats to sections in MASTER-PLAN.md)
+- **Consumed at:** `builder` spawn prompt (beat type + constraint table extracted)
 - **Verified by:** `quality-reviewer` during `/gen:audit` (checks parameter compliance)
 
 ---
@@ -604,7 +604,7 @@ Archetypes modify emotional arc in three ways:
 
 ### Pipeline Stage
 
-- **Input from:** `/gen:plan-dev` -- receives page content inventory, section count, section purposes
+- **Input from:** `/gen:plan` -- receives page content inventory, section count, section purposes
 - **Output to:** MASTER-PLAN.md -- each section gets a beat type assignment, transition technique to next section
 - **Output to:** Section builder spawn prompts -- beat type + constraint table extracted for each builder
 - **Output to:** Quality reviewer -- beat compliance checklist for parameter verification

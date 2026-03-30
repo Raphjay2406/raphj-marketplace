@@ -88,7 +88,7 @@ Context7 is an MCP server that provides live API documentation lookup via two to
 | **design-researcher** | YES (primary) | Track 3 Component Library research, any library-specific research |
 | **specialist agents** | YES | For complex or niche library APIs where training data may be stale |
 | **quality-reviewer** | YES | For verifying that generated code uses current API patterns |
-| **section-builder** | NO | Too much latency for fast builds; relies on pre-researched patterns in skills |
+| **builder** | NO | Too much latency for fast builds; relies on pre-researched patterns in skills |
 
 **Explicit Triggers for Lookup:**
 
@@ -120,10 +120,10 @@ Agents should invoke Context7 when any of these conditions are met:
 
 ### Pipeline Connection
 
-- **Referenced by:** section-builder (when generating forms and API integrations), specialist agents (when integrating external services mid-build)
+- **Referenced by:** builder (when generating forms and API integrations), specialist agents (when integrating external services mid-build)
 - **Context7 access:** design-researcher (Track 3 Component Library), specialist agents, quality-reviewer
 - **Consumed at:** `/gen:execute` Wave 2+ for form sections and API integration sections
-- **Input from:** `/gen:start-project` (project requirements identify needed integrations), `/gen:plan-dev` (sections flagged for API integration)
+- **Input from:** `/gen:start-project` (project requirements identify needed integrations), `/gen:plan` (sections flagged for API integration)
 - **Output to:** Server actions, API route handlers, API endpoints, utility libraries, `.env.example`
 
 ### Timeout Defaults
@@ -1511,7 +1511,7 @@ Agents should adapt the static strings in the `useActionState` component (Patter
 
 ### Pipeline Stage
 
-- **Input from:** `/gen:start-project` discovers which external services are needed (CRM platform, email provider, webhook sources). `/gen:plan-dev` section planner flags sections requiring API integration (contact forms, newsletter signups, webhook receivers). Design DNA provides brand tokens for email templates and form messaging voice.
+- **Input from:** `/gen:start-project` discovers which external services are needed (CRM platform, email provider, webhook sources). `/gen:plan` section planner flags sections requiring API integration (contact forms, newsletter signups, webhook receivers). Design DNA provides brand tokens for email templates and form messaging voice.
 - **Output to:** Server actions (`app/actions/*.ts`), route handlers (`app/api/**/*.ts`), Astro endpoints (`src/pages/api/*.ts`), utility libraries (`lib/api/*.ts`, `lib/crm/*.ts`, `lib/email/*.ts`, `lib/webhooks/*.ts`, `lib/security/*.ts`), and `.env.example` file.
 - **Pipeline position:** Wave 0 scaffold includes `.env.example` generation and utility library setup (`lib/api/client.ts`, `lib/env.ts`). Wave 1 shared UI may include the Turnstile widget component. Wave 2+ sections implement specific form submissions, webhook handlers, and API integrations.
 - **Context7 integration:** Available to design-researcher (Track 3 Component Library) and specialist agents during build for API documentation freshness checks. Quality-reviewer uses Context7 post-build to verify API pattern currency against current SDK versions.

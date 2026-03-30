@@ -63,7 +63,7 @@ These patterns work in BOTH Astro 5 (current stable) and Astro 6 (imminent stabl
 
 ### Pipeline Connection
 
-- **Referenced by:** section-planner, section-builder during build waves
+- **Referenced by:** planner, builder during build waves
 - **Consumed at:** `/gen:start-project` (framework detection), `/gen:execute` (project structure, all builder output)
 - **Depends on:** `design-dna` (token values), `tailwind-system` (CSS configuration), `dark-light-mode` (theme integration)
 
@@ -504,7 +504,7 @@ Archetypes primarily affect three things in Astro projects:
 
 - **Input from:** `DESIGN-DNA.md` (framework detection, token values), `MASTER-PLAN.md` (page structure)
 - **Output to:** Project scaffold (Wave 0), all subsequent builder output follows these structural patterns
-- **Used by:** build-orchestrator (scaffold generation), section-builder (component and island patterns), section-planner (route and content structure)
+- **Used by:** orchestrator (scaffold generation), builder (component and island patterns), planner (route and content structure)
 
 ### Related Skills
 

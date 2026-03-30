@@ -24,8 +24,8 @@ version: "2.0.0"
 
 ### Decision Tree
 
-- **Storefront API (headless, recommended)** -- Full control over frontend. GraphQL API for products, collections, cart, checkout. Works with Next.js, Astro, React/Vite. Best for award-caliber custom UIs. Use this for all Modulo projects.
-- **Hydrogen (Shopify's React framework)** -- Shopify's own React meta-framework built on Remix. Opinionated routing and data loading. Use only if client explicitly requires Hydrogen or needs Shopify's managed hosting (Oxygen). Not recommended for Modulo projects -- limits design freedom.
+- **Storefront API (headless, recommended)** -- Full control over frontend. GraphQL API for products, collections, cart, checkout. Works with Next.js, Astro, React/Vite. Best for award-caliber custom UIs. Use this for all Genorah projects.
+- **Hydrogen (Shopify's React framework)** -- Shopify's own React meta-framework built on Remix. Opinionated routing and data loading. Use only if client explicitly requires Hydrogen or needs Shopify's managed hosting (Oxygen). Not recommended for Genorah projects -- limits design freedom.
 - **Buy SDK (lightweight embed)** -- JavaScript SDK that renders Shopify buy buttons and cart widget into any page. Use for blogs, portfolios, or content sites that need a minimal "buy this item" capability without a full storefront. No custom UI control.
 - **Admin API** -- Server-side only. For order management, inventory sync, discount creation, customer data writes. Never expose to the client. Use in API routes or server actions.
 
@@ -39,11 +39,11 @@ version: "2.0.0"
 
 ### Pipeline Connection
 
-- **Auto-detected:** When e-commerce or shopping is mentioned during `/modulo:start-project`, ask: "Shopify Storefront, WooCommerce, or custom backend?"
+- **Auto-detected:** When e-commerce or shopping is mentioned during `/gen:start-project`, ask: "Shopify Storefront, WooCommerce, or custom backend?"
 - **Referenced by:** researcher agent during discovery (store audit, product count, collection structure)
-- **Referenced by:** section-builder during product page, collection, and cart section builds
-- **Consumed at:** `/modulo:execute` wave 0 (API client setup), wave 1 (cart provider), wave 2+ (product pages, collections)
-- **Related commands:** `/modulo:plan-dev` scopes Shopify data requirements per section
+- **Referenced by:** builder during product page, collection, and cart section builds
+- **Consumed at:** `/gen:execute` wave 0 (API client setup), wave 1 (cart provider), wave 2+ (product pages, collections)
+- **Related commands:** `/gen:plan` scopes Shopify data requirements per section
 
 ## Layer 2: Award-Winning Examples
 

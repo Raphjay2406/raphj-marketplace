@@ -51,7 +51,7 @@ Never. If you think you don't need accessibility, you are wrong.
 
 ### Pipeline Connection
 
-- **Referenced by:** section-builder during build (bake accessibility into every component)
+- **Referenced by:** builder during build (bake accessibility into every component)
 - **Referenced by:** quality-reviewer during verification (audit against these standards)
 - **Referenced by:** creative-director during pre-build review (ensure focus indicators match archetype)
 - **Consumed at:** Every pipeline stage. This skill is the accessibility authority for the entire system
