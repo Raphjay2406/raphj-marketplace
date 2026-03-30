@@ -157,6 +157,88 @@ Dashboard: .planning/genorah/vault/_index.md
 Mode: [full | scores | decisions]
 ```
 
+## Export Implementation Details
+
+### 1. Read All Artifacts
+
+Read the following files from `.planning/genorah/` (skip silently if a file does not exist):
+
+- `CONTEXT.md`
+- `STATE.md`
+- `DESIGN-DNA.md`
+- `BRAINSTORM.md`
+- `MASTER-PLAN.md`
+- `CONTENT.md`
+- `DECISIONS.md`
+- `DESIGN-SYSTEM.md`
+
+### 2. Read All Section Artifacts
+
+Glob `.planning/genorah/sections/*/` and for each section directory read:
+
+- `PLAN.md`
+- `SUMMARY.md`
+- `GAP-FIX.md`
+- `CONSISTENCY-FIX.md`
+
+### 3. Transform Each Artifact
+
+For every artifact read above, apply these transformations before writing:
+
+1. Add Dataview-compatible frontmatter at the top:
+   ```yaml
+   ---
+   name: [artifact name]
+   type: [context | state | design-dna | brainstorm | master-plan | content | decisions | design-system | section-plan | section-summary | section-gap-fix | section-consistency-fix]
+   status: [extracted from content or "active"]
+   tags: [genorah, artifact-type]
+   ---
+   ```
+2. Convert cross-artifact references to `[[wiki-links]]`:
+   - Any reference to another artifact filename (e.g. `DESIGN-DNA.md`) becomes `[[Design-DNA]]`.
+   - Section names used in MASTER-PLAN become `[[Sections/{section-name}/Plan]]`.
+3. Add `#tag` annotations inline where relevant:
+   - Quality scores: append `#quality` to score lines.
+   - Decisions: append `#decision` to lines that record a resolved choice.
+   - Warnings or blockers: append `#blocker`.
+
+### 4. Write to Vault
+
+Write all transformed artifacts to `.planning/genorah/vault/` following the path map in the **Full Export** section above.
+
+### 5. Generate `_index.md` Dashboard
+
+Write `.planning/genorah/vault/_index.md` with the following Dataview blocks:
+
+**Sections table** (name, status, beat, score):
+```dataview
+TABLE status, beat, score
+FROM "vault/Sections"
+SORT file.name ASC
+```
+
+**Quality scores table**:
+```dataview
+TABLE score, tier, date
+FROM "vault/Quality"
+SORT date DESC
+```
+
+**Decisions list**:
+```dataview
+LIST
+FROM "vault/Decisions"
+SORT file.ctime DESC
+```
+
+### 6. Mode Behavior
+
+| Mode | Action |
+|------|--------|
+| `--full` | Run steps 1–5: export all artifacts, all sections, generate dashboard |
+| `--scores` | Run steps 1–5 scoped to `audit/` artifacts and per-section SUMMARY.md quality data only; write to `vault/Quality/` |
+| `--decisions` | Run steps 1–5 scoped to BRAINSTORM.md, DESIGN-DNA.md, and all DISCUSSION-{phase}.md files only; write to `vault/Decisions/` |
+
 ## Rules
 
 1. Export is additive -- never modify source artifacts.

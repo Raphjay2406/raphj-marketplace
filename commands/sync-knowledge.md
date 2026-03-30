@@ -96,6 +96,55 @@ Skills synced: [N]
 Vault: [path]
 ```
 
+## Sync Implementation Details
+
+### 1. Detect Vault Path
+
+Read `.claude/genorah.local.md` and extract `vault_path` from YAML frontmatter:
+
+```yaml
+vault_path: /path/to/obsidian/vault
+```
+
+If the field is missing or the file does not exist, output: "Vault not configured. Add `vault_path: /path` to `.claude/genorah.local.md`." STOP.
+
+### 2. Plugin → Obsidian Direction
+
+For each skill in `skills/*/SKILL.md`:
+
+1. Read `SKILL.md` and parse YAML frontmatter (name, description, tier, triggers, version).
+2. Transform frontmatter to Obsidian format:
+   - Add `tags` array derived from tier and triggers.
+   - Add `type: skill` field.
+   - Preserve name, description, version.
+3. Convert internal cross-skill references to `[[wiki-links]]`:
+   - Pattern: `skills/{skill-name}/SKILL.md` → `[[{skill-name}]]`
+4. Convert constraint tables to Dataview-queryable format:
+   - Add inline Dataview fields: `parameter:: value`, `min:: value`, `max:: value`
+   - Wrap constraint rows in callouts: `> [!info] Constraint: {parameter}`
+5. Write transformed note to `{vault_path}/Knowledge/{tier}/{skill-name}.md`.
+6. After all skills: output "N skills exported to Obsidian".
+
+### 3. Obsidian → Plugin Direction
+
+For each note in `{vault_path}/Knowledge/`:
+
+1. Check file modification date vs corresponding `skills/{skill-name}/SKILL.md` modification date.
+2. If Obsidian note is newer:
+   - Read note and extract content (strip Obsidian callout wrappers, restore layer headings).
+   - Convert `[[wiki-links]]` back to `skills/{skill-name}/SKILL.md` references.
+   - Restore YAML frontmatter from Obsidian frontmatter (drop `tags`, `type`; restore original fields).
+   - Conflict resolution rules:
+     - Obsidian wins for prose content (layer body text).
+     - Plugin wins for frontmatter fields and structural headings.
+   - Write updated content to `skills/{skill-name}/SKILL.md`.
+3. If plugin skill is newer or dates are equal: skip without modification.
+4. After all notes: output "M skills imported from Obsidian, K conflicts resolved".
+
+### 4. Both Direction
+
+Run plugin → Obsidian first (step 2), then run Obsidian → plugin (step 3). The two-pass approach ensures the vault has the latest plugin content before checking for vault-side edits.
+
 ## Rules
 
 1. Never overwrite without checking modification dates.
