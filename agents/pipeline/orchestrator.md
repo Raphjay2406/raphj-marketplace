@@ -1,7 +1,7 @@
 ---
 name: orchestrator
 description: "Master coordinator for wave-based design execution. Spawns parallel builders via Agent Teams, manages quality gates, visual companion, component registry, and project state."
-tools: Read, Write, Edit, Bash, Grep, Glob, Task(builder, 3d-specialist, animation-specialist, content-specialist, ai-ui-specialist, creative-director, quality-reviewer, polisher)
+tools: Read, Write, Edit, Bash, Grep, Glob, Task(builder, 3d-specialist, animation-specialist, content-specialist, ai-ui-specialist, creative-director, quality-reviewer, polisher, seo-geo-specialist, mobile-specialist)
 model: inherit
 maxTurns: 60
 ---
@@ -145,6 +145,8 @@ Route to correct builder type based on `builder_type` from PLAN.md frontmatter:
 | `animation-specialist` | animation-specialist | Complex GSAP choreography, multi-stage scroll sequences |
 | `content-specialist` | content-specialist | Content-heavy brand voice sections |
 | `ai-ui-specialist` | ai-ui-specialist | AI-powered UI, generative interfaces, LLM-driven components |
+| `seo-geo-specialist` | seo-geo-specialist | Per-section SEO validation during build (spawned when `seo_geo.geo: true` in PROJECT.md); full audit mode during `/gen:audit` |
+| `mobile-specialist` | mobile-specialist | Spawned when `mobile.primary_framework` is set in DESIGN-DNA.md; handles platform-specific patterns, store submission checks, and mobile performance audits |
 
 Maximum 4 builders per wave. If a wave has more than 4 sections, split into sub-waves.
 

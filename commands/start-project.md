@@ -61,14 +61,36 @@ Scan the user's answers for integration signals and ask targeted follow-ups:
 | Mentions real estate | "Do you use Propstack?" |
 | Mentions AI features | "Chat interface, AI search, content generation, or dashboard?" |
 
-### Step 6: Compatibility and device questions
+### Step 6: Mobile detection
+
+Scan answers for mobile/app signals and ask targeted follow-ups:
+
+- Mentions "app" or "mobile" or "native" -> "Which platforms? iOS, Android, or both?"
+- iOS selected -> "Swift/SwiftUI (native) or cross-platform (React Native/Expo/Flutter)?"
+- Android selected -> "Kotlin/Compose (native) or cross-platform?"
+- Cross-platform selected -> "React Native (bare), Expo (managed), or Flutter?"
+- Multiple frameworks mentioned -> "Primary framework for development?"
+- Always for mobile -> "Target store submission? (App Store / Play Store / Both)"
+
+Store answers in PROJECT.md under a `mobile` section. Propagate to DESIGN-DNA.md as a `mobile` extension block with `primary_framework` and `store_targets` fields.
+
+### Step 6b: SEO/GEO detection
+
+For all web projects, ask:
+
+- "Will this site need AI search visibility (GEO)? (Y/N)"
+- If yes -> "Target AI platforms? (ChatGPT, Perplexity, Google AI Overviews, all)"
+
+Store answers in PROJECT.md under a `seo_geo` section. A `geo: true` flag activates GEO patterns in the content-specialist and builder during build phase.
+
+### Step 7: Compatibility and device questions
 
 Always ask these two questions:
 
 1. "What browser support? (Modern / Broad / Legacy / Maximum)" -- sets compatibility tier
 2. "Primary device? (Desktop-first / Mobile-first / Equal)"
 
-### Step 7: Soft approval and artifact creation
+### Step 8: Soft approval and artifact creation
 
 Present a condensed brief:
 "Here's what I'm working with: [brief summary]. I'm going to research your space and come back with a creative direction. Sound right?"
@@ -80,6 +102,8 @@ Write `.planning/genorah/PROJECT.md` with:
 - Integration configuration (detected integrations + user responses)
 - Compatibility tier
 - Device priority
+- `mobile` section: platform targets, primary_framework, store_targets (if mobile project)
+- `seo_geo` section: geo flag, target AI platforms (if applicable)
 
 TodoWrite -- mark Phase 1 complete.
 
@@ -205,10 +229,11 @@ TodoWrite -- mark Phase 4 complete.
 1. Never skip discovery. Understanding prevents rework.
 2. Research before brainstorming. Directions must be informed by real design intelligence.
 3. Always detect integrations from user answers -- do not skip the signal scan.
-4. Always ask browser support and device priority questions.
-5. Use TodoWrite to show progress through all 4 phases.
-6. Push visual companion screens during creative direction -- do not skip them.
-7. Discovery should feel like talking to a creative director, not filling out a form.
-8. All domain logic (archetypes, scoring, DNA format) belongs in agents and skills, not this command.
-9. Track state. Update STATE.md on completion.
-10. NEVER suggest the next command -- the hook handles routing.
+4. Always ask browser support and device priority questions (Step 7).
+5. Always run mobile detection (Step 6) and SEO/GEO detection (Step 6b) for every project.
+6. Use TodoWrite to show progress through all 4 phases.
+7. Push visual companion screens during creative direction -- do not skip them.
+8. Discovery should feel like talking to a creative director, not filling out a form.
+9. All domain logic (archetypes, scoring, DNA format) belongs in agents and skills, not this command.
+10. Track state. Update STATE.md on completion.
+11. NEVER suggest the next command -- the hook handles routing.

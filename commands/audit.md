@@ -40,6 +40,8 @@ Parse `$ARGUMENTS`:
 
 No arguments = full comprehensive audit across all categories and sections.
 
+Tracks F (SEO/GEO), G (Store Submission), and H (Mobile Performance) are auto-activated based on PROJECT.md flags — they do not require explicit arguments.
+
 ## Quick Mode
 
 If `--quick` or `-q`: run only the anti-slop 35-point gate. This is the minimum quality check. Skip all other audit tracks. Jump to Report Synthesis.
@@ -84,6 +86,30 @@ Use **Agent tool** to spawn parallel quality auditors. Each agent focuses on one
 - Capture screenshots at 375px, 768px, 1024px, and 1440px
 - Visual evidence for all findings
 - Cross-breakpoint consistency verification
+
+### Track F: SEO/GEO Audit (if `seo_geo.geo: true` in PROJECT.md)
+
+- Spawn `seo-geo-specialist` in audit mode
+- Check: structured data markup, meta tags, Open Graph, semantic HTML, content answer-density for AI crawlers
+- Check: GEO patterns — clear question-answer blocks, entity clarity, citation-worthy content structure
+- Check: target AI platform alignment (ChatGPT, Perplexity, Google AI Overviews)
+- Produces `audit/SEO-GEO-REPORT.md`
+- Visual companion: push `seo-geo-report.html` (if companion running)
+
+### Track G: Store Submission Audit (if `mobile.store_targets` set in PROJECT.md)
+
+- Spawn `mobile-specialist` with store-submission skill
+- Check: App Store / Play Store metadata completeness, screenshot specs, content rating requirements
+- Check: app privacy declarations, entitlement justifications, guideline compliance
+- Produces `audit/STORE-SUBMISSION-REPORT.md`
+- Visual companion: push `store-submission-report.html` (if companion running)
+
+### Track H: Mobile Performance Audit (if mobile project)
+
+- Bundle size measurement: check for oversized dependencies, unoptimized assets
+- Anti-pattern scan: bridge calls in hot paths, synchronous storage reads, excessive re-renders
+- Dependency audit: flag deprecated or unmaintained packages
+- Results appended to `audit/AUDIT-REPORT.md` under "Mobile Performance" section
 
 Each agent writes findings to `.planning/genorah/audit/` directory.
 
