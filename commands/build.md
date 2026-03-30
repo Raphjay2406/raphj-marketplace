@@ -1,29 +1,36 @@
 ---
-description: Build sections wave by wave with parallel builders
-argument-hint: [--wave N] [--resume] [--dry-run] [--parallel N]
-allowed-tools: Read, Write, Edit, Bash, Grep, Glob, Task
+description: Wave-based section execution with parallel builders, quality gates, and session resume
+argument-hint: "[--wave N] [--resume] [--dry-run] [--parallel N]"
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob, Agent, TodoWrite, EnterPlanMode
 ---
 
-You are the Genorah Execute orchestrator. You dispatch to the build-orchestrator agent which manages wave-based parallel execution, session boundaries, and quality gates.
+You are the Genorah Build orchestrator. You manage wave-based parallel execution, session boundaries, and quality gates -- dispatching to builder agents and reviewing output through multi-layer quality checks.
+
+## Command Behavior Contract
+
+1. Read `.planning/genorah/STATE.md` and `.planning/genorah/CONTEXT.md` FIRST.
+2. Use TodoWrite for progress tracking throughout.
+3. Use EnterPlanMode per wave before execution begins.
+4. Push visual companion screens at key moments.
+5. Update STATE.md on completion.
+6. NEVER suggest next command -- the hook handles routing.
 
 ## Guided Flow Header
 
-Read `.planning/genorah/STATE.md` and `.planning/genorah/CONTEXT.md`.
-
 Display one-line status:
-`Phase: Build | Wave: [X/Y] | Sections: [built/total] | Next: [current action]`
+```
+Phase: Build | Wave: [X/Y] | Sections: [built/total] | Next: [current action]
+```
 
 ## State Check & Auto-Recovery
 
 Required state: `PLANNING_COMPLETE` or later (or an existing wave in progress for resume).
 
-**Auto-recovery matrix:**
-
 | Missing Artifact | Recovery |
 |-----------------|----------|
-| No STATE.md | "No Genorah project found. Run `/gen:start-project` first." STOP. |
-| STATE.md exists, no section PLAN.md files | "No section plans found. Running plan-dev first..." Auto-chain to `/gen:plan-dev`, then return here to execute. |
-| Plans exist, all sections COMPLETE | "All waves complete. Run `/gen:iterate` to refine, or `/gen:audit` for comprehensive review." STOP. |
+| No STATE.md | "No Genorah project found. Run start-project first." STOP. |
+| STATE.md exists, no section PLAN.md files | "No section plans found. Run plan first." STOP. |
+| Plans exist, all sections COMPLETE | "All waves complete. Nothing to build." STOP. |
 
 Transparent auto-recovery: always tell the user what is being run automatically.
 
@@ -61,55 +68,88 @@ If `--dry-run`:
 2. Show which sections are pending, which are complete
 3. Show estimated parallel builders per wave
 4. Do NOT execute anything
-5. End with: "Run `/gen:execute` to start building."
+5. STOP.
 
-## Execution Dispatch
+## Wave Execution Loop
 
-Dispatch to `build-orchestrator` agent with:
-- Starting wave number (from flags or auto-detected)
-- Parallel limit (from `--parallel` or default 4)
-- Path to MASTER-PLAN.md
-- Path to DESIGN-DNA.md
-- Path to CONTEXT.md
+For each wave:
 
-The build-orchestrator handles ALL execution logic:
-- Wave ordering and dependency checking
-- Pre-build Creative Director review per wave (light, blocking)
-- Parallel builder spawning via Task tool
-- Post-wave CD + QR parallel quality review
-- Findings merge and severity classification
+### Pre-Wave Gate
+
+Use **EnterPlanMode** to present the wave plan for user approval:
+- Sections in this wave
+- Dependencies satisfied
+- Parallel builder count
+- Estimated complexity
+
+Wait for user approval before proceeding.
+
+### Visual Companion: Build Progress
+
+Push `build-progress.html` to the companion server with:
+- Wave map with current wave highlighted
+- Per-section build status (pending/building/complete/failed)
+- Real-time progress indicators
+
+### Builder Dispatch
+
+Spawn orchestrator agent via **Agent tool** which handles:
+- Agent Teams for parallel builders (up to --parallel limit)
+- Per-section builder execution against PLAN.md
+- Quality gate checks per section (DNA compliance, anti-slop quick check)
 - GAP-FIX remediation loop (polisher, max 2 cycles)
-- Wave review gate (CRITICAL blocks, WARNING tallies)
-- Post-wave canary checks and CONTEXT.md rewriting
-- Running tally maintenance in STATE.md
-- Session boundary management (2-wave soft suggestion)
-- After-final-wave: full polish pass, Layer 3 live testing, Layer 4 user checkpoint
+
+### Post-Wave Quality Gate
+
+After all sections in a wave complete:
+- Run quality reviewer on all wave sections
+- Merge findings and classify severity (CRITICAL blocks, WARNING tallies)
+- If CRITICAL issues found: pause and present to user
+- If only WARNINGs: log and continue
+
+### Visual Companion: Scores & Breakpoints
+
+Push `build-scores.html` to the companion server with:
+- Per-section anti-slop scores
+- Breakpoint screenshots (375px, 768px, 1024px, 1440px)
+- Consistency matrix across sections
+
+### Visual Companion: Consistency Check
+
+Push `build-consistency.html` to the companion server with:
+- Cross-section design token usage
+- Spacing/typography consistency heatmap
+- Shared component usage map
+
+### Post-Wave State Update
+
+- Update STATE.md with wave completion status
+- Rewrite CONTEXT.md with current state, DNA anchor, next instructions
+- Run canary check to verify context integrity
+- Session boundary management: after 2 waves, soft-suggest saving session
 
 ## Post-Execution Handling
-
-Build-orchestrator returns control after one of three conditions:
 
 ### All Waves Complete
 
 ```
 All [N] waves complete. [X] sections built.
 Quality: [anti-slop average]/35 ([rating])
-
-Next step: /gen:iterate
-  Review the build and request design improvements.
-  Or: /gen:audit for comprehensive quality review.
 ```
 
 Update STATE.md: `phase: EXECUTION_COMPLETE`.
+
+Run final polish pass:
+- Full polish across all sections
+- Layer 3 live testing
+- Layer 4 user checkpoint
 
 ### Session Boundary Reached
 
 ```
 Session state saved to CONTEXT.md.
 [N] waves complete, [M] remaining.
-
-Next step: /gen:execute --resume (in a new session)
-  Picks up exactly where you left off.
+Resume with --resume flag in a new session.
 ```
 
 ### Error
@@ -117,16 +157,15 @@ Next step: /gen:execute --resume (in a new session)
 ```
 Build paused due to error in [section].
 Error: [brief description]
-
-Next step: /gen:bug-fix [section description]
-  Diagnose and fix the issue, then resume with /gen:execute --resume.
 ```
 
 ## Rules
 
-1. This command is a thin wrapper. All execution logic lives in build-orchestrator.
+1. All execution logic runs through the Agent tool -- this command orchestrates, agents build.
 2. Always read CONTEXT.md first when resuming. It has everything needed.
 3. Never skip the canary check on resume. Context rot is the #1 quality killer.
 4. Transparent auto-recovery: tell the user what is being run automatically.
-5. Build failures bubble to the user. The orchestrator does NOT auto-retry.
-6. Always end with a clear next step.
+5. Build failures bubble to the user. Do NOT auto-retry.
+6. Use EnterPlanMode per wave for user approval before building.
+7. Use TodoWrite to track build progress across waves and sections.
+8. NEVER suggest the next command. The hook handles routing.

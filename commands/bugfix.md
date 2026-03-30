@@ -1,24 +1,31 @@
 ---
-description: Diagnose and fix visual bugs with root cause analysis before any changes
-argument-hint: [bug description or path to screenshot]
-allowed-tools: Read, Write, Edit, Bash, Grep, Glob, Task
+description: Root cause diagnosis and fix with hypothesis-driven debugging and breakpoint verification
+argument-hint: "[bug description or path to screenshot]"
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob, Agent, TodoWrite
 ---
 
 You are the Genorah Bug-Fix orchestrator. You diagnose visual bugs using a systematic hypothesis-test cycle -- brainstorming the CAUSE, not the solution. No fix is applied without understanding the root cause first.
 
+## Command Behavior Contract
+
+1. Read `.planning/genorah/STATE.md` and `.planning/genorah/CONTEXT.md` FIRST.
+2. Use TodoWrite for progress tracking throughout.
+3. Push visual companion screens at key moments.
+4. Update STATE.md on completion.
+5. NEVER suggest next command -- the hook handles routing.
+
 ## Guided Flow Header
 
-Read `.planning/genorah/STATE.md` and `.planning/genorah/CONTEXT.md`. Display one-line status:
-
+Display one-line status:
 ```
-Genorah | Phase: [phase] | Wave: [current]/[total] | Sections: [built]/[total]
+Phase: [phase] | Wave: [current]/[total] | Sections: [built]/[total]
 ```
 
 ## State Check & Auto-Recovery
 
 **Required state:** Any state with built sections.
 
-- If no built sections exist: "Nothing to fix yet. Run `/gen:execute` first."
+- If no built sections exist: "Nothing to fix yet. Run build first." STOP.
 
 ## Argument Parsing
 
@@ -28,7 +35,7 @@ Genorah | Phase: [phase] | Wave: [current]/[total] | Sections: [built]/[total]
 - `--viewport size` or `-v size` = viewport where bug appears (mobile, tablet, desktop)
 - No arguments: ask user to describe the bug
 
-## Bug Understanding
+## Step 1: Bug Understanding
 
 1. If screenshot provided: analyze it and describe what is wrong
 2. Read the affected section's PLAN.md (what it SHOULD look like)
@@ -48,13 +55,11 @@ Genorah | Phase: [phase] | Wave: [current]/[total] | Sections: [built]/[total]
 | Animation | Janky transitions, missing exit animation, layout shift |
 | Accessibility | No keyboard access, missing labels, broken focus trap |
 
-## Diagnostic Brainstorm (MANDATORY)
+## Step 2: Diagnostic Brainstorm (MANDATORY)
 
-This is fundamentally different from `/gen:iterate` -- iterate brainstorms CREATIVE APPROACHES (what could this become?), bug-fix brainstorms the ROOT CAUSE (what went wrong?).
+This is fundamentally different from iterate -- iterate brainstorms CREATIVE APPROACHES (what could this become?), bug-fix brainstorms the ROOT CAUSE (what went wrong?).
 
-Dispatch to `agents/pipeline/quality-reviewer` via Task tool with: bug description, section code, PLAN.md, DESIGN-DNA.md.
-
-The quality-reviewer investigates and presents a diagnostic:
+Generate 3 hypotheses:
 
 ```
 This could be caused by:
@@ -62,10 +67,19 @@ A) [hypothesis 1] -- because [evidence from code]
 B) [hypothesis 2] -- because [evidence from code]
 C) [hypothesis 3] -- because [evidence from code]
 
-Let me investigate...
+Investigating...
 ```
 
-The quality-reviewer tests each hypothesis against the code, then presents confirmed root cause and proposed fix:
+## Visual Companion: Diagnostic View
+
+Push `diagnostic-view.html` to the companion server with:
+- Bug screenshot/description
+- Hypothesis overlay showing suspected code regions
+- Evidence markers linking hypotheses to specific files/lines
+
+## Step 3: Hypothesis Testing
+
+Test each hypothesis against the code. Confirm or eliminate each one. Present confirmed root cause:
 
 ```
 Root Cause: [confirmed hypothesis]
@@ -85,16 +99,33 @@ Wait for user approval before proceeding.
 
 **This step is NON-NEGOTIABLE.** Never apply a fix without confirmed root cause.
 
-## Fix Application
+## Visual Companion: Breakpoint Reproduction
 
-Dispatch to `agents/pipeline/polisher` via Task tool to apply the minimal fix:
+Push `bugfix-breakpoints.html` to the companion server with:
+- Bug reproduction at all 4 breakpoints (375px, 768px, 1024px, 1440px)
+- Highlighting which breakpoints are affected
+- Expected vs actual comparison
+
+## Step 4: Fix Application
+
+Use **Agent tool** to dispatch polisher for minimal fix:
 
 1. Fix the specific issue -- minimal changes only
 2. Do NOT refactor or add unrelated improvements
 3. Verify no regression in adjacent sections
 4. Atomic commit: `fix(section-XX): description of what was fixed`
 
-## Post-Fix Report
+## Step 5: Post-Fix Verification
+
+Verify the fix at ALL breakpoints:
+- 375px (mobile)
+- 768px (tablet)
+- 1024px (desktop)
+- 1440px (wide)
+
+Check for regressions in adjacent sections.
+
+## Completion
 
 ```
 Bug Fix Report
@@ -106,21 +137,15 @@ Files: [modified files]
 Regression: None / [description]
 ```
 
-## Completion & Next Step
-
-```
-Bug fixed.
-
-Next step: /gen:bug-fix (if more bugs)
-  Or: /gen:iterate (for design improvements)
-  Or: /gen:execute --resume (if mid-build)
-```
+Update STATE.md with bug fix record.
 
 ## Rules
 
 1. **Diagnose before fixing.** NEVER apply a fix without confirmed root cause.
 2. **Minimal changes only.** Fix the bug, do not redesign the section.
 3. **One bug at a time.** Sequential diagnosis prevents confusion.
-4. **Check for regressions after every fix.**
+4. **Check for regressions after every fix** at all 4 breakpoints.
 5. **Atomic commits.** Each bug fix gets its own commit.
-6. **If the bug reveals a plan gap**, note it but do not modify the plan -- suggest `/gen:iterate`.
+6. **If the bug reveals a plan gap**, note it but do not modify the plan.
+7. Use TodoWrite to track diagnostic and fix progress.
+8. NEVER suggest the next command. The hook handles routing.
