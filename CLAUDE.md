@@ -4,9 +4,9 @@ This file provides guidance to Claude Code when working with the Genorah plugin 
 
 ## Project Overview
 
-**Genorah v2.0** is a Claude Code plugin for premium frontend design. It produces award-caliber websites (Awwwards SOTD 8.0+ baseline) through a pipeline of 15 specialized agents, machine-enforceable design identity, a 72-point quality gate across 12 categories, and a Visual Companion for localhost delivery. It is NOT a template generator -- every project gets a unique visual identity enforced through Design DNA, 19 Design Archetypes, Emotional Arc storytelling, and the 72-point Quality Gate. Covers 12 design domains with 96+ skills.
+**Genorah v2.0** is a Claude Code plugin for premium frontend design. It produces award-caliber websites (Awwwards SOTD 8.0+ baseline) through a pipeline of 19 specialized agents, machine-enforceable design identity, a 72-point quality gate across 12 categories, and a Visual Companion for localhost delivery. It is NOT a template generator -- every project gets a unique visual identity enforced through Design DNA, 19 Design Archetypes, Emotional Arc storytelling, and the 72-point Quality Gate. Covers 12 design domains with ~120 skills.
 
-This repository contains only markdown definitions and a plugin manifest -- there is no application code, build system, or test suite. Targets Next.js, Astro, React/Vite, Tauri, and Electron.
+This repository contains only markdown definitions and a plugin manifest -- there is no application code, build system, or test suite. Targets Next.js, Astro, React/Vite, Tauri, Electron, Swift/SwiftUI, Kotlin/Compose, React Native, Expo, and Flutter.
 
 ## Architecture
 
@@ -15,9 +15,9 @@ Three-tier system where commands are entry points, agents orchestrate work, and 
 ```
 commands/ (11 commands -- user-facing pipeline stages)
     | invoke
-agents/ (15 agents -- 7 pipeline + 4 specialists + 4 protocols)
+agents/ (19 agents -- 7 pipeline + 6 specialists + 4 protocols + 2 new)
     | reference
-skills/ (3-tier, 4-layer SKILL.md files -- 96+ modular knowledge bases)
+skills/ (3-tier, 4-layer SKILL.md files -- ~120 modular knowledge bases)
 ```
 
 **Plugin manifest:** `.claude-plugin/plugin.json`
@@ -27,16 +27,16 @@ skills/ (3-tier, 4-layer SKILL.md files -- 96+ modular knowledge bases)
 - **Skills:** `skills/{skill-name}/SKILL.md` -- 4-layer format with YAML frontmatter (name, description, tier, triggers, version)
 - **Agents:** `agents/{agent-name}.md` -- role definition, input/output contracts, context budget
 - **Commands:** `commands/{command-name}.md` -- description, argument-hint, numbered workflow steps
-- **Hooks:** `.claude-plugin/hooks/` -- 4 hooks: `session-start.mjs`, `pre-tool-use.mjs`, `user-prompt.mjs`, `dna-compliance-check.sh`
+- **Hooks:** `.claude-plugin/hooks/` -- 7 hooks: `session-start.mjs`, `pre-tool-use.mjs`, `post-tool-use.mjs`, `user-prompt.mjs`, `pre-compact.mjs`, `stop.mjs`, `dna-compliance-check.sh`
 - **Template:** `skills/_skill-template/SKILL.md` -- canonical 4-layer format reference
 
-## Agents (15 total)
+## Agents (19 total)
 
 ### Pipeline Agents (7)
 Researcher, Creative Director, Builder, Reviewer, Polisher, Auditor, Coordinator
 
-### Specialist Agents (4)
-Integration Specialist, AI-UI Specialist, Performance Specialist, Accessibility Specialist
+### Specialist Agents (6)
+Integration Specialist, AI-UI Specialist, Performance Specialist, Accessibility Specialist, SEO/GEO Specialist, Mobile Specialist
 
 ### Protocol Agents (4)
 Visual Companion, Knowledge Sync, Export Coordinator, Status Reporter
@@ -116,6 +116,49 @@ Genorah v2.0 ships baked-in integration skills for major platforms:
 | **Propstack** | Real estate listings, property search, CRM sync |
 
 Each integration skill follows the 4-layer format and maps to DNA tokens for consistent visual theming of third-party UI components.
+
+## SEO/GEO Intelligence
+
+Three core skills cover the full visibility stack, backed by the `seo-geo-specialist` agent which runs in both build and audit modes:
+
+| Skill | Scope |
+|-------|-------|
+| **seo-technical** | Sitemaps (XML/image/video/news), robots.txt, meta architecture, CWV enforcement, canonical strategy, hreflang, search console submission |
+| **geo-optimization** | llms.txt generation and hosting, AI crawler directives (GPTBot, ClaudeBot, PerplexityBot), citation pattern optimization, entity disambiguation, LLM indexing signals |
+| **structured-data-v2** | Comprehensive JSON-LD @graph composition: schema decision tree, rich result eligibility matrix, FAQPage/HowTo/Product/LocalBusiness/@graph combinations, schema audit protocol |
+
+The `seo-geo-specialist` agent validates technical SEO compliance and AI discoverability on every `/gen:audit` run, and generates llms.txt + schema markup during `/gen:build`.
+
+## Mobile App Pipeline
+
+Five framework-native skills plus store submission validation and a cross-platform performance suite, all backed by the `mobile-specialist` agent:
+
+| Skill | Framework | Scope |
+|-------|-----------|-------|
+| **mobile-swift** | Swift/SwiftUI | DNA token mapping to SwiftUI design tokens, SF Symbols, NavigationStack, HIG compliance |
+| **mobile-kotlin** | Kotlin/Jetpack Compose | Material You DNA bridge, Compose navigation, ViewModel, adaptive layouts for foldables |
+| **mobile-react-native** | React Native (bare) | NativeWind DNA bridge, React Navigation v7, Reanimated 3 motion profiles, Hermes optimization |
+| **mobile-expo** | Expo (managed) | EAS Build/Submit, Expo Router, OTA updates, config plugins, expo-linear-gradient theming |
+| **mobile-flutter** | Flutter/Dart | ThemeData DNA mapping, go_router, Riverpod, platform adaptive widgets, Impeller renderer |
+| **store-submission** | App Store + Play Store | Screenshot specs, metadata limits, ASO keywords, review guideline checklist, TestFlight/internal track |
+| **mobile-performance** | All frameworks | Cold start <600ms, warm <300ms, 60/120fps budget, memory profiling, bundle size, battery impact |
+
+The `mobile-specialist` agent bridges Design DNA tokens to each framework's native theming system and runs store submission validation before release.
+
+## Ruflo-Inspired Infrastructure
+
+Advanced session management and resource governance hooks active by default:
+
+| Hook | Event | Purpose |
+|------|-------|---------|
+| `pre-compact.mjs` | PreCompact | Preserves critical context (DNA tokens, arc position, wave state) into CONTEXT.md before compaction |
+| `stop.mjs` | Stop | Writes session summary to STATE.md on agent stop: completed tasks, open items, next instructions |
+| `post-tool-use.mjs` | PostToolUse | Records tool call metrics (latency, token cost, error rate) for pipeline observability |
+
+Additional infrastructure:
+
+- **PII scanning** -- `pre-tool-use.mjs` scans outbound tool calls for email, phone, SSN, credit card patterns before external API calls
+- **Per-skill resource constraints** -- Each skill declares max token budget and load priority in frontmatter; the plugin loader enforces total Core tier budget (~10,000 lines)
 
 ## Baked-In Defaults
 

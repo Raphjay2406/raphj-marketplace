@@ -12,7 +12,7 @@ claude plugin marketplace add https://github.com/Raphjay2406/raphj-marketplace
 
 | Plugin | Skills | Commands | Agents | Description |
 |--------|--------|----------|--------|-------------|
-| `genorah` | 96+ | 11 | 15 | Premium frontend design system (v2.0.0) — Pipeline with Agent Teams (7 pipeline + 4 specialists + 4 protocols), Design DNA, 19 archetypes, 72-point quality gate across 12 categories, Visual Companion for localhost delivery, integration skills for HubSpot/Stripe/Shopify/WooCommerce/Propstack. Creates SOTD-competitive websites. Next.js, Astro, React/Vite, Tauri, Electron. |
+| `genorah` | ~120 | 11 | 19 | Premium frontend design system (v2.0.0) — Pipeline with Agent Teams (7 pipeline + 6 specialists + 4 protocols), Design DNA, 19 archetypes, 72-point quality gate, Visual Companion, SEO/GEO intelligence (llms.txt, AI crawlers, structured data), mobile pipeline (Swift, Kotlin, React Native, Expo, Flutter, store submission), integration skills for HubSpot/Stripe/Shopify/WooCommerce/Propstack. Creates SOTD-competitive websites. Next.js, Astro, React/Vite, Tauri, Electron, Swift/SwiftUI, Kotlin/Compose, React Native, Expo, Flutter. |
 | `wavy-bavy` | 1 | — | — | Integrate the wavy-bavy library for seamless wave transitions between page sections |
 
 ## Install a Plugin

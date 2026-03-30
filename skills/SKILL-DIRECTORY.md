@@ -8,12 +8,12 @@ Genorah organizes skills into a **3-tier loading system** that controls context 
 
 | Tier | Loading | When | Context Budget | Skills |
 |------|---------|------|----------------|--------|
-| **Core** | Always loaded | Every Genorah session | ~10,000 lines total | 26 skills |
-| **Domain** | Per-project | Agent decides based on project type, archetype, and current task | Only relevant subset | 38 skills |
+| **Core** | Always loaded | Every Genorah session | ~10,000 lines total | 29 skills |
+| **Domain** | Per-project | Agent decides based on project type, archetype, and current task | Only relevant subset | 48 skills |
 | **Utility** | On-demand | Explicit reference when specific need arises | Only when needed | 4 skills |
 | **Data** | On-demand | Catalog lookups for palettes, fonts, charts, industry rules | Only when needed | 4 catalogs |
 
-**Why tiers matter:** Loading all 96 skills into every session wastes thousands of lines of context on skills that may never apply. Tier-based loading keeps Core skills available for every decision while deferring Domain and Utility skills until they are actually needed.
+**Why tiers matter:** Loading all ~120 skills into every session wastes thousands of lines of context on skills that may never apply. Tier-based loading keeps Core skills available for every decision while deferring Domain and Utility skills until they are actually needed.
 
 ### 4-Layer Format Standard
 
@@ -138,6 +138,9 @@ Domain skills are loaded **per project** based on the project's archetype, techn
 | `og-images` | COMPLETE | 18 | 1252 | Dynamic OG image generation from Design DNA tokens: branded 1200x630 social previews using next/og ImageResponse (Next.js) and Satori + sharp (Astro), 3 archetype-influenced template types |
 | `api-patterns` | COMPLETE | 17 | 1600 | Server-side API integration: Context7 MCP for live docs, server-side proxies with env secret protection, CRM form patterns (HubSpot, Salesforce), typed API clients with discriminated unions, webhook receivers with signature verification, Cloudflare Turnstile spam protection |
 | `ssr-dynamic-content` | COMPLETE | 19 | 1842 | SSR/ISR/streaming decision guidance: 4-dimension rendering matrix, Cache Components (Next.js 16), Server Islands (Astro 5), CMS webhook revalidation for 5 platforms, auth-gated rendering for 4 libraries, cache invalidation strategies, loading state patterns |
+| `seo-technical` | COMPLETE | 21 | — | Technical SEO infrastructure: sitemaps (XML, image, video, news), robots.txt authoring, meta tag architecture, Core Web Vitals enforcement, canonical strategy, hreflang, search console submission workflows |
+| `geo-optimization` | COMPLETE | 21 | — | Generative Engine Optimization: llms.txt generation and hosting, AI crawler directives (GPTBot, ClaudeBot, PerplexityBot), citation pattern optimization, entity disambiguation, structured authority signals for LLM indexing |
+| `structured-data-v2` | COMPLETE | 21 | — | Comprehensive JSON-LD @graph patterns: FAQPage, HowTo, Product, LocalBusiness, Article, Event, BreadcrumbList -- schema decision tree, @graph composition rules, rich result eligibility matrix, schema audit protocol |
 
 ### Platform Integrations
 
@@ -156,6 +159,18 @@ Domain skills are loaded **per project** based on the project's archetype, techn
 | `ai-ui-patterns` | COMPLETE | 20 | — | AI product design pattern catalog: 8 patterns (streaming text, thinking indicators, confidence display, model selector, prompt builder, result comparison, feedback loop, error/fallback) with DNA-themed implementations |
 | `ai-pipeline-features` | COMPLETE | 20 | — | AI features within Genorah pipeline: when to invoke AI-UI agents, pattern selection matrix, archetype-to-AI-style mappings, quality gate criteria for AI components |
 | `ai-ui-components` | COMPLETE | 20 | — | AI Elements integration guide: component library selection, installation patterns, DNA token mapping to AI component props, customization boundaries, accessibility requirements |
+
+### Mobile App Development
+
+| Skill | Status | Phase | Lines | Description |
+|-------|--------|-------|-------|-------------|
+| `mobile-swift` | COMPLETE | 21 | — | Swift/SwiftUI native iOS patterns: DNA token mapping to SwiftUI design tokens, SF Symbols integration, NavigationStack architecture, async/await data flow, HIG compliance per archetype |
+| `mobile-kotlin` | COMPLETE | 21 | — | Kotlin/Jetpack Compose native Android patterns: Material You token mapping from DNA, Compose navigation, ViewModel architecture, coroutine patterns, adaptive layouts for foldables |
+| `mobile-react-native` | COMPLETE | 21 | — | React Native bare workflow patterns: Metro bundler config, NativeWind DNA token bridge, React Navigation v7, Reanimated 3 motion profiles, hermes engine optimization |
+| `mobile-expo` | COMPLETE | 21 | — | Expo managed workflow patterns: EAS Build/Submit config, Expo Router file-based navigation, expo-linear-gradient DNA theming, OTA update strategy, config plugins |
+| `mobile-flutter` | COMPLETE | 21 | — | Flutter/Dart cross-platform patterns: ThemeData DNA token mapping, go_router navigation, Riverpod state management, platform adaptive widgets, Impeller renderer optimization |
+| `store-submission` | COMPLETE | 21 | — | App Store + Play Store pre-submission validation: screenshot specs (6.7", 12.9" iPad), metadata character limits, ASO keyword strategy, review guideline compliance checklist, TestFlight / internal track workflows |
+| `mobile-performance` | COMPLETE | 21 | — | Mobile app performance suite: startup time targets (cold <600ms, warm <300ms), frame rate budget (60/120fps), memory profiling patterns, bundle size optimization per framework, battery impact guidelines |
 
 ---
 
@@ -238,19 +253,28 @@ These legacy skills have no direct v2.0 replacement:
 
 ---
 
+## Agents
+
+| Agent | Phase | Mode | Description |
+|-------|-------|------|-------------|
+| `seo-geo-specialist` | 21 | build + audit | SEO/GEO validation specialist: technical SEO audit, llms.txt generation, schema validation, Core Web Vitals enforcement, search console submission, AI crawler configuration |
+| `mobile-specialist` | 21 | build | Mobile app builder across 5 frameworks (Swift/SwiftUI, Kotlin/Compose, React Native, Expo, Flutter): DNA token bridging, store submission validation, platform-specific performance profiling |
+
+---
+
 ## Skill Count Summary
 
 | Category | Count | Status |
 |----------|-------|--------|
-| Core | 26 | All COMPLETE |
-| Domain | 38 | All COMPLETE |
+| Core | 29 | All COMPLETE (+ seo-technical, geo-optimization, structured-data-v2) |
+| Domain | 48 | All COMPLETE (+ 3 SEO/visibility + 7 mobile) |
 | Utility | 4 | All COMPLETE |
 | Data Catalogs | 4 | All COMPLETE |
 | Legacy (superseded) | 1 | LEGACY -- v2.0 replacement exists (chart-data-viz) |
 | Legacy (unrewritten) | 26 | LEGACY -- evaluation pending |
 | Legacy (template) | 1 | Reference template |
-| **Total v2.0** | **73** | **72 skills + 4 data catalogs + 1 template** |
-| **Total in filesystem** | **100** | **73 v2.0 + 4 catalogs + 27 legacy** |
+| **Total v2.0** | **83** | **82 skills + 4 data catalogs + 1 template** |
+| **Total in filesystem** | **110** | **83 v2.0 + 4 catalogs + 27 legacy** |
 
 ---
 
@@ -353,6 +377,6 @@ All new and rewritten skills MUST follow the 4-layer format. See:
 
 ---
 
-*Registry version: 2.3.0*
-*Last updated: Phase 20, Plans 3-4 -- v2.0.0 release (ux-intelligence, quality-gate-v2, baked-in-defaults, component-consistency, integration skills, AI-UI skills, utility skills, data catalogs)*
-*Total v2.0 skills: 73 (26 core, 38 domain, 4 utility) + 4 data catalogs + 1 template*
+*Registry version: 2.4.0*
+*Last updated: Phase 21, Plan 6 -- SEO/GEO intelligence (seo-technical, geo-optimization, structured-data-v2), mobile pipeline (mobile-swift, mobile-kotlin, mobile-react-native, mobile-expo, mobile-flutter, store-submission, mobile-performance), new agents (seo-geo-specialist, mobile-specialist)*
+*Total v2.0 skills: ~120 (29 core, 48 domain, 4 utility) + 4 data catalogs + 1 template*

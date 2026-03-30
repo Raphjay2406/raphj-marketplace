@@ -11,7 +11,7 @@
     {
       "name": "genorah",
       "source": "./plugins/genorah",
-      "description": "Premium frontend design system for Claude Code. 11 workflow commands, 15-agent pipeline architecture, Design DNA identity system with 19 archetypes, creative tension, emotional arc, cinematic motion, 72-point quality gate across 12 categories, visual companion for localhost delivery, and integration skills for HubSpot, Stripe, Shopify, WooCommerce, and Propstack. Creates award-winning, production-ready websites.",
+      "description": "Premium frontend design system for Claude Code. 11 workflow commands, 19-agent pipeline architecture, Design DNA identity system with 19 archetypes, creative tension, emotional arc, cinematic motion, 72-point quality gate across 12 categories, visual companion for localhost delivery, SEO/GEO intelligence (llms.txt, AI crawlers, structured data), mobile pipeline (Swift, Kotlin, React Native, Expo, Flutter, store submission), and integration skills for HubSpot, Stripe, Shopify, WooCommerce, and Propstack. Creates award-winning, production-ready websites.",
       "version": "2.0.0",
       "author": {
         "name": "raphj"
@@ -75,7 +75,20 @@
         "shopify",
         "obsidian",
         "ai-ui",
-        "72-point-quality-gate"
+        "72-point-quality-gate",
+        "seo",
+        "geo",
+        "llms-txt",
+        "mobile",
+        "swift",
+        "kotlin",
+        "flutter",
+        "react-native",
+        "expo",
+        "app-store",
+        "play-store",
+        "pii-scanning",
+        "store-submission"
       ]
     },
     {
