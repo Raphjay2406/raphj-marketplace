@@ -13,7 +13,7 @@ This repository contains only markdown definitions and a plugin manifest -- ther
 Three-tier system where commands are entry points, agents orchestrate work, and skills provide domain knowledge:
 
 ```
-commands/ (11 commands -- user-facing pipeline stages)
+commands/ (12 commands -- user-facing pipeline stages)
     | invoke
 agents/ (19 agents -- 7 pipeline + 6 specialists + 4 protocols + 2 new)
     | reference
@@ -41,7 +41,7 @@ Integration Specialist, AI-UI Specialist, Performance Specialist, Accessibility 
 ### Protocol Agents (4)
 Visual Companion, Knowledge Sync, Export Coordinator, Status Reporter
 
-## Commands (11)
+## Commands (12)
 
 | Command | Purpose |
 |---------|---------|
@@ -56,6 +56,7 @@ Visual Companion, Knowledge Sync, Export Coordinator, Status Reporter
 | `/gen:sync-knowledge` | Refresh skill knowledge base from latest sources |
 | `/gen:companion` | Launch/interact with Visual Companion on localhost |
 | `/gen:export` | Export deliverables, design tokens, and build artifacts |
+| `/gen:migrate` | Migrate legacy .planning/modulo/ projects to .planning/genorah/ |
 
 ## Skill Tiers
 

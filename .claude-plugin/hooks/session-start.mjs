@@ -5,8 +5,8 @@
  * Reads project state from .planning/genorah/ and injects context.
  */
 
-import { readFileSync, existsSync } from 'fs';
-import { join } from 'path';
+import { readFileSync, existsSync, renameSync, mkdirSync } from 'fs';
+import { join, dirname } from 'path';
 
 try {
   const input = JSON.parse(readFileSync(0, 'utf8'));
@@ -14,11 +14,35 @@ try {
   const cwd = process.cwd();
 
   const planningDir = join(cwd, '.planning', 'genorah');
+  const legacyDir = join(cwd, '.planning', 'modulo');
   const contextFile = join(planningDir, 'CONTEXT.md');
   const stateFile = join(planningDir, 'STATE.md');
   const serverInfoFile = join(planningDir, 'companion', '.server-info');
 
   let additionalContext = '';
+  let migrated = false;
+
+  // Auto-migrate legacy .planning/modulo/ → .planning/genorah/
+  if (!existsSync(planningDir) && existsSync(legacyDir)) {
+    try {
+      renameSync(legacyDir, planningDir);
+      migrated = true;
+    } catch {
+      // Rename failed (e.g., cross-device) — notify user to run /gen:migrate
+      additionalContext += `<!-- genorah:migration-needed -->\n`;
+      additionalContext += `## Legacy Project Detected\n\n`;
+      additionalContext += `Found \`.planning/modulo/\` from a previous Modulo version. `;
+      additionalContext += `Auto-migration failed. Run \`/gen:migrate\` to migrate manually.\n`;
+    }
+  }
+
+  if (migrated) {
+    additionalContext += `<!-- genorah:auto-migrated -->\n`;
+    additionalContext += `## Project Auto-Migrated\n\n`;
+    additionalContext += `Migrated \`.planning/modulo/\` → \`.planning/genorah/\` automatically. `;
+    additionalContext += `All existing project state (DNA, plans, sections, context) preserved. `;
+    additionalContext += `Internal file references using old paths may need updating — run \`/gen:migrate\` for a full reference audit.\n\n`;
+  }
 
   if (existsSync(planningDir)) {
     if (existsSync(contextFile)) {
