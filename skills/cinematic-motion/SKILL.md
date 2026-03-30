@@ -6,6 +6,41 @@ triggers: "animation, motion, scroll effect, hover, transition, choreography, ci
 version: "2.0.0"
 ---
 
+## Genorah v2.0 Updates
+
+### Beat-to-Motion Tier Mapping
+
+The planner auto-assigns motion tier based on beat type + archetype. Builders execute the assigned tier -- they do not decide motion intensity.
+
+| Beat | Tier | Description |
+|------|------|-------------|
+| Hook | Heavy | Cinematic entrance, parallax, particle animation, text reveal char-by-char |
+| Tease | Medium | Scroll-triggered fade+slide, subtle parallax, icon animation |
+| Reveal | Heavy | Dramatic unveil, counter animation, image sequence, split-screen transition |
+| Build | Medium | Card stagger, progressive disclosure, scroll-linked progress |
+| Peak | Maximum | Full choreography -- 3D transforms, GSAP timeline, creative tension moment |
+| Breathe | Minimal | Gentle fade only, ambient motion (floating shapes), no scroll trigger |
+| Tension | Heavy | Unexpected motion -- scale violence, glitch, direction break |
+| Proof | Light | Testimonial carousel, logo ticker, stat count-up |
+| Pivot | Medium | Transition animation between content types, section morph |
+| Close | Medium | CTA pulse/glow, form field focus animation, footer reveal |
+
+### Baked-In Motion
+
+Animation is **mandatory in every section**. There are no static sections in Genorah 2.0. The planner auto-assigns a motion tier based on the section's beat type and the project's archetype. Builders receive the motion assignment in their section PLAN.md and execute it -- they do not choose whether to animate or what intensity to use.
+
+### Hard Gate
+
+Quality reviewer **rejects** sections that lack:
+- An entrance animation (every section must animate into view)
+- Interaction states on interactive elements (hover, focus, active)
+
+Sections without both are returned for rework. This is a blocking failure.
+
+- **Cross-reference:** `skills/baked-in-defaults/SKILL.md` for motion block templates used in section PLANs.
+
+---
+
 ## Layer 1: Decision Guidance
 
 This skill is the single authority on motion design in Genorah 2.0. It covers CSS animations, the Motion library (ex-Framer Motion), and GSAP in one unified system. Motion is not decoration -- it communicates hierarchy, draws attention, creates emotion, and guides the eye. Every animation must answer: "What story does this motion tell?"

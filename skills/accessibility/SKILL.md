@@ -6,6 +6,16 @@ triggers: "accessibility, a11y, WCAG, ARIA, keyboard, focus, screen reader, redu
 version: "2.0.0"
 ---
 
+## Genorah v2.0 Updates
+
+- **Designed focus indicators**: Custom focus rings must match the DNA accent color and archetype personality. Browser default `outline` without customization is flagged as a **-4 penalty** in the quality gate. Every project must define `:focus-visible` styles in `globals.css`.
+- **Reduced motion is designed**: `prefers-reduced-motion` must provide an **alternative static design**, not just `display: none` on animations. Removing animated content entirely is flagged -- provide a meaningful static equivalent (e.g., a static hero image instead of an animated sequence).
+- **Color never sole indicator**: Error states, success states, and status indicators require **icon + text + color**. Color-only differentiation is flagged in the quality gate. This applies to form validation, alerts, badges, and progress indicators.
+- **ARIA as last resort**: Native HTML elements are always preferred. Using `role="button"` on a `<div>` when `<button>` would work is flagged. Using `role="link"` on a `<span>` when `<a>` would work is flagged. ARIA is reserved for custom widgets where no native equivalent exists.
+- **Hard gate**: Accessibility is a quality gate category with **1.1x weight multiplier**, meaning accessibility failures have outsized impact on the final score. This reflects the principle that accessibility is a design fundamental, not an optional enhancement.
+
+---
+
 ## Layer 1: Decision Guidance
 
 Accessibility is a DESIGN CONSTRAINT, not a checklist. WCAG 2.1 AA is the floor, not the ceiling. Every component, every interaction, every state must be accessible. No exceptions. No retrofitting. No afterthought.

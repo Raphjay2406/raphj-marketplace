@@ -6,6 +6,20 @@ triggers: "responsive, mobile, breakpoint, container query, clamp, fluid typogra
 version: "2.0.0"
 ---
 
+## Genorah v2.0 Updates
+
+- **4-breakpoint mandate**: Every section `PLAN.md` must include a responsive block covering **375px, 768px, 1024px, and 1440px**. No section ships without all four breakpoints addressed.
+- **2 edge-case viewports**: Test against **375x667** (short mobile overflow test) and **2560x1440** (ultrawide containment test) during quality review.
+- **Container queries priority**: Use `@container` over `@media` for component-level responsiveness. Media queries reserved for page-level layout only.
+- **Content reflow requirement**: Mobile is a **redesigned layout**, not squished desktop. Content priority reordering is mandatory -- important content surfaces first on mobile regardless of desktop DOM order.
+- **Thumb zone**: Primary actions (CTAs, navigation triggers) must be placed in the **bottom 40%** of the mobile viewport.
+- **Font size floor**: **16px minimum** body text on all devices. 14px permitted only for captions and labels.
+- **Tap spacing**: **8px minimum gap** between adjacent touch targets (reinforces existing constraint).
+- **Hard gate**: Quality reviewer **rejects** sections without 4-breakpoint responsive implementation. This is a blocking failure, not a warning.
+- **Cross-reference:** `skills/baked-in-defaults/SKILL.md` for responsive block templates used in section PLANs.
+
+---
+
 ## Layer 1: Decision Guidance
 
 ### Core Philosophy

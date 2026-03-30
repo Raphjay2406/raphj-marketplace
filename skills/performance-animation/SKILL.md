@@ -6,6 +6,19 @@ triggers: "animation performance, CWV, core web vitals, code splitting, lazy loa
 version: "2.0.0"
 ---
 
+## Genorah v2.0 Updates
+
+- **Core Web Vitals budgets with penalties:**
+  - LCP < 2.5s -- exceeding incurs **-3 penalty** in quality gate
+  - FID/INP < 200ms -- exceeding incurs **-3 penalty** in quality gate
+  - CLS < 0.1 -- exceeding incurs **-3 penalty** in quality gate
+- **Max 3 concurrent animations in viewport** at any time. Animations outside the viewport must be paused or use `animation-play-state: paused` via IntersectionObserver.
+- **Bundle budget: < 200KB per route** (total JS, gzipped). Routes exceeding this budget trigger mandatory code-splitting review.
+- **Dynamic imports mandatory** for GSAP, Three.js, and chart libraries (recharts, chart.js, d3). Static imports of these libraries are a blocking build failure.
+- **`@next/bundle-analyzer` during audit**: Run bundle analysis as part of `/gen:audit` to verify per-route budgets. Include route-level breakdown in audit output.
+
+---
+
 ## Layer 1: Decision Guidance
 
 ### When to Use

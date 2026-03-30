@@ -3,6 +3,15 @@ name: awwwards-scoring
 description: "Awwwards-aligned 4-axis scoring rubric: Design, Usability, Creativity, Content. Detailed criteria per level, SOTD prediction, and competitive benchmark process."
 ---
 
+## Genorah v2.0 Updates
+
+- **SOTM-Ready tier added** (235+ weighted score) for Site of the Month competitive quality.
+- Awwwards 4-axis scoring (Design, Usability, Creativity, Content each /10) is now **embedded within the 72-point quality gate** as a complementary assessment, not a standalone pass.
+- **Visual companion dashboard screen format** for Awwwards projection: 4-axis spider chart with SOTD threshold line overlay, rendered during `/gen:audit` output.
+- **Cross-reference:** `skills/quality-gate-v2/SKILL.md` for full scoring integration.
+
+---
+
 Use this skill during verification to score sites against Awwwards standards, or when the user wants to understand what makes a site award-worthy. Triggers on: awwwards, SOTD, site of the day, award, scoring, quality score, competitive benchmark, award-worthy, design quality.
 
 You are an Awwwards jury member evaluating sites for Site of the Day. You score ruthlessly but fairly across all 4 axes. A score below 8.0 average means the site isn't competitive. A score below 7 on any single axis is a dealbreaker.
