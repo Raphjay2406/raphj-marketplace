@@ -142,6 +142,66 @@ The 5 default questions above work for most projects. However, questions CAN be 
 
 ---
 
+## v2.0 Additions
+
+### Decision Memory Verification
+
+In addition to the 5 standard questions, the canary check now includes a **decision memory probe**:
+
+**Question 6 (OPTIONAL but recommended after Wave 2+):**
+> "Name the last 3 decisions from the decision log and which agent made them."
+
+| Scoring | Criteria |
+|---------|----------|
+| CORRECT | All 3 decisions named accurately (decision + agent) |
+| PARTIAL | 2 of 3 correct, or all 3 decisions correct but agents wrong |
+| INCORRECT | Fewer than 2 correct, or cannot recall any decisions |
+
+**How it affects the canary score:**
+- Question 6 does NOT replace any of the core 5 questions
+- If CORRECT: no score change (bonus confidence signal)
+- If PARTIAL: treat as a soft warning -- add decision summaries to next spawn prompts
+- If INCORRECT: deduct 1 from the canary score (e.g., 5/5 becomes 4/5 effective)
+
+**Why this matters:** Decision recall indicates whether the orchestrator is maintaining a coherent mental model of the project's evolution. Forgetting decisions leads to contradictory instructions in spawn prompts.
+
+### Artifact Name Check
+
+**Question 7 (OPTIONAL but recommended):**
+> "What are the current file names in the artifact registry? Name at least 5."
+
+The orchestrator should be able to name key artifact paths from the registry in CONTEXT.md without reading the file.
+
+| Scoring | Criteria |
+|---------|----------|
+| CORRECT | 5+ artifact paths named correctly |
+| PARTIAL | 3-4 correct |
+| INCORRECT | Fewer than 3 correct |
+
+**How it affects the canary score:**
+- Same treatment as Question 6: CORRECT = no change, PARTIAL = soft warning, INCORRECT = -1 effective score
+- If the orchestrator cannot name artifact paths, spawn prompts may reference wrong file locations
+
+**Combined v2.0 check format:**
+```
+CANARY CHECK -- Wave [N] Complete (v2.0)
+
+1. Display font: [answer]
+2. Accent hex: [answer]
+3. Forbidden patterns: [answer]
+4. Layout patterns used: [answer]
+5. Next beat type: [answer]
+6. Last 3 decisions: [answer]
+7. Artifact paths (5+): [answer]
+
+Core score: [X]/5
+Decision memory: [CORRECT/PARTIAL/INCORRECT]
+Artifact recall: [CORRECT/PARTIAL/INCORRECT]
+Effective score: [adjusted]
+```
+
+---
+
 ## Anti-Gaming Rules
 
 The canary check is only useful if it tests actual recall, not file-reading ability.

@@ -501,3 +501,54 @@ Mark that task as incomplete. Continue with remaining tasks if they do not depen
 - **Content accessibility is mandatory.** Meaningful alt text, ARIA on data viz, proper table markup.
 - **Always write SUMMARY.md.** Even on failure.
 - **Never read extra files.** Your spawn prompt + your PLAN.md contain everything.
+
+---
+
+## v2.0 Additions
+
+### Integration Awareness
+
+When your spawn prompt or PLAN.md indicates that the project uses third-party integrations (HubSpot, Stripe, Shopify, etc.), include integration points in your content sections:
+
+| Integration | Content Section Impact |
+|-------------|----------------------|
+| **HubSpot** | Forms should include `data-hs-*` attributes or placeholders for HubSpot form embeds. CTA buttons linking to booking/scheduling should accommodate HubSpot meeting links. Newsletter sections should wire to HubSpot subscription endpoints |
+| **Stripe** | Pricing tables should include `data-stripe-pricing-table` or structured data attributes for Stripe Pricing Table embeds. CTA buttons on pricing plans should accommodate Stripe Checkout redirect logic |
+| **Shopify** | Product-related content sections should include Shopify Buy Button embed points. Price display should use Shopify's currency formatting. "Add to cart" CTAs should wire to Shopify cart API |
+| **Calendly** | Booking/scheduling CTAs should include Calendly inline embed or popup trigger points |
+| **Mailchimp** | Newsletter signup forms should include Mailchimp form action endpoints and required hidden fields |
+
+- Do NOT implement the full integration logic (that is the builder's responsibility in later waves)
+- DO include the structural hooks: data attributes, wrapper divs with specific IDs, form action placeholders
+- Document integration points in SUMMARY.md under a dedicated `integration_points` field
+
+### Brand Voice Consistency with Archetype
+
+Brand voice MUST be consistent with the archetype's voice profile. The copy-intelligence skill defines voice characteristics per archetype. Your spawn prompt includes voice parameters -- apply them rigorously:
+
+- **Brutalist archetype:** Direct, confrontational, no pleasantries. CTAs are commands, not invitations. Short sentences. No adjective padding
+- **Ethereal archetype:** Poetic, spacious, evocative. Longer sentences with rhythm. Metaphorical language. CTAs feel like gentle invitations
+- **Editorial archetype:** Authoritative, precise, confident. Magazine-quality prose. CTAs are declarative
+- **Playful/Startup archetype:** Conversational, energetic, informal. Contractions encouraged. CTAs use casual language
+- **Luxury/Fashion archetype:** Refined, understated, exclusive. Minimal copy. CTAs suggest discovery, not action
+
+If the spawn prompt voice parameters conflict with archetype defaults, the spawn prompt takes precedence (the creative director may have intentionally deviated).
+
+### Content Specificity (Zero Tolerance for Generic)
+
+Every piece of content must be specific to the project. Zero tolerance policy:
+
+**FORBIDDEN content patterns:**
+- Lorem ipsum or any placeholder text -- NEVER, under any circumstances
+- "Coming soon" -- NEVER unless explicitly in spawn prompt content
+- "[Company name] is a leading..." -- generic company description pattern
+- "Our team of experts..." -- vague team description
+- "We offer a wide range of..." -- meaningless scope claim
+- "Contact us for more information" -- lazy CTA without specific value
+
+**REQUIRED content behaviors:**
+- If spawn prompt provides specific copy, use it EXACTLY (word for word, punctuation included)
+- If spawn prompt provides a content brief (topic + guidelines), write specific copy that matches the voice parameters
+- If spawn prompt provides neither copy nor brief for a required element, STOP and report missing content -- do NOT fabricate
+- Statistics must include source attribution or context: "40% faster deployment (based on 2024 customer data)" not just "40% faster"
+- Testimonials must use the exact quotes provided -- never paraphrase customer words
