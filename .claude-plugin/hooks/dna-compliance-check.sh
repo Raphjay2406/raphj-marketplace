@@ -82,6 +82,40 @@ if [ -f "$DNA_FILE" ]; then
   fi
 fi
 
+# --- NEW v2.0: Animation absence detection ---
+for file in $STAGED_FILES; do
+  if echo "$file" | grep -qE '\.(tsx|jsx)$'; then
+    has_motion=$(grep -cE 'animate-|motion\.|gsap|ScrollTrigger|transition-|@keyframes|framer-motion|data-motion|useSpring|useScroll' "$file" 2>/dev/null || echo "0")
+    has_return=$(grep -c 'return' "$file" 2>/dev/null || echo "0")
+    if [ "$has_motion" = "0" ] && [ "$has_return" -gt 0 ]; then
+      is_component=$(echo "$file" | grep -qE 'components|sections|app/' && echo "yes" || echo "no")
+      if [ "$is_component" = "yes" ]; then
+        VIOLATIONS="${VIOLATIONS}\n[WARNING] No animation/motion detected in component: ${file}\n  Genorah v2.0 requires entrance animation and interaction states.\n"
+      fi
+    fi
+  fi
+done
+
+# --- NEW v2.0: Responsive absence detection ---
+for file in $STAGED_FILES; do
+  if echo "$file" | grep -qE '\.(tsx|jsx|css)$'; then
+    has_responsive=$(grep -cE '@media|@container|sm:|md:|lg:|xl:|max-w-|min-w-|container-type' "$file" 2>/dev/null || echo "0")
+    has_return=$(grep -c 'return' "$file" 2>/dev/null || echo "0")
+    if [ "$has_responsive" = "0" ] && [ "$has_return" -gt 0 ]; then
+      is_component=$(echo "$file" | grep -qE 'components|sections|app/' && echo "yes" || echo "no")
+      if [ "$is_component" = "yes" ]; then
+        VIOLATIONS="${VIOLATIONS}\n[WARNING] No responsive styles detected in: ${file}\n  Genorah v2.0 requires 4-breakpoint responsive design (375, 768, 1024, 1440).\n"
+      fi
+    fi
+  fi
+done
+
+# --- NEW v2.0: Compatibility tier feature warnings ---
+check_pattern 'container-type:\s*inline-size' "Using container queries -- ensure @supports fallback for Broad/Legacy tiers"
+check_pattern ':has(' "Using :has() selector -- ensure fallback for Broad/Legacy tiers"
+check_pattern 'oklch(' "Using oklch() colors -- ensure hsl() fallback for Broad/Legacy tiers"
+check_pattern 'subgrid' "Using subgrid -- ensure fallback for Broad/Legacy tiers"
+
 # --- Report ---
 
 if [ $VIOLATION_COUNT -gt 0 ]; then
