@@ -271,3 +271,40 @@ function InlineError({ message, onRetry }: { message: string; onRetry: () => voi
 8. Match error page design to the site's overall aesthetic
 9. For Astro: create `src/pages/404.astro` (Astro serves this automatically)
 10. Use `loading.tsx` in Next.js for Suspense fallbacks between error states
+
+## Archetype Variants for Error Pages
+
+Error pages are an opportunity for personality. A 404 page IS a design showcase:
+
+| Archetype | Headline | Subhead | Visual | CTA Style |
+|-----------|----------|---------|--------|-----------|
+| **Brutalist** | `"404."` (giant mono, 120px+) | "This page doesn't exist." | None. Typography only. | `rounded-none border-2 border-black` |
+| **Ethereal** | "Lost in the mist" | "This page has drifted away. Let us guide you home." | Soft gradient orb animation | `rounded-full bg-white/10 backdrop-blur` |
+| **Kinetic** | "Whoa, wrong turn!" | "This page bounced somewhere else." | Bouncing 404 animation (spring physics) | `rounded-lg` with bounce hover |
+| **Editorial** | "Page not found" | "The story you're looking for isn't here." | Clean serif type, rule line divider | `underline-offset-4 hover:underline` |
+| **Neo-Corporate** | "Page not found" | "The page you requested could not be located." | Minimal illustration | Standard button |
+| **Playful/Startup** | "Oops! We looked everywhere" | "This page is playing hide and seek." | Fun illustration or animated character | Colorful filled button |
+| **Japanese Minimal** | "404" | "Nothing here." | Extreme whitespace. One element. | Small text link |
+| **Luxury/Fashion** | "We can't find that page" | "Perhaps you'd like to explore our latest collection." | Full-bleed fashion photography | Outlined uppercase link |
+| **Neon Noir** | "ERROR::404" | "Signal lost. Node doesn't exist." | Glitch animation, scan lines | Glowing border button |
+| **Dark Academia** | "The page you seek has been lost to time" | "Like a misplaced manuscript, it may surface again." | Candlelight flicker, aged paper texture | Serif text link |
+
+### Empty State Variants
+
+| Archetype | Illustration Style | Tone | CTA Approach |
+|-----------|-------------------|------|-------------|
+| Brutalist | None. Text only. | Blunt: "No data." | Direct link, no wrapping |
+| Ethereal | Soft abstract shapes | Gentle: "Nothing here yet..." | Soft CTA with invitation |
+| Neo-Corporate | Clean line illustration | Professional: "No results found" | Standard action button |
+| Playful | Colorful character/mascot | Encouraging: "Ready to get started?" | Prominent colorful CTA |
+| Luxury | Minimal monochrome | Refined: "Your collection awaits" | Subtle text CTA |
+
+### Error Page Conversion Optimization
+
+Error pages should RETAIN users, not lose them:
+
+1. **Search bar on 404** — Let users search for what they wanted
+2. **Popular pages list** — Show 3-5 most-visited pages as navigation alternatives
+3. **Category links** — If the broken URL hints at a category, show that category's content
+4. **Contact/support CTA** — "Can't find what you need? Chat with us" reduces frustration bounce
+5. **Humor calibration** — Match archetype. Brutalist: zero humor. Playful: lots. Luxury: refined wit only.

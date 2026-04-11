@@ -178,3 +178,36 @@ import { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator } from '@/comp
 6. Show loading state on submit buttons
 7. Center auth cards vertically and horizontally
 8. Keep forms simple - social auth first, then email/password
+
+## Archetype Variants
+
+Auth pages are the FIRST thing users interact with. They must express archetype personality:
+
+| Archetype | Card Style | Background | Input Style | CTA | Social Auth |
+|-----------|-----------|------------|-------------|-----|-------------|
+| **Brutalist** | `rounded-none border-2 border-black` | Solid bg color, no image | `rounded-none border-2 border-black` | `rounded-none bg-black text-white font-mono uppercase` | Text-only links, no icons |
+| **Ethereal** | `rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10` | Soft gradient orbs | `rounded-xl bg-white/5 border-white/10` | `rounded-full bg-white/10 backdrop-blur` | Outlined circles with icons |
+| **Neo-Corporate** | `rounded-xl shadow-lg bg-white` | Clean gradient or solid | `rounded-lg border` (standard) | `rounded-lg bg-primary text-white` | Standard shadcn buttons |
+| **Luxury/Fashion** | `rounded-none border-b border-gold/30 bg-transparent` | Full-bleed editorial photo | `rounded-none border-b border-current bg-transparent` | `rounded-none uppercase tracking-[0.2em] text-sm` | Minimal text links |
+| **Japanese Minimal** | `rounded-sm bg-transparent max-w-sm` | White with extreme margin | `rounded-sm border` | `rounded-sm text-sm` | Text-only, single column |
+| **Neon Noir** | `rounded-lg border border-cyan/20 bg-black/80` | Dark with neon accent lines | `rounded-lg bg-black border border-cyan/10` | `rounded-lg border border-cyan shadow-[0_0_15px_cyan/20]` | Outlined with glow |
+| **Playful/Startup** | `rounded-2xl shadow-xl bg-white p-8` | Colorful gradient or illustration | `rounded-xl` | `rounded-xl bg-primary text-white text-lg` | Colorful brand buttons |
+| **Dark Academia** | `rounded-lg bg-amber-950/5 border border-amber-900/10` | Aged paper texture or library photo | `rounded-md bg-amber-50/50` | `rounded-md bg-amber-900 text-amber-50` | Serif text links |
+
+### Auth Page Layout Per Archetype
+
+| Archetype | Layout | Card Width | Extras |
+|-----------|--------|-----------|--------|
+| Split-screen (Luxury, Editorial) | Photo left (60%), form right (40%) | Full right column | Editorial image, brand statement on left |
+| Centered card (Neo-Corp, Playful) | Centered card on subtle bg | `max-w-md` | Logo above card, trust badges below |
+| Full-page minimal (Japanese, Swiss) | Centered form, no card border | `max-w-sm` | Extreme whitespace, logo only |
+| Dark immersive (Neon Noir, Dark Academia) | Centered card on dark bg | `max-w-lg` | Ambient glow or texture behind |
+
+## Conversion Psychology for Auth
+
+1. **Social auth FIRST** — reduces friction by 40%. Users see social buttons before email/password form.
+2. **Single-column layout** — 89% task completion vs multi-column forms.
+3. **"Sign up" not "Register"** — friendlier language converts 15% better.
+4. **Show password toggle** — reduces password errors by 60%.
+5. **Risk reversal below CTA** — "No credit card required" or "Free forever" directly under the signup button.
+6. **Progress indication for multi-step** — shows "Step 1 of 3" to set expectations and reduce abandonment.

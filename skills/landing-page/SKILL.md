@@ -403,3 +403,65 @@ import { WaitlistSection } from '../components/WaitlistSection'
 11. **Changelog**: Timeline with version badges — shows the product is actively developed
 12. **Waitlist**: Email capture + social proof count + no-spam reassurance
 13. **Astro**: Use static rendering for content, islands for interactive elements
+
+## Archetype Variants (Per-Section Adaptation)
+
+The same landing page section must look DIFFERENT per archetype. A Brutalist hero and a Luxury hero are completely different experiences:
+
+### Hero Section Variants
+
+| Archetype | Layout | Typography | CTA Style | Visual Treatment |
+|-----------|--------|------------|-----------|-----------------|
+| **Brutalist** | Full-width, no container | Mono/display at 80-120px, uppercase | `rounded-none border-2 border-black shadow-[4px_4px_0_black]` | Raw, no image, text IS the visual |
+| **Ethereal** | Centered, generous whitespace | Light weight serif, 48-64px, lowercase | `rounded-full bg-white/10 backdrop-blur` | Soft gradient orbs, floating elements |
+| **Kinetic** | Asymmetric split, off-center | Bold sans, animated weight on scroll | `rounded-lg` with spring hover animation | Motion-heavy entrance, parallax layers |
+| **Editorial** | Left-aligned, narrow column | Large serif headline, small sans body | `rounded-sm underline-offset-4 hover:underline` | Clean, photographic, minimal decoration |
+| **Neo-Corporate** | Split screen, product right | Clean sans, 40-56px, professional | `rounded-lg bg-primary text-white shadow-lg` | Product screenshot in device frame |
+| **Luxury/Fashion** | Full-bleed image, centered text overlay | Thin serif, extra letter-spacing | `rounded-none border border-white/30 tracking-widest uppercase text-sm` | Editorial photography, dark overlay |
+| **Japanese Minimal** | Centered, extreme whitespace | Display font at moderate size, precise tracking | `rounded-sm text-sm` (minimal) | Almost nothing. Typography + void. |
+| **Neon Noir** | Dark, full-bleed | Mono or geometric sans, glow text-shadow | `rounded-lg border border-cyan/30 shadow-[0_0_20px_cyan/20]` | Neon accents, dark base, glow |
+
+### Pricing Table Variants
+
+| Archetype | Card Style | Badge | Popular Highlight | CTA |
+|-----------|-----------|-------|-------------------|-----|
+| Brutalist | `rounded-none border-2 border-black` | Raw text badge, no rounded | Thick border + scale-100 (no lift) | Filled black, mono text |
+| Ethereal | `rounded-2xl bg-white/5 backdrop-blur border border-white/10` | Soft pill badge | Subtle glow border | Rounded-full, soft |
+| Neo-Corporate | `rounded-xl shadow-md border` | Standard pill badge | Primary border + shadow-xl + scale-105 | Filled primary, professional |
+| Luxury | `rounded-none border-b border-gold/30` | Gold text, no background | Gold left border accent | Outlined, uppercase, tracking-wide |
+
+### Testimonial Variants
+
+| Archetype | Card Shape | Quote Style | Avatar | Layout |
+|-----------|-----------|------------|--------|--------|
+| Brutalist | Square, heavy border | Raw text, no quotes | Square avatar, grayscale | Single column, stacked |
+| Ethereal | Rounded-2xl, glass effect | Italic serif, open-quote glyph | Rounded avatar, soft shadow | Horizontal scroll, 3 cards |
+| Editorial | No card, minimal divider | Large opening quote mark, serif | Small circular, inline with name | Magazine-style pull quotes |
+| Playful | Colorful cards, slight rotation | Casual text, emoji accents | Rounded with colored border | Masonry or carousel |
+
+## Conversion Psychology Quick-Reference
+
+| Principle | Application in Landing Page | Section |
+|-----------|---------------------------|---------|
+| **Anchoring** | Show highest price first, then the "recommended" plan seems reasonable | Pricing |
+| **Social proof** | Logos, testimonials, user counts near CTAs | Trust bar, Testimonials |
+| **Loss aversion** | "Don't miss out" messaging, countdown timers (use sparingly) | CTA, Waitlist |
+| **Reciprocity** | Free tools, free tier, free content before asking for signup | Demo, Resources |
+| **Scarcity** | Limited seats, limited-time pricing, exclusive access | Waitlist, Pricing |
+| **Authority** | Expert testimonials, certifications, press logos ("as seen in") | Trust bar |
+| **Commitment/consistency** | Multi-step forms (start small, then expand) | Forms, Onboarding |
+| **Von Restorff (isolation)** | CTA as single highest-contrast element on page | Hero, CTA section |
+| **Endowment effect** | "Start MY trial" (first-person = mental ownership) | All CTAs |
+| **Peak-end rule** | Strong hero (peak) + compelling close (end) = positive memory | Hero + CTA section |
+
+## Above-the-Fold Checklist
+
+Before shipping any landing page, verify these are visible without scrolling:
+
+- [ ] Clear headline (max 10 words, outcome-driven)
+- [ ] Subhead clarifying audience or use case (1-2 lines)
+- [ ] ONE primary CTA (high contrast, benefit-driven copy)
+- [ ] ONE proof element (logo strip, metric, or testimonial snippet)
+- [ ] Navigation does NOT compete with the CTA visually
+- [ ] LCP under 2 seconds (preload hero image/font)
+- [ ] No layout shift in the fold zone (explicit width/height on all elements)
