@@ -305,3 +305,75 @@ className="motion-safe:animate-[spin_4s_linear_infinite]"
 
 // Hover glow is fine — it's user-initiated, not auto-playing
 ```
+
+## 3D Bloom Glow (React Three Fiber)
+
+For 3D scenes, glow is achieved via the Bloom post-processing effect, not CSS box-shadow:
+
+```tsx
+import { EffectComposer, Bloom } from '@react-three/postprocessing';
+
+// Emissive materials produce bloom when their value exceeds luminanceThreshold
+<mesh>
+  <sphereGeometry args={[1, 32, 32]} />
+  <meshStandardMaterial
+    color={dna.primary}
+    emissive={dna.glow}
+    emissiveIntensity={2.0}  // Values > 1 push above bloom threshold
+  />
+</mesh>
+
+<EffectComposer>
+  <Bloom
+    luminanceThreshold={0.9}  // Only emit bloom for bright fragments
+    luminanceSmoothing={0.025}
+    intensity={0.5}
+    mipmapBlur              // Softer, more natural bloom spread
+  />
+</EffectComposer>
+```
+
+**Key principle:** In 3D, glow is EMISSIVE light, not shadow layers. Set `emissiveIntensity > 1` on meshes that should glow, and use Bloom post-processing to spread the light.
+
+## Per-Archetype Glow Palettes
+
+Not all archetypes use glow. This table maps glow tokens and intensity per archetype:
+
+| Archetype | Glow Color Source | Intensity | Layers | CSS Pattern | 3D Bloom |
+|-----------|------------------|-----------|--------|-------------|----------|
+| **Neon Noir** | `--color-glow` (neon cyan/magenta) | Maximum | 3 (inner + mid + outer) | `0 0 10px, 0 0 30px, 0 0 60px` | `intensity: 0.8, threshold: 0.6` |
+| **Glassmorphism** | `--color-accent` (frosted tint) | Medium | 2 (inner + outer) | `0 0 8px, 0 0 24px` | `intensity: 0.4, threshold: 0.8` |
+| **AI-Native** | `--color-primary` (data blue) | High | 2 (pulse + ambient) | `0 0 12px, 0 0 40px` | `intensity: 0.6, threshold: 0.7` |
+| **Ethereal** | `--color-accent` (soft iridescent) | Low | 1 (soft ambient) | `0 0 30px` at 0.15 opacity | `intensity: 0.3, threshold: 0.85` |
+| **Dark Academia** | `--color-highlight` (candlelight) | Minimal | 1 (warm inner) | `0 0 6px` warm amber | `intensity: 0.2, threshold: 0.9` |
+| **Kinetic** | `--color-primary` (electric) | Medium | 1 (sharp) | `0 0 4px` high opacity | `intensity: 0.4, threshold: 0.85` |
+| **Vaporwave** | `--color-glow` (pink/purple) | High | 3 (retro neon) | `0 0 8px, 0 0 20px, 0 0 50px` | `intensity: 0.7, threshold: 0.65` |
+| **Brutalist** | none | Zero | 0 | No glow. Ever. | No bloom. |
+| **Swiss/International** | none | Zero | 0 | No glow. | No bloom. |
+| **Japanese Minimal** | none | Zero | 0 | No glow. | No bloom. |
+| **Warm Artisan** | `--color-highlight` (warm) | Minimal | 1 (warm) | `0 0 8px` at 0.1 opacity | No bloom. |
+| **Neo-Corporate** | `--color-primary` | Minimal | 1 (professional) | `0 0 6px` at 0.15 opacity | `intensity: 0.2, threshold: 0.9` |
+| **Luxury/Fashion** | `--color-signature` (gold) | Low | 1 (elegant) | `0 0 12px` at 0.1 opacity | `intensity: 0.3, threshold: 0.85` |
+
+**Rule:** If archetype glow is "Zero" or "none," do NOT add glow effects even if they "look cool." The archetype personality forbids it.
+
+## SVG Filter Glow
+
+For SVG elements, use `<filter>` instead of CSS `box-shadow`:
+
+```svg
+<svg>
+  <defs>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feFlood flood-color="var(--color-glow)" flood-opacity="0.6" result="color" />
+      <feComposite in="color" in2="blur" operator="in" result="glow" />
+      <feMerge>
+        <feMergeNode in="glow" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+  <circle cx="50" cy="50" r="20" fill="var(--color-primary)" filter="url(#glow)" />
+</svg>
+```

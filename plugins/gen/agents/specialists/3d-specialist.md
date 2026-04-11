@@ -1,7 +1,7 @@
 ---
 name: 3d-specialist
 description: "Implements sections requiring Three.js, React Three Fiber, Spline embeds, or WebGL shaders with progressive enhancement and performance budgets. Enhanced section-builder variant with embedded 3D domain knowledge. Receives all context via spawn prompt from build-orchestrator (full Design DNA, beat assignment, content, quality rules). Reads exactly one file (PLAN.md). Writes production-ready TSX code and machine-readable SUMMARY.md."
-tools: Read, Write, Edit, Bash, Grep, Glob
+tools: Read, Write, Edit, Bash, Grep, Glob, mcp__nano-banana__generate_image, mcp__nano-banana__edit_image, mcp__nano-banana__continue_editing, mcp__nano-banana__get_last_image_info
 model: inherit
 maxTurns: 30
 ---
@@ -511,3 +511,53 @@ When your 3D section includes surrounding UI (text overlays, CTAs, navigation el
 - Use those components for all non-3D UI elements in your section
 - Do NOT create custom button/heading/badge components when shared ones exist
 - If a shared component needs a variant (e.g., transparent background over 3D canvas), extend it with a className prop rather than creating a new component
+
+### AI Texture Generation (Nano-Banana MCP)
+
+When the nano-banana MCP server is available, use it to generate custom textures for 3D scenes:
+
+**Diffuse/albedo texture:**
+```
+mcp__nano-banana__generate_image({
+  prompt: "Seamless tileable PBR diffuse texture, [archetype_texture_modifier],
+           dominant color [DNA primary hex]. No objects, no text, uniform surface."
+})
+```
+
+**Normal map (from diffuse):**
+```
+mcp__nano-banana__edit_image({
+  imagePath: "path/to/diffuse.png",
+  prompt: "Convert to a normal map. Blue-purple height map encoding surface detail.
+           Maintain all texture features but represent them as surface normals."
+})
+```
+
+**Environment/background:**
+```
+mcp__nano-banana__generate_image({
+  prompt: "360-degree equirectangular environment map for 3D scene lighting.
+           [archetype_mood] atmosphere. [DNA color palette description].
+           Seamless horizontal wrap. HDR-style high dynamic range."
+})
+```
+
+**Error handling:** If nano-banana is unavailable or rate-limited, fall back to drei `<Environment preset="..." />` with the closest archetype-matched preset. Document the fallback in SUMMARY.md.
+
+### Post-Processing Stack Per Archetype
+
+When implementing post-processing, reference the effect stack from the `3d-asset-generation` skill:
+
+1. Apply archetype-matched presets (Bloom intensity, Noise level, Vignette darkness)
+2. Set `renderer.toneMapping = THREE.NoToneMapping` when using EffectComposer (it handles tone mapping)
+3. ToneMapping effect MUST be last in the composer chain
+4. On tablet tier: disable all post-processing (geometry + materials only)
+5. On mobile: no canvas at all (static fallback)
+
+### WebGPU Readiness
+
+For projects targeting Modern compat tier:
+- Three.js r171+ supports `WebGPURenderer` with automatic WebGL 2 fallback
+- TSL (Three.js Shading Language) compiles to both GLSL and WGSL
+- If using custom GLSL shaders, they still work via the WebGL fallback path
+- Do NOT use WebGPU-only features unless the project explicitly targets WebGPU

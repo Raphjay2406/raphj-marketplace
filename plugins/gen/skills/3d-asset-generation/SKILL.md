@@ -473,6 +473,398 @@ export function Hero3D({ fallbackSrc }: { fallbackSrc: string }) {
 - **Basement Studio** (basement.studio) -- Heavy procedural geometry with noise displacement, R3F post-processing, and crystal-clear LOD management.
 - **Atmos** (atmos.style) -- AI-generated textures applied to 3D surfaces in real time, demonstrating the AI-assisted asset pipeline.
 
+## Shader Library (GLSL Code Reference)
+
+### Noise Displacement Vertex Shader
+
+```glsl
+// vertex shader — simplex noise displacement on any mesh
+uniform float uTime;
+uniform float uIntensity; // 0.1 (subtle) to 0.5 (dramatic)
+uniform float uFrequency; // 1.0 (smooth) to 4.0 (detailed)
+
+// Simplex noise function (paste snoise3 here or import)
+// ... (use lygia/generative/snoise or custom implementation)
+
+void main() {
+  vec3 pos = position;
+  float noise = snoise(pos * uFrequency + uTime * 0.3);
+  pos += normal * noise * uIntensity;
+  gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+}
+```
+
+**R3F integration via three-custom-shader-material (CSM v6.x):**
+```tsx
+import CustomShaderMaterial from 'three-custom-shader-material/vanilla';
+
+const material = new CustomShaderMaterial({
+  baseMaterial: THREE.MeshPhysicalMaterial,
+  vertexShader: `
+    uniform float uTime;
+    uniform float uIntensity;
+    void main() {
+      float noise = sin(position.x * 3.0 + uTime) * sin(position.y * 3.0 + uTime * 0.7);
+      csm_Position = position + normal * noise * uIntensity;
+    }
+  `,
+  uniforms: {
+    uTime: { value: 0 },
+    uIntensity: { value: 0.2 },
+  },
+  color: new THREE.Color(dna.primary),
+  roughness: 0.3,
+  metalness: 0.7,
+});
+```
+
+### Holographic/Iridescent Fragment Shader
+
+```glsl
+// fragment shader — Fresnel-based iridescence
+uniform float uFresnelPower;   // 2.0-4.0
+uniform float uStripeFreq;     // 30.0-50.0 (animated stripes)
+uniform float uTime;
+uniform vec3 uBaseColor;       // DNA primary
+
+varying vec3 vNormal;
+varying vec3 vViewDir;
+
+void main() {
+  float fresnel = pow(1.0 - dot(vNormal, vViewDir), uFresnelPower);
+  // Rainbow hue shift based on view angle
+  vec3 rainbow = vec3(
+    sin(fresnel * 6.28 + 0.0) * 0.5 + 0.5,
+    sin(fresnel * 6.28 + 2.09) * 0.5 + 0.5,
+    sin(fresnel * 6.28 + 4.18) * 0.5 + 0.5
+  );
+  // Animated scan stripes
+  float stripes = sin(vNormal.y * uStripeFreq + uTime * 2.0) * 0.5 + 0.5;
+  vec3 color = mix(uBaseColor, rainbow, fresnel * 0.6) + stripes * 0.05;
+  gl_FragColor = vec4(color, 0.9);
+}
+```
+
+### Liquid/Fluid Vertex Shader
+
+```glsl
+uniform float uTime;
+uniform float uSpeed;      // 0.5-2.0
+uniform float uAmplitude;  // 0.1-0.3
+
+void main() {
+  vec3 pos = position;
+  // Multi-wave displacement
+  pos.x += sin(pos.y * 4.0 + uTime * uSpeed) * uAmplitude;
+  pos.y += sin(pos.x * 3.0 + uTime * uSpeed * 0.7) * uAmplitude * 0.8;
+  pos.z += cos(pos.x * 2.0 + pos.y * 2.0 + uTime * uSpeed * 0.5) * uAmplitude * 0.5;
+  csm_Position = pos;
+}
+```
+
+### Crystal Refraction (MeshPhysicalMaterial)
+
+```tsx
+// No custom shader needed — MeshPhysicalMaterial handles crystal natively
+<meshPhysicalMaterial
+  color={dna.primary}
+  transmission={0.95}        // Transparency
+  thickness={2.0}            // Refraction depth
+  ior={2.33}                 // Index of refraction (diamond=2.42, glass=1.5, crystal=2.0-2.4)
+  roughness={0.05}
+  clearcoat={1.0}
+  clearcoatRoughness={0.1}
+  envMapIntensity={1.5}
+  attenuationColor={dna.accent}
+  attenuationDistance={0.5}
+/>
+```
+
+---
+
+## Post-Processing Effect Stack
+
+**Correct effect order (order matters — earlier effects feed into later ones):**
+
+```tsx
+import { EffectComposer, Bloom, ChromaticAberration, Noise, Vignette, ToneMapping } from '@react-three/postprocessing';
+import { ToneMappingMode } from 'postprocessing';
+
+<EffectComposer>
+  {/* 1. Bloom (luminance-based glow) */}
+  <Bloom luminanceThreshold={0.9} luminanceSmoothing={0.025} intensity={0.5} mipmapBlur />
+  {/* 2. Chromatic Aberration (subtle, radial) */}
+  <ChromaticAberration offset={[0.002, 0.002]} radialModulation />
+  {/* 3. Film Grain */}
+  <Noise opacity={0.02} />
+  {/* 4. Vignette */}
+  <Vignette eskil={false} offset={0.1} darkness={0.5} />
+  {/* 5. Tone Mapping (ALWAYS LAST) */}
+  <ToneMapping mode={ToneMappingMode.AGX} />
+</EffectComposer>
+```
+
+**Per-archetype post-processing presets:**
+
+| Archetype | Bloom | Noise | Vignette | ChromAb | Tone Map |
+|-----------|-------|-------|----------|---------|----------|
+| Neon Noir | `intensity: 0.8, threshold: 0.6` | `0.015` | `darkness: 0.7` | `[0.003, 0.003]` | AGX |
+| Ethereal | `intensity: 0.4, threshold: 0.85` | `0.01` | `darkness: 0.3` | `[0.001, 0.001]` | ACES |
+| Glassmorphism | `intensity: 0.3, threshold: 0.8` | none | `darkness: 0.2` | none | ACES |
+| Brutalist | none | `0.04` | `darkness: 0.6` | none | LINEAR |
+| Dark Academia | `intensity: 0.2, threshold: 0.9` | `0.05` | `darkness: 0.8` | none | AGX |
+| Luxury/Fashion | `intensity: 0.3, threshold: 0.85` | none | `darkness: 0.4` | none | ACES |
+| Japanese Minimal | none | none | `darkness: 0.15` | none | ACES |
+| AI-Native | `intensity: 0.6, threshold: 0.7` | none | none | `[0.002, 0.002]` | AGX |
+| Swiss/International | none | none | none | none | LINEAR |
+
+---
+
+## HDRI Environment Loading
+
+```tsx
+import { Environment } from '@react-three/drei';
+
+// Preset-based (instant, no download)
+<Environment preset="studio" />  // Product viewers, neutral
+<Environment preset="city" />    // Urban, Neon Noir
+<Environment preset="sunset" />  // Warm, Organic, Warm Artisan
+<Environment preset="dawn" />    // Ethereal, soft
+<Environment preset="night" />   // Dark Academia, moody
+<Environment preset="warehouse" /> // Brutalist, industrial
+
+// Custom HDRI (higher quality, larger download)
+<Environment files="/hdri/studio-soft.hdr" />
+
+// Per-archetype environment preset mapping:
+// Brutalist → warehouse | Ethereal → dawn | Kinetic → city
+// Neon Noir → night | Luxury → studio | Japanese Minimal → dawn
+// Dark Academia → night | Warm Artisan → sunset | AI-Native → city
+```
+
+---
+
+## GPU Particle Systems
+
+### Pattern 1: InstancedMesh Particles (up to 50K)
+
+```tsx
+function ParticleField({ count = 5000, dna }) {
+  const meshRef = useRef<THREE.InstancedMesh>(null);
+  const dummy = useMemo(() => new THREE.Object3D(), []);
+
+  useEffect(() => {
+    if (!meshRef.current) return;
+    for (let i = 0; i < count; i++) {
+      dummy.position.set(
+        (Math.random() - 0.5) * 20,
+        (Math.random() - 0.5) * 20,
+        (Math.random() - 0.5) * 20
+      );
+      dummy.scale.setScalar(Math.random() * 0.05 + 0.01);
+      dummy.updateMatrix();
+      meshRef.current.setMatrixAt(i, dummy.matrix);
+    }
+    meshRef.current.instanceMatrix.needsUpdate = true;
+  }, [count]);
+
+  useFrame(({ clock }) => {
+    if (!meshRef.current) return;
+    for (let i = 0; i < count; i++) {
+      meshRef.current.getMatrixAt(i, dummy.matrix);
+      dummy.matrix.decompose(dummy.position, dummy.quaternion, dummy.scale);
+      dummy.position.y += Math.sin(clock.elapsedTime + i * 0.1) * 0.002;
+      dummy.updateMatrix();
+      meshRef.current.setMatrixAt(i, dummy.matrix);
+    }
+    meshRef.current.instanceMatrix.needsUpdate = true;
+  });
+
+  return (
+    <instancedMesh ref={meshRef} args={[undefined, undefined, count]}>
+      <sphereGeometry args={[1, 8, 8]} />
+      <meshStandardMaterial color={dna.accent} emissive={dna.glow} emissiveIntensity={0.5} />
+    </instancedMesh>
+  );
+}
+```
+
+### Pattern 2: drei Sparkles (Quick Atmospheric)
+
+```tsx
+import { Sparkles } from '@react-three/drei';
+
+<Sparkles count={200} scale={10} size={2} speed={0.3}
+  color={dna.accent} opacity={0.5} />
+```
+
+---
+
+## GLTF Optimization CLI Commands
+
+```bash
+# Install
+npm install -g @gltf-transform/cli
+
+# Full pipeline (recommended)
+gltf-transform optimize input.glb output.glb \
+  --compress draco \
+  --texture-compress webp
+
+# Step-by-step for fine control:
+# 1. Validate
+npx gltf-validator input.glb
+
+# 2. Deduplicate + clean
+gltf-transform dedup input.glb step1.glb
+gltf-transform prune step1.glb step2.glb
+
+# 3. Geometry compression
+gltf-transform draco step2.glb step3.glb --method edgebreaker
+
+# 4. Texture compression (choose based on target)
+gltf-transform webp step3.glb final.glb --quality 80    # Broad compatibility
+gltf-transform uastc step3.glb final.glb --level 2       # GPU-native (KTX2)
+
+# 5. Resize oversized textures
+gltf-transform resize final.glb final.glb --width 1024 --height 1024
+```
+
+**Target sizes after optimization:**
+
+| Asset Type | Max File Size | Geometry Compression | Texture Format |
+|-----------|--------------|---------------------|----------------|
+| Hero model | 2-5 MB | Draco | KTX2 UASTC |
+| Background prop | 500 KB - 1 MB | Meshopt | WebP |
+| UI element/icon | < 500 KB | Low-poly (no compression needed) | None |
+| Full scene total | < 10 MB | Mixed | Mixed |
+
+---
+
+## Texture Format Reference
+
+| Format | Use Case | Compression | GPU-Native | Browser Support |
+|--------|----------|-------------|-----------|-----------------|
+| **PNG** | Alpha masks, UI elements | Lossless | No (CPU decode) | Universal |
+| **WebP** | Photos, diffuse maps | Lossy 80-90% | No (CPU decode) | 97%+ |
+| **AVIF** | Photos (better than WebP) | Lossy 50-80% | No (CPU decode) | 93%+ |
+| **KTX2 ETC1S** | Diffuse, AO maps | Lossy, small | Yes (GPU direct) | Via Three.js loader |
+| **KTX2 UASTC** | Normal maps, high-quality | Near-lossless | Yes (GPU direct) | Via Three.js loader |
+| **EXR/HDR** | HDRI environment maps | Float precision | Special handling | Via Three.js loader |
+
+**KTX2 loader setup in R3F:**
+```tsx
+import { useLoader } from '@react-three/fiber';
+import { KTX2Loader } from 'three/examples/jsm/loaders/KTX2Loader';
+import { BasisTextureLoader } from 'three/examples/jsm/loaders/BasisTextureLoader';
+
+// KTX2 textures require basis_transcoder WASM
+// drei's useTexture handles this automatically for .ktx2 files
+```
+
+---
+
+## AI-to-3D Asset Workflow
+
+**Text → 3D Model → Optimized GLB → R3F Scene:**
+
+```
+1. Generate 3D model via Meshy AI or Tripo 3D (text/image → GLB)
+   - Prompt: "[archetype_style] [object description] for web, low-poly optimized, PBR materials"
+   - Export as GLB
+
+2. Optimize with gltf-transform:
+   gltf-transform optimize model.glb model-opt.glb --compress draco --texture-compress webp
+
+3. Validate size budget:
+   gltf-transform inspect model-opt.glb
+   # Verify: triangles < 50K, textures < 2048px, file < 5MB
+
+4. Load in R3F:
+   const { scene } = useGLTF('/models/model-opt.glb')
+   <primitive object={scene} />
+
+5. Apply DNA colors at runtime:
+   scene.traverse(child => {
+     if (child.isMesh) {
+       child.material.color.set(dna.primary);
+       child.material.emissive.set(dna.glow);
+     }
+   });
+```
+
+**AI Texture Generation via Nano-Banana:**
+```
+1. mcp__nano-banana__generate_image({
+     prompt: "Seamless PBR diffuse texture, [archetype_texture_modifier], tileable,
+              dominant color [DNA primary hex], subtle variation. No seams, no objects."
+   })
+2. Use generated PNG as diffuse map on MeshStandardMaterial
+3. For normal maps: mcp__nano-banana__edit_image({
+     imagePath: "diffuse.png",
+     prompt: "Convert to a normal map (blue-purple height map). Preserve surface detail."
+   })
+```
+
+---
+
+## WebGPU Forward Path
+
+**Current status (April 2026):** WebGPU has ~95% browser support. Three.js r171+ includes production-ready WebGPU renderer.
+
+**Two-line migration:**
+```tsx
+// Old (WebGL)
+import * as THREE from 'three';
+const renderer = new THREE.WebGLRenderer();
+
+// New (WebGPU with automatic WebGL fallback)
+import { WebGPURenderer } from 'three/webgpu';
+const renderer = new WebGPURenderer(); // Falls back to WebGL automatically
+```
+
+**TSL (Three.js Shading Language) — replaces GLSL for cross-backend:**
+```tsx
+import { color, positionLocal, normalLocal, sin, timerLocal, float } from 'three/tsl';
+
+// Node-based material (compiles to both GLSL and WGSL)
+const material = new THREE.MeshPhysicalNodeMaterial();
+material.colorNode = color(dna.primary);
+material.positionNode = positionLocal.add(
+  normalLocal.mul(sin(timerLocal().mul(2.0)).mul(float(0.1)))
+);
+```
+
+**Recommendation:** New projects targeting Modern compat tier should use WebGPU renderer with auto-fallback. Existing GLSL shaders continue to work via the WebGL fallback path. TSL is optional but future-proof.
+
+---
+
+## drei Essential Helper Reference
+
+| Helper | Purpose | When to Use |
+|--------|---------|------------|
+| `useGLTF` | Load GLTF/GLB with Draco support | Every model load |
+| `Environment` | HDRI lighting (preset or custom) | Every scene |
+| `Float` | Floating animation wrapper | Ambient motion |
+| `ContactShadows` | Ground shadows without shadow maps | Product viewers |
+| `Html` | HTML overlay in 3D space | Labels, tooltips |
+| `Detailed` | LOD management | Models with multiple detail levels |
+| `AdaptiveDpr` | Auto-adjust pixel ratio for performance | Performance-sensitive scenes |
+| `useProgress` | Track loading state | Loading screens |
+| `PresentationControls` | Drag-to-rotate with spring physics | Product viewers |
+| `ScrollControls` | Scroll-driven camera/object animation | Scroll storytelling |
+| `MeshTransmissionMaterial` | Glass/crystal with refraction | Glassmorphism, crystals |
+| `MeshReflectorMaterial` | Reflective surfaces | Showrooms, luxury |
+| `MeshDistortMaterial` | Noise-based mesh distortion | Organic blobs |
+| `Sparkles` | Floating sparkle particles | Atmospheric effects |
+| `Stars` | Star field background | Space scenes, Neon Noir |
+| `Text3D` | Extruded 3D text | Hero typography, brand marks |
+| `Center` | Auto-center geometry | Model alignment |
+| `Bounds` | Auto-fit camera to scene | Product viewers |
+| `CameraControls` | Advanced camera controls | Interactive scenes |
+
+---
+
 ## Layer 3: Integration Context
 
 ### DNA Connection

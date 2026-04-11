@@ -340,6 +340,87 @@ Or use `mcp__nano-banana__continue_editing` for AI-based color correction:
  quality of the target palette."
 ```
 
+## Image Format Decision Guide
+
+Choose the right format for every image type:
+
+| Image Type | Primary Format | Fallback | Compression | Max Size |
+|-----------|---------------|----------|-------------|----------|
+| **Hero background** | AVIF (best compression) | WebP → JPEG | lossy 70-80% | 200KB |
+| **Product photography** | WebP | JPEG | lossy 80-85% | 150KB |
+| **Illustration** | WebP (flat) or SVG (vector) | PNG | lossy 80% | 100KB |
+| **Icon** | SVG (inline via SVGR) | -- | N/A | 5KB |
+| **Logo** | SVG | PNG | lossless | 10KB |
+| **OG/Social** | PNG (Satori) | -- | lossless | 200KB |
+| **Favicon** | SVG + ICO | PNG | mixed | 5KB each |
+| **Texture (3D)** | KTX2 (GPU) | WebP | GPU-native | per 3D budget |
+| **AI-generated** | WebP (from PNG source) | JPEG | lossy 80% | 200KB |
+
+### AVIF Support
+
+AVIF offers 30-50% better compression than WebP with near-identical visual quality. Use it as primary format with WebP fallback:
+
+```tsx
+// Next.js: automatic AVIF negotiation
+// next.config.js
+module.exports = {
+  images: {
+    formats: ['image/avif', 'image/webp'], // AVIF first, WebP fallback
+  },
+};
+
+// Astro: explicit AVIF
+import { Image } from 'astro:assets';
+<Image src={hero} format="avif" quality={70} alt="Hero" />
+
+// Manual <picture> for maximum control
+<picture>
+  <source srcSet="/hero.avif" type="image/avif" />
+  <source srcSet="/hero.webp" type="image/webp" />
+  <img src="/hero.jpg" alt="Hero" width={1600} height={900} loading="eager" />
+</picture>
+```
+
+### Build-Time Image Optimization
+
+```bash
+# Sharp CLI for batch optimization
+npx sharp-cli --input "public/images/*.png" --output "public/images/optimized/" \
+  --format webp --quality 80
+
+# AVIF conversion
+npx sharp-cli --input "public/images/*.png" --output "public/images/optimized/" \
+  --format avif --quality 65
+
+# Squoosh CLI (alternative)
+npx @squoosh/cli --avif '{quality: 65}' --webp '{quality: 80}' public/images/*.png
+```
+
+### Content-Aware Mobile Cropping
+
+For AI-generated images, generate mobile-specific compositions via nano-banana:
+
+```
+mcp__nano-banana__edit_image({
+  imagePath: "public/images/hero-desktop.png",
+  prompt: "Recompose this image for portrait (9:16) mobile layout.
+           Keep the central subject in focus and visually prominent.
+           Top 40% must have sufficient negative space for text overlay.
+           Maintain the same mood, colors, and lighting."
+})
+```
+
+For standard images, use CSS `object-position` for smart crops:
+```css
+/* Desktop: full composition */
+.hero-img { object-fit: cover; object-position: center; }
+
+/* Mobile: focus on subject (typically center-top) */
+@media (max-width: 767px) {
+  .hero-img { object-position: center 30%; aspect-ratio: 3/4; }
+}
+```
+
 ## Best Practices
 
 1. OG images: 1200x630px, PNG, edge runtime for fast generation
