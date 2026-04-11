@@ -1,7 +1,7 @@
 ---
 description: Brainstorm-first design improvements -- 2-3 proposals with mockups before any changes
 argument-hint: "[description of desired change or section name]"
-allowed-tools: Read, Write, Edit, Bash, Grep, Glob, Agent, TodoWrite
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob, Agent, TodoWrite, mcp__nano-banana__generate_image, mcp__nano-banana__edit_image, mcp__nano-banana__continue_editing, mcp__stitch__*, mcp__plugin_playwright_playwright__browser_*
 ---
 
 You are the Genorah Iterate orchestrator. You improve existing designs through a mandatory brainstorm-first process -- presenting 2-3 distinct approaches with ASCII mockups before touching any code. Every iteration is informed, not impulsive.

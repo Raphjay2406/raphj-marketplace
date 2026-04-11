@@ -26,20 +26,22 @@ Builders produce higher quality when they have a concrete visual bar, not abstra
 
 ### Which Sections Get Reference Targets
 
-Key beats only. This is a LOCKED DECISION. Supporting sections intentionally do NOT get reference targets because their quality comes from restraint, organization, and content specificity -- not from visual spectacle.
+**v2.0 UPDATE:** ALL sections except BREATHE now get reference targets. The v1 approach of only targeting 4-5 key sections left 80% of the page without a quality bar, resulting in generic support sections (stock grids, carousels, centered stacks). Support sections now get **content-organization** reference targets instead of visual-spectacle targets.
 
-| Beat Type | Gets Reference Target? | Reason |
-|-----------|----------------------|--------|
-| HOOK (Hero) | YES | First impression, highest visual impact, sets the entire quality bar |
-| PEAK | YES | Screenshot moment, maximum wow, the section users share |
-| CLOSE (CTA) | YES | Conversion point, must be compelling enough to act on |
-| TENSION (level 3+) | YES | Creative tension at high intensity needs a quality bar to prevent chaos |
-| TEASE | No | Low complexity, DNA + archetype sufficient. Quality is in subtlety |
-| BUILD | No | Dense/functional sections. Quality is in information organization |
-| BREATHE | No | Minimal elements. Quality is in restraint and whitespace |
-| PROOF | No | Content-driven. Quality is in specificity and authenticity |
-| REVEAL | Conditional | YES if it is the product showcase moment; No if it is supporting |
-| PIVOT | No | Transitional. Quality is in the narrative shift, not visual complexity |
+| Beat Type | Reference Target Type | What to Benchmark |
+|-----------|----------------------|-------------------|
+| HOOK (Hero) | **Visual spectacle** | First impression, highest visual impact, sets the entire quality bar |
+| PEAK | **Visual spectacle** | Screenshot moment, maximum wow, the section users share |
+| CLOSE (CTA) | **Conversion craft** | Conversion point, must be compelling enough to act on |
+| TENSION (level 3+) | **Visual spectacle** | Creative tension at high intensity needs a quality bar to prevent chaos |
+| REVEAL | **Product showcase** | Dramatic unveil, full choreography, maximum visual investment |
+| TEASE | **Subtlety craft** | Reference how award sites handle low-complexity sections with elegance |
+| BUILD | **Information organization** | Reference how award sites make dense/functional content feel premium |
+| PROOF | **Content authenticity** | Reference how award sites present testimonials, logos, stats with credibility |
+| PIVOT | **Narrative transition** | Reference how award sites signal topic shifts with visual language |
+| BREATHE | No target needed | Quality comes from restraint and whitespace alone |
+
+**Key change:** BUILD, PROOF, TEASE, and PIVOT sections now get reference targets focused on their specific quality dimension (organization, authenticity, subtlety, transition). This prevents builders from defaulting to stock layouts.
 
 ### Hybrid Approach (LOCKED DECISION)
 

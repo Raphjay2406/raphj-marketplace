@@ -154,9 +154,12 @@ Maximum 4 builders per wave. If a wave has more than 4 sections, split into sub-
 
 1. **Full Design DNA excerpt** — all 12 color tokens with hex values, display/body/mono fonts, full 8-level type scale, 5-level spacing scale, border radius, shadow system, motion tokens (easing, stagger, durations, enter directions), signature element, forbidden patterns, archetype mandatory techniques, compat tier
 2. **Beat assignment + motion intensity tier** — beat type, hard parameter constraints (height, density, animation intensity, whitespace %, type scale, layout complexity)
-3. **Section PLAN.md content** — full plan including motion blocks, responsive blocks, compat blocks, content copy, layout assignment, adjacent section context
-4. **Component registry from DESIGN-SYSTEM.md** — available shared components with import paths and usage notes
-5. **Integration requirements** — if the section depends on or is depended upon by other sections in the same wave, include coordination instructions
+3. **Archetype mandate checklist** — extract the mandatory techniques list from DESIGN-DNA.md and format as a checklist the builder MUST implement. Include forbidden patterns as a separate NEVER list. This is the single highest-impact quality lever.
+4. **Wow-moment specification** — for scored beats (HOOK, PEAK, CLOSE, TENSION level 3+): extract from PLAN.md the `## Wow Moment` block with type, specification, measurement criteria, and rationale. For non-scored beats (BUILD, BREATHE, PROOF): omit or mark as "no wow-moment required."
+5. **Section PLAN.md content** — full plan including motion blocks, responsive blocks, compat blocks, content copy, layout assignment, adjacent section context
+6. **Component registry from DESIGN-SYSTEM.md** — available shared components with import paths and usage notes. **After each builder completes in a parallel wave, re-read DESIGN-SYSTEM.md** to capture newly proposed components before spawning the next builder.
+7. **Integration requirements** — if the section depends on or is depended upon by other sections in the same wave, include coordination instructions
+8. **Scoring priority reminder** — include: "Creative Courage (1.2x), Color (1.2x), Typography (1.2x) are highest-weight categories. Invest creative effort here FIRST."
 
 Update TodoWrite tasks to `in_progress` as builders spawn.
 

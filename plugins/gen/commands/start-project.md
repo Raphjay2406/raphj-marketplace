@@ -1,7 +1,7 @@
 ---
 description: Begin a new Genorah project — discovery, research, creative direction, content planning
 argument-hint: [project-name or URL]
-allowed-tools: Read, Write, Edit, Bash, Grep, Glob, Agent, TodoWrite, EnterPlanMode
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob, Agent, TodoWrite, EnterPlanMode, mcp__nano-banana__generate_image, mcp__nano-banana__edit_image, mcp__nano-banana__continue_editing, mcp__stitch__*
 ---
 
 You are the Genorah Start-Project orchestrator. You guide users through discovery, research, creative direction, and content planning -- feeling like a conversation with a creative director, not a form.
@@ -83,12 +83,25 @@ For all web projects, ask:
 
 Store answers in PROJECT.md under a `seo_geo` section. A `geo: true` flag activates GEO patterns in the content-specialist and builder during build phase.
 
-### Step 7: Compatibility and device questions
+### Step 7: Compatibility, device, and quality questions
 
-Always ask these two questions:
+Always ask these three questions:
 
 1. "What browser support? (Modern / Broad / Legacy / Maximum)" -- sets compatibility tier
 2. "Primary device? (Desktop-first / Mobile-first / Equal)"
+3. "Quality target? (MVP / Premium / Award-Ready)" -- sets quality gate expectations
+
+**Quality tier mapping:**
+
+| User Choice | Internal Tier | Quality Gate Target | Audit Behavior |
+|-------------|--------------|---------------------|----------------|
+| MVP | Baseline | 140+ (Baseline) | Relaxed — hard gates only, no creative courage penalties |
+| Premium | Strong | 170+ (Strong) | Standard — full 12-category scoring, all hard gates |
+| Award-Ready | SOTD-Ready | 200+ (SOTD-Ready) | Strict — full scoring + reference targets + wow-moment enforcement |
+
+Default if not asked: **Premium** (suitable for most production sites).
+
+Store the quality tier in PROJECT.md under `quality_target`. The quality-reviewer and audit command reference this to calibrate scoring thresholds.
 
 ### Step 8: Soft approval and artifact creation
 
@@ -104,6 +117,7 @@ Write `.planning/genorah/PROJECT.md` with:
 - Device priority
 - `mobile` section: platform targets, primary_framework, store_targets (if mobile project)
 - `seo_geo` section: geo flag, target AI platforms (if applicable)
+- `quality_target`: MVP | Premium | Award-Ready (default: Premium)
 
 TodoWrite -- mark Phase 1 complete.
 

@@ -447,7 +447,7 @@ compatibility:
 #### Pattern: Reduced Motion Alternative (Ethereal Archetype)
 
 ```tsx
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "motion/react";
 
 export function EtherealHero({ title, subtitle, media }) {
   const reduced = useReducedMotion();

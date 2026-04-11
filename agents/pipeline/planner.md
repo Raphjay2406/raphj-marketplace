@@ -269,6 +269,35 @@ error_handling: [user-facing error states, retry logic]
 loading_states: [skeleton, spinner, or progressive disclosure]
 </integration>
 
+<accessibility>
+## Accessibility Specification
+
+### Keyboard Navigation
+focus_order: [tab order through interactive elements -- matches visual reading order]
+focus_trap: [if modal/dialog: describe focus trap boundaries]
+skip_link: [if first section: "Skip to main content" link]
+roving_tabindex: [if tab group: describe roving tabindex pattern]
+
+### ARIA Labeling
+landmark_role: [main | navigation | complementary | contentinfo | region]
+section_label: [aria-label or aria-labelledby for the section]
+interactive_labels:
+  - [element]: [aria-label text]
+  - [element]: [aria-label text]
+
+### Visual Accessibility
+contrast_pairs:
+  - text: [DNA --color-text] on bg: [DNA --color-bg] -- ratio: [≥ 4.5:1 for body, ≥ 3:1 for large]
+  - heading: [color] on bg: [color] -- ratio: [≥ 3:1]
+focus_indicator: [DNA-styled focus ring -- e.g., "2px solid var(--color-accent) with 2px offset"]
+touch_targets: [minimum 44x44px on all interactive elements at mobile breakpoint]
+
+### Content Accessibility
+heading_hierarchy: [h2 for section title, h3 for subsections -- must not skip levels]
+alt_text_strategy: [informative for content images, empty for decorative]
+motion_alternative: [what reduced-motion users see instead of animations]
+</accessibility>
+
 <component-structure>
 ## JSX Blueprint
 [Component hierarchy with props]

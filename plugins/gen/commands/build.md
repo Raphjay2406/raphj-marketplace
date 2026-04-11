@@ -159,6 +159,61 @@ Build paused due to error in [section].
 Error: [brief description]
 ```
 
+## Error Recovery Playbook
+
+When a build fails, present the user with clear recovery options:
+
+### Section Build Failure (builder agent error)
+```
+Section [XX-name] failed: [error description]
+
+Recovery options:
+  1. Fix and retry  — I'll diagnose the issue, apply a fix, and rebuild this section
+  2. Skip section   — Continue wave with remaining sections. [XX-name] marked FAILED in STATE.md
+  3. New session     — Save state to CONTEXT.md and resume in a fresh session (recommended if context is degraded)
+```
+
+### Quality Gate Rejection (score below Reject tier)
+```
+Section [XX-name] scored [N]/234 (Reject tier). Hard gate failures: [list]
+
+Recovery options:
+  1. Remediate — Run polisher with GAP-FIX.md (max 2 cycles)
+  2. Re-plan   — Regenerate PLAN.md for this section with simpler targets
+  3. Accept    — Override quality gate and continue (not recommended)
+```
+
+### Context Health Check Failure (canary check)
+```
+Context health: [N]/5 correct (threshold: 3/5)
+Wrong answers: [list which questions failed]
+
+Recovery options:
+  1. Continue (risk)  — Proceed with degraded context. Quality may suffer.
+  2. New session      — Recommended. CONTEXT.md has everything needed to resume cleanly.
+```
+
+### MCP Server Unavailable
+```
+[tool name] is unavailable. Affected capability: [what's lost]
+
+Fallback: [specific fallback behavior — e.g., "Screenshots skipped, code-only review"]
+```
+
+### Mid-Wave Resume
+If a wave fails partway through, state which sections completed vs failed:
+```
+Wave [N]: [completed]/[total] sections built
+  Completed: [list]
+  Failed: [XX-name] — [error]
+  Pending: [list]
+
+Resume options:
+  1. Retry failed  — Rebuild only [XX-name]
+  2. Skip failed   — Continue to quality gate with completed sections
+  3. Full wave     — Rebuild entire wave from scratch
+```
+
 ## Rules
 
 1. All execution logic runs through the Agent tool -- this command orchestrates, agents build.

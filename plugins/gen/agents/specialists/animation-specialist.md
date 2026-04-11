@@ -607,6 +607,106 @@ Animations must work or gracefully degrade across all breakpoints:
 - Complex GSAP timelines may be simplified to entrance-only animations on mobile
 - Test that animations do not cause layout shifts on any breakpoint
 
+### Touch & Gesture Animation Patterns (Mobile-First)
+
+Mobile is majority traffic. Gesture-driven animations must feel native, not bolted on.
+
+**Swipe Gestures:**
+```tsx
+// Swipe-to-reveal pattern using motion/react
+import { motion, useMotionValue, useTransform, useAnimation } from 'motion/react';
+
+function SwipeCard({ children, onSwipeRight, onSwipeLeft }) {
+  const x = useMotionValue(0);
+  const rotate = useTransform(x, [-200, 200], [-15, 15]);
+  const opacity = useTransform(x, [-200, -100, 0, 100, 200], [0.5, 1, 1, 1, 0.5]);
+
+  return (
+    <motion.div
+      drag="x"
+      dragConstraints={{ left: 0, right: 0 }}
+      style={{ x, rotate, opacity }}
+      onDragEnd={(_, info) => {
+        if (info.offset.x > 100) onSwipeRight?.();
+        if (info.offset.x < -100) onSwipeLeft?.();
+      }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+```
+
+**Drag-to-Dismiss:**
+```tsx
+// Drag-to-dismiss with spring physics
+<motion.div
+  drag="y"
+  dragConstraints={{ top: 0, bottom: 0 }}
+  dragElastic={0.4}
+  onDragEnd={(_, info) => {
+    if (info.offset.y > 150 || info.velocity.y > 500) dismiss();
+  }}
+  transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+/>
+```
+
+**Pinch-to-Zoom (Image Gallery):**
+```tsx
+// Use gesture library for multi-touch
+import { useGesture } from '@use-gesture/react';
+import { useSpring, animated } from '@react-spring/web';
+
+function ZoomableImage({ src, alt }) {
+  const [style, api] = useSpring(() => ({ scale: 1, x: 0, y: 0 }));
+
+  const bind = useGesture({
+    onPinch: ({ offset: [s] }) => api.start({ scale: s }),
+    onDrag: ({ offset: [x, y] }) => api.start({ x, y }),
+  }, { pinch: { scaleBounds: { min: 1, max: 4 } } });
+
+  return <animated.img {...bind()} style={style} src={src} alt={alt} />;
+}
+```
+
+**Long-Press Feedback:**
+```tsx
+// Visual + haptic feedback on long press
+function LongPressElement({ onLongPress, children }) {
+  const scale = useMotionValue(1);
+
+  return (
+    <motion.div
+      style={{ scale }}
+      onTapStart={() => {
+        // Animate to "pressed" state
+        animate(scale, 0.95, { duration: 0.1 });
+      }}
+      onTap={() => animate(scale, 1, { type: 'spring' })}
+      onTapCancel={() => animate(scale, 1, { type: 'spring' })}
+      whileTap={{ scale: 0.95 }}
+      onLongPress={() => {
+        // Haptic feedback if available
+        navigator.vibrate?.(50);
+        onLongPress?.();
+      }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+```
+
+**Per-Archetype Gesture Personality:**
+
+| Archetype | Drag Feel | Swipe Response | Pinch Behavior |
+|-----------|-----------|----------------|----------------|
+| Brutalist | No rubber-band, hard stops | Instant dismiss, no bounce | Sharp zoom steps (1x → 2x → 4x) |
+| Ethereal | Maximum elastic, slow return | Gentle drift, fade out | Smooth continuous zoom |
+| Kinetic | Spring-based with overshoot | Bounce at edges, momentum carry | Snappy spring zoom |
+| Japanese Minimal | Restrained, precise, no overshoot | Clean slide, fade at edges | Deliberate, no intermediate |
+| Playful/Startup | Bouncy, fun physics | Fun overshoot + settle | Playful spring with wobble |
+
 ### prefers-reduced-motion: Meaningful Alternatives
 
 `prefers-reduced-motion: reduce` does NOT mean "remove everything." Provide meaningful alternatives:

@@ -1,7 +1,7 @@
 ---
-description: Full quality audit -- 72-point scoring, Lighthouse, accessibility, 4-breakpoint screenshots
+description: Full quality audit -- 234-point scoring, Lighthouse, accessibility, 4-breakpoint visual QA
 argument-hint: "[--section name] [--quick] [--category name]"
-allowed-tools: Read, Write, Edit, Bash, Grep, Glob, Agent, TodoWrite
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob, Agent, TodoWrite, mcp__plugin_playwright_playwright__browser_*
 ---
 
 You are the Genorah Audit orchestrator. You run comprehensive quality audits covering visual design, performance, accessibility, and DNA compliance -- producing scored reports with prioritized fix plans.

@@ -30,9 +30,12 @@ version: "2.0.0"
 
 ## Layer 1: Decision Guidance
 
-The Anti-Slop Gate is a **POST-REVIEW** quality enforcement system. It does NOT run inline during building. Section builders focus on building; the gate runs during `/gen:audit` via the quality-reviewer agent.
+The Anti-Slop Gate serves two purposes in Genorah v2.0:
 
-This separation is intentional: builders spending tokens on scoring during construction wastes 30%+ of their context on evaluation instead of craft. The gate runs once, thoroughly, after all sections in a wave are complete.
+1. **Builder self-check (during construction)**: Builders use the 12-category self-check (Section 7 of builder.md) as a pre-completion verification. This is a quick sanity check, NOT a formal score.
+2. **Post-wave review (quality-reviewer)**: The full 72-point quality gate (quality-gate-v2) is the **authoritative scoring system**. The 35-point anti-slop quick-check is preserved in builder self-review only.
+
+**The 72-point quality-gate-v2 score is the ONLY score that determines tier and ship-readiness.** The 35-point system below is retained as a builder reference tool.
 
 ### When the Gate Runs
 

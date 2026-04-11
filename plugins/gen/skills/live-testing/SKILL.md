@@ -62,7 +62,22 @@ Code review catches structural issues but misses visual and performance problems
 
 ### Tool Strategy
 
-**Primary tool:** Playwright MCP (`@playwright/mcp@latest`). Provides browser automation, viewport resize, screenshots, and JavaScript execution via MCP protocol.
+**Primary tool:** Playwright MCP (declared in `.claude-plugin/.mcp.json`). Provides browser automation, viewport resize, screenshots, and JavaScript execution via MCP protocol.
+
+**MCP Tool Reference:**
+
+| Tool | Purpose |
+|------|---------|
+| `mcp__plugin_playwright_playwright__browser_navigate` | Load page URL |
+| `mcp__plugin_playwright_playwright__browser_resize` | Set viewport width/height for breakpoint testing |
+| `mcp__plugin_playwright_playwright__browser_take_screenshot` | Full-page or element screenshot (PNG/JPEG) |
+| `mcp__plugin_playwright_playwright__browser_snapshot` | Accessibility tree snapshot (DOM structure, element refs) |
+| `mcp__plugin_playwright_playwright__browser_evaluate` | Run arbitrary JS for CSS/DOM inspection |
+| `mcp__plugin_playwright_playwright__browser_wait_for` | Wait for render completion (text appear/disappear, time) |
+| `mcp__plugin_playwright_playwright__browser_hover` | Test hover states |
+| `mcp__plugin_playwright_playwright__browser_click` | Test click interactions |
+| `mcp__plugin_playwright_playwright__browser_console_messages` | Capture console errors/warnings |
+| `mcp__plugin_playwright_playwright__browser_run_code` | Raw Playwright `page` API access (escape hatch) |
 
 **If Playwright MCP is unavailable:** Graceful degradation path defined in the Degradation Protocol section below. The protocol does not fail catastrophically -- it degrades to CLI tools and manual steps where needed.
 
@@ -96,11 +111,13 @@ Capture full-page screenshots at the 4 standard breakpoints to verify responsive
 **Procedure for each breakpoint:**
 
 ```
-1. Playwright_resize: set viewport to width={breakpoint}px, height=900px
-2. Playwright_navigate: load http://localhost:[port]
-3. Wait 2 seconds for animations and lazy-loaded content to settle
-4. Playwright_screenshot: capture full-page screenshot
-5. Save to .planning/genorah/audit/screenshot-{breakpoint}.png
+1. mcp__plugin_playwright_playwright__browser_resize({ width: {breakpoint}, height: 900 })
+2. mcp__plugin_playwright_playwright__browser_navigate({ url: "http://localhost:[port]" })
+3. mcp__plugin_playwright_playwright__browser_wait_for({ time: 2 })
+4. mcp__plugin_playwright_playwright__browser_take_screenshot({
+     type: "png", fullPage: true,
+     filename: ".planning/genorah/audit/screenshot-{breakpoint}.png"
+   })
 ```
 
 **Screenshot Visual Comparison Protocol:**

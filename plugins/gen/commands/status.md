@@ -55,7 +55,28 @@ Sections: [complete]/[total] | Waves: [current]/[total]
 Discussions: [list of DISCUSSION-{phase}.md files found]
 Quality: [last audit score if AUDIT-REPORT.md exists]
 Gap Files: [count of GAP-FIX.md and CONSISTENCY-FIX.md files]
+
+Next Action: [PRIMARY recommendation based on current state]
+  Alternative: [secondary option]
 ```
+
+### Next Action Logic
+
+Determine the PRIMARY next action from project state:
+
+| State | Primary Action | Alternative |
+|-------|---------------|-------------|
+| No DESIGN-DNA.md | `/gen:start-project` | -- |
+| DNA exists, no MASTER-PLAN.md | `/gen:plan` | `/gen:discuss` to explore first |
+| Plans exist, no sections built | `/gen:build` | `/gen:plan --section X` to refine |
+| Build in progress (incomplete wave) | `/gen:build --resume` | `/gen:status -v` for details |
+| All sections built, no audit | `/gen:audit` | `/gen:iterate` for refinements |
+| Audit complete, score < SOTD-Ready | `/gen:iterate` on lowest-scoring sections | `/gen:audit` to re-check |
+| Audit complete, SOTD-Ready+ | Project ready to ship | `/gen:export` for artifacts |
+| GAP-FIX.md files present | `/gen:build --resume` (polisher will run) | Fix manually |
+| CONTEXT.md has "next instructions" | Follow the instructions in CONTEXT.md | `/gen:status -v` |
+
+Always read CONTEXT.md "Next Wave Instructions" section if it exists — it has the most specific guidance.
 
 ## Visual Companion: Status Dashboard
 

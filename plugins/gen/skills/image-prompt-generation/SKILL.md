@@ -403,6 +403,144 @@ Archetype personality is the PRIMARY creative driver for image prompts. The per-
 - **creative-tension** -- Tension zones may warrant intentionally discordant imagery, but DNA palette constraints still apply
 - **remotion** -- AI-generated images can serve as Remotion video composition backgrounds. Generate at appropriate resolution for video (1920x1080 minimum)
 
+## MCP-Powered Image Generation (Nano-Banana 2)
+
+When the `nano-banana` MCP server is available, Genorah can generate DNA-matched images directly during builds without leaving Claude Code. This replaces the tool-agnostic prompt workflow with direct generation.
+
+### MCP Tool Reference
+
+| Tool | Purpose | When to Use |
+|------|---------|-------------|
+| `mcp__nano-banana__generate_image` | Create new image from text prompt | Hero backgrounds, textures, illustrations, OG images |
+| `mcp__nano-banana__edit_image` | Edit existing image with natural language | Color correction, element removal, style adaptation |
+| `mcp__nano-banana__continue_editing` | Iteratively refine the last generated image | Progressive enhancement, DNA palette alignment |
+| `mcp__nano-banana__get_last_image_info` | Get metadata about last image | Verify output before using in build |
+
+### DNA-to-Prompt Pipeline (MCP Mode)
+
+When nano-banana is available, translate DNA tokens directly into generation prompts:
+
+```
+Step 1: Build prompt from DNA + archetype + beat + section purpose
+Step 2: Call mcp__nano-banana__generate_image with the prompt
+Step 3: Read the generated image (Claude can view it via Read tool)
+Step 4: Evaluate DNA color match visually
+Step 5: If colors drift, call mcp__nano-banana__continue_editing with:
+        "Adjust the color palette: dominant color should be [DNA --color-primary hex],
+         accent highlights should be [DNA --color-accent hex], background tones
+         should match [DNA --color-bg hex]. Maintain composition and style."
+Step 6: Save final image to public/images/generated/{section-name}-{purpose}.png
+```
+
+### Per-Beat Generation Templates (MCP Mode)
+
+These are optimized for nano-banana's Gemini model. Unlike tool-agnostic prompts, these include specific composition instructions that Gemini handles well.
+
+**HOOK (Hero) — Maximum Visual Impact:**
+```
+Generate a dramatic, cinematic [archetype_style_modifier] background for a website hero section.
+[archetype_mood_modifier] atmosphere. Color palette: [DNA primary hex] dominant, [DNA accent hex]
+highlights, [DNA bg hex] deep tones. Ultra-wide composition (21:9 aspect), generous negative space
+in center-left for text overlay. [DNA texture_modifier] surface quality. No text, no logos, no people.
+[DNA forbidden pattern negatives]. Professional quality, 4K resolution.
+```
+
+**PEAK — Screenshot Moment:**
+```
+Create a stunning [archetype_style_modifier] visual composition for a website showcase section.
+[archetype_mood_modifier], maximum creative expression. Colors: [DNA primary hex] and [DNA accent hex]
+with [DNA signature color hex] accents. Rich detail, layered depth, [archetype_texture_modifier].
+Composition that demands a screenshot. No text, no watermarks. [DNA forbidden negatives].
+```
+
+**BREATHE — Subtle Atmosphere:**
+```
+Generate a minimal, restrained [archetype_style_modifier] abstract background.
+Extremely subtle, almost invisible texture. Color: muted [DNA surface hex] with barely visible
+[DNA muted hex] undertones. High negative space. Calm, meditative. No focal point.
+Must work as text background. No text, no logos. [DNA forbidden negatives].
+```
+
+**TEXTURE — Tileable Pattern:**
+```
+Create a seamless, tileable [archetype_texture_modifier] texture pattern.
+Colors: [DNA surface hex] base with subtle [DNA border hex] variation. Low contrast.
+Must tile horizontally and vertically without visible seams. [archetype_style_modifier] feel.
+No recognizable objects. No text. [DNA forbidden negatives].
+```
+
+### Iterative Editing Workflow
+
+For DNA color alignment, use the edit chain:
+
+```
+1. generate_image → initial generation
+2. continue_editing("Shift the overall color temperature toward [DNA palette description].
+   The primary element should be closer to [exact hex]. Reduce [unwanted color].")
+3. continue_editing("Increase [DNA texture] quality. Add [signature element] motif
+   subtly in the [position].")
+4. get_last_image_info → verify file path and size
+5. Move file to project's public/images/generated/ directory
+```
+
+### Style Transfer via Reference Images
+
+For visual consistency across a multi-section project:
+
+```
+1. Generate the hero image first (highest quality, establishes style)
+2. For subsequent sections, use edit_image with referenceImages pointing to the hero:
+   mcp__nano-banana__edit_image({
+     imagePath: "path/to/new-section-base.png",
+     prompt: "Match the visual style, color palette, and mood of the reference image.
+              Adapt for [section purpose]. Maintain [archetype] personality.",
+     referenceImages: ["public/images/generated/hero-background.png"]
+   })
+3. This ensures all generated images share consistent DNA-derived style
+```
+
+### OG Image Generation (MCP Mode)
+
+For social sharing images that match DNA personality:
+
+```
+Generate a 1200x630 social sharing image for "[page title]".
+[archetype_style_modifier] design. Background: [DNA bg hex] to [DNA surface hex] gradient.
+Large display text area (left 60%) in [DNA text hex] color. Right 40% features
+[abstract/product/conceptual] element in [DNA primary hex] and [DNA accent hex].
+Brand feel: [archetype_mood_modifier]. Professional, clean edges.
+```
+
+### Output Management
+
+| Asset Type | Save Location | Naming Convention |
+|-----------|---------------|-------------------|
+| Hero backgrounds | `public/images/generated/` | `hero-bg-{archetype}.png` |
+| Section textures | `public/images/generated/` | `texture-{section-name}.png` |
+| Illustrations | `public/images/generated/` | `illustration-{section-name}.png` |
+| OG images | `public/images/og/` | `og-{page-slug}.png` |
+| Iterative edits | Same directory | `{name}-v{N}.png` (version incremented) |
+
+### Fallback When MCP Unavailable
+
+If `nano-banana` MCP is not available:
+1. Generate the text prompt using the tool-agnostic templates above
+2. Output the prompt to `.planning/genorah/image-prompts/{section-name}.md`
+3. Instruct user to run prompt in their preferred tool (Midjourney, DALL-E, Flux)
+4. Builder references the expected image path in code with a placeholder comment
+
+### Rate Limit Awareness
+
+Free tier: 500 images/day, ~2/minute. For a typical 8-section project:
+- Hero background: 1-3 generations (initial + 1-2 edits)
+- Per section: 0-2 generations (many sections don't need AI images)
+- OG image: 1-2 generations
+- Total: ~15-25 images per project (well within free tier)
+
+Builders should generate images early in the build process when rate limits are fresh, not at the end when other operations may have consumed quota.
+
+---
+
 ## Layer 4: Anti-Patterns
 
 ### Anti-Pattern: Tool-Specific Syntax in Main Prompts

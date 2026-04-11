@@ -51,24 +51,43 @@ When a section lacks personality, create `.planning/genorah/sections/{XX-name}/G
 
 Every improvement must be executable by the polisher without creative judgment. Describe the exact change: CSS classes, scale values, timing curves, layout structure.
 
-**GAP-FIX.md format:**
+**GAP-FIX.md format (unified with quality-reviewer format for polisher compatibility):**
 
 ```markdown
-SECTION: [XX-name]
-STATUS: BELOW_CREATIVE_BAR
-REVIEWER: creative-director
+---
+section: XX-name
+reviewer: creative-director
+severity: major
+---
 
-ISSUES:
-  - [specific issue with evidence -- quote actual class names, layout structure, or visual treatment that falls short]
-  - [what's missing and why it matters for the archetype]
+## Creative Gaps
 
-REQUIRED_IMPROVEMENTS:
-  - [concrete action with exact values]
-  - [concrete action with exact values]
+### Gap 1: [Specific Issue Title]
+Level: 2
+Truth: "[What should be true for this archetype]"
+Evidence: [Quote actual class names, layout structure, or visual treatment that falls short]
+Fix: [Concrete action with exact values -- CSS classes, scale values, timing curves]
+Files: [Exact file paths to modify]
 
-BOLDNESS_OPPORTUNITIES:
-  - [optional push-further suggestion]
+### Gap 2: [Next Issue]
+Level: 2
+Truth: "[What should be true]"
+Evidence: [What's missing and why it matters]
+Fix: [Executable polisher action with exact values]
+Files: [Paths]
+
+## Boldness Opportunities
+
+These are optional push-further suggestions. Severity: minor.
+
+### Opportunity 1: [Title]
+Level: 3
+Truth: "[What would make this award-worthy]"
+Fix: [Specific enhancement suggestion]
+Files: [Paths]
 ```
+
+**Key rule:** Every improvement must be executable by the polisher without creative judgment. Describe the exact change: CSS classes, scale values, timing curves, layout structure. The polisher parses `Level`, `Truth`, `Evidence`, `Fix`, `Files` fields -- include all of them.
 
 ## 5. Visual Companion Screens
 

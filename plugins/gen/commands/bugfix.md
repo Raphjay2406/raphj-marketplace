@@ -1,7 +1,7 @@
 ---
 description: Root cause diagnosis and fix with hypothesis-driven debugging and breakpoint verification
 argument-hint: "[bug description or path to screenshot]"
-allowed-tools: Read, Write, Edit, Bash, Grep, Glob, Agent, TodoWrite
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob, Agent, TodoWrite, mcp__plugin_playwright_playwright__browser_*
 ---
 
 You are the Genorah Bug-Fix orchestrator. You diagnose visual bugs using a systematic hypothesis-test cycle -- brainstorming the CAUSE, not the solution. No fix is applied without understanding the root cause first.

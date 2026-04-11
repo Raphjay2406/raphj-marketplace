@@ -31,12 +31,32 @@ version: "2.0.0"
 - If conflict detected (same note edited in both places), prompt user before overwriting
 - If Obsidian is not installed, skip vault operations silently -- all planning artifacts remain readable as plain markdown
 
+### MCP Server Architecture
+
+Genorah declares two optional Obsidian MCP servers in `.claude-plugin/.mcp.json`:
+
+| Server | Package | Requires Obsidian | Use Case |
+|--------|---------|-------------------|----------|
+| `obsidian` | `obsidian-mcp-server` (cyanheads) | Yes + Local REST API plugin | Frontmatter CRUD, tag management, global search with regex, Dataview-compatible writes |
+| `obsidian-fs` | `obsidian-mcp` (StevenStavrakis) | No | Direct filesystem vault access, multi-vault support, works in CI/headless environments |
+
+**Server selection logic:**
+1. If `obsidian_installed: true` in config AND Obsidian is running → use `obsidian` (REST API server)
+2. If `obsidian_installed: false` OR Obsidian not running → use `obsidian-fs` (filesystem server)
+3. If neither server is available → fall back to direct Read/Write tool operations on vault markdown files
+
+**Environment variables (set in `.claude/genorah.local.md` or shell):**
+- `OBSIDIAN_API_KEY` — API key from Obsidian Local REST API plugin settings
+- `OBSIDIAN_API_PORT` — Default: `27123`
+- `OBSIDIAN_VAULT_PATH` — Absolute path to vault for filesystem server
+
 ### Pipeline Connection
 
 - **Referenced by:** builder agent after each wave to mirror section summaries
-- **Referenced by:** reviewer agent to update quality scores in `quality/anti-slop-scores.md`
+- **Referenced by:** reviewer agent to update quality scores in `Quality/Section-Scores.md`
 - **Consumed at:** `/gen:sync-knowledge` (full sync), `/gen:export` (vault generation from project)
 - **SessionStart hook:** checks for vault presence and reports sync status
+- **MCP tools available:** `obsidian_read_note`, `obsidian_update_note`, `obsidian_manage_frontmatter`, `obsidian_manage_tags`, `obsidian_global_search` (REST), `read-note`, `create-note`, `edit-note`, `search-vault`, `add-tags` (filesystem)
 
 ---
 
@@ -48,24 +68,36 @@ Located at `.planning/genorah/vault/` inside the target project. Mirrors build s
 
 ```
 .planning/genorah/vault/
-+-- 00-DNA.md                  <- DESIGN-DNA mirror with [[links]]
-+-- 01-Brainstorm.md           <- creative directions with [[archetype]] links
-+-- 02-Master-Plan.md          <- wave map with [[section]] links
-+-- sections/
-|   +-- 01-hero.md             <- PLAN + SUMMARY merged, status tags
-|   +-- 02-features.md
-|   +-- 03-social-proof.md
-+-- decisions/
++-- _index.md                          <- dashboard with Dataview tables
++-- Project/
+|   +-- Project-Brief.md               <- PROJECT.md mirror
++-- Design/
+|   +-- Design-DNA.md                  <- DESIGN-DNA mirror with [[links]]
+|   +-- Creative-Direction.md          <- BRAINSTORM mirror with [[archetype]] links
+|   +-- Design-System.md              <- component registry and tokens
++-- Build/
+|   +-- Master-Plan.md                 <- wave map with [[section]] links
+|   +-- Context-Snapshot.md            <- current CONTEXT.md state
+|   +-- State.md                       <- current STATE.md
++-- Content/
+|   +-- Content-Plan.md               <- CONTENT.md mirror
++-- Sections/
+|   +-- hero/
+|   |   +-- Plan.md                    <- section PLAN + SUMMARY merged, status tags
+|   |   +-- Summary.md
+|   +-- features/
+|   +-- social-proof/
++-- Decisions/
 |   +-- archetype-choice.md
 |   +-- palette-override.md
-+-- quality/
-|   +-- anti-slop-scores.md    <- Dataview-queryable score history
-|   +-- awwwards-projection.md
-|   +-- arc-map.md
-+-- consistency/
-|   +-- component-registry.md
-+-- _index.md                  <- dashboard with Dataview tables
++-- Quality/
+|   +-- Audit-Report.md               <- Dataview-queryable score history
+|   +-- Section-Scores.md
++-- Discussions/
+|   +-- {phase}.md                     <- per-phase discussion notes
 ```
+
+This structure matches the export command (`/gen:export`) path map exactly. Both commands produce identical vault layouts.
 
 ### Knowledge Base Vault
 
@@ -92,15 +124,20 @@ Knowledge/
 
 Vault paths and behavior are configured in `.claude/genorah.local.md` inside the project. This file is gitignored and machine-local.
 
-```markdown
-## Obsidian Config
-
-knowledge-base-path: /Users/name/Documents/Obsidian/Knowledge
-obsidian-installed: true
-vault-sync: auto          # auto | manual | off
+```yaml
+# .claude/genorah.local.md — Obsidian Config
+vault_path: /Users/name/Documents/Obsidian/Knowledge
+obsidian_installed: true
+vault_sync: auto          # auto | manual | off
 ```
 
-If `obsidian-installed` is `false` or the key is absent, all vault operations are skipped silently. Planning artifacts in `.planning/genorah/` remain the working format and are always readable without Obsidian.
+| Key | Required | Default | Description |
+|-----|----------|---------|-------------|
+| `vault_path` | Yes (for vault features) | none | Absolute path to the Knowledge Base Obsidian vault |
+| `obsidian_installed` | No | `false` | Whether Obsidian is installed on this machine |
+| `vault_sync` | No | `manual` | Sync behavior: `auto` (sync on session start), `manual` (user-triggered), `off` (disabled) |
+
+If `obsidian_installed` is `false` or the key is absent, all vault operations are skipped silently. Planning artifacts in `.planning/genorah/` remain the working format and are always readable without Obsidian.
 
 ### _index.md Dashboard (Project Vault)
 
@@ -111,7 +148,7 @@ The `_index.md` file at the root of the project vault is auto-generated. It cont
 ````markdown
 ```dataview
 TABLE status, beat, wave, score
-FROM "sections"
+FROM "Sections"
 SORT wave ASC
 ```
 ````
@@ -120,9 +157,8 @@ SORT wave ASC
 
 ````markdown
 ```dataview
-TABLE score, phase, reviewer
-FROM "quality"
-WHERE type = "anti-slop"
+TABLE score, tier, date
+FROM "Quality"
 SORT date DESC
 ```
 ````
@@ -132,7 +168,7 @@ SORT date DESC
 ````markdown
 ```dataview
 LIST
-FROM "decisions"
+FROM "Decisions"
 SORT file.mtime DESC
 ```
 ````
@@ -179,7 +215,7 @@ Use wiki-links to create navigable relationships between notes:
 
 ---
 
-### Sample Section Note (sections/01-hero.md)
+### Sample Section Note (Sections/hero/Plan.md)
 
 A fully populated section note after Wave 2 build and review:
 
@@ -198,7 +234,7 @@ reviewer: anti-slop-gate
 
 # Hero Section
 
-[[02-Master-Plan]] > Wave 2 > Section 01
+[[Build/Master-Plan]] > Wave 2 > Hero Section
 
 ## Implementation Summary
 
@@ -224,7 +260,7 @@ overlay at 4% opacity locks visual identity across all sections.
 
 ## Links
 
-[[00-DNA]] | [[decisions/archetype-choice]] | [[quality/anti-slop-scores]]
+[[Design/Design-DNA]] | [[Decisions/archetype-choice]] | [[Quality/Section-Scores]]
 ```
 
 ### Sync Protocol
@@ -233,10 +269,10 @@ overlay at 4% opacity locks visual identity across all sections.
 
 Triggered after each wave or by `/gen:export`:
 
-1. Read source artifact (e.g., `sections/hero/PLAN.md` + `sections/hero/SUMMARY.md`)
+1. Read source artifact (e.g., `.planning/genorah/sections/hero/PLAN.md` + `SUMMARY.md`)
 2. Merge content into a single Obsidian note with full frontmatter
 3. Inject wiki-links for any referenced sections, archetypes, or decisions
-4. Write to `.planning/genorah/vault/sections/01-hero.md`
+4. Write to `.planning/genorah/vault/Sections/hero/Plan.md`
 5. Regenerate `_index.md` with fresh Dataview blocks
 
 **Obsidian → Plugin (import direction)**
@@ -421,7 +457,7 @@ Obsidian note structure does not change per archetype. Archetype identity affect
 
 When the `SessionStart` hook runs, this skill performs the following checks:
 
-1. Read `.claude/genorah.local.md` -- detect `knowledge-base-path` and `obsidian-installed`
+1. Read `.claude/genorah.local.md` -- detect `vault_path` and `obsidian_installed`
 2. If vault exists at `.planning/genorah/vault/`, compare note modification times to source artifacts
 3. Count notes where Obsidian is newer (drift count)
 4. If drift count > 0 and `vault-sync: auto`, run import direction automatically
@@ -504,7 +540,8 @@ These sites demonstrate best-in-class use of structured markdown knowledge bases
 
 | Parameter | Min | Max | Unit | Enforcement |
 |-----------|-----|-----|------|-------------|
-| Frontmatter `score` | 0 | 35 | points | HARD -- reject vault import if score outside range |
+| Frontmatter `score` (anti-slop) | 0 | 35 | points | HARD -- reject vault import if score outside range |
+| Frontmatter `score` (72-point gate) | 0 | 234 | weighted points | HARD -- reject if outside range |
 | Frontmatter `wave` | 0 | 9 | integer | HARD -- reject if wave number does not match STATE.md |
 | Tags array length | 1 | 10 | tags | SOFT -- warn if no tags present |
 | Note body length | 10 | 2000 | lines | SOFT -- warn if note exceeds 2000 lines (split recommended) |

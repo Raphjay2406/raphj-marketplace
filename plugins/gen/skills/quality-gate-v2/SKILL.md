@@ -37,6 +37,15 @@ version: "2.0.0"
 - **Consumed at:** `/gen:iterate` workflow step 3 (quality scoring)
 - **Consumed at:** `/gen:execute` wave completion gates
 
+### Relationship to Anti-Slop Gate (35-Point System)
+
+The 72-point quality gate is the **authoritative scoring system**. The 35-point anti-slop gate is a **quick-check subset** used by builders during construction for self-review. When both systems run:
+
+- **Builder self-check**: Anti-slop 35-point quick-check (12 categories, max 36 in self-check)
+- **Quality review**: Full 72-point gate (authoritative score, determines tier)
+- **Penalty system**: Only the 72-point penalty table applies. Anti-slop penalties are historical reference only.
+- **Reported score**: Always the 72-point weighted score. Anti-slop score may appear in SUMMARY.md for builder self-awareness but does not determine tier.
+
 ---
 
 ## Scoring Overview
@@ -47,7 +56,7 @@ version: "2.0.0"
 - Each criterion scored **0-3**: 0 = missing/broken, 1 = present but generic, 2 = good/intentional, 3 = award-worthy
 - Raw max per category: 18 (6 x 3)
 - Categories carry **weight multipliers** (see below)
-- **Weighted max: ~248 points** (varies slightly by rounding)
+- **Weighted max: ~234 points** (12 categories weighted per table below)
 - Penalties are subtracted after weighted scoring
 - Hard gates are pass/fail -- any failure blocks the score entirely
 
@@ -260,6 +269,7 @@ Hard gates are binary pass/fail. **Any failure blocks scoring entirely** -- the 
 | 2 | 4-breakpoint responsive | Layout tested and functional at 375px, 768px, 1024px, and 1440px |
 | 3 | Compat tier respected | No features used beyond the project's declared compatibility tier |
 | 4 | Component registry compliance | All component instances match their registered variant dimensions |
+| 5 | Archetype specificity | Section could NOT exist identically with a different archetype. Must use at least one archetype mandatory technique, match archetype motion personality, and express archetype identity through typography/color/layout. Generic premium = FAIL. |
 
 ---
 
