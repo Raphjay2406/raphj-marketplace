@@ -108,11 +108,16 @@ Read `.claude/genorah.local.md` and extract `vault_path`:
 vault_path: /path/to/obsidian/vault
 obsidian_installed: true
 vault_sync: auto
+# Optional: explicit override for vault structure (auto-detected if omitted)
+vault_root: /path/to/actual/.obsidian/parent   # If different from vault_path
+graph_path_prefix: ""                           # "" if vault root IS vault_path, else "Subfolder/"
 ```
 
 If `vault_path` is missing or the file does not exist, output: "Vault not configured. Add `vault_path: /path` to `.claude/genorah.local.md`." STOP.
 
 Validate the path exists and is writable before proceeding. If the path does not exist, offer to create it.
+
+**Auto-detect graph path prefix** if not explicitly set (see Step 4 of Plugin → Obsidian Direction below).
 
 ### 2. Plugin → Obsidian Direction
 
@@ -177,27 +182,74 @@ For any exported file that has zero outgoing `[[wiki-links]]`, append a `## See 
 
 After all links are written, verify every file has at least one INCOMING link (another file links TO it). If any file has zero incoming links, add it to `_Dashboard.md` under the appropriate category section.
 
-**Step 4: Write graph configuration**
+**Step 4: Detect vault structure (CRITICAL for path queries)**
 
-Write/update the Obsidian graph config at `{vault_path}/.obsidian/graph.json` with color groups:
+Obsidian's `path:` queries are RELATIVE TO THE VAULT ROOT — the folder containing `.obsidian/`. This affects how color group queries must be constructed.
+
+Determine the vault structure:
+
+1. **Locate `.obsidian` directory** by searching `vault_path` and its parent directories
+2. **The vault root is the directory containing `.obsidian/`**
+3. **Calculate the path prefix**: relative path from vault root to where Genorah content was written
+
+```
+Case A — Vault root IS the Genorah folder:
+  vault_path:    D:/Genorah/Genorah-Plugin
+  .obsidian at:  D:/Genorah/Genorah-Plugin/.obsidian
+  Genorah at:    D:/Genorah/Genorah-Plugin/Skills/, /Commands/, /Agents/
+  → Path prefix: "" (empty)
+  → Use: path:Skills/core, path:Commands, path:Agents/pipeline
+
+Case B — Genorah is a SUBFOLDER of the vault:
+  vault_path:    D:/Genorah/Genorah-Plugin
+  .obsidian at:  D:/Genorah/.obsidian
+  Genorah at:    D:/Genorah/Genorah-Plugin/Skills/, /Commands/, /Agents/
+  → Path prefix: "Genorah-Plugin/"
+  → Use: path:Genorah-Plugin/Skills/core, path:Genorah-Plugin/Commands
+```
+
+Detection algorithm (pseudocode):
+```
+let vaultRoot = vault_path
+let prefix = ""
+
+if not exists(vault_path + "/.obsidian"):
+  // Walk up parent directories looking for .obsidian
+  let current = vault_path
+  while current != filesystem_root:
+    let parent = dirname(current)
+    if exists(parent + "/.obsidian"):
+      vaultRoot = parent
+      prefix = relativePath(parent, vault_path) + "/"
+      break
+    current = parent
+
+// Use prefix in all path: queries
+```
+
+**Step 5: Write graph configuration**
+
+Write/update the Obsidian graph config at `{vaultRoot}/.obsidian/graph.json` with color groups using the detected prefix:
+
+**Note on `{prefix}` substitution:** Replace `{prefix}` with the auto-detected graph_path_prefix from Step 4. If empty (vault root IS the Genorah folder), queries become `path:Skills/core`. If `Genorah-Plugin/`, queries become `path:Genorah-Plugin/Skills/core`. The search filter `{prefixSearch}` becomes empty if no prefix needed, or `path:{prefix}` if Genorah is a subfolder.
 
 ```json
 {
   "collapse-filter": false,
-  "search": "",
+  "search": "{prefixSearch}",
   "showTags": false,
   "showAttachments": false,
   "hideUnresolved": true,
   "showOrphans": false,
   "collapse-color-groups": false,
   "colorGroups": [
-    { "query": "path:Skills/core", "color": { "a": 1, "rgb": 5046016 } },
-    { "query": "path:Skills/domain", "color": { "a": 1, "rgb": 34816 } },
-    { "query": "path:Skills/utility", "color": { "a": 1, "rgb": 11141290 } },
-    { "query": "path:Commands", "color": { "a": 1, "rgb": 16744448 } },
-    { "query": "path:Agents/pipeline", "color": { "a": 1, "rgb": 16711680 } },
-    { "query": "path:Agents/specialists", "color": { "a": 1, "rgb": 16711935 } },
-    { "query": "path:Agents/protocols", "color": { "a": 1, "rgb": 8388736 } },
+    { "query": "path:{prefix}Skills/core", "color": { "a": 1, "rgb": 14423100 } },
+    { "query": "path:{prefix}Skills/domain", "color": { "a": 1, "rgb": 5025616 } },
+    { "query": "path:{prefix}Skills/utility", "color": { "a": 1, "rgb": 38655 } },
+    { "query": "path:{prefix}Commands", "color": { "a": 1, "rgb": 16744448 } },
+    { "query": "path:{prefix}Agents/pipeline", "color": { "a": 1, "rgb": 16711680 } },
+    { "query": "path:{prefix}Agents/specialists", "color": { "a": 1, "rgb": 16711935 } },
+    { "query": "path:{prefix}Agents/protocols", "color": { "a": 1, "rgb": 8388736 } },
     { "query": "file:_Dashboard", "color": { "a": 1, "rgb": 16776960 } }
   ],
   "collapse-display": false,

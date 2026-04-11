@@ -506,6 +506,21 @@ These sites demonstrate best-in-class use of structured markdown knowledge bases
 
 Every sync and export MUST produce a fully connected Obsidian graph. This is non-negotiable for knowledge navigation.
 
+### Vault Structure Detection (CRITICAL)
+
+Obsidian's `path:` queries are RELATIVE TO THE VAULT ROOT (the directory containing `.obsidian/`). Before writing graph config, detect the vault structure:
+
+| Scenario | Vault Root | Genorah Files At | Path Prefix |
+|----------|-----------|------------------|-------------|
+| **Dedicated vault** | `D:/Genorah-Plugin/` (contains `.obsidian/`) | `Skills/`, `Commands/`, `Agents/` | `""` (empty) |
+| **Subfolder of larger vault** | `D:/MyVault/` (contains `.obsidian/`) | `D:/MyVault/Genorah-Plugin/Skills/` | `"Genorah-Plugin/"` |
+
+**Detection algorithm:**
+1. Check if `vault_path/.obsidian/` exists → vault root IS vault_path, prefix is `""`
+2. Otherwise walk parent directories until `.obsidian/` is found → vault root is that parent, prefix is the relative path from vault root to where Genorah content lives
+
+**All `path:` queries in graph.json must use the detected prefix.** Without it, color groups will match nothing.
+
 ### Connectivity Rules
 
 1. **Zero orphan nodes** -- Every file must have at least one incoming `[[wiki-link]]` from another file

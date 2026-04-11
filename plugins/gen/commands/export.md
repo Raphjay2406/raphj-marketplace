@@ -256,13 +256,14 @@ SORT file.ctime DESC
 
 ### 7. Graph Connectivity & Configuration (MANDATORY on --full export)
 
-After writing all vault notes, run the graph setup protocol from the sync-knowledge command (Steps 5-7):
+After writing all vault notes, run the graph setup protocol from the sync-knowledge command:
 
-1. **Connectivity pass** -- Convert all cross-references (`gen:skill-name`, backtick-quoted skill names, bold skill names in lists) to `[[wiki-links]]`. Only convert when the target file exists.
-2. **Orphan elimination** -- For files with zero outgoing links, add `## See Also` with 3-4 related skill links. For files with zero incoming links, add them to `_Dashboard.md`.
-3. **Graph config** -- Write `.obsidian/graph.json` with color groups per folder (Core=red-orange, Domain=green, Utility=teal, Commands=orange, Pipeline Agents=red, Specialist Agents=magenta, Protocol Agents=purple, Dashboard=yellow). Set `hideUnresolved: true`, `showOrphans: false`, `showArrow: true`.
-4. **Dashboard generation** -- Create/update `_Dashboard.md` linking to all skills, commands, and agents. Organized by category.
-5. **Index generation** -- Create/update `Skills/_Index.md` with Dataview queries.
+1. **Vault structure detection** (CRITICAL) -- Locate the `.obsidian/` directory by walking parent directories from `vault_path`. The vault root is the directory CONTAINING `.obsidian/`. Calculate `graph_path_prefix` as the relative path from vault root to where Genorah content was written. If vault root IS vault_path, prefix is `""`. Otherwise prefix is e.g. `"Genorah-Plugin/"`.
+2. **Connectivity pass** -- Convert all cross-references (`gen:skill-name`, backtick-quoted skill names, bold skill names in lists) to `[[wiki-links]]`. Only convert when the target file exists.
+3. **Orphan elimination** -- For files with zero outgoing links, add `## See Also` with 3-4 related skill links. For files with zero incoming links, add them to `_Dashboard.md`.
+4. **Graph config** -- Write `{vaultRoot}/.obsidian/graph.json` with color groups using the DETECTED prefix in every `path:` query (e.g., `path:{prefix}Skills/core`). Without correct prefix, color groups match nothing. Set `hideUnresolved: true`, `showOrphans: false`, `showArrow: true`.
+5. **Dashboard generation** -- Create/update `_Dashboard.md` linking to all skills, commands, and agents. Organized by category.
+6. **Index generation** -- Create/update `Skills/_Index.md` with Dataview queries using the same path prefix (e.g., `FROM "{prefix}Skills/core"`).
 
 This ensures every export produces a fully connected, color-coded, navigable Obsidian graph with zero floating nodes.
 
