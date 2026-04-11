@@ -289,6 +289,60 @@ compatibility:
 
 ---
 
+## CSS 2026 Progressive Enhancement
+
+Modern CSS features shipping in 2026 that builders should use with progressive enhancement:
+
+### CSS Anchor Positioning (Chrome 125+, Edge 125+)
+Use for tooltips, popovers, and dropdown menus. Replaces JS positioning libraries.
+```css
+.trigger { anchor-name: --my-trigger; }
+.tooltip {
+  position: fixed;
+  position-anchor: --my-trigger;
+  inset-area: top;
+  margin-bottom: 8px;
+}
+/* Fallback for unsupported browsers */
+@supports not (anchor-name: --x) {
+  .tooltip { position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); }
+}
+```
+
+### @starting-style (Chrome 117+, Safari 17.5+)
+Native CSS entry animations for dynamically inserted elements:
+```css
+dialog[open] {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 0.3s, transform 0.3s;
+  
+  @starting-style {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+```
+
+### text-wrap: balance and pretty (Baseline 2024)
+- `text-wrap: balance` -- Equalizes line lengths in headings. Use on ALL display text.
+- `text-wrap: pretty` -- Prevents orphan words in paragraphs. Use on body text.
+```css
+h1, h2, h3, h4, h5, h6 { text-wrap: balance; }
+p, li { text-wrap: pretty; }
+```
+
+### CSS color-mix() (Baseline 2023)
+Generate palette variants without adding tokens:
+```css
+.subtle-primary { background: color-mix(in oklch, hsl(var(--color-primary)), transparent 90%); }
+.hover-primary { background: color-mix(in oklch, hsl(var(--color-primary)), white 20%); }
+```
+
+### Builders MUST use these features with @supports fallbacks when targeting Broad/Legacy compat tiers.
+
+---
+
 ## Per-Tier Feature Availability Matrix
 
 | Feature | Modern | Broad | Legacy | Maximum |

@@ -1364,6 +1364,37 @@ Refine the beat-based suggestion with what the section actually contains:
 - **-> Performance-Aware Animation**: Tier 3 wow moments (WebGL, Rive, dotLottie) require code-splitting. NEVER bundle Three.js/R3F on initial page load for a single wow moment. Use `next/dynamic` with `{ ssr: false }` or dynamic `import()`.
 - **-> Design Archetypes**: The archetype intensity modifier in Table 2 is the primary guardrail. If the archetype says "Max 1 wow moment" (Japanese Minimal), do not add more regardless of beat suggestions.
 
+### DNA-Parameterized Wow Moments
+
+Wow moment effects must scale their intensity per archetype. The same "glow" effect should be dramatic for Neon Noir and subtle for Japanese Minimal.
+
+**Glow intensity per archetype:**
+| Archetype | Glow Layers | Glow Radius | Glow Opacity | Glow Color Token |
+|-----------|------------|-------------|-------------|-----------------|
+| Neon Noir | 3 (inner + mid + outer) | 20px, 40px, 80px | 0.8, 0.5, 0.2 | `--color-glow` |
+| Ethereal | 2 (inner + outer) | 8px, 30px | 0.3, 0.1 | `--color-accent` |
+| Kinetic | 1 (sharp) | 4px | 0.6 | `--color-primary` |
+| Japanese Minimal | 0 (no glow) | -- | -- | -- |
+| Brutalist | 0 (no glow) | -- | -- | -- |
+| Neo-Corporate | 1 (subtle) | 6px | 0.2 | `--color-primary` |
+
+**Parallax depth per archetype:**
+| Archetype | Parallax Factor | Direction | Feel |
+|-----------|----------------|-----------|------|
+| Ethereal | 0.3 (deep) | Vertical | Floating, dreamy |
+| Kinetic | 0.15 (fast) | Multi-axis | Energetic, responsive |
+| Editorial | 0.1 (subtle) | Vertical only | Measured, controlled |
+| Brutalist | 0 (none) | -- | Static, confrontational |
+| Luxury | 0.2 (moderate) | Vertical | Elegant, layered |
+
+**Animation easing per archetype:**
+All wow moments should use the archetype's motion personality easing, NOT hardcoded values:
+- Read easing from DNA `--motion-easing-*` tokens
+- Read duration scale from DNA `--motion-duration-*` tokens
+- Read stagger timing from DNA `--motion-stagger` token
+
+Example: A magnetic button should use `transition: transform [DNA duration] [DNA easing]` not `transition: transform 300ms ease-out`.
+
 ### Pipeline Stage
 
 - **Input from:** Section planner assigns beat types and content descriptions. Builder receives wow moment recommendation via spawn prompt.

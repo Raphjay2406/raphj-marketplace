@@ -150,6 +150,96 @@ All heading sizes use `clamp()` for fluid responsive scaling. Body and small are
 - At least 3 font weights visible per page
 - One typographic surprise per page: [describe -- e.g., gradient text, variable font animation, oversized numeral]
 
+### Display Font Strategy (Craft Guidance)
+
+**Weight selection by scale level:**
+- `hero` → Heaviest available weight (700+). Maximum drama.
+- `h1` → Primary heading weight (600). Confident but not screaming.
+- `h2-h4` → Medium weights (500). Clear hierarchy without competing with h1.
+- Display font at body size → NEVER. Display fonts are for headings only.
+
+**Scale jumps create drama:** The ratio between hero and h1 should be at least 1.5x. Between h1 and h2, at least 1.3x. Flat hierarchies (sizes too similar) produce generic layouts.
+
+**Variable font features (when available):**
+- `font-variation-settings: 'wght' 700` for precise weight control
+- `font-feature-settings: 'ss01'` for stylistic alternates
+- `font-feature-settings: 'liga', 'calt'` for ligatures
+- `text-wrap: balance` on all headings (prevents orphans)
+- `text-wrap: pretty` on body paragraphs (avoids short last lines)
+
+### Body Text Craft
+
+**Measure (line-length):**
+- Single column body: `max-w-[65ch]` (optimal readability)
+- Narrow context (sidebar, card): `max-w-[45ch]`
+- Wide context (full-width intro): `max-w-[75ch]`
+- Never let body text span full viewport width — unreadable above 80ch
+
+**Line-height responds to context:**
+- Body at 1rem: `leading-[1.65]` (comfortable reading)
+- Body at larger sizes (body-lg): `leading-[1.5]` (tighter, more editorial)
+- Small text: `leading-[1.5]` (tighter to save space)
+
+**Emphasis patterns:**
+- `<strong>` → Same font, one weight step heavier (400→500)
+- `<em>` → Italic if font supports it, else `text-[hsl(var(--color-accent))]`
+- `<mark>` → `bg-[hsl(var(--color-highlight)/0.2)] px-1 rounded-sm`
+- `<code>` → `font-mono bg-[hsl(var(--color-surface))] px-1.5 py-0.5 rounded text-[0.9em]`
+
+### Page-Level Hierarchy Template
+
+| Beat | Heading Level | Text Scale | Whitespace |
+|------|--------------|-----------|------------|
+| HOOK | hero (single h1) | Maximum display | Full viewport height |
+| BUILD | h2 + h3 for cards | Moderate display + body | Compact (`py-16`) |
+| PEAK | h1 or hero (second use OK) | Large display | Generous (`py-32`) |
+| BREATHE | h2 (restrained) | Small display + body-lg | Maximum (`py-40+`) |
+| PROOF | h2 + h3 for testimonials | Moderate | Medium |
+| CLOSE | h2 (compelling CTA) | Moderate-large | Focused |
+
+**Rule:** Only ONE `hero`-scale heading per page. If you need a second dramatic moment (PEAK beat), use `h1` not `hero`. Two heroes compete; one commands.
+
+### Color Context Guidance
+
+**Semantic color usage (when to use each token):**
+- `--color-primary` → CTAs, active states, key interactive elements, links
+- `--color-secondary` → Supporting actions, secondary buttons, badges
+- `--color-accent` → Notification badges, highlights, new indicators, small pops of personality
+- `--color-muted` → Helper text, captions, metadata, disabled labels, secondary navigation
+- `--color-glow` → Box-shadow glow effects, ambient orbs, neon border glow
+- `--color-tension` → Creative tension moments, contrast accents, dramatic color breaks
+- `--color-highlight` → Text selection (`::selection`), search result highlights, in-text emphasis
+- `--color-signature` → Signature element color, brand mark, unique visual identifier
+
+**Color at different scales:** The same token reads differently depending on area:
+- **Small area** (4px border, icon, badge): Use full-saturation token value
+- **Medium area** (button, card header): Use token value directly
+- **Large area** (section background, hero): Use tinted/lightened variant: `hsl(var(--color-primary) / 0.05)` or `hsl(var(--color-primary) / 0.1)` — full saturation on large areas is overwhelming
+
+**Beat-specific color intensity:**
+- HOOK: Primary + accent + glow (maximum palette expression)
+- BUILD: Primary + muted (functional, restrained)
+- PEAK: Primary + tension + signature (creative expression)
+- BREATHE: Surface + muted only (near-monochrome)
+- CLOSE: Primary + accent (action-oriented)
+
+**Palette expansion when 12 tokens aren't enough:**
+```css
+/* Opacity variants (preferred) */
+--color-primary-subtle: hsl(var(--color-primary) / 0.1);
+--color-primary-light: hsl(var(--color-primary) / 0.2);
+
+/* Color mixing (advanced) */
+--color-primary-muted: color-mix(in oklch, hsl(var(--color-primary)), hsl(var(--color-muted)) 40%);
+```
+
+**Interactive state color progression:**
+- Rest → `--color-primary` at base
+- Hover → Lighten 10% or shift toward accent: `brightness(1.1)` filter or opacity shift
+- Active → Darken 10%: `brightness(0.9)`
+- Focus → `--color-accent` ring with `2px offset`
+- Disabled → `--color-muted` at `0.5 opacity`
+
 ---
 
 ## Spacing System

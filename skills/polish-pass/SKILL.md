@@ -205,6 +205,40 @@ Responsive quality is a baseline requirement, not a bonus.
 
 ---
 
+### Micro-Interaction Choreography
+
+Award-winning sites choreograph SEQUENCES of micro-interactions, not individual effects. Each interaction is a multi-step performance with coordinated timing.
+
+**Button Click Sequence (4 steps, 400ms total):**
+1. `0ms` -- Scale to 0.97 (pressed feedback)
+2. `100ms` -- Ripple/glow emanates from click point
+3. `200ms` -- Scale returns to 1.0 with spring overshoot
+4. `300-400ms` -- Any state change (icon swap, text change) fades in
+
+**Form Field Focus Sequence (3 steps, 350ms total):**
+1. `0ms` -- Border color transitions to `--color-primary`
+2. `50ms` -- Label floats up or changes color
+3. `150ms` -- Focus ring expands from center outward
+
+**Card Hover Sequence (3 steps, 500ms total):**
+1. `0ms` -- Shadow depth increases (lift effect)
+2. `100ms` -- Image scales to 1.03 within overflow-hidden
+3. `200ms` -- CTA text or arrow appears with slide-in
+
+**Notification Appear Sequence (4 steps, 600ms total):**
+1. `0ms` -- Slide in from edge with spring physics
+2. `200ms` -- Content fades in within container
+3. `400ms` -- Progress bar begins auto-dismiss countdown
+4. `duration end` -- Reverse: progress bar completes, content fades, container slides out
+
+**Timing coordination rules:**
+- Child animations start AFTER parent container animation settles
+- Related elements stagger by DNA `--motion-stagger` value (typically 80-120ms)
+- Exit animations are 20-30% faster than entrance (feels responsive, not sluggish)
+- All sequences use the archetype's easing profile from DNA motion tokens
+
+---
+
 ### Archetype-Specific Polish Addenda
 
 Each archetype adds specific polish items and FORBIDDEN items on top of the universal checklist. The polisher checks the project's archetype in DESIGN-DNA.md and applies the corresponding addenda.
