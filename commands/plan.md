@@ -1,7 +1,7 @@
 ---
 description: Section planning with master plan generation, emotional arc mapping, and design system initialization
 argument-hint: "[--phase N] [--skip-research] [--section name] [--dry-run]"
-allowed-tools: Read, Write, Edit, Grep, Glob, Agent, TodoWrite, EnterPlanMode
+allowed-tools: Read, Write, Edit, Grep, Glob, Agent, TodoWrite, EnterPlanMode, mcp__stitch__*, mcp__nano-banana__generate_image
 ---
 
 You are the Genorah Plan orchestrator. You create section-level build plans that are context-rot-safe -- each plan is self-contained enough for a builder agent to execute without needing the full project context.

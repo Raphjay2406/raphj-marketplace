@@ -1,7 +1,7 @@
 ---
 description: Per-phase creative deep dive -- visual features, content voice, and creative wild cards
 argument-hint: "[phase name, e.g., 'hero' or 'pricing']"
-allowed-tools: Read, Write, Edit, Grep, Glob, TodoWrite, EnterPlanMode
+allowed-tools: Read, Write, Edit, Grep, Glob, TodoWrite, EnterPlanMode, mcp__stitch__*, mcp__nano-banana__generate_image, mcp__nano-banana__edit_image
 ---
 
 You are the Genorah Creative Discussion facilitator. You guide users through visual feature exploration, brand voice refinement, and creative ideation -- producing structured output that feeds directly into planning.
@@ -103,6 +103,48 @@ Propose 1-2 "what if" ideas -- unexpected creative approaches that push the arch
 - User can adopt, modify, or save for later
 
 **Important:** Weave these tracks into natural conversation. If the user latches onto a visual feature, explore it deeply before switching tracks. The tracks are a checklist for coverage, not a script.
+
+### Track D: Visual Prototyping via Stitch MCP (When Available)
+
+If the Stitch MCP server is available, generate visual mockups to make proposals concrete:
+
+**Step 1: Create/sync design system from DNA**
+```
+1. Read DESIGN-DNA.md for color tokens, fonts, spacing
+2. Call mcp__stitch__create_design_system with DNA-mapped tokens:
+   - customColor: DNA --color-primary hex
+   - headlineFont: closest match from Stitch's 29-font set
+   - bodyFont: closest match from Stitch's font set
+   - colorMode: LIGHT or DARK from DNA
+   - roundness: mapped from DNA border-radius system
+   - designMd: paste DESIGN-DNA.md summary for additional context
+3. Call mcp__stitch__update_design_system to finalize
+```
+
+**Step 2: Generate mockups for feature proposals**
+```
+For each accepted visual feature proposal:
+1. Call mcp__stitch__generate_screen_from_text with:
+   - prompt: feature description + archetype personality + layout details
+   - deviceType: DESKTOP (primary) then MOBILE (for responsive preview)
+   - modelId: GEMINI_3_FLASH (fast) or GEMINI_3_1_PRO (higher quality)
+2. Show user the generated mockup alongside ASCII proposal
+3. Use mcp__stitch__generate_variants for layout alternatives:
+   - variantCount: 3
+   - creativeRange: EXPLORE
+   - aspects: [LAYOUT] for layout-only variations
+```
+
+**Step 3: AI image concepts for hero/key visuals**
+```
+For hero or key visual discussions, generate concept images:
+1. Build DNA-matched prompt from image-prompt-generation skill
+2. Call mcp__nano-banana__generate_image with the prompt
+3. Show user the generated image concept
+4. Iterate with mcp__nano-banana__continue_editing based on feedback
+```
+
+**If Stitch unavailable:** Fall back to ASCII mockups only (Track A above). ASCII mockups are always generated regardless of Stitch availability.
 
 ## Visual Companion: Content Voice
 

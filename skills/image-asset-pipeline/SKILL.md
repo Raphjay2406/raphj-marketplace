@@ -236,6 +236,110 @@ export default function cloudinaryLoader({ src, width, quality }: {
 }
 ```
 
+## AI-Generated Image Integration (Nano-Banana MCP)
+
+When the `nano-banana` MCP server is available, AI-generated images integrate directly into the asset pipeline:
+
+### Generation → Optimization → Delivery
+
+```
+1. Builder generates image via mcp__nano-banana__generate_image
+   → Saves to public/images/generated/{section}-{purpose}.png (PNG, ~2-4MB)
+
+2. Optimize for web delivery:
+   - Convert PNG → WebP using sharp or Next.js Image optimization
+   - Generate responsive srcset variants: 400w, 800w, 1200w, 1600w
+   - Generate blur placeholder (LQIP) from the generated image
+   - For hero images: generate art-directed mobile crop (1:1 or 9:16)
+
+3. Reference in code:
+   <Image
+     src="/images/generated/hero-bg.webp"
+     alt="[descriptive alt from PLAN.md]"
+     width={1600} height={900}
+     placeholder="blur"
+     blurDataURL={heroBlur}
+     sizes="100vw"
+     priority
+   />
+```
+
+### Per-Beat Image Art Direction
+
+Different emotional arc beats demand different image treatments:
+
+| Beat | Image Style | Composition | Aspect Ratio | Treatment |
+|------|------------|-------------|--------------|-----------|
+| HOOK | Dramatic, cinematic, attention-grabbing | Wide with text overlay space | 21:9 or 16:9 | Full-bleed, hero-scale |
+| TEASE | Suggestive, partially revealed | Cropped, mysterious | 16:9 or 4:3 | Subtle blur or mask |
+| REVEAL | Full showcase, maximum detail | Centered, clear subject | 4:3 or 1:1 | Sharp, high-quality |
+| BUILD | Supportive, explanatory | Thumbnail or inline | 1:1 or 4:3 | Small, utility-focused |
+| PEAK | Maximum creative expression | Art-directed, unique | Variable | Full creative freedom |
+| BREATHE | Minimal, atmospheric | Abstract, edge-to-edge | 21:9 | Very subtle, low opacity |
+| PROOF | Authentic, credible | Portrait or documentary | 1:1 or 3:4 | Real photography preferred |
+| CLOSE | Compelling, action-driving | Focused, minimal distraction | 16:9 or 4:3 | Supports CTA prominence |
+
+### Responsive Image Strategy
+
+For AI-generated images, generate breakpoint-specific variants:
+
+```tsx
+// Art-directed AI image with per-breakpoint crops
+<picture>
+  {/* Mobile: portrait crop, focus on center subject */}
+  <source media="(max-width: 767px)" srcSet="/images/generated/hero-mobile.webp" />
+  {/* Tablet: wider crop, more context */}
+  <source media="(max-width: 1023px)" srcSet="/images/generated/hero-tablet.webp" />
+  {/* Desktop: full composition */}
+  <Image
+    src="/images/generated/hero-desktop.webp"
+    alt="Hero background"
+    width={1600} height={900}
+    sizes="100vw"
+    priority
+  />
+</picture>
+```
+
+For mobile crops, use `mcp__nano-banana__edit_image` to generate mobile-specific compositions:
+```
+mcp__nano-banana__edit_image({
+  imagePath: "public/images/generated/hero-desktop.png",
+  prompt: "Crop and recompose this image for a portrait (9:16) mobile layout.
+           Keep the central subject in focus. Ensure the top 40% has enough
+           negative space for headline text overlay."
+})
+```
+
+### DNA Color Alignment for Generated Images
+
+AI-generated images may drift from DNA palette. Post-generation alignment:
+
+```css
+/* CSS overlay to tint generated image toward DNA palette */
+.hero-bg {
+  position: relative;
+}
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    hsl(var(--color-bg) / 0.3),
+    hsl(var(--color-surface) / 0.6)
+  );
+  mix-blend-mode: multiply;
+}
+```
+
+Or use `mcp__nano-banana__continue_editing` for AI-based color correction:
+```
+"Shift the color palette to match: primary [hex], accent [hex], background [hex].
+ Maintain the composition and lighting. Adjust saturation to match the muted/vibrant
+ quality of the target palette."
+```
+
 ## Best Practices
 
 1. OG images: 1200x630px, PNG, edge runtime for fast generation
@@ -249,3 +353,7 @@ export default function cloudinaryLoader({ src, width, quality }: {
 9. Set explicit `width` and `height` to prevent CLS
 10. CDN: configure custom image loader for Cloudinary/Imgix/Bunny
 11. For Astro: use `astro:assets` Image component with `widths` and `format="webp"`
+12. AI-generated images: always optimize post-generation (PNG → WebP, generate srcset, LQIP)
+13. Per-beat image art direction: match image composition to emotional arc beat purpose
+14. Mobile crops: generate separate portrait-oriented compositions, not just scaled-down landscape
+15. DNA color alignment: use CSS overlay tinting or AI-based color correction for palette consistency

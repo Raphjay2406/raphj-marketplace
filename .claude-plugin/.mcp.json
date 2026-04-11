@@ -7,7 +7,7 @@
       "OBSIDIAN_API_PORT": "${OBSIDIAN_API_PORT:-27123}",
       "OBSIDIAN_PROTOCOL": "${OBSIDIAN_PROTOCOL:-https}"
     },
-    "description": "Obsidian REST API bridge (cyanheads) — frontmatter management, tag ops, global search, search-and-replace. Requires Obsidian running with Local REST API plugin.",
+    "description": "Obsidian REST API bridge (cyanheads) — frontmatter management, tag ops, global search. Requires Obsidian + Local REST API plugin.",
     "optional": true
   },
   "obsidian-fs": {
@@ -16,7 +16,29 @@
     "env": {
       "OBSIDIAN_VAULT_PATH": "${OBSIDIAN_VAULT_PATH}"
     },
-    "description": "Obsidian filesystem bridge (StevenStavrakis) — direct vault read/write, multi-vault support, tag management. No Obsidian required. Fallback when Obsidian is not running.",
+    "description": "Obsidian filesystem bridge (StevenStavrakis) — direct vault read/write. No Obsidian required.",
+    "optional": true
+  },
+  "nano-banana": {
+    "command": "npx",
+    "args": ["-y", "@anthropic-ai/nano-banana-mcp@latest"],
+    "env": {
+      "GEMINI_API_KEY": "${GEMINI_API_KEY}",
+      "NANO_BANANA_OUTPUT_DIR": "${NANO_BANANA_OUTPUT_DIR}"
+    },
+    "description": "AI image generation via Gemini 3.1 Flash Image (Nano Banana 2). Text-to-image, mask-free editing, style transfer via reference images, iterative editing. Free tier: 500 images/day.",
+    "optional": true
+  },
+  "stitch": {
+    "command": "npx",
+    "args": ["-y", "@anthropic-ai/stitch-mcp@latest"],
+    "description": "Visual UI design generation (Google Stitch). Text-to-screen mockups, design system management, variant generation with creative range control (REFINE/EXPLORE/REIMAGINE).",
+    "optional": true
+  },
+  "playwright": {
+    "command": "npx",
+    "args": ["-y", "@anthropic-ai/playwright-mcp@latest"],
+    "description": "Browser automation for visual QA. 4-breakpoint screenshots, CSS/DOM evaluation, accessibility auditing, console error detection, interaction testing.",
     "optional": true
   }
 }

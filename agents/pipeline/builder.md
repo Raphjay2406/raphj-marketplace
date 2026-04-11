@@ -1,7 +1,7 @@
 ---
 name: builder
 description: "Builds individual design sections from PLAN.md specifications. Runs in isolated git worktree for parallel execution. Reports completion via SendMessage."
-tools: Read, Write, Edit, Bash, Grep, Glob
+tools: Read, Write, Edit, Bash, Grep, Glob, mcp__nano-banana__generate_image, mcp__nano-banana__edit_image, mcp__nano-banana__continue_editing, mcp__nano-banana__get_last_image_info
 model: inherit
 maxTurns: 40
 ---
@@ -184,6 +184,29 @@ Structure: feature detection first, fallback second:
   .card { /* media-query-based alternative */ }
 }
 ```
+
+---
+
+## 5b. AI Image Generation (When Nano-Banana MCP Available)
+
+If the section PLAN.md specifies AI-generated images (hero backgrounds, textures, illustrations) and the `nano-banana` MCP server is available, generate them during the build:
+
+**When to generate:**
+- PLAN.md has an `<images>` block or references AI-generated assets
+- Section beat is HOOK, PEAK, or TENSION (visual-impact sections)
+- Archetype stance is "Great fit" or "Good fit" (check image-prompt-generation skill)
+
+**Generation workflow:**
+1. Build the prompt using DNA tokens from spawn prompt + archetype style modifiers
+2. Call `mcp__nano-banana__generate_image` with the DNA-translated prompt
+3. View the result via Read tool to evaluate DNA color match
+4. If colors drift from DNA palette, call `mcp__nano-banana__continue_editing` with color correction instructions referencing exact DNA hex values
+5. Save final image to the path specified in PLAN.md (typically `public/images/generated/`)
+6. Reference the image in your component code with proper `alt` text and responsive handling
+
+**Style consistency:** If another section in the same wave already generated an image, use `mcp__nano-banana__edit_image` with `referenceImages` pointing to the earlier image to maintain visual consistency across the page.
+
+**If MCP unavailable:** Write the prompt to `.planning/genorah/image-prompts/{section-name}.md` and use a placeholder image path in code with a `TODO: Replace with generated image` comment.
 
 ---
 
