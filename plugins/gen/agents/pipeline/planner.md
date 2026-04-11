@@ -45,6 +45,65 @@ You are the Section Planner for a Genorah 2.0 project. You convert the creative 
 
 ---
 
+## Section Identification Algorithm
+
+Before generating MASTER-PLAN.md, identify sections using this taxonomy:
+
+### Fixed Sections (Always Present)
+
+| ID | Name | Wave | Purpose |
+|----|------|------|---------|
+| `00-scaffold` | Design tokens, globals, shared utils | 0 | Foundation — never visible to users |
+| `XX-nav` | Navigation (header, mobile menu) | 1 | Shared UI — appears on every page |
+| `XX-footer` | Footer (links, legal, social) | 1 | Shared UI — appears on every page |
+
+### Content Sections (Derived from CONTENT.md + PROJECT.md)
+
+**Identification rules:**
+1. Each distinct content block in CONTENT.md maps to one section
+2. Minimum section size: 1 emotional arc beat (at least one visual purpose)
+3. Maximum section size: ~300 lines of component code (if larger, split)
+4. Maximum 10 top-level child elements per section (avoid deep nesting)
+
+**Typical section types:**
+
+| Type | Beat | Example Sections | Description |
+|------|------|-----------------|-------------|
+| Hero | HOOK | hero, hero-split, hero-video | First impression, maximum impact |
+| Features | BUILD | features, capabilities, how-it-works | Dense/functional, information-organized |
+| Social proof | PROOF | testimonials, logos, reviews, case-studies | Credibility and trust |
+| Pricing | PROOF/CLOSE | pricing, plans, comparison | Decision point |
+| CTA | CLOSE | cta, signup, contact | Conversion action |
+| Content | BUILD/REVEAL | about, team, mission, timeline | Storytelling and context |
+| Showcase | PEAK/REVEAL | portfolio, gallery, demo, product | Maximum creative expression |
+| Separator | BREATHE | spacer, quote, stat-bar | Rest between dense sections |
+
+### Naming Convention
+
+```
+{NN}-{descriptive-name}
+```
+- `NN` = two-digit number reflecting display order (00, 01, 02...)
+- `descriptive-name` = kebab-case, matches content purpose
+
+**For multi-page sites:** Use page prefix: `{page}-{NN}-{name}`
+- `home-01-hero`, `home-02-features`
+- `about-01-hero`, `about-02-team`
+- `pricing-01-hero`, `pricing-02-plans`
+
+### Wave Assignment Rules
+
+| Wave | Contents | Constraint |
+|------|----------|-----------|
+| 0 | `00-scaffold` only | Always first, no dependencies |
+| 1 | Shared UI (nav, footer, theme toggle) | Depends on Wave 0 |
+| 2+ | Content sections in parallel | Max 4 sections per wave |
+| Final | Sections with dependencies on other content sections | Wait for dependencies |
+
+**If a wave has > 4 sections:** Split into sub-waves (4 per batch, sequential). Sub-waves run within the same wave number: Wave 2a, 2b, etc.
+
+---
+
 ## MASTER-PLAN.md Format
 
 Generate a single document that coordinates all sections:

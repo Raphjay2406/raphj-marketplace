@@ -134,9 +134,29 @@ Use `run_in_background: true` for each:
 5. **Content voice** -- brand voice analysis, copywriting style, tone references
 6. **Integration research** -- only if integrations were detected in Phase 1; research best practices, SDK patterns, and implementation approaches for each detected integration
 
-### Step 2: Wait and summarize
+### Step 2: Wait for ALL researchers (completion gate)
 
-As each researcher completes, report findings in real-time. After all complete, synthesize a combined summary.
+**BLOCKING:** Do NOT proceed to Phase 3 until all 6 researchers have completed. This is a hard gate.
+
+```
+Research Progress:
+  [1/6] Industry analysis    — [complete/running/timeout]
+  [2/6] Design references    — [complete/running/timeout]
+  [3/6] Component patterns   — [complete/running/timeout]
+  [4/6] Animation techniques — [complete/running/timeout]
+  [5/6] Content voice        — [complete/running/timeout]
+  [6/6] Integration research — [complete/running/skipped]
+```
+
+**Timeout handling:** If any researcher hasn't completed after 5 minutes, check on it. After 10 minutes, report what was found so far and continue (partial research is better than blocked pipeline). Note which tracks timed out in PROJECT.md.
+
+### Step 3: Synthesize findings
+
+After all researchers complete (or timeout), synthesize a combined research summary. Highlight:
+- 3-5 strongest design references (with URLs if available)
+- Key industry conventions to follow
+- Integration patterns to implement
+- Competitive positioning insights
 
 Mention once that user can share additional reference URLs or screenshots if they have them.
 

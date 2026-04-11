@@ -55,9 +55,22 @@ If `--resume` or auto-detected:
 
 1. Read `.planning/genorah/CONTEXT.md` -- single file has everything: DNA identity, build state, next instructions
 2. Read next wave's section PLAN.md files (paths from CONTEXT.md)
-3. **Canary check** -- answer from memory BEFORE reading files:
-   - Display font? Accent-1 hex? Forbidden patterns? Layouts used so far? Next beat type?
-4. If 2+ answers wrong: recommend starting a new session
+3. **Canary check** -- answer these 5 questions from memory BEFORE reading files:
+   1. "What is the project's display font?" (verify against DESIGN-DNA.md)
+   2. "What is the accent color hex value?" (verify against DESIGN-DNA.md)
+   3. "Name one forbidden pattern for this archetype" (verify against DESIGN-DNA.md)
+   4. "What layout patterns have been used in completed sections?" (verify against MASTER-PLAN.md)
+   5. "What is the next section's beat type?" (verify against CONTEXT.md next wave instructions)
+   
+   **Scoring:** Each correct answer = 1 point. Score 0-5.
+   - 5/5: HEALTHY — proceed immediately
+   - 3-4/5: DEGRADING — proceed with caution, re-read DNA before spawning builders
+   - 0-2/5: ROT_DETECTED — recommend starting a new session for fresh context
+   
+4. **Post-canary warm-up** (if score >= 3): Re-read and validate:
+   - DESIGN-DNA.md color tokens match expectations
+   - DESIGN-SYSTEM.md component list is current
+   - Previous wave SUMMARY.md files for lessons learned
 5. Present wave summary to user before continuing
 
 ## Dry Run Mode

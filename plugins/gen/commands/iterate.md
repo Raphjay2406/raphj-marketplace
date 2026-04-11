@@ -126,6 +126,17 @@ Run a targeted quality self-check on changed sections only:
 
 If new gaps are found, create/update GAP-FIX.md.
 
+## Post-Iterate Quality Verification
+
+After implementation completes:
+
+1. **Run targeted quality self-check** on changed sections (DNA compliance, anti-slop quick gate, 4-breakpoint responsive)
+2. **Update SUMMARY.md** for each changed section with iteration details
+3. **Check if audit score exists** — if previous `/gen:audit` ran:
+   - Stale scores are marked in STATE.md: `last_audit_score: STALE (iterate changed sections)`
+   - Recommend: "Sections changed since last audit. Run `/gen:audit --quick` to re-score."
+4. **If Playwright MCP available** — capture before/after screenshots for visual verification
+
 ## Completion
 
 ```
@@ -134,6 +145,7 @@ Iteration complete.
 Changed: [section names]
 Approach: [chosen approach name]
 Quality: [quick anti-slop score]/35
+Audit status: [STALE — re-audit recommended | Not yet audited]
 ```
 
 ## Rules

@@ -148,7 +148,32 @@ Route to correct builder type based on `builder_type` from PLAN.md frontmatter:
 | `seo-geo-specialist` | seo-geo-specialist | Per-section SEO validation during build (spawned when `seo_geo.geo: true` in PROJECT.md); full audit mode during `/gen:audit` |
 | `mobile-specialist` | mobile-specialist | Spawned when `mobile.primary_framework` is set in DESIGN-DNA.md; handles platform-specific patterns, store submission checks, and mobile performance audits |
 
-Maximum 4 builders per wave. If a wave has more than 4 sections, split into sub-waves.
+Maximum 4 builders per wave. If a wave has more than 4 sections, split into sub-waves (max 4 per batch, sequential within the wave). Sub-waves are labeled 2a, 2b, etc. All sub-waves must complete before quality review runs for that wave.
+
+### Multi-Page Architecture
+
+For projects with multiple pages (home, about, pricing, blog, etc.):
+
+**Approach:** One MASTER-PLAN.md for the entire site. Pages are meta-groups of sections.
+
+```
+Wave 0: 00-scaffold (shared design tokens, globals)
+Wave 1: nav, footer (shared across ALL pages)
+Wave 2: home-01-hero, home-02-features, home-03-pricing, home-04-cta
+Wave 3: about-01-hero, about-02-team, about-03-timeline
+Wave 4: pricing-01-hero, pricing-02-plans, pricing-03-faq
+...
+```
+
+**Shared components:** DESIGN-SYSTEM.md is global (all pages share the same component registry). This ensures visual consistency across pages.
+
+**Section naming for multi-page:** Use `{page}-{NN}-{name}` convention:
+- `home-01-hero`, `about-01-hero`, `pricing-01-hero` (each page has its own hero)
+- Shared components (nav, footer) have no page prefix
+
+**Cross-page dependencies:** If page B's hero references page A's CTA (e.g., "Back to pricing"), mark the dependency in MASTER-PLAN.md and schedule page B sections in a later wave.
+
+**Quality review:** Run per-wave (not per-page). All sections in a wave are reviewed together for cross-section consistency, regardless of which page they belong to.
 
 **Builder spawn prompt MUST include ALL of the following:**
 
@@ -236,6 +261,110 @@ Include the following component variants with dimensions, padding, radius, and s
 - **Input** — text, textarea, select with focus/error/disabled states
 
 After subsequent waves, append new shared components proposed in builder SUMMARY.md files.
+
+Each new component MUST include: name, variants, dimensions (width/height/padding), border-radius, shadow, and usage notes. Builders validate proposals against this schema before adding.
+
+---
+
+## STATE.md Canonical Schema
+
+STATE.md is the single source of truth for execution state. All commands read and write it using this exact structure:
+
+```yaml
+# Genorah State
+
+## Phase
+phase: [discovery | research | brainstorm | planning | wave-N-in-progress | wave-N-complete | execution-complete | audit-in-progress | audit-complete | iterating | shipped]
+
+## Wave Progress
+wave_current: N
+wave_total: N
+
+## Sections
+| ID | Name | Wave | Beat | Status | Builder | Score |
+|----|------|------|------|--------|---------|-------|
+| 00 | shared | 0 | -- | complete | -- | -- |
+| 01 | hero | 1 | hook | complete | section-builder | 28/35 |
+| 02 | features | 2 | build | in-progress | section-builder | -- |
+| 03 | pricing | 2 | proof | pending | -- | -- |
+
+## Quality
+last_audit_score: NNN/234
+last_audit_tier: [Reject | Baseline | Strong | SOTD-Ready | Honoree | SOTM-Ready]
+last_audit_date: ISO date
+quality_target: [MVP | Premium | Award-Ready]
+
+## Metadata
+project_name: [name]
+archetype: [archetype name]
+created: ISO date
+last_modified: ISO date
+```
+
+**Phase transitions (in order):**
+```
+discovery → research → brainstorm → planning →
+wave-0-in-progress → wave-0-complete →
+wave-1-in-progress → wave-1-complete →
+... →
+wave-N-complete → execution-complete →
+audit-in-progress → audit-complete →
+iterating → audit-complete → shipped
+```
+
+**Section status values:** `pending | planned | in-progress | complete | failed | blocked | iterating`
+
+---
+
+## CONTEXT.md Canonical Schema
+
+CONTEXT.md is the single-page orientation document. It has TWO sections: a creative anchor (never rewritten) and a build state (rewritten after every wave).
+
+```markdown
+# Genorah Context
+
+## DNA Identity (NEVER REWRITE — creative anchor)
+- Archetype: [name]
+- Display font: [name] ([weight range])
+- Body font: [name]
+- Primary: [hex] | Secondary: [hex] | Accent: [hex]
+- Signature element: [description]
+- Forbidden: [patterns]
+- Compat tier: [Modern | Broad | Legacy]
+- Quality target: [MVP | Premium | Award-Ready]
+
+## Build State (REWRITE after every wave)
+- Phase: [current phase from STATE.md]
+- Wave: [N] of [total]
+- Sections complete: [list]
+- Sections in progress: [list]
+- Sections failed: [list]
+
+## Lessons Learned (last 2 waves only)
+- REPLICATE: [patterns that scored well]
+- AVOID: [patterns that lost points]
+
+## Creative Direction Notes (from creative-director)
+- [Wave-level observations]
+- [Archetype personality adjustments]
+
+## Next Wave Instructions
+- Sections to build: [list with beat types]
+- Special requirements: [any section-specific notes]
+- Component proposals pending: [from previous wave SUMMARY.md files]
+```
+
+**Hard constraints:**
+- Maximum 120 lines total
+- DNA Identity section: never modified after creation (immutable anchor)
+- Build State section: rewritten (not appended) after each wave
+- Lessons Learned: keep only last 2 waves (older lessons are in SUMMARY.md files)
+- Next Wave Instructions: always specific and actionable
+
+**Who writes CONTEXT.md:**
+- `/gen:start-project` creates it (DNA Identity only)
+- Orchestrator rewrites Build State + Lessons + Next Instructions after each wave
+- Creative Director appends Creative Direction Notes
 
 ---
 

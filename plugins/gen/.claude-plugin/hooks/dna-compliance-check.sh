@@ -53,7 +53,7 @@ check_pattern 'shadow-xl\b' "Using shadow-xl — use DNA shadow tokens instead"
 check_pattern 'rounded-lg\b' "Using rounded-lg — use DNA radius tokens instead"
 
 # Default gray text (should use DNA text tokens)
-check_pattern 'text-gray-[0-9]' "Using text-gray-XXX — use DNA text color tokens instead"
+check_pattern 'text-gray-[0-9]\+' "Using text-gray-XXX — use DNA text color tokens instead"
 
 # Default font-sans without DNA variable
 check_pattern 'font-sans\b' "Using font-sans — use DNA font variable instead"
@@ -86,32 +86,35 @@ if [ -f "$DNA_FILE" ]; then
 fi
 
 # --- NEW v2.0: Animation absence detection ---
-for file in $STAGED_FILES; do
+# Uses JSX detection (<ComponentName) instead of 'return' to identify components
+while IFS= read -r file; do
+  [ -z "$file" ] && continue
   if echo "$file" | grep -qE '\.(tsx|jsx)$'; then
-    has_motion=$(grep -cE 'animate-|motion\.|gsap|ScrollTrigger|transition-|@keyframes|framer-motion|data-motion|useSpring|useScroll' "$file" 2>/dev/null || echo "0")
-    has_return=$(grep -c 'return' "$file" 2>/dev/null || echo "0")
-    if [ "$has_motion" = "0" ] && [ "$has_return" -gt 0 ]; then
+    has_motion=$(grep -cE 'animate-|motion\.|gsap|ScrollTrigger|transition-|@keyframes|motion/react|data-motion|useSpring|useScroll' "$file" 2>/dev/null || echo "0")
+    has_jsx=$(grep -cE '<[A-Z]' "$file" 2>/dev/null || echo "0")
+    if [ "$has_motion" = "0" ] && [ "$has_jsx" -gt 0 ]; then
       is_component=$(echo "$file" | grep -qE 'components|sections|app/' && echo "yes" || echo "no")
       if [ "$is_component" = "yes" ]; then
         VIOLATIONS="${VIOLATIONS}\n[WARNING] No animation/motion detected in component: ${file}\n  Genorah v2.0 requires entrance animation and interaction states.\n"
       fi
     fi
   fi
-done
+done <<< "$STAGED_FILES"
 
 # --- NEW v2.0: Responsive absence detection ---
-for file in $STAGED_FILES; do
+while IFS= read -r file; do
+  [ -z "$file" ] && continue
   if echo "$file" | grep -qE '\.(tsx|jsx|css)$'; then
     has_responsive=$(grep -cE '@media|@container|sm:|md:|lg:|xl:|max-w-|min-w-|container-type' "$file" 2>/dev/null || echo "0")
-    has_return=$(grep -c 'return' "$file" 2>/dev/null || echo "0")
-    if [ "$has_responsive" = "0" ] && [ "$has_return" -gt 0 ]; then
+    has_jsx=$(grep -cE '<[A-Z]' "$file" 2>/dev/null || echo "0")
+    if [ "$has_responsive" = "0" ] && [ "$has_jsx" -gt 0 ]; then
       is_component=$(echo "$file" | grep -qE 'components|sections|app/' && echo "yes" || echo "no")
       if [ "$is_component" = "yes" ]; then
         VIOLATIONS="${VIOLATIONS}\n[WARNING] No responsive styles detected in: ${file}\n  Genorah v2.0 requires 4-breakpoint responsive design (375, 768, 1024, 1440).\n"
       fi
     fi
   fi
-done
+done <<< "$STAGED_FILES"
 
 # --- NEW v2.0: Compatibility tier feature warnings ---
 check_pattern 'container-type:\s*inline-size' "Using container queries -- ensure @supports fallback for Broad/Legacy tiers"
@@ -135,13 +138,13 @@ check_pii_pattern() {
   fi
 }
 
-check_pii_pattern 'sk_live_[a-zA-Z0-9]' "Stripe LIVE secret key detected in source code"
-check_pii_pattern 'sk_test_[a-zA-Z0-9]' "Stripe TEST secret key detected -- use env var STRIPE_SECRET_KEY"
-check_pii_pattern 'AKIA[0-9A-Z]\{16\}' "AWS access key detected in source code"
-check_pii_pattern 'ghp_[a-zA-Z0-9]\{36\}' "GitHub personal access token detected"
-check_pii_pattern 'gho_[a-zA-Z0-9]\{36\}' "GitHub OAuth token detected"
-check_pii_pattern 'xox[bpars]-[a-zA-Z0-9]' "Slack token detected in source code"
-check_pii_pattern 'glpat-[a-zA-Z0-9_-]' "GitLab personal access token detected"
+check_pii_pattern 'sk_live_[a-zA-Z0-9]\{20,\}' "Stripe LIVE secret key detected in source code"
+check_pii_pattern 'sk_test_[a-zA-Z0-9]\{20,\}' "Stripe TEST secret key detected -- use env var STRIPE_SECRET_KEY"
+check_pii_pattern 'AKIA[0-9A-Z]\{16,20\}' "AWS access key detected in source code"
+check_pii_pattern 'ghp_[a-zA-Z0-9]\{36,\}' "GitHub personal access token detected"
+check_pii_pattern 'gho_[a-zA-Z0-9]\{36,\}' "GitHub OAuth token detected"
+check_pii_pattern 'xox[bpars]-[a-zA-Z0-9]\{10,\}' "Slack token detected in source code"
+check_pii_pattern 'glpat-[a-zA-Z0-9_-]\{20,\}' "GitLab personal access token detected"
 
 # --- Report ---
 

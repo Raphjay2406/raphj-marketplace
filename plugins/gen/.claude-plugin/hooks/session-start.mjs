@@ -46,8 +46,28 @@ try {
 
   if (existsSync(planningDir)) {
     if (existsSync(contextFile)) {
-      // Extract first 80 lines as compressed project state
       const contextRaw = readFileSync(contextFile, 'utf8');
+
+      // --- CONTEXT.md integrity check ---
+      const requiredSections = ['## DNA Identity', '## Build State'];
+      const missingSections = requiredSections.filter(s => !contextRaw.includes(s));
+      if (missingSections.length > 0) {
+        additionalContext += `<!-- genorah:context-warning -->\n`;
+        additionalContext += `**Warning:** CONTEXT.md is missing required sections: ${missingSections.join(', ')}.\n`;
+        // Try SESSION-LOG.md as recovery fallback
+        const sessionLogFile = join(planningDir, 'SESSION-LOG.md');
+        if (existsSync(sessionLogFile)) {
+          const sessionLog = readFileSync(sessionLogFile, 'utf8');
+          const logLines = sessionLog.split('\n').slice(0, 30).join('\n');
+          additionalContext += `**Recovery:** Last session log found:\n${logLines}\n`;
+          additionalContext += `Consider running \`/gen:status\` to assess project state.\n`;
+        }
+      } else if (contextRaw.trim().length < 50) {
+        additionalContext += `<!-- genorah:context-warning -->\n`;
+        additionalContext += `**Warning:** CONTEXT.md exists but appears empty or corrupted. Run \`/gen:status\` to rebuild state.\n`;
+      }
+
+      // Extract first 80 lines as compressed project state
       const contextLines = contextRaw.split('\n').slice(0, 80).join('\n');
       additionalContext += `<!-- genorah:session-context -->\n`;
       additionalContext += `## Genorah Project State (auto-loaded)\n\n`;
