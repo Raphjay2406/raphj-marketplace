@@ -254,10 +254,23 @@ SORT file.ctime DESC
 | `--scores` | Run steps 1–5 scoped to `audit/` artifacts and per-section SUMMARY.md quality data only; write to `vault/Quality/` |
 | `--decisions` | Run steps 1–5 scoped to BRAINSTORM.md, DESIGN-DNA.md, and all DISCUSSION-{phase}.md files only; write to `vault/Decisions/` |
 
+### 7. Graph Connectivity & Configuration (MANDATORY on --full export)
+
+After writing all vault notes, run the graph setup protocol from the sync-knowledge command (Steps 5-7):
+
+1. **Connectivity pass** -- Convert all cross-references (`gen:skill-name`, backtick-quoted skill names, bold skill names in lists) to `[[wiki-links]]`. Only convert when the target file exists.
+2. **Orphan elimination** -- For files with zero outgoing links, add `## See Also` with 3-4 related skill links. For files with zero incoming links, add them to `_Dashboard.md`.
+3. **Graph config** -- Write `.obsidian/graph.json` with color groups per folder (Core=red-orange, Domain=green, Utility=teal, Commands=orange, Pipeline Agents=red, Specialist Agents=magenta, Protocol Agents=purple, Dashboard=yellow). Set `hideUnresolved: true`, `showOrphans: false`, `showArrow: true`.
+4. **Dashboard generation** -- Create/update `_Dashboard.md` linking to all skills, commands, and agents. Organized by category.
+5. **Index generation** -- Create/update `Skills/_Index.md` with Dataview queries.
+
+This ensures every export produces a fully connected, color-coded, navigable Obsidian graph with zero floating nodes.
+
 ## Rules
 
 1. Export is additive -- never modify source artifacts.
 2. All wiki-links must point to valid vault paths.
 3. Dataview fields must use correct inline syntax.
 4. Preserve all original content -- vault format adds metadata, never removes content.
-5. NEVER suggest the next command. The hook handles routing.
+5. Graph connectivity pass is MANDATORY on `--full` export. Every node must be reachable from `_Dashboard`.
+6. NEVER suggest the next command. The hook handles routing.

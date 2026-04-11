@@ -151,6 +151,106 @@ For each note in `{vault_path}/Knowledge/`:
 
 Run plugin → Obsidian first (step 2), then run Obsidian → plugin (step 3). The two-pass approach ensures the vault has the latest plugin content before checking for vault-side edits.
 
+### 5. Graph Connectivity Pass (MANDATORY after every plugin→obsidian sync)
+
+After writing all skill/command/agent notes, run the connectivity pass to ensure the Obsidian graph is fully linked:
+
+**Step 1: Convert cross-references to wiki-links**
+
+Scan every exported note for skill references in these formats and convert to `[[wiki-links]]`:
+- `` `gen:skill-name` `` → `[[skill-name]]`
+- `` `skill-name` `` in "Related Skills" list items → `[[skill-name]]`
+- `**skill-name**` in list items → `[[skill-name]]`
+- `` `/gen:command-name` `` → `[[command-name]]`
+
+Only convert if the target filename exists in the vault. Never create broken links.
+
+**Step 2: Add "See Also" to orphan nodes**
+
+For any exported file that has zero outgoing `[[wiki-links]]`, append a `## See Also` section with 3-4 links to topically related skills based on:
+- Same tier (core skills link to other core skills)
+- Same category (UI patterns link to other UI patterns)
+- Pipeline stage (build-time skills link to the builder agent)
+- Always include `[[_Dashboard]]` as a fallback link
+
+**Step 3: Verify zero orphan targets**
+
+After all links are written, verify every file has at least one INCOMING link (another file links TO it). If any file has zero incoming links, add it to `_Dashboard.md` under the appropriate category section.
+
+**Step 4: Write graph configuration**
+
+Write/update the Obsidian graph config at `{vault_path}/.obsidian/graph.json` with color groups:
+
+```json
+{
+  "collapse-filter": false,
+  "search": "",
+  "showTags": false,
+  "showAttachments": false,
+  "hideUnresolved": true,
+  "showOrphans": false,
+  "collapse-color-groups": false,
+  "colorGroups": [
+    { "query": "path:Skills/core", "color": { "a": 1, "rgb": 5046016 } },
+    { "query": "path:Skills/domain", "color": { "a": 1, "rgb": 34816 } },
+    { "query": "path:Skills/utility", "color": { "a": 1, "rgb": 11141290 } },
+    { "query": "path:Commands", "color": { "a": 1, "rgb": 16744448 } },
+    { "query": "path:Agents/pipeline", "color": { "a": 1, "rgb": 16711680 } },
+    { "query": "path:Agents/specialists", "color": { "a": 1, "rgb": 16711935 } },
+    { "query": "path:Agents/protocols", "color": { "a": 1, "rgb": 8388736 } },
+    { "query": "file:_Dashboard", "color": { "a": 1, "rgb": 16776960 } }
+  ],
+  "collapse-display": false,
+  "showArrow": true,
+  "textFadeMultiplier": -0.5,
+  "nodeSizeMultiplier": 1.2,
+  "lineSizeMultiplier": 0.8,
+  "collapse-forces": false,
+  "centerStrength": 0.5,
+  "repelStrength": 8,
+  "linkStrength": 0.6,
+  "linkDistance": 150,
+  "scale": 1,
+  "close": true
+}
+```
+
+**Color group legend:**
+| Color | RGB | Group |
+|-------|-----|-------|
+| Red-orange | 5046016 | Core Skills |
+| Green | 34816 | Domain Skills |
+| Blue-teal | 11141290 | Utility Skills |
+| Orange | 16744448 | Commands |
+| Red | 16711680 | Pipeline Agents |
+| Magenta | 16711935 | Specialist Agents |
+| Purple | 8388736 | Protocol Agents |
+| Yellow | 16776960 | Dashboard (hub node) |
+
+### 6. Generate Dashboard
+
+Write/update `{vault_path}/_Dashboard.md` as the central hub linking to ALL nodes. Structure:
+
+```markdown
+## Quick Navigation
+[links to key commands]
+
+## Key Skills
+[links to core and high-impact domain skills organized by category]
+
+## Pipeline Agents / Specialist Agents / Protocol Agents
+[links to all agents]
+
+## Integrations / UI Patterns / Framework & Content
+[links to ALL remaining skills ensuring zero orphan nodes]
+```
+
+The dashboard MUST link to every file that has zero other incoming links. This ensures the graph has no disconnected nodes.
+
+### 7. Generate Skills Index
+
+Write/update `{vault_path}/Skills/_Index.md` with Dataview queries using paths relative to vault root (e.g., `FROM "Skills/core"` or `FROM "Genorah-Plugin/Skills/core"` depending on vault structure).
+
 ## Rules
 
 1. Never overwrite without checking modification dates.
