@@ -395,6 +395,42 @@ Reference the `design-archetypes` skill for per-archetype tension techniques.
 | PROOF | CLOSE | [e.g., convergence] |
 
 Reference the `emotional-arc` skill for valid/invalid beat sequences and beat constraints.
+
+---
+
+## Tech Stack (from PROJECT.md)
+
+> These fields are set during `/gen:start-project` and affect ALL code generation.
+
+```yaml
+framework: nextjs | astro | react-vite | other
+framework_version: [version number]
+rendering_strategy: ssg | hybrid | ssr
+deployment_target: vercel | netlify | self-hosted
+package_manager: npm | pnpm | bun
+component_library: shadcn | radix | headless-ui | custom
+css_strategy: tailwind-v4
+animation_libraries: [motion/react, gsap]
+form_library: react-hook-form | native
+data_fetching: tanstack-query | fetch | swr
+state_management: zustand | none
+icons: lucide | heroicons | phosphor | custom
+```
+
+**Framework affects code generation:**
+
+| Aspect | Next.js | Astro | React/Vite |
+|--------|---------|-------|-----------|
+| Component files | `.tsx` with `"use client"` | `.astro` + `.tsx` islands | `.tsx` client-only |
+| Routing | App Router `app/` | Pages `src/pages/` | React Router |
+| Data fetching | RSC `fetch()` / `"use cache"` | `Astro.glob()` / `fetch` in frontmatter | `useQuery()` / `useEffect` |
+| Image component | `next/image` | `astro:assets Image` | `<img>` with srcset |
+| Font loading | `next/font` | CSS `@font-face` | CSS `@font-face` |
+| API routes | `app/api/*/route.ts` | `src/pages/api/*.ts` | External API only |
+| Animation | motion/react (client) | motion/react in `client:only` island | motion/react (direct) |
+| CSS | Tailwind v4 | Tailwind v4 + scoped styles | Tailwind v4 |
+
+Builders MUST adapt output to match the chosen framework. The framework field is passed in every builder spawn prompt.
 ```
 
 ### Reference Sites

@@ -195,23 +195,38 @@ Each section gets a complete build specification at `.planning/genorah/sections/
 section: XX-name
 wave: [number]
 depends_on: [list of section IDs this depends on]
+framework: [nextjs | astro | react-vite]   # from PROJECT.md tech_stack
 files_modified:
-  - src/components/sections/[name].tsx
-  - [other files]
+  # Adapt paths to framework:
+  # Next.js: src/components/sections/[name].tsx
+  # Astro:   src/components/sections/[name].astro + src/components/islands/[name].tsx (if interactive)
+  # Vite:    src/components/sections/[name].tsx
+  - [framework-appropriate path]
 autonomous: true
 builder_type: [section-builder | 3d-specialist | animation-specialist | content-specialist]
 must_haves:
   truths:
     - "[assertion that must be true when done]"
   artifacts:
-    - path: "src/components/sections/[name].tsx"
+    - path: "[framework-appropriate path]"
       provides: "[what this file delivers]"
 schema_type: [FAQPage | Article | Product | LocalBusiness | HowTo | Organization | BreadcrumbList | none]
 og_template: [article | landing | product | auto]
 integration_type: [form-submission | api-client | webhook-receiver | email-send | none]
 rendering_strategy: [static | isr | ssr | streaming | hybrid]
+rendering_rationale: "[WHY this strategy — e.g., 'static because content only changes on deploy' or 'ssr because pricing needs real-time currency conversion']"
 ---
 ```
+
+### Framework-Aware File Paths
+
+Generate file paths based on the project's framework:
+
+| Framework | Section Component | Island/Interactive | Page Route | API Route |
+|-----------|------------------|-------------------|------------|-----------|
+| **Next.js** | `src/components/sections/{name}.tsx` | Same file with `"use client"` | `app/(routes)/page.tsx` | `app/api/{endpoint}/route.ts` |
+| **Astro** | `src/components/sections/{name}.astro` | `src/components/islands/{name}.tsx` | `src/pages/{path}.astro` | `src/pages/api/{endpoint}.ts` |
+| **React/Vite** | `src/components/sections/{name}.tsx` | Same file (all client) | `src/pages/{path}.tsx` | External API (no server) |
 
 Body sections (all required):
 

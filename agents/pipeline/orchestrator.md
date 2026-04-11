@@ -148,6 +148,24 @@ Route to correct builder type based on `builder_type` from PLAN.md frontmatter:
 | `seo-geo-specialist` | seo-geo-specialist | Per-section SEO validation during build (spawned when `seo_geo.geo: true` in PROJECT.md); full audit mode during `/gen:audit` |
 | `mobile-specialist` | mobile-specialist | Spawned when `mobile.primary_framework` is set in DESIGN-DNA.md; handles platform-specific patterns, store submission checks, and mobile performance audits |
 
+### Framework-Aware Builder Instructions
+
+**ALL builders receive the framework from CONTEXT.md Tech Stack section.** The builder MUST adapt its output:
+
+| Framework | File Extension | Component Pattern | Hydration | Routing |
+|-----------|---------------|-------------------|-----------|---------|
+| `nextjs` | `.tsx` | RSC default, `"use client"` for interactive | Automatic (RSC/client boundary) | App Router `app/` |
+| `astro` | `.astro` + `.tsx` islands | `.astro` for page layout, `.tsx` with `client:load` or `client:only` for interactive islands | Explicit (`client:*` directives) | File-based `src/pages/` |
+| `react-vite` | `.tsx` | All client components | None (SPA) | React Router v7 |
+
+**Framework-specific instructions in spawn prompt:**
+
+For **Next.js**: "Output `.tsx` files. Use `"use client"` only for components with interactivity (event handlers, hooks, browser APIs). Server Components are the default. Use `next/image` for images, `next/font` for fonts. Data fetching in server components uses `fetch()` directly. For caching: use `"use cache"` directive with `cacheLife` and `cacheTag`."
+
+For **Astro**: "Output `.astro` files for section layout. Interactive elements (animations, forms, cursor effects) go in separate `.tsx` island files imported with `client:load` (needs JS on page load), `client:visible` (lazy), or `client:only="react"` (client-only, no SSR). Use `astro:assets Image` for images. Data fetching happens in the frontmatter `---` block."
+
+For **React/Vite**: "Output `.tsx` files. All components are client-rendered (no server components, no `"use client"` needed). Use React Router v7 for navigation. Use `useEffect` or TanStack Query for data fetching. Standard `<img>` tags with responsive srcset for images."
+
 Maximum 4 builders per wave. If a wave has more than 4 sections, split into sub-waves (max 4 per batch, sequential within the wave). Sub-waves are labeled 2a, 2b, etc. All sub-waves must complete before quality review runs for that wave.
 
 ### Multi-Page Architecture
@@ -185,6 +203,12 @@ Wave 4: pricing-01-hero, pricing-02-plans, pricing-03-faq
 6. **Component registry from DESIGN-SYSTEM.md** — available shared components with import paths and usage notes. **After each builder completes in a parallel wave, re-read DESIGN-SYSTEM.md** to capture newly proposed components before spawning the next builder.
 7. **Integration requirements** — if the section depends on or is depended upon by other sections in the same wave, include coordination instructions
 8. **Scoring priority reminder** — include: "Creative Courage (1.2x), Color (1.2x), Typography (1.2x) are highest-weight categories. Invest creative effort here FIRST."
+9. **Framework + rendering context** — from CONTEXT.md Tech Stack section:
+   - Framework: `nextjs | astro | react-vite` — determines file extensions, component patterns, import conventions
+   - Rendering strategy: `ssg | hybrid | ssr` — determines data fetching approach, caching directives
+   - Deployment target: `vercel | netlify | self-hosted` — determines available platform features
+   - Include the framework-specific instructions from the "Framework-Aware Builder Instructions" section above
+   - Include per-section `rendering_strategy` from PLAN.md frontmatter with rationale
 
 Update TodoWrite tasks to `in_progress` as builders spawn.
 
@@ -332,6 +356,14 @@ CONTEXT.md is the single-page orientation document. It has TWO sections: a creat
 - Forbidden: [patterns]
 - Compat tier: [Modern | Broad | Legacy]
 - Quality target: [MVP | Premium | Award-Ready]
+
+## Tech Stack (NEVER REWRITE — set during start-project)
+- Framework: [nextjs | astro | react-vite]
+- Rendering: [ssg | hybrid | ssr]
+- Deployment: [vercel | netlify | self-hosted]
+- Package manager: [pnpm | npm | bun]
+- Components: [shadcn | radix | headless-ui | custom]
+- Data fetching: [tanstack-query | fetch | swr]
 
 ## Build State (REWRITE after every wave)
 - Phase: [current phase from STATE.md]

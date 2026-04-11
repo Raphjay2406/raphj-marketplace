@@ -102,6 +102,30 @@ Propose 1-2 "what if" ideas -- unexpected creative approaches that push the arch
 - Each includes what changes, why it could work, and the risk
 - User can adopt, modify, or save for later
 
+### Track E: Tech Stack & Library Deep-Dive
+
+If the user's phase involves technical decisions (framework features, rendering strategy, library choices), discuss:
+
+**Framework-Specific Feature Proposals:**
+- Next.js: "Your pricing section needs real-time data. Should we use Cache Components with `cacheLife('minutes')` for near-real-time, or full SSR? Cache Components give 90% of the freshness at 10% of the cost."
+- Astro: "This hero has heavy animations. We'll make it an island with `client:visible` so it only loads when scrolled to. The rest of the page stays zero-JS."
+- React/Vite: "Since this is a SPA, we can use React Router's `lazy()` for code-splitting each section. First paint shows hero only."
+
+**Rendering Strategy Rationale:**
+- "This blog section changes weekly. SSG with ISR at 1-hour revalidation gives you fresh content without rebuilding the whole site."
+- "Your product catalog has 5000 items. We should use SSR with streaming for the listing page, but SSG for individual product pages (they change less often)."
+- "This is a brochure site — pure SSG with on-deploy rebuilds is simplest and fastest."
+
+**Library Trade-off Discussions:**
+- "GSAP gives us more control over scroll animations, but adds ~45KB. CSS scroll-driven animations are free but Safari support is newer. For your Modern compat tier, CSS is fine."
+- "TanStack Query vs SWR: Query has better devtools and mutation handling. For a dashboard with lots of data fetching, I'd recommend Query."
+- "Zustand for state management only if we need cross-section state (e.g., cart persisting across pages). For this marketing site, no global state needed."
+
+**Performance Budget Implications:**
+- Show how each library choice affects total JS bundle
+- Show how rendering strategy affects LCP/CLS/INP
+- Recommend lazy loading strategies per framework
+
 **Important:** Weave these tracks into natural conversation. If the user latches onto a visual feature, explore it deeply before switching tracks. The tracks are a checklist for coverage, not a script.
 
 ### Track D: Visual Prototyping via Stitch MCP (When Available)

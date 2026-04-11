@@ -103,7 +103,66 @@ Default if not asked: **Premium** (suitable for most production sites).
 
 Store the quality tier in PROJECT.md under `quality_target`. The quality-reviewer and audit command reference this to calibrate scoring thresholds.
 
-### Step 8: Soft approval and artifact creation
+### Step 8: Technology stack decisions
+
+Ask these questions to establish the technical foundation. These directly affect code generation, file structure, and builder routing.
+
+**8a. Web Framework:**
+"Which web framework? (Next.js / Astro / React+Vite / Other)"
+
+| User Choice | Internal Value | Builder Target | Default Rendering |
+|-------------|---------------|----------------|-------------------|
+| Next.js | `nextjs` | React TSX with `"use client"` boundaries, App Router, Route Handlers | SSG with ISR where needed |
+| Astro | `astro` | `.astro` files with island hydration (`client:load`, `client:only`), Content Collections | Static SSG (default), hybrid SSR opt-in |
+| React+Vite | `react-vite` | React TSX SPA, client-side routing (React Router), no server components | Client-only SPA |
+| Other | `other` | Specify: Vue, Svelte, plain HTML — adapt patterns | Varies |
+
+Default if not asked: **Next.js** (broadest capability).
+
+**8b. Rendering Strategy:**
+"How does your content change? (Static / Mostly static with some dynamic / Fully dynamic / Don't know)"
+
+| User Choice | Internal Strategy | Framework Implementation |
+|-------------|------------------|-------------------------|
+| Static | `ssg` | Next.js: `generateStaticParams`, Astro: `prerender: true` (default), Vite: build-time |
+| Mostly static + some dynamic | `hybrid` | Next.js: ISR + `"use cache"` + `cacheLife`, Astro: `hybrid` mode with `server:defer` |
+| Fully dynamic | `ssr` | Next.js: SSR with streaming, Astro: SSR mode, Vite: not applicable (use Next.js) |
+| Don't know | `hybrid` | Default to hybrid — can be refined later |
+
+**8c. Deployment Target:**
+"Where will this be deployed? (Vercel / Netlify / Self-hosted / Don't know)"
+
+| User Choice | Internal Value | Affects |
+|-------------|---------------|---------|
+| Vercel | `vercel` | Enables Fluid Compute, Cache Components, Edge Middleware, Analytics |
+| Netlify | `netlify` | Enables Edge Functions, On-Demand Builders, Forms |
+| Self-hosted | `self-hosted` | Node.js server, no platform-specific features |
+| Don't know | `vercel` | Default (broadest feature support) |
+
+**8d. Package Manager:**
+"Package manager preference? (npm / pnpm / bun / No preference)"
+
+Default if not asked: **pnpm** (fastest, best monorepo support).
+
+**8e. Component Library:**
+"UI component library? (shadcn/ui / Radix / Headless UI / Custom / No preference)"
+
+Default: **shadcn/ui** (best DNA token integration with Tailwind).
+
+**8f. Key Libraries (auto-detected from project type):**
+
+| Library Area | Default Choice | When to Override |
+|-------------|---------------|-----------------|
+| Styling | Tailwind CSS v4 | Always (locked) |
+| Animation | motion/react + GSAP (dynamic import) | Always (locked) |
+| Forms | React Hook Form + Zod | Override if Astro (use native forms) |
+| Data fetching | TanStack Query | Override if Next.js RSC (use `fetch` directly) |
+| State management | Zustand | Only if cross-section state needed |
+| Icons | Lucide React | Override per archetype (see icon-system skill) |
+
+Store all tech stack decisions in PROJECT.md under a `## Tech Stack` section.
+
+### Step 9: Soft approval and artifact creation
 
 Present a condensed brief:
 "Here's what I'm working with: [brief summary]. I'm going to research your space and come back with a creative direction. Sound right?"
@@ -118,6 +177,19 @@ Write `.planning/genorah/PROJECT.md` with:
 - `mobile` section: platform targets, primary_framework, store_targets (if mobile project)
 - `seo_geo` section: geo flag, target AI platforms (if applicable)
 - `quality_target`: MVP | Premium | Award-Ready (default: Premium)
+- `tech_stack` section:
+  - `framework`: nextjs | astro | react-vite | other
+  - `framework_version`: [latest or specified]
+  - `rendering_strategy`: ssg | hybrid | ssr
+  - `deployment_target`: vercel | netlify | self-hosted
+  - `package_manager`: npm | pnpm | bun
+  - `component_library`: shadcn | radix | headless-ui | custom
+  - `css_strategy`: tailwind-v4 (locked)
+  - `animation_libraries`: motion/react, gsap (locked)
+  - `form_library`: react-hook-form | native
+  - `data_fetching`: tanstack-query | fetch | swr
+  - `state_management`: zustand | none
+  - `icons`: lucide | heroicons | phosphor | custom
 
 TodoWrite -- mark Phase 1 complete.
 
