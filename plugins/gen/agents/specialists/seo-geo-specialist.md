@@ -238,7 +238,7 @@ Evaluate content for AI search citation optimization across all pages:
 **BLUF (Bottom Line Up Front):**
 - First 40-60 words after each H2 must contain the key answer or takeaway
 - Flag H2 sections that begin with context-setting rather than the answer
-- Example pass: "Modulo generates award-caliber websites through a pipeline of specialized agents..." (answer first)
+- Example pass: "Genorah generates award-caliber websites through a pipeline of specialized agents..." (answer first)
 - Example fail: "When it comes to website design, there are many factors to consider..." (context first, answer buried)
 
 **Fact Density:**

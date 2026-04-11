@@ -4,7 +4,7 @@ This file provides guidance to Claude Code when working with the Genorah plugin 
 
 ## Project Overview
 
-**Genorah v2.2** is a Claude Code plugin for premium frontend design. It produces award-caliber websites (Awwwards SOTD 8.0+ baseline) through a pipeline of 19 specialized agents, machine-enforceable design identity, a 234-point weighted quality gate across 12 categories, 5 hard gates, and a Visual Companion for localhost delivery. It is NOT a template generator -- every project gets a unique visual identity enforced through Design DNA, 19 Design Archetypes, Emotional Arc storytelling, and the Quality Gate. Covers 12 design domains with ~105 skills.
+**Genorah v2.8** is a Claude Code plugin for premium frontend design. It produces award-caliber websites (Awwwards SOTD 8.0+ baseline) through a pipeline of 19 specialized agents, machine-enforceable design identity, a 234-point weighted quality gate across 12 categories, 5 hard gates, and a Visual Companion for localhost delivery. It is NOT a template generator -- every project gets a unique visual identity enforced through Design DNA, 19 Design Archetypes, Emotional Arc storytelling, and the Quality Gate. Framework-aware pipeline supports Next.js, Astro, and React/Vite with per-framework code generation. Covers 12 design domains with ~115 skills.
 
 This repository contains only markdown definitions and a plugin manifest -- there is no application code, build system, or test suite. Targets Next.js, Astro, React/Vite, Tauri, Electron, Swift/SwiftUI, Kotlin/Compose, React Native, Expo, and Flutter.
 
@@ -13,11 +13,11 @@ This repository contains only markdown definitions and a plugin manifest -- ther
 Three-tier system where commands are entry points, agents orchestrate work, and skills provide domain knowledge:
 
 ```
-commands/ (12 commands -- user-facing pipeline stages)
+commands/ (13 commands -- user-facing pipeline stages)
     | invoke
 agents/ (19 agents -- 7 pipeline + 6 specialists + 5 protocols + 1 figma)
     | reference
-skills/ (3-tier, 4-layer SKILL.md files -- ~105 modular knowledge bases)
+skills/ (3-tier, 4-layer SKILL.md files -- ~115 modular knowledge bases)
 ```
 
 **Plugin manifest:** `.claude-plugin/plugin.json`
@@ -56,17 +56,18 @@ Five optional MCP servers declared in `.claude-plugin/.mcp.json`:
 
 All servers are optional. Commands gracefully degrade when servers are unavailable.
 
-## Commands (12)
+## Commands (13)
 
 | Command | Purpose |
 |---------|---------|
-| `/gen:start-project` | Discovery, research, archetype selection, Design DNA generation |
-| `/gen:discuss` | Per-phase creative deep dive, visual feature proposals, brand voice. Stitch mockups + nano-banana concept art when available. |
-| `/gen:plan` | Phase-scoped re-research, context-rot-safe PLAN.md generation |
-| `/gen:build` | Wave-based implementation with real-time status. Builders can generate AI images via nano-banana. |
-| `/gen:iterate` | Brainstorm-first design changes or bug diagnosis with approval |
-| `/gen:bugfix` | Diagnostic root cause analysis with proposed solutions |
-| `/gen:audit` | Full quality gate audit across 12 categories. Playwright visual QA when available. |
+| `/gen:start-project` | Discovery, research, archetype selection, Design DNA generation, tech stack selection |
+| `/gen:discuss` | Per-phase creative deep dive, visual features, brand voice, tech stack trade-offs. Stitch mockups + nano-banana concept art when available. |
+| `/gen:plan` | Phase-scoped re-research, framework-aware PLAN.md generation with rendering rationale |
+| `/gen:build` | Wave-based implementation with framework-specific code generation. AI images via nano-banana. |
+| `/gen:iterate` | Brainstorm-first design changes with post-iterate stale-audit detection |
+| `/gen:review` | Focused creative review — archetype personality, conversion readiness, visual polish, mobile quality |
+| `/gen:bugfix` | Diagnostic root cause analysis with Playwright visual evidence capture |
+| `/gen:audit` | Full 234-point quality gate audit. Playwright visual QA when available. |
 | `/gen:status` | Current pipeline state, wave progress, section statuses, next action suggestion |
 | `/gen:sync-knowledge` | Bidirectional sync between plugin skills and Obsidian knowledge vault |
 | `/gen:companion` | Launch/interact with Visual Companion on localhost |
