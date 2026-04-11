@@ -169,6 +169,15 @@ responsive:
     max_width: "1400px"      # Content max-width to prevent stretching
 ```
 
+### Responsive Craft Rules (v2.0 — Anti-Generic)
+
+These rules prevent "desktop but stacked" responsive implementations:
+
+1. **Mobile MUST NOT be "desktop but stacked"** -- Every section MUST have at least ONE mobile-specific design decision (reordered content, different visual hierarchy, touch-specific interaction, or simplified layout that feels designed-for-mobile rather than collapsed-from-desktop).
+2. **Tablet is NOT "mobile but wider"** -- Must have unique column decisions. If mobile is single-col and desktop is 3-col, tablet should NOT be 2-col by default -- consider whether a different approach (overlay, sidebar, card grid) better serves the content.
+3. **Each breakpoint must have a `design_decision` annotation** in the responsive block explaining WHY this layout was chosen for this width, not just WHAT the layout is. Example: `design_decision: "Stack heading over image because hero image impact is diminished at narrow widths — heading is the hook."
+4. **Mobile content priority reordering is mandatory** for all sections with 3+ content elements. The visual order on mobile should prioritize the most impactful content first, not mirror the desktop DOM order.
+
 ---
 
 ## Per-Section-Type Default Layouts

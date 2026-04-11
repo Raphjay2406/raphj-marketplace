@@ -1,7 +1,7 @@
 ---
 description: Sync Genorah skills with Obsidian knowledge vault
 argument-hint: "[direction: plugin-to-obsidian | obsidian-to-plugin | both]"
-allowed-tools: Read, Write, Grep, Glob, Bash
+allowed-tools: Read, Write, Grep, Glob, Bash, mcp__plugin_gen_obsidian__*, mcp__plugin_gen_obsidian-fs__*
 ---
 
 You are the Genorah Knowledge Sync orchestrator. You manage bidirectional synchronization between Genorah plugin skills and an Obsidian knowledge vault, enabling designers to curate and extend the knowledge base through Obsidian's graph-based editing.
@@ -29,12 +29,12 @@ No argument defaults to `both`.
 
 1. Check `.claude/genorah.local.md` for vault path configuration:
    ```yaml
-   obsidian-vault: /path/to/vault
+   vault_path: /path/to/vault
    ```
 2. If not configured, check common locations:
    - `~/Documents/Obsidian/Genorah`
    - `~/Obsidian/Genorah`
-3. If no vault found: "No Obsidian vault configured. Add `obsidian-vault: /path` to `.claude/genorah.local.md`." STOP.
+3. If no vault found: "No Obsidian vault configured. Add `vault_path: /path` to `.claude/genorah.local.md`." STOP.
 
 ## Plugin-to-Obsidian Sync
 
@@ -52,13 +52,15 @@ For each skill in `skills/*/SKILL.md`:
    - Skills by trigger
    - Recently modified skills
 
-Transform mapping:
+Transform mapping (must match actual SKILL.md layer names):
 ```
-SKILL.md Layer 1 (Decision Guidance)  → > [!tip] When to Use
-SKILL.md Layer 2 (Examples)           → > [!example] Award-Winning Examples
-SKILL.md Layer 3 (Integration)        → > [!info] Integration Context
+SKILL.md Layer 1 (Decision Guidance)  → > [!tip] Decision Guidance
+SKILL.md Layer 2 (varies per skill)   → > [!example] Implementation Reference
+SKILL.md Layer 3 (Integration Context)→ > [!info] Integration Context
 SKILL.md Layer 4 (Anti-Patterns)      → > [!warning] Anti-Patterns
 ```
+
+**IMPORTANT:** Layer 2 names vary across skills (e.g., "Vault Structures", "Award-Winning Examples", "Implementation Patterns"). Preserve the actual `## Layer 2:` heading text from each SKILL.md file as the callout title. Do NOT hardcode a single Layer 2 name.
 
 ## Obsidian-to-Plugin Sync
 
@@ -100,13 +102,17 @@ Vault: [path]
 
 ### 1. Detect Vault Path
 
-Read `.claude/genorah.local.md` and extract `vault_path` from YAML frontmatter:
+Read `.claude/genorah.local.md` and extract `vault_path`:
 
 ```yaml
 vault_path: /path/to/obsidian/vault
+obsidian_installed: true
+vault_sync: auto
 ```
 
-If the field is missing or the file does not exist, output: "Vault not configured. Add `vault_path: /path` to `.claude/genorah.local.md`." STOP.
+If `vault_path` is missing or the file does not exist, output: "Vault not configured. Add `vault_path: /path` to `.claude/genorah.local.md`." STOP.
+
+Validate the path exists and is writable before proceeding. If the path does not exist, offer to create it.
 
 ### 2. Plugin → Obsidian Direction
 

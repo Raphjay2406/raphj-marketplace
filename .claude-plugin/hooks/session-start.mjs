@@ -5,7 +5,7 @@
  * Reads project state from .planning/genorah/ and injects context.
  */
 
-import { readFileSync, existsSync, renameSync, mkdirSync } from 'fs';
+import { readFileSync, existsSync, renameSync, mkdirSync, statSync } from 'fs';
 import { join, dirname } from 'path';
 
 try {
@@ -75,6 +75,60 @@ try {
           additionalContext += `\n### Companion Server\n`;
           additionalContext += `- **URL:** ${serverInfo}\n`;
         }
+      }
+
+      // --- Vault drift detection ---
+      const vaultDir = join(planningDir, 'vault');
+      const localConfigFile = join(cwd, '.claude', 'genorah.local.md');
+
+      let vaultPath = null;
+      let vaultSync = 'manual';
+      let obsidianInstalled = false;
+
+      // Read local config
+      if (existsSync(localConfigFile)) {
+        try {
+          const localConfig = readFileSync(localConfigFile, 'utf8');
+          const vpMatch = localConfig.match(/^vault_path:\s*(.+)/m);
+          const vsMatch = localConfig.match(/^vault_sync:\s*(.+)/m);
+          const oiMatch = localConfig.match(/^obsidian_installed:\s*(.+)/m);
+          if (vpMatch) vaultPath = vpMatch[1].trim();
+          if (vsMatch) vaultSync = vsMatch[1].trim();
+          if (oiMatch) obsidianInstalled = oiMatch[1].trim() === 'true';
+        } catch {
+          // Config read failed — skip vault detection
+        }
+      }
+
+      // Report vault status
+      if (existsSync(vaultDir)) {
+        additionalContext += `\n### Obsidian Vault\n`;
+        additionalContext += `- **Project Vault:** \`.planning/genorah/vault/\` (exists)\n`;
+        if (vaultPath) {
+          additionalContext += `- **Knowledge Base:** ${vaultPath}\n`;
+        }
+        additionalContext += `- **Sync Mode:** ${vaultSync}\n`;
+        if (obsidianInstalled) {
+          additionalContext += `- **Obsidian:** Installed (MCP servers available)\n`;
+        }
+
+        // Check vault freshness by comparing _index.md mtime to STATE.md mtime
+        try {
+          const indexFile = join(vaultDir, '_index.md');
+          if (existsSync(indexFile) && existsSync(stateFile)) {
+            const indexMtime = statSync(indexFile).mtimeMs;
+            const stateMtime = statSync(stateFile).mtimeMs;
+            if (stateMtime - indexMtime > 0) {
+              additionalContext += `- **Drift Warning:** Vault is behind project state. Run \`/gen:export\` to sync.\n`;
+            }
+          }
+        } catch {
+          // Drift check failed — skip silently
+        }
+      } else if (vaultPath) {
+        additionalContext += `\n### Obsidian Vault\n`;
+        additionalContext += `- **Knowledge Base:** ${vaultPath} (configured)\n`;
+        additionalContext += `- **Project Vault:** Not yet created. Run \`/gen:export\` to generate.\n`;
       }
     } else {
       // Planning dir exists but no CONTEXT.md

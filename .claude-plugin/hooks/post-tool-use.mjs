@@ -40,8 +40,9 @@ try {
     writeFileSync(metricsFile, `# Build Metrics\n\n| Timestamp | Tool | Target | Status |\n|-----------|------|--------|--------|\n`);
   }
 
-  // Append row
-  appendFileSync(metricsFile, `| ${timestamp} | ${tool_name} | ${target} | OK |\n`);
+  // Append row (escape pipe characters in target to prevent table corruption)
+  const safeTarget = target.replace(/\|/g, '\\|');
+  appendFileSync(metricsFile, `| ${timestamp} | ${tool_name} | ${safeTarget} | OK |\n`);
 
   process.stdout.write('{}');
 } catch {

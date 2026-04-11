@@ -1,0 +1,22 @@
+{
+  "obsidian": {
+    "command": "npx",
+    "args": ["-y", "obsidian-mcp-server@latest"],
+    "env": {
+      "OBSIDIAN_API_KEY": "${OBSIDIAN_API_KEY}",
+      "OBSIDIAN_API_PORT": "${OBSIDIAN_API_PORT:-27123}",
+      "OBSIDIAN_PROTOCOL": "${OBSIDIAN_PROTOCOL:-https}"
+    },
+    "description": "Obsidian REST API bridge (cyanheads) — frontmatter management, tag ops, global search, search-and-replace. Requires Obsidian running with Local REST API plugin.",
+    "optional": true
+  },
+  "obsidian-fs": {
+    "command": "npx",
+    "args": ["-y", "obsidian-mcp@latest", "${OBSIDIAN_VAULT_PATH}"],
+    "env": {
+      "OBSIDIAN_VAULT_PATH": "${OBSIDIAN_VAULT_PATH}"
+    },
+    "description": "Obsidian filesystem bridge (StevenStavrakis) — direct vault read/write, multi-vault support, tag management. No Obsidian required. Fallback when Obsidian is not running.",
+    "optional": true
+  }
+}

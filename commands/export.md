@@ -1,7 +1,7 @@
 ---
 description: Export current project artifacts to Obsidian vault format
 argument-hint: "[--full | --scores | --decisions]"
-allowed-tools: Read, Write, Grep, Glob
+allowed-tools: Read, Write, Grep, Glob, mcp__plugin_gen_obsidian__*, mcp__plugin_gen_obsidian-fs__*
 ---
 
 You are the Genorah Export orchestrator. You transform project planning artifacts into Obsidian vault format with wiki-links, Dataview metadata, and an index dashboard -- enabling project knowledge to live in a connected graph.
@@ -68,17 +68,28 @@ For each `DISCUSSION-{phase}.md`:
 
 ## Vault Note Format
 
-Each exported note includes:
+Each exported note uses the unified Obsidian frontmatter schema (matching the obsidian-integration skill spec). Include all applicable fields; omit fields that don't apply to the artifact type.
 
 ```yaml
 ---
+name: [artifact or section name]
+type: [section | decision | quality | dna | plan | archetype | context | state | content | design-system | master-plan | discussion]
+status: [planned | in-progress | built | reviewed | blocked | active | complete]
+beat: [hook | tease | reveal | build | peak | breathe | tension | proof | pivot | close]  # sections only
+wave: [0-9]                    # sections only
+score: [0-35]                  # quality-scored artifacts only
 project: [project name from PROJECT.md]
-created: [ISO date]
 exported: [ISO date]
-type: [artifact type]
-tags: [genorah, artifact-type, phase]
+tags: [genorah, type-tag, wave-N, beat-X, status-X]
+date: [ISO date]
 ---
 ```
+
+**Field rules:**
+- `beat` and `wave`: Only on section notes (Plan.md, Summary.md)
+- `score`: Only on quality-scored artifacts (section summaries, audit reports)
+- `status`: Always present -- extracted from content or defaulted to `active`
+- `tags`: Auto-generated from frontmatter values using `category-value` pattern (e.g., `#wave-2`, `#beat-hook`)
 
 Body transformations:
 - Cross-reference other artifacts with `[[wiki-links]]`
@@ -185,15 +196,19 @@ Glob `.planning/genorah/sections/*/` and for each section directory read:
 
 For every artifact read above, apply these transformations before writing:
 
-1. Add Dataview-compatible frontmatter at the top:
+1. Add Dataview-compatible frontmatter at the top (using unified schema from Vault Note Format section above):
    ```yaml
    ---
    name: [artifact name]
    type: [context | state | design-dna | brainstorm | master-plan | content | decisions | design-system | section-plan | section-summary | section-gap-fix | section-consistency-fix]
    status: [extracted from content or "active"]
-   tags: [genorah, artifact-type]
+   project: [project name from PROJECT.md]
+   exported: [ISO date]
+   tags: [genorah, type-tag]
+   date: [ISO date]
    ---
    ```
+   For section artifacts, also include `beat`, `wave`, and `score` fields when available.
 2. Convert cross-artifact references to `[[wiki-links]]`:
    - Any reference to another artifact filename (e.g. `DESIGN-DNA.md`) becomes `[[Design-DNA]]`.
    - Section names used in MASTER-PLAN become `[[Sections/{section-name}/Plan]]`.

@@ -9,6 +9,7 @@
 
 import { readFileSync, existsSync, readdirSync, writeFileSync, mkdirSync } from 'fs';
 import { join, basename, dirname, resolve } from 'path';
+import { fileURLToPath } from 'url';
 import { createHash } from 'crypto';
 import { tmpdir } from 'os';
 
@@ -20,7 +21,7 @@ try {
   const { tool_name, tool_input, session_id } = input;
 
   // Determine the plugin root (one level up from hooks dir)
-  const hookDir = dirname(new URL(import.meta.url).pathname.replace(/^\/([A-Z]:)/, '$1'));
+  const hookDir = dirname(fileURLToPath(import.meta.url));
   const pluginRoot = resolve(hookDir, '..');
   const repoRoot = resolve(pluginRoot, '..');
   const skillsDir = join(repoRoot, 'skills');
@@ -234,7 +235,7 @@ try {
 
   // --- Resource constraint enforcement (restricted_paths) ---
   if ((tool_name === 'Write' || tool_name === 'Edit') && targetPath) {
-    for (const skill of matched) {
+    for (const skill of selected) {
       const restrictedPaths = parseConstraintPaths(skill.content);
       if (restrictedPaths.length > 0) {
         const normalizedTarget = targetPath.replace(/\\/g, '/');

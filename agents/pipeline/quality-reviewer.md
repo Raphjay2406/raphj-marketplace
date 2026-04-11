@@ -215,6 +215,7 @@ These are binary checks. A single failure blocks the section regardless of score
 | **4-Breakpoint Responsive** | All 4 breakpoints implemented: 375px, 768px, 1024px, 1440px | Check media queries or Tailwind responsive prefixes (sm:, md:, lg:, xl:) in all section files. |
 | **Compatibility Tier** | No CSS features above project's compatibility tier without @supports fallback | Check for backdrop-filter, :has(), container queries, view transitions without @supports wrapping if tier requires it. |
 | **Component Registry** | No unregistered component mismatches -- all shared components match registry signatures | Compare component props/usage against Wave 0/1 component exports. Flag type mismatches or missing props. |
+| **Archetype Specificity** | Section could NOT exist identically with a different archetype | For each section, ask: "Could this exact section appear on a site with a completely different archetype?" If yes → FAIL. Check: (1) Does it use at least ONE archetype mandatory technique? (2) Does the motion match the archetype personality profile? (3) Does typography, color, or layout express the specific archetype identity? A section that passes all other gates but looks "generic premium" still fails this gate. |
 
 **If ANY hard gate fails, the section is BLOCKED. Do not proceed to scoring. Write the gate failure directly into GAP-FIX.md with severity: critical.**
 

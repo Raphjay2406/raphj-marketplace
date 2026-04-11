@@ -5,7 +5,7 @@
  * Generates SESSION-LOG.md for cross-session continuity.
  */
 
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync, mkdirSync, statSync } from 'fs';
 import { join } from 'path';
 
 try {
@@ -110,6 +110,32 @@ try {
       .join('\n');
   }
 
+  // --- Check if vault export is stale ---
+  let vaultStatus = '';
+  const vaultDir = join(planningDir, 'vault');
+  const localConfigFile = join(cwd, '.claude', 'genorah.local.md');
+
+  if (existsSync(vaultDir)) {
+    const indexFile = join(vaultDir, '_index.md');
+    if (existsSync(indexFile) && existsSync(stateFile)) {
+      try {
+        const indexMtime = statSync(indexFile).mtimeMs;
+        const stateMtime = statSync(stateFile).mtimeMs;
+        if (stateMtime > indexMtime) {
+          vaultStatus = '\n- Vault is behind project state — run `/gen:export` next session';
+        }
+      } catch {
+        // Skip vault status on error
+      }
+    }
+  }
+
+  // --- Check for project completion → knowledge base accumulation reminder ---
+  let knowledgeBaseHint = '';
+  if (phase.toLowerCase().includes('complete') || phase.toLowerCase().includes('done')) {
+    knowledgeBaseHint = `\n## Knowledge Base\n- Project appears complete. Run \`/gen:export --full\` to accumulate project history to Knowledge Base.\n`;
+  }
+
   const sessionLog = `# Session Log — ${isoDate}
 
 ## Accomplished
@@ -117,11 +143,11 @@ try {
 
 ## Current State
 - Phase: ${phase}
-- Wave: ${wave}
+- Wave: ${wave}${vaultStatus}
 
 ## Recent Decisions
 ${decisionsBlock}
-
+${knowledgeBaseHint}
 ## Next Actions
 ${nextActions}
 `;

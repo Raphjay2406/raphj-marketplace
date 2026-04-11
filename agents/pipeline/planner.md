@@ -160,7 +160,26 @@ Body sections (all required):
 <objective>
 Build the [name] section implementing a [BEAT] beat. This section [purpose].
 Reference quality: [specific Awwwards/reference site with what to adapt from it].
+Archetype specificity test: This section must be IMPOSSIBLE to mistake for a [different archetype] site.
 </objective>
+
+<wow-moment>
+## Wow Moment
+<!-- Required for HOOK, PEAK, CLOSE, TENSION (level 3+), REVEAL (if product showcase). Omit for BUILD, BREATHE, PROOF, PIVOT. -->
+Type: [Scale Violence | Material Collision | Temporal Disruption | Dimensional Break | Interaction Shock | none]
+Specification: [Exact description with measurable values -- e.g., "Heading animates from 16px to 280px on scroll, filling viewport before settling at 96px"]
+Measurement: [How to verify implementation -- e.g., "Text reaches >= 200px rendered size at scroll peak"]
+Why This Works: [Connection to archetype personality and emotional arc beat -- e.g., "Kinetic archetype demands motion-driven surprise; scale violence IS the signature"]
+</wow-moment>
+
+<reference-target>
+## Reference Target
+<!-- Required for ALL beats except BREATHE. Expanded from v1 which only targeted 4-5 key sections. -->
+Site: [awwwards.com/site-name or specific URL]
+Element: [Specific element or pattern to benchmark against -- e.g., "Asymmetric split with product bleeding past container"]
+Why: [What quality attribute this reference demonstrates]
+Adaptation: [How to adapt reference to this project's archetype -- e.g., "Replace card shadows with Brutalist offset-shadow technique"]
+</reference-target>
 
 <visual-specification>
 ## Layout (ASCII)

@@ -25,6 +25,8 @@ The orchestrator MUST include ALL of the following in the spawn prompt. You MUST
 | Component registry | DESIGN-SYSTEM.md | All registered component variants with dimensions, props, and usage guidelines |
 | Integration requirements | PROJECT.md (if applicable) | HubSpot form IDs, Stripe config, analytics events, third-party embed specs |
 | Adjacent section context | Orchestrator | Neighbor layout patterns, backgrounds, spacing -- for visual continuity |
+| Archetype mandate checklist | DESIGN-DNA.md | Explicit list of mandatory techniques for this archetype -- ALL must be implemented |
+| Wow-moment specification | PLAN.md | For scored beats (HOOK/PEAK/CLOSE/TENSION): type, specification, measurement, rationale |
 | Pre-approved content | Content pipeline | Exact headlines, body text, CTAs, testimonials, stats for THIS section only |
 | Lessons learned | Previous wave SUMMARYs | Patterns to replicate, patterns to avoid |
 
@@ -39,6 +41,80 @@ Cannot build without complete context. Aborting.
 ```
 
 Do NOT fall back to reading source files. A builder without proper context will produce incorrect output.
+
+---
+
+## 2a. Scoring Priority (Spend Effort HERE FIRST)
+
+Categories with higher weight multipliers have exponentially more impact on the final score. **Optimize in this order:**
+
+| Priority | Category | Weight | Why It Matters |
+|----------|----------|--------|---------------|
+| 1 | **Creative Courage** | 1.2x | THIS IS WHAT SEPARATES AWARD FROM GENERIC. Signature element, tension, wow moments, archetype commitment. |
+| 2 | **Color System** | 1.2x | Expressive tokens (glow, tension, highlight, signature) differentiate from safe primary/secondary-only sites. |
+| 3 | **Typography** | 1.2x | Display font IS the personality. Variable weights, tracking experiments, scale violence all score here. |
+| 4 | **Depth & Polish** | 1.1x | Layering, shadows, blur, micro-details. The difference between "clean" and "premium." |
+| 5 | **Layout & Composition** | 1.1x | Asymmetry, grid-breaking, whitespace intention. NOT safe centered 3-col grids. |
+| 6 | **Motion & Interaction** | 1.0x | Choreography with personality, not just presence. Matches archetype easing profile. |
+
+**Do not optimize equally across all categories.** A 1-point improvement in a 1.2x category is worth 20% more than in a 1.0x category. Invest creative effort where the weight is highest.
+
+---
+
+## 2b. Archetype Mandate Checklist (MUST-DO Before Completing)
+
+The spawn prompt includes an **Archetype Mandatory Techniques** list extracted from Design DNA. These are NOT suggestions -- they are **hard requirements**. Missing any technique triggers a -10 penalty at quality review.
+
+Before completing, verify every item on the list:
+
+```
+ARCHETYPE MANDATE CHECK:
+- [ ] [Technique 1 from DNA mandatory list] -- implemented where: [file:line]
+- [ ] [Technique 2] -- implemented where: [file:line]
+- [ ] [Technique 3] -- implemented where: [file:line]
+- [ ] Signature element present and visually prominent (≥ 50% of sections)
+- [ ] At least ONE element that would be IMPOSSIBLE in a different archetype
+```
+
+**The specificity test:** Ask yourself: "Could this section exist identically with a different archetype?" If yes, you have not committed to the archetype. Go back and make it unmistakably [archetype name].
+
+---
+
+## 2c. Wow-Moment Execution
+
+The PLAN.md includes a **## Wow Moment** block for sections with HOOK, PEAK, REVEAL, TENSION, or CLOSE beats. This is a measurable, specific target -- not a vague "add something surprising."
+
+```markdown
+## Wow Moment (from PLAN.md)
+Type: [Scale Violence | Material Collision | Temporal Disruption | Dimensional Break | Interaction Shock]
+Specification: [Exact description with measurable values]
+Measurement: [How to verify it was implemented -- size, timing, viewport coverage]
+Why This Works: [Connection to archetype and emotional arc beat]
+```
+
+**Implementation rules:**
+- Wow moments are NOT optional for scored beats (HOOK, PEAK, CLOSE)
+- Implement the EXACT specification, not a "safer" version
+- If the specification is technically infeasible, document the deviation in SUMMARY.md under Deviations with specific reasons
+- Wow moment quality is scored under Creative Courage CC-4 (1.2x weight)
+
+---
+
+## 2d. Anti-Slop Pre-Build Verification
+
+**Before writing any code**, verify your mental model against these pre-build checks. Each "yes" answer means you're about to produce generic output:
+
+| Check | If YES → You're Being Generic | Instead Do |
+|-------|-------------------------------|------------|
+| Display font is a standard sans-serif? | Generic serif/sans = 0 points on Typography | Use the DNA display font at dramatic scale |
+| Layout is a centered symmetric grid? | 3-col centered = minimum composition score | Use asymmetric split, offset grid, or broken container |
+| Motion is fade-in-from-bottom on scroll? | Default motion = 1/3 on Motion category | Use archetype-specific entrance per motion personality table |
+| Hover states are just opacity change? | Opacity-only hover = 0 on Depth & Polish | Use lift + shadow + scale per archetype |
+| Mobile layout is desktop-but-stacked? | Stack-and-shrink = 0 on Responsive Craft | Redesign for mobile with content priority reordering |
+| Signature element is absent or tiny? | Missing = -8 penalty | Make it prominent and section-defining |
+| Section looks like it could be any archetype? | Archetype-agnostic = -10 penalty | Commit to mandatory techniques list |
+
+If 3+ checks are "yes," **stop and rethink** before writing code.
 
 ---
 

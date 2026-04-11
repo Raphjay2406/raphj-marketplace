@@ -387,9 +387,9 @@ AFTER ALL WAVES:
 
 When a section FAILs the gate (anti-slop < 25 or CRITICAL finding):
 
-1. **Cycle 1:** QR/CD create GAP-FIX.md. Polisher executes fixes. QR re-scores the FULL gate (not partial).
-2. **Cycle 2:** If still failing, second GAP-FIX.md created. Polisher executes. QR re-scores again.
-3. **Cycle 3 (escalation):** If still failing after 2 remediation cycles, escalate to user with full evidence. User decides: manual fix, skip section, or accept as-is.
+1. **Polisher Cycle 1:** QR/CD create GAP-FIX.md. Polisher executes fixes. QR re-scores the FULL gate (not partial).
+2. **Polisher Cycle 2:** If still failing, second GAP-FIX.md created. Polisher executes. QR re-scores again.
+3. **User Escalation (NOT a polisher cycle):** If still failing after 2 polisher cycles, escalate to user with full evidence. User decides: manual fix, skip section, or accept as-is. The polisher's 2-cycle limit (polisher.md) is authoritative -- no third polisher cycle exists.
 
 Remediation priority order:
 1. Penalty fixes first (highest point impact: -3 to -5 per penalty)
