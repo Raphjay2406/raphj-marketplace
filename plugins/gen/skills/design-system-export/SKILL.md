@@ -793,6 +793,96 @@ Export content and complexity vary by archetype:
 
 ---
 
+### Figma Design Token Sync
+
+Export DESIGN-DNA tokens to Figma Variables for bidirectional design↔code sync.
+
+**Option A: Figma Variables via Tokens Studio Plugin**
+
+```json
+// tokens.json — Tokens Studio format (generated from DESIGN-DNA.md)
+{
+  "color": {
+    "primary": { "value": "{DNA --color-primary hex}", "type": "color" },
+    "secondary": { "value": "{DNA --color-secondary hex}", "type": "color" },
+    "accent": { "value": "{DNA --color-accent hex}", "type": "color" },
+    "bg": { "value": "{DNA --color-bg hex}", "type": "color" },
+    "surface": { "value": "{DNA --color-surface hex}", "type": "color" },
+    "text": { "value": "{DNA --color-text hex}", "type": "color" },
+    "border": { "value": "{DNA --color-border hex}", "type": "color" },
+    "muted": { "value": "{DNA --color-muted hex}", "type": "color" },
+    "glow": { "value": "{DNA --color-glow hex}", "type": "color" },
+    "tension": { "value": "{DNA --color-tension hex}", "type": "color" },
+    "highlight": { "value": "{DNA --color-highlight hex}", "type": "color" },
+    "signature": { "value": "{DNA --color-signature hex}", "type": "color" }
+  },
+  "spacing": {
+    "xs": { "value": "8", "type": "spacing" },
+    "sm": { "value": "16", "type": "spacing" },
+    "md": { "value": "32", "type": "spacing" },
+    "lg": { "value": "64", "type": "spacing" },
+    "xl": { "value": "96", "type": "spacing" }
+  },
+  "fontFamilies": {
+    "display": { "value": "{DNA display font}", "type": "fontFamilies" },
+    "body": { "value": "{DNA body font}", "type": "fontFamilies" },
+    "mono": { "value": "{DNA mono font}", "type": "fontFamilies" }
+  },
+  "borderRadius": {
+    "sm": { "value": "4", "type": "borderRadius" },
+    "md": { "value": "8", "type": "borderRadius" },
+    "lg": { "value": "12", "type": "borderRadius" },
+    "full": { "value": "9999", "type": "borderRadius" }
+  }
+}
+```
+
+**Export workflow:**
+```bash
+# 1. Generate tokens.json from DESIGN-DNA.md
+# (done by the design-system-export command or manually)
+
+# 2. Push to Figma via Tokens Studio CLI
+npx token-transformer tokens.json figma-tokens.json
+
+# 3. In Figma: Tokens Studio plugin → Import → Select figma-tokens.json
+# 4. Apply tokens to Figma components → Design matches code exactly
+```
+
+**Option B: Figma REST API (Programmatic)**
+
+```ts
+// scripts/sync-figma-tokens.ts
+async function pushTokensToFigma(fileKey: string, tokens: Record<string, any>) {
+  const response = await fetch(`https://api.figma.com/v1/files/${fileKey}/variables`, {
+    method: 'POST',
+    headers: {
+      'X-Figma-Token': process.env.FIGMA_ACCESS_TOKEN!,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      variableCollections: [{
+        name: 'Design DNA',
+        modes: [{ name: 'Default' }],
+        variables: Object.entries(tokens.color).map(([name, value]) => ({
+          name: `color/${name}`,
+          resolvedType: 'COLOR',
+          valuesByMode: { Default: hexToFigmaColor(value) },
+        })),
+      }],
+    }),
+  });
+  return response.json();
+}
+```
+
+**Bidirectional sync rules:**
+- **Code → Figma:** DESIGN-DNA.md is source of truth. Export tokens to Figma after DNA changes.
+- **Figma → Code:** Designers can propose token changes in Figma. Export via Tokens Studio, review diff against DESIGN-DNA.md, apply approved changes.
+- **Conflict resolution:** Code wins on locked tokens (from parent DNA). Figma wins on experimental tokens during design exploration. Final approval via `/gen:discuss`.
+
+---
+
 ## Layer 4: Anti-Patterns
 
 ### Anti-Pattern 1: Using CSF3 Instead of CSF Factories

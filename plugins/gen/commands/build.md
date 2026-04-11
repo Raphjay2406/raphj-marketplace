@@ -227,6 +227,86 @@ Resume options:
   3. Full wave     — Rebuild entire wave from scratch
 ```
 
+## Section Undo/Rollback
+
+If an iteration or fix makes a section worse, rollback to the previous state:
+
+**Usage:** User says "undo the last change to hero" or "rollback pricing section"
+
+**Rollback protocol:**
+```bash
+# 1. Find last commit that touched the section files
+git log --oneline -- "src/components/sections/{section-name}*" | head -5
+
+# 2. Show the user what will be reverted
+git diff HEAD~1..HEAD -- "src/components/sections/{section-name}*"
+
+# 3. After user confirmation, restore previous version
+git checkout HEAD~1 -- "src/components/sections/{section-name}*"
+
+# 4. Update SUMMARY.md: status: ROLLED_BACK, reason: [user reason]
+
+# 5. Commit the rollback
+git commit -m "revert(section-{name}): rollback to pre-iterate state — [reason]"
+```
+
+**Rules:**
+- Always show the diff BEFORE reverting
+- Never rollback without user confirmation
+- Update STATE.md section status to `rolled-back`
+- If rollback affects shared components, warn about blast radius
+- Maximum rollback depth: 3 commits (beyond that, recommend re-plan)
+
+## Post-Wave Performance Gate
+
+After all builders complete but BEFORE quality review, run a performance check:
+
+```bash
+# Quick bundle size check
+npx next build 2>&1 | grep -E "First Load|Route"
+# Or for Vite:
+npx vite build 2>&1 | grep -E "dist/"
+```
+
+**Performance thresholds:**
+
+| Metric | Warning | Critical | Action |
+|--------|---------|----------|--------|
+| First Load JS (per route) | > 150KB | > 300KB | Suggest dynamic imports |
+| Total JS bundle | > 500KB | > 1MB | Audit heavy dependencies |
+| Build time | > 60s | > 180s | Check for re-render loops |
+| CSS output | > 100KB | > 250KB | Audit unused Tailwind classes |
+
+If any metric hits Critical:
+```
+Performance Warning: [metric] exceeds threshold.
+  Current: [value] | Target: < [threshold]
+  Suggestion: [specific action — e.g., "dynamic import GSAP in section-05-showcase"]
+  
+Continue to quality review? Or fix performance first?
+```
+
+**Lighthouse Integration (if dev server running):**
+```bash
+# Run Lighthouse CI check
+npx lighthouse http://localhost:[port] \
+  --output=json \
+  --output-path=.planning/genorah/audit/lighthouse-wave-{N}.json \
+  --chrome-flags="--headless --no-sandbox" \
+  --only-categories=performance
+```
+
+Track Lighthouse scores across waves in METRICS.md:
+```markdown
+| Wave | LCP | CLS | TBT | FCP | Score |
+|------|-----|-----|-----|-----|-------|
+| 2 | 1.8s | 0.02 | 120ms | 1.2s | 92 |
+| 3 | 2.1s | 0.05 | 180ms | 1.4s | 87 |
+| 4 | 2.4s | 0.08 | 250ms | 1.6s | 82 ← WARNING: degrading |
+```
+
+If score drops >5 points between waves, flag: "Performance degrading. Wave [N] scored [X] vs Wave [N-1] scored [Y]. Check newly added sections for heavy assets or animations."
+
 ## Rules
 
 1. All execution logic runs through the Agent tool -- this command orchestrates, agents build.
