@@ -4,10 +4,10 @@
 
 import { readFileSync, readdirSync, statSync, mkdirSync, writeFileSync, copyFileSync, existsSync } from 'node:fs';
 import { createHash } from 'node:crypto';
-import { join, relative, resolve } from 'node:path';
+import { join, relative, resolve, dirname } from 'node:path';
 import { append } from './preservation-ledger.mjs';
 
-const SKIP_DIRS = new Set(['node_modules', '.git', '.next', '.nuxt', '.svelte-kit', 'dist', 'build', '.cache', 'coverage']);
+const SKIP_DIRS = new Set(['node_modules', '.git', '.next', '.nuxt', '.svelte-kit', 'dist', 'build', '.cache', 'coverage', '.claude']);
 
 function walk(root, out = []) {
   for (const name of readdirSync(root)) {
@@ -69,14 +69,23 @@ function main() {
   const files = walk(srcRoot);
   const routes = [];
   const components = [];
+  let captured = 0;
+  let skipped = 0;
   for (const f of files) {
     const rel = relative(srcRoot, f);
     const destPath = join(sourceDir, rel);
-    mkdirSync(destPath.substring(0, destPath.lastIndexOf('/') || destPath.lastIndexOf('\\')) || sourceDir, { recursive: true });
-    copyFileSync(f, destPath);
-    const bytes = statSync(f).size;
-    const sha = createHash('sha256').update(readFileSync(f)).digest('hex');
-    append(slug, { kind: 'capture.file', path: `source/${rel.replace(/\\/g, '/')}`, bytes, sha256: sha });
+    try {
+      mkdirSync(dirname(destPath), { recursive: true });
+      copyFileSync(f, destPath);
+      const bytes = statSync(f).size;
+      const sha = createHash('sha256').update(readFileSync(f)).digest('hex');
+      append(slug, { kind: 'capture.file', path: `source/${rel.replace(/\\/g, '/')}`, bytes, sha256: sha });
+      captured++;
+    } catch (e) {
+      append(slug, { kind: 'error', stage: 'capture', path: rel.replace(/\\/g, '/'), error: String(e.code || e.message) });
+      skipped++;
+      continue;
+    }
 
     // Lightweight inventory — routes and components from common Next/Astro patterns
     if (/app\/.*page\.(tsx|jsx|ts|js|mdx)$/.test(rel) || /pages\/.*\.(tsx|jsx|ts|js|mdx)$/.test(rel) || /src\/routes\/.*\/\+page/.test(rel)) {
@@ -98,7 +107,7 @@ function main() {
     `**Origin**: ${srcRoot}`,
     `**Framework**: ${fw.framework} (confidence ${fw.confidence})`,
     `**Token sources**: ${tokenSources.length}`,
-    `**Files captured**: ${files.length}`,
+    `**Files captured**: ${captured} (${skipped} skipped)`,
     `**Routes detected**: ${routes.length}`,
     `**Components detected**: ${components.length}`,
     ``,
@@ -110,8 +119,8 @@ function main() {
     `4. /gen:ingest verify ${slug}`,
   ].join('\n');
   writeFileSync(join(dest, 'INGESTION.md'), summary);
-  append(slug, { kind: 'ingest.complete', stage: 'capture+inventory', files: files.length, routes: routes.length, components: components.length });
-  console.log(`Captured ${files.length} files → ${dest}`);
+  append(slug, { kind: 'ingest.complete', stage: 'capture+inventory', files: captured, skipped, routes: routes.length, components: components.length });
+  console.log(`Captured ${captured} files (${skipped} skipped) → ${dest}`);
 }
 
 main();

@@ -1,5 +1,61 @@
 # Changelog
 
+## v3.22.0 — 2026-04-12
+
+**Ingestion depth + E2E proven.**
+
+v3.22 hardens and extends v3.21 preservation-first ingestion. Full E2E run against the plugin repo itself surfaced real bugs (fixed), validated invariants, and produced coherent top-3 archetype inference (ai-native / ethereal / y2k).
+
+### E2E-discovered fixes (from v3.21 shakedown)
+
+- `codebase-scan.mjs`: Windows path dir-extraction bug — now uses `path.dirname`. Race on volatile cache files — now logs `error` event and continues. Added `.claude/` to `SKIP_DIRS`.
+- `archetype-score.mjs`: cwd-relative `testable-markers.json` path broke when ingest ran outside plugin — now looks script-relative first, then cwd, then `GENORAH_MARKERS_PATH` env. Marker shape updated for `{archetypes: {<name>: {mandatory, forbidden, signature}}}` with bucket weighting (mandatory=1, signature=1.5, forbidden=-2).
+
+### New capabilities
+
+**Crawl executor** (`scripts/ingest/crawl-executor.mjs`)
+- Consumes `CRAWL-PLAN.json` from `crawl.mjs`, drives Playwright.
+- Fetches robots.txt / sitemap.xml / llms.txt, then BFS over sitemap URLs.
+- Per route: HTML + 4-breakpoint screenshots + computed-styles (200-selector sample).
+- Records `capture.route`, `capture.screenshot`, `capture.computed-styles` ledger events.
+- Falls back to `gap:playwright-unavailable` when lib absent, keeps plan emission path via MCP delegation.
+
+**Pixel-path DNA extraction** (`scripts/ingest/pixel-kmeans.mjs` + `skills/pixel-dna-extraction/`)
+- K-means (k=12) on 1%-sampled PNG pixels across all captured breakpoints.
+- Perceptual distance (rMean-weighted RGB, ΔE2000-approximation).
+- Role-based slot assignment: bg by frequency, text by opposite luminance, primary/secondary/accent by saturation rank.
+- Confidence = `min(0.95, 0.5 + coverage × 5)`; low-coverage slots auto-emit paired `gap:dna-low-confidence` (preservation invariant).
+- Optional `pngjs` peer; absence emits actionable remedy in ledger.
+
+**Interaction replay** (`skills/interaction-replay/`)
+- Playwright trace → `MOTION-INVENTORY.md` with per-selector trigger + duration + easing + stagger.
+- Easing-family fitting (linear / cubic-bezier / spring) from sampled transform/opacity over time.
+- Bundle fingerprint detects source library (GSAP / Framer Motion / Motion One / CSS @keyframes).
+- Feeds `animation-specialist` when `/gen:build` runs on ingested slug.
+
+**CMS reconnect** (`scripts/ingest/cms-detect.mjs` + `skills/cms-reconnect/`)
+- Fingerprint detection for Sanity, Contentful, Payload, WordPress, Strapi, Builder.io, Storyblok, Shopify.
+- Records `cms.detected` with evidence; emits `gap:cms-credentials-missing` unless `--cms-token` + `--cms-project` provided.
+- Future: schema export → SDUI block type proposals in `CMS-SCHEMA.md`.
+
+### New tests
+
+- `tests/v321-ingest-ledger.test.mjs` expanded: 7/7 (was 5/5). Added `content.extract` destination invariants (BLOCK on invalid, PASS on valid).
+
+### E2E results (plugin self-ingest)
+
+```
+Captured 1251 files (0 skipped) → .planning/genorah/ingested/self
+DNA extracted (css-var path): 0 tokens, 12 gaps (expected — plugin is docs, no design tokens)
+Archetype inference → ai-native(1.00), ethereal(0.67), y2k(0.52)
+CMS detected: payload(2), strapi(2) — from integration skill mentions
+Verify: 1267 events, 1251 captures, 12 gaps paired, 0 findings, verdict PASS
+```
+
+### Skills (+3)
+
+`pixel-dna-extraction` (domain), `interaction-replay` (domain), `cms-reconnect` (domain). Count: 287.
+
 ## v3.21.0 — 2026-04-12
 
 **Preservation-first project ingestion.**

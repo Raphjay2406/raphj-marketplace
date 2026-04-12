@@ -3,16 +3,23 @@
 // Returns top-3 with per-marker evidence. Never auto-locks.
 
 import { readFileSync, writeFileSync, existsSync, readdirSync, statSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { append } from './preservation-ledger.mjs';
 
 function loadMarkers() {
-  const p = join(process.cwd(), 'skills', 'design-archetypes', 'testable-markers.json');
-  if (!existsSync(p)) {
-    console.error(`Missing ${p}`);
-    return null;
+  // Look relative to script first (plugin install), then cwd (dev).
+  const scriptDir = dirname(fileURLToPath(import.meta.url));
+  const candidates = [
+    join(scriptDir, '..', '..', 'skills', 'design-archetypes', 'testable-markers.json'),
+    join(process.cwd(), 'skills', 'design-archetypes', 'testable-markers.json'),
+    process.env.GENORAH_MARKERS_PATH,
+  ].filter(Boolean);
+  for (const p of candidates) {
+    if (existsSync(p)) return JSON.parse(readFileSync(p, 'utf8'));
   }
-  return JSON.parse(readFileSync(p, 'utf8'));
+  console.error(`Missing testable-markers.json (tried: ${candidates.join(', ')})`);
+  return null;
 }
 
 function readAllSource(root, out = [], limit = 5_000_000) {
@@ -35,19 +42,22 @@ function readAllSource(root, out = [], limit = 5_000_000) {
   return out;
 }
 
-function scoreArchetype(archetype, markers, corpus) {
+function scoreArchetype(archetype, markerGroups, corpus) {
+  // markerGroups: { mandatory: [regex...], forbidden: [regex...], signature: [regex...] }
   const evidence = [];
   let score = 0;
-  for (const marker of markers || []) {
-    const pattern = typeof marker === 'string' ? marker : marker.pattern;
-    if (!pattern) continue;
-    let re;
-    try { re = new RegExp(pattern, 'i'); } catch { continue; }
-    const hits = corpus.filter(t => re.test(t)).length;
-    if (hits > 0) {
-      const weight = typeof marker === 'object' && marker.weight ? marker.weight : 1;
-      score += hits * weight;
-      evidence.push({ marker: pattern.slice(0, 40), hits, weight });
+  const bucketWeight = { mandatory: 1, signature: 1.5, forbidden: -2 };
+  for (const [bucket, patterns] of Object.entries(markerGroups || {})) {
+    if (!Array.isArray(patterns)) continue;
+    const weight = bucketWeight[bucket] ?? 0;
+    for (const pattern of patterns) {
+      let re;
+      try { re = new RegExp(pattern, 'i'); } catch { continue; }
+      const hits = corpus.filter(t => re.test(t)).length;
+      if (hits > 0) {
+        score += hits * weight;
+        evidence.push({ bucket, marker: pattern.slice(0, 40), hits, weight });
+      }
     }
   }
   return { archetype, score, evidence };
@@ -66,9 +76,11 @@ function main() {
   const corpus = [...readAllSource(sourceDir), ...readAllSource(capturedDir)];
   if (corpus.length === 0) { console.error(`Empty corpus for ${slug}`); process.exit(1); }
 
+  const archetypeMap = markers.archetypes || markers;
   const scores = [];
-  for (const [archetype, markerList] of Object.entries(markers)) {
-    scores.push(scoreArchetype(archetype, markerList, corpus));
+  for (const [archetype, markerGroups] of Object.entries(archetypeMap)) {
+    if (typeof markerGroups !== 'object' || !markerGroups) continue;
+    scores.push(scoreArchetype(archetype, markerGroups, corpus));
   }
 
   const sortable = scores.filter(s => s.score > 0);

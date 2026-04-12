@@ -57,3 +57,20 @@ test('ledger: append requires event.kind', () => {
     assert.throws(() => append('t4', {}), /event\.kind/);
   });
 });
+
+test('ledger: content.extract with invalid destination flags BLOCK', () => {
+  inSandbox(() => {
+    append('t5', { kind: 'content.extract', selector: 'h1', text: 'x', destination: 'wrong.md:hero.title' });
+    const r = verify('t5');
+    assert.equal(r.verdict, 'BLOCK');
+    assert.ok(r.findings.some(f => f.kind === 'content.extract'));
+  });
+});
+
+test('ledger: content.extract with valid CONTENT.md destination passes', () => {
+  inSandbox(() => {
+    append('t6', { kind: 'content.extract', selector: 'h1', text: 'x', destination: 'CONTENT.md:hero.title' });
+    const r = verify('t6');
+    assert.equal(r.verdict, 'PASS');
+  });
+});
