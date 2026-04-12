@@ -1,0 +1,3 @@
+# Ambient Computing — Reference Sites
+
+(Curated Awwwards SOTD + indie studios. Updated quarterly.)

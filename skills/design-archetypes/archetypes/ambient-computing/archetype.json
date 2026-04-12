@@ -1,0 +1,35 @@
+{
+  "slug": "ambient-computing",
+  "name": "Ambient Computing",
+  "tier": "webgpu-native",
+  "mandatory_techniques": [
+    "subtle-idle-motion",
+    "breathing-ui",
+    "peripheral-glow"
+  ],
+  "forbidden_patterns": [
+    "aggressive-cta"
+  ],
+  "tension_zones": [
+    "breath-pause",
+    "attention-drift",
+    "recenter"
+  ],
+  "default_intensity": "cinematic",
+  "dna_color_palette": {
+    "primary": "#0F1117",
+    "secondary": "#C7A86B",
+    "accent": "#F6F2EC",
+    "signature": "#1A73E8"
+  },
+  "dna_fonts": {
+    "display": "Söhne Breit",
+    "body": "Söhne",
+    "mono": "Berkeley Mono"
+  },
+  "dna_motion_tokens": {
+    "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+    "duration_hero_ms": 1600,
+    "duration_micro_ms": 160
+  }
+}
