@@ -40,15 +40,20 @@ Returns `Result<T>` envelope per `@genorah/protocol`:
 
 ## Protocol
 
-1. Receive task envelope from wave-director
-2. Execute domain-specific implementation
-3. Run validators: motion-health, interaction-fidelity-gate
-4. Return Result envelope
+1. Read SCENE-CHOREOGRAPHY.json + DESIGN-DNA.md (archetype preset).
+2. Initialize Theatre.js project via `getOrCreateProject(slug)`, create sheets per section in SequenceSpec.
+3. For each animated object, define Theatre object with typed props (position, opacity, scale) bound to DNA motion tokens.
+4. Author keyframe sequences using `val.onChange` listeners; export project state to `theatre-project.json`.
+5. Bind sequence playback to scroll position via `studio.scrub()` or `sequence.position = scrollProgress`.
+6. Self-check via `theatre-choreography` and `cinematic-motion` validators (score threshold 0.8).
+7. Return Result envelope with TheatreProject artifact (project JSON + sheet map).
 
 ## Skills Invoked
 
-_Stubs — fleshed out in M2-M5_
+- `theatre-choreography` — project setup, sheet authoring, JSON export format, scroll-to-timeline binding
+- `cinematic-motion` — archetype timing personality, easing curves for Theatre props
+- `animation-orchestration` — cross-sheet sequencing and dependency ordering
 
 ## Followups
 
-_None by default — director-initiated only_
+If self-check score < 0.8, emit followup `{ suggested_worker: "gsap-choreographer", reason: "tighten output — Theatre sequence too complex, split to GSAP" }`.

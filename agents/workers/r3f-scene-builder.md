@@ -40,15 +40,20 @@ Returns `Result<T>` envelope per `@genorah/protocol`:
 
 ## Protocol
 
-1. Receive task envelope from scene-director
-2. Execute domain-specific implementation
-3. Run validators: r3f-physics-rapier, performance-animation
-4. Return Result envelope
+1. Read SCENE-CHOREOGRAPHY.json + DESIGN-DNA.md (archetype preset).
+2. Scaffold `<Canvas>` via `persistent-canvas-pattern` — single instance in RootLayout, sections receive portals.
+3. Build R3F scene graph: load GLTF via `useGLTF`, apply KTX2 textures, bind DNA `primary`/`accent`/`glow` to MeshStandardMaterial uniforms.
+4. Wire Rapier physics bodies where archetype intensity is `cinematic` or `immersive`.
+5. Add postprocessing pipeline (Bloom, ChromaticAberration) tuned to DNA `tension` and `glow` tokens.
+6. Self-check via `persistent-canvas-pattern` and `cinematic-motion` validators (score threshold 0.8).
+7. Return Result envelope with R3FComponent artifact.
 
 ## Skills Invoked
 
-_Stubs — fleshed out in M2-M5_
+- `persistent-canvas-pattern` — single-canvas scaffold, FallbackHero, portal model
+- `cinematic-motion` — camera integration, postprocessing tuning
+- `r3f-physics-rapier` — Rapier body config, collision groups, world setup
 
 ## Followups
 
-_None by default — director-initiated only_
+If self-check score < 0.8, emit followup `{ suggested_worker: "gltf-lod-generator", reason: "tighten output — LOD needed to meet perf budget" }`.

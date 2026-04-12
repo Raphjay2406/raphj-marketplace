@@ -40,15 +40,18 @@ Returns `Result<T>` envelope per `@genorah/protocol`:
 
 ## Protocol
 
-1. Receive task envelope from scene-director
-2. Execute domain-specific implementation
-3. Run validators: performance-animation, reduced-motion-variant-author
-4. Return Result envelope
+1. Read SCENE-CHOREOGRAPHY.json + DESIGN-DNA.md (archetype preset).
+2. Scaffold Spline embed component with `@splinetool/react-spline` — lazy-load via `next/dynamic` to avoid SSR mismatch.
+3. Inject DNA `primary`, `accent`, `glow` tokens via Spline events API `emitEvent('colorSync', { primary, accent, glow })` on mount.
+4. Wire reduced-motion fallback: if `prefers-reduced-motion: reduce`, render static `<FallbackHero>` image instead of Spline runtime.
+5. Self-check via `cinematic-motion` and `persistent-canvas-pattern` validators (score threshold 0.8).
+6. Return Result envelope with SplineEmbedComponent artifact.
 
 ## Skills Invoked
 
-_Stubs — fleshed out in M2-M5_
+- `cinematic-motion` — scroll trigger integration and Spline animation timing
+- `persistent-canvas-pattern` — validates Spline embed does not spawn a second Canvas context
 
 ## Followups
 
-_None by default — director-initiated only_
+If self-check score < 0.8, emit followup `{ suggested_worker: "r3f-scene-builder", reason: "tighten output — replace Spline with native R3F for deeper DNA control" }`.

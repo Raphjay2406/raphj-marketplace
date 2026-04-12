@@ -40,15 +40,19 @@ Returns `Result<T>` envelope per `@genorah/protocol`:
 
 ## Protocol
 
-1. Receive task envelope from wave-director
-2. Execute domain-specific implementation
-3. Run validators: brand-motion-sigils, performance-animation
-4. Return Result envelope
+1. Read SCENE-CHOREOGRAPHY.json + DESIGN-DNA.md (archetype preset).
+2. Author Lottie JSON for the animation class in LottieSpec (micro-animation, brand sigil, loading state, icon transition).
+3. Map color layers to DNA `primary`, `accent`, `signature` tokens via Lottie color filter API.
+4. Target frame rate from DNA `motion_fps` token (default 60fps); validate file size ≤ 150KB per animation.
+5. Self-check via `cinematic-motion` and `animation-orchestration` validators (score threshold 0.8).
+6. Return Result envelope with LottieAnimation artifact + color layer map.
 
 ## Skills Invoked
 
-_Stubs — fleshed out in M2-M5_
+- `cinematic-motion` — archetype-matched timing curves and loop behavior
+- `animation-orchestration` — integration with page-level motion sequencing
+- `reduced-motion` — static first-frame fallback when `prefers-reduced-motion: reduce`
 
 ## Followups
 
-_None by default — director-initiated only_
+If self-check score < 0.8, emit followup `{ suggested_worker: "rive-author", reason: "tighten output — interactive state machine needed instead of looping Lottie" }`.

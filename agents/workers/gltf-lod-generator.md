@@ -40,15 +40,18 @@ Returns `Result<T>` envelope per `@genorah/protocol`:
 
 ## Protocol
 
-1. Receive task envelope from scene-director
-2. Execute domain-specific implementation
-3. Run validators: gltf-optimization, perf-budgets
-4. Return Result envelope
+1. Read SCENE-CHOREOGRAPHY.json + DESIGN-DNA.md (archetype preset).
+2. For each GLTF asset in the scene manifest, generate 3 LOD tiers: LOD0 (full, ≤150k tris), LOD1 (50% reduction), LOD2 (25% — mobile fallback).
+3. Validate texture sizes per tier: LOD0 ≤ 2048px, LOD1 ≤ 1024px, LOD2 ≤ 512px.
+4. Emit LOD manifest JSON with asset paths, triangle counts, texture dims, and distance thresholds.
+5. Self-check via `cinematic-motion` and `persistent-canvas-pattern` validators (score threshold 0.8).
+6. Return Result envelope with LODManifest artifact.
 
 ## Skills Invoked
 
-_Stubs — fleshed out in M2-M5_
+- `cinematic-motion` — validates LOD switch distances don't cause visible pop during camera moves
+- `persistent-canvas-pattern` — confirms LOD assets integrate with single-canvas model
 
 ## Followups
 
-_None by default — director-initiated only_
+If self-check score < 0.8, emit followup `{ suggested_worker: "ktx2-encoder", reason: "tighten output — texture sizes still exceed budget" }`.

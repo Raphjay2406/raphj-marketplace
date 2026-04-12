@@ -40,15 +40,19 @@ Returns `Result<T>` envelope per `@genorah/protocol`:
 
 ## Protocol
 
-1. Receive task envelope from wave-director
-2. Execute domain-specific implementation
-3. Run validators: cross-browser-rendering, motion-health
-4. Return Result envelope
+1. Read SCENE-CHOREOGRAPHY.json + DESIGN-DNA.md (archetype preset).
+2. Author `@keyframes` blocks with `animation-timeline: scroll()` or `view()` for each animated element in MotionSpec.
+3. Map `animation-timing-function` to DNA `motion_easing` token; map `animation-duration` to `motion_duration`.
+4. Emit `@supports (animation-timeline: scroll())` feature-detect wrapper; inside the else branch emit a JS ScrollTrigger polyfill import.
+5. Self-check via `cinematic-motion` and `animation-orchestration` validators (score threshold 0.8).
+6. Return Result envelope with ScrollDrivenCSS artifact.
 
 ## Skills Invoked
 
-_Stubs — fleshed out in M2-M5_
+- `cinematic-motion` — archetype scroll personality, parallax depth rules
+- `animation-orchestration` — multi-element sequencing via `animation-delay` offsets
+- `reduced-motion` — `@media (prefers-reduced-motion: reduce)` override block
 
 ## Followups
 
-_None by default — director-initiated only_
+If self-check score < 0.8, emit followup `{ suggested_worker: "gsap-choreographer", reason: "tighten output — complex sequence requires JS timeline" }`.

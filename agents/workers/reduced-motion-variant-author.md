@@ -34,21 +34,27 @@ MotionArtifact: task envelope received from wave-director
 ## Output Contract
 
 Returns `Result<T>` envelope per `@genorah/protocol`:
+
 - `artifact`: Reduced-motion CSS/JS variant with equivalent static presentation
 - `verdicts`: validation results from accessibility, motion-health
 - `followups`: []
 
 ## Protocol
 
-1. Receive task envelope from wave-director
-2. Execute domain-specific implementation
-3. Run validators: accessibility, motion-health
-4. Return Result envelope
+1. Read SCENE-CHOREOGRAPHY.json + DESIGN-DNA.md (archetype preset).
+2. Receive MotionArtifact (GSAP timeline, CSS scroll-driven block, Lottie JSON, or Rive spec) from the upstream motion worker.
+3. For each animated property, derive an equivalent static presentation: translate `opacity` animations to final opacity, `transform` animations to final position, loops to static first frame.
+4. Emit `@media (prefers-reduced-motion: reduce)` CSS overrides and/or `useReducedMotion()` React hook guards for JS-driven animations.
+5. Validate WCAG 2.1 SC 2.3.3 compliance: no animations longer than 5s without a pause/stop mechanism when reduced-motion is not set.
+6. Self-check via `cinematic-motion` and `animation-orchestration` validators (score threshold 0.8).
+7. Return Result envelope with ReducedMotionVariant artifact.
 
 ## Skills Invoked
 
-_Stubs — fleshed out in M2-M5_
+- `cinematic-motion` — identifies which motion properties are essential vs decorative for safe removal
+- `animation-orchestration` — validates reduced variant doesn't break sequencing dependencies
+- `reduced-motion` — WCAG rules, `useReducedMotion` hook pattern, CSS `@media` override structure
 
 ## Followups
 
-_None by default — director-initiated only_
+If self-check score < 0.8, emit followup `{ suggested_worker: "gsap-choreographer", reason: "tighten output — upstream animation uses non-overridable inline styles" }`.

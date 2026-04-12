@@ -40,15 +40,19 @@ Returns `Result<T>` envelope per `@genorah/protocol`:
 
 ## Protocol
 
-1. Receive task envelope from wave-director
-2. Execute domain-specific implementation
-3. Run validators: motion-health, performance-animation
-4. Return Result envelope
+1. Read SCENE-CHOREOGRAPHY.json + DESIGN-DNA.md (archetype preset).
+2. Parse MotionSpec: section target, beat type, and trigger mode (scroll, load, interaction).
+3. Author GSAP ScrollTrigger or timeline sequences — bind duration, ease, and stagger to DNA `motion_easing`, `motion_duration`, and `motion_stagger` tokens.
+4. Wrap every animation in a `prefers-reduced-motion` guard; dispatch to reduced-motion-variant-author for fallback generation.
+5. Self-check via `cinematic-motion` and `animation-orchestration` validators (score threshold 0.8).
+6. Return Result envelope with GSAPTimeline artifact.
 
 ## Skills Invoked
 
-_Stubs — fleshed out in M2-M5_
+- `cinematic-motion` — archetype-specific timing personality, easing curves
+- `animation-orchestration` — sequencing across multiple elements, stagger logic
+- `reduced-motion` — guard pattern and fallback dispatch contract
 
 ## Followups
 
-_None by default — director-initiated only_
+If self-check score < 0.8, emit followup `{ suggested_worker: "scroll-driven-css-author", reason: "tighten output — offload scroll binding to native CSS where supported" }`.

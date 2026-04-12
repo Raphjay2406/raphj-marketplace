@@ -40,15 +40,18 @@ Returns `Result<T>` envelope per `@genorah/protocol`:
 
 ## Protocol
 
-1. Receive task envelope from scene-director
-2. Execute domain-specific implementation
-3. Run validators: gltf-optimization
-4. Return Result envelope
+1. Read SCENE-CHOREOGRAPHY.json + DESIGN-DNA.md (archetype preset).
+2. For each texture asset from the LOD manifest, encode to KTX2 with dual variants: UASTC (high-quality, for desktop) and ETC1S (compressed, for mobile LOD2).
+3. Emit transcoder hints in the KTX2 supercompression metadata (BasisU target: RGBA8 for desktop, ETC2 for mobile).
+4. Validate final file sizes: UASTC variant ≤ 4MB per texture, ETC1S ≤ 1MB.
+5. Self-check via `cinematic-motion` validator for texture continuity across camera bookmarks (score threshold 0.8).
+6. Return Result envelope with KTX2Texture artifact + transcoder hint map.
 
 ## Skills Invoked
 
-_Stubs — fleshed out in M2-M5_
+- `cinematic-motion` — validates textures don't pop/stutter during camera moves
+- `persistent-canvas-pattern` — confirms KTX2 assets integrate with single-canvas GPU context
 
 ## Followups
 
-_None by default — director-initiated only_
+If self-check score < 0.8, emit followup `{ suggested_worker: "gltf-lod-generator", reason: "tighten output — texture dimensions need further reduction" }`.

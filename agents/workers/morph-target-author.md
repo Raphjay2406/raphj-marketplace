@@ -40,15 +40,19 @@ Returns `Result<T>` envelope per `@genorah/protocol`:
 
 ## Protocol
 
-1. Receive task envelope from scene-director
-2. Execute domain-specific implementation
-3. Run validators: gltf-optimization, perf-budgets
-4. Return Result envelope
+1. Read SCENE-CHOREOGRAPHY.json + DESIGN-DNA.md (archetype preset).
+2. For each cinematic mesh in the scene manifest, derive blend shape targets from archetype emotion palette (e.g. Kinetic → high-energy deformations, Japanese Minimal → subtle drift).
+3. Validate blend shape count against perf budget: max 8 active targets per mesh at runtime.
+4. Emit GLTF morph target data with animation clips keyed to SCENE-CHOREOGRAPHY bookmarks.
+5. Self-check via `cinematic-motion` and `persistent-canvas-pattern` validators (score threshold 0.8).
+6. Return Result envelope with MorphTargetGLTF artifact.
 
 ## Skills Invoked
 
-_Stubs — fleshed out in M2-M5_
+- `cinematic-motion` — blend shape timing and easing curves
+- `persistent-canvas-pattern` — validates morph targets integrate with single-canvas model
+- `theatre-choreography` — bookmark alignment for morph clip keyframes
 
 ## Followups
 
-_None by default — director-initiated only_
+If self-check score < 0.8, emit followup `{ suggested_worker: "hero-camera-choreographer", reason: "re-sync bookmark timing after morph adjustment" }`.

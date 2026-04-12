@@ -40,15 +40,19 @@ Returns `Result<T>` envelope per `@genorah/protocol`:
 
 ## Protocol
 
-1. Receive task envelope from scene-director
-2. Execute domain-specific implementation
-3. Run validators: motion-health, performance-animation
-4. Return Result envelope
+1. Read SCENE-CHOREOGRAPHY.json + DESIGN-DNA.md (archetype preset).
+2. Parse bookmark list; for each bookmark derive scroll offset, camera position, look-at target, and FOV from archetype preset defaults.
+3. Emit Theatre.js keyframes for camera position across scroll — one keyframe sequence per bookmark transition.
+4. Bind easing curves to DNA `motion_easing` token; default to `easeInOutCubic` if not set.
+5. Self-check via `theatre-choreography` and `cinematic-motion` validators (score threshold 0.8).
+6. Return Result envelope with CameraTimeline JSON.
 
 ## Skills Invoked
 
-_Stubs — fleshed out in M2-M5_
+- `theatre-choreography` — keyframe format, sequence export, scroll-to-timeline binding
+- `cinematic-motion` — camera path smoothness, FOV variance rules, archetype camera personality
+- `persistent-canvas-pattern` — confirms canvas context is available before emitting keyframes
 
 ## Followups
 
-_None by default — director-initiated only_
+If self-check score < 0.8, emit followup `{ suggested_worker: "morph-target-author", reason: "tighten bookmark transitions" }`.

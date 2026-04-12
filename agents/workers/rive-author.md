@@ -40,15 +40,19 @@ Returns `Result<T>` envelope per `@genorah/protocol`:
 
 ## Protocol
 
-1. Receive task envelope from wave-director
-2. Execute domain-specific implementation
-3. Run validators: brand-motion-sigils, interaction-fidelity-gate
-4. Return Result envelope
+1. Read SCENE-CHOREOGRAPHY.json + DESIGN-DNA.md (archetype preset).
+2. Design Rive state machine: define states (idle, hover, active, exit), transitions, and input bindings for the interaction pattern in RiveSpec.
+3. Map DNA `primary`, `accent`, `signature` tokens to Rive fill/stroke color overrides via runtime API.
+4. Wire JS inputs to DOM events: `rive.setInput('hover', true)` on pointerenter, `false` on pointerleave.
+5. Self-check via `cinematic-motion` and `animation-orchestration` validators (score threshold 0.8).
+6. Return Result envelope with RiveStateMachine artifact (state graph + input map).
 
 ## Skills Invoked
 
-_Stubs — fleshed out in M2-M5_
+- `cinematic-motion` — archetype interaction personality and transition timing
+- `animation-orchestration` — Rive playback coordination with page-level motion
+- `reduced-motion` — bypass state machine transitions, hold idle state when `prefers-reduced-motion: reduce`
 
 ## Followups
 
-_None by default — director-initiated only_
+If self-check score < 0.8, emit followup `{ suggested_worker: "lottie-author", reason: "tighten output — simplify to non-interactive Lottie" }`.

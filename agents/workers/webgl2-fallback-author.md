@@ -40,15 +40,20 @@ Returns `Result<T>` envelope per `@genorah/protocol`:
 
 ## Protocol
 
-1. Receive task envelope from scene-director
-2. Execute domain-specific implementation
-3. Run validators: cross-browser-rendering
-4. Return Result envelope
+1. Read SCENE-CHOREOGRAPHY.json + DESIGN-DNA.md (archetype preset).
+2. Receive WebGPU shader artifact (or ShaderSpec if no prior WGSL exists) from scene-director.
+3. For each compute effect, emit equivalent GLSL 3.0 fragment/vertex shader pair via Three.js ShaderMaterial — convert WGSL compute logic to fragment-shader simulation where needed.
+4. Map DNA `primary`, `accent`, `glow` tokens to GLSL uniforms mirroring the WGSL binding names.
+5. Wrap in feature-detect branch: `if (!renderer.capabilities.isWebGL2) { fallback to static image }`.
+6. Self-check via `webgl2-fallback-generator` validator (score threshold 0.8).
+7. Return Result envelope with GLSL300Shader artifact.
 
 ## Skills Invoked
 
-_Stubs — fleshed out in M2-M5_
+- `webgl2-fallback-generator` — WGSL-to-GLSL conversion patterns, Three.js ShaderMaterial setup
+- `cinematic-motion` — timing parity with WebGPU path
+- `persistent-canvas-pattern` — single-canvas context contract for WebGL2 path
 
 ## Followups
 
-_None by default — director-initiated only_
+If self-check score < 0.8, emit followup `{ suggested_worker: "webgpu-shader-author", reason: "tighten output — fallback diverges from WebGPU reference" }`.
