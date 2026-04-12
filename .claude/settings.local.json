@@ -91,7 +91,9 @@
       "Bash(mv \"D:/Genorah/Agents\" \"D:/Genorah/Genorah-Plugin/Agents\")",
       "Bash(mv \"D:/Genorah/_Dashboard.md\" \"D:/Genorah/Genorah-Plugin/_Dashboard.md\")",
       "Bash(find Skills Commands Agents -name \"*.md\" -exec sh -c 'grep -qL \"\\\\[\\\\[\" \"$1\" && echo \"$1\"' _ {} \\\\;)",
-      "Bash(find . -name \"*.md\" -exec sh -c 'grep -qL \"\\\\[\\\\[\" \"$1\" && echo \"$1\"' _ {} \\\\;)"
+      "Bash(find . -name \"*.md\" -exec sh -c 'grep -qL \"\\\\[\\\\[\" \"$1\" && echo \"$1\"' _ {} \\\\;)",
+      "WebFetch(domain:mobbin.com)",
+      "WebFetch(domain:cosmos.so)"
     ]
   }
 }

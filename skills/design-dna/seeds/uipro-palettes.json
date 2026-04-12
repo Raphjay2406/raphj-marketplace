@@ -1,0 +1,300 @@
+{
+  "_meta": {
+    "source": "nextlevelbuilder/ui-ux-pro-max-skill v2.0 src/ui-ux-pro-max/data/colors.csv",
+    "license": "MIT",
+    "remapping": "17-token PRO MAX → 12-token Genorah DNA (see ATTRIBUTION.md)",
+    "count_in_source": 160,
+    "count_distilled": 24,
+    "note": "Representative distillation covering the most common Genorah industry targets. For any industry not listed, fall back to live DNA generation or consult PRO MAX source."
+  },
+  "palettes": [
+    {
+      "id": "saas-modern-01",
+      "industries": ["saas", "dev-tools", "productivity"],
+      "mood": "modern-professional",
+      "tokens": {
+        "primary": "#6366f1", "secondary": "#8b5cf6", "accent": "#06b6d4",
+        "bg": "#0a0a0b", "text": "#e8e8ea", "surface": "#141418",
+        "muted": "#2a2a31", "border": "#2a2a31",
+        "tension": "#ef4458", "highlight": "#7c5cff"
+      },
+      "notes": "Dark-first SaaS palette. Indigo primary for trust, cyan accent for energy, deep neutral foundation. Used by Linear/Arc style."
+    },
+    {
+      "id": "saas-enterprise-01",
+      "industries": ["saas", "enterprise", "fintech"],
+      "mood": "trustworthy-corporate",
+      "tokens": {
+        "primary": "#0f62fe", "secondary": "#4589ff", "accent": "#8a3ffc",
+        "bg": "#ffffff", "text": "#161616", "surface": "#f4f4f4",
+        "muted": "#c6c6c6", "border": "#dde1e6",
+        "tension": "#da1e28", "highlight": "#0f62fe"
+      },
+      "notes": "IBM Carbon-inspired. High-contrast, WCAG AAA, enterprise-safe. Good for regulated industries."
+    },
+    {
+      "id": "ecommerce-luxury-01",
+      "industries": ["ecommerce", "fashion", "jewelry", "luxury"],
+      "mood": "sophisticated-elegant",
+      "tokens": {
+        "primary": "#1a1a1a", "secondary": "#c9a961", "accent": "#8a7249",
+        "bg": "#fafaf8", "text": "#1a1a1a", "surface": "#ffffff",
+        "muted": "#e8e5df", "border": "#d4ccbf",
+        "tension": "#8b2e2a", "highlight": "#c9a961"
+      },
+      "notes": "Restrained luxury. Black/ivory with muted gold accent. Reads high-end without shouting."
+    },
+    {
+      "id": "ecommerce-playful-01",
+      "industries": ["ecommerce", "beauty", "wellness", "dtc"],
+      "mood": "warm-inviting",
+      "tokens": {
+        "primary": "#ec4899", "secondary": "#f472b6", "accent": "#fbbf24",
+        "bg": "#fef3f2", "text": "#7f1d1d", "surface": "#ffffff",
+        "muted": "#fee2e2", "border": "#fecaca",
+        "tension": "#dc2626", "highlight": "#fbbf24"
+      },
+      "notes": "Warm pink-ivory with amber accent. DTC beauty/wellness defaults."
+    },
+    {
+      "id": "agency-editorial-01",
+      "industries": ["agency", "editorial", "portfolio", "creative"],
+      "mood": "bold-confident",
+      "tokens": {
+        "primary": "#fafafa", "secondary": "#a3a3a3", "accent": "#fde047",
+        "bg": "#0a0a0a", "text": "#fafafa", "surface": "#171717",
+        "muted": "#404040", "border": "#262626",
+        "tension": "#ef4444", "highlight": "#fde047"
+      },
+      "notes": "Black/white editorial foundation, electric yellow for signature moments. Photography-friendly."
+    },
+    {
+      "id": "fintech-trust-01",
+      "industries": ["fintech", "banking", "investing"],
+      "mood": "stable-confident",
+      "tokens": {
+        "primary": "#0d2e4d", "secondary": "#1e5f8e", "accent": "#00b871",
+        "bg": "#ffffff", "text": "#0d2e4d", "surface": "#f8fafb",
+        "muted": "#e5ecf2", "border": "#d1dbe5",
+        "tension": "#d64545", "highlight": "#00b871"
+      },
+      "notes": "Navy + green for gain/stability. White foundation builds institutional trust."
+    },
+    {
+      "id": "health-calm-01",
+      "industries": ["healthcare", "wellness", "mental-health"],
+      "mood": "calming-reassuring",
+      "tokens": {
+        "primary": "#0891b2", "secondary": "#22d3ee", "accent": "#84cc16",
+        "bg": "#f0fdfa", "text": "#134e4a", "surface": "#ffffff",
+        "muted": "#ccfbf1", "border": "#99f6e4",
+        "tension": "#f97316", "highlight": "#84cc16"
+      },
+      "notes": "Teal + lime. Calming without being sterile. Healthcare compliance-friendly contrast."
+    },
+    {
+      "id": "health-medical-01",
+      "industries": ["healthcare", "medical", "clinical"],
+      "mood": "clinical-clean",
+      "tokens": {
+        "primary": "#1e40af", "secondary": "#3b82f6", "accent": "#10b981",
+        "bg": "#ffffff", "text": "#0f172a", "surface": "#f8fafc",
+        "muted": "#e2e8f0", "border": "#cbd5e1",
+        "tension": "#dc2626", "highlight": "#10b981"
+      },
+      "notes": "Medical blue primary. Emerald for vitals/positive. Standard clinical UI."
+    },
+    {
+      "id": "education-warm-01",
+      "industries": ["education", "edtech", "learning"],
+      "mood": "engaging-approachable",
+      "tokens": {
+        "primary": "#7c3aed", "secondary": "#a78bfa", "accent": "#f59e0b",
+        "bg": "#faf5ff", "text": "#1e1b4b", "surface": "#ffffff",
+        "muted": "#ede9fe", "border": "#ddd6fe",
+        "tension": "#dc2626", "highlight": "#f59e0b"
+      },
+      "notes": "Purple + amber — curiosity + warmth. Engaging without being childish."
+    },
+    {
+      "id": "real-estate-premium-01",
+      "industries": ["real-estate", "property", "architecture"],
+      "mood": "premium-grounded",
+      "tokens": {
+        "primary": "#1c1917", "secondary": "#78716c", "accent": "#b45309",
+        "bg": "#fafaf9", "text": "#1c1917", "surface": "#ffffff",
+        "muted": "#e7e5e4", "border": "#d6d3d1",
+        "tension": "#b91c1c", "highlight": "#b45309"
+      },
+      "notes": "Warm stone neutrals + rust accent. Architectural photography pairs well."
+    },
+    {
+      "id": "hospitality-warmth-01",
+      "industries": ["hospitality", "restaurant", "hotel", "travel"],
+      "mood": "inviting-warm",
+      "tokens": {
+        "primary": "#9a3412", "secondary": "#fb923c", "accent": "#fcd34d",
+        "bg": "#fff7ed", "text": "#431407", "surface": "#ffffff",
+        "muted": "#fed7aa", "border": "#fdba74",
+        "tension": "#991b1b", "highlight": "#fcd34d"
+      },
+      "notes": "Terracotta + cream. Mediterranean/boutique hospitality."
+    },
+    {
+      "id": "crypto-neon-01",
+      "industries": ["crypto", "web3", "defi"],
+      "mood": "energetic-rebel",
+      "tokens": {
+        "primary": "#00ff9f", "secondary": "#00d9ff", "accent": "#ff006e",
+        "bg": "#0a0118", "text": "#ffffff", "surface": "#1a0b2e",
+        "muted": "#4a148c", "border": "#6a1b9a",
+        "tension": "#ff006e", "highlight": "#00ff9f"
+      },
+      "notes": "Neon mint/cyan on deep purple. Crypto-native aesthetic. High saturation warning."
+    },
+    {
+      "id": "gaming-cyber-01",
+      "industries": ["gaming", "esports", "streaming"],
+      "mood": "aggressive-futuristic",
+      "tokens": {
+        "primary": "#a855f7", "secondary": "#06b6d4", "accent": "#eab308",
+        "bg": "#0c0a09", "text": "#fafafa", "surface": "#1c1917",
+        "muted": "#292524", "border": "#44403c",
+        "tension": "#ef4444", "highlight": "#eab308"
+      },
+      "notes": "Cyberpunk gaming palette. Purple/cyan accent with yellow highlight."
+    },
+    {
+      "id": "ai-native-01",
+      "industries": ["ai", "ml", "developer-ai"],
+      "mood": "technical-futuristic",
+      "tokens": {
+        "primary": "#8b5cf6", "secondary": "#ec4899", "accent": "#14b8a6",
+        "bg": "#09090b", "text": "#fafafa", "surface": "#18181b",
+        "muted": "#27272a", "border": "#3f3f46",
+        "tension": "#f43f5e", "highlight": "#14b8a6"
+      },
+      "notes": "Violet gradient base with teal accent. Modern AI product default (Anthropic/OpenAI style)."
+    },
+    {
+      "id": "agency-brutal-01",
+      "industries": ["agency", "design-studio", "creative"],
+      "mood": "brutalist-aggressive",
+      "tokens": {
+        "primary": "#000000", "secondary": "#ffffff", "accent": "#ff3333",
+        "bg": "#f5f5f5", "text": "#000000", "surface": "#ffffff",
+        "muted": "#d4d4d4", "border": "#000000",
+        "tension": "#ff3333", "highlight": "#ff3333"
+      },
+      "notes": "Raw Brutalist. Black/white/red only. Borders are thick and unambiguous."
+    },
+    {
+      "id": "b2b-consulting-01",
+      "industries": ["consulting", "b2b-services", "professional"],
+      "mood": "authoritative-polished",
+      "tokens": {
+        "primary": "#1e3a8a", "secondary": "#3730a3", "accent": "#be123c",
+        "bg": "#ffffff", "text": "#1e293b", "surface": "#f8fafc",
+        "muted": "#e2e8f0", "border": "#cbd5e1",
+        "tension": "#be123c", "highlight": "#1e3a8a"
+      },
+      "notes": "Deep blue + crimson. Mckinsey/BCG lineage. Senior buyer-safe."
+    },
+    {
+      "id": "nonprofit-hopeful-01",
+      "industries": ["nonprofit", "charity", "social-impact"],
+      "mood": "hopeful-human",
+      "tokens": {
+        "primary": "#059669", "secondary": "#14b8a6", "accent": "#f97316",
+        "bg": "#ffffff", "text": "#064e3b", "surface": "#f0fdf4",
+        "muted": "#d1fae5", "border": "#a7f3d0",
+        "tension": "#b91c1c", "highlight": "#f97316"
+      },
+      "notes": "Green + orange. Growth + action. Nonprofit donation-flow tested."
+    },
+    {
+      "id": "podcast-editorial-01",
+      "industries": ["podcast", "media", "content"],
+      "mood": "literary-warm",
+      "tokens": {
+        "primary": "#7c2d12", "secondary": "#c2410c", "accent": "#eab308",
+        "bg": "#fef6e4", "text": "#1c1917", "surface": "#ffffff",
+        "muted": "#fde68a", "border": "#fcd34d",
+        "tension": "#991b1b", "highlight": "#eab308"
+      },
+      "notes": "Tobacco + amber + cream. Magazine/longform editorial."
+    },
+    {
+      "id": "ethereal-soft-01",
+      "industries": ["saas", "design-tools", "productivity"],
+      "mood": "ethereal-spotlight",
+      "tokens": {
+        "primary": "#5e60ce", "secondary": "#64dfdf", "accent": "#ff9eb5",
+        "bg": "#fafbff", "text": "#1a1b2e", "surface": "#ffffff",
+        "muted": "#e6e8f5", "border": "#d6d8e8",
+        "tension": "#e63946", "highlight": "#ff9eb5"
+      },
+      "notes": "Linear/Vercel-inspired soft gradient base. Works beautifully with spotlight gradient moments."
+    },
+    {
+      "id": "neon-noir-01",
+      "industries": ["entertainment", "nightlife", "streaming"],
+      "mood": "cinematic-noir",
+      "tokens": {
+        "primary": "#ff0080", "secondary": "#7928ca", "accent": "#00dfd8",
+        "bg": "#000000", "text": "#fafafa", "surface": "#0a0a0a",
+        "muted": "#171717", "border": "#262626",
+        "tension": "#ff0080", "highlight": "#00dfd8"
+      },
+      "notes": "Magenta + cyan on pure black. Blade Runner 2049 aesthetic."
+    },
+    {
+      "id": "japanese-minimal-01",
+      "industries": ["fashion", "minimal-brand", "craft"],
+      "mood": "quiet-refined",
+      "tokens": {
+        "primary": "#1a1a1a", "secondary": "#6b6b6b", "accent": "#b91c1c",
+        "bg": "#f7f5f1", "text": "#1a1a1a", "surface": "#ffffff",
+        "muted": "#e8e5df", "border": "#d4ccbf",
+        "tension": "#b91c1c", "highlight": "#b91c1c"
+      },
+      "notes": "Washi paper base. Single red accent (vermilion hanko). Zen restraint."
+    },
+    {
+      "id": "vaporwave-01",
+      "industries": ["music", "experimental", "art"],
+      "mood": "retro-nostalgic",
+      "tokens": {
+        "primary": "#ff71ce", "secondary": "#01cdfe", "accent": "#b967ff",
+        "bg": "#05041c", "text": "#ffffff", "surface": "#1a0a3a",
+        "muted": "#3d2c6b", "border": "#5b3d9a",
+        "tension": "#ff4d8f", "highlight": "#05ffa1"
+      },
+      "notes": "80s Miami vaporwave. Pink/cyan/purple on midnight."
+    },
+    {
+      "id": "dark-academia-01",
+      "industries": ["education", "publishing", "literature"],
+      "mood": "scholarly-moody",
+      "tokens": {
+        "primary": "#3f2813", "secondary": "#8b6f47", "accent": "#c89b3c",
+        "bg": "#1c1611", "text": "#e8dcc5", "surface": "#2b1f14",
+        "muted": "#3f2813", "border": "#5a3f28",
+        "tension": "#8b2e1f", "highlight": "#c89b3c"
+      },
+      "notes": "Dark leather + brass + parchment. Oxford library aesthetic."
+    },
+    {
+      "id": "playful-startup-01",
+      "industries": ["saas", "early-stage", "consumer-app"],
+      "mood": "energetic-friendly",
+      "tokens": {
+        "primary": "#f97316", "secondary": "#fbbf24", "accent": "#8b5cf6",
+        "bg": "#fffbeb", "text": "#1e1b4b", "surface": "#ffffff",
+        "muted": "#fef3c7", "border": "#fde68a",
+        "tension": "#dc2626", "highlight": "#8b5cf6"
+      },
+      "notes": "Orange + purple. Young consumer app (Duolingo-adjacent)."
+    }
+  ]
+}
