@@ -10,16 +10,146 @@ claude plugin marketplace add https://github.com/Raphjay2406/raphj-marketplace
 
 ## Available Plugins
 
-| Plugin | Skills | Commands | Agents | Description |
-|--------|--------|----------|--------|-------------|
-| `genorah` | ~153 | 26 | 21 | Premium frontend design system **v3.4.1 — 3dsvg Hero Mark Automation**. v3.4.0 shipped 75-preset 3dsvg library + AJV schema + archetype-material compliance + `<GenorahSVG3D>` accessibility wrapper pattern + SVG input sanitization + motion-health/perf-budgets coupling + Hero Mark Compliance sub-gate. v3.4.1 adds `/gen:hero-mark` command (design/live/export/preview), `/gen:start-project` discovery Q, brandkit 30-variant fan-out, and the `3dsvg-export` MCP server (headless Playwright + registerCanvas render pipeline). v3.2.1 fixed skill-injection routing (99% of skills were silently unreachable before the `triggers:` fallback landed). v3.3 adds quality-gate sub-gate wiring docs, stale mobile/Shopify content refresh (SwiftUI 6, Compose 2.0, Expo 52, Flutter 3.24, Storefront API 2025-01), motion-health ↔ animation-orchestration cross-reference, uipro palette selection algorithm, testable archetype-specificity hard gate, 65-skill metadata retrofit for path-pattern injection, 3dsvg-extrusion skill for zero-config 3D SVG glyphs, 9 new hook integration tests, pre-push mirror parity enforcement. 21-agent pipeline (adds visual-refiner + consistency-auditor), Design DNA, 19 archetypes, 234-point quality gate via 6-stage validation pipeline (DNA → render → registry → consistency → fidelity → full gate). v3.0 primitives: closed-loop visual refiner, DNA drift detector (92% coverage hard gate), perf budgets per beat, motion health sub-gate, reference-diff-protocol (per-beat SSIM), AI variant tournament, section consistency auditor, live localhost dashboard, interactive click-to-refine companion, competitive benchmarking, smart router, self-audit. Frontier: WebGPU/TSL decision matrix, GLTF optimization, Sanity + Payload CMS round-trip, Remotion section video, brand voice extractor, cognitive accessibility (CVD ΔE2000), i18n-by-default. 5 MCP integrations (nano-banana, Stitch, Playwright, Obsidian x2). Targets Next.js, Astro, React/Vite, Tauri, Electron, Swift/SwiftUI, Kotlin/Compose, React Native, Expo, Flutter. |
-| `wavy-bavy` | 1 | — | — | Integrate the wavy-bavy library for seamless wave transitions between page sections |
+| Plugin | Skills | Commands | Agents | Version | Description |
+|--------|--------|----------|--------|---------|-------------|
+| `gen` | 252 | 54 | 24 | **3.18.0** | Premium frontend design system — Measurably Enforced Quality with Closed-Loop Refinement |
+| `wavy-bavy` | 1 | — | — | 1.0.0 | Integrate the wavy-bavy library for seamless wave transitions |
+
+## Genorah v3.18.0 — What's shipped
+
+**Core:**
+- 33 Design Archetypes + formal mixing protocol (primary 60% + secondary 30% + tension 10%)
+- Two-axis 354-pt quality gate: Design Craft 234 + UX Integrity 120
+- 14-stage pipeline (Discovery → Intent Alignment → DNA → Brainstorm → Plan → Plan Review → Rehearsal → Build → Mid-wave Reconciliation → Audit → Narrative Audit → Regression → Ship Check → Export → Post-ship Learning)
+- 8-layer Context Fabric (L1 scratchpad → L4 ledger → L5 BM25 → L6 Obsidian KB → L7 calibration → L8 user memory)
+- 10-track empirical research program
+
+**Quality enforcement:**
+- 6 UX Integrity sub-gates with binary machine checks: Nielsen heuristics, interaction fidelity, cognitive load, conversion integrity, visual craft quantified, synthetic-user testing (6 personas via Playwright)
+- DNA drift detection (92% tokenized coverage hard-block via `DNA_STRICT=1`)
+- Motion health via Playwright + PerformanceObserver (INP/CLS/concurrent animations)
+- Reference-diff SSIM hard cap (2σ → Creative Courage × 0.7)
+- Archetype specificity hard gate with machine-checkable regex markers (33/33 archetypes)
+- SUMMARY.md cascade transparency
+
+**Asset Forge:**
+- `public/assets/MANIFEST.json` governance with sha256 cache key + license enum + DNA coverage per asset
+- Procedural 2D SVG (blob/mesh-gradient/voronoi/noise-field/flow-field, deterministic, offline)
+- Procedural 3D (box/sphere/torus glTF, deterministic)
+- 3dsvg integration (75 archetype-curated presets + `<GenorahSVG3D>` wrapper + sanitization + Hero Mark sub-gate + 30-variant brandkit fan-out)
+- Meshy MCP scaffold for text/image → 3D
+- Image cascade (Flux → nano-banana → Ideogram → text-prompt fallback)
+
+**Full-stack delivery (v3.6):**
+- RSC patterns per framework (Next 16 Cache Components + Nuxt Nitro + SvelteKit streaming + Astro Server Islands)
+- API route templates (auth/CRUD/webhook/upload/rate-limited/ai-stream) with Zod + OpenAPI
+- DB schema generation (Prisma/Drizzle/Payload/Supabase)
+- Environment variable scheme with Zod runtime validation
+- Deploy preview + Vercel Rolling Releases canary
+- Telemetry/RUM + background jobs (Vercel Queues/Cron/Upstash QStash/Inngest)
+
+**Mobile depth (v3.7):**
+- Asset forge (adaptive icons + splash + store graphics for iOS/Android/Expo)
+- Mobile quality-gate (60/120fps, cold <600ms, battery <3%/10min)
+- DNA bridge (SwiftUI + Material You Compose + NativeWind + Flutter)
+- Maestro testing + EAS Build/Submit
+- Expo Go QR preview
+- Platform idioms (iOS swipe-back + Android predictive back + haptics)
+
+**AI-native (v3.8):**
+- Voice UI patterns (Web Speech + OpenAI Realtime + Gemini Live + ElevenLabs)
+- WebXR AR (USDZ Quick Look + Android Scene Viewer + WebXR R3F + `<model-viewer>` universal)
+- Real-time personalization (prefers-* media queries + Battery API + Connection API + Ambient Light)
+- AI chat via Vercel AI SDK v6 + AI Gateway (OIDC, no raw provider keys)
+- WebAuthn/Passkeys with progressive enhancement
+- Active UX adjustment (signal → response matrix)
+
+**Content depth (v3.9):**
+- Long-form MDX with voice binding + archetype reading-grade bands
+- React Email cross-client templates (9 patterns)
+- Remotion video scripts with DNA-parameterized compositions + WebVTT captions
+- Interactive content (ROI calculator, quiz, configurator)
+- 9-format social asset pack (OG/Twitter/LinkedIn/IG feed/story/Reels/TikTok/Pinterest/YouTube)
+
+**Integration ecosystem (v3.15):**
+- HubSpot CMS (HUBL modules) + CRM objects (Deals/Companies/Tickets/Products with Associations API v4)
+- n8n workflow JSON generation from natural-language intent
+- Full Supabase: Auth (email/OAuth/magic-link/MFA/Passkey) + Postgres (migrations + FTS + pgvector) + RLS + Storage + Realtime + Edge Functions
+- Notion/Airtable/Framer-migration/Iconify/Slack/Discord/Salesforce/Pipedrive/Google Workspace/Zapier/Make
+
+**i18n depth (v3.10):**
+- User-global translation memory
+- Locale archetype overrides (font-pair matrix per CJK/Arabic/Hebrew/Thai/Russian/Korean)
+- Cultural accessibility matrix
+- Full Intl API coverage (DateTimeFormat/NumberFormat/PluralRules/RelativeTimeFormat/ListFormat)
+
+**Advanced a11y (v3.11):**
+- Eye-tracking simulation via saliency model
+- Low-bandwidth (2G-viable) mode with asset swaps
+- Voice-control compatibility (accessible-name matching)
+- Tremor-friendly interaction (56×56 enhanced hit zones)
+- Battery-aware graceful degradation
+- Full keyboard-task-completion testing
+
+**Legal + ethics (v3.12):**
+- Privacy policy + TOS + accessibility statement generator (GDPR/CCPA/LGPD/UK PECR)
+- AI content disclosure (CA AB 2013 + EU AI Act Art 50)
+- C2PA watermarking + visible AI badges
+- Cookie consent banner with anti-dark-pattern rules
+
+**Plugin self-improvement (v3.13):**
+- Opt-in anonymous telemetry (skill/command/agent usage + outcome; no PII/content/keys)
+- Skill usage analytics with auto-deprecation candidates (0 injections in 90d)
+- Cross-user plugin health dashboard
+
+**Testing for generated projects (v3.16):**
+- E2E test generation from PLAN.md journeys (Playwright, role-selectors, 3-breakpoint)
+- Visual regression with reviewer-approved expected-diff workflow
+- Axe a11y suite (WCAG 2.2 AA per route)
+- API integration tests (supertest + vitest + msw + testcontainers Postgres)
+
+**Security hardening (v3.17):**
+- Prompt-injection defense (sanitize user content fed to LLMs)
+- 2026 PII regex (Stripe/AWS/GitHub/GitLab/Slack/OpenAI/Anthropic/Supabase + entropy + Luhn)
+- CycloneDX SBOM + license allowlist + vulnerability audit
+- Content moderation (NSFWJS + OpenAI) with human review queue
+- CSP generator + SRI + Trusted Types
+- API key rotation playbooks (staged dual-key)
+- Font license tracker with expiry warnings
+
+**Advanced visual refinement (v3.18):**
+- LPIPS perceptual similarity (beyond SSIM)
+- Bounding-box layout-difference metric
+- Animation-path similarity (keyframe/easing/duration/trigger)
+- Cross-framework parity (SvelteKit vs Next as canonical)
+- Cross-browser matrix (Chromium/Firefox/WebKit + mobile)
+- Print/PDF parity for brandkit
 
 ## Install a Plugin
 
-After adding the marketplace, install any plugin:
+```bash
+claude plugin install gen@raphj-marketplace
+claude plugin install wavy-bavy@raphj-marketplace
+```
+
+## Release history
+
+See `CHANGELOG.md` for the full v3.4.1 → v3.18.0 journey (22 RC releases + stable promotion).
+
+## Docs
+
+- `CLAUDE.md` — contributor guide, architecture overview, file conventions
+- `docs/glossary.md` — vocabulary reference (archetype, axis, beat, cascade cap, context fabric, hard gate, κ, ledger, Pareto, sub-gate, tier, etc.)
+- `docs/faq.md` — common questions with answers
+- `docs/troubleshooting/` — playbook per error code
+- `docs/v3.5-rfc.md` — Asset Forge + Quality Spine + Context Fabric design
+- `docs/v3.5-research-program.md` — 10-track empirical validation plan
+- `docs/v3.5.4-plus-deep-analysis.md` — comprehensive v3.5.4 → v3.18 scope analysis
+- `docs/migration-v3.4-to-v3.5.md` — upgrade guide for existing v3.4 projects
+
+## Build + validate locally
 
 ```bash
-claude plugin install genorah@raphj-marketplace
-claude plugin install wavy-bavy@raphj-marketplace
+npm install
+npm run validate  # lint + self-audit + tests
 ```
