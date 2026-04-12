@@ -4,9 +4,9 @@ This file provides guidance to Claude Code when working with the Genorah plugin 
 
 ## Project Overview
 
-**Genorah v3.4.1** is a Claude Code plugin for premium frontend design — "Measurably Enforced Quality with Closed-Loop Refinement." It produces award-caliber websites (Awwwards SOTD 8.0+ baseline) through a pipeline of 21 specialized agents, machine-enforceable design identity, a 234-point weighted quality gate enforced via a 6-stage validation pipeline (DNA compliance → render → registry → consistency → design fidelity → full gate), and a Visual Companion for localhost delivery. v3.0 introduces closed-loop visual refiner, DNA drift detection (92% coverage hard gate), per-beat perf budgets, motion-health sub-gate, reference-diff-protocol (pixel-diff vs reference URL), AI variant tournament, section consistency auditor, live localhost dashboard, interactive click-to-refine companion, competitive benchmarking, smart intent router, self-audit, WebGPU/TSL frontier, Sanity + Payload CMS round-trip, Remotion section video, brand voice extractor, cognitive accessibility (CVD ΔE2000), and i18n-by-default. It is NOT a template generator -- every project gets a unique visual identity enforced through Design DNA, 19 Design Archetypes, Emotional Arc storytelling, and the Quality Gate. Framework-aware pipeline supports Next.js, Astro, and React/Vite with per-framework code generation. ~150 skills across 12 design domains.
+**Genorah v3.18.0-rc.1** is a Claude Code plugin for premium frontend design — "Measurably Enforced Quality with Closed-Loop Refinement." It produces award-caliber websites (Awwwards SOTD 8.0+ baseline) through a pipeline of 24 specialized agents, machine-enforceable design identity, a **two-axis 354-point quality gate** (Design Craft 234 + UX Integrity 120) enforced via a 6-stage validation pipeline plus 6 UX Integrity sub-gates and ~14 pipeline stages, and a Visual Companion + v2 Dashboard. Ships 54 commands, 252 skills, 8 MCP integrations, 33 Design Archetypes + formal mixing protocol, 10-track empirical research program, Context Fabric 8-layer retention (L1 scratchpad → L8 user memory), opt-in plugin telemetry, and end-to-end integrations including HubSpot deep, n8n workflow generation, full Supabase stack (Auth/Postgres/RLS/Storage/Realtime/Edge Functions/Vector), and comprehensive security/legal/a11y/i18n/testing/visual-refinement suites.
 
-This repository contains only markdown definitions and a plugin manifest -- there is no application code, build system, or test suite. Targets Next.js, Astro, React/Vite, Tauri, Electron, Swift/SwiftUI, Kotlin/Compose, React Native, Expo, and Flutter.
+This repository contains markdown skill/command/agent definitions, runtime script helpers, hooks, 2 MCP servers (3dsvg-export + meshy scaffold), and a test suite. Targets Next.js 16, Astro 6, SvelteKit 2, Nuxt 3, React/Vite 8, Tauri, Electron, Swift/SwiftUI 6, Kotlin/Compose Multiplatform 2.0, React Native, Expo SDK 52, and Flutter 3.24.
 
 ## Architecture
 
@@ -59,7 +59,13 @@ Five optional MCP servers declared in `.claude-plugin/.mcp.json`:
 
 All servers are optional. Commands gracefully degrade when servers are unavailable.
 
-## Commands (31)
+## Commands (54)
+
+Core pipeline: `/gen:start-project` → `/gen:align` → `/gen:discuss` → `/gen:plan` → `/gen:rehearse` → `/gen:build` → `/gen:audit` → `/gen:ux-audit` → `/gen:narrative-audit` → `/gen:regression` → `/gen:ship-check` → `/gen:export` → `/gen:postship`.
+
+v3.5.4+ adds: `/gen:assets`, `/gen:variant`, `/gen:synthetic-test`, `/gen:critic`, `/gen:trajectory`, `/gen:rehearse`, `/gen:regression`, `/gen:postship`, `/gen:recalibrate`, `/gen:research`, `/gen:deploy`, `/gen:api`, `/gen:db-init`, `/gen:mobile-test`, `/gen:mobile-preview`, `/gen:workflow`, `/gen:supabase`, `/gen:integrate`, `/gen:legal`, `/gen:telemetry`, `/gen:plugin-health`, `/gen:tests`, `/gen:security`, `/gen:tutorial`.
+
+Earlier (v3.x):
 
 | Command | Purpose |
 |---------|---------|
