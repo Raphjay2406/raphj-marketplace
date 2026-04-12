@@ -34,18 +34,38 @@ try {
 
   const metricsFile = join(planningDir, 'METRICS.md');
   const timestamp = new Date().toISOString();
+  const header = `# Build Metrics\n\n| Timestamp | Tool | Target | Status |\n|-----------|------|--------|--------|\n`;
 
-  // Create file with header if it doesn't exist
+  // Create file with header if it doesn't exist (atomic: check-then-write)
   if (!existsSync(metricsFile)) {
-    writeFileSync(metricsFile, `# Build Metrics\n\n| Timestamp | Tool | Target | Status |\n|-----------|------|--------|--------|\n`);
+    try {
+      writeFileSync(metricsFile, header, { flag: 'wx' }); // wx = fail if exists (race-safe)
+    } catch {
+      // Another process created it first — that's fine, proceed to append.
+    }
   }
 
   // Append row (escape pipe characters in target to prevent table corruption)
   const safeTarget = target.replace(/\|/g, '\\|');
-  appendFileSync(metricsFile, `| ${timestamp} | ${tool_name} | ${safeTarget} | OK |\n`);
+  try {
+    appendFileSync(metricsFile, `| ${timestamp} | ${tool_name} | ${safeTarget} | OK |\n`);
+  } catch (err) {
+    // Log append failure to .claude/hook-errors.log for diagnostics (silent to user)
+    try {
+      const errorLog = join(cwd, '.claude', 'hook-errors.log');
+      if (!existsSync(join(cwd, '.claude'))) mkdirSync(join(cwd, '.claude'), { recursive: true });
+      appendFileSync(errorLog, `[${timestamp}] post-tool-use append failed: ${err.message}\n`);
+    } catch { /* swallow — never crash hook */ }
+  }
 
   process.stdout.write('{}');
-} catch {
-  // Never crash — output empty response on error
+} catch (err) {
+  // Never crash — output empty response on error, log for diagnostics
+  try {
+    const errorLog = join(process.cwd(), '.claude', 'hook-errors.log');
+    const errDir = join(process.cwd(), '.claude');
+    if (!existsSync(errDir)) mkdirSync(errDir, { recursive: true });
+    appendFileSync(errorLog, `[${new Date().toISOString()}] post-tool-use fatal: ${err.message}\n`);
+  } catch { /* swallow */ }
   process.stdout.write('{}');
 }

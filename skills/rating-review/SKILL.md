@@ -1,3 +1,11 @@
+---
+name: "rating-review"
+description: "Star ratings, review forms, aggregate rating displays, review cards, and helpful vote patterns with DNA-themed styling and accessibility."
+tier: "domain"
+triggers: "rating, review, star rating, review form, testimonial, review cards, helpful votes, aggregate rating"
+version: "2.0.0"
+---
+
 # Rating & Review Systems
 
 Star ratings, review forms, aggregate rating displays, review cards, and helpful vote patterns.

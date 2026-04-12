@@ -4,7 +4,7 @@ This file provides guidance to Claude Code when working with the Genorah plugin 
 
 ## Project Overview
 
-**Genorah v2.8** is a Claude Code plugin for premium frontend design. It produces award-caliber websites (Awwwards SOTD 8.0+ baseline) through a pipeline of 19 specialized agents, machine-enforceable design identity, a 234-point weighted quality gate across 12 categories, 5 hard gates, and a Visual Companion for localhost delivery. It is NOT a template generator -- every project gets a unique visual identity enforced through Design DNA, 19 Design Archetypes, Emotional Arc storytelling, and the Quality Gate. Framework-aware pipeline supports Next.js, Astro, and React/Vite with per-framework code generation. Covers 12 design domains with ~115 skills.
+**Genorah v2.9** is a Claude Code plugin for premium frontend design. It produces award-caliber websites (Awwwards SOTD 8.0+ baseline) through a pipeline of 19 specialized agents, machine-enforceable design identity, a 234-point weighted quality gate across 12 categories, 5 hard gates, and a Visual Companion for localhost delivery. It is NOT a template generator -- every project gets a unique visual identity enforced through Design DNA, 19 Design Archetypes, Emotional Arc storytelling, and the Quality Gate. Framework-aware pipeline supports Next.js, Astro, and React/Vite with per-framework code generation. Covers 12 design domains with ~116 skills.
 
 This repository contains only markdown definitions and a plugin manifest -- there is no application code, build system, or test suite. Targets Next.js, Astro, React/Vite, Tauri, Electron, Swift/SwiftUI, Kotlin/Compose, React Native, Expo, and Flutter.
 
@@ -13,11 +13,11 @@ This repository contains only markdown definitions and a plugin manifest -- ther
 Three-tier system where commands are entry points, agents orchestrate work, and skills provide domain knowledge:
 
 ```
-commands/ (13 commands -- user-facing pipeline stages)
+commands/ (16 commands -- user-facing pipeline stages)
     | invoke
 agents/ (19 agents -- 7 pipeline + 6 specialists + 5 protocols + 1 figma)
     | reference
-skills/ (3-tier, 4-layer SKILL.md files -- ~115 modular knowledge bases)
+skills/ (3-tier, 4-layer SKILL.md files -- ~116 modular knowledge bases)
 ```
 
 **Plugin manifest:** `.claude-plugin/plugin.json`
@@ -56,7 +56,7 @@ Five optional MCP servers declared in `.claude-plugin/.mcp.json`:
 
 All servers are optional. Commands gracefully degrade when servers are unavailable.
 
-## Commands (13)
+## Commands (16)
 
 | Command | Purpose |
 |---------|---------|
@@ -73,6 +73,9 @@ All servers are optional. Commands gracefully degrade when servers are unavailab
 | `/gen:companion` | Launch/interact with Visual Companion on localhost |
 | `/gen:export` | Export deliverables, design tokens, vault format, and build artifacts |
 | `/gen:migrate` | Migrate legacy .planning/modulo/ projects to .planning/genorah/ |
+| `/gen:feedback` | Accept client/user feedback and route into Design DNA or quality loop |
+| `/gen:design-system` | Extract/sync component registry, design tokens, Figma integration |
+| `/gen:self-audit` | Self-heal audit — validates plugin consistency (versions, counts, frontmatter, mirror drift) |
 
 ## Skill Tiers
 

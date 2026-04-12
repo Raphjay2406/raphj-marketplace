@@ -11,7 +11,6 @@ import { readFileSync, existsSync, readdirSync, writeFileSync, mkdirSync } from 
 import { join, basename, dirname, resolve } from 'path';
 import { fileURLToPath } from 'url';
 import { createHash } from 'crypto';
-import { tmpdir } from 'os';
 
 const MAX_SKILLS = 3;
 const MAX_BYTES = 18000;
@@ -42,9 +41,10 @@ try {
     process.exit(0);
   }
 
-  // Session dedup: track injected skills per session
+  // Session dedup: track injected skills per session (project-local to survive
+  // OS temp-dir wipes on Windows between sessions — prevents wasted re-injection).
   const sessionHash = createHash('sha256').update(session_id || 'default').digest('hex').slice(0, 16);
-  const dedupDir = join(tmpdir(), 'genorah-hooks');
+  const dedupDir = join(process.cwd(), '.claude', 'genorah-dedup');
   const dedupFile = join(dedupDir, `session-${sessionHash}.json`);
 
   let injectedSkills = new Set();
