@@ -1,6 +1,6 @@
 ---
 name: polish-pass
-category: core
+tier: core
 description: "Defines the end-of-build polish protocol: universal micro-detail checklist, archetype-specific addenda with FORBIDDEN items, and creative license boundaries for the polisher agent."
 triggers: ["polish", "micro-details", "hover states", "textures", "finishing touches", "micro-interactions", "polish pass", "deep polish"]
 used_by: ["polisher", "quality-reviewer", "builder"]

@@ -1,6 +1,6 @@
 ---
 name: dna-drift-detection
-category: core
+tier: core
 description: "AST-level detection of off-DNA color/spacing/font literals in TSX, CSS, and Tailwind class strings. Coverage %, hard-gate at 92%, suggests nearest DNA token via Lab ΔE and L2 distance."
 triggers: ["DNA drift", "token coverage", "off-token", "hex literal", "arbitrary value", "design system enforcement"]
 used_by: ["builder", "quality-reviewer", "consistency-auditor", "polisher"]

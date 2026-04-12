@@ -1,6 +1,6 @@
 ---
 name: cms-sanity
-category: domain
+tier: domain
 description: "Sanity Studio v3 integration: schema generation from emotional-arc beats, DNA-themed Studio, GROQ query patterns, Visual Editing/Presentation tool wiring for Next.js + Astro."
 triggers: ["sanity", "sanity studio", "headless cms", "GROQ", "content lake", "visual editing", "presentation tool", "sanity client", "sanity schema"]
 used_by: ["content-specialist", "builder", "start-project"]

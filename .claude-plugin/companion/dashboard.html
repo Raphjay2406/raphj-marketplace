@@ -99,28 +99,47 @@ function render(state) {
     chips.appendChild(chip);
   }
 
-  // Waves (derived from MASTER-PLAN)
+  // Waves (derived from MASTER-PLAN) — textContent-safe
   const waves = document.getElementById('waves');
+  waves.replaceChildren();
   const waveMatches = [...(state.master_plan || '').matchAll(/wave[:\s]+(\d+)/gi)];
   const uniqWaves = [...new Set(waveMatches.map(m => m[1]))];
-  waves.innerHTML = uniqWaves.length
-    ? uniqWaves.map(n => `<div class="wave-pill">Wave ${n}</div>`).join('')
-    : '<div class="empty">no waves defined</div>';
+  if (!uniqWaves.length) {
+    const empty = document.createElement('div');
+    empty.className = 'empty';
+    empty.textContent = 'no waves defined';
+    waves.appendChild(empty);
+  } else {
+    for (const n of uniqWaves) {
+      const pill = document.createElement('div');
+      pill.className = 'wave-pill';
+      pill.textContent = `Wave ${n}`;
+      waves.appendChild(pill);
+    }
+  }
 
-  // Sections
+  // Sections — use textContent for all data fields (XSS-safe)
   const sec = document.getElementById('sections');
-  sec.innerHTML = (state.sections || []).length
-    ? state.sections.map(s => {
-        const score = s.score ?? '—';
-        const scoreClass = s.score == null ? '' : s.score >= 200 ? '' : s.score >= 170 ? 'low' : 'fail';
-        return `<div class="section-card">
-          <div class="beat">${s.beat || '—'}</div>
-          <div class="name">${s.name}</div>
-          <div class="score ${scoreClass}">${score}</div>
-          <div class="tier">${s.tier || s.status || 'pending'}</div>
-        </div>`;
-      }).join('')
-    : '<div class="empty">no sections yet — run /gen:plan</div>';
+  sec.replaceChildren();
+  if (!(state.sections || []).length) {
+    const empty = document.createElement('div');
+    empty.className = 'empty';
+    empty.textContent = 'no sections yet — run /gen:plan';
+    sec.appendChild(empty);
+  } else {
+    for (const s of state.sections) {
+      const score = s.score ?? '—';
+      const scoreClass = s.score == null ? '' : s.score >= 200 ? '' : s.score >= 170 ? 'low' : 'fail';
+      const card = document.createElement('div');
+      card.className = 'section-card';
+      const makeDiv = (cls, text) => { const d = document.createElement('div'); d.className = cls; d.textContent = text; return d; };
+      card.appendChild(makeDiv('beat', s.beat || '—'));
+      card.appendChild(makeDiv('name', s.name));
+      card.appendChild(makeDiv(`score ${scoreClass}`.trim(), String(score)));
+      card.appendChild(makeDiv('tier', s.tier || s.status || 'pending'));
+      sec.appendChild(card);
+    }
+  }
 
   // Action queue
   const banner = document.getElementById('queued-banner');

@@ -1,6 +1,6 @@
 ---
 name: competitive-benchmarking
-category: domain
+tier: domain
 description: "Per-archetype curated SOTD reference list + Playwright capture + vision LLM scoring against 234-pt gate. Generates BENCHMARKS.md + auto-injects per-section reference targets."
 triggers: ["benchmark", "competitive", "reference sites", "SOTD library", "award library", "gap targets"]
 used_by: ["start-project", "plan", "builder", "quality-reviewer"]

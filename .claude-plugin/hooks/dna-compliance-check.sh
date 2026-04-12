@@ -70,9 +70,9 @@ check_pattern '"Submit"' "Button text 'Submit' found — use outcome-driven copy
 check_pattern '"Learn More"' "Button text 'Learn More' found — use specific action copy"
 check_pattern '"Click Here"' "Button text 'Click Here' found — use descriptive action copy"
 
-# Layout-triggering animations
-check_pattern 'animate-\[.*width' "Animating width — use transform instead"
-check_pattern 'animate-\[.*height' "Animating height — use transform instead"
+# Layout-triggering animations (anchored to bracket close to avoid false positives on names containing 'width'/'height')
+check_pattern 'animate-\[[^]]*width\]' "Animating width — use transform instead"
+check_pattern 'animate-\[[^]]*height\]' "Animating height — use transform instead"
 
 # --- Project-Specific DNA Patterns (if DNA exists) ---
 

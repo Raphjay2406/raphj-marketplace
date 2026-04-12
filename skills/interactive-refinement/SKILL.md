@@ -1,6 +1,6 @@
 ---
 name: interactive-refinement
-category: core
+tier: core
 description: "Click-to-annotate refinement loop — companion captures element selector + user intent, queues a structured patch request for /gen:iterate to consume."
 triggers: ["iterate from queue", "refinement queue", "companion refinement", "click-to-fix", "interactive refinement"]
 used_by: ["visual-companion", "iterate", "builder"]

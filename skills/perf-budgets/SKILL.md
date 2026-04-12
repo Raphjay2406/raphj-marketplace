@@ -1,6 +1,6 @@
 ---
 name: perf-budgets
-category: core
+tier: core
 description: "Per-beat performance budgets (LCP/INP/CLS/section-JS/hero-image) enforced via Lighthouse CI and section-scoped measurement. Hard gate in /gen:audit, warning in /gen:build."
 triggers: ["perf budgets", "performance budgets", "lighthouse ci", "LCP", "INP", "CLS", "section budget", "bundle budget"]
 used_by: ["builder", "quality-reviewer", "polisher"]

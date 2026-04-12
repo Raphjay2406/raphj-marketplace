@@ -1,6 +1,6 @@
 ---
 name: quality-gate-protocol
-category: core
+tier: core
 description: "4-layer progressive enforcement (WHEN gates fire) combined with v3.0 6-stage validation pipeline (WHAT each gate checks). Severity tiers, tally management, user-checkpoint triggers, and named remediation owners per stage."
 triggers: ["quality gate", "enforcement", "severity", "tally", "checkpoint", "quality pipeline", "validation pipeline", "6-stage", "stage 1", "stage 2", "stage 3", "stage 4", "stage 5", "stage 6"]
 used_by: ["orchestrator", "quality-reviewer", "creative-director", "visual-refiner", "polisher", "builder", "consistency-auditor"]

@@ -1,6 +1,6 @@
 ---
 name: context-anchor-v2
-category: core
+tier: core
 description: "Lightweight DNA-token refresh injected by pre-tool-use hook when recent agent outputs lack DNA token references. Prevents mid-build drift without full context reinjection."
 triggers: ["DNA drift", "context anchor", "pre-tool-use inject", "DNA refresh"]
 used_by: ["pre-tool-use hook", "post-tool-use hook"]

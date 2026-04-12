@@ -1,11 +1,9 @@
 ---
 name: consistency-auditor
-role: specialist
 description: "Cross-section drift detector. Runs in parallel with builders during Wave 2+. Emits CONSISTENCY-AUDIT.md with ranked fix proposals. Blocks wave-completion on CRITICAL findings."
-tools: [Read, Grep, Glob, Write, Edit, Bash]
-model: sonnet-4-6
-context_budget: 80000
-version: 3.0.0
+tools: Read, Grep, Glob, Write, Edit, Bash
+model: inherit
+maxTurns: 40
 ---
 
 # Consistency Auditor Agent

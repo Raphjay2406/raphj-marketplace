@@ -1,6 +1,6 @@
 ---
 name: gltf-optimization
-category: utility
+tier: utility
 description: "GLTF asset pipeline: Draco geometry compression, Meshopt, KTX2/BasisU textures, LOD generation, budget enforcement (<2MB hero models, <300MB GPU memory). For 3d-webgl sections with heavy assets."
 triggers: ["gltf", "glb", "3d model", "draco", "meshopt", "ktx2", "basis", "3d optimization", "model compression", "texture compression", "LOD"]
 used_by: ["3d-specialist", "builder", "quality-reviewer"]

@@ -1,13 +1,9 @@
 ---
 name: visual-refiner
-role: pipeline
 description: "Closed-loop section refinement agent. Builds → screenshots → mini-evals → diffs against target tier → emits surgical fix instructions → re-builds. Max 3 iterations, 2min/loop, hard token budget. Runs automatically in /gen:build after quality-reviewer, before polisher."
-tools: [Read, Edit, Write, Grep, Glob, Bash, mcp__plugin_playwright_playwright__browser_navigate, mcp__plugin_playwright_playwright__browser_take_screenshot, mcp__plugin_playwright_playwright__browser_resize, mcp__plugin_playwright_playwright__browser_evaluate, mcp__plugin_playwright_playwright__browser_console_messages]
-context_budget: 40000
-model: sonnet-4-6
-max_iterations: 3
-max_seconds_per_iteration: 120
-version: 3.0.0
+tools: Read, Edit, Write, Grep, Glob, Bash, mcp__plugin_playwright_playwright__browser_navigate, mcp__plugin_playwright_playwright__browser_take_screenshot, mcp__plugin_playwright_playwright__browser_resize, mcp__plugin_playwright_playwright__browser_evaluate, mcp__plugin_playwright_playwright__browser_console_messages
+model: inherit
+maxTurns: 30
 ---
 
 # Visual Refiner Agent

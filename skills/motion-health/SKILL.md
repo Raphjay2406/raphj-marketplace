@@ -1,6 +1,6 @@
 ---
 name: motion-health
-category: core
+tier: core
 description: "Motion-quality sub-gate inside Motion & Interaction category. Measures INP regression, GPU layer count, concurrent animations, reduced-motion parity, scroll-timeline fallback, motion conflicts. Fail caps parent category at 50% — blocks SOTD-Ready tier."
 triggers: ["motion health", "animation performance", "INP regression", "reduced-motion", "GPU layers", "scroll-driven fallback", "motion conflicts"]
 used_by: ["quality-reviewer", "polisher", "visual-refiner"]

@@ -1,6 +1,6 @@
 ---
 name: model-cascade
-category: core
+tier: core
 description: "Tiered model assignment per beat type and agent role. Haiku for scaffold, Sonnet for hero work, Opus for judging. Advisory-only in v3.0 (Claude Code can't switch models mid-session); emits recommended-model hints + cost telemetry."
 triggers: ["model selection", "cost optimization", "cascade", "escalation", "model tier", "recommended model"]
 used_by: ["orchestrator", "builder", "all commands"]

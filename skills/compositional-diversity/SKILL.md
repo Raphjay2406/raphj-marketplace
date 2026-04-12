@@ -1,6 +1,6 @@
 ---
 name: compositional-diversity
-category: core
+tier: core
 description: "Enforces visual variety across page sections through an 18-pattern layout taxonomy with adjacency rules. Pre-assigns layouts in MASTER-PLAN.md during planning to prevent repetition structurally."
 triggers: ["layout", "diversity", "composition", "adjacent", "repetition", "section layout", "master plan"]
 used_by: ["planner", "quality-reviewer", "orchestrator"]

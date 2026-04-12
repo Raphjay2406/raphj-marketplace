@@ -1,6 +1,6 @@
 ---
 name: reference-diff-protocol
-category: core
+tier: core
 description: "Perceptual pixel-diff between built section and reference URL declared in PLAN.md. Per-beat SSIM thresholds, Playwright capture, pHash pre-filter, fail-soft when no reference. Produces annotated diff PNG plus score."
 triggers: ["reference diff", "pixel diff", "SSIM", "visual fidelity", "design fidelity", "reference comparison", "ref screenshot"]
 used_by: ["builder", "quality-reviewer", "visual-refiner"]

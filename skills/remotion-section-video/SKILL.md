@@ -1,6 +1,6 @@
 ---
 name: remotion-section-video
-category: domain
+tier: domain
 description: "Programmatic section-video generation via Remotion. 5 DNA-parameterized templates (kinetic-type, particle-field, shape-morph, color-field, camera-fly), dual-encode AVIF/MP4/WebM output, LCP-safe lazy autoplay. Opt-in via PLAN.md flag or /gen:video command."
 triggers: ["section video", "hero video", "background video", "remotion section", "programmatic video background", "kinetic background", "/gen:video"]
 used_by: ["builder", "3d-specialist"]

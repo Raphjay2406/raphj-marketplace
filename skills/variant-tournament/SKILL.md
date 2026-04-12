@@ -1,6 +1,6 @@
 ---
 name: variant-tournament
-category: domain
+tier: domain
 description: "Blind-ranked AI variant competition for high-stakes beats (HOOK/PEAK). N parallel builds, vision-judged, winner-commits."
 triggers: ["tournament", "variant", "A/B build", "hero variants", "peak variants", "blind ranking"]
 used_by: ["orchestrator", "builder"]

@@ -1,6 +1,6 @@
 ---
 name: cms-payload
-category: domain
+tier: domain
 description: "Payload 3 integration (Next-native): collection generators from DNA + emotional arc, Lexical editor with DNA tokens, Local API for build-time fetch, access control, Postgres-backed."
 triggers: ["payload", "payload cms", "payload 3", "headless cms", "lexical editor", "postgres cms", "payload collections"]
 used_by: ["content-specialist", "builder", "start-project"]

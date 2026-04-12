@@ -1,6 +1,6 @@
 ---
 name: brand-voice-extraction
-category: domain
+tier: domain
 description: "Extract brand voice from competitor + client URLs via Playwright. 5-axis analysis (formality, warmth, density, jargon, signature n-grams). Produces VOICE-PROFILE.md consumed by copy-intelligence to kill generic SaaS voice."
 triggers: ["brand voice", "voice extraction", "competitor copy analysis", "tone analysis", "copy fingerprint", "voice profile", "voice mining"]
 used_by: ["content-specialist", "copy-intelligence", "start-project", "discuss"]

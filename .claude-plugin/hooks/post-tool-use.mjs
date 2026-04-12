@@ -9,6 +9,17 @@
 import { readFileSync, appendFileSync, existsSync, mkdirSync, writeFileSync } from 'fs';
 import { join } from 'path';
 
+// Hoisted error-log helper: ensures .claude/ exists once, reused from both
+// the normal flow and fatal-catch. Swallows its own errors (never crashes hook).
+function logHookError(cwd, message) {
+  try {
+    const claudeDir = join(cwd, '.claude');
+    if (!existsSync(claudeDir)) mkdirSync(claudeDir, { recursive: true });
+    appendFileSync(join(claudeDir, 'hook-errors.log'),
+      `[${new Date().toISOString()}] post-tool-use: ${message}\n`);
+  } catch { /* swallow */ }
+}
+
 try {
   const input = JSON.parse(readFileSync(0, 'utf8'));
   const { tool_name, tool_input } = input;
@@ -50,22 +61,11 @@ try {
   try {
     appendFileSync(metricsFile, `| ${timestamp} | ${tool_name} | ${safeTarget} | OK |\n`);
   } catch (err) {
-    // Log append failure to .claude/hook-errors.log for diagnostics (silent to user)
-    try {
-      const errorLog = join(cwd, '.claude', 'hook-errors.log');
-      if (!existsSync(join(cwd, '.claude'))) mkdirSync(join(cwd, '.claude'), { recursive: true });
-      appendFileSync(errorLog, `[${timestamp}] post-tool-use append failed: ${err.message}\n`);
-    } catch { /* swallow — never crash hook */ }
+    logHookError(cwd, `append failed: ${err.message}`);
   }
 
   process.stdout.write('{}');
 } catch (err) {
-  // Never crash — output empty response on error, log for diagnostics
-  try {
-    const errorLog = join(process.cwd(), '.claude', 'hook-errors.log');
-    const errDir = join(process.cwd(), '.claude');
-    if (!existsSync(errDir)) mkdirSync(errDir, { recursive: true });
-    appendFileSync(errorLog, `[${new Date().toISOString()}] post-tool-use fatal: ${err.message}\n`);
-  } catch { /* swallow */ }
+  logHookError(process.cwd(), `fatal: ${err.message}`);
   process.stdout.write('{}');
 }

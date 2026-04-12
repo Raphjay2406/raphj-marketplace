@@ -72,10 +72,22 @@ function debounce(fn, ms) {
   return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
 }
 
+let lastSnapshotJson = '';
 function broadcast() {
-  const data = `data: ${JSON.stringify(snapshot())}\n\n`;
+  const json = JSON.stringify(snapshot());
+  if (json === lastSnapshotJson) return; // skip no-op broadcasts
+  lastSnapshotJson = json;
+  const data = `data: ${json}\n\n`;
   for (const c of clients) {
-    try { c.write(data); } catch { clients.delete(c); }
+    try {
+      if (!c.write(data)) {
+        // Backpressure: drain buffer full — drop client rather than queueing
+        clients.delete(c);
+        try { c.end(); } catch {}
+      }
+    } catch {
+      clients.delete(c);
+    }
   }
 }
 
@@ -138,14 +150,15 @@ const server = http.createServer((req, res) => {
 
 // File watching with polling fallback for Windows
 const onChange = debounce(broadcast, 250);
+let watchWorking = false;
 try {
   fs.watch(ROOT, { recursive: true }, onChange);
+  watchWorking = true;
 } catch {
-  // recursive watch unsupported — use polling
-  setInterval(broadcast, 5000);
+  // recursive watch unsupported — pure polling fallback below
 }
-// Always also poll as fallback (fs.watch is flaky on Windows)
-setInterval(broadcast, 5000);
+// Polling fallback (interval longer when watch works to avoid doubled traffic)
+setInterval(broadcast, watchWorking ? 15000 : 5000);
 
 function listen(idx = 0) {
   if (idx >= PORT_RANGE.length) {

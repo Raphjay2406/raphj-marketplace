@@ -1,6 +1,6 @@
 ---
 name: closed-loop-iteration
-category: core
+tier: core
 description: "Bounded iteration protocol for visual-refiner agent. Mini-eval scoring (30-pt subset), targeted-diff-to-fix-instruction translation, bail conditions, refinement log format."
 triggers: ["closed loop", "visual refiner", "iterate", "mini-eval", "refinement", "self-correcting build"]
 used_by: ["visual-refiner", "quality-reviewer", "orchestrator"]
@@ -82,6 +82,17 @@ Deterministic mapping from subscore deficit to edit instruction:
 | Layout:alignment < 7 | `enforce 8pt grid: round all gap/padding values to 8/16/24/32/48` |
 
 Each fix is surgical — one attribute or small block. No full-component rewrites.
+
+### State reset between iterations (REQUIRED)
+
+Each iteration must start from on-disk state, not in-memory cache. Before iteration N+1:
+
+1. **Re-read the section files from disk** — not from the agent's prior turn cache. TSX/CSS may have been edited by hooks (dna-compliance auto-fix, polisher side-effects).
+2. **Discard prior mini-eval subscores** — the score applies to the previous render; last iteration's edits may have moved scores in both directions.
+3. **Re-capture screenshots** — do not reuse the previous iteration's PNGs.
+4. **Treat the previous REFINEMENT-LOG.md tail as history only** — don't carry forward "deficits to fix" from iteration N-1 if they're no longer present.
+
+This prevents oscillation (re-applying the same fix because stale state says it's needed) and divergence (fixing a bug that was already resolved by hook-driven auto-fix).
 
 ### Bail conditions
 

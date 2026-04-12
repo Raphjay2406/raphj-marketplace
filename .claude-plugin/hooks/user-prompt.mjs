@@ -28,13 +28,16 @@ const STALE_REFS = [
 ];
 
 // ── Lost-user signals ──────────────────────────────────────────────
+// Tightened v3.0.1: single words like "help" false-triggered on docs questions.
+// Now require combined lost-signal phrasing OR explicit "stuck" / "lost" keywords.
 const LOST_SIGNALS = [
-  /what\s*now/i,
-  /what\s*next/i,
-  /what\s*should\s*i/i,
+  /what\s*now\b/i,
+  /what\s*(should\s*i|do\s*i)\s*(do|run)/i,
+  /what'?s?\s*next/i,
   /where\s*am\s*i/i,
-  /\bhelp\b/i,
-  /\bstuck\b/i,
+  /\bi['\s]*m\s*(stuck|lost|confused)\b/i,
+  /\b(stuck|lost)\s*(here|now|on\s*this)\b/i,
+  /\bhelp\s*me\s*(out|here|with\s*(this|what|where))\b/i,
 ];
 
 // ── v3.0 Smart Router: intent → /gen:* ─────────────────────────────

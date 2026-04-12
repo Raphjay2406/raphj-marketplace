@@ -1,6 +1,6 @@
 ---
 name: cognitive-accessibility
-category: core
+tier: core
 description: "Beyond-WCAG cognitive load: reading grade per section, sentence variance, decision density (≤5 CTAs/viewport), focus-trap integrity, CVD ΔE2000 (protanopia/deuteranopia/tritanopia), motion-sickness flags (parallax/rotation thresholds)."
 triggers: ["cognitive load", "reading grade", "flesch", "color blind", "CVD", "deuteranopia", "protanopia", "tritanopia", "motion sickness", "vestibular", "decision density", "focus trap"]
 used_by: ["quality-reviewer", "content-specialist", "polisher"]
