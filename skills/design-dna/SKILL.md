@@ -601,3 +601,50 @@ Motion tokens provide the **values**; animation libraries provide the **implemen
 | Tension plan | 1-3 techniques | technique + target beat + approach | HARD -- reject if zero |
 | Emotional arc | Valid beat sequence | Beat names in order | HARD -- reject if invalid sequence |
 | Tailwind @theme | Complete block | `@theme { --color-*: initial; ... }` | HARD -- reject if @theme missing |
+
+---
+
+## v3.3 Addendum: UI UX PRO MAX Seed Palette Selection Algorithm (H7 fix)
+
+When `uipro_seed_palette: true` is set in PROJECT.md (v3.1 discovery question), the creative-director agent picks a starting palette from `skills/design-dna/seeds/uipro-palettes.json` via the following deterministic algorithm:
+
+### Selection ranking
+
+For each of the 24 seed palettes, compute a match score:
+
+```
+match_score = archetype_color_match * 0.45
+            + industry_match         * 0.35
+            + mood_match             * 0.20
+
+archetype_color_match:
+  - ΔE2000(archetype_primary_hue, palette.primary) normalized to 0-1 (1 = identical)
+industry_match:
+  - 1.0 if palette.industries includes project_industry
+  - 0.6 if any adjacent industry (see adjacency map in PROJECT.md)
+  - 0.0 otherwise
+mood_match:
+  - 1.0 if palette.mood matches archetype_mood_keyword
+  - 0.5 if adjacent mood
+  - 0.0 otherwise
+```
+
+Top-scoring palette is the **proposal** (not a lock). DNA generation proceeds:
+
+1. If `match_score ≥ 0.75`, adopt the palette; creative-director fine-tunes expressive tokens (glow, signature) from archetype.
+2. If `0.50 ≤ match_score < 0.75`, surface top-3 palettes as options — user picks or skips to live generation.
+3. If `match_score < 0.50` for all seeds, skip seeds entirely → live palette generation from archetype + industry.
+
+### Archetype hard-overrides
+
+Certain archetype constraints override seeds regardless of match score:
+- **Brutalist** forbids pastels → any seed with ≥1 pastel token disqualified (match_score = 0).
+- **Japanese Minimal** forbids >3 hues → any seed with broader hue range disqualified.
+- **Pixel-Art** limited to PICO-8-adjacent palettes → typically no seed match, always go live.
+
+Archetype forbidden_patterns list (from `design-archetypes`) must be checked BEFORE selection, not after.
+
+### Attribution
+
+Generated `DESIGN-DNA.md` must include `palette_source: "uipro-palette-{id} (MIT)"` when seed used, or `palette_source: "live-generated"` otherwise.
+

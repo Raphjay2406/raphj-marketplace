@@ -676,3 +676,51 @@ function useOTAUpdates() {
 | SplashScreen.preventAutoHideAsync | 1 | 1 | call at module scope | HARD -- prevent splash flash |
 | expo-font loading | - | - | before splash hide | HARD -- fonts must load before UI renders |
 | app.config.ts over app.json | - | - | required | SOFT -- use dynamic config for environment vars |
+
+
+---
+
+## v3.3 Addendum: Expo SDK 52 + Expo Router v4 (2024-11)
+
+### Expo Router v4 (stable in SDK 52)
+
+- **Typed routes** — `expo-router/types` generates route types; compile-time path safety
+- **Stack.Protected** — declarative auth gating
+- **Server APIs** — full Node server routes in `app/api/*+api.ts`, deployable to EAS Hosting
+
+```tsx
+// app/api/hello+api.ts
+export async function GET(request: Request) {
+  return Response.json({ hello: 'world' });
+}
+```
+
+### Expo SDK 52
+
+- **Precompiled React Native** — 3-10× faster clean builds (release mode too)
+- **New Architecture (Fabric + TurboModules) ON BY DEFAULT** for new projects
+- **React 18.3 + Hermes** default
+- **expo-video stable** — replaces expo-av (PiP, AirPlay, subtitles, DRM)
+
+### EAS Hosting
+
+```bash
+eas init
+eas deploy   # app/api/* + static assets
+```
+
+Managed serverless for Expo Router server functions — no separate Vercel/Cloudflare setup needed.
+
+### DNA tokens (NativeWind 4.x + vars)
+
+```tsx
+import { vars } from 'nativewind';
+const dnaTokens = vars({ '--dna-primary': '#6366f1', '--dna-bg': '#0a0a0b' });
+<Stack style={dnaTokens}>…</Stack>
+```
+
+### Deprecated
+
+- Classic Updates → EAS Update only
+- expo-av for video → expo-video
+- Default Bridge → deprecated SDK 54+

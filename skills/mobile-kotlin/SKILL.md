@@ -755,3 +755,47 @@ dependencies {
 | Version catalog | - | - | libs.versions.toml | SOFT -- use Gradle version catalogs over hardcoded versions |
 | Dynamic color support | - | - | API 31+ check | SOFT -- support Material You on compatible devices |
 | Compose Compiler metrics | - | - | verified | SOFT -- check for non-skippable composables |
+
+
+---
+
+## v3.3 Addendum: Compose Multiplatform 2.0 + Jetpack Compose 1.7+ (2024-10)
+
+### Compose Multiplatform 2.0
+
+Share Compose UI across Android + iOS + Desktop + Web (Wasm). For Genorah projects targeting multiple mobile platforms, **CMP is now the default recommendation** over native-per-platform.
+
+```kotlin
+// commonMain/App.kt
+@Composable
+fun App() {
+    MaterialTheme {
+        Greeting()  // renders identically on Android + iOS + Desktop
+    }
+}
+```
+
+### Jetpack Compose 1.7+ features
+
+- **Shared-element transitions** (SharedTransitionScope + sharedElement/sharedBounds) — maps to cross-doc view-transitions idiom
+- **Pull-to-refresh** stable in material3
+- **Predictive back** (BackHandler + animateContentSize)
+- **Composable invalidation lift** — less recomposition noise
+
+### Material You + DNA tokens
+
+```kotlin
+val DnaColorScheme = lightColorScheme(
+    primary = Color(0xFF6366F1),       // DNA primary
+    background = Color(0xFF0A0A0B),    // DNA bg
+    surface = Color(0xFF141418),       // DNA surface
+)
+
+MaterialTheme(colorScheme = DnaColorScheme) { /* ... */ }
+```
+
+**Dynamic color (dynamicLightColorScheme(ctx)) is OPT-IN** for archetype-locked designs — DNA-fixed palette should override user wallpaper.
+
+### Gradle version catalog (2025 standard)
+
+Use `libs.versions.toml` centrally; avoid version-literal sprawl across modules.

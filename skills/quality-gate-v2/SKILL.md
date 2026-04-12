@@ -419,3 +419,37 @@ Final Score: 204.4 -> SOTD-Ready tier
 | hard_gates_passed | 4 | 4 | count | HARD -- all 4 must pass before scoring |
 | per_category_minimum | 8 | - | raw points | SOFT -- any category below 8/18 is a red flag |
 | creative_courage_minimum | 10 | - | raw points | HARD -- below 10/18 is not award-caliber |
+
+---
+
+## v3.3 Addendum: Sub-Gate Integration (H5 fix)
+
+The 234-point total is preserved, but four v3.0/3.1 sub-gates cascade into their parent categories. When a sub-gate fails, its parent category score is multiplied by a cap factor BEFORE weighted summation:
+
+| Sub-gate | Parent category | Cap on fail | Source skill |
+|---|---|---|---|
+| Motion Health (INP regression, RM parity, GPU layers) | Motion & Interaction | × 0.50 | `motion-health` |
+| DNA Drift coverage (<92% hard gate) | Color System + Typography (both) | × 0.60 each | `dna-drift-detection` |
+| Perf Budget (LCP/INP/CLS/bundle over beat-budget) | Performance | × 0.50, tier capped at Strong (199) | `perf-budgets` |
+| Reference Diff Fidelity (SSIM < beat threshold) | Creative Courage + Layout (both) | × 0.70 each (signals archetype drift) | `reference-diff-protocol` |
+
+### Cascade math example
+
+Section with raw scores:
+- Motion & Interaction: 20/22 (weighted 1.1× = 22.0) — but motion-health score 9/20 = FAIL → category × 0.5 = 11.0
+- Color System: 22/24 (weighted 1.2× = 26.4) — but DNA coverage 88% = FAIL → category × 0.6 = 15.8
+- All other categories pass normally.
+
+Final weighted total reflects the cascade. Per-section SUMMARY.md must display BOTH the raw category score AND the effective score after cap, so reviewers see what sub-gate triggered the reduction.
+
+### Reviewer responsibility
+
+When running `/gen:audit`, quality-reviewer agent MUST:
+1. Compute raw per-category scores first.
+2. Check each sub-gate independently.
+3. Apply cap multipliers for any failing sub-gate to its parent category.
+4. Report in audit output: `Category: raw / effective / cap-reason (if triggered)`.
+5. If perf-budgets fails → hard cap tier at Strong (199) regardless of other scores.
+
+This makes sub-gate wiring auditable, not implicit.
+

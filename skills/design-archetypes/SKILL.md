@@ -1262,3 +1262,59 @@ Builders read the full archetype block from this skill for technique details. Th
 
 **What goes wrong:** Defaulting to Neo-Corporate (or whatever feels safe) for every project. The result is a portfolio of identical-looking sites. Genorah exists for DISTINCTIVE output.
 **Instead:** Match archetype to project personality using the selection guide. Push clients beyond their comfort zone. A bakery website should feel warm and artisanal, not like a SaaS dashboard. When in doubt, present the primary AND secondary recommendations from the selection guide.
+
+---
+
+## v3.3 Addendum: Archetype Specificity — Testable Hard Gate (C2 fix)
+
+Hard Gate #5 ("Archetype Specificity: section could NOT exist with a different archetype") was previously subjective. v3.3 converts it to a testable rule.
+
+### Testable rule
+
+A section PASSES Archetype Specificity when ALL three conditions hold:
+
+1. **Mandatory-technique count ≥ 3 of 5** — section implements at least 3 of the archetype's 5 mandatory techniques (from the archetype's definition).
+2. **Forbidden-pattern count = 0** — section contains ZERO items from the archetype's forbidden-patterns list.
+3. **Signature OR tension zone ≥ 1** — section includes either the archetype's signature element OR at least one of its 3 tension zones.
+
+### Verification mechanism
+
+For each archetype, maintain a `testable_markers` block in its definition:
+
+```yaml
+archetype: Claymorphism
+mandatory_techniques_markers:
+  - grep: 'rounded-(2xl|3xl|4xl|full)'           # chunky radii
+  - grep: 'shadow-\[.*inset.*\]'                # inner highlight shadow
+  - grep: 'hover:rotate-[xy]'                     # 3D rotate-hover
+  - grep: '(illustrat|mascot|cartoon)'            # illustrated iconography
+  - grep: 'blob|pastel|soft-pink|warm-cream'      # palette signals
+forbidden_markers:
+  - grep: '\brounded-none\b'
+  - grep: 'border-radius:\s*0\b'
+  - grep: 'brutal|sharp|hard-edge'
+signature_marker:
+  - grep: 'layer-shadow|ambient.*glow|inner-ring'
+```
+
+Quality-reviewer agent greps the section's TSX/CSS:
+- Counts distinct mandatory_markers matched → must be ≥ 3
+- Counts forbidden_markers matched → must be 0
+- Verifies signature_marker or any tension_zone marker → must be ≥ 1
+
+Gate result is binary: PASS or FAIL with specific missing/violating markers listed.
+
+### Applied to 25 archetypes
+
+Each archetype MUST define `testable_markers` before v3.3 GA. Current state: 6 v3.1 archetypes (Claymorphism, Neumorphism, Y2K, Cyberpunk-HUD, Spatial-VisionOS, Pixel-Art) need markers added; 19 original archetypes get markers in v3.3.1 as a batch.
+
+Where the grep-based marker is insufficient (e.g., "spacing feels restrained" for Japanese Minimal), augment with an AST-checkable metric: count of `p-\d+` + `gap-\d+` class usage, mean value ≥ threshold.
+
+### Builder workflow impact
+
+Builders receive the archetype's `testable_markers` block alongside the existing mandatory/forbidden/signature/tension-zones guidance. They must implement the section in a way that at least 3 mandatory markers grep-match AFTER the file is written. Self-audit during Stage 6 validates.
+
+### Anti-pattern
+
+Don't treat the markers as a sufficient target ("write code that matches 3 greps and nothing else"). Markers are the FLOOR — the archetype's prose guidance remains the ceiling. A Claymorphism section that passes 3 grep markers but has no real tactile feel still fails the creative review even if it passes the hard gate.
+

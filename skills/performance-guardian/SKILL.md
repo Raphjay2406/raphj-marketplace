@@ -450,3 +450,36 @@ if (process.env.NODE_ENV === 'development') {
 | Lighthouse Performance | 90 | — | score | SOFT -- warn if below |
 | backdrop-blur elements | — | 3 | count | SOFT -- warn if exceeded per viewport |
 
+
+---
+
+## v3.3 Addendum: Performance-Motion Skill Cluster Clarification (H3)
+
+Genorah has 5 performance-adjacent skills that previously overlapped. v3.3 clarifies boundaries:
+
+| Skill | Role | When it fires |
+|---|---|---|
+| `perf-budgets` (core, HARD gate) | Per-beat LCP/INP/CLS/JS-bytes thresholds | `/gen:audit` gate + `/gen:build` warning |
+| `performance-guardian` (this skill) | Non-animation web perf playbook — images, fonts, cache, bundle, CWV | General-purpose runtime perf review |
+| `performance-animation` | Animation-specific perf (GPU layers, compositor thread) | Motion-heavy sections |
+| `motion-health` (core, SUB-GATE) | Motion-SAFETY: INP regression, RM parity, concurrent animations | Stage 6 of validation pipeline |
+| `performance-patterns` | General CWV optimization recipes | Implementation reference |
+
+### Precedence
+
+When guidance conflicts, follow:
+1. **perf-budgets** — hard gates always win
+2. **motion-health** — sub-gate for motion safety
+3. **performance-animation** — motion-specific tactics
+4. **performance-guardian** (this) — general perf playbook
+5. **performance-patterns** — implementation reference
+
+### Single source of truth per domain
+
+- **Animation perf numbers** → `motion-health` (INP delta, layer count, concurrency)
+- **Static asset numbers** → `perf-budgets` (LCP, bundle bytes, hero img weight)
+- **Optimization recipes** → `performance-patterns`
+- **Framework-specific perf** → respective framework skill (nextjs-patterns, react-vite-patterns)
+- **CWV runtime tuning** → this skill (performance-guardian)
+
+Cross-reference but never duplicate.
