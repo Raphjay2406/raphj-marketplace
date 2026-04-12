@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "version": "1.0.0",
-  "purpose": "Machine-checkable regex markers converting Hard Gate #5 (Archetype Specificity) from subjective to testable. Each archetype defines mandatory/forbidden/signature greps. Quality-reviewer runs grep per archetype against built section TSX; if any mandatory missing or any forbidden present, archetype-specificity gate FAILS.",
+  "version": "1.1.0",
+  "purpose": "Machine-checkable regex markers converting Hard Gate #5 (Archetype Specificity) from subjective to testable. v3.5.5 completes rollout to all 25 archetypes.",
   "enforcement": {
     "stage": "quality-gate stage 5 (design fidelity)",
     "blocker": true,
@@ -74,14 +74,272 @@
         "text-(pink|fuchsia|purple)-[4-9]00"
       ],
       "signature": ["grid-cols-12|subgrid|grid-template-columns:\\s*subgrid"]
+    },
+    "organic": {
+      "mandatory": [
+        "rounded-(2xl|3xl|full)|border-radius:\\s*(2[4-9]|[3-9][0-9])",
+        "bg-(amber|emerald|stone|rose)-[345][0-9]{2}",
+        "blob|clip-path:\\s*polygon"
+      ],
+      "forbidden": [
+        "border-[4-9]|font-mono",
+        "bg-(black|zinc-900)\\b",
+        "grid-cols-(10|11|12)"
+      ],
+      "signature": ["animate-(bounce|wiggle|float)|transform:\\s*scale\\(1\\.0[5-9]"]
+    },
+    "retro-future": {
+      "mandatory": [
+        "font-(mono|display)\\b|font-family:\\s*['\"]?(VT323|Press Start|Orbitron|Audiowide)",
+        "bg-gradient-to-(tr|br).*from-(fuchsia|pink|cyan|violet)",
+        "border-(fuchsia|pink|cyan)-"
+      ],
+      "forbidden": [
+        "font-serif",
+        "rounded-(2xl|3xl|full)",
+        "bg-(white|stone|amber)\\b"
+      ],
+      "signature": ["text-shadow:.*neon|drop-shadow.*pink|drop-shadow.*cyan|glow"]
+    },
+    "luxury": {
+      "mandatory": [
+        "font-serif|font-family:\\s*['\"]?(Didot|Bodoni|Ivypresto|Canela|GT Super)",
+        "bg-(stone|neutral|amber)-[089][0-9]{2}|bg-white|bg-black",
+        "tracking-(wide|widest)|letter-spacing:\\s*0\\.[0-9]em"
+      ],
+      "forbidden": [
+        "bg-gradient-to-r.*from-(pink|cyan|lime|fuchsia)",
+        "animate-(bounce|wiggle|spin)",
+        "font-mono|rounded-(full|3xl)"
+      ],
+      "signature": ["uppercase\\s+tracking-widest\\s+text-(xs|sm)"]
+    },
+    "playful": {
+      "mandatory": [
+        "rounded-(xl|2xl|3xl)",
+        "bg-(yellow|pink|sky|emerald|violet)-[345][0-9]{2}",
+        "animate-(bounce|wiggle|pulse)|transition-transform"
+      ],
+      "forbidden": [
+        "font-serif|font-mono",
+        "bg-(black|zinc-900|stone-900)",
+        "tracking-widest"
+      ],
+      "signature": ["hover:scale-1[01][0-9]|hover:rotate-[1-9]"]
+    },
+    "data-dense": {
+      "mandatory": [
+        "grid-cols-(8|12|16)|grid-template-columns",
+        "font-mono|font-family:\\s*['\"]?(JetBrains|IBM Plex Mono|Fira Code)",
+        "text-(xs|sm)|border-(zinc|neutral|slate)"
+      ],
+      "forbidden": [
+        "font-serif|leading-loose",
+        "rounded-(2xl|3xl|full)",
+        "bg-gradient-to-"
+      ],
+      "signature": ["tabular-nums|font-variant-numeric:\\s*tabular"]
+    },
+    "japanese-minimal": {
+      "mandatory": [
+        "text-(lg|xl|2xl).*leading-(loose|relaxed)",
+        "bg-(white|stone-50|neutral-50)",
+        "space-y-(12|16|20|24)|gap-(12|16|20)"
+      ],
+      "forbidden": [
+        "bg-gradient|animate-bounce",
+        "border-[4-9]|shadow-2xl",
+        "grid-cols-(10|11|12)"
+      ],
+      "signature": ["writing-mode:\\s*vertical|text-orientation|break-keep"]
+    },
+    "glassmorphism": {
+      "mandatory": [
+        "backdrop-blur-(md|lg|xl|2xl)|backdrop-filter:\\s*blur",
+        "bg-white/[12][0-9]|bg-black/[12][0-9]|rgba\\(.*,\\s*0\\.[12][0-9]",
+        "border-white/[12][0-9]|border-(neutral|zinc)-200/[0-9]"
+      ],
+      "forbidden": [
+        "bg-opacity-100|backdrop-blur-none",
+        "border-[4-9]",
+        "shadow-none"
+      ],
+      "signature": ["backdrop-saturate|saturate-1[5-9]0"]
+    },
+    "neon-noir": {
+      "mandatory": [
+        "bg-(black|zinc-950|slate-950)",
+        "text-(cyan|fuchsia|emerald)-[34][0-9]{2}",
+        "drop-shadow.*neon|shadow-(cyan|fuchsia)|glow"
+      ],
+      "forbidden": [
+        "bg-white|bg-stone-50|text-black",
+        "font-serif",
+        "rounded-(2xl|3xl|full)"
+      ],
+      "signature": ["animate-pulse.*shadow|text-shadow.*glow|filter:\\s*drop-shadow"]
+    },
+    "warm-artisan": {
+      "mandatory": [
+        "bg-(amber|orange|stone|yellow)-[234][0-9]{2}",
+        "font-serif|font-family:\\s*['\"]?(Lora|Merriweather|Cardo|Vollkorn)",
+        "texture|noise|grain|filter:\\s*(sepia|brightness)"
+      ],
+      "forbidden": [
+        "bg-(black|zinc-950)",
+        "font-mono",
+        "animate-spin|animate-bounce"
+      ],
+      "signature": ["grain-|noise-|filter:\\s*contrast\\(1\\.[01]"]
+    },
+    "swiss-international": {
+      "mandatory": [
+        "font-(sans|display).*(Helvetica|Akzidenz|Univers|Neue Haas|Inter)",
+        "grid-cols-(6|12|16)|grid-template-columns",
+        "text-(sm|base)\\s+leading-(snug|normal|tight)"
+      ],
+      "forbidden": [
+        "font-serif|font-mono",
+        "rotate-|skew-",
+        "bg-gradient|animate-bounce"
+      ],
+      "signature": ["uppercase\\s+tracking-(tight|normal).*text-(xs|sm)|grid-cols-12\\s+gap-"]
+    },
+    "vaporwave": {
+      "mandatory": [
+        "bg-gradient-to-(br|tr).*from-(pink|fuchsia|violet|purple)",
+        "font-(mono|display)|font-family:\\s*['\"]?(VT323|Press Start)",
+        "text-(pink|fuchsia|cyan|violet)-[34][0-9]{2}"
+      ],
+      "forbidden": [
+        "font-serif|bg-stone",
+        "rounded-none|shadow-none",
+        "text-black|bg-white\\s"
+      ],
+      "signature": ["text-shadow|gradient-text|bg-clip-text"]
+    },
+    "neubrutalism": {
+      "mandatory": [
+        "border-[3-5]\\s+border-black",
+        "shadow-\\[?[0-9]+px_[0-9]+px_0",
+        "bg-(yellow|pink|lime|cyan)-[345][0-9]{2}"
+      ],
+      "forbidden": [
+        "rounded-(xl|2xl|3xl|full)",
+        "shadow-(sm|md|lg|xl|2xl)(?!-\\[)",
+        "bg-gradient-to-"
+      ],
+      "signature": ["shadow-\\[?[4-9]+px_[4-9]+px_0px_#000"]
+    },
+    "dark-academia": {
+      "mandatory": [
+        "bg-(amber|stone|neutral)-[789][0-9]{2}|bg-(zinc|slate)-[78][0-9]{2}",
+        "font-serif|font-family:\\s*['\"]?(Cormorant|EB Garamond|Cardo)",
+        "italic|font-style:\\s*italic"
+      ],
+      "forbidden": [
+        "bg-(white|stone-50)",
+        "font-mono|font-sans\\s",
+        "animate-bounce|animate-wiggle"
+      ],
+      "signature": ["text-(amber|stone)-[23][0-9]{2}\\s+italic|drop-cap|::first-letter"]
+    },
+    "ai-native": {
+      "mandatory": [
+        "bg-gradient-to-(r|br).*from-(violet|indigo|purple)",
+        "(Message|Chat|AIElements|Prompt|Conversation)",
+        "backdrop-blur|bg-(zinc|slate)-(900|950)/[567][0-9]"
+      ],
+      "forbidden": [
+        "font-serif",
+        "bg-(amber|orange)-[234][0-9]{2}",
+        "rotate-[1-9][0-9]"
+      ],
+      "signature": ["animate-(pulse|shimmer)|streaming|token-stream"]
+    },
+    "claymorphism": {
+      "mandatory": [
+        "rounded-(2xl|3xl)",
+        "bg-(pink|violet|sky|emerald)-[234][0-9]{2}",
+        "shadow-(lg|xl|2xl)|drop-shadow-(lg|xl|2xl)"
+      ],
+      "forbidden": [
+        "rounded-none|border-[3-9]",
+        "font-mono",
+        "bg-(black|zinc-950)"
+      ],
+      "signature": ["shadow-inner|inset|rounded-\\[[0-9]+px\\]"]
+    },
+    "neumorphism": {
+      "mandatory": [
+        "bg-(neutral|stone|zinc)-[12][0-9]{2}",
+        "shadow-\\[?(inset\\s)?[-0-9]+px_[-0-9]+px",
+        "rounded-(xl|2xl|3xl)"
+      ],
+      "forbidden": [
+        "border-[2-9]|bg-(black|white)\\s",
+        "bg-gradient-to-",
+        "shadow-\\[0px_0px_0px"
+      ],
+      "signature": ["shadow-\\[inset_|dual-shadow|neumorphic"]
+    },
+    "y2k": {
+      "mandatory": [
+        "bg-gradient-to-(br|tr).*from-(pink|fuchsia|cyan|lime)",
+        "font-(mono|display)|font-family:\\s*['\"]?(Arial|Verdana|Comic Sans|VT323)",
+        "text-(pink|cyan|lime)-"
+      ],
+      "forbidden": [
+        "font-serif",
+        "shadow-(sm|md|lg)(?!-\\[)",
+        "rounded-none"
+      ],
+      "signature": ["bg-clip-text|gradient-text|text-shadow|chrome"]
+    },
+    "cyberpunk-hud": {
+      "mandatory": [
+        "bg-(black|zinc-950|slate-950)",
+        "text-(cyan|fuchsia|lime|pink)-[34][0-9]{2}",
+        "border-(cyan|fuchsia|lime)-"
+      ],
+      "forbidden": [
+        "bg-(white|stone-50)",
+        "font-serif",
+        "rounded-(2xl|3xl|full)"
+      ],
+      "signature": ["font-mono.*text-(cyan|fuchsia)|scanline|crt-|glitch-"]
+    },
+    "spatial-visionos": {
+      "mandatory": [
+        "backdrop-blur-(xl|2xl|3xl)",
+        "bg-white/[5-8][0-9]|bg-black/[5-8][0-9]",
+        "rounded-(xl|2xl|3xl)"
+      ],
+      "forbidden": [
+        "border-[3-9]|bg-gradient-to-r.*from-(pink|fuchsia)",
+        "font-mono|font-serif",
+        "shadow-none"
+      ],
+      "signature": ["backdrop-saturate|depth-|parallax|3d-transform"]
+    },
+    "pixel-art": {
+      "mandatory": [
+        "image-rendering:\\s*pixelated|imageRendering:\\s*['\"]?pixelated",
+        "font-family:\\s*['\"]?(Press Start|Pixelify|VT323|Silkscreen)",
+        "border-[2-4]|outline-[2-4]"
+      ],
+      "forbidden": [
+        "backdrop-blur|filter:\\s*blur",
+        "rounded-(2xl|3xl|full)",
+        "bg-gradient-to-"
+      ],
+      "signature": ["image-rendering:\\s*pixelated|crisp-edges"]
     }
   },
-  "remaining_archetypes_todo": [
-    "organic", "retro-future", "luxury", "playful", "data-dense",
-    "japanese-minimal", "glassmorphism", "neon-noir", "warm-artisan",
-    "swiss-international", "vaporwave", "neubrutalism", "dark-academia",
-    "ai-native", "claymorphism", "neumorphism", "y2k", "cyberpunk-hud",
-    "spatial-visionos", "pixel-art"
-  ],
-  "rollout_note": "v3.4.2 ships 5 archetype markers (above) as pilot + enforcement harness. v3.4.3 completes remaining 20 archetypes. Quality-reviewer treats unmarked archetypes as WARN (not BLOCK) during rollout window."
+  "coverage": {
+    "total_archetypes": 25,
+    "populated": 25,
+    "remaining": 0,
+    "status": "complete"
+  }
 }

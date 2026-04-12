@@ -1,0 +1,90 @@
+[
+  {
+    "slug": "apple-peak-luxury-001",
+    "path": "skills/reference-library-rag/entries/apple-peak-luxury-001.md",
+    "archetype": "luxury",
+    "beat": "PEAK",
+    "layout_pattern": "full-bleed-product",
+    "reference_url": "https://apple.com/iphone",
+    "captured_at": "2026-04-12",
+    "preview": "entries/apple-peak-luxury-001.webp",
+    "tags": [
+      "product",
+      "full-bleed",
+      "restrained-motion",
+      "premium"
+    ],
+    "permit_training": "true",
+    "quality_panel": {
+      "design": 224,
+      "ux": 106,
+      "awwwards_avg": 8.8
+    }
+  },
+  {
+    "slug": "awwwards-hook-editorial-001",
+    "path": "skills/reference-library-rag/entries/awwwards-hook-editorial-001.md",
+    "archetype": "editorial",
+    "beat": "HOOK",
+    "layout_pattern": "hero-typography",
+    "reference_url": "https://awwwards.com/sites/(multiple)",
+    "captured_at": "2026-04-12",
+    "preview": "entries/awwwards-hook-editorial-001.webp",
+    "tags": [
+      "typography",
+      "serif-display",
+      "editorial",
+      "full-bleed-text"
+    ],
+    "permit_training": "true",
+    "quality_panel": {
+      "design": 205,
+      "ux": 98,
+      "awwwards_avg": 8.4
+    }
+  },
+  {
+    "slug": "linear-hero-kinetic-001",
+    "path": "skills/reference-library-rag/entries/linear-hero-kinetic-001.md",
+    "archetype": "kinetic",
+    "beat": "HOOK",
+    "layout_pattern": "split-asymmetric",
+    "reference_url": "https://linear.app",
+    "captured_at": "2026-04-12",
+    "preview": "entries/linear-hero-kinetic-001.webp",
+    "tags": [
+      "saas",
+      "animation-heavy",
+      "split-nav",
+      "dark-mode"
+    ],
+    "permit_training": "true",
+    "quality_panel": {
+      "design": 218,
+      "ux": 112,
+      "awwwards_avg": 8.6
+    }
+  },
+  {
+    "slug": "stripe-peak-neo-corporate-001",
+    "path": "skills/reference-library-rag/entries/stripe-peak-neo-corporate-001.md",
+    "archetype": "neo-corporate",
+    "beat": "PEAK",
+    "layout_pattern": "12-col-subgrid-pricing",
+    "reference_url": "https://stripe.com/pricing",
+    "captured_at": "2026-04-12",
+    "preview": "entries/stripe-peak-neo-corporate-001.webp",
+    "tags": [
+      "pricing",
+      "saas",
+      "clear-hierarchy",
+      "accessibility-exemplar"
+    ],
+    "permit_training": "true",
+    "quality_panel": {
+      "design": 198,
+      "ux": 115,
+      "awwwards_avg": 9
+    }
+  }
+]

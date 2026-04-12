@@ -1,0 +1,31 @@
+{
+  "version": "1.0.0",
+  "purpose": "Map Genorah archetypes to Recraft V3 substyles for native-SVG generation.",
+  "map": {
+    "brutalist":          { "style": "vector-illustration", "substyle": "bold-geometric" },
+    "ethereal":           { "style": "vector-illustration", "substyle": "airy-soft" },
+    "editorial":          { "style": "vector-illustration", "substyle": "elegant-line" },
+    "kinetic":            { "style": "vector-illustration", "substyle": "dynamic-shapes" },
+    "neo-corporate":      { "style": "logo", "substyle": "clean-modern" },
+    "organic":            { "style": "vector-illustration", "substyle": "organic-hand" },
+    "retro-future":       { "style": "vector-illustration", "substyle": "retro-futurist" },
+    "luxury":             { "style": "logo", "substyle": "elegant-line" },
+    "playful":            { "style": "vector-illustration", "substyle": "playful-hand" },
+    "data-dense":         { "style": "icon", "substyle": "technical-diagram" },
+    "japanese-minimal":   { "style": "vector-illustration", "substyle": "zen-line" },
+    "glassmorphism":      { "style": "vector-illustration", "substyle": "glossy-soft" },
+    "neon-noir":          { "style": "vector-illustration", "substyle": "neon-outline" },
+    "warm-artisan":       { "style": "vector-illustration", "substyle": "hand-drawn" },
+    "swiss-international":{ "style": "logo", "substyle": "modernist-grid" },
+    "vaporwave":          { "style": "vector-illustration", "substyle": "retro-80s" },
+    "neubrutalism":       { "style": "vector-illustration", "substyle": "bold-flat" },
+    "dark-academia":      { "style": "vector-illustration", "substyle": "engraved-line" },
+    "ai-native":          { "style": "icon", "substyle": "geometric-abstract" },
+    "claymorphism":       { "style": "vector-illustration", "substyle": "soft-3d" },
+    "neumorphism":        { "style": "vector-illustration", "substyle": "soft-shadow" },
+    "y2k":                { "style": "vector-illustration", "substyle": "chrome-y2k" },
+    "cyberpunk-hud":      { "style": "vector-illustration", "substyle": "neon-outline" },
+    "spatial-visionos":   { "style": "icon", "substyle": "translucent-glass" },
+    "pixel-art":          { "style": "vector-illustration", "substyle": "8-bit-pixel" }
+  }
+}
