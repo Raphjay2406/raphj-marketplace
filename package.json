@@ -27,5 +27,8 @@
     "ajv": "^8.17.1",
     "react-dom": "^19.2.5",
     "yaml": "^2.6.0"
+  },
+  "dependencies": {
+    "globby": "^14.0.2"
   }
 }
