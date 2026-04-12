@@ -1,7 +1,7 @@
 {
   "name": "gen",
-  "description": "Premium frontend design system for Claude Code. Award-caliber websites through Design DNA, 19 archetypes, 72-point quality gate, emotional arc, creative tension, visual companion, and pipeline agent architecture. Next.js, Astro, React/Vite, Tauri, Electron.",
-  "version": "2.9.0",
+  "description": "Premium frontend design system for Claude Code v3.0. Measurably enforced quality via closed-loop refinement: 234-point weighted quality gate with 6-stage validation pipeline (DNA compliance → render → registry → consistency → design fidelity → full gate), pixel-diff reference validator, DNA drift detection (92% coverage hard gate), perf budgets per beat, closed-loop visual refiner, AI variant tournament, cross-section consistency auditor, motion health sub-gate, model cascade advisory, interactive refinement companion, competitive benchmarking, brand voice extraction, cognitive accessibility (CVD ΔE2000), WebGPU/TSL frontier, headless CMS round-trip (Sanity + Payload), Remotion section video, i18n by default. 21-agent pipeline, ~131 skills, framework-aware (Next.js, Astro, React/Vite), 5 MCP integrations.",
+  "version": "3.0.1",
   "author": {
     "name": "raphj"
   },

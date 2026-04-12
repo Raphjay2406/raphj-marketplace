@@ -85,7 +85,13 @@ try {
   readFileSync(0, 'utf8');
 
   const cwd = process.cwd();
-  const planningDir = join(cwd, '.planning', 'genorah');
+  let planningDir = join(cwd, '.planning', 'genorah');
+  const legacyDir = join(cwd, '.planning', 'modulo');
+
+  // Fallback: check legacy modulo path if genorah doesn't exist
+  if (!existsSync(planningDir) && existsSync(legacyDir)) {
+    planningDir = legacyDir; // Read from legacy path to preserve context during compaction
+  }
 
   // If no project directory, output empty response
   if (!existsSync(planningDir)) {

@@ -1,3 +1,11 @@
+---
+name: "markdown-mdx"
+description: "React-markdown with custom components, MDX integration, syntax highlighting, table of contents generation, and live code blocks with DNA typography."
+tier: "domain"
+triggers: "markdown, mdx, react-markdown, remark, rehype, syntax highlighting, table of contents, code blocks, docs rendering"
+version: "2.0.0"
+---
+
 # Markdown & MDX Rendering
 
 React-markdown with custom components, MDX integration, syntax highlighting, table of contents generation, and live code blocks.

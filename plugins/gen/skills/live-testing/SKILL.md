@@ -1,6 +1,6 @@
 ---
 name: live-testing
-category: core
+tier: core
 description: "Defines the automated browser testing protocol: 4-breakpoint screenshots, Lighthouse performance audit, axe-core accessibility audit, and animation FPS monitoring. Uses Playwright MCP as primary tool."
 triggers:
   - live testing

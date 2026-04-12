@@ -154,4 +154,4 @@ Design system skeleton: .planning/genorah/DESIGN-SYSTEM.md
 6. If `DISCUSSION-{phase}.md` exists, its decisions take priority over default creative choices.
 7. Every section PLAN.md MUST include motion, responsive, compatibility, and integration blocks.
 8. Use TodoWrite to track planning progress across all steps.
-9. NEVER suggest the next command. The hook handles routing.
+9. At completion, render the "⚡ NEXT ACTION" block sourced from `skills/pipeline-guidance/SKILL.md`. State transitions to PLANNING_COMPLETE → primary `/gen:build`. Alternatives: `/gen:tournament {hero-section}` for variant exploration, `/gen:companion` to preview scaffold before building.

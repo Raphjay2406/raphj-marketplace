@@ -11,7 +11,7 @@ You are the Genorah Status reporter. You display the current project state in a 
 1. Read `.planning/genorah/STATE.md` and `.planning/genorah/CONTEXT.md` FIRST.
 2. Use TodoWrite for progress tracking if needed.
 3. Push visual companion screen if companion is running.
-4. NEVER suggest next command -- the hook handles routing.
+4. ALWAYS render the "Next Action" block using the canonical table from `skills/pipeline-guidance/SKILL.md`.
 
 ## Guided Flow Header
 
@@ -62,21 +62,11 @@ Next Action: [PRIMARY recommendation based on current state]
 
 ### Next Action Logic
 
-Determine the PRIMARY next action from project state:
+Source of truth: `skills/pipeline-guidance/SKILL.md` Layer 2 mapping table. This command reads from that skill's state→command table — do not duplicate the mapping here.
 
-| State | Primary Action | Alternative |
-|-------|---------------|-------------|
-| No DESIGN-DNA.md | `/gen:start-project` | -- |
-| DNA exists, no MASTER-PLAN.md | `/gen:plan` | `/gen:discuss` to explore first |
-| Plans exist, no sections built | `/gen:build` | `/gen:plan --section X` to refine |
-| Build in progress (incomplete wave) | `/gen:build --resume` | `/gen:status -v` for details |
-| All sections built, no audit | `/gen:audit` | `/gen:iterate` for refinements |
-| Audit complete, score < SOTD-Ready | `/gen:iterate` on lowest-scoring sections | `/gen:audit` to re-check |
-| Audit complete, SOTD-Ready+ | Project ready to ship | `/gen:export` for artifacts |
-| GAP-FIX.md files present | `/gen:build --resume` (polisher will run) | Fix manually |
-| CONTEXT.md has "next instructions" | Follow the instructions in CONTEXT.md | `/gen:status -v` |
+State detection algorithm and command mappings live in the skill. `/gen:status` and `/gen:next` both consume the same table so guidance never drifts.
 
-Always read CONTEXT.md "Next Wave Instructions" section if it exists — it has the most specific guidance.
+If CONTEXT.md has "Next Wave Instructions" — those override the default state→command mapping (command authors hand-craft explicit routing when the state table is insufficient).
 
 ## Visual Companion: Status Dashboard
 
@@ -94,10 +84,19 @@ If companion server is running (check `.server-info`), push `status-dashboard.ht
 
 ## Completion
 
-Display the status information. Show contextual details based on current state but do NOT suggest commands -- the hook handles routing.
+Display the status information, then always append the "⚡ NEXT ACTION" block sourced from `skills/pipeline-guidance/SKILL.md`:
 
 ```
-[Status display as above]
+⚡ NEXT ACTION
+
+Primary: /gen:{command}
+  {one-line rationale}
+
+Prereq: {check} or "none"
+
+Alternatives:
+  - /gen:{alt-1} — {why}
+  - /gen:{alt-2} — {why}
 ```
 
 ## Rules
@@ -105,4 +104,4 @@ Display the status information. Show contextual details based on current state b
 1. Read-only command. Never modify project files.
 2. Display accurate, current state from STATE.md and section files.
 3. Use TodoWrite only if tracking a multi-step status investigation.
-4. NEVER suggest the next command. The hook handles routing.
+4. ALWAYS render Next Action block. Canonical source: `skills/pipeline-guidance`.

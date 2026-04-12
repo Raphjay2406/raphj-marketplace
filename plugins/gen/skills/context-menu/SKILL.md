@@ -1,3 +1,11 @@
+---
+name: "context-menu"
+description: "Right-click context menus, command palette (Cmd+K), keyboard shortcuts system, and advanced menu interactions with DNA-themed styling."
+tier: "domain"
+triggers: "context menu, right-click, command palette, cmdk, Cmd+K, keyboard shortcuts, menu interactions"
+version: "2.0.0"
+---
+
 # Context Menu & Command Palette
 
 Right-click context menus, command palette (Cmd+K), keyboard shortcuts system, and advanced menu interactions.

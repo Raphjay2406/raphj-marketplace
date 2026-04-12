@@ -1,3 +1,11 @@
+---
+name: "notification-center"
+description: "In-app notification feeds, notification preferences, push notification setup, real-time notification badges, and notification grouping with DNA styling."
+tier: "domain"
+triggers: "notification center, notification feed, notification badge, push notifications, in-app notifications, notification preferences"
+version: "2.0.0"
+---
+
 # Notification Center
 
 In-app notification feeds, notification preferences, push notification setup, real-time notification badges, and notification grouping.

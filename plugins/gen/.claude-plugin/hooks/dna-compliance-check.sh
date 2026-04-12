@@ -70,9 +70,9 @@ check_pattern '"Submit"' "Button text 'Submit' found — use outcome-driven copy
 check_pattern '"Learn More"' "Button text 'Learn More' found — use specific action copy"
 check_pattern '"Click Here"' "Button text 'Click Here' found — use descriptive action copy"
 
-# Layout-triggering animations
-check_pattern 'animate-\[.*width' "Animating width — use transform instead"
-check_pattern 'animate-\[.*height' "Animating height — use transform instead"
+# Layout-triggering animations (anchored to bracket close to avoid false positives on names containing 'width'/'height')
+check_pattern 'animate-\[[^]]*width\]' "Animating width — use transform instead"
+check_pattern 'animate-\[[^]]*height\]' "Animating height — use transform instead"
 
 # --- Project-Specific DNA Patterns (if DNA exists) ---
 
@@ -90,7 +90,7 @@ fi
 while IFS= read -r file; do
   [ -z "$file" ] && continue
   if echo "$file" | grep -qE '\.(tsx|jsx)$'; then
-    has_motion=$(grep -cE 'animate-|motion\.|gsap|ScrollTrigger|transition-|@keyframes|motion/react|data-motion|useSpring|useScroll' "$file" 2>/dev/null || echo "0")
+    has_motion=$(grep -cE 'animate-|motion\.|gsap|ScrollTrigger|transition-|@keyframes|(motion/react|framer-motion)|data-motion|useSpring|useScroll|animation-timeline' "$file" 2>/dev/null || echo "0")
     has_jsx=$(grep -cE '<[A-Z]' "$file" 2>/dev/null || echo "0")
     if [ "$has_motion" = "0" ] && [ "$has_jsx" -gt 0 ]; then
       is_component=$(echo "$file" | grep -qE 'components|sections|app/' && echo "yes" || echo "no")
