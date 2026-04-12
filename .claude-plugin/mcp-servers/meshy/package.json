@@ -1,0 +1,10 @@
+{
+  "name": "@genorah/meshy-mcp",
+  "version": "0.1.0",
+  "description": "MCP server scaffold for Meshy v4 text/image → 3D generation. Requires MESHY_API_KEY env var.",
+  "type": "module",
+  "bin": {
+    "meshy-mcp": "./server.mjs"
+  },
+  "engines": { "node": ">=20" }
+}

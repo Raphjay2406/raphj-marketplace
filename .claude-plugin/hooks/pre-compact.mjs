@@ -143,6 +143,48 @@ try {
 
   const additionalContext = sections.join('\n\n') + '\n';
 
+  // v3.5.4 — Compaction-Survivor protocol: also persist the same structured
+  // snapshot to .planning/genorah/compaction-summary.md so session-start can
+  // re-emit it after resume.
+  try {
+    const { writeFileSync, appendFileSync, mkdirSync, existsSync: hasFile } = await import('fs');
+    const dir = join(cwd, '.planning', 'genorah');
+    if (!hasFile(dir)) mkdirSync(dir, { recursive: true });
+    const journal = join(dir, 'journal.ndjson');
+    // Pull top ledger signals (last 10 high-signal entries)
+    let recentLedger = '';
+    try {
+      if (hasFile(journal)) {
+        const lines = readFileSync(journal, 'utf8').split('\n').filter(Boolean).slice(-50);
+        const signalKinds = new Set(['decision-made','section-shipped','variant-selected','subgate-fired','hardgate-fail','critique-issued','feedback-received','cap-applied']);
+        const picked = lines.map((l) => { try { return JSON.parse(l); } catch { return null; } })
+          .filter((e) => e && signalKinds.has(e.kind))
+          .slice(-10);
+        recentLedger = picked.map((e) => `  ${e.ts?.slice(0,19)} ${e.actor} ${e.kind} ${e.subject || ''}`).join('\n');
+      }
+    } catch { /* ignore */ }
+    const survivor = [
+      `# Compaction Summary — ${new Date().toISOString()}`,
+      '',
+      '## Resume context (Tier A+B)',
+      additionalContext.trim(),
+      '',
+      '## Recent ledger signals (Tier C)',
+      recentLedger || '  (no signal events recorded yet)',
+      '',
+    ].join('\n');
+    writeFileSync(join(dir, 'compaction-summary.md'), survivor);
+    // Ledger emit
+    appendFileSync(journal, JSON.stringify({
+      ts: new Date().toISOString(),
+      actor: 'hook:pre-compact',
+      kind: 'compaction-run',
+      subject: 'project',
+      payload: { tokens_est: Math.round(survivor.length / 4) },
+      refs: ['.planning/genorah/compaction-summary.md'],
+    }) + '\n');
+  } catch { /* never crash */ }
+
   // Only output if we actually have content beyond the header
   if (sections.length > 1) {
     process.stdout.write(JSON.stringify({ additionalContext }));

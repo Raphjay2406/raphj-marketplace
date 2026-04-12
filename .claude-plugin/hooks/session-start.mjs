@@ -198,6 +198,35 @@ try {
     // MCP config read failed — skip silently
   }
 
+  // v3.5.4 — drift-alert banner from L7 calibration store
+  try {
+    const { homedir } = await import('os');
+    const alertsPath = join(homedir(), '.claude', 'genorah', 'calibration', 'drift_alerts.ndjson');
+    if (existsSync(alertsPath)) {
+      const lines = readFileSync(alertsPath, 'utf8').split('\n').filter(Boolean);
+      const unresolved = lines.map((l) => { try { return JSON.parse(l); } catch { return null; } })
+        .filter((a) => a && !a.resolved_at);
+      if (unresolved.length > 0) {
+        const latest = unresolved[unresolved.length - 1];
+        const pct = (latest.delta_rmse * 100).toFixed(1);
+        additionalContext += `\n⚠️ **Judge drift detected** — ${unresolved.length} unresolved alert(s). Run \`/gen:recalibrate\` to review. Latest: Δ=${pct}%\n\n`;
+      }
+    }
+  } catch { /* never crash */ }
+
+  // v3.5.4 — compaction summary re-emission on resume
+  try {
+    const summaryPath = join(cwd, '.planning', 'genorah', 'compaction-summary.md');
+    if (existsSync(summaryPath)) {
+      const { statSync } = await import('fs');
+      const ageMs = Date.now() - statSync(summaryPath).mtimeMs;
+      if (ageMs < 3600000) {  // only if < 1 hour old
+        const s = readFileSync(summaryPath, 'utf8');
+        additionalContext += `\n<!-- genorah:compaction-resume -->\n${s}\n<!-- /genorah:compaction-resume -->\n`;
+      }
+    }
+  } catch { /* never crash */ }
+
   additionalContext += `<!-- /genorah:session-context -->\n`;
 
   const response = {};

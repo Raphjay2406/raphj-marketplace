@@ -64,6 +64,36 @@ try {
     logHookError(cwd, `append failed: ${err.message}`);
   }
 
+  // v3.5.4 — curated ledger emissions
+  // Pattern-match Write/Edit targets against canonical kind taxonomy and emit ledger line.
+  try {
+    const journalFile = join(planningDir, 'journal.ndjson');
+    let kind = null;
+    let subject = null;
+    if (tool_name === 'Write' || tool_name === 'Edit') {
+      if (/decisions\.json$/.test(target)) { kind = 'decision-made'; subject = 'decisions.json'; }
+      else if (/sections\/.+\/SUMMARY\.md$/.test(target)) { kind = 'section-shipped'; subject = target.match(/sections\/([^/]+)/)?.[1] || target; }
+      else if (/sections\/.+\/CRITIQUE-.+\.md$/.test(target)) { kind = 'critique-issued'; subject = target.match(/sections\/([^/]+)/)?.[1] || target; }
+      else if (/public\/assets\/MANIFEST\.json$/.test(target)) { kind = 'asset-generated'; subject = 'manifest'; }
+      else if (/\.planning\/genorah\/audit\/.+\.json$/.test(target)) { kind = 'subgate-fired'; subject = target; }
+    } else if (tool_name === 'Bash') {
+      if (/^git commit/.test(target)) { kind = 'commit-made'; subject = 'repo'; }
+    }
+    if (kind) {
+      const line = JSON.stringify({
+        ts: timestamp,
+        actor: `hook:post-tool-use`,
+        kind,
+        subject,
+        payload: { tool: tool_name, target: safeTarget },
+        refs: target ? [target] : [],
+      }) + '\n';
+      appendFileSync(journalFile, line);
+    }
+  } catch (err) {
+    logHookError(cwd, `ledger emit failed: ${err.message}`);
+  }
+
   process.stdout.write('{}');
 } catch (err) {
   logHookError(process.cwd(), `fatal: ${err.message}`);

@@ -5,7 +5,7 @@
  * Generates SESSION-LOG.md for cross-session continuity.
  */
 
-import { readFileSync, writeFileSync, existsSync, mkdirSync, statSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync, mkdirSync, statSync, appendFileSync } from 'fs';
 import { join } from 'path';
 
 try {
@@ -153,6 +153,30 @@ ${nextActions}
 `;
 
   writeFileSync(join(planningDir, 'SESSION-LOG.md'), sessionLog, 'utf8');
+
+  // v3.5.4 — post-ship capture nudge
+  try {
+    const shipCheckPath = join(planningDir, 'ship-check.md');
+    const backlogPath = join(planningDir, 'post-ship-backlog.md');
+    if (existsSync(shipCheckPath) && !existsSync(backlogPath)) {
+      const scText = readFileSync(shipCheckPath, 'utf8');
+      if (/DECISION:\s*PASS/.test(scText)) {
+        // Seed backlog placeholder so this only prompts once
+        writeFileSync(backlogPath, `# Post-Ship Backlog\n\n_Placeholder created at ${new Date().toISOString()}. Run \`/gen:postship\` to capture learnings._\n`);
+        const journal = join(planningDir, 'journal.ndjson');
+        try {
+          appendFileSync(journal, JSON.stringify({
+            ts: new Date().toISOString(),
+            actor: 'hook:session-end',
+            kind: 'post-ship-prompt-issued',
+            subject: 'project',
+            payload: {},
+            refs: [backlogPath],
+          }) + '\n');
+        } catch { /* ignore */ }
+      }
+    }
+  } catch { /* never crash */ }
 
   // Stop hooks don't inject context
   process.stdout.write(JSON.stringify({}));
