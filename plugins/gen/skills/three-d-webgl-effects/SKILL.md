@@ -4,6 +4,11 @@ description: "3D and WebGL effects with React Three Fiber. Composable shader bui
 tier: domain
 triggers: "3D, WebGL, three.js, react three fiber, R3F, shader, particles, 3D scene, WebGPU, TSL, holographic, liquid effect, glass, displacement, orbit controls, 3D background, 3D product viewer, post-processing, bloom, noise displacement"
 version: "3.0.0"
+metadata:
+  pathPatterns:
+    - "**/*.tsx"
+    - "**/*.jsx"
+    - "**/*.glsl"
 ---
 
 ## v3.0 Addendum: WebGPU / TSL Decision Matrix

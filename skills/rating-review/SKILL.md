@@ -4,6 +4,10 @@ description: "Star ratings, review forms, aggregate rating displays, review card
 tier: "domain"
 triggers: "rating, review, star rating, review form, testimonial, review cards, helpful votes, aggregate rating"
 version: "2.0.0"
+metadata:
+  pathPatterns:
+    - "**/*.tsx"
+    - "**/*.jsx"
 ---
 
 # Rating & Review Systems

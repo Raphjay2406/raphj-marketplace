@@ -3,6 +3,10 @@ name: data-table
 description: "Build data tables with TanStack Table and shadcn/ui including sorting, filtering, pagination, and column resizing."
 tier: domain
 version: "2.0.0"
+metadata:
+  pathPatterns:
+    - "**/data-table.tsx"
+    - "**/table/*.tsx"
 ---
 
 Use this skill when the user mentions data table, table, sortable table, filterable table, pagination, TanStack Table, or tabular data display.

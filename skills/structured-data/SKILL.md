@@ -4,6 +4,10 @@ description: "Typed JSON-LD schemas for all major page types via @graph combinat
 tier: "domain"
 triggers: "structured data, JSON-LD, schema, rich results, FAQ schema, Article schema, Organization schema, BreadcrumbList, Product schema, LocalBusiness, Event schema, HowTo, WebSite schema, @graph, GEO, generative engine optimization, AI search, BLUF, question headings, quotable statistics, schema audit, content-schema match"
 version: "1.0.0"
+metadata:
+  pathPatterns:
+    - "**/*.tsx"
+    - "**/layout.tsx"
 ---
 
 ## Layer 1: Decision Guidance

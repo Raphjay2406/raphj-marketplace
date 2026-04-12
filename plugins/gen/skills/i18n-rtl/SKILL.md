@@ -4,6 +4,11 @@ description: "Internationalization and RTL patterns: CSS logical properties, Tai
 tier: "utility"
 triggers: "i18n, internationalization, localization, RTL, right-to-left, Arabic, Hebrew, language, locale, translation, multi-language, l10n, bidirectional, i18n default, auto-locale"
 version: "3.0.0"
+metadata:
+  pathPatterns:
+    - "**/messages/*.json"
+    - "**/i18n/**/*"
+    - "**/*.tsx"
 ---
 
 ## v3.0 Addendum: i18n by Default

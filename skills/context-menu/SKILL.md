@@ -4,6 +4,10 @@ description: "Right-click context menus, command palette (Cmd+K), keyboard short
 tier: "domain"
 triggers: "context menu, right-click, command palette, cmdk, Cmd+K, keyboard shortcuts, menu interactions"
 version: "2.0.0"
+metadata:
+  pathPatterns:
+    - "**/*.tsx"
+    - "**/*.jsx"
 ---
 
 # Context Menu & Command Palette

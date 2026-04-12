@@ -4,6 +4,10 @@ description: "Expo managed workflow patterns. Expo Router file-based routing, EA
 tier: "domain"
 triggers: "expo, expo router, eas build, eas submit, managed workflow, expo app"
 version: "2.0.0"
+metadata:
+  pathPatterns:
+    - "**/app/**/*.tsx"
+    - "**/app.json"
 ---
 
 ## Layer 1: Decision Guidance

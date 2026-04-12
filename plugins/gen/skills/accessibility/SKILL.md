@@ -4,6 +4,11 @@ description: "WCAG 2.1 AA baked into every component: ARIA patterns, keyboard na
 tier: "core"
 triggers: "accessibility, a11y, WCAG, ARIA, keyboard, focus, screen reader, reduced motion, color blind, touch target, skip link"
 version: "2.0.0"
+metadata:
+  pathPatterns:
+    - "**/*.tsx"
+    - "**/*.jsx"
+    - "**/*.astro"
 ---
 
 ## Genorah v2.0 Updates

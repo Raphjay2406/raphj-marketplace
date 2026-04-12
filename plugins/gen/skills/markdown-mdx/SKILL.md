@@ -4,6 +4,10 @@ description: "React-markdown with custom components, MDX integration, syntax hig
 tier: "domain"
 triggers: "markdown, mdx, react-markdown, remark, rehype, syntax highlighting, table of contents, code blocks, docs rendering"
 version: "2.0.0"
+metadata:
+  pathPatterns:
+    - "**/*.md"
+    - "**/*.mdx"
 ---
 
 # Markdown & MDX Rendering

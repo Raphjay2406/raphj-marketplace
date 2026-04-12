@@ -5,6 +5,11 @@ description: "CSS Anchor Positioning — native tooltip/popover/dropdown positio
 triggers: ["anchor positioning", "css anchor", "position-anchor", "anchor-name", "floating ui alternative", "native tooltip", "popover positioning"]
 used_by: ["context-menu", "navigation-patterns", "search-ui", "form-builder"]
 version: "3.2.0"
+metadata:
+  pathPatterns:
+    - "**/*.css"
+    - "**/*.tsx"
+    - "**/*.jsx"
 ---
 
 ## Layer 1: Decision Guidance

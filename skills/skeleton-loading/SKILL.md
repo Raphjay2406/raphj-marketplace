@@ -4,6 +4,10 @@ description: "Skeleton loading patterns: shimmer placeholders, content-aware ske
 tier: domain
 triggers: "skeleton, loading, shimmer, placeholder, suspense, streaming, progressive load, skeleton ui, content-loader, boneyard"
 version: "3.1.0"
+metadata:
+  pathPatterns:
+    - "**/*.tsx"
+    - "**/*.jsx"
 ---
 
 ## v3.1 Addendum: 3-Tier Skeleton Framework Decision Matrix

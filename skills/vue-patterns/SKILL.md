@@ -5,6 +5,9 @@ description: "Vue 3 Composition API patterns: <script setup>, composables, Pinia
 triggers: ["vue", "vue 3", "composition api", "script setup", "pinia", "composable", "vue tailwind", "vite vue"]
 used_by: ["builder", "planner", "start-project"]
 version: "3.1.0"
+metadata:
+  pathPatterns:
+    - "**/*.vue"
 ---
 
 ## Layer 1: Decision Guidance

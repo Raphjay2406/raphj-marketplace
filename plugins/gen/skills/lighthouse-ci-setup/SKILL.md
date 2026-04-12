@@ -5,6 +5,10 @@ description: "Lighthouse CI + Playwright preview-smoke scaffold for Genorah proj
 triggers: ["lighthouse ci", "lhci", "performance ci", "preview smoke", "vercel preview hook", "perf gate", "ci setup"]
 used_by: ["ci-setup", "export"]
 version: "3.2.0"
+metadata:
+  bashPatterns:
+    - "lhci"
+    - "lighthouse-ci"
 ---
 
 ## Layer 1: Decision Guidance

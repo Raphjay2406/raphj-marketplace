@@ -3,6 +3,11 @@ name: navigation-patterns
 description: "Desktop navigation patterns: mega menus, multi-level dropdowns, sticky headers with scroll behavior, search with autocomplete, contextual navigation, sidebar nav, command palette. Works with Next.js and Astro."
 tier: domain
 version: "2.0.0"
+metadata:
+  pathPatterns:
+    - "**/nav/**/*.tsx"
+    - "**/layout.tsx"
+    - "**/header.tsx"
 ---
 
 Use this skill when the user mentions mega menu, navigation, header, navbar, sticky header, scroll header, breadcrumb nav, search autocomplete, contextual nav. Triggers on: mega menu, navigation, navbar, header, sticky, scroll header, nav bar, multi-level nav.

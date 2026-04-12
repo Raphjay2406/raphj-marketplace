@@ -4,6 +4,10 @@ description: "Dynamic OG image generation from Design DNA tokens: branded 1200x6
 tier: "domain"
 triggers: "OG image, social preview, Open Graph image, opengraph-image, social card, Twitter card image, og:image, social sharing, branded preview, Satori, ImageResponse"
 version: "1.0.0"
+metadata:
+  pathPatterns:
+    - "**/opengraph-image.tsx"
+    - "**/og/**/*"
 ---
 
 ## Layer 1: Decision Guidance

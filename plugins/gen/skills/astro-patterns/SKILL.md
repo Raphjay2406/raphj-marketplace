@@ -4,6 +4,9 @@ description: "Astro 5/6 patterns: Islands architecture, Content Layer API, Clien
 tier: "domain"
 triggers: "astro, islands, content collections, view transitions, static site, SSG, SSR, astro components"
 version: "2.0.0"
+metadata:
+  pathPatterns:
+    - "**/*.astro"
 ---
 
 ## Layer 1: Decision Guidance

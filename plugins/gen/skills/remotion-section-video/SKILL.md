@@ -5,6 +5,9 @@ description: "Programmatic section-video generation via Remotion. 5 DNA-paramete
 triggers: ["section video", "hero video", "background video", "remotion section", "programmatic video background", "kinetic background", "/gen:video"]
 used_by: ["builder", "3d-specialist"]
 version: "3.0.0"
+metadata:
+  pathPatterns:
+    - "**/remotion/**/*.tsx"
 ---
 
 ## Layer 1: Decision Guidance

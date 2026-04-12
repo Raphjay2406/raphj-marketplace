@@ -4,6 +4,11 @@ description: "Performance-aware animation system. CWV compliance alongside heavy
 tier: core
 triggers: "animation performance, CWV, core web vitals, code splitting, lazy load animation, font loading, will-change, FPS, jank, compositor thread, bundle size, animation budget"
 version: "2.0.0"
+metadata:
+  pathPatterns:
+    - "**/*.tsx"
+    - "**/*.jsx"
+    - "**/*.css"
 ---
 
 ## Genorah v2.0 Updates

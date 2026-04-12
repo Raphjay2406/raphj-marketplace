@@ -3,6 +3,11 @@ name: error-states-ui
 description: "Error state UI patterns: 404/500 pages, error boundaries, empty states, offline indicators, retry patterns, skeleton fallbacks, toast error feedback. Works with Next.js and Astro."
 tier: domain
 version: "2.0.0"
+metadata:
+  pathPatterns:
+    - "**/error.tsx"
+    - "**/not-found.tsx"
+    - "**/*.tsx"
 ---
 
 Use this skill when the user mentions error pages, 404, 500, error boundaries, empty states, offline mode, retry, fallback UI, or error handling UI. Triggers on: error page, 404, 500, empty state, offline, retry, error boundary, fallback, not found.

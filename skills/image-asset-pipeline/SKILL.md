@@ -3,6 +3,10 @@ name: image-asset-pipeline
 description: "Image and asset pipeline: OG image generation, favicon sets, SVG optimization, responsive art direction, blur placeholders, CDN patterns, sprite generation. Works with Next.js and Astro."
 tier: domain
 version: "2.0.0"
+metadata:
+  pathPatterns:
+    - "**/public/**/*.{png,jpg,webp,avif}"
+    - "**/*.tsx"
 ---
 
 Use this skill when the user mentions OG image generation, favicon, SVG optimization, image pipeline, blur placeholder, art direction, responsive images, CDN, or asset optimization. Triggers on: og image, favicon, SVG, image pipeline, blur, placeholder, art direction, asset, CDN.

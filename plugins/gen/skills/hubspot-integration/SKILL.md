@@ -4,6 +4,10 @@ description: "HubSpot CRM, Marketing, and CMS integration patterns for Next.js a
 tier: "domain"
 triggers: "hubspot, crm, marketing automation, lead capture, tracking, contact form"
 version: "2.0.0"
+metadata:
+  pathPatterns:
+    - "**/hubspot/**/*.ts"
+    - "**/*.ts"
 ---
 
 ## Layer 1: Decision Guidance

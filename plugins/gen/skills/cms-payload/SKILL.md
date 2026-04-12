@@ -5,6 +5,10 @@ description: "Payload 3 integration (Next-native): collection generators from DN
 triggers: ["payload", "payload cms", "payload 3", "headless cms", "lexical editor", "postgres cms", "payload collections"]
 used_by: ["content-specialist", "builder", "start-project"]
 version: "3.0.0"
+metadata:
+  pathPatterns:
+    - "**/payload/**/*.ts"
+    - "**/payload.config.ts"
 ---
 
 ## Layer 1: Decision Guidance

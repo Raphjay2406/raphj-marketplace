@@ -5,6 +5,11 @@ description: "GLTF asset pipeline: Draco geometry compression, Meshopt, KTX2/Bas
 triggers: ["gltf", "glb", "3d model", "draco", "meshopt", "ktx2", "basis", "3d optimization", "model compression", "texture compression", "LOD"]
 used_by: ["3d-specialist", "builder", "quality-reviewer"]
 version: "3.0.0"
+metadata:
+  pathPatterns:
+    - "**/*.gltf"
+    - "**/*.glb"
+    - "**/*.ktx2"
 ---
 
 ## Layer 1: Decision Guidance

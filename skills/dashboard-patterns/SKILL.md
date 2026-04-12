@@ -4,6 +4,10 @@ description: "Dashboard UI patterns: data-dense layouts, metric cards, chart int
 tier: "domain"
 triggers: "dashboard, admin, analytics, stat card, sidebar, chart layout, settings, onboarding, activity feed, breadcrumb, role, panel, metrics"
 version: "2.0.0"
+metadata:
+  pathPatterns:
+    - "**/dashboard/**/*.tsx"
+    - "**/admin/**/*.tsx"
 ---
 
 ## Layer 1: Decision Guidance

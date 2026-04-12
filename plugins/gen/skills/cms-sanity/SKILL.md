@@ -5,6 +5,10 @@ description: "Sanity Studio v3 integration: schema generation from emotional-arc
 triggers: ["sanity", "sanity studio", "headless cms", "GROQ", "content lake", "visual editing", "presentation tool", "sanity client", "sanity schema"]
 used_by: ["content-specialist", "builder", "start-project"]
 version: "3.0.0"
+metadata:
+  pathPatterns:
+    - "**/sanity/**/*.ts"
+    - "**/sanity.config.ts"
 ---
 
 ## Layer 1: Decision Guidance

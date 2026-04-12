@@ -132,3 +132,33 @@ Works best with page-level content changes. Use for route transitions. Fallback:
 - ❌ **Motion without prefers-reduced-motion gate** — every keyframed animation must have RM fallback. Enforced by `motion-health`.
 - ❌ **Redefining motion tokens here** — DNA owns that. This skill references, not defines.
 - ❌ **Injecting this skill on every prompt** — scoped regex in frontmatter ensures only animation-related prompts pull it in.
+
+---
+
+## v3.3 Addendum: Motion-Health Cross-Reference (H4 fix)
+
+Stagger patterns in this skill (wave, radial, sequence, reverse-wave) can produce high concurrent-animation counts. They MUST respect the per-beat concurrency limits enforced by `motion-health`:
+
+| Beat | Max concurrent animations (motion-health HARD) |
+|---|---|
+| HOOK | 3 |
+| PEAK | 4 |
+| BREATHE | 1 |
+| Other | 2 |
+
+### Implications for stagger patterns
+
+- **40-item wave stagger in BREATHE** — violates `concurrent_animations_BREATHE: 1`. Choose one: virtualize (only animate items in viewport = 1 active transition), collapse to a single container-level animation, or move the stagger to a HOOK/PEAK section.
+- **Radial stagger of a 6×6 grid in HOOK** — if using all 36 cells with simultaneous easing, violates the HOOK budget of 3. Split into wave-phased bursts (≤3 concurrent via timing offsets).
+- **Sequence stagger with groups** — each group can contain many items but only ≤ beat-budget cells animate at once.
+
+### Self-check for builders
+
+Before implementing a stagger, compute:
+
+```
+peak_concurrent = items_in_viewport × (stagger_overlap_ms / stagger_step_ms)
+```
+
+If peak_concurrent exceeds the beat's motion-health budget, refactor before shipping. This is an orchestration rule, not an aspiration — fail-gate under motion-health.
+

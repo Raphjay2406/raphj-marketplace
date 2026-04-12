@@ -4,6 +4,10 @@ description: "Propstack real estate CRM integration. Property listings, lead cap
 tier: "domain"
 triggers: "propstack, real estate, property listings, immobilien, makler"
 version: "2.0.0"
+metadata:
+  pathPatterns:
+    - "**/propstack/**/*.ts"
+    - "**/*.ts"
 ---
 
 ## Layer 1: Decision Guidance

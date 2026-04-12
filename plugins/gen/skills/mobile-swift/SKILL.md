@@ -4,6 +4,9 @@ description: "Swift/SwiftUI native iOS development patterns. DNA token translati
 tier: "domain"
 triggers: "swift, swiftui, ios native, xcode, app store, apple, ios app"
 version: "2.0.0"
+metadata:
+  pathPatterns:
+    - "**/*.swift"
 ---
 
 ## Layer 1: Decision Guidance
@@ -618,3 +621,65 @@ let apiBaseURL = "https://api.example.com"
 | LazyVStack threshold | - | 20 | items before lazy required | HARD -- use LazyVStack for 20+ items |
 | SF Symbol rendering mode | - | - | explicit | SOFT -- always specify symbolRenderingMode for DNA consistency |
 | Privacy usage descriptions | - | - | Info.plist keys | HARD -- every capability must have a usage description |
+
+
+---
+
+## v3.3 Addendum: SwiftUI 6 + Xcode 16 + iOS 18 (Aug 2024+)
+
+### Observation framework (replaces @ObservableObject)
+
+```swift
+@Observable final class ViewModel {
+    var count = 0
+}
+
+struct CounterView: View {
+    @State private var vm = ViewModel()   // not @StateObject
+    var body: some View { Text("\(vm.count)") }
+}
+```
+
+@Observable + @State/@Bindable replaces @ObservableObject/@StateObject/@Published. Tighter view updates — only actual dependencies re-render.
+
+### Scroll API improvements (iOS 17+ / 18)
+
+```swift
+ScrollView {
+    ForEach(items) { ItemRow(item: $0).id($0.id) }
+}
+.scrollPosition(id: $selectedId)
+.scrollTargetBehavior(.viewAligned)
+.defaultScrollAnchor(.center)              // iOS 18
+```
+
+Preferred over ScrollViewReader hacks.
+
+### Zoom transition (iOS 18)
+
+```swift
+NavigationLink(value: item) {
+    Thumbnail(item: item).matchedTransitionSource(id: item.id, in: ns)
+}
+.navigationTransition(.zoom(sourceID: item.id, in: ns))
+```
+
+Same mental model as web cross-document view transitions.
+
+### Deprecated in 2025+
+
+- @ObservableObject / @StateObject / @Published → @Observable
+- NavigationView → NavigationStack / NavigationSplitView
+- NavigationLink(destination:) → value-based + navigationDestination(for:)
+
+### DNA tokens via Asset Catalog (P3 Display)
+
+```swift
+extension Color {
+    static let dnaPrimary = Color("dna/primary")  // P3-colorspace asset
+    static let dnaBg = Color("dna/bg")
+    static let dnaSurface = Color("dna/surface")
+}
+```
+
+P3 colorspace assets render wide-gamut on iPhone 14 Pro+, iPad Pro M4, Vision Pro; fall back to sRGB automatically.

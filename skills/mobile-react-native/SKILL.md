@@ -4,6 +4,11 @@ description: "React Native bare workflow patterns. DNA token translation, React 
 tier: "domain"
 triggers: "react native, rn, bare react native, metro bundler, hermes, react native app"
 version: "2.0.0"
+metadata:
+  pathPatterns:
+    - "**/*.tsx"
+    - "**/*.jsx"
+    - "**/App.tsx"
 ---
 
 ## Layer 1: Decision Guidance

@@ -4,6 +4,11 @@ description: "Technical SEO infrastructure: sitemaps, robots.txt (3-tier AI stra
 tier: "core"
 triggers: "seo, sitemap, robots.txt, meta tags, canonical, hreflang, open graph, search console, indexnow, webmaster"
 version: "2.0.0"
+metadata:
+  pathPatterns:
+    - "**/app/robots.ts"
+    - "**/app/sitemap.ts"
+    - "**/*.tsx"
 ---
 
 ## Layer 1: Decision Guidance

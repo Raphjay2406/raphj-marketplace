@@ -4,6 +4,10 @@ description: "Stripe payment integration patterns for Next.js and Astro. Checkou
 tier: "domain"
 triggers: "stripe, payment, checkout, subscription, billing, e-commerce payment"
 version: "2.0.0"
+metadata:
+  pathPatterns:
+    - "**/stripe/**/*.ts"
+    - "**/webhooks/*.ts"
 ---
 
 ## Layer 1: Decision Guidance

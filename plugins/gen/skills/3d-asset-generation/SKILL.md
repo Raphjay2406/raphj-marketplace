@@ -4,6 +4,11 @@ description: "Full 3D asset generation suite: procedural geometry with Three.js,
 tier: domain
 triggers: "3d asset, 3d generation, 3d model, GLTF, GLB, Spline scene, procedural 3d, 3d hero, 3d background, WebGL asset, three.js asset, react three fiber"
 version: "2.3.0"
+metadata:
+  pathPatterns:
+    - "**/*.tsx"
+    - "**/*.gltf"
+    - "**/*.glb"
 ---
 
 ## Layer 1: Decision Guidance

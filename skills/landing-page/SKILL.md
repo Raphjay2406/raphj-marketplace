@@ -4,6 +4,11 @@ description: "Landing page patterns including hero sections, CTAs, feature grids
 tier: domain
 triggers: "landing page, hero, CTA, pricing, features, testimonials, marketing, homepage, SaaS, changelog, waitlist, trust, before-after, comparison slider, integration grid, live metrics, quiz hero"
 version: "3.1.0"
+metadata:
+  pathPatterns:
+    - "**/page.tsx"
+    - "**/index.tsx"
+    - "**/landing/*.tsx"
 ---
 
 ## v3.1 Addendum: 7 Patterns distilled from PRO MAX

@@ -1,7 +1,7 @@
 {
   "name": "gen",
   "description": "Premium frontend design system for Claude Code v3.2 — Verified Frontier. v3.1's distilled intelligence + v3.2 WebFetch-verified 2026 SOTA (Speculation Rules, Cross-doc View Transitions Safari 18.2+, CSS Anchor Positioning Chrome 125+, Next 16 Cache Components GA, Vite 8 + Rolldown, GSAP 3.13 free SplitText, Flux 1.1 Pro + Ideogram 3 image models, Chrome DevTools MCP + next-devtools-mcp) + operational gaps (git-workflow, lighthouse-ci-setup, seo-keyword-gaps, behavioral-prediction, client-review-workflow) + first-ever test infrastructure (node:test + GH Actions + lint scripts + self-audit runtime). v3.0's measurably enforced quality + v3.1 distillations from UI UX PRO MAX (160→24 curated palettes, 73→18 font pairings, 161 offline industry rules, 6 new archetypes: Claymorphism/Neumorphism/Y2K/Cyberpunk-HUD/Spatial-VisionOS/Pixel-Art → 25 total) and bencium-marketplace (Butterick typography rules, anti-vanity-check, user-style-adapter, 5-pillar planner checklist). New frameworks: Svelte 5, Vue 3, Nuxt 3. 4 OAuth-free inspiration sources (Land-book, SiteInspire, Cosmos.so, Awwwards archive). Preloader animation suite (25 archetype variants), animation-orchestration meta-skill (scoped injection, 2500-word cap), brandkit suite (logo/favicon/OG/PDF/`/brand` route), react-content-loader skeleton default. 234-pt quality gate with 6-stage validation + motion-health sub-gate + DNA drift detection + perf budgets + closed-loop visual refiner. 23 commands, 21-agent pipeline, ~142 skills, 5 MCP integrations.",
-  "version": "3.2.0",
+  "version": "3.3.0",
   "author": {
     "name": "raphj"
   },

@@ -4,6 +4,10 @@ description: "Comprehensive JSON-LD structured data for SEO and GEO. @graph patt
 tier: "core"
 triggers: "json-ld, schema.org, structured data, rich results, faq schema, breadcrumb, product schema, @graph"
 version: "2.0.0"
+metadata:
+  pathPatterns:
+    - "**/*.tsx"
+    - "**/layout.tsx"
 ---
 
 ## Layer 1: Decision Guidance

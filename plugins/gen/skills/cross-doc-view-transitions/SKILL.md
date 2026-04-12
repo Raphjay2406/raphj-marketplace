@@ -5,6 +5,11 @@ description: "Cross-document View Transitions (MPA) — native smooth page-to-pa
 triggers: ["view transitions", "cross-document view transitions", "MPA transitions", "@view-transition", "page transition", "shared element morph"]
 used_by: ["page-transitions", "nextjs-patterns", "astro-patterns", "multi-page-architecture"]
 version: "3.2.0"
+metadata:
+  pathPatterns:
+    - "**/*.css"
+    - "**/*.tsx"
+    - "**/*.astro"
 ---
 
 ## Layer 1: Decision Guidance

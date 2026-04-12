@@ -4,6 +4,9 @@ description: "Swift/SwiftUI native iOS development patterns. DNA token translati
 tier: "domain"
 triggers: "swift, swiftui, ios native, xcode, app store, apple, ios app"
 version: "2.0.0"
+metadata:
+  pathPatterns:
+    - "**/*.swift"
 ---
 
 ## Layer 1: Decision Guidance

@@ -4,6 +4,9 @@ description: "Flutter/Dart cross-platform patterns. ThemeData from DNA, Material
 tier: "domain"
 triggers: "flutter, dart, flutter widget, material cupertino, riverpod, flutter app"
 version: "2.0.0"
+metadata:
+  pathPatterns:
+    - "**/*.dart"
 ---
 
 ## Layer 1: Decision Guidance

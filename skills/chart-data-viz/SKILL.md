@@ -4,6 +4,10 @@ description: "Chart and data visualization patterns: Recharts with shadcn stylin
 tier: domain
 triggers: "chart, graph, visualization, sparkline, donut, area chart, bar chart, line chart, analytics, metrics, recharts, chart-type selection, a11y chart"
 version: "3.1.0"
+metadata:
+  pathPatterns:
+    - "**/charts/*.tsx"
+    - "**/*.tsx"
 ---
 
 ## v3.1 Addendum: Chart-Type Decision Matrix

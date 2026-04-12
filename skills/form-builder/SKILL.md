@@ -4,6 +4,10 @@ description: "Form UI patterns: accessible form layouts, validation feedback, mu
 tier: "utility"
 triggers: "form, input, validation, zod, react-hook-form, error state, multi-step, checkout form, contact form, signup, login"
 version: "2.0.0"
+metadata:
+  pathPatterns:
+    - "**/form/**/*.tsx"
+    - "**/*.tsx"
 ---
 
 ## Layer 1: Decision Guidance

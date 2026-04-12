@@ -4,6 +4,10 @@ description: "In-app notification feeds, notification preferences, push notifica
 tier: "domain"
 triggers: "notification center, notification feed, notification badge, push notifications, in-app notifications, notification preferences"
 version: "2.0.0"
+metadata:
+  pathPatterns:
+    - "**/*.tsx"
+    - "**/*.jsx"
 ---
 
 # Notification Center

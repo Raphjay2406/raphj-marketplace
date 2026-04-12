@@ -3,6 +3,10 @@ name: search-ui
 description: "Search UI patterns: full-text search with Algolia/Meilisearch, faceted filtering, search results page, autocomplete dropdown, recent searches, search highlighting, Cmd+K dialog. Works with Next.js and Astro."
 tier: domain
 version: "2.0.0"
+metadata:
+  pathPatterns:
+    - "**/search/**/*.tsx"
+    - "**/*.tsx"
 ---
 
 Use this skill when the user mentions search page, search results, faceted search, filters, autocomplete, search bar, Algolia, Meilisearch, Cmd+K, or search highlighting. Triggers on: search, filter, facet, autocomplete, Algolia, Meilisearch, search results, search page.

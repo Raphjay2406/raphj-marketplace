@@ -4,6 +4,10 @@ description: "WooCommerce headless e-commerce patterns via REST API v3. Product 
 tier: "domain"
 triggers: "woocommerce, woo, wordpress e-commerce, headless wordpress shop"
 version: "2.0.0"
+metadata:
+  pathPatterns:
+    - "**/woo/**/*.ts"
+    - "**/*.ts"
 ---
 
 ## Layer 1: Decision Guidance

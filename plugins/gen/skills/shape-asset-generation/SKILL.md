@@ -4,6 +4,10 @@ description: "Procedural shape generation, SVG assets, and decorative elements. 
 tier: domain
 triggers: "shapes, SVG, geometric, organic, blob, pattern, divider, background pattern, decorative, illustration, isometric, clip-path, procedural, noise texture, dot grid, mesh gradient, particle, animated SVG, morphing, path drawing, ASCII art"
 version: "2.0.0"
+metadata:
+  pathPatterns:
+    - "**/*.svg"
+    - "**/*.tsx"
 ---
 
 ## Layer 1: Decision Guidance

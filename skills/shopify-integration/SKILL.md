@@ -4,6 +4,10 @@ description: "Shopify headless e-commerce patterns using Storefront API. Product
 tier: "domain"
 triggers: "shopify, e-commerce, storefront, product catalog, shopping cart, online store"
 version: "2.0.0"
+metadata:
+  pathPatterns:
+    - "**/shopify/**/*.ts"
+    - "**/*.ts"
 ---
 
 ## Layer 1: Decision Guidance

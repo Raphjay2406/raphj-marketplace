@@ -4,6 +4,10 @@ description: "React/Vite SPA patterns: client-side routing, Vite setup, no-SSR p
 tier: "domain"
 triggers: "react, vite, SPA, single page app, client-side routing, react router, tanstack router"
 version: "2.0.0"
+metadata:
+  pathPatterns:
+    - "**/*.tsx"
+    - "**/*.jsx"
 ---
 
 ## Layer 1: Decision Guidance

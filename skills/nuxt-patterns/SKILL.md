@@ -5,6 +5,10 @@ description: "Nuxt 3 patterns: file-based routing, auto-imports, useFetch/useAsy
 triggers: ["nuxt", "nuxt 3", "nitro", "useFetch", "useAsyncData", "server routes", "nuxt content", "nuxt islands", "hybrid rendering"]
 used_by: ["builder", "planner", "start-project"]
 version: "3.1.0"
+metadata:
+  pathPatterns:
+    - "**/*.vue"
+    - "**/nuxt.config.ts"
 ---
 
 ## Layer 1: Decision Guidance

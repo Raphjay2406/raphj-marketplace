@@ -4,6 +4,10 @@ description: "Variable font axis animation, split-text character reveals, text-a
 tier: domain
 triggers: "kinetic type, variable font, text animation, split text, text reveal, gradient text, text stroke, outlined text, text mask, hero typography, animated type"
 version: "2.3.0"
+metadata:
+  pathPatterns:
+    - "**/*.tsx"
+    - "**/*.jsx"
 ---
 
 ## Layer 1: Decision Guidance

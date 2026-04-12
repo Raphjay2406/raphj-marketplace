@@ -4,6 +4,10 @@ description: "CMS content integration patterns: Contentful, Sanity, Strapi, Buil
 tier: domain
 triggers: "CMS, content management, Contentful, Sanity, Strapi, Builder.io, Payload, headless CMS, content API, content model, MDX, content collections"
 version: "2.8.1"
+metadata:
+  pathPatterns:
+    - "**/content/**/*"
+    - "**/*.ts"
 ---
 
 ## Layer 1: Decision Guidance

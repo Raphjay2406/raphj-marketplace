@@ -4,6 +4,9 @@ description: "Programmatic video content generation with Remotion. DNA-aware com
 tier: domain
 triggers: "Remotion, video generation, programmatic video, hero video, product video, social media assets, OG image, video composition, animated video, motion graphics"
 version: "2.0.0"
+metadata:
+  pathPatterns:
+    - "**/remotion/**/*.tsx"
 ---
 
 ## Layer 1: Decision Guidance

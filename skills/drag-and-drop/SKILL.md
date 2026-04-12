@@ -3,6 +3,10 @@ name: drag-and-drop
 description: "Drag-and-drop patterns with dnd-kit: sortable lists, kanban boards, file tree reordering, multi-container drag, accessible drag. Works with Next.js and Astro."
 tier: domain
 version: "2.0.0"
+metadata:
+  pathPatterns:
+    - "**/*.tsx"
+    - "**/*.jsx"
 ---
 
 Use this skill when the user mentions drag and drop, sortable list, kanban board, reorderable, dnd-kit, drag handles, or any reordering interaction. Triggers on: drag, drop, sortable, kanban, reorder, dnd-kit, drag handle, draggable.

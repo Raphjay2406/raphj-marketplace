@@ -5,6 +5,11 @@ description: "Speculation Rules API — progressive-enhancement prerender/prefet
 triggers: ["speculation rules", "prerender", "prefetch", "instant navigation", "speculative loading", "eagerness"]
 used_by: ["seo-technical", "performance-guardian", "nextjs-patterns"]
 version: "3.2.0"
+metadata:
+  pathPatterns:
+    - "**/*.tsx"
+    - "**/*.astro"
+    - "**/_document.tsx"
 ---
 
 ## Layer 1: Decision Guidance

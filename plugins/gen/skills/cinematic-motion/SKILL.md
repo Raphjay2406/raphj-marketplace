@@ -4,6 +4,11 @@ description: "Unified motion design system. CSS scroll-driven default, archetype
 tier: core
 triggers: "animation, motion, scroll effect, hover, transition, choreography, cinematic, parallax, GSAP, framer motion, scroll-driven, entrance animation, CSS animation, keyframes, scroll trigger, motion presets"
 version: "2.0.0"
+metadata:
+  pathPatterns:
+    - "**/*.tsx"
+    - "**/*.jsx"
+    - "**/*.css"
 ---
 
 ## Genorah v2.0 Updates

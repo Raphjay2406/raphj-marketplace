@@ -4,6 +4,11 @@ description: "Page transition system covering View Transitions API (native), Mot
 tier: domain
 triggers: "page transition, route transition, view transition, navigate, page change, route change, shared element, AnimatePresence, crossfade, slide transition"
 version: "2.0.0"
+metadata:
+  pathPatterns:
+    - "**/*.tsx"
+    - "**/*.jsx"
+    - "**/*.astro"
 ---
 
 ## Layer 1: Decision Guidance

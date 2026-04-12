@@ -3,6 +3,10 @@ name: file-upload-media
 description: "File upload patterns: drag-drop zones, image crop, multi-file with progress, video player, gallery/lightbox, avatar upload. Works with Next.js and Astro."
 tier: domain
 version: "2.0.0"
+metadata:
+  pathPatterns:
+    - "**/upload/**/*.tsx"
+    - "**/*.tsx"
 ---
 
 Use this skill when the user mentions file upload, drag and drop, image upload, image crop, avatar upload, video player, gallery, lightbox, media, or file handling. Triggers on: upload, drag drop, file, image crop, avatar, video, gallery, lightbox, media, dropzone.

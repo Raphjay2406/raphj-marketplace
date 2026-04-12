@@ -4,6 +4,10 @@ description: "Shopify headless e-commerce patterns using Storefront API. Product
 tier: "domain"
 triggers: "shopify, e-commerce, storefront, product catalog, shopping cart, online store"
 version: "2.0.0"
+metadata:
+  pathPatterns:
+    - "**/shopify/**/*.ts"
+    - "**/*.ts"
 ---
 
 ## Layer 1: Decision Guidance
@@ -964,3 +968,56 @@ function SizingChart({ data }: { data: Record<string, string>[] }) {
 | Cart persistence | - | - | - | HARD -- cart ID must be persisted in localStorage or cookie |
 | Currency formatting | - | - | - | HARD -- must use Intl.NumberFormat with API-provided currencyCode |
 | Structured data per product page | 1 | 1 | JSON-LD block | HARD -- every product page must have Product schema |
+
+
+---
+
+## v3.3 Addendum: Shopify Storefront API 2025-01 + Hydrogen 2025 (CRITICAL)
+
+### API version migration
+
+**Storefront API 2024-10 DEPRECATED Jan 2025.** New projects MUST target `2025-01` or later.
+
+```ts
+// BEFORE:
+const client = createStorefrontClient({ apiVersion: '2024-10' });
+
+// AFTER:
+const client = createStorefrontClient({ apiVersion: '2025-01' });
+```
+
+Shopify maintains 4 concurrent API versions (release + 3 prior quarters).
+
+### Hydrogen 2025
+
+- Hydrogen 2025.1 — Remix-based, Vite 6+ option available
+- **Customer Account API v2025-01** replaces Multipass for customer auth
+- **B2B Storefront** — separate B2B scope for quote/net-terms workflows
+
+### Shopify Functions (Rust/JS)
+
+- Cart transform — runtime cart manipulation (bundles, tiered pricing)
+- Selling Plans — subscription pricing
+- Bundles API — composite products
+- Deploy via `shopify app deploy`
+
+### Checkout Extensibility (CRITICAL for Plus)
+
+**checkout.liquid DEPRECATED — full removal Aug 2025 for Plus merchants.** All custom checkout logic via Checkout UI Extensions (React sandbox). Plus merchants must migrate before Aug 2025.
+
+### DNA-themed cart drawer (Hydrogen)
+
+```tsx
+<CartProvider>
+  <CartDrawer className="bg-[var(--color-bg)] text-[var(--color-text)]">
+    <CartLineItem className="border-b border-[var(--color-border)]" />
+  </CartDrawer>
+</CartProvider>
+```
+
+### Removed / deprecated (2025)
+
+- checkout.liquid → Checkout Extensibility
+- Multipass → Customer Account API
+- Cart attributes via URL → Cart API attributes
+- Storefront API 2024-10 and earlier

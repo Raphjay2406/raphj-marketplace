@@ -5,6 +5,9 @@ description: "Svelte 5 + SvelteKit 2 patterns: runes ($state, $derived, $effect)
 triggers: ["svelte", "sveltekit", "svelte 5", "runes", "$state", "$derived", "form action", "load function", "svelte tailwind"]
 used_by: ["builder", "planner", "start-project"]
 version: "3.1.0"
+metadata:
+  pathPatterns:
+    - "**/*.svelte"
 ---
 
 ## Layer 1: Decision Guidance

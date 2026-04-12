@@ -4,6 +4,12 @@ description: "Tailwind CSS v4 CSS-first configuration, DNA token mapping, contai
 tier: "core"
 triggers: "tailwind, css, tokens, theme, dark mode setup, container queries, styling system"
 version: "2.0.0"
+metadata:
+  pathPatterns:
+    - "**/tailwind.config.*"
+    - "**/*.css"
+    - "**/*.tsx"
+    - "**/*.jsx"
 ---
 
 ## Layer 1: Decision Guidance

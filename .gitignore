@@ -4,3 +4,4 @@ Thumbs.db
 .env.local
 node_modules/
 *.log
+.claude/genorah-dedup/

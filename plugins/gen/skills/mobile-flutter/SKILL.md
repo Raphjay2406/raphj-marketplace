@@ -4,6 +4,9 @@ description: "Flutter/Dart cross-platform patterns. ThemeData from DNA, Material
 tier: "domain"
 triggers: "flutter, dart, flutter widget, material cupertino, riverpod, flutter app"
 version: "2.0.0"
+metadata:
+  pathPatterns:
+    - "**/*.dart"
 ---
 
 ## Layer 1: Decision Guidance
@@ -955,3 +958,54 @@ class AppConfig {
 | Riverpod for state | - | - | required | SOFT -- no setState for cross-widget state |
 | Main isolate blocking | 0 | 16 | ms of synchronous work | HARD -- offload heavy computation to isolates |
 | Platform adaptive widgets | - | - | checked | SOFT -- use Cupertino widgets on iOS where appropriate |
+
+
+---
+
+## v3.3 Addendum: Flutter 3.24 + Dart 3.5 (Aug 2024+)
+
+### Flutter 3.24
+
+- **Impeller default on iOS + Android** — eliminates "jank on first run" (shader pre-compilation). Metal on iOS, Vulkan on Android.
+- **Multi-window desktop** (stable macOS/Linux, preview Windows)
+- **WidgetInspector V3** — AI-completion friendly
+- **CanvasKit Chromium (Wasm)** for Flutter Web — smaller bundle, faster startup
+
+### Dart 3.5
+
+- **Sealed classes** for exhaustive pattern matching
+- **Extension types** (zero-cost primitive wrappers)
+- **Digit separators** in literals: `1_000_000`
+
+### State management consolidation
+
+**flutter_riverpod 2.5+** is the 2025 default. BLoC fine for teams with existing investment. Provider deprecated for new work.
+
+### DNA token pipeline
+
+```dart
+class DnaColors {
+  static const primary = Color(0xFF6366F1);
+  static const bg = Color(0xFF0A0A0B);
+  static const surface = Color(0xFF141418);
+}
+
+final dnaTheme = ThemeData(
+  useMaterial3: true,
+  colorScheme: ColorScheme.dark(
+    primary: DnaColors.primary,
+    surface: DnaColors.surface,
+    background: DnaColors.bg,
+  ),
+  fontFamily: 'Inter',
+);
+```
+
+### View Transitions on Flutter Web
+
+Flutter Web (Canvas renderer) does NOT benefit from browser's View Transitions API. Use go_router's built-in animated transitions instead.
+
+### Deprecated in 3.24+
+
+- Skia backend on Android → Impeller
+- useMaterial3: false → M3 default; M2 only for migration

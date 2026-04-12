@@ -4,6 +4,11 @@ description: "Blog and article UI patterns: post index, article typography, read
 tier: "domain"
 triggers: "blog, article, post, reading, editorial, magazine, content, RSS, table of contents, TOC, reading time, tag filter"
 version: "2.0.0"
+metadata:
+  pathPatterns:
+    - "**/*.md"
+    - "**/*.mdx"
+    - "**/blog/**/*"
 ---
 
 ## Layer 1: Decision Guidance

@@ -5,6 +5,11 @@ description: "Butterick-derived typography rules — smart quotes, en/em dashes,
 triggers: ["typography", "typography rules", "smart quotes", "en dash", "em dash", "hyphenation", "butterick", "practical typography", "copy rules", "punctuation"]
 used_by: ["builder", "content-specialist", "polisher", "dna-compliance-check"]
 version: "3.1.0"
+metadata:
+  pathPatterns:
+    - "**/*.tsx"
+    - "**/*.mdx"
+    - "**/*.md"
 ---
 
 ## Layer 1: Decision Guidance

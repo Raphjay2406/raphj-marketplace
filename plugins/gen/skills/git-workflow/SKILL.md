@@ -5,6 +5,11 @@ description: "Git workflow automation — DNA-tagged commit templates per emotio
 triggers: ["git workflow", "commit template", "pr generation", "worktree", "conventional commit", "section commit", "beat commit"]
 used_by: ["builder", "polisher", "orchestrator"]
 version: "3.2.0"
+metadata:
+  bashPatterns:
+    - "git commit"
+    - "git worktree"
+    - "git log"
 ---
 
 ## Layer 1: Decision Guidance

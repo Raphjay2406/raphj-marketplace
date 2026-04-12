@@ -4,6 +4,11 @@ description: "Next.js 16 patterns for App Router and Pages Router: proxy.ts, asy
 tier: "domain"
 triggers: "next.js, nextjs, app router, pages router, server components, RSC, proxy, cache components, next/font, next/image"
 version: "2.0.0"
+metadata:
+  pathPatterns:
+    - "**/app/**/*.tsx"
+    - "**/pages/**/*.tsx"
+    - "**/*.tsx"
 ---
 
 ## Layer 1: Decision Guidance

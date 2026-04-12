@@ -4,6 +4,10 @@ description: "Kotlin/Jetpack Compose native Android patterns. Material 3 theming
 tier: "domain"
 triggers: "kotlin, jetpack compose, android native, gradle, play store, material design, android app"
 version: "2.0.0"
+metadata:
+  pathPatterns:
+    - "**/*.kt"
+    - "**/*.kts"
 ---
 
 ## Layer 1: Decision Guidance
