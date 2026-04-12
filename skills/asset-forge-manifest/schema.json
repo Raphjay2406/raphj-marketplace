@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://genorah.dev/schemas/asset-forge-manifest/v1.json",
+  "title": "Asset Forge Manifest v1",
+  "type": "object",
+  "required": ["version", "generated_at", "dna_hash", "archetype", "assets"],
+  "properties": {
+    "version": { "const": 1 },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "dna_hash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "archetype": { "type": "string" },
+    "assets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "kind", "path", "cache_key", "source", "license", "bytes"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "3d/model", "3d/scene", "3d/material", "3d/hero-glyph",
+              "2d/svg", "2d/icon", "2d/pattern", "2d/illustration",
+              "2d/mesh-gradient", "2d/blob",
+              "raster/hero-bg", "raster/texture", "raster/og",
+              "raster/product", "raster/character",
+              "vector/ai"
+            ]
+          },
+          "path": { "type": "string" },
+          "preview": { "type": "string" },
+          "cache_key": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+          "source": {
+            "type": "object",
+            "required": ["tool"],
+            "properties": {
+              "tool": { "type": "string" },
+              "model": { "type": "string" },
+              "seed": { "type": "integer" },
+              "prompt_id": { "type": "string" }
+            }
+          },
+          "dna_coverage": {
+            "type": "object",
+            "properties": {
+              "primary": { "type": "number", "minimum": 0, "maximum": 1 },
+              "secondary": { "type": "number", "minimum": 0, "maximum": 1 },
+              "accent": { "type": "number", "minimum": 0, "maximum": 1 },
+              "off_palette": { "type": "number", "minimum": 0, "maximum": 1 }
+            }
+          },
+          "material": { "type": "string" },
+          "beat": {
+            "type": "string",
+            "enum": ["HOOK", "TEASE", "REVEAL", "BUILD", "PEAK", "BREATHE", "TENSION", "PROOF", "PIVOT", "CLOSE"]
+          },
+          "license": {
+            "type": "string",
+            "enum": [
+              "cc0", "cc-by", "cc-by-sa",
+              "commercial-paid",
+              "meshy-commercial", "flux-commercial",
+              "ideogram-commercial", "recraft-commercial",
+              "user-upload", "genorah-procedural", "unknown"
+            ]
+          },
+          "bytes": { "type": "integer", "minimum": 0 },
+          "quality_scores": {
+            "type": "object",
+            "properties": {
+              "dna_coverage_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+              "archetype_compliance": { "enum": ["pass", "warn", "fail"] },
+              "style_coherence": { "type": "number", "minimum": 0, "maximum": 1 }
+            }
+          }
+        }
+      }
+    }
+  }
+}

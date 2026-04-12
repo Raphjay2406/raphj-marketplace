@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "version": "1.0.0",
+  "purpose": "Machine-checkable regex markers converting Hard Gate #5 (Archetype Specificity) from subjective to testable. Each archetype defines mandatory/forbidden/signature greps. Quality-reviewer runs grep per archetype against built section TSX; if any mandatory missing or any forbidden present, archetype-specificity gate FAILS.",
+  "enforcement": {
+    "stage": "quality-gate stage 5 (design fidelity)",
+    "blocker": true,
+    "applies_to": ["*.tsx", "*.jsx", "*.vue", "*.svelte", "*.astro"],
+    "cascade_on_fail": "Integration Quality category x 0.5",
+    "require_per_archetype": {"mandatory": 3, "forbidden": 3, "signature": 1}
+  },
+  "archetypes": {
+    "brutalist": {
+      "mandatory": [
+        "border-[0-9]+\\b|border-width:\\s*[2-9]px",
+        "font-mono|font-family:\\s*['\"]?(JetBrains|Fira|Space Mono|IBM Plex Mono)",
+        "bg-(black|white|zinc-900|zinc-950)\\b|background:\\s*#0{3,6}|#f{3,6}"
+      ],
+      "forbidden": [
+        "rounded-(xl|2xl|3xl|full)|border-radius:\\s*(1[2-9]|[2-9][0-9])px",
+        "shadow-(xl|2xl)|box-shadow:.*blur\\((1[6-9]|[2-9][0-9])",
+        "bg-gradient-to-|linear-gradient"
+      ],
+      "signature": ["rotate-(-?[1-9]|1[0-2])|transform:\\s*rotate"]
+    },
+    "ethereal": {
+      "mandatory": [
+        "backdrop-blur|filter:\\s*blur|backdrop-filter",
+        "bg-white/[0-9]{1,2}\\b|opacity-[2-7][0-9]|rgba\\([^)]*,\\s*0\\.[2-7]",
+        "bg-gradient|linear-gradient|radial-gradient"
+      ],
+      "forbidden": [
+        "border-[4-9]|border-width:\\s*[4-9]px",
+        "font-mono",
+        "rotate-[1-9][0-9]|transform:\\s*rotate\\(-?[1-9][0-9]"
+      ],
+      "signature": ["float|animate-pulse|animate-float|will-change:\\s*transform"]
+    },
+    "editorial": {
+      "mandatory": [
+        "font-serif|font-family:\\s*['\"]?(Playfair|Cormorant|Fraunces|GT Sectra|Canela|Tiempos)",
+        "max-w-(prose|2xl|3xl|4xl)|max-width:\\s*(6[0-9]|7[0-9]|8[0-9])ch",
+        "leading-(relaxed|loose)|line-height:\\s*1\\.[6-9]"
+      ],
+      "forbidden": [
+        "font-mono|font-display:\\s*swap.*mono",
+        "bg-gradient-to-r.*from-(pink|fuchsia|cyan|lime)",
+        "animate-bounce|animate-spin"
+      ],
+      "signature": ["drop-cap|::first-letter|first-letter:"]
+    },
+    "kinetic": {
+      "mandatory": [
+        "motion\\.|useScroll|useTransform|ScrollTrigger|gsap",
+        "will-change|transform-gpu|translate3d",
+        "(animate-|transition-).*(duration-|ease-)"
+      ],
+      "forbidden": [
+        "prefers-reduced-motion\\s*:\\s*reduce\\s*\\{[^}]*\\}(?!.*animation:\\s*none)",
+        "animation-duration:\\s*0s(?!.*reduce)",
+        "static(?![a-zA-Z-])"
+      ],
+      "signature": ["SplitText|splitText|text-split|char-animate"]
+    },
+    "neo-corporate": {
+      "mandatory": [
+        "font-(sans|display)\\b|font-family:\\s*['\"]?(Inter|Geist|SF Pro|Söhne)",
+        "grid-cols-(6|8|12)|grid-template-columns:.*repeat\\((6|8|12)",
+        "text-(sm|base)\\b|letter-spacing:\\s*-0\\."
+      ],
+      "forbidden": [
+        "rotate-|skew-|transform:\\s*(rotate|skew)",
+        "font-serif|font-mono",
+        "text-(pink|fuchsia|purple)-[4-9]00"
+      ],
+      "signature": ["grid-cols-12|subgrid|grid-template-columns:\\s*subgrid"]
+    }
+  },
+  "remaining_archetypes_todo": [
+    "organic", "retro-future", "luxury", "playful", "data-dense",
+    "japanese-minimal", "glassmorphism", "neon-noir", "warm-artisan",
+    "swiss-international", "vaporwave", "neubrutalism", "dark-academia",
+    "ai-native", "claymorphism", "neumorphism", "y2k", "cyberpunk-hud",
+    "spatial-visionos", "pixel-art"
+  ],
+  "rollout_note": "v3.4.2 ships 5 archetype markers (above) as pilot + enforcement harness. v3.4.3 completes remaining 20 archetypes. Quality-reviewer treats unmarked archetypes as WARN (not BLOCK) during rollout window."
+}

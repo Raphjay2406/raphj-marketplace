@@ -5,14 +5,14 @@
   },
   "metadata": {
     "description": "Personal Claude Code plugin marketplace by Raphjay2406",
-    "version": "1.6.1"
+    "version": "1.6.2"
   },
   "plugins": [
     {
       "name": "gen",
       "source": "./plugins/gen",
-      "description": "Premium frontend design system for Claude Code v3.0.1 — Measurably Enforced Quality with Pipeline Guidance. 22 workflow commands (new /gen:next for always-on routing), 21-agent pipeline (7 pipeline + 7 specialists including new visual-refiner and consistency-auditor + 5 protocols + 1 figma + 1 self-audit), Design DNA identity system with 19 archetypes. 234-point weighted quality gate now enforced via 6-stage validation pipeline: DNA compliance → render validation → component registry → cross-section consistency → design fidelity (pixel-diff) → full gate. New v3.0 quality primitives: closed-loop visual refiner (max 3 iterations, surgical edits only), DNA drift detector (92% coverage hard gate), perf budgets per emotional beat, motion health sub-gate (INP regression <50ms, CVD parity, scroll-timeline fallback), reference-diff-protocol with per-beat SSIM thresholds. Intelligence layer: AI variant tournament (blind-ranked N=3 hero attempts), model cascade advisory (Haiku/Sonnet/Opus by role), section consistency auditor (runs parallel with builders). Experience: live localhost dashboard at :4455 with SSE updates, interactive click-to-refine companion with data-genorah-id stable selectors, competitive benchmarking against curated SOTD library, smart router (12 intent→/gen:* mappings). Frontier: WebGPU/TSL decision matrix, GLTF optimization pipeline (Draco + Meshopt + KTX2), Sanity + Payload CMS round-trip with auto-generated schemas from emotional arc, Remotion section video (5 DNA-parameterized templates), brand voice extractor (5-axis tone analysis from competitor URLs), cognitive accessibility (reading grade + CVD ΔE2000 + motion sickness), i18n-by-default when ≥2 locales. ~131 skills, 5 MCP integrations (nano-banana, Stitch, Playwright, Obsidian x2). Framework-aware: Next.js, Astro, React/Vite, Tauri, Electron, mobile (Swift, Kotlin, RN, Expo, Flutter). Creates Awwwards SOTD-ready (8.0+) websites with closed-loop refinement.",
-      "version": "3.4.1",
+      "description": "Premium frontend design system for Claude Code v3.4.1 — 3dsvg Hero Mark Automation. 26 commands, 21-agent pipeline, ~153 skills, 8 MCP integrations (nano-banana, Stitch, Playwright, Obsidian x2, Chrome DevTools, Next DevTools, 3dsvg-export). 25 Design Archetypes × 234-point weighted quality gate via 6-stage validation (DNA → render → registry → consistency → fidelity → full gate). v3.4 3dsvg integration: 75 archetype-curated presets with AJV schema, `<GenorahSVG3D>` accessibility wrapper pattern, SVG input sanitization (XXE/recursive-use/script rejection), Hero Mark Compliance sub-gate (5 binary checks), motion-health + perf-budgets coupling (3-instance WebGL cap, per-beat feasibility), `/gen:hero-mark` command (design/live/export/preview subcommands), 3dsvg-export MCP server (headless Playwright + registerCanvas render to PNG/MP4), brandkit 30-variant fan-out (5 materials × 3 angles × 2 breakpoints). Earlier v3.x primitives: closed-loop visual refiner, DNA drift detection (92% coverage hard gate), reference-diff-protocol (per-beat SSIM), AI variant tournament, section consistency auditor, live dashboard (localhost:4455 SSE), interactive click-to-refine companion with data-genorah-id stable selectors, competitive benchmarking (Land-book + SiteInspire + Cosmos + Awwwards), smart intent router, self-audit with pre-push parity hook, 4 OAuth-free inspiration sources, kinetic typography (GSAP 3.13 free SplitText + variable-font morphing), Speculation Rules API, CSS Anchor Positioning, cross-document View Transitions (Safari 18.2+), Next.js 16 Cache Components (GA), Vite 8 + Rolldown, Flux 1.1 Pro + Ideogram 3 image models, 7 new frameworks (Svelte 5, Vue 3, Nuxt 3), WebGPU/TSL decision matrix, GLTF optimization (Draco + Meshopt + KTX2), Sanity + Payload CMS round-trip, Remotion section video, brand voice extractor (5-axis competitor analysis), cognitive accessibility (CVD ΔE2000 + motion sickness), typography-rules (Butterick), anti-vanity-check, Hero Mark + Motion Health + DNA Drift + Perf Budget sub-gates cascading into 234-pt total. Testing infrastructure: node:test (50/50 pass), GH Actions validate workflow (Ubuntu + Windows matrix), self-audit runtime (BLOCK/WARN/INFO tiers), pre-push mirror parity. Targets Next.js 16, Astro 6, SvelteKit 2, Nuxt 3, React/Vite 8, Tauri, Electron, mobile (SwiftUI 6, Compose Multiplatform 2.0, Expo SDK 52, Flutter 3.24, React Native). Creates Awwwards SOTD-ready (8.0+) websites with measurably enforced, closed-loop refinement.",
+      "version": "3.4.2-rc.1",
       "author": {
         "name": "raphj"
       },
@@ -127,6 +127,23 @@
         "payload-cms",
         "remotion-section-video",
         "i18n-by-default",
+        "3dsvg",
+        "3dsvg-extrusion",
+        "3dsvg-preset-library",
+        "hero-mark",
+        "hero-mark-command",
+        "hero-mark-compliance-sub-gate",
+        "3dsvg-export-mcp",
+        "svg-extrusion",
+        "3d-wordmark",
+        "logo-extrusion",
+        "genorah-svg3d-wrapper",
+        "svg-sanitization",
+        "svgo-allowlist",
+        "webgl-instance-cap",
+        "render-preset",
+        "render-batch",
+        "render-video",
         "speculation-rules",
         "anchor-positioning",
         "cross-doc-view-transitions",

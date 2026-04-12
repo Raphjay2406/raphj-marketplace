@@ -59,7 +59,7 @@ Five optional MCP servers declared in `.claude-plugin/.mcp.json`:
 
 All servers are optional. Commands gracefully degrade when servers are unavailable.
 
-## Commands (25)
+## Commands (26)
 
 | Command | Purpose |
 |---------|---------|
@@ -88,6 +88,7 @@ All servers are optional. Commands gracefully degrade when servers are unavailab
 | `/gen:brandkit` | (v3.1) Generate brand kit deliverables — logo variants, favicon, OG templates, color exports, guidelines PDF, /brand public route |
 | `/gen:ci-setup` | (v3.2) Scaffold Lighthouse CI + GitHub Actions + Playwright preview-smoke from perf-budgets |
 | `/gen:review-share` | (v3.2) Generate shareable client-review URL with pinnable comments + approval tracking |
+| `/gen:hero-mark` | (v3.4.1) 3dsvg hero-mark workflow — design/live/export/preview subcommands, DNA-bound preset library, 30-variant brand fan-out |
 
 ## Skill Tiers
 

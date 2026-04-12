@@ -575,3 +575,79 @@ AVOID: [patterns that lost points]
 - **Always create fix files.** Never just report problems -- create actionable GAP-FIX.md and CONSISTENCY-FIX.md files the polisher can execute.
 - **Remediation protocol.** If a section is BLOCKED or in Reject tier, prioritize: hard gates first, then penalties, then lowest-scoring categories. After polisher runs, re-score the FULL gate (not partial). Second failure = escalate to user. Max 2 remediation cycles before escalation.
 - **Visual companion always ships.** Generate score-dashboard.html after every review pass, even if all sections pass. The dashboard is the review's permanent record.
+
+---
+
+## v3.4.2 Addendum — Measurement Protocols
+
+### Motion Health Measurement Protocol (MANDATORY per audit)
+
+When Playwright MCP is available, run this protocol and write results to `.planning/genorah/audit/motion-health.json`.
+
+```
+For each section of interest:
+1. browser_navigate to the section anchor.
+2. browser_evaluate to install PerformanceObserver:
+   ```js
+   window.__genorah_motion = { inp: [], layoutShifts: [], longTasks: [], raf: [] };
+   new PerformanceObserver((list) => {
+     for (const e of list.getEntries()) {
+       if (e.entryType === 'event' && e.name === 'pointerdown') {
+         window.__genorah_motion.inp.push(e.duration);
+       }
+       if (e.entryType === 'layout-shift') window.__genorah_motion.layoutShifts.push(e.value);
+       if (e.entryType === 'longtask') window.__genorah_motion.longTasks.push(e.duration);
+     }
+   }).observe({ entryTypes: ['event', 'layout-shift', 'longtask'], buffered: true });
+   ```
+3. Simulate interaction: scroll through section, hover interactive elements, click primary CTA.
+4. Wait 3000ms for observer flush.
+5. browser_evaluate to read:
+   ```js
+   const rec = window.__genorah_motion;
+   const animating = document.querySelectorAll('[class*="animate-"],[style*="animation"],[data-gsap]').length;
+   const gpuLayers = performance.getEntriesByType('largest-contentful-paint').length;
+   return {
+     inp_p75: rec.inp.sort()[Math.floor(rec.inp.length * 0.75)] || 0,
+     cls_sum: rec.layoutShifts.reduce((a,b)=>a+b, 0),
+     long_tasks: rec.longTasks.length,
+     concurrent_animations: animating,
+   };
+   ```
+6. Compare against `skills/motion-health/SKILL.md` per-beat budgets. Write verdict to JSON.
+```
+
+**Sub-gate verdict rules:**
+- INP p75 > beat budget (default 200ms) → FAIL
+- CLS sum > 0.1 → FAIL
+- Concurrent animations > beat budget (HOOK 8, BREATHE 1, PEAK 12, others 4) → FAIL
+- prefers-reduced-motion parity not honored (test by toggling emulation) → FAIL
+
+Any FAIL caps Motion & Interaction category × 0.5. Record in SUMMARY.md cascade block.
+
+### Archetype-Marker Grep (MANDATORY, Stage 5)
+
+```
+1. Read archetype from .planning/genorah/DESIGN-DNA.md
+2. Read skills/design-archetypes/testable-markers.json
+3. For each mandatory regex: grep section source; missing → FAIL hard gate #5.
+4. For each forbidden regex: grep section source; present → FAIL hard gate #5.
+5. For each signature regex: grep; zero matches → penalty -8 (not block during rollout).
+6. Write results to sections/{id}/markers.json:
+   { archetype, mandatory_found: [], mandatory_missing: [], forbidden_found: [], signature_found: [] }
+```
+
+If archetype is in `remaining_archetypes_todo` list, emit WARN with "archetype markers pending v3.4.3 — manual review required."
+
+### SSIM Hard Cap Handling
+
+When `reference_url` is present in section plan:
+1. Run reference-diff-protocol per existing skill.
+2. Compute σ deviation from beat threshold.
+3. If > 2σ below: mark Creative Courage cap × 0.7 in cascade.
+4. If > 3σ below AND trajectory.json shows ≥ 3 refine attempts: emit BLOCK with remediation = "human review in DECISIONS.md required."
+
+### SUMMARY.md Cascade Block (MANDATORY output)
+
+Every GAP-FIX.md or SUMMARY.md you write for a reviewed section MUST include the v3.4.2 Quality Cascade template (see `skills/quality-gate-v2/SKILL.md` §E). No exceptions.
+

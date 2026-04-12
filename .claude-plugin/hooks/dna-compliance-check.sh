@@ -169,6 +169,19 @@ check_pii_pattern 'gho_[a-zA-Z0-9]\{36,\}' "GitHub OAuth token detected"
 check_pii_pattern 'xox[bpars]-[a-zA-Z0-9]\{10,\}' "Slack token detected in source code"
 check_pii_pattern 'glpat-[a-zA-Z0-9_-]\{20,\}' "GitLab personal access token detected"
 
+# --- v3.4.2 DNA Drift Enforcement (opt-in via DNA_STRICT=1 during rollout) ---
+# Delegates to scripts/dna-drift-check.mjs which computes tokenized/hardcoded ratio.
+# When DNA_STRICT=1 and coverage < 92%, blocks the commit. Otherwise warns.
+if command -v node >/dev/null 2>&1; then
+  DRIFT_SCRIPT="${CLAUDE_PLUGIN_ROOT:-.}/scripts/dna-drift-check.mjs"
+  if [ -f "$DRIFT_SCRIPT" ]; then
+    if ! node "$DRIFT_SCRIPT" ${DNA_STRICT:+--strict}; then
+      VIOLATIONS="${VIOLATIONS}\n[BLOCK] DNA drift coverage below 92% threshold (see details above)\n"
+      VIOLATION_COUNT=$((VIOLATION_COUNT + 1))
+    fi
+  fi
+fi
+
 # --- Report ---
 
 if [ $VIOLATION_COUNT -gt 0 ]; then

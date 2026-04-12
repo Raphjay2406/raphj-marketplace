@@ -507,3 +507,79 @@ hero_mark_compliance:
 - ❌ Bare `<SVG3D>` import at top of a Server Component (SSR crash + no a11y).
 - ❌ Override `material` to a forbidden value (Luxury + clay, etc.) via PLAN.md — preset library rejects this at build time.
 - ❌ 4+ `<GenorahSVG3D>` instances on same page — WebGL context exhaustion.
+
+---
+
+## v3.4.2 Addendum — Enforcement Closure
+
+Closes five holes surfaced in the v3.4.1 deep audit. All items in this addendum are **shipping rules**, not aspirational.
+
+### A. Archetype Specificity — Testable Markers (Hard Gate #5)
+
+Quality-reviewer Stage 5 (Design Fidelity) MUST grep built section source against `skills/design-archetypes/testable-markers.json` for the chosen archetype.
+
+- If any `mandatory` regex is MISSING from the source → FAIL (hard gate #5, block).
+- If any `forbidden` regex is PRESENT → FAIL (hard gate #5, block).
+- If no `signature` regex matches → penalty -8 (not block) during rollout; upgrade to block in v3.4.3.
+
+Archetypes without markers (20/25 during v3.4.2) emit WARN only. v3.4.3 completes rollout.
+
+### B. DNA Drift — Hard Block Wiring
+
+`scripts/dna-drift-check.mjs` computes tokenized/hardcoded color ratio across staged .tsx/.jsx/.ts/.css. Invoked from `dna-compliance-check.sh`:
+
+- Default (rollout): `WARN` when coverage < 92%.
+- With `DNA_STRICT=1`: `BLOCK` commit when coverage < 92%.
+
+Projects ship `DNA_STRICT=1` in their `.claude/genorah.local.md` once they clear the first clean audit. This staged rollout avoids surprise-blocking teams mid-sprint.
+
+### C. Motion-Health Sub-Gate — Actual Measurement
+
+Quality-reviewer MUST produce `.planning/genorah/audit/motion-health.json` per audit run. See `agents/pipeline/quality-reviewer.md` §"Motion Health Measurement Protocol" for the Playwright + PerformanceObserver recipe. Missing artifact = sub-gate FAIL (category Motion × 0.5 cap applied; effective score recorded in SUMMARY.md).
+
+### D. Reference-Diff SSIM Hard Cap
+
+Previously SSIM was a "signal, not a hard fail." Upgraded:
+
+| SSIM vs reference | Action |
+|---|---|
+| ≥ beat threshold | pass |
+| threshold − 1σ | warn; refiner MAY attempt 1 iteration |
+| > 2σ below threshold | **Creative Courage category × 0.7 cap** in final scoring |
+| > 3σ below threshold, after 3 refine attempts | **BLOCK ship** — requires human override in DECISIONS.md |
+
+Beat thresholds stored in `skills/reference-diff-protocol/SKILL.md`; refiner attempts tracked in `sections/{id}/trajectory.json`.
+
+### E. SUMMARY.md — Cascade Transparency Template
+
+Every section's SUMMARY.md MUST include this block after the score:
+
+```markdown
+## Quality Cascade
+
+| Category | Raw | Cap | Reason | Effective |
+|---|---|---|---|---|
+| Color System | 22/24 | — | — | 22 |
+| Typography | 26/26 | — | — | 26 |
+| Motion & Interaction | 18/20 | × 0.5 | motion-health sub-gate fail (INP 203ms > 200 budget) | 9 |
+| Creative Courage | 19/22 | × 0.7 | reference-diff SSIM 0.41 vs beat threshold 0.55 | 13 |
+| ...all 12 categories... |
+| **Total (raw)** | **212** | | | |
+| **Total (effective)** | | | | **178** |
+
+**Tier:** Strong (effective) / SOTD (raw)
+**Shipping score:** 178 (effective governs)
+**Sub-gates:** motion-health FAIL · dna-drift PASS (96.2%) · ref-diff WARN · hero-mark PASS
+```
+
+Reviewers and dashboard read this block verbatim. No more divining which sub-gate capped which category.
+
+### Enforcement Matrix (v3.4.2 shipping)
+
+| Gate | Pre-v3.4.2 | v3.4.2 |
+|---|---|---|
+| Archetype specificity | subjective | testable-markers grep (5 archetypes full, 20 WARN) |
+| DNA drift | advisory WARN | opt-in BLOCK via `DNA_STRICT=1`; default WARN |
+| Motion health | not measured | measured per audit, artifact required |
+| Reference diff | signal only | 2σ below → cap × 0.7; 3σ + 3 retries → block |
+| Cascade transparency | implicit | explicit SUMMARY.md block, mandatory |
