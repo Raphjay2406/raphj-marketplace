@@ -59,7 +59,7 @@ Five optional MCP servers declared in `.claude-plugin/.mcp.json`:
 
 All servers are optional. Commands gracefully degrade when servers are unavailable.
 
-## Commands (26)
+## Commands (31)
 
 | Command | Purpose |
 |---------|---------|
@@ -89,6 +89,11 @@ All servers are optional. Commands gracefully degrade when servers are unavailab
 | `/gen:ci-setup` | (v3.2) Scaffold Lighthouse CI + GitHub Actions + Playwright preview-smoke from perf-budgets |
 | `/gen:review-share` | (v3.2) Generate shareable client-review URL with pinnable comments + approval tracking |
 | `/gen:hero-mark` | (v3.4.1) 3dsvg hero-mark workflow — design/live/export/preview subcommands, DNA-bound preset library, 30-variant brand fan-out |
+| `/gen:assets` | (v3.5.0) Asset Forge — generate/audit/library/export 2D+3D+raster assets with MANIFEST.json governance and asset-forge-dna-compliance sub-gate |
+| `/gen:align` | (v3.5.3) Intent Alignment — SMART-validate PROJECT goals, trace sections to goals; Stage 1 of pipeline-depth |
+| `/gen:ship-check` | (v3.5.3) Unified ship-readiness gate — build, typecheck, lint, test, lighthouse, axe, visual-regression, SEO, security, license scorecard |
+| `/gen:ux-audit` | (v3.5.0) Standalone UX Integrity audit — runs all 6 quality-gate-v3 Axis 2 sub-gates + synthetic-user personas |
+| `/gen:narrative-audit` | (v3.5.3) Cross-section arc coherence judge — Stage 10 of pipeline-depth; catches per-section-great-but-story-flat failure |
 
 ## Skill Tiers
 
