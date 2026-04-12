@@ -1,0 +1,191 @@
+{
+  "_meta": {
+    "source": "nextlevelbuilder/ui-ux-pro-max-skill v2.0 src/ui-ux-pro-max/data/typography.csv",
+    "license": "MIT (curation) + OFL (fonts)",
+    "count_in_source": 73,
+    "count_distilled": 18,
+    "note": "All fonts are Google Fonts. No binaries vendored — use URL imports. Each pairing uses the PRO MAX mood/best-for taxonomy."
+  },
+  "pairings": [
+    {
+      "id": "modern-sans-01",
+      "display": "Inter",
+      "body": "Inter",
+      "mono": "JetBrains Mono",
+      "mood": "clean-technical",
+      "best_for": ["saas", "dev-tools", "dashboards"],
+      "google_fonts_url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap",
+      "notes": "Universal modern SaaS default. Inter handles everything; JBM for code."
+    },
+    {
+      "id": "editorial-serif-01",
+      "display": "Playfair Display",
+      "body": "Source Serif Pro",
+      "mono": "JetBrains Mono",
+      "mood": "editorial-elegant",
+      "best_for": ["editorial", "publishing", "luxury-ecom", "agency"],
+      "google_fonts_url": "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+Pro:wght@400;600&family=JetBrains+Mono&display=swap",
+      "notes": "Playfair's high contrast gives headlines weight; Source Serif body is readable at long form."
+    },
+    {
+      "id": "brutalist-mono-01",
+      "display": "Space Mono",
+      "body": "Space Grotesk",
+      "mono": "Space Mono",
+      "mood": "raw-brutalist",
+      "best_for": ["agency", "portfolio", "experimental"],
+      "google_fonts_url": "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap",
+      "notes": "Space pair is the Brutalist default — display mono + geometric sans."
+    },
+    {
+      "id": "warm-humanist-01",
+      "display": "Fraunces",
+      "body": "Inter",
+      "mono": "JetBrains Mono",
+      "mood": "warm-expressive",
+      "best_for": ["dtc", "beauty", "wellness", "food"],
+      "google_fonts_url": "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,700&family=Inter:wght@400;500&family=JetBrains+Mono&display=swap",
+      "notes": "Fraunces variable font has optical sizing + SOFT/WONKY axes. Character without sacrificing readability."
+    },
+    {
+      "id": "geometric-display-01",
+      "display": "Outfit",
+      "body": "Outfit",
+      "mono": "JetBrains Mono",
+      "mood": "modern-geometric",
+      "best_for": ["startup", "consumer", "mobile-app"],
+      "google_fonts_url": "https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&family=JetBrains+Mono&display=swap",
+      "notes": "Geometric sans with wide range (100-900). Good for both display and body."
+    },
+    {
+      "id": "literary-serif-01",
+      "display": "Lora",
+      "body": "Lora",
+      "mono": "IBM Plex Mono",
+      "mood": "literary-warm",
+      "best_for": ["blog", "longform", "podcast", "education"],
+      "google_fonts_url": "https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono&display=swap",
+      "notes": "Reading-optimized serif. Works for Substack/Medium-style longform."
+    },
+    {
+      "id": "corporate-clean-01",
+      "display": "IBM Plex Sans",
+      "body": "IBM Plex Sans",
+      "mono": "IBM Plex Mono",
+      "mood": "corporate-technical",
+      "best_for": ["enterprise", "b2b", "fintech"],
+      "google_fonts_url": "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono&display=swap",
+      "notes": "IBM's Plex family is a matched system. Mono/Sans/Serif/Condensed all available."
+    },
+    {
+      "id": "futuristic-mono-01",
+      "display": "JetBrains Mono",
+      "body": "Inter",
+      "mono": "JetBrains Mono",
+      "mood": "technical-futuristic",
+      "best_for": ["ai", "crypto", "devtools-hero"],
+      "google_fonts_url": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500&display=swap",
+      "notes": "Mono as display is a strong signal. Pair with Inter for body to keep it readable."
+    },
+    {
+      "id": "japanese-minimal-01",
+      "display": "Shippori Mincho",
+      "body": "Noto Sans JP",
+      "mono": "JetBrains Mono",
+      "mood": "quiet-refined",
+      "best_for": ["fashion", "craft", "minimal-brand"],
+      "google_fonts_url": "https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;700&family=Noto+Sans+JP:wght@300;500&family=JetBrains+Mono&display=swap",
+      "notes": "Mincho serif for Japanese-minimal aesthetics. Noto Sans JP for multi-script support."
+    },
+    {
+      "id": "kinetic-variable-01",
+      "display": "Bricolage Grotesque",
+      "body": "Inter",
+      "mono": "JetBrains Mono",
+      "mood": "kinetic-expressive",
+      "best_for": ["agency", "creative", "motion-heavy"],
+      "google_fonts_url": "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,900&family=Inter&family=JetBrains+Mono&display=swap",
+      "notes": "Variable font with optical-size axis — scales elegantly from caption to headline."
+    },
+    {
+      "id": "neon-cyber-01",
+      "display": "Orbitron",
+      "body": "Inter",
+      "mono": "Share Tech Mono",
+      "mood": "cyber-futuristic",
+      "best_for": ["gaming", "crypto", "cyberpunk-hud"],
+      "google_fonts_url": "https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter&family=Share+Tech+Mono&display=swap",
+      "notes": "Geometric sci-fi display. Use sparingly — high recognition value."
+    },
+    {
+      "id": "retro-display-01",
+      "display": "Monoton",
+      "body": "Space Grotesk",
+      "mono": "Space Mono",
+      "mood": "retro-neon",
+      "best_for": ["music", "event", "experimental"],
+      "google_fonts_url": "https://fonts.googleapis.com/css2?family=Monoton&family=Space+Grotesk&family=Space+Mono&display=swap",
+      "notes": "Monoton is a one-trick display — ideal for short hero words, unusable at body size."
+    },
+    {
+      "id": "healthcare-readable-01",
+      "display": "DM Sans",
+      "body": "DM Sans",
+      "mono": "DM Mono",
+      "mood": "friendly-clinical",
+      "best_for": ["healthcare", "medical", "wellness"],
+      "google_fonts_url": "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono&display=swap",
+      "notes": "DM Sans is high-legibility at all sizes. Trusted by medical UX."
+    },
+    {
+      "id": "financial-serif-01",
+      "display": "Playfair Display",
+      "body": "Mulish",
+      "mono": "JetBrains Mono",
+      "mood": "authoritative-stable",
+      "best_for": ["fintech", "banking", "investing"],
+      "google_fonts_url": "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Mulish:wght@400;500;700&family=JetBrains+Mono&display=swap",
+      "notes": "Classic serif headline signals gravitas; clean sans body for data-heavy pages."
+    },
+    {
+      "id": "y2k-display-01",
+      "display": "VT323",
+      "body": "Inter",
+      "mono": "VT323",
+      "mood": "y2k-nostalgic",
+      "best_for": ["experimental", "gaming", "retro-brand"],
+      "google_fonts_url": "https://fonts.googleapis.com/css2?family=VT323&family=Inter:wght@400;500&display=swap",
+      "notes": "VT323 is terminal/retro aesthetic. Pair with Inter to keep body readable."
+    },
+    {
+      "id": "claymorphism-soft-01",
+      "display": "Poppins",
+      "body": "Poppins",
+      "mono": "Fira Code",
+      "mood": "soft-friendly",
+      "best_for": ["consumer", "onboarding", "illustrated-brand"],
+      "google_fonts_url": "https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Fira+Code&display=swap",
+      "notes": "Poppins' rounded geometry pairs naturally with Claymorphism 3D soft-UI."
+    },
+    {
+      "id": "luxury-serif-01",
+      "display": "Cormorant Garamond",
+      "body": "Inter",
+      "mono": "JetBrains Mono",
+      "mood": "refined-luxury",
+      "best_for": ["luxury-ecom", "fashion", "jewelry", "hotel"],
+      "google_fonts_url": "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;500;700&family=Inter&family=JetBrains+Mono&display=swap",
+      "notes": "High-contrast old-style serif. Thin weights sing at display size."
+    },
+    {
+      "id": "pixel-art-01",
+      "display": "Press Start 2P",
+      "body": "Inter",
+      "mono": "Press Start 2P",
+      "mood": "pixel-retro",
+      "best_for": ["gaming", "experimental", "retro-product"],
+      "google_fonts_url": "https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter&display=swap",
+      "notes": "8-bit pixel font. Use ONLY for accent headlines; body must be readable sans."
+    }
+  ]
+}

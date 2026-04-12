@@ -1,10 +1,58 @@
 ---
 name: design-brainstorm
-description: "Research-first creative direction engine. Studies real-world Awwwards winners, Dribbble shots, and competitor sites before generating 3 distinct creative directions with full concept boards, ASCII mockups, and competitive positioning."
+description: "Research-first creative direction engine. Studies Awwwards winners, Land-book, SiteInspire, Cosmos.so moodboards, and competitor sites before generating 3 distinct creative directions with concept boards, ASCII mockups, and competitive positioning. v3.1: Layer 2.5 deep-inspiration research + offline industry-rules fallback + decision-entropy-lens heuristic from bencium."
 tier: core
-triggers: "brainstorm, design brainstorm, creative direction, design exploration, visual direction, competitive landscape, design concepts, brainstorm phase, design direction"
-version: "2.0.0"
+triggers: "brainstorm, design brainstorm, creative direction, design exploration, visual direction, competitive landscape, design concepts, brainstorm phase, design direction, inspiration, moodboard, land-book, siteinspire, cosmos, awwwards archive"
+version: "3.1.0"
 ---
+
+## v3.1 Addendum: Layer 2.5 Deep-Inspiration Research (OAuth-free)
+
+When `inspiration_depth: deep` flag is set (via `/gen:start-project` discovery), run 4 parallel research tracks via Playwright MCP. All OAuth-free — no per-user API registration.
+
+### Track 1 — Land-book (landing-page archetype match)
+URL: https://land-book.com. Full public. Filter by style × industry × color. Capture 5 references to `.planning/genorah/inspiration/landbook/`.
+
+### Track 2 — SiteInspire (best taxonomy)
+URL: https://www.siteinspire.com. 4-axis filter (style × type × subject × platform). Capture 5 references. Mirror their axes into competitive-benchmarking.
+
+### Track 3 — Cosmos.so (visual moodboards for palette)
+URL: https://www.cosmos.so. Hex-color filter. Capture 3-5 curation boards, not individual shots.
+
+### Track 4 — Awwwards archive (existing, now deeper)
+Multi-filter queries (tag + color + era) for less-obvious past SOTD references. 5 per session.
+
+### Deferred
+- Dribbble (OAuth required — defer v3.2)
+- Mobbin (paywalled — revisit when paid seat available)
+- FWA / Httpster / Lapa Ninja — narrower or redundant
+
+### Legal guardrails (hard)
+- Rate-limit: ≤1 request per 2s per source
+- Store URL + metadata + thumbnail only. Never republish scraped content.
+- Cite source URL in generated DESIGN-DNA.md inspiration block.
+- Respect robots.txt.
+
+### Decision-Entropy Heuristic (from bencium/negentropy-lens)
+
+When evaluating 3 creative directions during Phase 3, score each on compounding-vs-decay axis 1–5:
+
+- **Compounding:** Elements build on each other (signature element reinforced by tension zones, motion language visible across 3+ beats, color palette produces derived expressive tokens naturally).
+- **Decaying:** Elements feel stapled (signature in hero but nowhere else, motion happens once, palette fights itself, requires remapping per section).
+
+Directions scoring ≤2 should be revised or dropped before presenting to user.
+
+### Offline fallback
+
+If Playwright MCP unavailable OR rate-limited across all 4 sources:
+
+1. Load `skills/design-brainstorm/seeds/uipro-industry-rules.json`.
+2. Match project industry.
+3. Use `recommended_pattern` + `style_priority` + `key_effects` as inspiration seed.
+4. Note `research_mode: offline (uipro-rules)` in output.
+
+---
+
 
 Trigger: During brainstorm phase, when generating creative directions, when exploring design concepts, when studying competitive landscape, design exploration, visual direction.
 

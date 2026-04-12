@@ -70,6 +70,20 @@ check_pattern '"Submit"' "Button text 'Submit' found — use outcome-driven copy
 check_pattern '"Learn More"' "Button text 'Learn More' found — use specific action copy"
 check_pattern '"Click Here"' "Button text 'Click Here' found — use descriptive action copy"
 
+# --- v3.1: Typography-rules checks (Butterick) on user-visible strings ---
+# Double-hyphen as em-dash substitute in .md/.mdx/prose (excluding CLI flags/code)
+for file in $(echo "$STAGED_FILES" | grep -E '\.(md|mdx)$'); do
+  [ -z "$file" ] && continue
+  bad_emdash=$(grep -nE '(^|[^-])--[^->a-zA-Z0-9]' "$file" 2>/dev/null | grep -v '^\s*```' || true)
+  if [ -n "$bad_emdash" ]; then
+    VIOLATIONS="${VIOLATIONS}\n[TYPOGRAPHY] Double-hyphen in prose (use em dash U+2014 —): ${file}\n${bad_emdash}\n"
+    VIOLATION_COUNT=$((VIOLATION_COUNT + 1))
+  fi
+done
+
+# Double-space-after-period in visible strings
+check_pattern '\.  [A-Z]' "Double space after period — use single space"
+
 # Layout-triggering animations (anchored to bracket close to avoid false positives on names containing 'width'/'height')
 check_pattern 'animate-\[[^]]*width\]' "Animating width — use transform instead"
 check_pattern 'animate-\[[^]]*height\]' "Animating height — use transform instead"

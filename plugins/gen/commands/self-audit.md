@@ -45,6 +45,15 @@ Read in parallel:
 
 **WARN (HIGH)**
 6. **Quality gate text freshness** — no references to "72-point" or "248-point" in `plugin.json`, `marketplace.json`, `README.md`, `CLAUDE.md` (234-point is current).
+
+**v3.1 HARD GUARDRAILS**
+6a. **animation-orchestration word cap** — `wc -w skills/animation-orchestration/SKILL.md` must be ≤ 2500. Fail if exceeded. Prevents god-skill bloat.
+6b. **animation-orchestration scoped injection** — frontmatter must include `injection_regex:` field. Fail if missing or if pre-tool-use.mjs injects this skill without checking the regex against user prompt.
+6c. **No motion-token redefinitions** — `animation-orchestration/SKILL.md` must not contain lines matching `--motion-duration-\w+:` or `--motion-ease-\w+:`. Those belong in `design-dna`. Fail if found (meta-skill leaking into definition space).
+6d. **Skill frontmatter field check** — every skill in `skills/*/SKILL.md` must use `tier:` (not `category:`). Grep fail if `^category:` appears.
+6e. **Agent frontmatter format** — every agent in `agents/**/*.md` must use comma-string `tools:` (not JSON array), `model: inherit` (not a specific model), `maxTurns: N` (not `context_budget`). Grep for deviations.
+6f. **Typography-rules CSS defaults** — `design-system-scaffold` SKILL must emit text-wrap + font-feature-settings + hyphens rules (v3.1). Grep for required CSS snippets.
+6g. **Discovery question named-key contract** — `commands/start-project.md` must use named YAML keys (`preloader: { enabled, style }`), not ordinal indexing. Grep for `^\s*\d+\.` patterns in PROJECT.md emission blocks.
 7. **Removed feature references** — no `stop.mjs` references (renamed to `session-end.mjs`), no `.planning/modulo/` in current-path context (only in migration docs), no `/modulo:*` command references in non-migration docs.
 8. **Motion library consistency** — `dna-compliance-check.sh` regex must match both `motion/react` and `framer-motion` (alternation).
 9. **Command → file validity** — every command row in `CLAUDE.md` commands table must exist as `commands/{name}.md`.

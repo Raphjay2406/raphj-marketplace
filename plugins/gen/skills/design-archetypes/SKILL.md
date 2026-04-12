@@ -1,10 +1,90 @@
 ---
 name: design-archetypes
-description: "19 opinionated design personality systems with machine-enforceable constraints. Each archetype locks colors, fonts, techniques, and forbidden patterns."
+description: "25 opinionated design personality systems (19 original + 6 v3.1 distilled from PRO MAX) with machine-enforceable constraints. Each archetype locks colors, fonts, techniques, and forbidden patterns."
 tier: core
-triggers: "archetype, design personality, design direction, creative direction, aesthetic, visual identity, style selection"
-version: "2.0.0"
+triggers: "archetype, design personality, design direction, creative direction, aesthetic, visual identity, style selection, claymorphism, neumorphism, soft-ui, y2k, cyberpunk, hud, spatial, visionos, pixel-art"
+version: "3.1.0"
 ---
+
+## v3.1 Addendum: 6 New Archetypes (distilled from PRO MAX)
+
+Added to the original 19 as equal-authority archetypes. Each follows the same constraint-system pattern: locked palette, required fonts, mandatory techniques, forbidden patterns, signature element, tension zones.
+
+### 20. Claymorphism
+
+Soft 3D rounded surfaces with chunky drop shadows. Feels tactile, playful, illustrated. DTC consumer and onboarding flows thrive here.
+
+- **Palette:** warm pastels + saturated accent — `primary: #ff8a65` (clay orange), `secondary: #ffb4a2`, `accent: #6d5dfc` (electric purple), `bg: #fef3f2`, `surface: #ffffff`, `text: #3d2c2c`, `muted: #fdebe8`, `border: #fdd0c4`, `tension: #e63946`, `highlight: #6d5dfc`
+- **Fonts:** Poppins display + body (soft geometric) + Fira Code mono
+- **Mandatory techniques:** `rounded-3xl` or higher, stacked shadows (inner highlight + outer drop), 3D rotate-hover on cards, illustrated iconography, NO sharp corners anywhere
+- **Forbidden:** hard geometric edges, grayscale monochrome, small border radii (<12px), flat shadows, Brutalist type treatment
+- **Signature:** chunky floating CTA with multi-layered shadow (light inner ring + soft drop + subtle colored ambient)
+- **Tension zones:** 3D perspective tilt on hero, oversized illustrated mascot, asymmetric card stacking
+
+### 21. Neumorphism / Soft-UI
+
+Monochromatic raised/inset surfaces on tinted neutral base. Subtle, tactile, minimalist. Best for premium mobile-feel dashboards.
+
+- **Palette:** single-hue neutral + single accent — `primary: #4f46e5`, `secondary: #6366f1`, `accent: #ec4899`, `bg: #e0e5ec`, `surface: #e0e5ec`, `text: #2d3748`, `muted: #cbd2db`, `border: transparent`, `tension: #e53e3e`, `highlight: #ec4899`
+- **Fonts:** Outfit or Inter (both display + body) + JetBrains Mono
+- **Mandatory techniques:** dual-shadow system (light-top-left + dark-bottom-right), slightly raised or inset state per element, single-hue saturation variation for depth, subtle inner highlight on focus
+- **Forbidden:** hard borders, high-saturation backgrounds, drop shadows without matching inset, multiple accent colors
+- **Signature:** pressable "raised" card that flips to "inset" on press (via dual shadow inversion)
+- **Tension zones:** single bold gradient accent, oversized numeric metrics, asymmetric negative space
+- **A11y note:** Neumorphism fails WCAG 1.4.11 by default (non-text contrast). Add subtle border on focus + ensure text hits AA independently.
+
+### 22. Y2K
+
+Early-2000s digital optimism. Chrome gradients, translucent glass, bubbly UI, aqua buttons, starfield backgrounds. Nostalgic but fresh.
+
+- **Palette:** chrome + saturated pop — `primary: #ff006e`, `secondary: #8338ec`, `accent: #00f5ff`, `bg: #ffffff`, `surface: #f0f4ff`, `text: #3a0ca3`, `muted: #e0e7ff`, `border: #c7d2fe`, `tension: #ff006e`, `highlight: #00f5ff`
+- **Fonts:** VT323 display (pixel/terminal) + Inter body + VT323 mono
+- **Mandatory techniques:** chrome gradients (`linear-gradient(to bottom, #fff 0%, #c0c0c0 50%, #808080 100%)`), translucent bubble buttons, holographic sticker badges, Comic Sans SPECIFICALLY avoided (use Poppins/Outfit for friendly instead)
+- **Forbidden:** Comic Sans (please), muted earth tones, Brutalist flat design, corporate navy
+- **Signature:** "Aqua button" — translucent gradient button with inner glow + specular highlight
+- **Tension zones:** animated starfield or bubble background, oversized holographic badge, retro scan-line filter
+
+### 23. Cyberpunk / HUD Sci-Fi FUI
+
+Military/gaming heads-up-display aesthetic. Grid overlays, radar sweeps, corner brackets, data-dense panels. Terminal-green or cyan glow on black.
+
+- **Palette:** sci-fi signal — `primary: #00ff9f` (toxic green), `secondary: #00d9ff` (cyan), `accent: #ff006e`, `bg: #000000`, `surface: #0a0e14`, `text: #c9d1d9`, `muted: #21262d`, `border: #30363d`, `tension: #ff006e`, `highlight: #00ff9f`
+- **Fonts:** Orbitron display + Inter body + Share Tech Mono (all three contribute to HUD character)
+- **Mandatory techniques:** corner brackets on every container (`::before`/`::after` with 1px lines), grid-overlay background at 10% opacity, monospace tabular numbers, radar-sweep animation somewhere on page, glowing text-shadow on headers
+- **Forbidden:** pastels, warm tones (cream, beige, orange-warm), rounded-3xl softness, serif body text
+- **Signature:** corner-bracketed data panel with live-updating monospace digits + faint scan-line overlay
+- **Tension zones:** oversized radar/sonar visual, system status bar with faux diagnostic data, glitch-transition between sections
+- **A11y note:** Green-on-black can fail tritanopia. Ensure secondary colors provide redundant signal.
+
+### 24. Spatial / VisionOS
+
+Apple VisionOS-inspired. Frosted glass panels floating in depth, soft gradients behind, subtle parallax, spatial hierarchy via blur-depth. Premium and airy.
+
+- **Palette:** soft atmospheric — `primary: #007aff` (Apple blue), `secondary: #5ac8fa`, `accent: #ff9500`, `bg: #f5f5f7`, `surface: rgba(255,255,255,0.7)`, `text: #1d1d1f`, `muted: #e5e5ea`, `border: rgba(255,255,255,0.3)`, `tension: #ff3b30`, `highlight: #007aff`
+- **Fonts:** SF Pro (via system-ui fallback) or Inter display + Inter body + SF Mono/JetBrains Mono
+- **Mandatory techniques:** frosted glass (`backdrop-filter: blur(40px)` + semi-transparent bg), layered depth (z-stack with blur-increment per layer), soft inner borders (white at low opacity), subtle scale-on-focus (1.02-1.05), rounded-2xl minimum
+- **Forbidden:** solid opaque backgrounds on foreground panels, heavy drop shadows, Brutalist hard edges, high-saturation color fields behind glass (defeats the effect)
+- **Signature:** hero panel floating in blurred gradient mesh with 3-layer depth (bg gradient → mid blur overlay → foreground glass card)
+- **Tension zones:** genuine 3D transform on hover (perspective + rotateX), oversized depth-blurred subject behind foreground text, light-refraction caustic overlay
+
+### 25. Pixel-Art
+
+8-bit/16-bit retro game aesthetic. Sharp pixel grid, flat color palette, dithered gradients, chunky UI elements. Niche — use for gaming/retro-product only.
+
+- **Palette:** PICO-8-adjacent — `primary: #ff004d` (retro red), `secondary: #ffa300` (amber), `accent: #00e436` (retro green), `bg: #1d2b53` (PICO navy), `surface: #7e2553`, `text: #fff1e8`, `muted: #5f574f`, `border: #000000`, `tension: #ff004d`, `highlight: #00e436`
+- **Fonts:** Press Start 2P display + Inter body (readability override — don't body-set pixel fonts) + Press Start 2P mono
+- **Mandatory techniques:** `image-rendering: pixelated` on all raster imagery, 2px or 4px hard borders (no anti-alias), dithered gradient (CSS pattern, not smooth), flat illustration only
+- **Forbidden:** anti-aliased edges on icons, smooth gradients, serif fonts, subtle shadows, retina-quality photography
+- **Signature:** animated pixel-sprite cursor/mascot that responds to scroll
+- **Tension zones:** oversized pixel-art hero scene, chiptune-style loading bar, sprite-walk reveal animation
+- **A11y note:** Pixel fonts in body copy destroy legibility. HARD rule: pixel font display-only; body must be readable sans.
+
+### Archetype Count (v3.1): 25
+
+Previous 19 unchanged. Additions documented here. All 25 follow the same constraint-system contract. Archetype selection flow in `/gen:start-project` now surfaces additional options matching new archetype keywords.
+
+---
+
 
 ## Layer 1: Decision Guidance
 

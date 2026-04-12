@@ -1,7 +1,40 @@
 ---
 name: landing-page
-description: "Landing page patterns including hero sections, CTAs, feature grids, testimonials, pricing tables, marketing layouts, SaaS patterns, changelog, waitlist, trust signals. Works with Next.js and Astro."
+description: "Landing page patterns including hero sections, CTAs, feature grids, testimonials, pricing tables, marketing layouts, SaaS patterns, changelog, waitlist, trust signals. v3.1: Comparison-slider, before/after scroll, waitlist-with-referral-counter, integration-grid, live-metrics hero, quiz-first-hero, creator-economy patterns. Works with Next.js and Astro."
+tier: domain
+triggers: "landing page, hero, CTA, pricing, features, testimonials, marketing, homepage, SaaS, changelog, waitlist, trust, before-after, comparison slider, integration grid, live metrics, quiz hero"
+version: "3.1.0"
 ---
+
+## v3.1 Addendum: 7 Patterns distilled from PRO MAX
+
+Cherry-picked from PRO MAX landing.csv patterns that aren't already in this skill:
+
+### 1. Comparison Slider Hero
+Before/after drag-to-reveal comparison — ideal for beauty, home-improvement, photo-editing tools. Large draggable divider splits the hero. Works with touch. Use react-compare-slider.
+
+### 2. Quiz-First Hero
+CTA is a quiz (3-5 questions) rather than a form or pricing jump. Best for DTC beauty/wellness/supplement brands where personalization drives conversion. Quiz results route to tailored product recommendation.
+
+### 3. Integration Grid Hero
+12-24 logo grid of integrations above the fold. Best for developer tools / middleware SaaS — "we work with everything you use" as the primary message. Each logo is a tooltip-linked case study.
+
+### 4. Live-Metrics Hero
+Hero includes a live-updating counter (total users / API calls served / connections active). Real number, not a lie. Builds credibility through transparency. Use SWR/streaming for values.
+
+### 5. Waitlist + Referral Counter
+For pre-launch: waitlist signup with referral-boost mechanic. Each user sees their queue position + "move up by inviting 3 friends". Morning Brew / Robinhood playbook.
+
+### 6. Creator-Economy Landing
+Creator photo prominent + 3 content previews + multiple support tiers (one-off tip, monthly membership, merch). Kickstarter meets Patreon meets personal brand.
+
+### 7. Before-After Scroll Story
+Full-page scroll-driven storytelling showing problem → transformation → solution. For case studies / testimonial-led landings. Use GSAP ScrollTrigger or Motion scroll-linked animations.
+
+Each pattern ships with archetype compatibility notes — some require specific archetypes (Comparison Slider needs photo-forward archetype; Creator-Economy pairs with warm-humanist typography).
+
+---
+
 
 Use this skill when the user mentions landing page, hero section, CTA, pricing page, features section, testimonials, marketing page, homepage design, SaaS page, changelog, waitlist, or trust signals. Triggers on: landing page, hero, CTA, pricing, features, testimonials, marketing, homepage, SaaS, changelog, waitlist, trust.
 

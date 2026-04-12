@@ -1,12 +1,77 @@
 ---
 name: competitive-benchmarking
 tier: domain
-description: "Per-archetype curated SOTD reference list + Playwright capture + vision LLM scoring against 234-pt gate. Generates BENCHMARKS.md + auto-injects per-section reference targets."
-triggers: ["benchmark", "competitive", "reference sites", "SOTD library", "award library", "gap targets"]
-used_by: ["start-project", "plan", "builder", "quality-reviewer"]
-version: "3.0.0"
+description: "Per-archetype curated SOTD reference list + Playwright capture + vision LLM scoring against 234-pt gate. Generates BENCHMARKS.md + auto-injects per-section reference targets. v3.1: 4-source OAuth-free axes (Land-book, SiteInspire, Cosmos.so, Awwwards archive) with SiteInspire taxonomy mirror + rate-limit guardrails + offline industry-rules fallback."
+triggers: ["benchmark", "competitive", "reference sites", "SOTD library", "award library", "gap targets", "land-book", "siteinspire", "cosmos", "awwwards archive"]
+used_by: ["start-project", "plan", "builder", "quality-reviewer", "discuss"]
+version: "3.1.0"
 mcp_required: ["playwright"]
 ---
+
+## v3.1 Addendum: 4-Source OAuth-Free Benchmarking
+
+Beyond the original Awwwards-only SOTD library, v3.1 expands to 4 inspiration sources. All are public (no OAuth), captured via Playwright MCP.
+
+### Source axis matrix (mirrors SiteInspire taxonomy)
+
+Every reference captured is tagged across 4 axes so future queries can filter precisely:
+
+| Axis | Values | Source origin |
+|------|--------|---------------|
+| **Style** | archetype-adjacent names (Minimal, Brutalist, Glassmorphism, etc.) | Land-book + SiteInspire + Cosmos |
+| **Type** | Homepage, Portfolio, Product, Agency, Ecommerce, Editorial, Landing, App | SiteInspire primary |
+| **Subject** | Industry (SaaS, DTC, Agency, Fintech, etc.) | All sources |
+| **Platform** | Framework or CMS (Next, Astro, Framer, Webflow, Shopify, WordPress) | SiteInspire primary |
+
+Benchmarking queries specify one or more axes → get filtered reference set.
+
+### Per-source capture protocol
+
+**Land-book** — best for landing-page archetype match
+- Filter: style × industry × color (hex match)
+- Capture 5 references
+- Store: `benchmarks-cache/landbook/{hash}.png`
+
+**SiteInspire** — best taxonomy, breadth coverage
+- Filter: style × type × subject × platform (4-axis)
+- Capture 5 references
+- Use taxonomy as the canonical axis reference for this skill
+
+**Cosmos.so** — best for palette/moodboard seeding
+- Filter: tag + hex color
+- Capture 3-5 curation boards (not individual shots)
+- Store: `benchmarks-cache/cosmos/{hash}/`
+
+**Awwwards archive** — existing SOTD capture (already supported pre-v3.1)
+- Filter: tag + era + color
+- Capture 5 references per query
+- Existing schema unchanged
+
+### Rate-limit guardrails (hard rules)
+
+- `max_requests_per_source_per_session: 20`
+- `min_delay_between_requests_ms: 2000`
+- `respect_robots_txt: true` — skip sources with disallow rules
+- `user_agent: "Genorah-Plugin-Research/3.1 (+internal)"` — honest UA
+- Store: URL + title + capture-date + small-thumb only. Never republish content.
+- Always cite source URL in any generated BENCHMARKS.md entry.
+
+### Deferred sources (v3.2+)
+
+| Source | Why deferred |
+|--------|--------------|
+| Dribbble | Requires OAuth app registration per-user; punt until we build the flow |
+| Mobbin | Hard paywall — revisit when mobile-specialist tier has a paid seat |
+| FWA | Too narrow (3D/experimental only); niche coverage |
+| Httpster | Low signal/noise |
+| Lapa Ninja | Redundant with Land-book |
+
+### Offline fallback
+
+If all 4 sources rate-limit or Playwright unavailable, fall through to `skills/design-brainstorm/seeds/uipro-industry-rules.json` and generate references-lite from industry-matched entries. Note `research_mode: offline` in output.
+
+---
+
 
 ## Layer 1: Decision Guidance
 

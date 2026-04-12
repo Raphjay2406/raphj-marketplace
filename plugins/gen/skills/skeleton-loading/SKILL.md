@@ -1,7 +1,77 @@
 ---
 name: skeleton-loading
-description: "Skeleton loading patterns: shimmer placeholders, content-aware skeletons, Suspense boundaries, streaming SSR shells, progressive loading, table/card/list skeletons. Works with Next.js and Astro."
+description: "Skeleton loading patterns: shimmer placeholders, content-aware skeletons, Suspense boundaries, streaming SSR shells, progressive loading, table/card/list skeletons. v3.1: 3-tier decision matrix — shadcn <Skeleton> (default, Wave 0/1), react-content-loader (SVG auto-shapes, 13k+ stars, mature), Boneyard (preview tier, revisit v3.2). Works with Next.js and Astro."
+tier: domain
+triggers: "skeleton, loading, shimmer, placeholder, suspense, streaming, progressive load, skeleton ui, content-loader, boneyard"
+version: "3.1.0"
 ---
+
+## v3.1 Addendum: 3-Tier Skeleton Framework Decision Matrix
+
+| Tier | Framework | When | Maturity |
+|------|-----------|------|----------|
+| **Default** | shadcn `<Skeleton>` | Wave 0/1, simple placeholders | Battle-tested |
+| **Auto-shape (recommended)** | **`react-content-loader`** | Dense dashboards, tables with variable rows, complex geometry | **Mature (13k+ stars, 7+ years)** |
+| **Preview** | Boneyard | Experimental auto-mirror capture | New (April 2026) — revisit v3.2 |
+
+### Default: shadcn `<Skeleton>` (zero ceremony)
+
+```tsx
+import { Skeleton } from "@/components/ui/skeleton";
+<div className="space-y-3 rounded-lg border p-4">
+  <Skeleton className="h-40 w-full rounded-md" />
+  <Skeleton className="h-4 w-3/4" />
+  <Skeleton className="h-4 w-1/2" />
+</div>
+```
+
+DNA-driven: `bg-muted` + `animate-pulse` → `--color-muted` token.
+
+### Recommended: react-content-loader
+
+```bash
+npm i react-content-loader
+```
+
+```tsx
+import ContentLoader from "react-content-loader";
+<ContentLoader
+  speed={2} width={400} height={280} viewBox="0 0 400 280"
+  backgroundColor="var(--color-muted)"
+  foregroundColor="var(--color-surface)"
+>
+  <rect x="0" y="0" rx="8" ry="8" width="400" height="180" />
+  <rect x="0" y="200" rx="4" ry="4" width="300" height="16" />
+  <rect x="0" y="226" rx="4" ry="4" width="200" height="16" />
+</ContentLoader>
+```
+
+Explicit SVG geometry. Better for complex layouts (charts, table rows, avatar + text). DNA binding via `var(--color-*)`.
+
+### Preview: Boneyard
+
+Created 2026-04-01 (brand new). Documents future evaluation path. Do not default until v3.2.
+
+### Decision Tree
+
+```
+Simple shape? → shadcn <Skeleton>
+Complex geometry? → react-content-loader
+Streaming RSC? → Suspense + loading.tsx
+Non-React? → CSS-only animate-pulse
+```
+
+### DNA mapping
+
+| Property | DNA token |
+|----------|-----------|
+| Base color | `var(--color-muted)` |
+| Shimmer | `var(--color-surface)` |
+| Radius | `var(--radius-md)` or `var(--radius-lg)` |
+| Duration | `var(--motion-duration-normal)` |
+
+---
+
 
 Use this skill when the user mentions skeleton, loading state, shimmer, placeholder, suspense, streaming SSR, progressive loading, or loading skeleton. Triggers on: skeleton, loading, shimmer, placeholder, suspense, streaming, progressive load.
 
