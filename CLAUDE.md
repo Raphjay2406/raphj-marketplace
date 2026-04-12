@@ -4,7 +4,7 @@ This file provides guidance to Claude Code when working with the Genorah plugin 
 
 ## Project Overview
 
-**Genorah v2.9** is a Claude Code plugin for premium frontend design. It produces award-caliber websites (Awwwards SOTD 8.0+ baseline) through a pipeline of 19 specialized agents, machine-enforceable design identity, a 234-point weighted quality gate across 12 categories, 5 hard gates, and a Visual Companion for localhost delivery. It is NOT a template generator -- every project gets a unique visual identity enforced through Design DNA, 19 Design Archetypes, Emotional Arc storytelling, and the Quality Gate. Framework-aware pipeline supports Next.js, Astro, and React/Vite with per-framework code generation. Covers 12 design domains with ~116 skills.
+**Genorah v3.0** is a Claude Code plugin for premium frontend design — "Measurably Enforced Quality with Closed-Loop Refinement." It produces award-caliber websites (Awwwards SOTD 8.0+ baseline) through a pipeline of 21 specialized agents, machine-enforceable design identity, a 234-point weighted quality gate enforced via a 6-stage validation pipeline (DNA compliance → render → registry → consistency → design fidelity → full gate), and a Visual Companion for localhost delivery. v3.0 introduces closed-loop visual refiner, DNA drift detection (92% coverage hard gate), per-beat perf budgets, motion-health sub-gate, reference-diff-protocol (pixel-diff vs reference URL), AI variant tournament, section consistency auditor, live localhost dashboard, interactive click-to-refine companion, competitive benchmarking, smart intent router, self-audit, WebGPU/TSL frontier, Sanity + Payload CMS round-trip, Remotion section video, brand voice extractor, cognitive accessibility (CVD ΔE2000), and i18n-by-default. It is NOT a template generator -- every project gets a unique visual identity enforced through Design DNA, 19 Design Archetypes, Emotional Arc storytelling, and the Quality Gate. Framework-aware pipeline supports Next.js, Astro, and React/Vite with per-framework code generation. ~131 skills across 12 design domains.
 
 This repository contains only markdown definitions and a plugin manifest -- there is no application code, build system, or test suite. Targets Next.js, Astro, React/Vite, Tauri, Electron, Swift/SwiftUI, Kotlin/Compose, React Native, Expo, and Flutter.
 
@@ -13,11 +13,11 @@ This repository contains only markdown definitions and a plugin manifest -- ther
 Three-tier system where commands are entry points, agents orchestrate work, and skills provide domain knowledge:
 
 ```
-commands/ (16 commands -- user-facing pipeline stages)
+commands/ (21 commands -- user-facing pipeline stages)
     | invoke
-agents/ (19 agents -- 7 pipeline + 6 specialists + 5 protocols + 1 figma)
+agents/ (21 agents -- 8 pipeline + 7 specialists + 5 protocols + 1 figma)
     | reference
-skills/ (3-tier, 4-layer SKILL.md files -- ~116 modular knowledge bases)
+skills/ (3-tier, 4-layer SKILL.md files -- ~131 modular knowledge bases)
 ```
 
 **Plugin manifest:** `.claude-plugin/plugin.json`
@@ -31,16 +31,19 @@ skills/ (3-tier, 4-layer SKILL.md files -- ~116 modular knowledge bases)
 - **MCP Servers:** `.claude-plugin/.mcp.json` -- 5 optional MCP servers (nano-banana, stitch, playwright, obsidian, obsidian-fs)
 - **Template:** `skills/_skill-template/SKILL.md` -- canonical 4-layer format reference
 
-## Agents (19 total)
+## Agents (21 total)
 
-### Pipeline Agents (7)
-Researcher, Creative Director, Planner, Builder, Quality Reviewer, Polisher, Orchestrator
+### Pipeline Agents (8)
+Researcher, Creative Director, Planner, Builder, Quality Reviewer, Polisher, Orchestrator, **Visual Refiner** (v3.0 — closed-loop refinement)
 
-### Specialist Agents (6)
-3D Specialist, Animation Specialist, Content Specialist, AI-UI Specialist, SEO/GEO Specialist, Mobile Specialist
+### Specialist Agents (7)
+3D Specialist, Animation Specialist, Content Specialist, AI-UI Specialist, SEO/GEO Specialist, Mobile Specialist, **Consistency Auditor** (v3.0 — runs parallel with builders)
 
 ### Protocol Agents (5)
 Visual Companion, Agent Memory System, Canary Check, Context Rot Prevention, Discussion Protocol
+
+### Figma Agent (1)
+Figma Translator
 
 ## MCP Server Integrations
 
@@ -56,7 +59,7 @@ Five optional MCP servers declared in `.claude-plugin/.mcp.json`:
 
 All servers are optional. Commands gracefully degrade when servers are unavailable.
 
-## Commands (16)
+## Commands (21)
 
 | Command | Purpose |
 |---------|---------|
@@ -76,6 +79,11 @@ All servers are optional. Commands gracefully degrade when servers are unavailab
 | `/gen:feedback` | Accept client/user feedback and route into Design DNA or quality loop |
 | `/gen:design-system` | Extract/sync component registry, design tokens, Figma integration |
 | `/gen:self-audit` | Self-heal audit — validates plugin consistency (versions, counts, frontmatter, mirror drift) |
+| `/gen:tournament` | (v3.0) Blind-ranked N=3 variants for HOOK/PEAK sections; vision-LLM judge commits winner |
+| `/gen:dashboard` | (v3.0) Launch live localhost:4455 project cockpit with SSE updates, DNA swatches, wave progress |
+| `/gen:benchmark` | (v3.0) Score 3-5 reference SOTD sites against 234-pt gate; auto-inject gap targets per section |
+| `/gen:cms-init` | (v3.0) Scaffold headless CMS (Sanity or Payload) with DNA-themed Studio + auto-generated schemas |
+| `/gen:video` | (v3.0) Render DNA-parameterized Remotion section video with 5 templates + AVIF/MP4/WebM dual encode |
 
 ## Skill Tiers
 
