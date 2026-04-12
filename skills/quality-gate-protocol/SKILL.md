@@ -1,10 +1,62 @@
 ---
 name: quality-gate-protocol
 category: core
-description: "Defines the 4-layer progressive quality enforcement system: when each gate fires, severity classification (CRITICAL/WARNING/INFO), running tally management, and user checkpoint trigger logic."
-triggers: ["quality gate", "enforcement", "severity", "tally", "checkpoint", "quality pipeline"]
-used_by: ["orchestrator", "quality-reviewer", "creative-director"]
-version: "2.0.0"
+description: "4-layer progressive enforcement (WHEN gates fire) combined with v3.0 6-stage validation pipeline (WHAT each gate checks). Severity tiers, tally management, user-checkpoint triggers, and named remediation owners per stage."
+triggers: ["quality gate", "enforcement", "severity", "tally", "checkpoint", "quality pipeline", "validation pipeline", "6-stage", "stage 1", "stage 2", "stage 3", "stage 4", "stage 5", "stage 6"]
+used_by: ["orchestrator", "quality-reviewer", "creative-director", "visual-refiner", "polisher", "builder", "consistency-auditor"]
+version: "3.0.0"
+---
+
+## v3.0 Addendum: 6-Stage Validation Pipeline
+
+The 4-layer system (below) governs WHEN enforcement fires. v3.0 adds a 6-stage pipeline governing WHAT each gate validates, with named remediation owners so failures route to a specific agent instead of generic "retry".
+
+### Stage Map
+
+| # | Stage | When | Pass criterion | Remediation owner | Skill |
+|---|-------|------|----------------|-------------------|-------|
+| 1 | DNA Compliance | pre-build | DESIGN-DNA.md complete; archetype locked; all 12 color tokens defined | creative-director (regenerate DNA) | design-dna |
+| 2 | Render Validation | post-code-gen per file | Playwright loads URL; 0 console errors; target selectors mount within 3s | builder (fix import/runtime errors) | visual-qa-protocol |
+| 3 | Component Registry Audit | post-section | Every JSX component used appears in DESIGN-SYSTEM.md with variant entry | builder (register or refactor) | component-consistency |
+| 4 | Cross-Section Consistency | post-wave | DNA drift coverage ≥92% across sibling sections; shared component visual variance ΔE<3 | consistency-auditor → polisher | dna-drift-detection |
+| 5 | Design Fidelity | post-section | reference-diff-protocol SSIM ≥ beat threshold | visual-refiner (closed loop) | reference-diff-protocol |
+| 6 | Full Quality Gate | post-wave | 234-pt scoring ≥ target tier + 5 hard gates + perf budgets + motion-health sub-gate | quality-reviewer → polisher → visual-refiner | quality-gate-v2, perf-budgets, motion-health |
+
+### Stage routing
+
+```
+/gen:build
+  └─ Wave loop:
+      ├─ Stage 1: creative-director validates DNA before any section starts
+      ├─ For each section in wave:
+      │   ├─ Stage 2: builder renders, Playwright validates
+      │   ├─ Stage 3: builder registers components
+      │   └─ Stage 5: if reference_url present, ref-diff-protocol
+      ├─ Stage 4: consistency-auditor runs in parallel with builders (wave ≥2)
+      └─ Stage 6: quality-reviewer scores
+          ├─ score < target + gap is visual? → visual-refiner (max 3 loops)
+          └─ polisher pass
+```
+
+Each stage fail = specific remediation path, not generic retry. Failures write structured signal (GAP-FIX.md, CONSISTENCY-AUDIT.md, REFINEMENT-LOG.md) for the named owner to consume.
+
+### Hard gates (unchanged count = 5, but composed into Stage 6)
+
+Existing: (1) Motion exists, (2) 4-breakpoint responsive, (3) Compatibility tier, (4) Component registry, (5) Archetype specificity.
+
+v3.0 additions as **sub-gates**, not new top-level hard gates (keeps 234-pt total stable):
+
+- **Motion Health sub-gate** inside Motion & Interaction category: fails if INP regression >50ms, RM parity <1.0, or scroll-timeline fallback missing.
+- **DNA Drift sub-gate** inside Color + Typography: fails if coverage <92%.
+- **Perf Budget sub-gate** inside Performance: any over-budget metric caps tier at Strong (199).
+
+### Integration with 4-layer enforcement
+
+- **Layer 1 (Build-Time)** hosts Stages 1-3. Caught free during building.
+- **Layer 2 (Post-Wave)** hosts Stages 4-5 and visual-refiner closed-loop. Caught with one review cycle.
+- **Layer 3 (End-of-Build)** hosts Stage 6. Full browser testing.
+- **Layer 4 (User Checkpoint)** unchanged: ship/iterate decision after everything passes.
+
 ---
 
 ## Layer 1: Decision Guidance
