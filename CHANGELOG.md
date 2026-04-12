@@ -1,5 +1,31 @@
 # Changelog
 
+## v3.25.0 — 2026-04-12
+
+**Test hardening: exact-preset easing baselines, sitemap error observability, localized-field Contentful coverage.**
+
+### Exact-preset easing baselines (+ fixture bug fixed)
+
+- `tests/v325-easing-baselines.test.mjs` — 8/8. One test per preset in the fitter (linear / ease-out / ease-in / ease-in-out / ease-out-expo / ease-out-quart / spring) plus an ambiguous-curve regression.
+- **Bug found while writing these**: initial fixture generated frames using bezier *parameter* t as the timestamp, but the fitter compares samples against curve *x(t)* values — so "linear" samples weren't linear-in-real-time. 6/8 tests failed catching presets as wrong neighbors. Fixed by generating fixtures from full `bezierXY(t)` pairs so `timestamp = x·duration` matches the fitter's internal curve. Now every preset fits exactly (RMSE < 0.05, confidence ≥ 0.85). Ambiguous curve between `ease-out` and `ease-out-expo` stays in the ease-out family.
+
+### Sitemap BFS error observability
+
+- `scripts/ingest/crawl-executor.mjs`: `collectSitemapUrls` now accepts `onEvent` callback. Wired from the crawl-executor site to `append(slug, ev)`, so every fetch failure, parse error, depth-exceeded, empty index, or unrecognized XML root surfaces in the preservation ledger instead of silent skip.
+- New gap reasons: `sitemap-fetch-failed`, `sitemap-unrecognized-root`, `sitemap-depth-exceeded`, `sitemap-index-empty`.
+- New progress events: `sitemap.index` (children count + depth), `sitemap.urlset` (added count + depth).
+- `tests/v323-sitemap-bfs.test.mjs` expanded to 8/8 — 4 original + 4 error-path (fetch failure via unreachable port, unrecognized RSS root, empty sitemapindex, urlset progress event).
+
+### Contentful localized-field coverage
+
+- `tests/v324-cms-schema.test.mjs` — Contentful fixture expanded to 3 fields per type including `Link<Entry>` variant, multi-locale FAQ with localized `question` + `answer` but non-localized `tags`, non-localized `media` on hero.
+- Now asserts: `Link<Asset>` vs `Link<Entry>` disambiguation, exact count of localized fields per type (`localizedFaqFields.length === 2`), field-level required + localized per-field preservation.
+
+### Totals
+
+- **109/109 tests pass** (+12 from v3.24: 8 easing baselines + 4 sitemap error events).
+- Mirror parity, plugin.json + marketplace.json + package.json at 3.25.0.
+
 ## v3.24.0 — 2026-04-12
 
 **Integration tests for v3.22–v3.23 executors + command exposure.**

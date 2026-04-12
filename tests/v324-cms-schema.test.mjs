@@ -102,10 +102,12 @@ test('cms-schema: Contentful → full field metadata (type/linkType/required/loc
         { sys: { id: 'heroBanner' }, name: 'Hero Banner', fields: [
           { id: 'title', type: 'Symbol', required: true, localized: true },
           { id: 'media', type: 'Link', linkType: 'Asset', required: false, localized: false },
+          { id: 'cta', type: 'Link', linkType: 'Entry', required: false, localized: false },
         ]},
         { sys: { id: 'faqItem' }, name: 'FAQ Item', fields: [
-          { id: 'question', type: 'Symbol', required: true },
-          { id: 'answer', type: 'Text', required: true },
+          { id: 'question', type: 'Symbol', required: true, localized: true },
+          { id: 'answer', type: 'Text', required: true, localized: true },
+          { id: 'tags', type: 'Array', required: false, localized: false },
         ]},
       ],
     }));
@@ -122,14 +124,33 @@ test('cms-schema: Contentful → full field metadata (type/linkType/required/loc
     assert.equal(out.status, 0, out.stderr);
 
     const md = readFileSync(join(slugDir, 'CMS-SCHEMA.md'), 'utf8');
-    assert.match(md, /\| heroBanner \| 2 \| `hero` \|/);
-    assert.match(md, /\| faqItem \| 2 \| `faq` \|/);
+    assert.match(md, /\| heroBanner \| 3 \| `hero` \|/);
+    assert.match(md, /\| faqItem \| 3 \| `faq` \|/);
 
     const manifest = JSON.parse(readFileSync(join(slugDir, 'manifests', 'cms-schema.json'), 'utf8'));
     const hero = manifest.find(t => t.name === 'heroBanner');
+    const faq = manifest.find(t => t.name === 'faqItem');
+
+    // Link<Asset> and Link<Entry> surfaced distinctly
     assert.ok(hero.fields.some(f => f.name === 'media' && f.type === 'Link<Asset>'));
-    assert.equal(hero.fields.find(f => f.name === 'title').required, true);
-    assert.equal(hero.fields.find(f => f.name === 'title').localized, true);
+    assert.ok(hero.fields.some(f => f.name === 'cta' && f.type === 'Link<Entry>'));
+
+    // Localized-field preservation — single localized Symbol (hero.title)
+    const title = hero.fields.find(f => f.name === 'title');
+    assert.equal(title.required, true);
+    assert.equal(title.localized, true);
+
+    // Multi-locale content type: ALL translatable fields localized, tags NOT
+    const localizedFaqFields = faq.fields.filter(f => f.localized);
+    assert.equal(localizedFaqFields.length, 2, `expected 2 localized fields on faqItem, got ${localizedFaqFields.length}: ${JSON.stringify(faq.fields)}`);
+    assert.deepEqual(localizedFaqFields.map(f => f.name).sort(), ['answer', 'question']);
+
+    const tags = faq.fields.find(f => f.name === 'tags');
+    assert.equal(tags.localized, false, 'tags field should NOT be localized');
+    assert.equal(tags.required, false);
+
+    // Non-localized media link on hero
+    assert.equal(hero.fields.find(f => f.name === 'media').localized, false);
   } finally { server.close(); cleanup(); }
 });
 

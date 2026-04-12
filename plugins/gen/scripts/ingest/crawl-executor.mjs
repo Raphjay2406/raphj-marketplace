@@ -20,32 +20,55 @@ async function fetchText(url) {
 
 // Recursive sitemap parser — handles sitemap indexes (nested <sitemap><loc>)
 // and honors <lastmod>. Depth-limited to prevent loops; dedupes via Set.
-async function collectSitemapUrls(seedUrl, { maxDepth = 3, maxUrls = 500 } = {}) {
+// onEvent callback receives per-sitemap fetch/parse errors so caller can log them.
+async function collectSitemapUrls(seedUrl, { maxDepth = 3, maxUrls = 500, onEvent } = {}) {
   const visited = new Set();
   const urls = [];
   const queue = [{ url: seedUrl, depth: 0 }];
 
   while (queue.length && urls.length < maxUrls) {
     const { url, depth } = queue.shift();
-    if (visited.has(url) || depth > maxDepth) continue;
+    if (visited.has(url)) continue;
+    if (depth > maxDepth) {
+      onEvent?.({ kind: 'gap', reason: 'sitemap-depth-exceeded', url, maxDepth });
+      continue;
+    }
     visited.add(url);
 
     const body = await fetchText(url);
-    if (!body) continue;
+    if (!body) {
+      onEvent?.({ kind: 'gap', reason: 'sitemap-fetch-failed', url });
+      continue;
+    }
 
     const isIndex = /<sitemapindex/i.test(body);
+    const isUrlset = /<urlset/i.test(body);
+    if (!isIndex && !isUrlset) {
+      onEvent?.({ kind: 'gap', reason: 'sitemap-unrecognized-root', url, sample: body.slice(0, 120) });
+      continue;
+    }
+
     if (isIndex) {
       // Nested sitemaps — enqueue their <loc> children
+      let childCount = 0;
       for (const m of body.matchAll(/<sitemap>[\s\S]*?<loc>\s*([^<\s]+)\s*<\/loc>/g)) {
         queue.push({ url: m[1].trim(), depth: depth + 1 });
+        childCount++;
+      }
+      if (childCount === 0) {
+        onEvent?.({ kind: 'gap', reason: 'sitemap-index-empty', url });
+      } else {
+        onEvent?.({ kind: 'sitemap.index', url, children: childCount, depth });
       }
     } else {
       // Leaf URL set
+      let added = 0;
       for (const m of body.matchAll(/<url>[\s\S]*?<loc>\s*([^<\s]+)\s*<\/loc>(?:[\s\S]*?<lastmod>\s*([^<\s]+)\s*<\/lastmod>)?/g)) {
         const loc = m[1].trim();
         const lastmod = m[2]?.trim() || null;
-        if (urls.length < maxUrls) urls.push({ url: loc, lastmod });
+        if (urls.length < maxUrls) { urls.push({ url: loc, lastmod }); added++; }
       }
+      onEvent?.({ kind: 'sitemap.urlset', url, added, depth });
     }
   }
   return urls;
@@ -130,7 +153,11 @@ async function main() {
   const routes = [seedUrl];
   const sitemapUrl = new URL('/sitemap.xml', seedUrl).href;
   try {
-    const discovered = await collectSitemapUrls(sitemapUrl, { maxDepth: 3, maxUrls: plan.maxRoutes || 50 });
+    const discovered = await collectSitemapUrls(sitemapUrl, {
+      maxDepth: 3,
+      maxUrls: plan.maxRoutes || 50,
+      onEvent: ev => append(slug, ev),
+    });
     append(slug, { kind: 'sitemap.bfs', root: sitemapUrl, discovered: discovered.length });
     for (const { url, lastmod } of discovered) {
       if (routes.length >= (plan.maxRoutes || 50)) break;

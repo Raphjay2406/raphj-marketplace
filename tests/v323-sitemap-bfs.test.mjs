@@ -91,3 +91,62 @@ test('sitemap BFS: dedupes and caps depth', async () => {
     assert.equal(out.length, 0);
   } finally { server.close(); }
 });
+
+test('sitemap BFS: fetch failure emits gap:sitemap-fetch-failed', async () => {
+  // Point at a port nothing is listening on — fetch will reject → gap event
+  const events = [];
+  const out = await collectSitemapUrls('http://127.0.0.1:1/sitemap.xml', {
+    onEvent: ev => events.push(ev),
+  });
+  assert.equal(out.length, 0);
+  assert.ok(events.some(e => e.kind === 'gap' && e.reason === 'sitemap-fetch-failed'),
+    `expected sitemap-fetch-failed event, got: ${JSON.stringify(events)}`);
+});
+
+test('sitemap BFS: unrecognized XML root emits gap:sitemap-unrecognized-root', async () => {
+  const { server, port } = await startFixtureServer({
+    '/sitemap.xml': `<?xml version="1.0"?><rss><channel><title>not a sitemap</title></channel></rss>`,
+  });
+  try {
+    const events = [];
+    const out = await collectSitemapUrls(`http://127.0.0.1:${port}/sitemap.xml`, {
+      onEvent: ev => events.push(ev),
+    });
+    assert.equal(out.length, 0);
+    assert.ok(events.some(e => e.kind === 'gap' && e.reason === 'sitemap-unrecognized-root'),
+      `expected sitemap-unrecognized-root, got: ${JSON.stringify(events)}`);
+  } finally { server.close(); }
+});
+
+test('sitemap BFS: empty sitemap index emits gap:sitemap-index-empty', async () => {
+  const { server, port } = await startFixtureServer({
+    '/sitemap.xml': `<sitemapindex></sitemapindex>`,
+  });
+  try {
+    const events = [];
+    await collectSitemapUrls(`http://127.0.0.1:${port}/sitemap.xml`, {
+      onEvent: ev => events.push(ev),
+    });
+    assert.ok(events.some(e => e.kind === 'gap' && e.reason === 'sitemap-index-empty'));
+  } finally { server.close(); }
+});
+
+test('sitemap BFS: urlset emits per-sitemap progress event with added count', async () => {
+  const { server, port } = await startFixtureServer({
+    '/sitemap.xml': `<urlset>
+      <url><loc>http://example.com/a</loc></url>
+      <url><loc>http://example.com/b</loc></url>
+      <url><loc>http://example.com/c</loc></url>
+    </urlset>`,
+  });
+  try {
+    const events = [];
+    await collectSitemapUrls(`http://127.0.0.1:${port}/sitemap.xml`, {
+      onEvent: ev => events.push(ev),
+    });
+    const progress = events.find(e => e.kind === 'sitemap.urlset');
+    assert.ok(progress, 'missing sitemap.urlset event');
+    assert.equal(progress.added, 3);
+    assert.equal(progress.depth, 0);
+  } finally { server.close(); }
+});
