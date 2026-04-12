@@ -4,7 +4,7 @@ id: genorah/pricing-author
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Authors pricing tier copy, feature bullets, and CTA text optimized for conversion. Applies cognitive load gate.
 capabilities:
   - id: author-pricing
     input: PricingSpec

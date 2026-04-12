@@ -4,7 +4,7 @@ id: genorah/gsap-choreographer
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Authors GSAP ScrollTrigger and timeline sequences bound to DNA motion tokens. Enforces reduced-motion variants and performance budgets.
 capabilities:
   - id: choreograph-gsap
     input: MotionSpec

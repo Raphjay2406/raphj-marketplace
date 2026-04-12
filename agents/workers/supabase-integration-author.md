@@ -4,7 +4,7 @@ id: genorah/supabase-integration-author
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: "Scaffolds Supabase integration: auth, Postgres schema, RLS policies, realtime subscriptions, and storage config."
 capabilities:
   - id: author-supabase-integration
     input: IntegrationSpec

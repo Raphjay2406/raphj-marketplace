@@ -4,7 +4,7 @@ id: genorah/video-reel-gen
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Generates DNA-parameterized video reel assets via Remotion or video gen APIs. Outputs AVIF/MP4/WebM.
 capabilities:
   - id: generate-video-reel
     input: VideoSpec

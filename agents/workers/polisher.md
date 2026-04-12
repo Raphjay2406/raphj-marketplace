@@ -4,7 +4,7 @@ id: genorah/polisher
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: "Applies final polish pass: micro-interactions, hover states, focus rings, loading skeletons, and transition refinements."
 capabilities:
   - id: polish-section
     input: SectionArtifact

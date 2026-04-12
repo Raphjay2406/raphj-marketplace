@@ -4,7 +4,7 @@ id: genorah/sotd-scout
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Scouts recent Awwwards SOTD winners in the target vertical. Extracts design patterns, score benchmarks, and differentiators.
 capabilities:
   - id: scout-sotd
     input: ResearchSpec

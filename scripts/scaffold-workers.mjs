@@ -146,6 +146,14 @@ const workers = [
   { domain: "misc", name: "n8n-workflow-author", title: "n8n Workflow Author", isolation: "worktree", capability: "author-n8n-workflow", director: "wave-director", input: "WorkflowSpec", output: "N8NWorkflow", role: "Authors n8n automation workflow JSON for lead capture, CRM sync, and notification pipelines.", artifactDesc: "n8n workflow JSON with node config, credential placeholders, and activation steps", validators: "n8n-workflows" }
 ];
 
+function yamlStr(s) {
+  // Quote if contains colon-space or starts with special chars
+  if (s.includes(": ") || s.includes(" #") || /^[{[\|>&*!%@`'"?,]/.test(s)) {
+    return `"${s.replace(/"/g, '\\"')}"`;
+  }
+  return s;
+}
+
 function buildWorkerMd(w) {
   return `---
 name: ${w.name}
@@ -153,7 +161,7 @@ id: genorah/${w.name}
 version: 4.0.0
 channel: stable
 tier: worker
-description: ${w.description}
+description: ${yamlStr(w.role)}
 capabilities:
   - id: ${w.capability}
     input: ${w.input}

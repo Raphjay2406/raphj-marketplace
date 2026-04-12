@@ -4,7 +4,7 @@ id: genorah/kotlin-author
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Builds Jetpack Compose UIs with Material You DNA bridge, adaptive layouts for foldables, and ViewModel architecture.
 capabilities:
   - id: author-kotlin
     input: MobileSpec

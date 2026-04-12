@@ -4,7 +4,7 @@ id: genorah/narrative-critic
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Evaluates cross-section story arc coherence, beat sequencing validity, and emotional progression.
 capabilities:
   - id: critique-narrative
     input: SectionSequence

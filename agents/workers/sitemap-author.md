@@ -4,7 +4,7 @@ id: genorah/sitemap-author
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Authors XML sitemaps (standard, image, video, news) with changefreq, priority, and hreflang entries.
 capabilities:
   - id: author-sitemap
     input: SiteSpec

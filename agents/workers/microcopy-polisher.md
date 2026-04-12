@@ -4,7 +4,7 @@ id: genorah/microcopy-polisher
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: "Final microcopy review and polish: tightens CTAs, removes filler words, enforces anti-slop gate, checks brand voice."
 capabilities:
   - id: polish-microcopy
     input: SectionArtifact

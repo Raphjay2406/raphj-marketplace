@@ -4,7 +4,7 @@ id: genorah/astro-section
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Builds a single page section as an Astro component with DNA tokens, island hydration strategy, and 4-breakpoint layout.
 capabilities:
   - id: build-astro-section
     input: SectionSpec

@@ -4,7 +4,7 @@ id: genorah/shopify-integration-author
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: "Scaffolds Shopify Storefront API integration: product listings, cart, checkout, and DNA-themed product display."
 capabilities:
   - id: author-shopify-integration
     input: IntegrationSpec

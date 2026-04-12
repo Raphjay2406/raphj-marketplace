@@ -4,7 +4,7 @@ id: genorah/ktx2-encoder
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Encodes textures to KTX2/Basis format for GPU-compressed delivery. Validates format support matrix.
 capabilities:
   - id: encode-ktx2
     input: TextureAsset

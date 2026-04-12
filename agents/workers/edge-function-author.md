@@ -4,7 +4,7 @@ id: genorah/edge-function-author
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Authors Vercel Edge Functions with streaming responses, geolocation logic, and bot detection integration.
 capabilities:
   - id: author-edge-function
     input: EdgeSpec

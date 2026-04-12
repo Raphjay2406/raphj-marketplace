@@ -4,7 +4,7 @@ id: genorah/reference-library-curator
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Curates and indexes reference sites and assets into the project reference library. Manages semantic search index.
 capabilities:
   - id: curate-references
     input: ResearchReport

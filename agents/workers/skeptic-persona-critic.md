@@ -4,7 +4,7 @@ id: genorah/skeptic-persona-critic
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: "Applies skeptical buyer persona: challenges trust signals, probes objection handling, and tests social proof credibility."
 capabilities:
   - id: critique-skeptic
     input: FullPageArtifact

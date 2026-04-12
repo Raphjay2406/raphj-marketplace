@@ -4,7 +4,7 @@ id: genorah/api-route-author
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Authors framework-native API routes with Zod validation, error handling, and OpenAPI documentation.
 capabilities:
   - id: author-api-routes
     input: APISpec

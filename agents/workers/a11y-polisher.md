@@ -4,7 +4,7 @@ id: genorah/a11y-polisher
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: "Applies accessibility polish: ARIA labels, focus management, color contrast corrections, and keyboard navigation."
 capabilities:
   - id: polish-a11y
     input: SectionArtifact

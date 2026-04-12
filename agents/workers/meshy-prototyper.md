@@ -4,7 +4,7 @@ id: genorah/meshy-prototyper
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Rapid 3D prototype generation via Meshy API. Produces low-fidelity models for layout and proportion validation.
 capabilities:
   - id: prototype-meshy
     input: MeshySpec

@@ -1,0 +1,4202 @@
+[
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/asset-director",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "asset-director",
+    "description": "Composite asset pipeline coordination, cost governance, and provenance tracking",
+    "tier": "director",
+    "capabilities": [
+      {
+        "id": "direct-assets",
+        "input": "AssetRequest",
+        "output": "AssetManifest"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/creative-director",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "creative-director",
+    "description": "Taste enforcement, archetype personality, GAP-FIX authoring, and Design DNA stewardship",
+    "tier": "director",
+    "capabilities": [
+      {
+        "id": "enforce-taste",
+        "input": "SectionArtifact",
+        "output": "GapFixDirective"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/master-orchestrator",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "master-orchestrator",
+    "description": "Project-level coordination, state ownership, and wave routing across all pipeline phases",
+    "tier": "director",
+    "capabilities": [
+      {
+        "id": "orchestrate-project",
+        "input": "ProjectSpec",
+        "output": "WaveRouteMap"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/mobile-director",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "mobile-director",
+    "description": "Mobile framework routing (Swift/Kotlin/RN/Expo/Flutter), HIG compliance, and store submission",
+    "tier": "director",
+    "capabilities": [
+      {
+        "id": "route-mobile",
+        "input": "MobileSpec",
+        "output": "MobileBuildPlan"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/narrative-director",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "narrative-director",
+    "description": "Cross-section story arc coherence, emotional beat sequencing, and arc validity enforcement",
+    "tier": "director",
+    "capabilities": [
+      {
+        "id": "validate-arc",
+        "input": "SectionSequence",
+        "output": "ArcValidationReport"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/protocol-director",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "protocol-director",
+    "description": "A2A traffic management, schema validation, and inter-agent error routing",
+    "tier": "director",
+    "capabilities": [
+      {
+        "id": "route-a2a",
+        "input": "A2AMessage",
+        "output": "RoutingDecision"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/quality-director",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "quality-director",
+    "description": "394-point quality gate verdicts, hard gate enforcement, and Playwright visual QA coordination",
+    "tier": "director",
+    "capabilities": [
+      {
+        "id": "run-quality-gate",
+        "input": "SectionArtifact",
+        "output": "QualityVerdict"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/research-director",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "research-director",
+    "description": "Parallel research orchestration, SOTD benchmarking, and competitive analysis coordination",
+    "tier": "director",
+    "capabilities": [
+      {
+        "id": "orchestrate-research",
+        "input": "ResearchSpec",
+        "output": "ResearchReport"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/scene-director",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "scene-director",
+    "description": "Persistent 3D canvas management, cross-section camera choreography, and WebGPU/WebGL routing",
+    "tier": "director",
+    "capabilities": [
+      {
+        "id": "direct-scene",
+        "input": "SceneSpec",
+        "output": "SceneManifest"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/wave-director",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "wave-director",
+    "description": "Per-wave section routing, parallel dispatch, and merge coordination",
+    "tier": "director",
+    "capabilities": [
+      {
+        "id": "route-wave",
+        "input": "WaveSpec",
+        "output": "WaveMergeReport"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/a11y-polisher",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "a11y-polisher",
+    "description": "Applies accessibility polish: ARIA labels, focus management, color contrast corrections, and keyboard navigation.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "polish-a11y",
+        "input": "SectionArtifact",
+        "output": "A11yPolishedArtifact"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/agent-trace-ui-author",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "agent-trace-ui-author",
+    "description": "Builds agent trace visualization UI with AG-UI event stream rendering and step-by-step thought display.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "author-agent-trace-ui",
+        "input": "AgentTraceSpec",
+        "output": "AgentTraceUIComponent"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/api-route-author",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "api-route-author",
+    "description": "Authors framework-native API routes with Zod validation, error handling, and OpenAPI documentation.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "author-api-routes",
+        "input": "APISpec",
+        "output": "APIRoutes"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/archetype-researcher",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "archetype-researcher",
+    "description": "Researches archetype-specific visual references, color systems, typography precedents, and motion language.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "research-archetype",
+        "input": "ArchetypeSpec",
+        "output": "ArchetypeResearch"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/astro-section",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "astro-section",
+    "description": "Builds a single page section as an Astro component with DNA tokens, island hydration strategy, and 4-breakpoint layout.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "build-astro-section",
+        "input": "SectionSpec",
+        "output": "SectionArtifact"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/awwwards-judge-simulator",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "awwwards-judge-simulator",
+    "description": "Simulates Awwwards SOTD judge scoring across 4 axes: Design, Usability, Creativity, Content. Targets 8.0+ average.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "simulate-awwwards",
+        "input": "FullPageArtifact",
+        "output": "AwwwardsScore"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/axe-runner",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "axe-runner",
+    "description": "Runs axe-core accessibility audit against deployed preview. Reports WCAG 2.1 AA violations with fix guidance.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "run-axe",
+        "input": "DeployURL",
+        "output": "AxeReport"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/brand-voice-enforcer",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "brand-voice-enforcer",
+    "description": "Reviews all copy against extracted brand voice guidelines. Rewrites passages that deviate from tone, vocabulary, or personality.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "enforce-brand-voice",
+        "input": "ContentDraft",
+        "output": "VoiceValidatedContent"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/bundle-analyzer",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "bundle-analyzer",
+    "description": "Analyzes production bundle composition. Flags oversized chunks, duplicate dependencies, and tree-shaking failures.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "analyze-bundle",
+        "input": "BuildArtifact",
+        "output": "BundleReport"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/character-poser",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "character-poser",
+    "description": "Applies poses and expressions to character models. Validates against brand character consistency guidelines.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "pose-character",
+        "input": "PoseSpec",
+        "output": "PosedCharacter"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/chat-ui-author",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "chat-ui-author",
+    "description": "Builds AI chat UI components with Vercel AI SDK v4, streaming responses, and DNA-themed message bubbles.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "author-chat-ui",
+        "input": "ChatUISpec",
+        "output": "ChatUIComponent"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/ci-pipeline-author",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "ci-pipeline-author",
+    "description": "Authors GitHub Actions or CI pipeline with Lighthouse CI, Playwright preview smoke, and quality gate checks.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "author-ci-pipeline",
+        "input": "CISpec",
+        "output": "CIPipeline"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/cms-schema-introspector",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "cms-schema-introspector",
+    "description": "Introspects CMS schemas via GROQ (Sanity), CMA (Contentful), or OpenAPI (Payload). Maps content types to DNA sections.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "introspect-cms-schema",
+        "input": "CMSConnectionSpec",
+        "output": "CMSSchemaReport"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/color-critic",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "color-critic",
+    "description": "Evaluates color system against DNA tokens, contrast ratios, and archetype color rules. Checks for token drift.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "critique-color",
+        "input": "SectionArtifact",
+        "output": "ColorCritique"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/competitor-analyzer",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "competitor-analyzer",
+    "description": "Analyzes competitor sites for design quality, UX patterns, conversion strategies, and differentiation opportunities.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "analyze-competitors",
+        "input": "CompetitorList",
+        "output": "CompetitorReport"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/contentful-author",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "contentful-author",
+    "description": "Authors Contentful content model definitions and GraphQL query fragments with DNA token field mappings.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "author-contentful",
+        "input": "CMSSpec",
+        "output": "ContentfulSchema"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/conversion-critic",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "conversion-critic",
+    "description": "Evaluates conversion readiness: CTA clarity, social proof placement, friction reduction, and conversion gate compliance.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "critique-conversion",
+        "input": "SectionArtifact",
+        "output": "ConversionCritique"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/dna-reverse-engineer",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "dna-reverse-engineer",
+    "description": "Extracts Design DNA from captured CSS variables and computed styles. Runs pixel-kmeans with ΔE2000 perceptual distance.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "reverse-engineer-dna",
+        "input": "CrawlManifest",
+        "output": "ExtractedDNA"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/docker-author",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "docker-author",
+    "description": "Authors Dockerfile and docker-compose.yml for self-hosted deployment with standalone Next.js output.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "author-docker",
+        "input": "DeploySpec",
+        "output": "DockerConfig"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/edge-function-author",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "edge-function-author",
+    "description": "Authors Vercel Edge Functions with streaming responses, geolocation logic, and bot detection integration.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "author-edge-function",
+        "input": "EdgeSpec",
+        "output": "EdgeFunction"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/email-template-author",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "email-template-author",
+    "description": "Authors React Email or MJML transactional email templates with DNA-aligned styling and dark mode support.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "author-email-templates",
+        "input": "EmailSpec",
+        "output": "EmailTemplates"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/expo-author",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "expo-author",
+    "description": "Builds Expo managed workflow apps with EAS Build config, Expo Router, OTA updates, and config plugin setup.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "author-expo",
+        "input": "MobileSpec",
+        "output": "ExpoArtifact"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/faq-author",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "faq-author",
+    "description": "Authors FAQ content with structured data markup. Targets featured snippet eligibility and GEO citation patterns.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "author-faq",
+        "input": "FAQSpec",
+        "output": "FAQContent"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/first-time-visitor-critic",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "first-time-visitor-critic",
+    "description": "Simulates first-time visitor experience: 5-second test, clarity of value proposition, and confusion points.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "critique-first-visit",
+        "input": "FullPageArtifact",
+        "output": "FirstVisitCritique"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/flutter-author",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "flutter-author",
+    "description": "Builds Flutter widgets with ThemeData DNA mapping, go_router navigation, Riverpod state, and platform adaptive widgets.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "author-flutter",
+        "input": "MobileSpec",
+        "output": "FlutterArtifact"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/flux-hero-gen",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "flux-hero-gen",
+    "description": "Generates hero background images using Flux API with DNA-matched color palettes and beat-type visual language.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "generate-flux-hero",
+        "input": "HeroAssetSpec",
+        "output": "HeroImageAsset"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/gltf-lod-generator",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "gltf-lod-generator",
+    "description": "Generates multiple LOD variants for GLTF models. Validates triangle counts and texture sizes against perf budgets.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "generate-gltf-lod",
+        "input": "GLTFAsset",
+        "output": "LODManifest"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/gsap-choreographer",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "gsap-choreographer",
+    "description": "Authors GSAP ScrollTrigger and timeline sequences bound to DNA motion tokens. Enforces reduced-motion variants and performance budgets.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "choreograph-gsap",
+        "input": "MotionSpec",
+        "output": "GSAPTimeline"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/hero-camera-choreographer",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "hero-camera-choreographer",
+    "description": "Authors camera keyframe sequences for hero and cinematic sections. Produces Theatre.js or GSAP ScrollTrigger camera paths tied to DNA motion tokens.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "choreograph-camera",
+        "input": "SceneSpec",
+        "output": "CameraTimeline"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/hubspot-integration-author",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "hubspot-integration-author",
+    "description": "Scaffolds HubSpot CRM integration: forms, contact sync, marketing automation hooks, and CMS API.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "author-hubspot-integration",
+        "input": "IntegrationSpec",
+        "output": "HubSpotIntegration"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/hydrogen-integration-author",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "hydrogen-integration-author",
+    "description": "Scaffolds Shopify Hydrogen storefront with Oxygen deployment config, Remix routes, and DNA-bound storefront components.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "author-hydrogen-integration",
+        "input": "IntegrationSpec",
+        "output": "HydrogenIntegration"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/inpainter",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "inpainter",
+    "description": "Runs inpainting workflows to fix, extend, or composite image assets. Preserves DNA color accuracy in edited regions.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "inpaint-image",
+        "input": "InpaintSpec",
+        "output": "InpaintedAsset"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/interaction-replay-fitter",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "interaction-replay-fitter",
+    "description": "Fits Playwright traces to 7 cubic-Bezier easing presets and generates MOTION-INVENTORY.md with exact preset matches.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "fit-interaction-replay",
+        "input": "PlaywrightTrace",
+        "output": "MotionInventory"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/kotlin-author",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "kotlin-author",
+    "description": "Builds Jetpack Compose UIs with Material You DNA bridge, adaptive layouts for foldables, and ViewModel architecture.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "author-kotlin",
+        "input": "MobileSpec",
+        "output": "KotlinArtifact"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/ktx2-encoder",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "ktx2-encoder",
+    "description": "Encodes textures to KTX2/Basis format for GPU-compressed delivery. Validates format support matrix.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "encode-ktx2",
+        "input": "TextureAsset",
+        "output": "KTX2Texture"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/legal-doc-author",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "legal-doc-author",
+    "description": "Authors privacy policy, terms of service, and cookie consent documents with jurisdiction-specific clauses.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "author-legal-docs",
+        "input": "LegalSpec",
+        "output": "LegalDocs"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/lighthouse-runner",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "lighthouse-runner",
+    "description": "Runs Lighthouse CI against preview deployments. Enforces perf budget thresholds and flags CWV regressions.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "run-lighthouse",
+        "input": "DeployURL",
+        "output": "LighthouseReport"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/lottie-author",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "lottie-author",
+    "description": "Authors Lottie animation JSON for micro-animations and brand motion sigils. Validates file size and frame rate targets.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "author-lottie",
+        "input": "LottieSpec",
+        "output": "LottieAnimation"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/medusa-integration-author",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "medusa-integration-author",
+    "description": "Scaffolds Medusa v2 headless commerce integration with product catalog, cart, and checkout flows.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "author-medusa-integration",
+        "input": "IntegrationSpec",
+        "output": "MedusaIntegration"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/meshy-prototyper",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "meshy-prototyper",
+    "description": "Rapid 3D prototype generation via Meshy API. Produces low-fidelity models for layout and proportion validation.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "prototype-meshy",
+        "input": "MeshySpec",
+        "output": "MeshyModel"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/microcopy-author",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "microcopy-author",
+    "description": "Authors UI microcopy, CTA text, tooltips, and error messages aligned with brand voice and anti-slop gate.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "author-microcopy",
+        "input": "CopySpec",
+        "output": "MicrocopyDraft"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/microcopy-polisher",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "microcopy-polisher",
+    "description": "Final microcopy review and polish: tightens CTAs, removes filler words, enforces anti-slop gate, checks brand voice.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "polish-microcopy",
+        "input": "SectionArtifact",
+        "output": "PolishedCopy"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/morph-target-author",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "morph-target-author",
+    "description": "Generates morph target animations for character and product 3D models. Validates blend shape count against performance budget.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "author-morph-targets",
+        "input": "MeshSpec",
+        "output": "MorphTargetGLTF"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/motion-critic",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "motion-critic",
+    "description": "Evaluates motion design against quality gate: intentionality, DNA motion token usage, reduced-motion compliance.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "critique-motion",
+        "input": "SectionArtifact",
+        "output": "MotionCritique"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/n8n-workflow-author",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "n8n-workflow-author",
+    "description": "Authors n8n automation workflow JSON for lead capture, CRM sync, and notification pipelines.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "author-n8n-workflow",
+        "input": "WorkflowSpec",
+        "output": "N8NWorkflow"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/nano-banana-iterator",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "nano-banana-iterator",
+    "description": "Runs iterative image editing via nano-banana MCP. Applies DNA color corrections, style transfers, and beat-specific atmosphere adjustments.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "iterate-nano-banana",
+        "input": "ImageIterSpec",
+        "output": "IteratedImageAsset"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/narrative-critic",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "narrative-critic",
+    "description": "Evaluates cross-section story arc coherence, beat sequencing validity, and emotional progression.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "critique-narrative",
+        "input": "SectionSequence",
+        "output": "NarrativeCritique"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/nextjs-section",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "nextjs-section",
+    "description": "Builds a single page section as a Next.js RSC with Tailwind v4 DNA tokens, animation, and 4-breakpoint responsive layout.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "build-nextjs-section",
+        "input": "SectionSpec",
+        "output": "SectionArtifact"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/og-image-author",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "og-image-author",
+    "description": "Authors dynamic OG image generation routes with next/og, DNA typography, and brand color templates.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "author-og-images",
+        "input": "OGSpec",
+        "output": "OGImageRoutes"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/pattern-miner",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "pattern-miner",
+    "description": "Extracts reusable design patterns from reference sites. Identifies cross-archetype techniques and innovation opportunities.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "mine-patterns",
+        "input": "ReferenceLibrary",
+        "output": "PatternCatalog"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/payload-author",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "payload-author",
+    "description": "Authors Payload CMS collection and global definitions with DNA-themed admin UI and access control policies.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "author-payload",
+        "input": "CMSSpec",
+        "output": "PayloadSchema"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/perf-polisher",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "perf-polisher",
+    "description": "Applies performance polish: image optimization, lazy loading, bundle splitting, and CWV budget validation.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "polish-performance",
+        "input": "SectionArtifact",
+        "output": "PerfPolishedArtifact"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/playwright-test-author",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "playwright-test-author",
+    "description": "Authors Playwright E2E tests for critical user journeys, visual regression baselines, and accessibility checks.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "author-playwright-tests",
+        "input": "TestSpec",
+        "output": "PlaywrightTests"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/polisher",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "polisher",
+    "description": "Applies final polish pass: micro-interactions, hover states, focus rings, loading skeletons, and transition refinements.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "polish-section",
+        "input": "SectionArtifact",
+        "output": "PolishedArtifact"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/pricing-author",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "pricing-author",
+    "description": "Authors pricing tier copy, feature bullets, and CTA text optimized for conversion. Applies cognitive load gate.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "author-pricing",
+        "input": "PricingSpec",
+        "output": "PricingContent"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/prisma-schema-author",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "prisma-schema-author",
+    "description": "Authors Prisma schema from content and data requirements. Generates migrations and type-safe client bindings.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "author-prisma-schema",
+        "input": "DataSpec",
+        "output": "PrismaSchema"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/propstack-integration-author",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "propstack-integration-author",
+    "description": "Scaffolds Propstack real estate CRM integration: property listings, search, and lead capture forms.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "author-propstack-integration",
+        "input": "IntegrationSpec",
+        "output": "PropstackIntegration"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/r3f-scene-builder",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "r3f-scene-builder",
+    "description": "Builds React Three Fiber scene components with Rapier physics, DNA-bound materials, and postprocessing pipeline.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "build-r3f-scene",
+        "input": "SceneSpec",
+        "output": "R3FComponent"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/rag-pipeline-author",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "rag-pipeline-author",
+    "description": "Scaffolds RAG pipeline with Supabase pgvector, embedding generation, and retrieval-augmented generation routes.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "author-rag-pipeline",
+        "input": "RAGSpec",
+        "output": "RAGPipeline"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/react-vite-section",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "react-vite-section",
+    "description": "Builds a single page section as a React component with Vite, DNA tokens, Framer Motion, and 4-breakpoint responsive layout.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "build-react-vite-section",
+        "input": "SectionSpec",
+        "output": "SectionArtifact"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/recraft-vector-author",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "recraft-vector-author",
+    "description": "Generates SVG vector assets via Recraft API. Binds vector colors to DNA tokens for runtime theming.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "author-recraft-vector",
+        "input": "VectorSpec",
+        "output": "SVGAsset"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/reduced-motion-variant-author",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "reduced-motion-variant-author",
+    "description": "Generates prefers-reduced-motion CSS/JS variants for every animated section. Ensures WCAG 2.1 compliance without sacrificing design intent.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "author-reduced-motion",
+        "input": "MotionArtifact",
+        "output": "ReducedMotionVariant"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/reference-library-curator",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "reference-library-curator",
+    "description": "Curates and indexes reference sites and assets into the project reference library. Manages semantic search index.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "curate-references",
+        "input": "ResearchReport",
+        "output": "ReferenceLibrary"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/rive-author",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "rive-author",
+    "description": "Authors Rive state machine definitions for interactive brand animations. Wires inputs to user interaction events.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "author-rive",
+        "input": "RiveSpec",
+        "output": "RiveStateMachine"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/rn-author",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "rn-author",
+    "description": "Builds React Native bare workflow components with NativeWind DNA bridge, React Navigation v7, and Reanimated 3.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "author-react-native",
+        "input": "MobileSpec",
+        "output": "RNArtifact"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/rodin-3d-gen",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "rodin-3d-gen",
+    "description": "Generates 3D model assets via Rodin API. Produces GLTF output ready for scene-director pipeline.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "generate-rodin-3d",
+        "input": "Model3DSpec",
+        "output": "Model3DAsset"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/sanity-author",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "sanity-author",
+    "description": "Authors Sanity schema definitions, GROQ queries, and DNA-themed Studio components for content management.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "author-sanity",
+        "input": "CMSSpec",
+        "output": "SanitySchema"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/scroll-driven-css-author",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "scroll-driven-css-author",
+    "description": "Authors native CSS scroll-driven animations using @keyframes with animation-timeline. Provides JS-based fallback for unsupported browsers.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "author-scroll-driven-css",
+        "input": "MotionSpec",
+        "output": "ScrollDrivenCSS"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/shopify-integration-author",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "shopify-integration-author",
+    "description": "Scaffolds Shopify Storefront API integration: product listings, cart, checkout, and DNA-themed product display.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "author-shopify-integration",
+        "input": "IntegrationSpec",
+        "output": "ShopifyIntegration"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/sitemap-author",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "sitemap-author",
+    "description": "Authors XML sitemaps (standard, image, video, news) with changefreq, priority, and hreflang entries.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "author-sitemap",
+        "input": "SiteSpec",
+        "output": "SitemapXML"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/sitemap-crawler",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "sitemap-crawler",
+    "description": "Recursive BFS sitemap crawl with per-sitemap error events. Captures HTML, computed styles, and 4-breakpoint screenshots.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "crawl-sitemap",
+        "input": "CrawlSpec",
+        "output": "CrawlManifest"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/skeptic-persona-critic",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "skeptic-persona-critic",
+    "description": "Applies skeptical buyer persona: challenges trust signals, probes objection handling, and tests social proof credibility.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "critique-skeptic",
+        "input": "FullPageArtifact",
+        "output": "SkepticCritique"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/sotd-scout",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "sotd-scout",
+    "description": "Scouts recent Awwwards SOTD winners in the target vertical. Extracts design patterns, score benchmarks, and differentiators.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "scout-sotd",
+        "input": "ResearchSpec",
+        "output": "SOTDReport"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/spline-embed-author",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "spline-embed-author",
+    "description": "Authors Spline scene embed components with lazy loading, DNA color injection via Spline events API, and reduced-motion fallback.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "author-spline-embed",
+        "input": "SplineSpec",
+        "output": "SplineEmbedComponent"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/storybook-story-author",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "storybook-story-author",
+    "description": "Authors Storybook stories for all shared components with controls, docs, and accessibility addon integration.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "author-storybook-stories",
+        "input": "ComponentSpec",
+        "output": "StorybookStories"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/stripe-integration-author",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "stripe-integration-author",
+    "description": "Scaffolds Stripe payment integration: checkout session, subscription management, webhook handling, and payment element theming.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "author-stripe-integration",
+        "input": "IntegrationSpec",
+        "output": "StripeIntegration"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/supabase-integration-author",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "supabase-integration-author",
+    "description": "Scaffolds Supabase integration: auth, Postgres schema, RLS policies, realtime subscriptions, and storage config.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "author-supabase-integration",
+        "input": "IntegrationSpec",
+        "output": "SupabaseIntegration"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/sveltekit-section",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "sveltekit-section",
+    "description": "Builds a single page section as a SvelteKit component with DNA tokens, Svelte transitions, and 4-breakpoint responsive layout.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "build-sveltekit-section",
+        "input": "SectionSpec",
+        "output": "SectionArtifact"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/swift-author",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "swift-author",
+    "description": "Builds SwiftUI views with DNA token mapping to SwiftUI design tokens, SF Symbols, NavigationStack, and HIG compliance.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "author-swift",
+        "input": "MobileSpec",
+        "output": "SwiftArtifact"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/synthetic-persona-prober",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "synthetic-persona-prober",
+    "description": "Runs synthetic user personas through the full page journey. Validates task completion, confusion points, and conversion path.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "probe-synthetic-persona",
+        "input": "PersonaSpec",
+        "output": "PersonaProbeReport"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/telemetry-ingester",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "telemetry-ingester",
+    "description": "Ingests RUM and synthetic telemetry. Tracks CWV trends, error rates, and user flow drop-offs against SLO budgets.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "ingest-telemetry",
+        "input": "TelemetryStream",
+        "output": "TelemetryReport"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/testimonial-author",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "testimonial-author",
+    "description": "Authors realistic testimonial copy with persona diversity and conversion-optimized framing. Flags synthetic content for disclosure.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "author-testimonials",
+        "input": "TestimonialSpec",
+        "output": "TestimonialSet"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/theatre-sequencer",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "theatre-sequencer",
+    "description": "Authors Theatre.js project files for complex multi-object animation sequences. Binds sequence values to DNA motion tokens.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "sequence-theatre",
+        "input": "SequenceSpec",
+        "output": "TheatreProject"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/trend-scout",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "trend-scout",
+    "description": "Identifies emerging design and UX trends relevant to the project vertical. Flags trends conflicting with archetype.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "scout-trends",
+        "input": "TrendSpec",
+        "output": "TrendReport"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/typography-critic",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "typography-critic",
+    "description": "Evaluates typography against quality gate axis: scale discipline, hierarchy clarity, archetype font personality, and readability.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "critique-typography",
+        "input": "SectionArtifact",
+        "output": "TypographyCritique"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/upscaler",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "upscaler",
+    "description": "Upscales raster assets to target resolution using AI super-resolution. Validates output sharpness and artifact levels.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "upscale-asset",
+        "input": "LowResAsset",
+        "output": "UpscaledAsset"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/vercel-config-author",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "vercel-config-author",
+    "description": "Authors vercel.json with routing rules, edge config, caching strategies, and environment variable schema.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "author-vercel-config",
+        "input": "DeploySpec",
+        "output": "VercelConfig"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/video-reel-gen",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "video-reel-gen",
+    "description": "Generates DNA-parameterized video reel assets via Remotion or video gen APIs. Outputs AVIF/MP4/WebM.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "generate-video-reel",
+        "input": "VideoSpec",
+        "output": "VideoReelAsset"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/visual-refiner",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "visual-refiner",
+    "description": "Closed-loop visual refinement: captures Playwright screenshots, compares against reference targets, applies corrections until delta converges.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "refine-visuals",
+        "input": "SectionArtifact",
+        "output": "RefinedArtifact"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/vitest-author",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "vitest-author",
+    "description": "Authors Vitest unit and integration tests for utilities, hooks, and component logic with coverage targets.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "author-vitest",
+        "input": "TestSpec",
+        "output": "VitestTests"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/vr-snapshot-taker",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "vr-snapshot-taker",
+    "description": "Captures 4-breakpoint visual regression snapshots via Playwright. Diffs against baseline and flags regressions.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "take-vr-snapshots",
+        "input": "DeployURL",
+        "output": "SnapshotSet"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/vue-section",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "vue-section",
+    "description": "Builds a single page section as a Vue 3 SFC with DNA tokens, GSAP/VueUse motion, and 4-breakpoint responsive layout.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "build-vue-section",
+        "input": "SectionSpec",
+        "output": "SectionArtifact"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/webgl2-fallback-author",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "webgl2-fallback-author",
+    "description": "Transpiles or authors equivalent GLSL 3.0 fallback shaders for WebGPU scenes. Ensures tier-1 browser compatibility.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "author-webgl2-fallback",
+        "input": "WebGPUShader",
+        "output": "GLSL300Shader"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/webgpu-shader-author",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "webgpu-shader-author",
+    "description": "Authors WGSL compute and fragment shaders for WebGPU-capable browsers. Provides WebGL2 fallback strategy via scene-director.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "author-webgpu-shader",
+        "input": "ShaderSpec",
+        "output": "WGSLShader"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
+    "id": "genorah/woocommerce-integration-author",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "woocommerce-integration-author",
+    "description": "Scaffolds WooCommerce REST API integration: product grids, cart management, order flows, and DNA-themed checkout.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "author-woocommerce-integration",
+        "input": "IntegrationSpec",
+        "output": "WooCommerceIntegration"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  }
+]

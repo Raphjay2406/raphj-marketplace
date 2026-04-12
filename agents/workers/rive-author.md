@@ -4,7 +4,7 @@ id: genorah/rive-author
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Authors Rive state machine definitions for interactive brand animations. Wires inputs to user interaction events.
 capabilities:
   - id: author-rive
     input: RiveSpec

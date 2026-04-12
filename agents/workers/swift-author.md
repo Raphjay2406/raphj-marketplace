@@ -4,7 +4,7 @@ id: genorah/swift-author
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Builds SwiftUI views with DNA token mapping to SwiftUI design tokens, SF Symbols, NavigationStack, and HIG compliance.
 capabilities:
   - id: author-swift
     input: MobileSpec

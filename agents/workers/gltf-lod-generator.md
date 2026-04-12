@@ -4,7 +4,7 @@ id: genorah/gltf-lod-generator
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Generates multiple LOD variants for GLTF models. Validates triangle counts and texture sizes against perf budgets.
 capabilities:
   - id: generate-gltf-lod
     input: GLTFAsset

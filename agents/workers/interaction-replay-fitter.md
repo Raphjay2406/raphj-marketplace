@@ -4,7 +4,7 @@ id: genorah/interaction-replay-fitter
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Fits Playwright traces to 7 cubic-Bezier easing presets and generates MOTION-INVENTORY.md with exact preset matches.
 capabilities:
   - id: fit-interaction-replay
     input: PlaywrightTrace

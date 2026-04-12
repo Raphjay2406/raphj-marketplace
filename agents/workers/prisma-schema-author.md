@@ -4,7 +4,7 @@ id: genorah/prisma-schema-author
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Authors Prisma schema from content and data requirements. Generates migrations and type-safe client bindings.
 capabilities:
   - id: author-prisma-schema
     input: DataSpec

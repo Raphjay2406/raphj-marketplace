@@ -4,7 +4,7 @@ id: genorah/theatre-sequencer
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Authors Theatre.js project files for complex multi-object animation sequences. Binds sequence values to DNA motion tokens.
 capabilities:
   - id: sequence-theatre
     input: SequenceSpec

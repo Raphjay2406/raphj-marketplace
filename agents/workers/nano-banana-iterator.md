@@ -4,7 +4,7 @@ id: genorah/nano-banana-iterator
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Runs iterative image editing via nano-banana MCP. Applies DNA color corrections, style transfers, and beat-specific atmosphere adjustments.
 capabilities:
   - id: iterate-nano-banana
     input: ImageIterSpec

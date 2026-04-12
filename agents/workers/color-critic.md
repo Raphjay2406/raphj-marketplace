@@ -4,7 +4,7 @@ id: genorah/color-critic
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Evaluates color system against DNA tokens, contrast ratios, and archetype color rules. Checks for token drift.
 capabilities:
   - id: critique-color
     input: SectionArtifact

@@ -4,7 +4,7 @@ id: genorah/recraft-vector-author
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Generates SVG vector assets via Recraft API. Binds vector colors to DNA tokens for runtime theming.
 capabilities:
   - id: author-recraft-vector
     input: VectorSpec

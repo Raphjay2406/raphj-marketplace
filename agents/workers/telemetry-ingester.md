@@ -4,7 +4,7 @@ id: genorah/telemetry-ingester
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Ingests RUM and synthetic telemetry. Tracks CWV trends, error rates, and user flow drop-offs against SLO budgets.
 capabilities:
   - id: ingest-telemetry
     input: TelemetryStream

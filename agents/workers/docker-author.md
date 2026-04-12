@@ -4,7 +4,7 @@ id: genorah/docker-author
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Authors Dockerfile and docker-compose.yml for self-hosted deployment with standalone Next.js output.
 capabilities:
   - id: author-docker
     input: DeploySpec

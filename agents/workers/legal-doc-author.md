@@ -4,7 +4,7 @@ id: genorah/legal-doc-author
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Authors privacy policy, terms of service, and cookie consent documents with jurisdiction-specific clauses.
 capabilities:
   - id: author-legal-docs
     input: LegalSpec

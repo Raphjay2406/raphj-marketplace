@@ -4,7 +4,7 @@ id: genorah/perf-polisher
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: "Applies performance polish: image optimization, lazy loading, bundle splitting, and CWV budget validation."
 capabilities:
   - id: polish-performance
     input: SectionArtifact

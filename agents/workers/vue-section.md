@@ -4,7 +4,7 @@ id: genorah/vue-section
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Builds a single page section as a Vue 3 SFC with DNA tokens, GSAP/VueUse motion, and 4-breakpoint responsive layout.
 capabilities:
   - id: build-vue-section
     input: SectionSpec

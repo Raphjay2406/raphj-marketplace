@@ -4,7 +4,7 @@ id: genorah/dna-reverse-engineer
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Extracts Design DNA from captured CSS variables and computed styles. Runs pixel-kmeans with ΔE2000 perceptual distance.
 capabilities:
   - id: reverse-engineer-dna
     input: CrawlManifest

@@ -4,7 +4,7 @@ id: genorah/nextjs-section
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Builds a single page section as a Next.js RSC with Tailwind v4 DNA tokens, animation, and 4-breakpoint responsive layout.
 capabilities:
   - id: build-nextjs-section
     input: SectionSpec

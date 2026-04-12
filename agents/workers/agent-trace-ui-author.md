@@ -4,7 +4,7 @@ id: genorah/agent-trace-ui-author
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Builds agent trace visualization UI with AG-UI event stream rendering and step-by-step thought display.
 capabilities:
   - id: author-agent-trace-ui
     input: AgentTraceSpec

@@ -4,7 +4,7 @@ id: genorah/pattern-miner
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Extracts reusable design patterns from reference sites. Identifies cross-archetype techniques and innovation opportunities.
 capabilities:
   - id: mine-patterns
     input: ReferenceLibrary

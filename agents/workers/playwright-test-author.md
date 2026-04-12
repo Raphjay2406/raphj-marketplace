@@ -4,7 +4,7 @@ id: genorah/playwright-test-author
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Authors Playwright E2E tests for critical user journeys, visual regression baselines, and accessibility checks.
 capabilities:
   - id: author-playwright-tests
     input: TestSpec

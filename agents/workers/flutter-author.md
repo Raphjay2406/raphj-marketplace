@@ -4,7 +4,7 @@ id: genorah/flutter-author
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Builds Flutter widgets with ThemeData DNA mapping, go_router navigation, Riverpod state, and platform adaptive widgets.
 capabilities:
   - id: author-flutter
     input: MobileSpec

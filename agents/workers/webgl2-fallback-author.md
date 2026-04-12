@@ -4,7 +4,7 @@ id: genorah/webgl2-fallback-author
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Transpiles or authors equivalent GLSL 3.0 fallback shaders for WebGPU scenes. Ensures tier-1 browser compatibility.
 capabilities:
   - id: author-webgl2-fallback
     input: WebGPUShader

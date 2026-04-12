@@ -4,7 +4,7 @@ id: genorah/spline-embed-author
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Authors Spline scene embed components with lazy loading, DNA color injection via Spline events API, and reduced-motion fallback.
 capabilities:
   - id: author-spline-embed
     input: SplineSpec

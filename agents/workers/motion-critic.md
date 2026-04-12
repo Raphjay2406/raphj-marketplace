@@ -4,7 +4,7 @@ id: genorah/motion-critic
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: "Evaluates motion design against quality gate: intentionality, DNA motion token usage, reduced-motion compliance."
 capabilities:
   - id: critique-motion
     input: SectionArtifact

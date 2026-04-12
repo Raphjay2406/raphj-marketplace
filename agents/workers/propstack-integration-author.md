@@ -4,7 +4,7 @@ id: genorah/propstack-integration-author
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: "Scaffolds Propstack real estate CRM integration: property listings, search, and lead capture forms."
 capabilities:
   - id: author-propstack-integration
     input: IntegrationSpec

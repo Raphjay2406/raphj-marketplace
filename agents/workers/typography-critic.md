@@ -4,7 +4,7 @@ id: genorah/typography-critic
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: "Evaluates typography against quality gate axis: scale discipline, hierarchy clarity, archetype font personality, and readability."
 capabilities:
   - id: critique-typography
     input: SectionArtifact

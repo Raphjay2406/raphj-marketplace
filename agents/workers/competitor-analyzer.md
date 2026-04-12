@@ -4,7 +4,7 @@ id: genorah/competitor-analyzer
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Analyzes competitor sites for design quality, UX patterns, conversion strategies, and differentiation opportunities.
 capabilities:
   - id: analyze-competitors
     input: CompetitorList

@@ -4,7 +4,7 @@ id: genorah/medusa-integration-author
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Scaffolds Medusa v2 headless commerce integration with product catalog, cart, and checkout flows.
 capabilities:
   - id: author-medusa-integration
     input: IntegrationSpec

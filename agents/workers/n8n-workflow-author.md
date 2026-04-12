@@ -4,7 +4,7 @@ id: genorah/n8n-workflow-author
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Authors n8n automation workflow JSON for lead capture, CRM sync, and notification pipelines.
 capabilities:
   - id: author-n8n-workflow
     input: WorkflowSpec

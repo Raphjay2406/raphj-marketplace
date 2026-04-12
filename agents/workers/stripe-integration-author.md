@@ -4,7 +4,7 @@ id: genorah/stripe-integration-author
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: "Scaffolds Stripe payment integration: checkout session, subscription management, webhook handling, and payment element theming."
 capabilities:
   - id: author-stripe-integration
     input: IntegrationSpec

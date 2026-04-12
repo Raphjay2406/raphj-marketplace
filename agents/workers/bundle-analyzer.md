@@ -4,7 +4,7 @@ id: genorah/bundle-analyzer
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Analyzes production bundle composition. Flags oversized chunks, duplicate dependencies, and tree-shaking failures.
 capabilities:
   - id: analyze-bundle
     input: BuildArtifact

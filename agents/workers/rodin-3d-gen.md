@@ -4,7 +4,7 @@ id: genorah/rodin-3d-gen
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Generates 3D model assets via Rodin API. Produces GLTF output ready for scene-director pipeline.
 capabilities:
   - id: generate-rodin-3d
     input: Model3DSpec

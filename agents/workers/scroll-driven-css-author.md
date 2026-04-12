@@ -4,7 +4,7 @@ id: genorah/scroll-driven-css-author
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Authors native CSS scroll-driven animations using @keyframes with animation-timeline. Provides JS-based fallback for unsupported browsers.
 capabilities:
   - id: author-scroll-driven-css
     input: MotionSpec

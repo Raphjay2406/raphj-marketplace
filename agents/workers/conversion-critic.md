@@ -4,7 +4,7 @@ id: genorah/conversion-critic
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: "Evaluates conversion readiness: CTA clarity, social proof placement, friction reduction, and conversion gate compliance."
 capabilities:
   - id: critique-conversion
     input: SectionArtifact

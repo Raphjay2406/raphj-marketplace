@@ -4,7 +4,7 @@ id: genorah/contentful-author
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Authors Contentful content model definitions and GraphQL query fragments with DNA token field mappings.
 capabilities:
   - id: author-contentful
     input: CMSSpec

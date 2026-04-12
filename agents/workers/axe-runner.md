@@ -4,7 +4,7 @@ id: genorah/axe-runner
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Runs axe-core accessibility audit against deployed preview. Reports WCAG 2.1 AA violations with fix guidance.
 capabilities:
   - id: run-axe
     input: DeployURL

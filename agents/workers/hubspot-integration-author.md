@@ -4,7 +4,7 @@ id: genorah/hubspot-integration-author
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: "Scaffolds HubSpot CRM integration: forms, contact sync, marketing automation hooks, and CMS API."
 capabilities:
   - id: author-hubspot-integration
     input: IntegrationSpec

@@ -4,7 +4,7 @@ id: genorah/brand-voice-enforcer
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Reviews all copy against extracted brand voice guidelines. Rewrites passages that deviate from tone, vocabulary, or personality.
 capabilities:
   - id: enforce-brand-voice
     input: ContentDraft

@@ -4,7 +4,7 @@ id: genorah/synthetic-persona-prober
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Runs synthetic user personas through the full page journey. Validates task completion, confusion points, and conversion path.
 capabilities:
   - id: probe-synthetic-persona
     input: PersonaSpec

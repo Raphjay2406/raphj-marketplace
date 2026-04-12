@@ -4,7 +4,7 @@ id: genorah/archetype-researcher
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Researches archetype-specific visual references, color systems, typography precedents, and motion language.
 capabilities:
   - id: research-archetype
     input: ArchetypeSpec

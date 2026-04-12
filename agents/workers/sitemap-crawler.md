@@ -4,7 +4,7 @@ id: genorah/sitemap-crawler
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Recursive BFS sitemap crawl with per-sitemap error events. Captures HTML, computed styles, and 4-breakpoint screenshots.
 capabilities:
   - id: crawl-sitemap
     input: CrawlSpec

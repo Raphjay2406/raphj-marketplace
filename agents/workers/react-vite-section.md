@@ -4,7 +4,7 @@ id: genorah/react-vite-section
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Builds a single page section as a React component with Vite, DNA tokens, Framer Motion, and 4-breakpoint responsive layout.
 capabilities:
   - id: build-react-vite-section
     input: SectionSpec

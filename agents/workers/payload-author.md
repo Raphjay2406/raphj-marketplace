@@ -4,7 +4,7 @@ id: genorah/payload-author
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Authors Payload CMS collection and global definitions with DNA-themed admin UI and access control policies.
 capabilities:
   - id: author-payload
     input: CMSSpec

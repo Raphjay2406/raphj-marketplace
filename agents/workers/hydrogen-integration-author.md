@@ -4,7 +4,7 @@ id: genorah/hydrogen-integration-author
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Scaffolds Shopify Hydrogen storefront with Oxygen deployment config, Remix routes, and DNA-bound storefront components.
 capabilities:
   - id: author-hydrogen-integration
     input: IntegrationSpec

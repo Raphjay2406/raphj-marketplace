@@ -4,7 +4,7 @@ id: genorah/expo-author
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Builds Expo managed workflow apps with EAS Build config, Expo Router, OTA updates, and config plugin setup.
 capabilities:
   - id: author-expo
     input: MobileSpec

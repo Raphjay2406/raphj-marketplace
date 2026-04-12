@@ -4,7 +4,7 @@ id: genorah/r3f-scene-builder
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Builds React Three Fiber scene components with Rapier physics, DNA-bound materials, and postprocessing pipeline.
 capabilities:
   - id: build-r3f-scene
     input: SceneSpec

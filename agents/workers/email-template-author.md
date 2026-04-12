@@ -4,7 +4,7 @@ id: genorah/email-template-author
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Authors React Email or MJML transactional email templates with DNA-aligned styling and dark mode support.
 capabilities:
   - id: author-email-templates
     input: EmailSpec

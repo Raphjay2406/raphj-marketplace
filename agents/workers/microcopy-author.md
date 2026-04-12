@@ -4,7 +4,7 @@ id: genorah/microcopy-author
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Authors UI microcopy, CTA text, tooltips, and error messages aligned with brand voice and anti-slop gate.
 capabilities:
   - id: author-microcopy
     input: CopySpec

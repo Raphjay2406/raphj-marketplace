@@ -4,7 +4,7 @@ id: genorah/faq-author
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Authors FAQ content with structured data markup. Targets featured snippet eligibility and GEO citation patterns.
 capabilities:
   - id: author-faq
     input: FAQSpec

@@ -4,7 +4,7 @@ id: genorah/flux-hero-gen
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Generates hero background images using Flux API with DNA-matched color palettes and beat-type visual language.
 capabilities:
   - id: generate-flux-hero
     input: HeroAssetSpec

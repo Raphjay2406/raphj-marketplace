@@ -4,7 +4,7 @@ id: genorah/lighthouse-runner
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Runs Lighthouse CI against preview deployments. Enforces perf budget thresholds and flags CWV regressions.
 capabilities:
   - id: run-lighthouse
     input: DeployURL

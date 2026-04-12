@@ -4,7 +4,7 @@ id: genorah/og-image-author
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Authors dynamic OG image generation routes with next/og, DNA typography, and brand color templates.
 capabilities:
   - id: author-og-images
     input: OGSpec

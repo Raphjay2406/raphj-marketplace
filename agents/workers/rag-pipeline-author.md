@@ -4,7 +4,7 @@ id: genorah/rag-pipeline-author
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Scaffolds RAG pipeline with Supabase pgvector, embedding generation, and retrieval-augmented generation routes.
 capabilities:
   - id: author-rag-pipeline
     input: RAGSpec

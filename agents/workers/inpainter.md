@@ -4,7 +4,7 @@ id: genorah/inpainter
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Runs inpainting workflows to fix, extend, or composite image assets. Preserves DNA color accuracy in edited regions.
 capabilities:
   - id: inpaint-image
     input: InpaintSpec

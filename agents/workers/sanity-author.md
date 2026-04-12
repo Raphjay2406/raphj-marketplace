@@ -4,7 +4,7 @@ id: genorah/sanity-author
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Authors Sanity schema definitions, GROQ queries, and DNA-themed Studio components for content management.
 capabilities:
   - id: author-sanity
     input: CMSSpec

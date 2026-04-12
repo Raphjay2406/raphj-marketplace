@@ -4,7 +4,7 @@ id: genorah/cms-schema-introspector
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Introspects CMS schemas via GROQ (Sanity), CMA (Contentful), or OpenAPI (Payload). Maps content types to DNA sections.
 capabilities:
   - id: introspect-cms-schema
     input: CMSConnectionSpec

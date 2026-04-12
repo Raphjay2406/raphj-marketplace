@@ -4,7 +4,7 @@ id: genorah/reduced-motion-variant-author
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Generates prefers-reduced-motion CSS/JS variants for every animated section. Ensures WCAG 2.1 compliance without sacrificing design intent.
 capabilities:
   - id: author-reduced-motion
     input: MotionArtifact

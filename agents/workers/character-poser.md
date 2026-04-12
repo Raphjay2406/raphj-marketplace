@@ -4,7 +4,7 @@ id: genorah/character-poser
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Applies poses and expressions to character models. Validates against brand character consistency guidelines.
 capabilities:
   - id: pose-character
     input: PoseSpec

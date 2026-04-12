@@ -4,7 +4,7 @@ id: genorah/first-time-visitor-critic
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: "Simulates first-time visitor experience: 5-second test, clarity of value proposition, and confusion points."
 capabilities:
   - id: critique-first-visit
     input: FullPageArtifact

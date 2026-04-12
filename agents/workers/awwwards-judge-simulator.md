@@ -4,7 +4,7 @@ id: genorah/awwwards-judge-simulator
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: "Simulates Awwwards SOTD judge scoring across 4 axes: Design, Usability, Creativity, Content. Targets 8.0+ average."
 capabilities:
   - id: simulate-awwwards
     input: FullPageArtifact

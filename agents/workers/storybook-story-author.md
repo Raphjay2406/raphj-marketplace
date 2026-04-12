@@ -4,7 +4,7 @@ id: genorah/storybook-story-author
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Authors Storybook stories for all shared components with controls, docs, and accessibility addon integration.
 capabilities:
   - id: author-storybook-stories
     input: ComponentSpec

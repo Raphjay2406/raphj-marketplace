@@ -4,7 +4,7 @@ id: genorah/vercel-config-author
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Authors vercel.json with routing rules, edge config, caching strategies, and environment variable schema.
 capabilities:
   - id: author-vercel-config
     input: DeploySpec

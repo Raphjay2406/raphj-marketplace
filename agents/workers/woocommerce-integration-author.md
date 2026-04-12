@@ -4,7 +4,7 @@ id: genorah/woocommerce-integration-author
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: "Scaffolds WooCommerce REST API integration: product grids, cart management, order flows, and DNA-themed checkout."
 capabilities:
   - id: author-woocommerce-integration
     input: IntegrationSpec

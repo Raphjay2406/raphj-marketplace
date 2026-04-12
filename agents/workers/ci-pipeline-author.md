@@ -4,7 +4,7 @@ id: genorah/ci-pipeline-author
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Authors GitHub Actions or CI pipeline with Lighthouse CI, Playwright preview smoke, and quality gate checks.
 capabilities:
   - id: author-ci-pipeline
     input: CISpec

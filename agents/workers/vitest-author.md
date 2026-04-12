@@ -4,7 +4,7 @@ id: genorah/vitest-author
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Authors Vitest unit and integration tests for utilities, hooks, and component logic with coverage targets.
 capabilities:
   - id: author-vitest
     input: TestSpec

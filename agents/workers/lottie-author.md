@@ -4,7 +4,7 @@ id: genorah/lottie-author
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Authors Lottie animation JSON for micro-animations and brand motion sigils. Validates file size and frame rate targets.
 capabilities:
   - id: author-lottie
     input: LottieSpec

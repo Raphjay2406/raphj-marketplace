@@ -4,7 +4,7 @@ id: genorah/vr-snapshot-taker
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Captures 4-breakpoint visual regression snapshots via Playwright. Diffs against baseline and flags regressions.
 capabilities:
   - id: take-vr-snapshots
     input: DeployURL

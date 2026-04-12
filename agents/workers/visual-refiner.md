@@ -4,7 +4,7 @@ id: genorah/visual-refiner
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: "Closed-loop visual refinement: captures Playwright screenshots, compares against reference targets, applies corrections until delta converges."
 capabilities:
   - id: refine-visuals
     input: SectionArtifact

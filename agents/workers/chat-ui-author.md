@@ -4,7 +4,7 @@ id: genorah/chat-ui-author
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Builds AI chat UI components with Vercel AI SDK v4, streaming responses, and DNA-themed message bubbles.
 capabilities:
   - id: author-chat-ui
     input: ChatUISpec

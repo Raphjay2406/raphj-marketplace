@@ -4,7 +4,7 @@ id: genorah/upscaler
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Upscales raster assets to target resolution using AI super-resolution. Validates output sharpness and artifact levels.
 capabilities:
   - id: upscale-asset
     input: LowResAsset

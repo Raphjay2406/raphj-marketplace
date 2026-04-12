@@ -4,7 +4,7 @@ id: genorah/rn-author
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Builds React Native bare workflow components with NativeWind DNA bridge, React Navigation v7, and Reanimated 3.
 capabilities:
   - id: author-react-native
     input: MobileSpec

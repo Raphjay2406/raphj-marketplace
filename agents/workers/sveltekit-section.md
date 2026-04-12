@@ -4,7 +4,7 @@ id: genorah/sveltekit-section
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Builds a single page section as a SvelteKit component with DNA tokens, Svelte transitions, and 4-breakpoint responsive layout.
 capabilities:
   - id: build-sveltekit-section
     input: SectionSpec

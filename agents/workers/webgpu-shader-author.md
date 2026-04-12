@@ -4,7 +4,7 @@ id: genorah/webgpu-shader-author
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Authors WGSL compute and fragment shaders for WebGPU-capable browsers. Provides WebGL2 fallback strategy via scene-director.
 capabilities:
   - id: author-webgpu-shader
     input: ShaderSpec

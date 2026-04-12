@@ -4,7 +4,7 @@ id: genorah/hero-camera-choreographer
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Authors camera keyframe sequences for hero and cinematic sections. Produces Theatre.js or GSAP ScrollTrigger camera paths tied to DNA motion tokens.
 capabilities:
   - id: choreograph-camera
     input: SceneSpec

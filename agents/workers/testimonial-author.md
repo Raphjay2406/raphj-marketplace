@@ -4,7 +4,7 @@ id: genorah/testimonial-author
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Authors realistic testimonial copy with persona diversity and conversion-optimized framing. Flags synthetic content for disclosure.
 capabilities:
   - id: author-testimonials
     input: TestimonialSpec

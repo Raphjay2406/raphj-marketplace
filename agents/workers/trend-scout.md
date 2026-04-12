@@ -4,7 +4,7 @@ id: genorah/trend-scout
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Identifies emerging design and UX trends relevant to the project vertical. Flags trends conflicting with archetype.
 capabilities:
   - id: scout-trends
     input: TrendSpec

@@ -4,7 +4,7 @@ id: genorah/morph-target-author
 version: 4.0.0
 channel: stable
 tier: worker
-description: undefined
+description: Generates morph target animations for character and product 3D models. Validates blend shape count against performance budget.
 capabilities:
   - id: author-morph-targets
     input: MeshSpec
