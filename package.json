@@ -1,5 +1,8 @@
 {
   "name": "genorah-plugin",
+  "workspaces": [
+    "packages/*"
+  ],
   "version": "3.25.0",
   "private": true,
   "type": "module",
