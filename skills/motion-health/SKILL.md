@@ -121,3 +121,22 @@ Polisher receives `motion-health-remediation.json` with specific fixes:
 - ❌ **Flagging scroll-timeline without fallback on non-Chromium** — other engines don't support; fallback is mandatory, not optional.
 - ❌ **Letting will-change persist after animation** — creates permanent GPU layer. Remove `will-change` on animation end.
 - ❌ **Measuring once** — INP is noisy; 3-run average minimum.
+
+
+---
+
+## v3.4 Addendum: 3dsvg Live Instance Accounting
+
+Every live `<GenorahSVG3D>` in a section counts toward the per-beat concurrent-animation budget:
+
+| Preset animation field | Motion-health budget consumed |
+|---|---|
+| `none` | 0 |
+| `float`, `pulse`, `swing`, `wobble`, `spin` | 1 |
+| `spinFloat` (composite) | 1 (single loop, counts once) |
+
+Quality-reviewer Stage 6 greps section TSX for `<GenorahSVG3D>` + `<SVG3D>`, looks up `motion_health_budget_units` per preset in `skills/design-archetypes/seeds/3dsvg-presets.json`, adds to concurrent count. Exceeds per-beat limit = gate fail.
+
+### WebGL context hard cap
+
+**Max 3 live `<SVG3D>` per page** regardless of beat — WebGL context limit at browser level. For brand pages needing more, switch N-3 to offline PNG.

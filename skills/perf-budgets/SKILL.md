@@ -119,3 +119,35 @@ Per-section JSON:
 - ❌ **Omitting bundle attribution** — "LCP regressed, unclear why" wastes polisher time. Bundle attribution tells polisher the owner.
 - ❌ **Ignoring INP on marketing pages** — "no interaction" is a myth; scroll, hover, focus all count. Measure on representative interaction.
 - ❌ **Fixing by lowering budgets instead of code** — budgets reflect tier targets, not "what we happen to ship".
+
+
+---
+
+## v3.4 Addendum: 3dsvg Bundle Cost Accounting
+
+Live `<GenorahSVG3D>` adds to section-JS budget:
+
+| Component | Cost (gz) |
+|---|---|
+| `three` peer dep | 0 (shared) or ~150KB (new) |
+| `@react-three/fiber` | 0 (shared) or ~30KB |
+| `3dsvg` + opentype.js | ~50KB |
+| **First R3F use** | ~180KB gz |
+| **Amortized (R3F present)** | ~50KB gz |
+
+### Per-beat feasibility
+
+| Beat | Section-JS budget | Live SVG3D feasible? |
+|---|---|---|
+| HOOK | 40KB | ❌ offline preferred |
+| TEASE | 25KB | ❌ |
+| REVEAL | 50KB | ⚠️ amortized only |
+| BUILD | 35KB | ❌ |
+| PEAK | 80KB | ✅ |
+| BREATHE | 15KB | ❌ |
+| TENSION | 60KB | ✅ amortized |
+| PROOF | 30KB | ❌ |
+| PIVOT | 35KB | ❌ |
+| CLOSE | 30KB | ❌ |
+
+**Rule of thumb:** PEAK and TENSION have headroom for live SVG3D as first R3F use. Other beats: offline PNG/MP4 preferred. Use preset's `offline_export_cost_kb` = 0.

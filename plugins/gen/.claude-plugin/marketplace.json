@@ -5,14 +5,14 @@
   },
   "metadata": {
     "description": "Personal Claude Code plugin marketplace by Raphjay2406",
-    "version": "1.5.0"
+    "version": "1.6.0"
   },
   "plugins": [
     {
       "name": "gen",
       "source": "./plugins/gen",
       "description": "Premium frontend design system for Claude Code v3.0.1 — Measurably Enforced Quality with Pipeline Guidance. 22 workflow commands (new /gen:next for always-on routing), 21-agent pipeline (7 pipeline + 7 specialists including new visual-refiner and consistency-auditor + 5 protocols + 1 figma + 1 self-audit), Design DNA identity system with 19 archetypes. 234-point weighted quality gate now enforced via 6-stage validation pipeline: DNA compliance → render validation → component registry → cross-section consistency → design fidelity (pixel-diff) → full gate. New v3.0 quality primitives: closed-loop visual refiner (max 3 iterations, surgical edits only), DNA drift detector (92% coverage hard gate), perf budgets per emotional beat, motion health sub-gate (INP regression <50ms, CVD parity, scroll-timeline fallback), reference-diff-protocol with per-beat SSIM thresholds. Intelligence layer: AI variant tournament (blind-ranked N=3 hero attempts), model cascade advisory (Haiku/Sonnet/Opus by role), section consistency auditor (runs parallel with builders). Experience: live localhost dashboard at :4455 with SSE updates, interactive click-to-refine companion with data-genorah-id stable selectors, competitive benchmarking against curated SOTD library, smart router (12 intent→/gen:* mappings). Frontier: WebGPU/TSL decision matrix, GLTF optimization pipeline (Draco + Meshopt + KTX2), Sanity + Payload CMS round-trip with auto-generated schemas from emotional arc, Remotion section video (5 DNA-parameterized templates), brand voice extractor (5-axis tone analysis from competitor URLs), cognitive accessibility (reading grade + CVD ΔE2000 + motion sickness), i18n-by-default when ≥2 locales. ~131 skills, 5 MCP integrations (nano-banana, Stitch, Playwright, Obsidian x2). Framework-aware: Next.js, Astro, React/Vite, Tauri, Electron, mobile (Swift, Kotlin, RN, Expo, Flutter). Creates Awwwards SOTD-ready (8.0+) websites with closed-loop refinement.",
-      "version": "3.3.0",
+      "version": "3.4.0",
       "author": {
         "name": "raphj"
       },

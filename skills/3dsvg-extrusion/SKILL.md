@@ -180,3 +180,89 @@ export function FallbackMark() {
 ## Attribution
 
 `3dsvg` by renatoworks, MIT-licensed. Source: https://github.com/renatoworks/3dsvg. Tool at https://3dsvg.design/. Genorah integration is wrapper guidance only — no vendored code.
+
+
+---
+
+## v3.4 Addendum: SSR Gate + Accessibility Wrapper + SVG Input Sanitization (CRITICAL)
+
+### 1. SSR Gate (MANDATORY — 3dsvg is NOT SSR-safe)
+
+Never import `3dsvg` at the top of a Next.js Server Component or Astro page without an island. Use `dynamic({ ssr: false })` or `client:only="react"`.
+
+```tsx
+// ✅ Next.js App Router
+const SVG3D = dynamic(() => import('3dsvg').then(m => ({ default: m.SVG3D })), { ssr: false });
+
+// ✅ Astro
+<MySVG3DComponent client:only="react" />
+
+// ❌ WRONG — hydration mismatch / WebGL missing on server
+import { SVG3D } from '3dsvg';
+```
+
+### 2. <GenorahSVG3D> Accessibility Wrapper (REQUIRED)
+
+3dsvg ships zero accessibility. Every Genorah project wraps it in `<GenorahSVG3D>` providing:
+
+- `role="img"` + `aria-label` on container
+- `prefers-reduced-motion` → static PNG fallback (or SVG3D with `animate="none"`)
+- SSR gate via dynamic import
+
+Canonical pattern lives in `skills/3dsvg-preset-library/SKILL.md` Layer 3. Skill-documented pattern — each project copy-pastes the wrapper; no vendoring.
+
+### 3. SVG Input Sanitization (SHIP-BLOCKING SECURITY)
+
+When user-provided SVG paths (not brand text) are passed to the `svg` prop, sanitize via `svgo` allowlist first. Attacks to prevent:
+
+| Attack | Example | Mitigation |
+|---|---|---|
+| XXE | `<!ENTITY xxe SYSTEM "file:///etc/passwd">` | Reject any ENTITY declaration |
+| Recursive <use> bomb | `<use href="#a"/>` → `<g id="a"><use href="#a"/></g>` | Reject self-referential use |
+| Script injection | `<script>fetch('/api/steal')</script>` | Reject `<script>` entirely |
+| Event handlers | `<rect onload="alert(1)"/>` | Reject any on* attribute |
+| External resource loads | `<image href="https://evil/track.png"/>` | data: URIs only |
+| Recursive nesting | `<svg><svg><svg>…` 10k deep | Cap depth at 10 |
+
+### Sanitization implementation (svgo)
+
+```ts
+import { optimize } from 'svgo';
+
+export function sanitizeUserSvg(raw: string): string {
+  const result = optimize(raw, {
+    plugins: [
+      { name: 'removeDoctype' },
+      { name: 'removeXMLProcInst' },
+      { name: 'removeComments' },
+      { name: 'removeMetadata' },
+      { name: 'removeScriptElement' },
+      { name: 'removeElementsByAttr', params: { attrs: 'on[a-z]+' } },
+      {
+        name: 'genorah-allowlist',
+        fn: () => ({
+          element: {
+            enter: (node) => {
+              const forbidden = ['script', 'foreignObject', 'iframe', 'object', 'embed'];
+              if (forbidden.includes(node.name)) throw new Error('Forbidden SVG element: ' + node.name);
+              if (node.name === 'image' && node.attributes.href && !node.attributes.href.startsWith('data:')) {
+                throw new Error('External image href forbidden');
+              }
+            }
+          }
+        })
+      }
+    ]
+  });
+  if (!result.data) throw new Error('SVG sanitization failed');
+  return result.data;
+}
+```
+
+Builder enforcement: any SVG input from user/PROJECT.md/CONTENT.md sanitized before reaching 3dsvg. Failure = build error with specific rejection reason.
+
+### 4. WebGL Context Limit — concurrent instance cap
+
+Browsers cap WebGL contexts at 8-16 per page. Genorah enforces **max 3 live `<GenorahSVG3D>` per page** via motion-health sub-gate.
+
+For N>3 branded testimonial cards etc, switch N-3 instances to offline PNG export (zero WebGL cost).

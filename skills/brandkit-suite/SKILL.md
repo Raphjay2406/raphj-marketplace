@@ -150,3 +150,28 @@ Re-syncs color/font tokens from `DESIGN-DNA.md` without regenerating logos (usef
 - ❌ **Favicon under 512×512 as source** — downscaling from small source produces artifacts. If logo-mark.svg is the favicon source, render at 1024+ then downscale.
 - ❌ **Brandkit without passing audit** — brand kit represents a polished project. Exporting from a low-quality build communicates that quality publicly.
 - ❌ **Forgetting /brand route behind auth** — public route is deliberate (investors, partners can find assets quickly). Do not require login.
+
+
+---
+
+## v3.4 Addendum: 3dsvg Brand Variant Export (v3.4.1 preparation)
+
+When `hero_mark.enabled` in DESIGN-DNA, brandkit gains an automatic 3dsvg variant export matrix (shipping fully in v3.4.1 via `/gen:hero-mark export`):
+
+- 5 materials from archetype's preferred_materials list (e.g., Luxury: gold/chrome/metal → 3 variants)
+- 3 camera angles per material (front 0°, 3/4 right, 3/4 left)
+- 2 breakpoints (2K print-safe, 4K display)
+- Per-variant output: PNG + MP4 (60fps, 4s loop)
+
+Asset layout (once v3.4.1 ships):
+
+```
+public/brand/3d/
+├── {brand}-{material}-{angle}-{bp}.png
+├── {brand}-{material}-{angle}-{bp}.mp4
+└── index.html (preview gallery)
+```
+
+Brand guidelines PDF embeds the preview gallery with archetype rationale per material choice.
+
+v3.4.0 ships the preset library + schema + accessibility wrapper; the brandkit fan-out automation ships in v3.4.1 alongside `/gen:hero-mark` command.

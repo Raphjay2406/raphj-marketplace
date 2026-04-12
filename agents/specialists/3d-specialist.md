@@ -561,3 +561,35 @@ For projects targeting Modern compat tier:
 - TSL (Three.js Shading Language) compiles to both GLSL and WGSL
 - If using custom GLSL shaders, they still work via the WebGL fallback path
 - Do NOT use WebGPU-only features unless the project explicitly targets WebGPU
+
+
+---
+
+## v3.4 Addendum: 3dsvg Preset Routing
+
+When a section's PLAN.md declares `hero_mark: { enabled: true }`:
+
+1. Read beat (HOOK/PEAK/CLOSE only support 3dsvg).
+2. Read archetype from DESIGN-DNA.md.
+3. Lookup preset in `skills/design-archetypes/seeds/3dsvg-presets.json`:
+   `presets.find(p => p.archetype === archetype && p.beat === beat)`
+4. If `preset.disabled`: execute `preset.fallback_strategy`, skip SVG3D emission.
+5. If preset not found: ERROR — missing preset, halt build.
+6. Merge user-overrides per `field_overridable` matrix (color_override + text_template always OK; material/animation/depth/bevel locked unless loosened).
+7. Compute perf impact (live_component_cost_kb vs offline_export_cost_kb). PEAK/TENSION allow live; others prefer offline.
+8. Compute motion-health impact (motion_health_budget_units). Enforce per-beat limit + global 3-instance hard cap.
+9. Emit `<GenorahSVG3D>` wrapper per `skills/3dsvg-preset-library` Layer 3:
+   - `ariaLabel` MANDATORY
+   - `fallbackSrc` MANDATORY for reduced-motion
+   - `dynamic({ssr:false})` or Astro `client:only="react"`
+10. Log decisions to `.planning/genorah/DECISIONS.md`.
+
+### Escalation
+
+- Full 3D scene → `three-d-webgl-effects`.
+- Interactive editor → `spline-integration`.
+- User-provided SVG path → MUST sanitize per `skills/3dsvg-extrusion` security section.
+
+### Collision handling
+
+User overrides `material` to archetype forbidden value → build fails with explicit error + 3 resolution options (default / switch preset / disable hero_mark). Logged to DECISIONS.md.
