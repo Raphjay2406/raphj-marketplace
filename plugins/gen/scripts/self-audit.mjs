@@ -93,13 +93,21 @@ for (const cmd of declaredHooks) {
   }
 }
 
-// Check 7: plugins/gen mirror drift (exclude _skill-template per v3.1.1)
+// Check 7: plugins/gen mirror drift (v3.2.1: filter by SKILL.md existence to
+// match check 4's semantics; raw directory count masked drift when skills/data/
+// or other non-skill dirs existed).
 const mirror = join(ROOT, 'plugins/gen');
 if (existsSync(mirror)) {
-  const mSkills = readdirSync(join(mirror, 'skills')).filter(n => !n.startsWith('_'));
-  if (Math.abs(mSkills.length - skillDirs.length) > 0) {
-    flag('WARN', `plugins/gen skills ${mSkills.length} vs root ${skillDirs.length} (after excluding _skill-template)`);
+  const mSkillDirs = readdirSync(join(mirror, 'skills')).filter(n => !n.startsWith('_'));
+  const mSkillsWithMd = mSkillDirs.filter(n => existsSync(join(mirror, 'skills', n, 'SKILL.md'))).length;
+  if (Math.abs(mSkillsWithMd - skillsCount) > 0) {
+    flag('WARN', `plugins/gen SKILL.md count ${mSkillsWithMd} vs root ${skillsCount} (after excluding _skill-template + non-skill dirs)`);
   }
+  // Also verify command + agent count parity
+  const mCmds = readdirSync(join(mirror, 'commands')).filter(n => n.endsWith('.md')).length;
+  if (mCmds !== commandsCount) flag('WARN', `plugins/gen commands ${mCmds} vs root ${commandsCount}`);
+  const mAgents = countAgents(join(mirror, 'agents'));
+  if (mAgents !== agentsCount) flag('WARN', `plugins/gen agents ${mAgents} vs root ${agentsCount}`);
 }
 
 // Summary

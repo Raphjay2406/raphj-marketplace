@@ -12,7 +12,10 @@
     "lint:json": "node scripts/lint-json.mjs",
     "lint:frontmatter": "node scripts/lint-frontmatter.mjs",
     "self-audit": "node scripts/self-audit.mjs --fail-on=BLOCK",
-    "validate": "npm run lint:syntax && npm run lint:json && npm run lint:frontmatter && npm run self-audit && npm run test"
+    "sync-mirror": "node scripts/sync-mirror.mjs",
+    "check-mirror": "node scripts/check-mirror-parity.mjs",
+    "validate": "npm run lint:syntax && npm run lint:json && npm run lint:frontmatter && npm run self-audit && npm run test",
+    "prepush": "npm run check-mirror"
   },
   "devDependencies": {
     "ajv": "^8.17.1"

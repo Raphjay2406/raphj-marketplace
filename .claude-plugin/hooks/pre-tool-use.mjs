@@ -80,7 +80,7 @@ try {
     if (!match) return null;
 
     const yaml = match[1];
-    const result = { priority: 5, pathPatterns: [], bashPatterns: [] };
+    const result = { priority: 5, pathPatterns: [], bashPatterns: [], triggers: [], injectionRegex: null };
 
     // Extract simple scalar fields
     const nameMatch = yaml.match(/^name:\s*(.+)/m);
@@ -92,12 +92,40 @@ try {
     const tierMatch = yaml.match(/^tier:\s*(.+)/m);
     if (tierMatch) result.tier = tierMatch[1].trim().replace(/^["']|["']$/g, '');
 
+    // v3.2.1: triggers field (fallback matcher for skills that don't define metadata.pathPatterns)
+    // Supports both forms:
+    //   triggers: "phrase one, phrase two, phrase three"
+    //   triggers: ["phrase one", "phrase two", "phrase three"]
+    const triggersMatch = yaml.match(/^triggers:\s*(.+)$/m);
+    if (triggersMatch) {
+      const raw = triggersMatch[1].trim();
+      if (raw.startsWith('[')) {
+        // JSON-array form
+        try { result.triggers = JSON.parse(raw).map(s => String(s).trim()); }
+        catch { /* malformed — skip */ }
+      } else {
+        // Comma-string form (strip outer quotes first)
+        const stripped = raw.replace(/^["']|["']$/g, '');
+        result.triggers = stripped.split(',').map(s => s.trim()).filter(Boolean);
+      }
+    }
+
+    // v3.2.1: injection_regex field (animation-orchestration + future scoped skills)
+    const injectionRegexMatch = yaml.match(/^injection_regex:\s*(.+)$/m);
+    if (injectionRegexMatch) {
+      const raw = injectionRegexMatch[1].trim().replace(/^["']|["']$/g, '');
+      // Accept either "/pattern/flags" or bare pattern
+      const parsed = raw.match(/^\/(.+)\/([a-z]*)$/);
+      try {
+        result.injectionRegex = parsed ? new RegExp(parsed[1], parsed[2]) : new RegExp(raw);
+      } catch { /* malformed — skip */ }
+    }
+
     // Extract metadata block arrays (pathPatterns, bashPatterns)
     const metadataMatch = yaml.match(/^metadata:\s*\n((?:\s{2,}.+\n?)*)/m);
     if (metadataMatch) {
       const metaBlock = metadataMatch[1];
 
-      // Extract pathPatterns
       const pathPatternsMatch = metaBlock.match(/pathPatterns:\s*\n((?:\s+-\s+.+\n?)*)/);
       if (pathPatternsMatch) {
         result.pathPatterns = pathPatternsMatch[1]
@@ -107,7 +135,6 @@ try {
           .map(m => m[1]);
       }
 
-      // Extract bashPatterns
       const bashPatternsMatch = metaBlock.match(/bashPatterns:\s*\n((?:\s+-\s+.+\n?)*)/);
       if (bashPatternsMatch) {
         result.bashPatterns = bashPatternsMatch[1]
@@ -119,6 +146,21 @@ try {
     }
 
     return result;
+  }
+
+  /**
+   * v3.2.1: Match user prompt / target content against trigger phrases.
+   * Case-insensitive substring match. Also honors injection_regex scoped gate.
+   */
+  function matchesTriggers(searchText, frontmatter) {
+    if (!searchText) return false;
+    const lower = searchText.toLowerCase();
+    // If injection_regex is set, it's the authoritative gate
+    if (frontmatter.injectionRegex) {
+      return frontmatter.injectionRegex.test(searchText);
+    }
+    if (!frontmatter.triggers?.length) return false;
+    return frontmatter.triggers.some(phrase => lower.includes(phrase.toLowerCase()));
   }
 
   /**
@@ -212,12 +254,30 @@ try {
 
     let isMatch = false;
 
+    // Path / command pattern matching (primary mechanism since v2)
     if (targetPath && frontmatter.pathPatterns.length > 0) {
       isMatch = matchesPath(targetPath, frontmatter.pathPatterns);
     }
 
     if (!isMatch && targetCommand && frontmatter.bashPatterns.length > 0) {
       isMatch = matchesCommand(targetCommand, frontmatter.bashPatterns);
+    }
+
+    // v3.2.1: triggers fallback — match skill's trigger phrases or injection_regex
+    // against (a) target path basename and (b) file content being written/edited.
+    // This lets skills that only declared `triggers:` (most v3.x skills) inject
+    // when the content being authored mentions their domain.
+    if (!isMatch && (frontmatter.triggers.length > 0 || frontmatter.injectionRegex)) {
+      const writeContent = tool_input?.content || tool_input?.new_string || '';
+      const searchHaystack = [
+        targetPath ? basename(targetPath) : '',
+        targetCommand || '',
+        writeContent.slice(0, 4000),  // first 4KB of written content
+      ].filter(Boolean).join(' ');
+
+      if (searchHaystack && matchesTriggers(searchHaystack, frontmatter)) {
+        isMatch = true;
+      }
     }
 
     if (isMatch) {
