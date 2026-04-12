@@ -91,9 +91,27 @@ Rapid-increment counter with spring-physics overshoot on exit.
 
 CRT scan-line animation with corner-bracket "BOOT SEQUENCE" text. Exits with digital glitch.
 
-### Remaining 21 archetype variants
+### Remaining 21 archetype variants — pattern-based generation
 
-Stored in `skills/preloader-animation/variants/` directory (referenced by name in this skill). Each variant ships as a ready-to-paste TSX snippet with the required parameters.
+The four variants above (Brutalist, Ethereal, Kinetic, Cyberpunk-HUD) are **representative templates** covering the main preloader-style clusters. Remaining 21 archetypes follow the same pattern: pick an archetype-aligned technique, fit the duration budget, apply the exit style, add skip button + RM fallback + sessionStorage gating.
+
+Builders generate these on-demand during `/gen:build` using:
+- The 4 reference variants as structural templates
+- Archetype's signature element + tension zones as visual vocabulary
+- Archetype easing curve from `animation-orchestration` skill
+- Duration budget from the table above
+
+**Archetype → variant-cluster mapping (builders consult this to pick the closest reference):**
+
+| Archetype | Closest reference cluster | Key adaptation |
+|---|---|---|
+| Swiss/International, Japanese Minimal, Neo-Corporate, Editorial | Brutalist cluster (hard-cut, minimal) | Soften timing (1.8-2.0s), use DNA display font in neutral |
+| Ethereal, Glassmorphism, Spatial/VisionOS, Luxury/Fashion, Warm Artisan | Ethereal cluster (gradient wash, dissolve) | Swap gradient to archetype palette, keep soft exit |
+| Kinetic, Playful/Startup, Claymorphism, Organic | Kinetic cluster (spring physics, overshoot) | Adjust spring stiffness per archetype energy |
+| Neon Noir, Cyberpunk-HUD, Vaporwave, AI-Native, Y2K | Cyberpunk-HUD cluster (scan-line, glitch) | Palette + glow intensity per archetype |
+| Brutalist, Neubrutalism, Retro-Future, Dark Academia, Pixel-Art, Data-Dense | Brutalist cluster (hard-cut, typographic) | Font + spacing per archetype |
+
+Each variant is a ~30-line TSX file generated at build time, not pre-written. This keeps the skill tight and guarantees variants stay DNA-synchronized.
 
 ## Layer 2: Performance Rules (Hard)
 

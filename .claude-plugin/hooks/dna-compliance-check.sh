@@ -71,10 +71,19 @@ check_pattern '"Learn More"' "Button text 'Learn More' found — use specific ac
 check_pattern '"Click Here"' "Button text 'Click Here' found — use descriptive action copy"
 
 # --- v3.1: Typography-rules checks (Butterick) on user-visible strings ---
-# Double-hyphen as em-dash substitute in .md/.mdx/prose (excluding CLI flags/code)
+# Double-hyphen as em-dash substitute in .md/.mdx/prose
+# Excludes: CLI flags (--flag), inline backtick code (`--no-verify`), fenced blocks, HTML comments
 for file in $(echo "$STAGED_FILES" | grep -E '\.(md|mdx)$'); do
   [ -z "$file" ] && continue
-  bad_emdash=$(grep -nE '(^|[^-])--[^->a-zA-Z0-9]' "$file" 2>/dev/null | grep -v '^\s*```' || true)
+  # v3.1.1 hardened filter: strip fenced code blocks + inline backticks + HTML comments before scan
+  stripped=$(awk '
+    /^```/ { in_fence = !in_fence; next }
+    !in_fence {
+      gsub(/`[^`]*`/, "")           # strip inline backtick content
+      gsub(/<!--[^>]*-->/, "")      # strip HTML comments
+      print
+    }' "$file" 2>/dev/null)
+  bad_emdash=$(echo "$stripped" | grep -nE '(^|[^-])--[^->a-zA-Z0-9]' 2>/dev/null || true)
   if [ -n "$bad_emdash" ]; then
     VIOLATIONS="${VIOLATIONS}\n[TYPOGRAPHY] Double-hyphen in prose (use em dash U+2014 —): ${file}\n${bad_emdash}\n"
     VIOLATION_COUNT=$((VIOLATION_COUNT + 1))
