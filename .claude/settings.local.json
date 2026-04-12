@@ -99,7 +99,9 @@
       "Bash(mkdir -p ~/.claude/plugins/cache/raphj-marketplace/gen/3.5.0-rc.1)",
       "Bash(cp -r plugins/gen/. ~/.claude/plugins/cache/raphj-marketplace/gen/3.5.0-rc.1/)",
       "Bash(mkdir -p ~/.claude/plugins/cache/raphj-marketplace/gen/3.18.0)",
-      "Bash(cp -r plugins/gen/. ~/.claude/plugins/cache/raphj-marketplace/gen/3.18.0/)"
+      "Bash(cp -r plugins/gen/. ~/.claude/plugins/cache/raphj-marketplace/gen/3.18.0/)",
+      "Bash(mkdir -p \"C:/Users/raphj/.claude/plugins/cache/raphj-marketplace/gen/3.25.0\")",
+      "Bash(cp -r d:/Modulo/Plugins/v0-ahh-skill/plugins/gen/. \"C:/Users/raphj/.claude/plugins/cache/raphj-marketplace/gen/3.25.0/\")"
     ]
   }
 }

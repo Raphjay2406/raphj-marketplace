@@ -4,7 +4,7 @@ This file provides guidance to Claude Code when working with the Genorah plugin 
 
 ## Project Overview
 
-**Genorah v3.18.0-rc.1** is a Claude Code plugin for premium frontend design — "Measurably Enforced Quality with Closed-Loop Refinement." It produces award-caliber websites (Awwwards SOTD 8.0+ baseline) through a pipeline of 24 specialized agents, machine-enforceable design identity, a **two-axis 354-point quality gate** (Design Craft 234 + UX Integrity 120) enforced via a 6-stage validation pipeline plus 6 UX Integrity sub-gates and ~14 pipeline stages, and a Visual Companion + v2 Dashboard. Ships 54 commands, 252 skills, 8 MCP integrations, 33 Design Archetypes + formal mixing protocol, 10-track empirical research program, Context Fabric 8-layer retention (L1 scratchpad → L8 user memory), opt-in plugin telemetry, and end-to-end integrations including HubSpot deep, n8n workflow generation, full Supabase stack (Auth/Postgres/RLS/Storage/Realtime/Edge Functions/Vector), and comprehensive security/legal/a11y/i18n/testing/visual-refinement suites.
+**Genorah v3.25.0** is a Claude Code plugin for premium frontend design — "Measurably Enforced Quality + 9-axis Frontier + Preservation-First Ingestion." It produces award-caliber websites (Awwwards SOTD 8.0+ baseline) through a 24-agent pipeline, machine-enforceable design identity, a **two-axis 354-point quality gate** (Design Craft 234 + UX Integrity 120), and v3.21+ can also *ingest existing projects* (codebase or live URL) into the same pipeline without losing any detail. Ships **59 commands, 287 skills**, 8 MCP integrations, 33 Design Archetypes + formal mixing protocol, 10-track empirical research program, 8-layer Context Fabric (L1 scratchpad → L8 user memory), opt-in plugin telemetry, the v3.20 9-axis frontier (agentic UX, server-driven UI, brandkit v2, multi-brand governance, experimentation layer, 3D scene composer, commerce v2, observability/SRE, edge-native), and the v3.21–v3.25 preservation-first ingestion suite (append-only preservation ledger + DNA reverse-engineer + archetype inference + Playwright crawl + pixel-kmeans with full ΔE2000 + recursive sitemap BFS with per-sitemap error events + interaction replay with 7 cubic-Bezier easing presets + CMS schema executors for Sanity/Contentful/Payload). 109/109 tests passing.
 
 This repository contains markdown skill/command/agent definitions, runtime script helpers, hooks, 2 MCP servers (3dsvg-export + meshy scaffold), and a test suite. Targets Next.js 16, Astro 6, SvelteKit 2, Nuxt 3, React/Vite 8, Tauri, Electron, Swift/SwiftUI 6, Kotlin/Compose Multiplatform 2.0, React Native, Expo SDK 52, and Flutter 3.24.
 
@@ -13,11 +13,13 @@ This repository contains markdown skill/command/agent definitions, runtime scrip
 Three-tier system where commands are entry points, agents orchestrate work, and skills provide domain knowledge:
 
 ```
-commands/ (26 commands -- user-facing pipeline stages)
+commands/ (59 commands -- pipeline stages + ingestion + deploy + CMS + integrations)
     | invoke
-agents/ (21 agents -- 8 pipeline + 7 specialists + 5 protocols + 1 figma)
+agents/ (24 agents -- 8 pipeline + 8 specialists + 5 protocols + 1 figma + 2 auxiliary)
     | reference
-skills/ (3-tier, 4-layer SKILL.md files -- ~150 modular knowledge bases)
+skills/ (3-tier, 4-layer SKILL.md files -- 287 modular knowledge bases)
+    |
+scripts/ingest/ (v3.21+ runtime for codebase/URL ingestion into the pipeline)
 ```
 
 **Plugin manifest:** `.claude-plugin/plugin.json`
@@ -186,6 +188,45 @@ Genorah ships baked-in integration skills for major platforms:
 | **Propstack** | Real estate listings, property search, CRM sync |
 
 Each integration skill follows the 4-layer format and maps to DNA tokens for consistent visual theming of third-party UI components.
+
+## Preservation-First Ingestion (v3.21–v3.25)
+
+For existing projects built outside this pipeline, `/gen:ingest` brings them in without losing detail. Source preserved verbatim under `source/` (codebase) or `captured/` (URL). Every byte touched → `preservation.ledger.ndjson` append-only NDJSON.
+
+| Subcommand | Purpose |
+|------------|---------|
+| `codebase <path>` | Mirror repo + framework detect + token/component inventory |
+| `url <url> --consent` | Playwright crawl — HTML + 4bp screenshots + computed-styles + assets |
+| `motion <slug> <trace-dir>` | Playwright-trace → MOTION-INVENTORY.md with exact preset fitting (7 cubic-Bezier presets) |
+| `cms <slug> --cms=<p>` | Schema introspection — Sanity (GROQ) / Contentful (CMA) / Payload (access + OpenAPI) |
+| `verify <slug>` | Preservation invariants — every source has capture, every asset has license or paired gap |
+| `gap <slug>` / `resolve` | User-decision prompts; blocking gaps stop scaffold |
+
+**Invariants** (enforced by `verify`):
+1. Every `source/**` file has `capture.file` event.
+2. Every asset has confirmed license OR paired `gap:license-unknown`.
+3. Every `content.extract` has valid `CONTENT.md:*` destination.
+4. Every low-confidence `dna.extract` has paired `gap:dna-low-confidence`.
+
+**Runtime scripts** (`scripts/ingest/`): `preservation-ledger`, `codebase-scan`, `crawl` (plan emitter) + `crawl-executor` (Playwright), `dna-extract` (CSS-var path), `pixel-kmeans` (full ΔE2000 perceptual distance via sRGB→Lab→ΔE2000), `archetype-score`, `interaction-replay` (trace → easing fit), `cms-schema` (3-platform dispatcher), `cms-detect` (8-CMS fingerprinting), `asset-download`.
+
+Architecture: `docs/v3.21-ingestion-architecture.md`.
+
+## 9-Axis Frontier (v3.20)
+
+Shipped as composable skills + commands, integrating with DNA + pipeline:
+
+| Axis | Skills / Commands |
+|------|-------------------|
+| Agentic UX | `agentic-ux-patterns` + `agent-trace-ui` + `/gen:agents` — AI SDK v6 via Vercel AI Gateway with `stopWhen: stepCountIs(N)` + agent-trace UI primitives |
+| Server-driven UI | `server-driven-ui` — Zod discriminated-union → component tree for CMS-authored pages |
+| Brandkit v2 | `brand-motion-sigils` (Lottie + Rive) + `sonic-logo` + `haptic-signature` + `figma-variables-roundtrip` |
+| Multi-brand governance | `multi-brand-governance` + `/gen:multibrand` — parent DNA + N sub-brand overlays with drift policy |
+| Experimentation | `experimentation-layer` + `/gen:experiment` — A/B/n with quality-gate-aware winner (variants below Design 200 / UX 100 disqualified) |
+| 3D scenes | `3d-scene-composer` + `r3f-physics-rapier` + `gltf-authoring-pipeline` |
+| Commerce v2 | `commerce-hydrogen` + `commerce-medusa` |
+| Observability / SRE | `opentelemetry-traces` + `slo-error-budgets` |
+| Edge-native | `vercel-sandbox` + `vercel-botid` |
 
 ## SEO/GEO Intelligence
 
