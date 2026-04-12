@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Genorah Dashboard</title>
+<style>
+  :root {
+    --bg: #0a0a0b; --surface: #141418; --text: #e8e8ea; --muted: #8a8a95;
+    --border: #2a2a31; --primary: #7c5cff; --ok: #3fc28a; --warn: #f0a830; --fail: #ef4458;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--text); font: 14px/1.5 ui-monospace, "SF Mono", Menlo, monospace; }
+  .container { max-width: 1440px; margin: 0 auto; padding: 24px; display: grid; gap: 24px; }
+  header { display: flex; align-items: center; justify-content: space-between; padding: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; }
+  header h1 { font-size: 18px; font-weight: 600; }
+  header .status-dot { display: inline-block; width: 8px; height: 8px; background: var(--ok); border-radius: 50%; margin-right: 8px; }
+  .dna-chips { display: flex; gap: 4px; flex-wrap: wrap; }
+  .dna-chip { width: 32px; height: 32px; border-radius: 6px; border: 1px solid var(--border); position: relative; }
+  .dna-chip:hover::after { content: attr(data-token); position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); background: var(--surface); padding: 4px 8px; border-radius: 4px; white-space: nowrap; font-size: 11px; }
+  section { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+  section h2 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 16px; }
+  .waves { display: flex; gap: 8px; flex-wrap: wrap; }
+  .wave-pill { padding: 6px 12px; background: var(--bg); border: 1px solid var(--border); border-radius: 999px; font-size: 12px; }
+  .wave-pill.done { border-color: var(--ok); color: var(--ok); }
+  .wave-pill.building { border-color: var(--primary); color: var(--primary); }
+  .wave-pill.failed { border-color: var(--fail); color: var(--fail); }
+  .sections-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+  .section-card { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px; }
+  .section-card .beat { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+  .section-card .name { font-weight: 600; font-size: 14px; margin: 4px 0; }
+  .section-card .score { font-size: 24px; font-weight: 700; color: var(--primary); }
+  .section-card .score.low { color: var(--warn); }
+  .section-card .score.fail { color: var(--fail); }
+  .section-card .tier { font-size: 11px; color: var(--muted); }
+  pre { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px; white-space: pre-wrap; font-size: 12px; max-height: 300px; overflow: auto; }
+  .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .action-btn { padding: 8px 16px; background: var(--primary); color: white; border: none; border-radius: 6px; cursor: pointer; font: inherit; font-weight: 600; }
+  .action-btn:hover { opacity: 0.9; }
+  .action-btn.secondary { background: transparent; border: 1px solid var(--border); color: var(--text); }
+  .empty { color: var(--muted); font-style: italic; padding: 24px; text-align: center; }
+  .queued-banner { background: var(--warn); color: var(--bg); padding: 12px; border-radius: 8px; margin-bottom: 16px; font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div>
+      <h1><span class="status-dot"></span>Genorah Dashboard</h1>
+      <p style="font-size: 12px; color: var(--muted); margin-top: 4px;" id="ts">—</p>
+    </div>
+    <div class="dna-chips" id="dna-chips"></div>
+  </header>
+
+  <div id="queued-banner" style="display:none;"></div>
+
+  <section>
+    <h2>Waves</h2>
+    <div class="waves" id="waves"></div>
+  </section>
+
+  <section>
+    <h2>Sections</h2>
+    <div class="sections-grid" id="sections"></div>
+  </section>
+
+  <section>
+    <h2>Quick Actions</h2>
+    <div class="actions">
+      <button class="action-btn" onclick="queueAction('audit')">Queue /gen:audit</button>
+      <button class="action-btn secondary" onclick="queueAction('status')">Queue /gen:status</button>
+      <button class="action-btn secondary" onclick="queueAction('self-audit')">Queue /gen:self-audit</button>
+    </div>
+    <p style="font-size: 11px; color: var(--muted); margin-top: 8px;">Buttons queue commands; run the matching /gen:* command in your Claude Code session.</p>
+  </section>
+
+  <section>
+    <h2>Context</h2>
+    <pre id="context">loading…</pre>
+  </section>
+
+  <section>
+    <h2>Decisions (tail)</h2>
+    <pre id="decisions">loading…</pre>
+  </section>
+</div>
+
+<script>
+function render(state) {
+  document.getElementById('ts').textContent = 'last update: ' + state.ts;
+
+  // DNA chips
+  const chips = document.getElementById('dna-chips');
+  chips.innerHTML = '';
+  for (const [tok, val] of Object.entries(state.dna_tokens || {})) {
+    const chip = document.createElement('div');
+    chip.className = 'dna-chip';
+    chip.style.background = val;
+    chip.setAttribute('data-token', tok + ': ' + val);
+    chips.appendChild(chip);
+  }
+
+  // Waves (derived from MASTER-PLAN)
+  const waves = document.getElementById('waves');
+  const waveMatches = [...(state.master_plan || '').matchAll(/wave[:\s]+(\d+)/gi)];
+  const uniqWaves = [...new Set(waveMatches.map(m => m[1]))];
+  waves.innerHTML = uniqWaves.length
+    ? uniqWaves.map(n => `<div class="wave-pill">Wave ${n}</div>`).join('')
+    : '<div class="empty">no waves defined</div>';
+
+  // Sections
+  const sec = document.getElementById('sections');
+  sec.innerHTML = (state.sections || []).length
+    ? state.sections.map(s => {
+        const score = s.score ?? '—';
+        const scoreClass = s.score == null ? '' : s.score >= 200 ? '' : s.score >= 170 ? 'low' : 'fail';
+        return `<div class="section-card">
+          <div class="beat">${s.beat || '—'}</div>
+          <div class="name">${s.name}</div>
+          <div class="score ${scoreClass}">${score}</div>
+          <div class="tier">${s.tier || s.status || 'pending'}</div>
+        </div>`;
+      }).join('')
+    : '<div class="empty">no sections yet — run /gen:plan</div>';
+
+  // Action queue
+  const banner = document.getElementById('queued-banner');
+  if (state.action_queue && state.action_queue.length) {
+    banner.style.display = 'block';
+    banner.className = 'queued-banner';
+    banner.textContent = `⚡ ${state.action_queue.length} queued action(s): ${state.action_queue.join(', ')}`;
+  } else {
+    banner.style.display = 'none';
+  }
+
+  document.getElementById('context').textContent = state.context || '(empty)';
+  document.getElementById('decisions').textContent = state.decisions_tail || '(empty)';
+}
+
+async function queueAction(cmd) {
+  await fetch('/api/action/' + cmd, { method: 'POST', body: JSON.stringify({ at: new Date().toISOString() }) });
+  alert('Queued /gen:' + cmd + '. Run it in your Claude Code session.');
+}
+
+const evt = new EventSource('/api/sse');
+evt.onmessage = e => {
+  try { render(JSON.parse(e.data)); } catch {}
+};
+evt.onerror = () => setTimeout(() => location.reload(), 3000);
+</script>
+</body>
+</html>
