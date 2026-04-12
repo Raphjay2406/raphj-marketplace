@@ -1,0 +1,29 @@
+/**
+ * Task 8: Barrel index — public API of @genorah/canvas-runtime.
+ *
+ * Three-layer export grouping:
+ *   1. Schemas + pure types (no side-effects, safe in SSR/Node)
+ *   2. Runtime adapters (Theatre.js, GSAP, Lenis, WebGPU, PerfBudget)
+ *   3. React components (canvas-runtime.tsx — marks "use client" internally)
+ */
+// ---------------------------------------------------------------------------
+// 1. Schemas & types
+// ---------------------------------------------------------------------------
+export { MotionPresetSchema, PerfBudgetSchema, ScenePropsSchema, CanvasConfigSchema, parseCanvasConfig, } from "./schemas/canvas-config.js";
+// ---------------------------------------------------------------------------
+// 2. Runtime adapters
+// ---------------------------------------------------------------------------
+// Theatre.js wrapper
+export { types as theatreTypes, onChange as theatreOnChange, val as theatreVal, getOrCreateProject, getSheet, playSequence, scrubSequence, getSharedRafDriver, tickRafDriver, getSheetObject, resetTheatreRuntime, } from "./theatre.js";
+// GSAP adapter
+export { gsap, presetToGsapEase, dnaTween, setGsapTimescale, scrollProgressTween, } from "./gsap-adapter.js";
+// Lenis adapter
+export { createLenis, getLenis, onScroll, tickLenis, scrollTo, destroyLenis, } from "./lenis-adapter.js";
+// WebGPU feature detection
+export { detectWebGpu, getCachedWebGpuCapabilities, resetWebGpuCache, } from "./webgpu/feature-detect.js";
+// Performance budget
+export { PerfBudgetTracker, FpsSampler, } from "./perf-budget.js";
+// ---------------------------------------------------------------------------
+// 3. React components
+// ---------------------------------------------------------------------------
+export { CanvasRuntime, useCanvasRuntime, } from "./canvas-runtime.js";

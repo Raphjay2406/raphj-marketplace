@@ -1,0 +1,35 @@
+{
+  "name": "@genorah/canvas-runtime",
+  "version": "4.0.0-alpha.2",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "three": "^0.170.0"
+  },
+  "dependencies": {
+    "@react-three/fiber": "^9.0.0",
+    "@react-three/drei": "^10.0.0",
+    "@react-three/postprocessing": "^3.0.0",
+    "@theatre/core": "^0.7.2",
+    "gsap": "^3.13.0",
+    "lenis": "^1.2.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@webgpu/types": "^0.1.50",
+    "@types/three": "^0.170.0",
+    "@types/react": "^19.0.0",
+    "typescript": "^5.6.2",
+    "vitest": "^2.1.4",
+    "@testing-library/react": "^16.0.0",
+    "happy-dom": "^15.0.0",
+    "react": "^19.0.0",
+    "three": "^0.170.0"
+  },
+  "scripts": {
+    "build": "tsc -p .",
+    "test": "vitest run"
+  }
+}
