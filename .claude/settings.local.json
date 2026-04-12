@@ -95,7 +95,9 @@
       "WebFetch(domain:mobbin.com)",
       "WebFetch(domain:cosmos.so)",
       "Bash(mkdir -p ~/.claude/plugins/cache/raphj-marketplace/gen/3.4.2-rc.1)",
-      "Bash(cp -r plugins/gen/. ~/.claude/plugins/cache/raphj-marketplace/gen/3.4.2-rc.1/)"
+      "Bash(cp -r plugins/gen/. ~/.claude/plugins/cache/raphj-marketplace/gen/3.4.2-rc.1/)",
+      "Bash(mkdir -p ~/.claude/plugins/cache/raphj-marketplace/gen/3.5.0-rc.1)",
+      "Bash(cp -r plugins/gen/. ~/.claude/plugins/cache/raphj-marketplace/gen/3.5.0-rc.1/)"
     ]
   }
 }
