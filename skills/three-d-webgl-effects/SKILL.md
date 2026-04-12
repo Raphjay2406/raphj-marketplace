@@ -1,9 +1,73 @@
 ---
 name: three-d-webgl-effects
-description: "3D and WebGL effects with React Three Fiber. Composable shader building blocks, three-tier responsive (desktop/tablet/static fallback), scroll-driven 3D, post-processing, DNA-guided materials, WebGPU forward-looking."
+description: "3D and WebGL effects with React Three Fiber. Composable shader building blocks, three-tier responsive (desktop/tablet/static fallback), scroll-driven 3D, post-processing, DNA-guided materials. v3.0: WebGPU/TSL decision matrix, gltf-optimization hand-off, WebGL auto-fallback pattern."
 tier: domain
-triggers: "3D, WebGL, three.js, react three fiber, R3F, shader, particles, 3D scene, WebGPU, holographic, liquid effect, glass, displacement, orbit controls, 3D background, 3D product viewer, post-processing, bloom, noise displacement"
-version: "2.0.0"
+triggers: "3D, WebGL, three.js, react three fiber, R3F, shader, particles, 3D scene, WebGPU, TSL, holographic, liquid effect, glass, displacement, orbit controls, 3D background, 3D product viewer, post-processing, bloom, noise displacement"
+version: "3.0.0"
+---
+
+## v3.0 Addendum: WebGPU / TSL Decision Matrix
+
+Three.js r170+ exposes TSL (Three Shading Language) — write shaders in JS, compile to WGSL (WebGPU) or GLSL (WebGL). This unlocks WebGPU where it counts without losing WebGL compatibility.
+
+### When to reach for WebGPU
+
+| Signal | WebGPU | WebGL |
+|--------|:------:|:-----:|
+| GPU compute needed (fluid sim, cellular automata) | ✅ | ❌ |
+| Particle count > 100k | ✅ | stretched |
+| Baseline target M1+, modern iPhone | ✅ | both fine |
+| IE11/older Safari target (Tier 2 compat) | ❌ | ✅ |
+| Static geometry, simple materials | neutral | ✅ (smaller bundle) |
+
+Default: **WebGL**. Upgrade to WebGPU only when the scene genuinely benefits (compute, massive particles).
+
+### Auto-fallback pattern
+
+```tsx
+import { WebGPURenderer } from 'three/webgpu';
+import { WebGLRenderer } from 'three';
+
+function makeRenderer(canvas: HTMLCanvasElement) {
+  if ('gpu' in navigator) {
+    try {
+      const r = new WebGPURenderer({ canvas, antialias: true });
+      r.init(); // async init; returns quickly in practice
+      return r;
+    } catch { /* fall through */ }
+  }
+  return new WebGLRenderer({ canvas, antialias: true });
+}
+```
+
+R3F with `<Canvas gl={makeRenderer}>` — opaque swap.
+
+### TSL shader example
+
+```ts
+import { mix, sin, time, uv, vec3 } from 'three/tsl';
+
+// Same code compiles to WGSL (WebGPU) and GLSL (WebGL)
+const colorA = vec3(0.1, 0.2, 0.3);
+const colorB = vec3(0.8, 0.3, 0.5);
+const wobble = sin(time.mul(2.0).add(uv().x.mul(8.0))).mul(0.5).add(0.5);
+const material = new MeshBasicNodeMaterial();
+material.colorNode = mix(colorA, colorB, wobble);
+```
+
+### Hand-off to gltf-optimization
+
+When a section declares a `.glb`/`.gltf` asset, this skill hands off the asset pipeline to the `gltf-optimization` skill (utility tier). Draco/Meshopt/KTX2/LOD/budget-enforcement lives there. This skill stays focused on scene composition, materials, and interaction.
+
+### Constraint table (v3.0)
+
+| Parameter | Min | Max | Unit | Enforcement |
+|-----------|-----|-----|------|-------------|
+| fps_baseline_m1 | 55 | 60 | fps | SOFT — report |
+| total_gpu_memory_mb | — | 300 | MB | HARD (via gltf-optimization) |
+| webgpu_fallback_required | true | true | bool | HARD |
+| tsl_preferred_for_new_shaders | true | — | bool | SOFT recommend |
+
 ---
 
 ## Layer 1: Decision Guidance

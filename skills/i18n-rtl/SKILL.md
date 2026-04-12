@@ -1,10 +1,60 @@
 ---
 name: "i18n-rtl"
-description: "Internationalization and RTL patterns: CSS logical properties, Tailwind logical utilities, next-intl setup, Astro i18n, locale-aware formatting, language switcher, bidirectional layout support."
+description: "Internationalization and RTL patterns: CSS logical properties, Tailwind logical utilities, next-intl setup, Astro i18n, locale-aware formatting, language switcher, bidirectional layout support. v3.0: auto-scaffold by-default when ≥2 locales declared in discovery, LLM stub translation with review markers, motion token RTL mirroring."
 tier: "utility"
-triggers: "i18n, internationalization, localization, RTL, right-to-left, Arabic, Hebrew, language, locale, translation, multi-language, l10n, bidirectional"
-version: "2.0.0"
+triggers: "i18n, internationalization, localization, RTL, right-to-left, Arabic, Hebrew, language, locale, translation, multi-language, l10n, bidirectional, i18n default, auto-locale"
+version: "3.0.0"
 ---
+
+## v3.0 Addendum: i18n by Default
+
+Previous behavior: i18n available on request. v3.0: auto-scaffold when discovery flags ≥2 locales, wire logical-property defaults into Wave 0 design-system scaffold, mirror motion tokens for RTL.
+
+### Trigger (auto)
+
+During `/gen:start-project` discovery, question: "Locales? (default: en)". Any answer with 2+ locales routes through this skill's auto-scaffold path.
+
+### Auto-scaffold steps
+
+1. **Framework detection** → wire `next-intl` (Next) or `@astrojs/i18n` (Astro).
+2. **Content structure**:
+   ```
+   content/
+   ├── en/
+   │   ├── hero.json
+   │   ├── features.json
+   │   └── ...
+   └── de/          # (or whichever locale)
+       ├── hero.json (stub, marked for review)
+       └── ...
+   ```
+3. **LLM stub translation**: for each non-primary locale, pass primary-locale content through translation call; inject `// REVIEW NEEDED` markers on each string. Editors must review before publish.
+4. **Logical-property utilities**: inject `design-system-scaffold` with logical utilities (`ps-4`, `pe-4`, `ms-auto`, etc.) instead of physical (`pl-4`, `pr-4`).
+5. **Motion token RTL mirroring**: directional motion tokens (e.g., `slide-in-left`) get RTL variants (`slide-in-start`) with sign-flipped transforms.
+6. **Language switcher scaffold**: drop a DNA-themed `<LanguageSwitcher />` component into the shared UI.
+7. **Locale middleware** (Next): `middleware.ts` for prefix-based or cookie-based locale routing.
+
+### Motion RTL mirror map
+
+| Physical direction | Logical direction | LTR transform | RTL transform |
+|---|---|---|---|
+| slide-in-left | slide-in-start | `translateX(-100%)` | `translateX(100%)` |
+| slide-in-right | slide-in-end | `translateX(100%)` | `translateX(-100%)` |
+| rotate-cw | rotate-start-to-end | `rotate(0→360)` | `rotate(0→-360)` (optional) |
+
+Non-directional motion (fade, scale) needs no mirror.
+
+### Constraint table (v3.0)
+
+| Parameter | Min | Max | Unit | Enforcement |
+|-----------|-----|-----|------|-------------|
+| auto_scaffold_threshold_locales | 2 | — | count | HARD |
+| stub_translation_review_markers | required | — | comment | HARD |
+| logical_properties_in_scaffold | on | on | bool | HARD when locales ≥2 |
+| motion_rtl_mirror_directional | required | — | tokens | HARD |
+
+---
+
 
 ## Layer 1: Decision Guidance
 
