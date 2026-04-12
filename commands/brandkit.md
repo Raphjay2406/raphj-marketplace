@@ -9,6 +9,24 @@ recommended-model: sonnet-4-6
 
 Generate brand-identity deliverables from the project's `DESIGN-DNA.md`. See `skills/brandkit-suite/SKILL.md` for the full output inventory.
 
+## v3.4.1 Addendum — 3dsvg 30-variant fan-out
+
+When `hero_mark.enabled: true` is set in DESIGN-DNA or PROJECT.md, `/gen:brandkit export` automatically invokes the `3dsvg-export` MCP to render 30 brand-matrix assets:
+
+- 5 materials (archetype's `preferred_materials` per preset library)
+- 3 angles (front 0°, 3/4 right, 3/4 left)
+- 2 breakpoints (2K = 2048×1152, 4K = 3840×2160)
+
+Outputs to `public/brand/3d/`:
+- `{brand}-{material}-{angle}-{bp}.png`
+- `{brand}-{material}-{angle}-{bp}.mp4` (when `--with-video` flag set)
+- `manifest.json` — variant index
+- `index.html` — preview gallery embeddable in `/brand` public route
+
+Cache key: `sha256(DESIGN-DNA.md + hero_mark.preset_id + override_hash)`. Re-runs skip regeneration unless `--force`.
+
+If `3dsvg-export` MCP unavailable, brandkit exits gracefully with instructions to run `/gen:hero-mark design` manually.
+
 ## Workflow
 
 ### 1. Parse argument

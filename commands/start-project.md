@@ -62,6 +62,26 @@ Emit:
 skeleton_framework: shadcn|content-loader|boneyard
 ```
 
+### Q7 (v3.4.1): 3D Hero Mark
+"Does your brand need a 3D hero mark? (extruded logo / wordmark / glyph as a focal point on a hero section). Answer y/n/later."
+
+If y: follow-up — "Which beat hosts it? (HOOK / PEAK / CLOSE). Default: HOOK."
+
+If archetype is Pixel-Art: auto-decline with note ("3D extrusion incompatible with pixel-perfect aesthetic — falling back to 2D sprite animation via cinematic-motion skill").
+
+Emit:
+```yaml
+hero_mark:
+  enabled: true|false|later
+  beat: HOOK|PEAK|CLOSE              # if enabled
+  source: discovered|user_provided
+  text: "BRAND"                      # default = brand_name from PROJECT.md
+```
+
+The assigned preset from `skills/design-archetypes/seeds/3dsvg-presets.json` (archetype × beat lookup) populates `material`, `animation`, `depth`, `bevel`, `intro` automatically in `/gen:plan`. User can override via `/gen:hero-mark design --override=...` later.
+
+Downstream: `/gen:plan` populates PLAN.md `hero_mark` slot. `/gen:build` routes to 3d-specialist. `/gen:brandkit export` fans out 30 brand-matrix assets when enabled.
+
 ### Rendering the "⚡ NEXT ACTION" block
 
 After discovery completes and DNA is locked, state transitions to `DNA_COMPLETE`. Render the Next Action block per `skills/pipeline-guidance/SKILL.md`:

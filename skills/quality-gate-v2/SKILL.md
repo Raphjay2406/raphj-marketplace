@@ -453,3 +453,57 @@ When running `/gen:audit`, quality-reviewer agent MUST:
 
 This makes sub-gate wiring auditable, not implicit.
 
+
+---
+
+## v3.4.1 Addendum: Hero Mark Compliance Sub-Gate
+
+New sub-gate inside the **Creative Courage** category (weight 1.2×). Scores a section's 3D hero-mark implementation against 5 binary checks.
+
+### Scoring (5 points max, within the Creative Courage category)
+
+| Check | Pass condition | Fail penalty |
+|---|---|---|
+| Archetype-material compliance | Emitted `material` ∈ archetype's `preferred_materials` from 3dsvg-presets.json | -3 + Creative Courage capped at 50% |
+| SSR gate present | `dynamic({ ssr: false })` wrapper OR Astro `client:only="react"` | -2 + hard build failure risk |
+| Accessibility wrapper | `<GenorahSVG3D>` with `ariaLabel` prop — NOT bare `<SVG3D>` | -2 |
+| RM fallback present | `fallbackSrc` prop OR in-wrapper `useReducedMotion()` branch | -1 (WCAG 2.3.3) |
+| WebGL instance cap | ≤3 live `<GenorahSVG3D>` per page | -2 per excess instance |
+
+### Scoring rules
+
+- If `hero_mark.enabled: false` or section has no 3D mark → sub-gate not applicable (neutral score).
+- If emitted but violates archetype material → CRITICAL; entire Creative Courage category capped at 50% (per v3.3 sub-gate integration pattern).
+- If all 5 checks pass → +5 to Creative Courage raw.
+
+### Quality-reviewer implementation
+
+At Stage 6, for each section with `hero_mark.enabled`:
+
+1. `grep -n "<GenorahSVG3D\|<SVG3D " sections/{name}/*.tsx` — locate usage.
+2. Parse component props → `{material, ariaLabel, fallbackSrc}` set?
+3. Confirm dynamic-import wrapper imports `3dsvg` with `ssr: false`.
+4. Load preset library, verify emitted material ∈ archetype's preferred.
+5. Count emissions across the whole page (>3 = hard cap breach).
+6. Log score in `SUMMARY.md` `hero_mark_compliance` block.
+
+### SUMMARY.md output
+
+```yaml
+hero_mark_compliance:
+  enabled: true
+  preset_used: luxury_hook_001
+  material_compliant: true
+  ssr_gated: true
+  accessibility_wrapped: true
+  rm_fallback: true
+  instance_count: 1
+  sub_gate_score: 5/5
+  creative_courage_cap: none
+```
+
+### Anti-patterns
+
+- ❌ Bare `<SVG3D>` import at top of a Server Component (SSR crash + no a11y).
+- ❌ Override `material` to a forbidden value (Luxury + clay, etc.) via PLAN.md — preset library rejects this at build time.
+- ❌ 4+ `<GenorahSVG3D>` instances on same page — WebGL context exhaustion.

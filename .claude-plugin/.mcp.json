@@ -52,5 +52,11 @@
     "args": ["-y", "next-devtools-mcp@latest"],
     "description": "Next.js DevTools MCP (official Vercel). Exposes Next.js build logs, deployment info, routing inspection. Separate from vercel-plugin MCP — focused on Next.js runtime introspection, not deploys.",
     "optional": true
+  },
+  "3dsvg-export": {
+    "command": "node",
+    "args": ["${CLAUDE_PLUGIN_ROOT}/mcp-servers/3dsvg-export/server.mjs"],
+    "description": "Headless 3dsvg export server (Genorah v3.4.1). Renders preset → PNG (single, batch) and MP4 via Playwright + 3dsvg registerCanvas. Used by /gen:hero-mark export for the 30-variant brand matrix. Requires playwright (already declared) + optional @ffmpeg-installer/ffmpeg for MP4.",
+    "optional": true
   }
 }
