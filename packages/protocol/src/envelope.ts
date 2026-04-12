@@ -56,7 +56,10 @@ export function parseResultEnvelope<T = unknown>(input: unknown): ResultEnvelope
   return parsed as ResultEnvelope<T>;
 }
 
-export function ok<T>(artifact: T, extras: Partial<ResultEnvelope<T>> = {}): ResultEnvelope<T> {
+export function ok<T>(
+  artifact: T,
+  extras: Partial<Omit<ResultEnvelope<T>, "schema_version" | "status" | "artifact">> = {}
+): ResultEnvelope<T> {
   return {
     schema_version: "4.0.0",
     status: "ok",
