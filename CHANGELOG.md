@@ -1,5 +1,46 @@
 # Changelog
 
+## v3.21.0 — 2026-04-12
+
+**Preservation-first project ingestion.**
+
+Bring existing projects into the Genorah pipeline without losing any detail. Codebase or live URL. Every byte captured, every transformation logged in an append-only preservation ledger, every derived artifact (DNA, archetype, components, content) traceable back to origin.
+
+### New
+
+- `/gen:ingest` command with 7 subcommands: `codebase`, `url` (consent-gated), `route`, `diff`, `gap`, `verify`, `resolve`.
+- 9 skills: `codebase-ingestion`, `url-scrape-ingestion`, `dna-reverse-engineer`, `archetype-inference`, `content-extraction`, `component-mapping`, `asset-provenance`, `preservation-ledger` (core tier), `ingest-gap-report`.
+- 6 scripts under `scripts/ingest/`: `preservation-ledger.mjs` (functional), `codebase-scan.mjs` (functional), `crawl.mjs` (plan emitter for Playwright MCP), `dna-extract.mjs` (CSS-variable path functional; pixel extraction stubbed), `archetype-score.mjs` (functional against `testable-markers.json`), `asset-download.mjs` (functional fetch + sha256 + license heuristic).
+- Architecture doc: `docs/v3.21-ingestion-architecture.md`.
+- Tests: `tests/v321-ingest-ledger.test.mjs` — 5/5 passing (roundtrip, verify invariants, license-gap pairing, dna-low-confidence-gap pairing, kind required).
+
+### Preservation contract
+
+1. Source captured verbatim under `source/` (codebase) or `captured/` (URL). Never mutated.
+2. `preservation.ledger.ndjson` — append-only NDJSON. Every capture, extract, match, map, gap, and user decision.
+3. No silent drops. Unmappable items → `GAP-REPORT.md` with user-decision prompts.
+4. Archetype inference returns top-3 with confidence — never auto-locks.
+5. `license-unknown` assets block scaffold stage until user confirms.
+6. PII scan runs on extracted content; matches go to gap report, not CONTENT.md.
+7. `/gen:ingest verify` asserts preservation invariants: every source file has capture event, every asset has license or paired gap, every low-confidence DNA token has paired gap, every content extract has valid destination.
+
+### Artifact layout
+
+```
+.planning/genorah/ingested/<slug>/
+├── INGESTION.md / DNA-EXTRACTED.md / ARCHETYPE-MATCH.md
+├── CONTENT.md / DESIGN-SYSTEM.md / GAP-REPORT.md
+├── preservation.ledger.ndjson
+├── source/ or captured/ + screenshots/ + computed-styles/ + assets/
+└── manifests/{routes,components,assets,fonts}.json
+```
+
+### Legal gates
+
+- `/gen:ingest url` refuses without `--consent` flag.
+- robots.txt honored; disallowed routes logged as `gap:robots-disallow`.
+- Asset license defaults to `unknown`; no silent inference (Unsplash/Pexels etc. emit hint + require user confirm).
+
 ## v3.20.0 — 2026-04-12
 
 **Frontier axes unlocked.**

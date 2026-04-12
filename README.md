@@ -12,7 +12,7 @@ claude plugin marketplace add https://github.com/Raphjay2406/raphj-marketplace
 
 | Plugin | Skills | Commands | Agents | Version | Description |
 |--------|--------|----------|--------|---------|-------------|
-| `gen` | 275 | 58 | 24 | **3.20.0** | Premium frontend design system — Measurably Enforced Quality + 9-axis Frontier (agentic UX, SDUI, brandkit v2, multi-brand, experimentation, 3D scenes, commerce v2, observability, edge-native) |
+| `gen` | 284 | 59 | 24 | **3.21.0** | Premium frontend design system — Measurably Enforced Quality + 9-axis Frontier + Preservation-First Ingestion (`/gen:ingest` codebase or URL, append-only ledger, archetype inference, license-gated assets, PII-scrubbed content) |
 | `wavy-bavy` | 1 | — | — | 1.0.0 | Integrate the wavy-bavy library for seamless wave transitions |
 
 ## Genorah v3.18.0 — What's shipped
@@ -124,6 +124,18 @@ claude plugin marketplace add https://github.com/Raphjay2406/raphj-marketplace
 - Cross-framework parity (SvelteKit vs Next as canonical)
 - Cross-browser matrix (Chromium/Firefox/WebKit + mobile)
 - Print/PDF parity for brandkit
+
+## v3.21 — Preservation-First Ingestion
+
+**Bring existing projects into the pipeline without losing any detail:**
+
+- `/gen:ingest codebase <path>` — mirror + inventory + DNA extract + archetype top-3 + component → beat mapping
+- `/gen:ingest url <url> --consent` — Playwright crawl; HTML + CSS + JS + 4-breakpoint screenshots + computed styles + assets
+- `/gen:ingest verify <slug>` — preservation invariants (every source file has capture event, every asset has license or paired gap, every low-confidence DNA token has paired gap)
+- Append-only `preservation.ledger.ndjson` per project — origin → destination → transformation for every byte
+- 33-archetype inference via `testable-markers.json` — always returns top-3 with evidence, never auto-locks
+- License-gated assets (unknown blocks scaffold), PII-scrubbed content extraction, robots.txt honored
+- Architecture: `docs/v3.21-ingestion-architecture.md`
 
 ## v3.20 — 9-Axis Frontier
 
