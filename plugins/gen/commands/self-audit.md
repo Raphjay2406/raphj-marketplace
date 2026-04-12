@@ -41,7 +41,7 @@ Read in parallel:
 2. **Command count claim** — count of `commands/*.md` must equal the "(N commands)" claim in `CLAUDE.md` and the commands table row count.
 3. **Skill frontmatter presence** — every `skills/*/SKILL.md` (excluding `_skill-template`) must start with `---\n` YAML block containing `name`, `description`, `tier`, `version`.
 4. **Hook file integrity** — every hook referenced in `plugin.json.hooks[*].command` must exist on disk and parse as valid JS/Bash (`node --check` / `bash -n`).
-5. **plugins/gen mirror exists** — if `plugins/gen/` is present, `plugins/gen/commands/`, `plugins/gen/skills/`, `plugins/gen/agents/` counts must match root counts.
+5. **plugins/gen mirror exists** — if `plugins/gen/` is present, `plugins/gen/commands/`, `plugins/gen/skills/`, `plugins/gen/agents/` counts must match root counts. **Exclusion:** `_skill-template/` is an authoring reference, not a live skill — exclude from count comparisons on both sides. Any count drift after exclusion is a genuine mirror bug.
 
 **WARN (HIGH)**
 6. **Quality gate text freshness** — no references to "72-point" or "248-point" in `plugin.json`, `marketplace.json`, `README.md`, `CLAUDE.md` (234-point is current).
@@ -49,7 +49,7 @@ Read in parallel:
 **v3.1 HARD GUARDRAILS**
 6a. **animation-orchestration word cap** — `wc -w skills/animation-orchestration/SKILL.md` must be ≤ 2500. Fail if exceeded. Prevents god-skill bloat.
 6b. **animation-orchestration scoped injection** — frontmatter must include `injection_regex:` field. Fail if missing or if pre-tool-use.mjs injects this skill without checking the regex against user prompt.
-6c. **No motion-token redefinitions** — `animation-orchestration/SKILL.md` must not contain lines matching `--motion-duration-\w+:` or `--motion-ease-\w+:`. Those belong in `design-dna`. Fail if found (meta-skill leaking into definition space).
+6c. **No motion-token redefinitions** — `animation-orchestration/SKILL.md` must not contain CSS variable DEFINITIONS (lines matching `^\s*--motion-(duration|ease)-\w+:\s*\S`). Referencing token names in prose or example consumption (`var(--motion-ease-archetype)`) is ALLOWED. Fail only when the file attempts to define the token rather than reference it.
 6d. **Skill frontmatter field check** — every skill in `skills/*/SKILL.md` must use `tier:` (not `category:`). Grep fail if `^category:` appears.
 6e. **Agent frontmatter format** — every agent in `agents/**/*.md` must use comma-string `tools:` (not JSON array), `model: inherit` (not a specific model), `maxTurns: N` (not `context_budget`). Grep for deviations.
 6f. **Typography-rules CSS defaults** — `design-system-scaffold` SKILL must emit text-wrap + font-feature-settings + hyphens rules (v3.1). Grep for required CSS snippets.

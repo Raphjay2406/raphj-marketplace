@@ -1,6 +1,8 @@
 ---
 name: glow-neon-effects
 description: "Neon glow effects, light bleeding, luminous borders, gradient glow, spotlight effects, and ambient lighting for dark UI."
+tier: domain
+version: "2.0.0"
 ---
 
 Use this skill when the user mentions glow, neon, light effect, luminous, glowing border, spotlight, light bleeding, ambient light, or radiant design.

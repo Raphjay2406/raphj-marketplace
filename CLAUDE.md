@@ -4,7 +4,7 @@ This file provides guidance to Claude Code when working with the Genorah plugin 
 
 ## Project Overview
 
-**Genorah v3.1.0** is a Claude Code plugin for premium frontend design — "Measurably Enforced Quality with Closed-Loop Refinement." It produces award-caliber websites (Awwwards SOTD 8.0+ baseline) through a pipeline of 21 specialized agents, machine-enforceable design identity, a 234-point weighted quality gate enforced via a 6-stage validation pipeline (DNA compliance → render → registry → consistency → design fidelity → full gate), and a Visual Companion for localhost delivery. v3.0 introduces closed-loop visual refiner, DNA drift detection (92% coverage hard gate), per-beat perf budgets, motion-health sub-gate, reference-diff-protocol (pixel-diff vs reference URL), AI variant tournament, section consistency auditor, live localhost dashboard, interactive click-to-refine companion, competitive benchmarking, smart intent router, self-audit, WebGPU/TSL frontier, Sanity + Payload CMS round-trip, Remotion section video, brand voice extractor, cognitive accessibility (CVD ΔE2000), and i18n-by-default. It is NOT a template generator -- every project gets a unique visual identity enforced through Design DNA, 19 Design Archetypes, Emotional Arc storytelling, and the Quality Gate. Framework-aware pipeline supports Next.js, Astro, and React/Vite with per-framework code generation. ~131 skills across 12 design domains.
+**Genorah v3.2.0** is a Claude Code plugin for premium frontend design — "Measurably Enforced Quality with Closed-Loop Refinement." It produces award-caliber websites (Awwwards SOTD 8.0+ baseline) through a pipeline of 21 specialized agents, machine-enforceable design identity, a 234-point weighted quality gate enforced via a 6-stage validation pipeline (DNA compliance → render → registry → consistency → design fidelity → full gate), and a Visual Companion for localhost delivery. v3.0 introduces closed-loop visual refiner, DNA drift detection (92% coverage hard gate), per-beat perf budgets, motion-health sub-gate, reference-diff-protocol (pixel-diff vs reference URL), AI variant tournament, section consistency auditor, live localhost dashboard, interactive click-to-refine companion, competitive benchmarking, smart intent router, self-audit, WebGPU/TSL frontier, Sanity + Payload CMS round-trip, Remotion section video, brand voice extractor, cognitive accessibility (CVD ΔE2000), and i18n-by-default. It is NOT a template generator -- every project gets a unique visual identity enforced through Design DNA, 19 Design Archetypes, Emotional Arc storytelling, and the Quality Gate. Framework-aware pipeline supports Next.js, Astro, and React/Vite with per-framework code generation. ~131 skills across 12 design domains.
 
 This repository contains only markdown definitions and a plugin manifest -- there is no application code, build system, or test suite. Targets Next.js, Astro, React/Vite, Tauri, Electron, Swift/SwiftUI, Kotlin/Compose, React Native, Expo, and Flutter.
 
@@ -13,11 +13,11 @@ This repository contains only markdown definitions and a plugin manifest -- ther
 Three-tier system where commands are entry points, agents orchestrate work, and skills provide domain knowledge:
 
 ```
-commands/ (23 commands -- user-facing pipeline stages)
+commands/ (25 commands -- user-facing pipeline stages)
     | invoke
 agents/ (21 agents -- 8 pipeline + 7 specialists + 5 protocols + 1 figma)
     | reference
-skills/ (3-tier, 4-layer SKILL.md files -- ~142 modular knowledge bases)
+skills/ (3-tier, 4-layer SKILL.md files -- ~151 modular knowledge bases)
 ```
 
 **Plugin manifest:** `.claude-plugin/plugin.json`
@@ -59,7 +59,7 @@ Five optional MCP servers declared in `.claude-plugin/.mcp.json`:
 
 All servers are optional. Commands gracefully degrade when servers are unavailable.
 
-## Commands (23)
+## Commands (25)
 
 | Command | Purpose |
 |---------|---------|
@@ -86,6 +86,8 @@ All servers are optional. Commands gracefully degrade when servers are unavailab
 | `/gen:video` | (v3.0) Render DNA-parameterized Remotion section video with 5 templates + AVIF/MP4/WebM dual encode |
 | `/gen:next` | (v3.0.1) Preview next /gen:* command for current pipeline state — primary + alternatives + rationale |
 | `/gen:brandkit` | (v3.1) Generate brand kit deliverables — logo variants, favicon, OG templates, color exports, guidelines PDF, /brand public route |
+| `/gen:ci-setup` | (v3.2) Scaffold Lighthouse CI + GitHub Actions + Playwright preview-smoke from perf-budgets |
+| `/gen:review-share` | (v3.2) Generate shareable client-review URL with pinnable comments + approval tracking |
 
 ## Skill Tiers
 

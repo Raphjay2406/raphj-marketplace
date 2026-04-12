@@ -1,6 +1,8 @@
 ---
 name: social-features
 description: "Social feature patterns: threaded comments, reactions/emoji picker, share buttons, embed cards, social proof widgets, user mentions, like/upvote system, follow buttons. Works with Next.js and Astro."
+tier: domain
+version: "2.0.0"
 ---
 
 Use this skill when the user mentions comments, reactions, share buttons, social proof, mentions, likes, upvotes, follow, or social features. Triggers on: comments, reactions, share, social proof, mentions, likes, upvote, follow, emoji.

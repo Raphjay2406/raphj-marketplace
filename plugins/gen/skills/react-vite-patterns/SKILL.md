@@ -630,3 +630,43 @@ The only archetype interaction unique to React/Vite is that FOUC prevention for 
 | FOUC prevention script | 1 | 1 | inline script | HARD -- dark mode class must be set before render |
 | Environment variable prefix | - | - | VITE_ | HARD -- never use NEXT_PUBLIC_ or process.env in client code |
 | Tailwind integration | - | - | @tailwindcss/vite | HARD -- use Vite plugin, never PostCSS config |
+
+## v3.2 Addendum: Vite 8 + Rolldown (default since 2026-03-12)
+
+Vite 8.0 released 2026-03-12. Rolldown (Rust bundler) is now the default and only bundler. 10-30× faster builds vs Vite 5/6.
+
+### Migration from Vite 6/7 → 8
+
+Most projects: no action needed. Breaking changes to watch:
+
+- `esbuild.minify` → `build.rolldownOptions.output.minify`
+- Lightning CSS is now the default CSS minifier
+- CJS interop changed (escape hatch: `legacy.inconsistentCjsInterop: true` in config)
+- Oxc replaces esbuild for transforms (JSX, TS)
+
+### Genorah default (v3.2+)
+
+New Vite scaffolds emit `vite.config.ts` targeting Vite 8:
+
+```ts
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+
+export default defineConfig({
+  plugins: [react()],
+  build: {
+    target: 'es2022',
+    // Rolldown defaults are sensible; no rolldownOptions needed for common cases
+  },
+});
+```
+
+No CommonJS interop unless legacy dep requires it. Astro 6 and SvelteKit follow the same bundler path.
+
+### When to pin to Vite 7
+
+- Project depends on a Vite 6/7-era plugin without Vite 8 support (check compatibility matrix).
+- Legacy CJS-heavy codebase that can't migrate yet.
+
+Otherwise: Vite 8 by default.
+

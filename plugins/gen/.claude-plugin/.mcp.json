@@ -40,5 +40,17 @@
     "args": ["-y", "@anthropic-ai/playwright-mcp@latest"],
     "description": "Browser automation for visual QA. 4-breakpoint screenshots, CSS/DOM evaluation, accessibility auditing, console error detection, interaction testing.",
     "optional": true
+  },
+  "chrome-devtools": {
+    "command": "npx",
+    "args": ["-y", "chrome-devtools-mcp@latest"],
+    "description": "Chrome DevTools MCP (official, by Chrome team). Exposes performance traces, network, console, DOM inspection, Lighthouse-style perf analysis on a live Chrome. Requires Node 20.19+. Complements Playwright for perf/tracing where Playwright snapshots fall short. Used by motion-health and perf-budgets skills.",
+    "optional": true
+  },
+  "next-devtools": {
+    "command": "npx",
+    "args": ["-y", "next-devtools-mcp@latest"],
+    "description": "Next.js DevTools MCP (official Vercel). Exposes Next.js build logs, deployment info, routing inspection. Separate from vercel-plugin MCP — focused on Next.js runtime introspection, not deploys.",
+    "optional": true
   }
 }

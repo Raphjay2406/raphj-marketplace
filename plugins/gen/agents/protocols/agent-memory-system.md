@@ -1,3 +1,8 @@
+---
+name: agent-memory-system
+description: "Cross-session memory protocol for agents — persists decisions, DNA tokens, arc position across compacts."
+---
+
 # Agent Memory System
 
 3-layer memory architecture for accumulating knowledge across waves without context window bloat. Each layer serves a different time horizon: short-term (living context), medium-term (growing design system), and cross-session (reviewer feedback with platform memory).

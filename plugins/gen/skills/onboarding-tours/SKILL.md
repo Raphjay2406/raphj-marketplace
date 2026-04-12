@@ -1,6 +1,8 @@
 ---
 name: onboarding-tours
 description: "Onboarding tour patterns: product tours, feature highlights, tooltip walkthroughs, coachmarks, progressive disclosure, step-by-step guides, hotspot indicators. Works with Next.js and Astro."
+tier: domain
+version: "2.0.0"
 ---
 
 Use this skill when the user mentions product tour, onboarding tour, feature highlight, tooltip walkthrough, coachmark, guided tour, or step-by-step guide. Triggers on: tour, onboarding tour, product tour, coachmark, walkthrough, highlight, guided, tooltip guide.

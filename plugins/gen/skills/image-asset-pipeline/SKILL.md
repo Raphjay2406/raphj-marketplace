@@ -1,6 +1,8 @@
 ---
 name: image-asset-pipeline
 description: "Image and asset pipeline: OG image generation, favicon sets, SVG optimization, responsive art direction, blur placeholders, CDN patterns, sprite generation. Works with Next.js and Astro."
+tier: domain
+version: "2.0.0"
 ---
 
 Use this skill when the user mentions OG image generation, favicon, SVG optimization, image pipeline, blur placeholder, art direction, responsive images, CDN, or asset optimization. Triggers on: og image, favicon, SVG, image pipeline, blur, placeholder, art direction, asset, CDN.
@@ -438,3 +440,51 @@ For standard images, use CSS `object-position` for smart crops:
 13. Per-beat image art direction: match image composition to emotional arc beat purpose
 14. Mobile crops: generate separate portrait-oriented compositions, not just scaled-down landscape
 15. DNA color alignment: use CSS overlay tinting or AI-based color correction for palette consistency
+
+## v3.2 Addendum: Multi-Model Image Generation + LQIP + Art-Direction Cropping
+
+### Model cascade for image generation (beyond nano-banana)
+
+Genorah routes image generation by beat + content type:
+
+| Beat / Content | Primary model | Fallback | Why |
+|---|---|---|---|
+| HOOK — hero atmosphere | nano-banana (Gemini 3.1 Flash Image) | Flux 1.1 Pro | Speed + DNA color adherence; Flux for photoreal fallback |
+| HOOK — typography-in-image (poster, branded hero with text) | **Ideogram 3** | nano-banana | Best typographic clarity (multi-line, curved, integrated). $0.03-0.05/img |
+| PEAK — showcase / painterly | **Flux 1.1 Pro** | nano-banana | Photoreal/painterly. $0.04/img (BFL API) |
+| PROOF — testimonials / portraits | nano-banana | Flux 1.1 Pro | Cost-optimized |
+| Texture / decorative | nano-banana | — | Fastest |
+| Iterative edits | **nano-banana** (continue_editing) | — | Only model with strong iterative-edit API in 2026 |
+
+All three models are optional MCP integrations. `.claude-plugin/.mcp.json` declares availability; graceful fallback to text-prompts-only when unavailable.
+
+### LQIP (Low Quality Image Placeholder) auto-generation
+
+Every hero image gets a 20×20 pixelated LQIP generated from a 32×32 downsample, base64-embedded in the srcset as the `src` attribute. Benefits:
+
+- Paints immediately (no network for placeholder)
+- Hints final image aspect ratio + color tone (prevents CLS)
+- ~1KB per image in HTML; no extra request
+
+Implementation: nano-banana or local `sharp` pipeline produces the LQIP at build time; built into next-image / astro-image config.
+
+### Responsive srcset — art direction per breakpoint
+
+Instead of one image scaled to 4 sizes, generate 3 breakpoint variants with **different crops**:
+
+- Mobile (375px): tight crop on hero subject (portrait orientation)
+- Tablet (768px): balanced crop
+- Desktop (1280px+): wide crop with environmental context
+
+Vision LLM (Gemini/Claude) identifies subject bounding box, proposes 3 crops. Builder emits:
+
+```html
+<picture>
+  <source media="(max-width: 767px)"  srcset="/hero-mobile.avif" type="image/avif">
+  <source media="(max-width: 1279px)" srcset="/hero-tablet.avif" type="image/avif">
+  <img src="/hero-desktop.avif" alt="...">
+</picture>
+```
+
+Genuinely different compositions per breakpoint, not just downscales.
+

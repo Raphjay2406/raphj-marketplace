@@ -814,3 +814,64 @@ export function AccessibleKineticText({ text }: { text: string }) {
 | Max kinetic headings per page | 1 | 4 | count | HARD -- reject if more than 4 |
 | WCAG contrast ratio (large text) | 3 | -- | :1 | HARD -- reject if below 3:1 |
 | Split-text max characters | 1 | 80 | chars | SOFT -- warn if over 80 for performance |
+
+---
+
+## v3.2 Addendum: GSAP 3.13 Fully Free
+
+Major context shift: since Webflow acquisition (May 2024), GSAP ships fully free — **SplitText, ScrollSmoother, MorphSVG, DrawSVG, all former Club plugins** are default install. Remove any "paid plugin" caveats from pre-v3.2 guidance.
+
+### SplitText 3.13 — rewrite highlights
+
+```ts
+import { SplitText } from 'gsap/SplitText';  // FREE since 3.13
+
+const split = SplitText.create('.headline', {
+  type: 'chars, words, lines',
+  mask: 'lines',      // NEW: built-in overflow mask, no CSS hack needed
+  autoSplit: true,    // NEW: re-splits on font-load + ResizeObserver (200ms debounce)
+  onSplit: self => {
+    gsap.from(self.chars, { y: 100, opacity: 0, stagger: 0.02, duration: 0.8, ease: 'power4.out' });
+  },
+});
+```
+
+- `autoSplit: true` → fixes FOUT-causes-jumpy-text bug. Listens to `document.fonts.loadingdone` and ResizeObserver.
+- `mask: 'lines'` → replaces manual `overflow: hidden` + inline-block wrapper pattern.
+- `onSplit` callback fires initial split AND each auto-re-split — re-trigger animations here.
+
+### Variable-font morphing (2026 Awwwards staple)
+
+```ts
+gsap.to(split.chars, {
+  fontVariationSettings: '"wght" 900, "slnt" -15',
+  duration: 2,
+  stagger: { each: 0.05, from: 'random', repeat: -1, yoyo: true },
+  ease: 'sine.inOut',
+});
+```
+
+Variable fonts with good axis coverage: Recursive (wght + slnt + MONO + CASL), Inter (wght + ital), Roboto Flex, Bricolage Grotesque.
+
+### ScrollSmoother now free
+
+```ts
+ScrollSmoother.create({
+  wrapper: '#smooth-wrapper',
+  content: '#smooth-content',
+  smooth: 1.5,
+  effects: true,           // enables [data-speed] + [data-lag] on children
+  normalizeScroll: true,
+});
+```
+
+Competitive alternative to Lenis in 2026 with tighter ScrollTrigger integration.
+
+### Splitting.js vs SplitText — updated recommendation
+
+SplitText 3.13 is strictly superior. Use Splitting.js only for non-GSAP projects.
+
+### Remove from earlier skill guidance
+
+Delete any "Club GreenSock required" / "SplitText is paid" language in earlier 4 layers. Those caveats are obsolete.
+

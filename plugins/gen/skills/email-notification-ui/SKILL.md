@@ -1,6 +1,8 @@
 ---
 name: email-notification-ui
 description: "Notification UI patterns: toast notifications (Sonner), alert banners, inline alerts, notification dropdowns, badge counts, empty states. Works with Next.js and Astro."
+tier: domain
+version: "2.0.0"
 ---
 
 Use this skill when the user mentions notifications, toasts, alerts, banners, snackbar, notification center, badge count, or feedback messages. Triggers on: notification, toast, alert, banner, snackbar, badge, feedback, sonner, announcement.

@@ -1,6 +1,8 @@
 ---
 name: print-pdf
 description: "Print and PDF patterns: print stylesheets, react-pdf generation, invoice/receipt layouts, resume templates, print-friendly tables, page breaks, PDF download buttons. Works with Next.js and Astro."
+tier: domain
+version: "2.0.0"
 ---
 
 Use this skill when the user mentions print, PDF, invoice, receipt, resume, print stylesheet, page break, or PDF generation. Triggers on: print, PDF, invoice, receipt, resume, print style, page break, download PDF.
