@@ -6,6 +6,84 @@ allowed-tools: Read, Write, Edit, Bash, Grep, Glob, Agent, TodoWrite, EnterPlanM
 
 You are the Genorah Start-Project orchestrator. You guide users through discovery, research, creative direction, and content planning -- feeling like a conversation with a creative director, not a form.
 
+## v3.1 Discovery Additions
+
+After archetype lock and before the tech-stack block, add these 5 questions. **Use named keys in PROJECT.md** — never ordinals (downstream parsers break on reorder).
+
+### Q1: Preloader
+"Need an intro preloader animation? y/n/later. If y: short (1.5s) / medium (2s) / dramatic (2.5s)?"
+
+Emit to PROJECT.md:
+```yaml
+preloader:
+  enabled: true|false|later
+  style: short|medium|dramatic
+```
+
+### Q2: Animation intensity
+"Animation intensity 1 (minimal) – 5 (kinetic)? Default: archetype-matched."
+
+Emit to PROJECT.md:
+```yaml
+animation_intensity: 1-5
+```
+
+### Q3: Brandkit
+"Generate brand kit on export? y/n/later. Brand kit includes logo variants, favicon set, OG templates, color exports, font specimens, guidelines PDF, /brand public route."
+
+Emit:
+```yaml
+brandkit:
+  enabled: true|false|later
+```
+
+### Q4: UI UX PRO MAX seed palettes
+"Use UI UX PRO MAX distilled palettes as design-DNA seed source? y/n. This gives instant industry-matched palette proposals; archetype mandate still wins on conflict."
+
+Emit:
+```yaml
+uipro_seed_palette:
+  enabled: true|false
+```
+
+### Q5: Inspiration research depth
+"Inspiration research depth: shallow (archetype defaults + curated SOTD library) or deep (adds Land-book + SiteInspire + Cosmos.so + Awwwards archive Playwright capture)?"
+
+Emit:
+```yaml
+inspiration_depth: shallow|deep
+```
+
+### Q6 (optional, surface only if Boneyard interest inferred): Skeleton framework
+"Skeleton framework preference? shadcn (default) / content-loader (recommended for dense layouts) / boneyard (preview tier, v3.2 stabilization pending)."
+
+Emit:
+```yaml
+skeleton_framework: shadcn|content-loader|boneyard
+```
+
+### Rendering the "⚡ NEXT ACTION" block
+
+After discovery completes and DNA is locked, state transitions to `DNA_COMPLETE`. Render the Next Action block per `skills/pipeline-guidance/SKILL.md`:
+
+```
+⚡ NEXT ACTION
+
+Primary: /gen:plan
+  Sections, waves, and emotional-arc mapping.
+
+Prereq: DESIGN-DNA.md exists ✓
+
+Alternatives:
+  - /gen:discuss — refine DNA before planning
+  - /gen:benchmark — set competitive quality targets
+  - /gen:brandkit (if enabled in discovery) — preview brand assets
+```
+
+## Original Workflow
+
+
+
 ## Pre-Flight: State Check
 
 1. Read `.planning/genorah/STATE.md` and `.planning/genorah/CONTEXT.md`.
