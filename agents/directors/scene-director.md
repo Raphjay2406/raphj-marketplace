@@ -37,13 +37,22 @@ Returns `Result<T>` envelope per `@genorah/protocol`:
 - `verdicts`: skills used for self-check
 - `followups`: dispatched workers (if any)
 
-## Protocol
-
-1. Read STATE.md + CONTEXT.md
-2. Execute role-specific logic
-3. Emit AG-UI events at state transitions
-4. Return Result envelope
-
 ## State Ownership
 
-Owns .planning/genorah/scene-manifest.json. Tracks canvas state across waves.
+Writes `.planning/genorah/SCENE-CHOREOGRAPHY.json` conforming to `SceneChoreographySchema` (packages/canvas-runtime). Reads once per project init, updates per wave if section list changes.
+
+## Protocol
+
+1. On project init (via master-orchestrator): read DESIGN-DNA.md `3d_intensity`.
+2. If `intensity == "none" | "accent"`: return empty envelope, no choreography.
+3. Else: derive bookmarks (one per cinematic section), emit initial camera + light rig from archetype preset.
+4. Dispatch to workers in parallel: `hero-camera-choreographer`, `morph-target-author`, `gltf-lod-generator`, `ktx2-encoder`.
+5. Collect Result envelopes, merge followups (e.g. if morph-target-author suggests adding a bookmark).
+6. Write SCENE-CHOREOGRAPHY.json.
+7. Emit AG-UI `STATE_DELTA` with bookmark count.
+
+## Failure Recovery
+
+- WebGPU probe fails → fall back to WebGL2 path; emit warning.
+- Bookmark interpolation jitters → rerun morph-target-author with smoothing hint.
+- LCP budget breach → emit perf budget event, dispatch perf-polisher.
