@@ -274,4 +274,4 @@ This ensures every export produces a fully connected, color-coded, navigable Obs
 3. Dataview fields must use correct inline syntax.
 4. Preserve all original content -- vault format adds metadata, never removes content.
 5. Graph connectivity pass is MANDATORY on `--full` export. Every node must be reachable from `_Dashboard`.
-6. NEVER suggest the next command. The hook handles routing.
+6. At completion, render the "⚡ NEXT ACTION" block sourced from `skills/pipeline-guidance/SKILL.md`. Export is terminal — primary is typically `/gen:sync-knowledge` (push learnings to KB vault) or `/gen:benchmark` (competitive positioning). Offer a note that the project is shippable.

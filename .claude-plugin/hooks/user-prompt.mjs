@@ -76,15 +76,63 @@ function queuedActions(cwd) {
   } catch { return []; }
 }
 
-function suggestFromPhase(stateContent) {
-  const lower = stateContent.toLowerCase();
+// v3.0.1: state detection aligned with skills/pipeline-guidance Layer 2 algorithm.
+// Falls back to STATE.md keyword matching when artifact files aren't readable.
+function detectPipelineState(cwd) {
+  const g = (p) => existsSync(join(cwd, ".planning", "genorah", p));
+  const l = (p) => existsSync(join(cwd, ".planning", "modulo", p));
 
-  if (/complete|audit/.test(lower))           return "/gen:audit or /gen:iterate";
-  if (/build|wave\s*\d/i.test(lower))         return "/gen:build --resume or /gen:iterate";
-  if (/plan/.test(lower))                      return "/gen:build or /gen:discuss";
-  if (/discover|research/.test(lower))         return "/gen:discuss or /gen:plan";
+  if (!existsSync(join(cwd, ".planning", "genorah")) && existsSync(join(cwd, ".planning", "modulo"))) return "EMPTY_LEGACY";
+  if (!existsSync(join(cwd, ".planning", "genorah"))) return "EMPTY";
+  if (!g("PROJECT.md")) return "EMPTY";
+  if (!g("BRAINSTORM.md")) return "DISCOVERY";
+  if (!g("DESIGN-DNA.md")) return "RESEARCH";
+  if (!g("MASTER-PLAN.md")) return "DNA_COMPLETE";
 
-  return "/gen:start-project";
+  // sections check
+  try {
+    const sectionsDir = join(cwd, ".planning", "genorah", "sections");
+    if (!existsSync(sectionsDir)) return "PLANNING_COMPLETE";
+    const secs = readdirSync(sectionsDir);
+    const summaries = secs.filter(s => existsSync(join(sectionsDir, s, "SUMMARY.md")));
+    if (summaries.length === 0) return "PLANNING_COMPLETE";
+    const statuses = summaries.map(s => {
+      try { return readFileSync(join(sectionsDir, s, "SUMMARY.md"), "utf-8"); } catch { return ""; }
+    });
+    if (statuses.some(c => /STATUS:\s*FAILED/i.test(c))) return "EXECUTION_FAILED";
+    if (summaries.length < secs.length || statuses.some(c => !/STATUS:\s*COMPLETE/i.test(c))) return "EXECUTION_IN_PROGRESS";
+  } catch { /* fall through */ }
+
+  if (!g("audit/AUDIT-REPORT.md")) return "EXECUTION_COMPLETE";
+
+  try {
+    const audit = readFileSync(join(cwd, ".planning", "genorah", "audit", "AUDIT-REPORT.md"), "utf-8");
+    const m = audit.match(/(?:score|total)[:\s]+(\d+)/i);
+    if (m && parseInt(m[1], 10) >= 200) return "AUDIT_PASSED";
+    return "AUDIT_BELOW_GATE";
+  } catch { return "EXECUTION_COMPLETE"; }
+}
+
+// Compact form of pipeline-guidance Layer 2 mapping table.
+// Authoritative table in skills/pipeline-guidance/SKILL.md.
+const STATE_TO_COMMAND = {
+  EMPTY:                  { cmd: "/gen:start-project",    why: "begin a new Genorah project" },
+  EMPTY_LEGACY:           { cmd: "/gen:migrate",          why: "legacy .planning/modulo/ detected — migrate first" },
+  DISCOVERY:              { cmd: "/gen:start-project",    why: "continue discovery" },
+  RESEARCH:               { cmd: "/gen:start-project",    why: "lock direction + generate DNA" },
+  DNA_COMPLETE:           { cmd: "/gen:plan",             why: "sections, waves, emotional arc" },
+  PLANNING_COMPLETE:      { cmd: "/gen:build",            why: "wave-based implementation" },
+  EXECUTION_IN_PROGRESS:  { cmd: "/gen:build --resume",   why: "continue current wave" },
+  EXECUTION_FAILED:       { cmd: "/gen:bugfix",           why: "section failed — diagnose first" },
+  EXECUTION_COMPLETE:     { cmd: "/gen:audit",            why: "score on 234-point gate" },
+  AUDIT_BELOW_GATE:       { cmd: "/gen:iterate",          why: "improve lowest-scoring sections" },
+  AUDIT_PASSED:           { cmd: "/gen:export",           why: "score passed — produce deliverables" },
+  UNKNOWN:                { cmd: "/gen:status -v",        why: "diagnose current state" },
+};
+
+function suggestFromState(cwd) {
+  const state = detectPipelineState(cwd);
+  return STATE_TO_COMMAND[state] || STATE_TO_COMMAND.UNKNOWN;
 }
 
 // ── Main ───────────────────────────────────────────────────────────
@@ -104,14 +152,8 @@ try {
   // 2. Flow-state awareness -- only when user seems lost
   const isLost = LOST_SIGNALS.some((rx) => rx.test(user_message));
   if (isLost) {
-    const statePath = join(process.cwd(), ".planning", "genorah", "STATE.md");
-    if (existsSync(statePath)) {
-      const state = readFileSync(statePath, "utf-8");
-      const suggestion = suggestFromPhase(state);
-      hints.push(`Current project state detected. Try: ${suggestion}`);
-    } else {
-      hints.push("No project state found. Start with `/gen:start-project`");
-    }
+    const { cmd, why } = suggestFromState(process.cwd());
+    hints.push(`Suggested next: \`${cmd}\` — ${why}`);
   }
 
   // 3. v3.0 Smart Router — intent detection for natural-language prompts

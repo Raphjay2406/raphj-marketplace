@@ -158,4 +158,4 @@ Audit status: [STALE — re-audit recommended | Not yet audited]
 6. **Preserve the creative direction.** Iterations refine within the archetype, not against it.
 7. **Auto-read GAP-FIX.md and CONSISTENCY-FIX.md.** No flags needed -- always check.
 8. Use TodoWrite to track iteration progress.
-9. NEVER suggest the next command. The hook handles routing.
+9. At completion, render the "⚡ NEXT ACTION" block sourced from `skills/pipeline-guidance/SKILL.md`. Typical primary: `/gen:audit` to re-score, or `/gen:build --resume` if iteration reopened a wave. Include the section iterated as context.

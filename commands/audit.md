@@ -179,4 +179,4 @@ Update STATE.md with audit results.
 3. Create actionable FIX-PLAN.md for every gap found. Don't just report -- plan the fix.
 4. Anti-slop gate is automatic and cannot be skipped (even in --quick mode, it's the minimum).
 5. Use TodoWrite to track audit progress across all tracks.
-6. NEVER suggest the next command. The hook handles routing.
+6. At completion, render the "⚡ NEXT ACTION" block sourced from `skills/pipeline-guidance/SKILL.md`. Map the final score: ≥200 → AUDIT_PASSED → primary `/gen:export`; <200 → AUDIT_BELOW_GATE → primary `/gen:iterate {lowest-scoring section}` with category gap callout. Alternatives per the canonical table.

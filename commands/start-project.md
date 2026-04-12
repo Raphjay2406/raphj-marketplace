@@ -342,4 +342,4 @@ TodoWrite -- mark Phase 4 complete.
 8. Discovery should feel like talking to a creative director, not filling out a form.
 9. All domain logic (archetypes, scoring, DNA format) belongs in agents and skills, not this command.
 10. Track state. Update STATE.md on completion.
-11. NEVER suggest the next command -- the hook handles routing.
+11. At completion, render the "⚡ NEXT ACTION" block sourced from `skills/pipeline-guidance/SKILL.md`. Final state is DNA_COMPLETE → primary `/gen:plan`. Alternative: `/gen:discuss` to explore direction before planning; `/gen:benchmark` to set quality targets.

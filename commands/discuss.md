@@ -237,4 +237,4 @@ Artifact: .planning/genorah/DISCUSSION-{phase}.md
 - Stay within archetype constraints from DESIGN-DNA.md. Push boundaries through tension zones, don't break the archetype.
 - Use TodoWrite to track discussion progress across all three tracks.
 - Use EnterPlanMode for proposal approval -- do not auto-approve.
-- NEVER suggest the next command. The hook handles routing.
+- At completion, render the "⚡ NEXT ACTION" block sourced from `skills/pipeline-guidance/SKILL.md`. Typical primary: `/gen:plan` (if DNA locked) or `/gen:build --resume` (if refining mid-build). Include the phase discussed as context.

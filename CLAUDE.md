@@ -13,11 +13,11 @@ This repository contains only markdown definitions and a plugin manifest -- ther
 Three-tier system where commands are entry points, agents orchestrate work, and skills provide domain knowledge:
 
 ```
-commands/ (21 commands -- user-facing pipeline stages)
+commands/ (22 commands -- user-facing pipeline stages)
     | invoke
 agents/ (21 agents -- 8 pipeline + 7 specialists + 5 protocols + 1 figma)
     | reference
-skills/ (3-tier, 4-layer SKILL.md files -- ~131 modular knowledge bases)
+skills/ (3-tier, 4-layer SKILL.md files -- ~132 modular knowledge bases)
 ```
 
 **Plugin manifest:** `.claude-plugin/plugin.json`
@@ -59,7 +59,7 @@ Five optional MCP servers declared in `.claude-plugin/.mcp.json`:
 
 All servers are optional. Commands gracefully degrade when servers are unavailable.
 
-## Commands (21)
+## Commands (22)
 
 | Command | Purpose |
 |---------|---------|
@@ -84,6 +84,7 @@ All servers are optional. Commands gracefully degrade when servers are unavailab
 | `/gen:benchmark` | (v3.0) Score 3-5 reference SOTD sites against 234-pt gate; auto-inject gap targets per section |
 | `/gen:cms-init` | (v3.0) Scaffold headless CMS (Sanity or Payload) with DNA-themed Studio + auto-generated schemas |
 | `/gen:video` | (v3.0) Render DNA-parameterized Remotion section video with 5 templates + AVIF/MP4/WebM dual encode |
+| `/gen:next` | (v3.0.1) Preview next /gen:* command for current pipeline state — primary + alternatives + rationale |
 
 ## Skill Tiers
 

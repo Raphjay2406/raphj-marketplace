@@ -316,4 +316,4 @@ If score drops >5 points between waves, flag: "Performance degrading. Wave [N] s
 5. Build failures bubble to the user. Do NOT auto-retry.
 6. Use EnterPlanMode per wave for user approval before building.
 7. Use TodoWrite to track build progress across waves and sections.
-8. NEVER suggest the next command. The hook handles routing.
+8. At completion, render the "⚡ NEXT ACTION" block sourced from `skills/pipeline-guidance/SKILL.md` (primary + prereq + 2 alternatives). State is typically EXECUTION_IN_PROGRESS (→ `/gen:build --resume`) or EXECUTION_COMPLETE (→ `/gen:audit`). If any section has FAILED status, route to `/gen:bugfix {section}` as primary.
