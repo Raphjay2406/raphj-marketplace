@@ -96,3 +96,14 @@ export {
   type CanvasRuntimeProps,
   type CanvasRuntimeContext,
 } from "./canvas-runtime.js";
+
+// ---------------------------------------------------------------------------
+// 4. M2 cinematic canvas additions
+// ---------------------------------------------------------------------------
+export * from "./PersistentCanvas.js";
+export * from "./SceneDirector.js";
+export * from "./FallbackHero.js";
+export * from "./CapabilityProbe.js";
+export * from "./useCameraBookmark.js";
+export * from "./webgpu/ComputeShaderHost.js";
+export * from "./schemas/scene-choreography.schema.js";

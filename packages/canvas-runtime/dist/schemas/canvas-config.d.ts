@@ -18,12 +18,12 @@ export declare const PerfBudgetSchema: z.ZodObject<{
     maxDrawCalls: number;
     maxTriangles: number;
     maxTextureBytes: number;
-    targetFps: 60 | 120;
+    targetFps: 120 | 60;
 }, {
     maxDrawCalls?: number | undefined;
     maxTriangles?: number | undefined;
     maxTextureBytes?: number | undefined;
-    targetFps?: 60 | 120 | undefined;
+    targetFps?: 120 | 60 | undefined;
 }>;
 export type PerfBudget = z.infer<typeof PerfBudgetSchema>;
 export declare const ScenePropsSchema: z.ZodObject<{
@@ -55,12 +55,12 @@ export declare const ScenePropsSchema: z.ZodObject<{
         maxDrawCalls: number;
         maxTriangles: number;
         maxTextureBytes: number;
-        targetFps: 60 | 120;
+        targetFps: 120 | 60;
     }, {
         maxDrawCalls?: number | undefined;
         maxTriangles?: number | undefined;
         maxTextureBytes?: number | undefined;
-        targetFps?: 60 | 120 | undefined;
+        targetFps?: 120 | 60 | undefined;
     }>>;
 }, "strip", z.ZodTypeAny, {
     sectionId: string;
@@ -69,12 +69,12 @@ export declare const ScenePropsSchema: z.ZodObject<{
     preferWebGpu: boolean;
     lenisDamping: number;
     gsapTimescale: number;
-    motionPreset: "ease-in-out" | "ease-out" | "ease-in" | "linear" | "spring" | "overshoot" | "anticipate";
+    motionPreset: "linear" | "ease-in-out" | "ease-out" | "ease-in" | "spring" | "overshoot" | "anticipate";
     perf: {
         maxDrawCalls: number;
         maxTriangles: number;
         maxTextureBytes: number;
-        targetFps: 60 | 120;
+        targetFps: 120 | 60;
     };
 }, {
     sectionId: string;
@@ -83,12 +83,12 @@ export declare const ScenePropsSchema: z.ZodObject<{
     preferWebGpu?: boolean | undefined;
     lenisDamping?: number | undefined;
     gsapTimescale?: number | undefined;
-    motionPreset?: "ease-in-out" | "ease-out" | "ease-in" | "linear" | "spring" | "overshoot" | "anticipate" | undefined;
+    motionPreset?: "linear" | "ease-in-out" | "ease-out" | "ease-in" | "spring" | "overshoot" | "anticipate" | undefined;
     perf?: {
         maxDrawCalls?: number | undefined;
         maxTriangles?: number | undefined;
         maxTextureBytes?: number | undefined;
-        targetFps?: 60 | 120 | undefined;
+        targetFps?: 120 | 60 | undefined;
     } | undefined;
 }>;
 export type SceneProps = z.infer<typeof ScenePropsSchema>;
@@ -111,12 +111,12 @@ export declare const CanvasConfigSchema: z.ZodObject<{
         maxDrawCalls: number;
         maxTriangles: number;
         maxTextureBytes: number;
-        targetFps: 60 | 120;
+        targetFps: 120 | 60;
     }, {
         maxDrawCalls?: number | undefined;
         maxTriangles?: number | undefined;
         maxTextureBytes?: number | undefined;
-        targetFps?: 60 | 120 | undefined;
+        targetFps?: 120 | 60 | undefined;
     }>>;
     /** Default motion preset applied to all scenes unless overridden */
     defaultMotionPreset: z.ZodDefault<z.ZodEnum<["ease-in-out", "ease-out", "ease-in", "linear", "spring", "overshoot", "anticipate"]>>;
@@ -144,12 +144,12 @@ export declare const CanvasConfigSchema: z.ZodObject<{
             maxDrawCalls: number;
             maxTriangles: number;
             maxTextureBytes: number;
-            targetFps: 60 | 120;
+            targetFps: 120 | 60;
         }, {
             maxDrawCalls?: number | undefined;
             maxTriangles?: number | undefined;
             maxTextureBytes?: number | undefined;
-            targetFps?: 60 | 120 | undefined;
+            targetFps?: 120 | 60 | undefined;
         }>>>;
     }, "strip", z.ZodTypeAny, {
         sectionId?: string | undefined;
@@ -158,12 +158,12 @@ export declare const CanvasConfigSchema: z.ZodObject<{
         preferWebGpu?: boolean | undefined;
         lenisDamping?: number | undefined;
         gsapTimescale?: number | undefined;
-        motionPreset?: "ease-in-out" | "ease-out" | "ease-in" | "linear" | "spring" | "overshoot" | "anticipate" | undefined;
+        motionPreset?: "linear" | "ease-in-out" | "ease-out" | "ease-in" | "spring" | "overshoot" | "anticipate" | undefined;
         perf?: {
             maxDrawCalls: number;
             maxTriangles: number;
             maxTextureBytes: number;
-            targetFps: 60 | 120;
+            targetFps: 120 | 60;
         } | undefined;
     }, {
         sectionId?: string | undefined;
@@ -172,25 +172,25 @@ export declare const CanvasConfigSchema: z.ZodObject<{
         preferWebGpu?: boolean | undefined;
         lenisDamping?: number | undefined;
         gsapTimescale?: number | undefined;
-        motionPreset?: "ease-in-out" | "ease-out" | "ease-in" | "linear" | "spring" | "overshoot" | "anticipate" | undefined;
+        motionPreset?: "linear" | "ease-in-out" | "ease-out" | "ease-in" | "spring" | "overshoot" | "anticipate" | undefined;
         perf?: {
             maxDrawCalls?: number | undefined;
             maxTriangles?: number | undefined;
             maxTextureBytes?: number | undefined;
-            targetFps?: 60 | 120 | undefined;
+            targetFps?: 120 | 60 | undefined;
         } | undefined;
     }>>>;
 }, "strip", z.ZodTypeAny, {
+    debug: boolean;
     theatreProjectId: string;
     schemaVersion: "4.0.0";
     defaultPerfBudget: {
         maxDrawCalls: number;
         maxTriangles: number;
         maxTextureBytes: number;
-        targetFps: 60 | 120;
+        targetFps: 120 | 60;
     };
-    defaultMotionPreset: "ease-in-out" | "ease-out" | "ease-in" | "linear" | "spring" | "overshoot" | "anticipate";
-    debug: boolean;
+    defaultMotionPreset: "linear" | "ease-in-out" | "ease-out" | "ease-in" | "spring" | "overshoot" | "anticipate";
     scenes: Record<string, {
         sectionId?: string | undefined;
         theatreProjectId?: string | undefined;
@@ -198,25 +198,25 @@ export declare const CanvasConfigSchema: z.ZodObject<{
         preferWebGpu?: boolean | undefined;
         lenisDamping?: number | undefined;
         gsapTimescale?: number | undefined;
-        motionPreset?: "ease-in-out" | "ease-out" | "ease-in" | "linear" | "spring" | "overshoot" | "anticipate" | undefined;
+        motionPreset?: "linear" | "ease-in-out" | "ease-out" | "ease-in" | "spring" | "overshoot" | "anticipate" | undefined;
         perf?: {
             maxDrawCalls: number;
             maxTriangles: number;
             maxTextureBytes: number;
-            targetFps: 60 | 120;
+            targetFps: 120 | 60;
         } | undefined;
     }>;
 }, {
+    debug?: boolean | undefined;
     theatreProjectId?: string | undefined;
     schemaVersion?: "4.0.0" | undefined;
     defaultPerfBudget?: {
         maxDrawCalls?: number | undefined;
         maxTriangles?: number | undefined;
         maxTextureBytes?: number | undefined;
-        targetFps?: 60 | 120 | undefined;
+        targetFps?: 120 | 60 | undefined;
     } | undefined;
-    defaultMotionPreset?: "ease-in-out" | "ease-out" | "ease-in" | "linear" | "spring" | "overshoot" | "anticipate" | undefined;
-    debug?: boolean | undefined;
+    defaultMotionPreset?: "linear" | "ease-in-out" | "ease-out" | "ease-in" | "spring" | "overshoot" | "anticipate" | undefined;
     scenes?: Record<string, {
         sectionId?: string | undefined;
         theatreProjectId?: string | undefined;
@@ -224,12 +224,12 @@ export declare const CanvasConfigSchema: z.ZodObject<{
         preferWebGpu?: boolean | undefined;
         lenisDamping?: number | undefined;
         gsapTimescale?: number | undefined;
-        motionPreset?: "ease-in-out" | "ease-out" | "ease-in" | "linear" | "spring" | "overshoot" | "anticipate" | undefined;
+        motionPreset?: "linear" | "ease-in-out" | "ease-out" | "ease-in" | "spring" | "overshoot" | "anticipate" | undefined;
         perf?: {
             maxDrawCalls?: number | undefined;
             maxTriangles?: number | undefined;
             maxTextureBytes?: number | undefined;
-            targetFps?: 60 | 120 | undefined;
+            targetFps?: 120 | 60 | undefined;
         } | undefined;
     }> | undefined;
 }>;

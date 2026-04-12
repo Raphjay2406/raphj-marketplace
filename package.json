@@ -23,7 +23,9 @@
     "prepush": "npm run check-mirror"
   },
   "devDependencies": {
+    "@testing-library/dom": "^10.4.1",
     "ajv": "^8.17.1",
+    "react-dom": "^19.2.5",
     "yaml": "^2.6.0"
   }
 }

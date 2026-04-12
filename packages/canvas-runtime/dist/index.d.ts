@@ -13,3 +13,10 @@ export { createLenis, getLenis, onScroll, tickLenis, scrollTo, destroyLenis, typ
 export { detectWebGpu, getCachedWebGpuCapabilities, resetWebGpuCache, type RendererTier, type WebGpuCapabilities, } from "./webgpu/feature-detect.js";
 export { PerfBudgetTracker, FpsSampler, type PerfSnapshot, type PerfViolation, } from "./perf-budget.js";
 export { CanvasRuntime, useCanvasRuntime, type CanvasRuntimeProps, type CanvasRuntimeContext, } from "./canvas-runtime.js";
+export * from "./PersistentCanvas.js";
+export * from "./SceneDirector.js";
+export * from "./FallbackHero.js";
+export * from "./CapabilityProbe.js";
+export * from "./useCameraBookmark.js";
+export * from "./webgpu/ComputeShaderHost.js";
+export * from "./schemas/scene-choreography.schema.js";
