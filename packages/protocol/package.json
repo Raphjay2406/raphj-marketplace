@@ -7,21 +7,23 @@
   "scripts": {
     "build": "tsc -p .",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "emit:schemas": "npx tsx scripts/emit-schemas.ts"
   },
   "dependencies": {
-    "zod": "^3.23.8",
+    "@copilotkit/runtime": "^1.8.0",
+    "@modelcontextprotocol/sdk": "^1.1.0",
     "ajv": "^8.17.1",
     "ajv-formats": "^3.0.1",
     "fastify": "^5.0.0",
     "fastify-sse-v2": "^4.2.0",
-    "@copilotkit/runtime": "^1.8.0",
-    "@modelcontextprotocol/sdk": "^1.1.0",
-    "nanoid": "^5.0.7"
+    "nanoid": "^5.0.7",
+    "zod": "^3.23.8",
+    "zod-to-json-schema": "^3.23.2"
   },
   "devDependencies": {
+    "@types/node": "^24.0.0",
     "typescript": "^5.6.2",
-    "vitest": "^2.1.4",
-    "@types/node": "^24.0.0"
+    "vitest": "^2.1.4"
   }
 }

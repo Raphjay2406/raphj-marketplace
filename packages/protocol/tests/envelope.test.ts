@@ -1,5 +1,8 @@
 import { describe, it, expect } from "vitest";
 import { ResultEnvelope, parseResultEnvelope } from "../src/envelope.js";
+import Ajv from "ajv";
+import addFormats from "ajv-formats";
+import schema from "../src/schemas/result-envelope.schema.json" with { type: "json" };
 
 describe("ResultEnvelope", () => {
   it("accepts a minimal ok envelope", () => {
@@ -68,5 +71,22 @@ describe("ResultEnvelope", () => {
       ]
     };
     expect(parseResultEnvelope(envelope).followups[0].suggested_worker).toBe("inpainter");
+  });
+});
+
+describe("result-envelope JSON Schema", () => {
+  const ajv = new Ajv({ allErrors: true, strict: false });
+  addFormats(ajv);
+  const validate = ajv.compile(schema);
+
+  it("accepts a minimal ok envelope", () => {
+    const ok = validate({
+      schema_version: "4.0.0",
+      status: "ok",
+      artifact: {},
+      verdicts: [],
+      followups: []
+    });
+    expect(ok).toBe(true);
   });
 });

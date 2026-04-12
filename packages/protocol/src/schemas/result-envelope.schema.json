@@ -1,0 +1,158 @@
+{
+  "$ref": "#/definitions/ResultEnvelope",
+  "definitions": {
+    "ResultEnvelope": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "type": "string",
+          "const": "4.0.0"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "ok",
+            "partial",
+            "failed"
+          ]
+        },
+        "artifact": {},
+        "verdicts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "validator": {
+                "type": "string",
+                "minLength": 1
+              },
+              "pass": {
+                "type": "boolean"
+              },
+              "score": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "notes": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "validator",
+              "pass"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "followups": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "suggested_worker": {
+                "type": "string",
+                "minLength": 1
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 1
+              },
+              "context_override": {
+                "type": "object",
+                "additionalProperties": {}
+              }
+            },
+            "required": [
+              "suggested_worker",
+              "reason"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "trace": {
+          "type": "object",
+          "properties": {
+            "decisions": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "step": {
+                    "type": "string"
+                  },
+                  "chose": {
+                    "type": "string"
+                  },
+                  "reason": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "step",
+                  "chose",
+                  "reason"
+                ],
+                "additionalProperties": true
+              }
+            },
+            "skills_used": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "cost": {
+              "type": "object",
+              "properties": {
+                "tokens_in": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "tokens_out": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "api_spend_usd": {
+                  "type": "number",
+                  "minimum": 0
+                }
+              },
+              "required": [
+                "tokens_in",
+                "tokens_out",
+                "api_spend_usd"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "decisions",
+            "skills_used",
+            "cost"
+          ],
+          "additionalProperties": false
+        },
+        "correlation_id": {
+          "type": "string"
+        },
+        "emitted_by": {
+          "type": "string"
+        },
+        "emitted_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "schema_version",
+        "status",
+        "artifact",
+        "verdicts",
+        "followups"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}
