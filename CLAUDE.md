@@ -4,7 +4,7 @@ This file provides guidance to Claude Code when working with the Genorah plugin 
 
 ## Project Overview
 
-**Genorah v4.0.0-alpha.1** — ships A2A protocol (L4 full citizenship), tiered agent structure (105 agents: 10 directors + 95 workers), `Result<T>` typed envelope, and embedded HTTP daemon. Pillars 1, 2, 5, 6 land in M2–M5. See `docs/superpowers/specs/2026-04-12-genorah-v4-cinematic-intelligence-design.md`.
+**Genorah v4.0.0-alpha.2** — ships A2A protocol (L4 full citizenship), tiered agent structure (105 agents: 10 directors + 95 workers), `Result<T>` typed envelope, and embedded HTTP daemon. M2 Cinematic Canvas shipped: 17 WebGPU-native archetype presets (50 total), Scroll Coherence 6th hard gate, perf-budget validator, canvas-runtime test suite. Pillars 1, 2, 5, 6 land in M3–M5. See `docs/superpowers/specs/2026-04-12-genorah-v4-cinematic-intelligence-design.md`.
 
 ## Architecture (v4)
 
