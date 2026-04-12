@@ -1,6 +1,6 @@
 ---
 description: "Quarterly recalibration ritual — re-run R1 (judge calibration) + R5 (UX floor) against updated golden set + new variant archive. Publishes diff vs current shipping thresholds; prompts approval to update defaults."
-argument-hint: "[--reindex] [--dry-run]"
+argument-hint: "[--reindex] [--dry-run] [--headless] [--cron]"
 allowed-tools: Read, Write, Edit, Bash, Glob, Grep
 recommended-model: opus-4-6
 ---
@@ -77,6 +77,8 @@ On reject: keep current thresholds; log attempt.
 
 - `--reindex` — also rebuild semantic index (L5) after recalibration
 - `--dry-run` — show proposed changes without writing
+- `--headless` (v3.19) — skip prompts; fail-closed on any ΔRMSE > 0.1 or κ < floor; auto-invokes `/gen:shakedown` before applying
+- `--cron` (v3.19) — emits Prometheus-compatible gauges to stdout, non-zero exit on proposed changes (for scheduled jobs)
 
 ## Cadence
 

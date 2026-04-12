@@ -1,5 +1,37 @@
 # Changelog
 
+## v3.20.0 — 2026-04-12
+
+**Frontier axes unlocked.**
+
+v3.19 shipped calibration + production hardening; v3.20 introduces 9 frontier capability axes. 275 skills, 58 commands.
+
+### v3.19 — Calibration & Production Hardening
+
+- **Shakedown harness** — `scripts/shakedown.mjs` + `/gen:shakedown` command runs seeded brief through all 15 pipeline stages; emits spec-vs-reality gap report. Gates stable promotion.
+- **Telemetry first-run consent** — v3.19+ shows opt-in prompt once per user on first SessionStart; decision persisted in `~/.claude/genorah/telemetry-consent.json`. Opt-out remains default in CI/headless.
+- **`/gen:recalibrate --headless` + `--cron`** — fail-closed on ΔRMSE > 0.1 or κ < floor; auto-invokes shakedown; Prometheus gauges on stdout for scheduled jobs.
+- **PROVISIONAL → measured** — R1/R5/R7 thresholds pending first quarterly calibration pass against 5 seeded goldens + synthetic personas.
+
+### v3.20 — 9-Axis Frontier
+
+1. **Agentic UX** — `agentic-ux-patterns` + `agent-trace-ui` skills + `/gen:agents` command. Multi-step AI SDK v6 flows via Vercel AI Gateway (`'anthropic/claude-sonnet-4.6'`), `stopWhen: stepCountIs(N)`, tool calling with Zod, agent-trace UI (Plan / ToolCallCard / ApprovalGate / Progress / TraceTimeline).
+2. **Server-driven UI** — `server-driven-ui` skill. JSON-schema → discriminated-union block tree for CMS-authored pages beyond MDX; per-block hydration boundary; DNA enforcement on every block.
+3. **Brandkit v2** — 4 skills: `brand-motion-sigils` (Rive + Lottie), `sonic-logo` (consent-gated audio mark), `haptic-signature` (Web Vibration + iOS `.sensoryFeedback` + Android Compose + RN Haptics), `figma-variables-roundtrip` (DTCG-compliant bidirectional sync, Tokens Studio or Figma Variables REST).
+4. **Multi-brand governance** — `multi-brand-governance` skill + `/gen:multibrand` command. Parent DNA + N sub-brand overlays with inheritance + `DRIFT-POLICY.md` per child + drift check per build.
+5. **Experimentation layer** — `experimentation-layer` skill + `/gen:experiment` command. GrowthBook/Statsig/Edge-Config A/B/n with quality-gate-aware winner selection (variants below Design 200 / UX 100 auto-disqualified regardless of CVR).
+6. **3D scene depth** — `3d-scene-composer` + `r3f-physics-rapier` + `gltf-authoring-pipeline` skills. Narrative R3F scenes with archetype-keyed lighting rigs, Rapier WASM physics (≤ 200 bodies desktop), glTF pipeline with Draco + Meshopt + KTX2 + budget enforcement + license capture.
+7. **Commerce depth v2** — `commerce-hydrogen` + `commerce-medusa` skills. Shopify Hydrogen/Oxygen with B2B Catalog; Medusa v2 self-hosted with multi-region/currency/tax; complements existing Stripe + Shopify + WooCommerce.
+8. **Observability / SRE** — `opentelemetry-traces` + `slo-error-budgets` skills. OTLP export to Grafana Cloud / Honeycomb / Vercel Observability; SLOs with fast + slow burn-rate alerts; error-budget-gated deploys; public status pages.
+9. **Edge-native patterns** — `vercel-sandbox` + `vercel-botid` skills. Sandbox (GA 2026-01) for AI-generated and untrusted code execution; BotID (GA 2025-06) for AI endpoint + form protection without CAPTCHA.
+
+### Upgrade notes
+
+- Telemetry consent prompt auto-fires on first v3.19+ session — no action required for existing opted-out users.
+- Sub-brand overlays must declare `DRIFT-POLICY.md` or `/gen:build --brand=<name>` will block.
+- Experiment winners must pass `/gen:audit` — failing variants no longer eligible regardless of statistical significance.
+- Agentic UX flows must route through Vercel AI Gateway (OIDC); raw `@ai-sdk/anthropic` imports flagged by `posttooluse-validate`.
+
 ## v3.18.0 — 2026-04-12 (stable)
 
 **Measurably Enforced Quality with Closed-Loop Refinement.**

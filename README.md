@@ -12,7 +12,7 @@ claude plugin marketplace add https://github.com/Raphjay2406/raphj-marketplace
 
 | Plugin | Skills | Commands | Agents | Version | Description |
 |--------|--------|----------|--------|---------|-------------|
-| `gen` | 252 | 54 | 24 | **3.18.0** | Premium frontend design system — Measurably Enforced Quality with Closed-Loop Refinement |
+| `gen` | 275 | 58 | 24 | **3.20.0** | Premium frontend design system — Measurably Enforced Quality + 9-axis Frontier (agentic UX, SDUI, brandkit v2, multi-brand, experimentation, 3D scenes, commerce v2, observability, edge-native) |
 | `wavy-bavy` | 1 | — | — | 1.0.0 | Integrate the wavy-bavy library for seamless wave transitions |
 
 ## Genorah v3.18.0 — What's shipped
@@ -124,6 +124,66 @@ claude plugin marketplace add https://github.com/Raphjay2406/raphj-marketplace
 - Cross-framework parity (SvelteKit vs Next as canonical)
 - Cross-browser matrix (Chromium/Firefox/WebKit + mobile)
 - Print/PDF parity for brandkit
+
+## v3.20 — 9-Axis Frontier
+
+**Agentic UX (v3.20):**
+
+- Multi-step AI SDK v6 flows via Vercel AI Gateway (`'anthropic/claude-sonnet-4.6'`) with `stopWhen: stepCountIs(N)` + Zod tools
+- Agent-trace UI: `<AgentPlan>` / `<ToolCallCard>` / `<ApprovalGate>` / `<AgentProgress>` / `<TraceTimeline>`
+- `/gen:agents <flow-name>` scaffolds route handler + components + schemas + `agent_runs` table
+
+**Server-driven UI (v3.20):**
+
+- Zod discriminated-union block schema → component tree renderer
+- Per-block hydration boundaries (static default, opt-in client)
+- CMS-authored pages beyond MDX, DNA-enforced atoms
+
+**Brandkit v2 (v3.20):**
+
+- Motion sigils — Lottie (linear) + Rive (state-machine) with DNA color injection
+- Sonic logo — consent-gated 200-800ms audio mark (-14 LUFS), WebM Opus + MP3 fallback
+- Haptic signature — Web Vibration API + iOS `.sensoryFeedback` + Android Compose + RN Haptics
+- Figma Variables roundtrip — DTCG-compliant bidirectional sync, REST API v1 or Tokens Studio JSON
+
+**Multi-brand governance (v3.20):**
+
+- Parent DNA + N sub-brand overlays with inheritance rules
+- `DRIFT-POLICY.md` per child brand, enforced on every build
+- `/gen:multibrand list|add|build|audit`
+
+**Experimentation layer (v3.20):**
+
+- GrowthBook / Statsig / Vercel Edge Config A/B/n
+- Quality-gate-aware winner selection — variants below Design 200 / UX 100 disqualified regardless of CVR
+- `/gen:experiment setup|evaluate`
+
+**3D scene depth (v3.20):**
+
+- Full R3F scene composer with archetype-keyed lighting rigs
+- Rapier WASM physics (≤ 200 bodies desktop, ≤ 50 mobile, fixed-timestep determinism)
+- glTF authoring pipeline (Draco + Meshopt + KTX2, budget enforcement, license capture)
+
+**Commerce depth v2 (v3.20):**
+
+- Shopify Hydrogen + Oxygen with B2B Catalog support
+- Medusa v2 self-hosted (multi-region, multi-currency, custom checkout)
+
+**Observability / SRE (v3.20):**
+
+- OpenTelemetry auto-instrumentation + OTLP export (Grafana Cloud / Honeycomb / Vercel Observability)
+- SLOs with fast + slow burn-rate alerts, error-budget-gated deploys, public status pages
+
+**Edge-native (v3.20):**
+
+- Vercel Sandbox (GA 2026-01) for AI-generated + untrusted code execution
+- Vercel BotID (GA 2025-06) for AI endpoint + form protection without CAPTCHA
+
+## v3.19 — Calibration & Hardening
+
+- `/gen:shakedown [brief]` — full 15-stage pipeline dry-run on seeded briefs (editorial-saas, brutalist-agency, ethereal-portfolio); gates stable promotion
+- Telemetry first-run consent prompt — opt-in only, decision persisted, no re-prompts
+- `/gen:recalibrate --headless --cron` — fail-closed, Prometheus gauges, scheduled-job compatible
 
 ## Install a Plugin
 
