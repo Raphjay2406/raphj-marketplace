@@ -617,3 +617,55 @@ Archetypes do NOT change Next.js structural patterns. They change the VALUES flo
 | default.tsx in parallel routes | 1 | - | file per slot | HARD -- every parallel route slot requires explicit default |
 | params access pattern | - | - | `await` | HARD -- all params access must use `await` in App Router |
 | cookies/headers access | - | - | `await` | HARD -- all cookies()/headers() calls must use `await` |
+
+## v3.2 Addendum: Next.js 16 Cache Components (GA)
+
+Next.js 16 made `'use cache'` + `cacheLife` + `cacheTag` + `updateTag` stable (no more `unstable_` prefix). Replaces `unstable_cache` and the implicit fetch-caching model.
+
+### Opt in
+
+```ts
+// next.config.ts
+export default { cacheComponents: true };  // GA flag in Next 16.0+
+```
+
+### Cache a component
+
+```tsx
+// app/page.tsx
+'use cache';
+import { cacheLife, cacheTag } from 'next/cache';
+
+export default async function Page() {
+  cacheLife('hours');           // or 'minutes', 'days', or { revalidate: 3600, expire: 86400 }
+  cacheTag('homepage');
+  const data = await getData();
+  return <Home data={data} />;
+}
+```
+
+### Read-your-writes with updateTag
+
+```ts
+// app/actions.ts
+'use server';
+import { updateTag } from 'next/cache';
+
+export async function createPost(formData: FormData) {
+  await db.posts.create({ data: ... });
+  updateTag('homepage');   // Stable in Next 16.2+
+  // Returning client sees fresh data immediately (no revalidation lag)
+}
+```
+
+### Migration from ISR + unstable_cache
+
+| Old (Next 14-15) | New (Next 16) |
+|---|---|
+| `export const revalidate = 3600` | `'use cache'` + `cacheLife('hours')` |
+| `unstable_cache(fn, [key], { tags })` | `'use cache'` + `cacheTag(key)` |
+| `fetch(url, { next: { tags: ['x'] } })` | `'use cache'` wrapping the fetch-calling function |
+| `revalidateTag('x')` in Server Action | `updateTag('x')` for read-your-writes, or `revalidateTag('x')` for background |
+
+Genorah builders default to `'use cache'` + `cacheTag` for CMS-backed pages (see cms-sanity, cms-payload skills). ISR mental model only for legacy projects.
+
