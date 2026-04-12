@@ -1,7 +1,53 @@
 ---
 name: chart-data-viz
-description: "Chart and data visualization patterns: Recharts with shadcn styling, stat cards with sparklines, area/bar/donut/line charts, responsive containers, real-time updates, accessible charts."
+description: "Chart and data visualization patterns: Recharts with shadcn styling, stat cards with sparklines, area/bar/donut/line charts, responsive containers, real-time updates, accessible charts. v3.1: volume-threshold + a11y-grade + library-rec decision matrix distilled from UI UX PRO MAX."
+tier: domain
+triggers: "chart, graph, visualization, sparkline, donut, area chart, bar chart, line chart, analytics, metrics, recharts, chart-type selection, a11y chart"
+version: "3.1.0"
 ---
+
+## v3.1 Addendum: Chart-Type Decision Matrix
+
+Distilled from PRO MAX charts.csv (25 patterns). Use this before reaching for default Recharts components.
+
+### Data type → Chart type selection
+
+| Data Type | Best Chart | Secondary | Volume Threshold | A11y Grade | Library Rec |
+|-----------|-----------|-----------|------------------|------------|-------------|
+| Single metric over time | Line | Area | Up to 10k points in single series | A (needs axis labels + legend) | Recharts |
+| Part-to-whole (≤6 parts) | Donut | Stacked bar | 2-6 slices ideal | B (aria-label per slice) | Recharts |
+| Part-to-whole (7+ parts) | Stacked bar | Treemap | prefer bar over pie for >6 | A (bar a11y-default) | Recharts |
+| Distribution | Histogram | Violin (advanced) | Up to 1k bins | B (bins need labels) | Recharts + D3 |
+| Comparison (categorical) | Horizontal bar | Grouped bar | ≤15 categories readable | A | Recharts |
+| Comparison (2-3 series over time) | Multi-line | Area-stacked | ≤5 series, else soup | A-B | Recharts |
+| Correlation | Scatter | Bubble | ≤500 points | B | Recharts |
+| Flow/pipeline | Sankey | Funnel | ≤8 stages | C (pattern explanation) | react-flow or D3 |
+| Hierarchy | Treemap | Sunburst | ≤4 depth levels | C (color alone insufficient) | D3 |
+| Geographic | Choropleth | Symbol map | country-level or sub-division | B (table fallback) | react-simple-maps |
+| Real-time streaming | Live line | Live area | update UI ≤10Hz, data ≤100Hz | B (aria-live on significant changes) | Recharts + SWR |
+
+### Key rules (from PRO MAX Decision_Rules)
+
+- **≤6 slices in a pie/donut.** Above 6, switch to horizontal bar — always.
+- **Never 3D charts.** 3D distorts data perception. Flat only.
+- **Sort bars.** Horizontal bars should sort by value (descending), never alphabetically, unless alphabetical carries meaning.
+- **Time on X, value on Y.** For time series, always. No exceptions.
+- **Color-safe palettes.** Use ColorBrewer palettes for multi-series. Avoid red+green for positive/negative (CVD fails) — use red+blue or red+teal.
+- **Always provide data-table fallback.** Every chart must have `aria-describedby` or a visible data table for screen readers. Canvas-based charts need an off-screen table.
+
+### Library recommendation (framework-aware)
+
+| Framework | Primary | Alternative |
+|-----------|---------|-------------|
+| Next.js / React / Vite | Recharts | Tremor (dashboards), D3 (bespoke) |
+| Astro | Recharts (in React islands) | Chart.js (plain JS) |
+| Vue / Nuxt | Vue-ECharts | Chart.js |
+| SvelteKit | Layercake | Chart.js |
+
+Genorah builders default to Recharts for all React/Next/Vite projects. Only escalate to D3 when the visualization doesn't fit the Recharts component catalog.
+
+---
+
 
 Use this skill when the user mentions charts, graphs, data visualization, sparklines, donut chart, area chart, bar chart, line chart, analytics dashboard, or metrics display. Triggers on: chart, graph, visualization, sparkline, donut, area chart, bar chart, line chart, analytics, metrics, recharts.
 
