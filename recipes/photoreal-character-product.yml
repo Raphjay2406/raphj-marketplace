@@ -1,0 +1,18 @@
+name: photoreal-character-product
+version: 1.0.0
+description: Photoreal character holding or interacting with a product, DNA-locked.
+steps:
+  - worker: rodin-3d-gen
+    input: { prompt: "${brand.character_prompt}", quality: "high", style: "${dna.archetype}" }
+  - worker: character-poser
+    input: { model: "${previous.artifact.path}", pose: "${recipe.pose}" }
+  - worker: inpainter
+    input:
+      base: "${previous.artifact.path}"
+      mask: "hands"
+      prompt: "${brand.product_prompt}"
+      strength: 0.75
+  - worker: upscaler
+    input: { image: "${previous.artifact.path}", scale: 2 }
+validators_per_step: [dna-compliance, license, provenance]
+followups_enabled: true

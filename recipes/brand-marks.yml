@@ -1,0 +1,12 @@
+name: brand-marks
+version: 1.0.0
+description: Vector brand marks + favicon + OG template.
+steps:
+  - worker: recraft-vector-author
+    input: { prompt: "${brand.logo_prompt}", substyle: "${dna.archetype}" }
+  - worker: recraft-vector-author
+    input: { prompt: "${brand.logo_prompt} — monochrome variant", substyle: "${dna.archetype}" }
+  - worker: recraft-vector-author
+    input: { prompt: "${brand.logo_prompt} — mark only", substyle: "${dna.archetype}" }
+validators_per_step: [dna-compliance, license]
+followups_enabled: false

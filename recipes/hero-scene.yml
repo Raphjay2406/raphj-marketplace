@@ -1,0 +1,14 @@
+name: hero-scene
+version: 1.0.0
+description: Single cinematic hero scene — background + subject + lighting consistency.
+steps:
+  - worker: flux-hero-gen
+    input: { prompt: "${brand.hero_prompt}", style: "${dna.archetype}", aspect: "16:9", references: "${dna.reference_images}" }
+  - worker: rodin-3d-gen
+    input: { prompt: "${brand.subject_prompt}", quality: "high" }
+  - worker: ktx2-encoder
+    input: { source: "${previous.artifact.path}" }
+  - worker: gltf-lod-generator
+    input: { source: "${previous.artifact.path}" }
+validators_per_step: [dna-compliance, license, provenance, mesh-triangle-count, texture-size]
+followups_enabled: true
