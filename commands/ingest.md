@@ -1,6 +1,6 @@
 ---
-description: "v3.21 — Ingest existing projects into Genorah without losing detail. Codebase or live URL. Source preserved verbatim; every transformation logged in an append-only preservation ledger."
-argument-hint: "<codebase|url|route|diff|gap|verify|resolve> <path-or-url-or-slug> [flags]"
+description: "v3.21–v3.24 — Ingest existing projects into Genorah without losing detail. Codebase or live URL; plus motion-trace replay and CMS schema introspection. Source preserved verbatim; every transformation logged in an append-only preservation ledger."
+argument-hint: "<codebase|url|route|diff|gap|verify|resolve|motion|cms> <path-or-url-or-slug> [flags]"
 allowed-tools: Read, Write, Edit, Bash, Glob, Grep
 recommended-model: opus-4-6
 ---
@@ -61,6 +61,35 @@ Invariants:
 ### `resolve <slug> <gap-id> <decision>`
 
 User decision on a blocking gap. Appends `user.decision` ledger entry (never mutates original gap).
+
+### `motion <slug> <extracted-trace-dir>` (v3.24)
+
+Consume a pre-extracted Playwright trace directory, extract per-selector animations, fit easing family against 7 cubic-Bezier presets (linear / ease-in/out/both / ease-out-expo / ease-out-quart / spring), fingerprint motion library (GSAP / Framer Motion / Motion One / Lottie / Rive / React Spring), and emit `MOTION-INVENTORY.md`.
+
+```bash
+# Extract Playwright trace zip first
+unzip trace.zip -d traceout/
+node scripts/ingest/interaction-replay.mjs <slug> traceout/
+```
+
+Low-confidence fits (RMSE > 0.2) auto-emit paired `gap:motion-low-confidence`.
+
+### `cms <slug> --cms=<sanity|contentful|payload> [platform-flags]` (v3.24)
+
+Introspect headless CMS schema, map content types to SDUI block proposals, emit `CMS-SCHEMA.md` + `manifests/cms-schema.json`.
+
+```bash
+# Sanity (GROQ + sample shape)
+node scripts/ingest/cms-schema.mjs <slug> --cms=sanity --project=<id> --dataset=<name> --token=<read-token>
+
+# Contentful (CMA content_types)
+node scripts/ingest/cms-schema.mjs <slug> --cms=contentful --space=<id> --token=<cma-token> [--env=master]
+
+# Payload (access + OpenAPI fallback)
+node scripts/ingest/cms-schema.mjs <slug> --cms=payload --base=https://…/api [--token=<jwt>]
+```
+
+Unmapped types emit `gap:cms-type-unmapped` for user review. Heuristic mapping covers hero / feature-grid / pricing / testimonial / faq / cta / article / page-shell.
 
 ## Pipeline
 

@@ -1,5 +1,33 @@
 # Changelog
 
+## v3.24.0 — 2026-04-12
+
+**Integration tests for v3.22–v3.23 executors + command exposure.**
+
+### Integration tests (synthetic + mock)
+
+- `tests/v324-interaction-replay.test.mjs` — 4/4. Fabricates Playwright-trace NDJSON with known opacity curves, runs `interaction-replay.mjs` as subprocess, asserts easing family is recognized (ease-out-expo → ease-out-family, linear → linear), library fingerprint surfaced (GSAP), MOTION-INVENTORY.md contents, ledger events (`capture.motion-event`, `motion.library-detected`, `motion.fit`), non-zero exit on empty trace with paired `gap:trace-empty-or-unsupported-format`.
+- `tests/v324-cms-schema.test.mjs` — 5/5. Local `node:http` servers mock Sanity GROQ, Contentful CMA, and Payload REST responses. Script routed via `SANITY_BASE` / `CONTENTFUL_BASE` env overrides (new) and Payload's existing `--base` flag. Asserts block mapping (`heroBanner → hero`, `pricingPlan → pricing`, `faqItem → faq`, `pages → page-shell`, `articles → article`), `mysteryWidget → unknown` emits paired `gap:cms-type-unmapped`, Contentful field metadata preserved (type/linkType/required/localized), Payload system fields filtered (id/createdAt/updatedAt), fail-fast on missing credentials, refusal on unknown `--cms`.
+
+### Bug caught by integration tests
+
+- Initial CMS test hung: `spawnSync` blocks the parent event loop, starving the in-process mock HTTP server of accept cycles. Fixed by introducing `spawnAsync` helper using `child_process.spawn` + Promise. 0.7s total for 5 tests instead of >30s hangs.
+
+### Runtime change
+
+- `scripts/ingest/cms-schema.mjs` — Sanity and Contentful base URLs now overridable via `SANITY_BASE` / `CONTENTFUL_BASE` env for testing / private Sanity mirrors / Contentful EU region. No behavior change when unset.
+
+### Command surface
+
+- `/gen:ingest` argument-hint expanded: `<codebase|url|route|diff|gap|verify|resolve|motion|cms>`.
+- New subcommand: `motion <slug> <extracted-trace-dir>` documented with trace-extract prerequisite.
+- New subcommand: `cms <slug> --cms=<sanity|contentful|payload>` with per-platform flag examples.
+
+### Totals
+
+- **97/97 tests pass** (+9 from v3.23: 4 interaction-replay + 5 CMS schema).
+- Mirror parity, plugin.json + marketplace.json + package.json at 3.24.0.
+
 ## v3.23.0 — 2026-04-12
 
 **Four deferred items cleared — all functional, all tested.**

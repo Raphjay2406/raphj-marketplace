@@ -1,0 +1,3 @@
+{"ts":"2026-04-12T13:07:02.052Z","kind":"cms.schema-export","platform":"payload","types":2}
+{"ts":"2026-04-12T13:07:02.054Z","kind":"cms.type-map","type":"pages","proposed_block":"page-shell","fields":3}
+{"ts":"2026-04-12T13:07:02.054Z","kind":"cms.type-map","type":"articles","proposed_block":"article","fields":3}

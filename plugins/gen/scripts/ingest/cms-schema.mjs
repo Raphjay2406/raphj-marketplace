@@ -37,7 +37,8 @@ async function fetchSanity({ project, dataset, token }) {
   if (!project || !dataset || !token) throw new Error('Sanity requires --project, --dataset, --token');
   // GROQ introspection: fetch all documents of each type, then extract field shapes.
   // We ask for the type registry via the built-in `_type` meta query.
-  const base = `https://${project}.api.sanity.io/v2024-01-01/data/query/${dataset}`;
+  // Base URL can be overridden via SANITY_BASE for testing.
+  const base = process.env.SANITY_BASE || `https://${project}.api.sanity.io/v2024-01-01/data/query/${dataset}`;
   // Distinct types present in the dataset
   const typesQuery = encodeURIComponent('array::unique(*[]._type)');
   const { result: typeNames } = await httpJson(`${base}?query=${typesQuery}`, { headers: { Authorization: `Bearer ${token}` } });
@@ -57,7 +58,8 @@ async function fetchSanity({ project, dataset, token }) {
 // ──────────────────────────────── Contentful ────────────────────────────
 async function fetchContentful({ space, token, env = 'master' }) {
   if (!space || !token) throw new Error('Contentful requires --space, --token');
-  const base = `https://api.contentful.com/spaces/${space}/environments/${env}/content_types`;
+  // Base URL can be overridden via CONTENTFUL_BASE for testing.
+  const base = process.env.CONTENTFUL_BASE || `https://api.contentful.com/spaces/${space}/environments/${env}/content_types`;
   const data = await httpJson(base, { headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/vnd.contentful.management.v1+json' } });
   const types = (data.items || []).map(ct => ({
     name: ct.sys.id,
