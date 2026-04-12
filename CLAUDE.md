@@ -4,7 +4,15 @@ This file provides guidance to Claude Code when working with the Genorah plugin 
 
 ## Project Overview
 
-**Genorah v3.25.0** is a Claude Code plugin for premium frontend design — "Measurably Enforced Quality + 9-axis Frontier + Preservation-First Ingestion." It produces award-caliber websites (Awwwards SOTD 8.0+ baseline) through a 24-agent pipeline, machine-enforceable design identity, a **two-axis 354-point quality gate** (Design Craft 234 + UX Integrity 120), and v3.21+ can also *ingest existing projects* (codebase or live URL) into the same pipeline without losing any detail. Ships **59 commands, 287 skills**, 8 MCP integrations, 33 Design Archetypes + formal mixing protocol, 10-track empirical research program, 8-layer Context Fabric (L1 scratchpad → L8 user memory), opt-in plugin telemetry, the v3.20 9-axis frontier (agentic UX, server-driven UI, brandkit v2, multi-brand governance, experimentation layer, 3D scene composer, commerce v2, observability/SRE, edge-native), and the v3.21–v3.25 preservation-first ingestion suite (append-only preservation ledger + DNA reverse-engineer + archetype inference + Playwright crawl + pixel-kmeans with full ΔE2000 + recursive sitemap BFS with per-sitemap error events + interaction replay with 7 cubic-Bezier easing presets + CMS schema executors for Sanity/Contentful/Payload). 109/109 tests passing.
+**Genorah v4.0.0-alpha.1** — ships A2A protocol (L4 full citizenship), tiered agent structure (105 agents: 10 directors + 95 workers), `Result<T>` typed envelope, and embedded HTTP daemon. Pillars 1, 2, 5, 6 land in M2–M5. See `docs/superpowers/specs/2026-04-12-genorah-v4-cinematic-intelligence-design.md`.
+
+## Architecture (v4)
+
+Three-layer:
+
+- 10 directors (stateful, own context budget, only tier that talks to user)
+- 95 workers (stateless, narrow craft, tiered isolation: worktree for code-writers, in-process for artifact-returners)
+- Validators as skills (invoked by workers for self-check)
 
 This repository contains markdown skill/command/agent definitions, runtime script helpers, hooks, 2 MCP servers (3dsvg-export + meshy scaffold), and a test suite. Targets Next.js 16, Astro 6, SvelteKit 2, Nuxt 3, React/Vite 8, Tauri, Electron, Swift/SwiftUI 6, Kotlin/Compose Multiplatform 2.0, React Native, Expo SDK 52, and Flutter 3.24.
 
