@@ -1,6 +1,8 @@
 ---
 name: ux-patterns
 description: "UX intelligence patterns for navigation, forms, feedback, and content discovery. Ensures sites are not just beautiful but genuinely usable and conversion-optimized."
+tier: domain
+version: "2.0.0"
 ---
 
 Use this skill when building navigation, forms, interactive feedback, or optimizing content flow. Triggers on: UX, usability, navigation, form, feedback, user experience, accessibility, interaction, content discovery, user flow.

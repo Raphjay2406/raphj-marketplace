@@ -1,3 +1,8 @@
+---
+name: context-rot-prevention
+description: "Context preservation protocol across compaction — hoists critical DNA/state into CONTEXT.md before auto-compact."
+---
+
 # Context Rot Prevention Protocol
 
 > Protocol document for the Genorah 2.0 build pipeline. Referenced by the build-orchestrator and all pipeline agents. Defines the 9-layer structural defense system against LLM attention degradation over extended build sessions.

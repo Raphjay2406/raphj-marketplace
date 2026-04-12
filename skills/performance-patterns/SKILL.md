@@ -1,6 +1,8 @@
 ---
 name: performance-patterns
 description: "Performance optimization: Core Web Vitals, image optimization, font loading, code splitting, virtualization, bundle analysis, lazy loading. Works with Next.js and Astro."
+tier: domain
+version: "2.0.0"
 ---
 
 Use this skill when the user mentions performance, Core Web Vitals, LCP, CLS, INP, page speed, optimization, lazy loading, bundle size, image optimization, font loading, or virtualization. Triggers on: performance, speed, Core Web Vitals, LCP, CLS, INP, optimize, lazy load, bundle, image optimization, font.

@@ -1,6 +1,8 @@
 ---
 name: auth-ui
 description: "Build polished authentication UI flows including login, signup, forgot password, OTP verification, and social auth."
+tier: domain
+version: "2.0.0"
 ---
 
 Use this skill when the user mentions login, signup, sign in, register, authentication UI, forgot password, auth page, or social login.

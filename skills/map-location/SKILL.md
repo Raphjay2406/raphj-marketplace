@@ -1,6 +1,8 @@
 ---
 name: map-location
 description: "Map and location UI patterns: Google Maps/Mapbox integration, store locators, location pickers, address autocomplete, geolocation, interactive markers. Works with Next.js and Astro."
+tier: domain
+version: "2.0.0"
 ---
 
 Use this skill when the user mentions map, Google Maps, Mapbox, location picker, store locator, address autocomplete, geolocation, or markers. Triggers on: map, Google Maps, Mapbox, location, store locator, address, geolocation, marker.

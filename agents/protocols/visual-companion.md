@@ -1,3 +1,8 @@
+---
+name: visual-companion
+description: "Browser-based visual display layer — renders mockups, palettes, scored options in a live browser tab. Reserves terminal for questions/status/structured output."
+---
+
 # Visual Companion Protocol (v1.0)
 
 A browser-based visual display layer for agents. Render mockups, design comparisons, color palettes, and scored options in a live browser window rather than the terminal — reserving the terminal for questions, status, and structured output.

@@ -1,6 +1,8 @@
 ---
 name: shadcn-components
 description: "Deep knowledge of all shadcn/ui components, variants, props, composition patterns, multi-select tags, inline editable, stepper, timeline, kanban, tree view, color picker, rich text toolbar."
+tier: domain
+version: "2.0.0"
 ---
 
 Use this skill when the user mentions shadcn, shadcn/ui, UI components, component library, or asks to build with specific shadcn components like Button, Dialog, Card, multi-select, stepper, timeline, tree view, or color picker. Triggers on: shadcn, UI component, Button, Dialog, Card, multi-select, stepper, timeline, tree view, color picker, tag input.

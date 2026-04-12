@@ -1,6 +1,8 @@
 ---
 name: awwwards-scoring
 description: "Awwwards-aligned 4-axis scoring rubric: Design, Usability, Creativity, Content. Detailed criteria per level, SOTD prediction, and competitive benchmark process."
+tier: domain
+version: "2.0.0"
 ---
 
 ## Genorah v2.0 Updates

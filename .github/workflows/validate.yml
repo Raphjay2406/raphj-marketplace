@@ -1,0 +1,44 @@
+name: validate
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install devDeps (AJV only)
+        run: npm i --ignore-scripts --no-audit --no-fund
+        shell: bash
+
+      - name: Syntax check (node --check + bash -n)
+        run: npm run lint:syntax
+        shell: bash
+
+      - name: JSON parse
+        run: npm run lint:json
+        shell: bash
+
+      - name: Frontmatter schema
+        run: npm run lint:frontmatter
+        shell: bash
+
+      - name: Self-audit (fail on BLOCK)
+        run: npm run self-audit
+        shell: bash
+
+      - name: node:test unit tests
+        run: npm test
+        shell: bash

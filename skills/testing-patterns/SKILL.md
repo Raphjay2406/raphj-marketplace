@@ -1,6 +1,8 @@
 ---
 name: testing-patterns
 description: "Testing patterns: Vitest, React Testing Library, accessibility testing, visual regression, E2E with Playwright, MSW mocking, snapshot testing. Works with Next.js and Astro."
+tier: domain
+version: "2.0.0"
 ---
 
 Use this skill when the user mentions testing, unit tests, integration tests, E2E tests, Vitest, Playwright, Testing Library, test coverage, a11y testing, or visual regression. Triggers on: test, testing, vitest, playwright, jest, testing library, E2E, coverage, a11y test, visual regression, MSW.

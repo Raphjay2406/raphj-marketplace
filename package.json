@@ -1,0 +1,20 @@
+{
+  "name": "genorah-plugin",
+  "version": "3.2.0-dev",
+  "private": true,
+  "type": "module",
+  "description": "Genorah Claude Code plugin — internal testing infrastructure for hooks + dashboard + skill schema validation",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "test:watch": "node --test --watch tests/*.test.mjs",
+    "lint:syntax": "node scripts/lint-syntax.mjs",
+    "lint:json": "node scripts/lint-json.mjs",
+    "lint:frontmatter": "node scripts/lint-frontmatter.mjs",
+    "self-audit": "node scripts/self-audit.mjs --fail-on=BLOCK",
+    "validate": "npm run lint:syntax && npm run lint:json && npm run lint:frontmatter && npm run self-audit && npm run test"
+  },
+  "devDependencies": {
+    "ajv": "^8.17.1"
+  }
+}
