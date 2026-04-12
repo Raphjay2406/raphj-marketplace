@@ -12,7 +12,7 @@ claude plugin marketplace add https://github.com/Raphjay2406/raphj-marketplace
 
 | Plugin | Skills | Commands | Agents | Version | Description |
 |--------|--------|----------|--------|---------|-------------|
-| `gen` | 287 | 59 | 24 | **3.22.0** | Premium frontend design system — Measurably Enforced Quality + 9-axis Frontier + Preservation-First Ingestion (v3.21 `/gen:ingest` + v3.22 Playwright crawl executor + pixel-path DNA k-means + interaction replay + CMS reconnect; E2E-verified) |
+| `gen` | 287 | 59 | 24 | **3.23.0** | Premium frontend design system — Measurably Enforced Quality + 9-axis Frontier + Preservation-First Ingestion (v3.21 `/gen:ingest` + v3.22 crawl executor + pixel-kmeans + CMS detect + v3.23 full ΔE2000 + recursive sitemap BFS + Playwright-trace motion inventory + CMS schema executors for Sanity/Contentful/Payload) |
 | `wavy-bavy` | 1 | — | — | 1.0.0 | Integrate the wavy-bavy library for seamless wave transitions |
 
 ## Genorah v3.18.0 — What's shipped

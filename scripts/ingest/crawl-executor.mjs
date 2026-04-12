@@ -18,6 +18,39 @@ async function fetchText(url) {
   catch { return null; }
 }
 
+// Recursive sitemap parser — handles sitemap indexes (nested <sitemap><loc>)
+// and honors <lastmod>. Depth-limited to prevent loops; dedupes via Set.
+async function collectSitemapUrls(seedUrl, { maxDepth = 3, maxUrls = 500 } = {}) {
+  const visited = new Set();
+  const urls = [];
+  const queue = [{ url: seedUrl, depth: 0 }];
+
+  while (queue.length && urls.length < maxUrls) {
+    const { url, depth } = queue.shift();
+    if (visited.has(url) || depth > maxDepth) continue;
+    visited.add(url);
+
+    const body = await fetchText(url);
+    if (!body) continue;
+
+    const isIndex = /<sitemapindex/i.test(body);
+    if (isIndex) {
+      // Nested sitemaps — enqueue their <loc> children
+      for (const m of body.matchAll(/<sitemap>[\s\S]*?<loc>\s*([^<\s]+)\s*<\/loc>/g)) {
+        queue.push({ url: m[1].trim(), depth: depth + 1 });
+      }
+    } else {
+      // Leaf URL set
+      for (const m of body.matchAll(/<url>[\s\S]*?<loc>\s*([^<\s]+)\s*<\/loc>(?:[\s\S]*?<lastmod>\s*([^<\s]+)\s*<\/lastmod>)?/g)) {
+        const loc = m[1].trim();
+        const lastmod = m[2]?.trim() || null;
+        if (urls.length < maxUrls) urls.push({ url: loc, lastmod });
+      }
+    }
+  }
+  return urls;
+}
+
 async function crawlOne(page, url, dest, slug, breakpoints) {
   const routeSlug = new URL(url).pathname.replace(/\//g, '_') || '_root';
   const captured = join(dest, 'captured', `${routeSlug}.html`);
@@ -92,11 +125,23 @@ async function main() {
   const ctx = await browser.newContext({ userAgent: 'Genorah-Ingest/3.22 (compatible; respects robots.txt)' });
   const page = await ctx.newPage();
 
-  // Crawl seed URL only in this executor pass; BFS expansion is a follow-up stage.
+  // Recursive sitemap BFS (honors sitemap indexes, nested sitemaps, <lastmod>)
   const seedUrl = plan.url;
   const routes = [seedUrl];
-  const sitemap = existsSync(join(dest, 'captured', 'sitemap.xml')) ? readFileSync(join(dest, 'captured', 'sitemap.xml'), 'utf8') : '';
-  for (const m of sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)) { if (routes.length < (plan.maxRoutes || 50)) routes.push(m[1]); }
+  const sitemapUrl = new URL('/sitemap.xml', seedUrl).href;
+  try {
+    const discovered = await collectSitemapUrls(sitemapUrl, { maxDepth: 3, maxUrls: plan.maxRoutes || 50 });
+    append(slug, { kind: 'sitemap.bfs', root: sitemapUrl, discovered: discovered.length });
+    for (const { url, lastmod } of discovered) {
+      if (routes.length >= (plan.maxRoutes || 50)) break;
+      if (!routes.includes(url)) {
+        routes.push(url);
+        if (lastmod) append(slug, { kind: 'sitemap.entry', url, lastmod });
+      }
+    }
+  } catch (e) {
+    append(slug, { kind: 'gap', reason: 'sitemap-parse-failed', error: String(e.message || e) });
+  }
 
   for (const url of routes) {
     try { await crawlOne(page, url, dest, slug, plan.breakpoints); }

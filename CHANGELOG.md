@@ -1,5 +1,49 @@
 # Changelog
 
+## v3.23.0 — 2026-04-12
+
+**Four deferred items cleared — all functional, all tested.**
+
+### ΔE2000 perceptual color distance
+
+- Full Sharma/Wu/Dalal (2005) CIEDE2000 implementation in `scripts/ingest/pixel-kmeans.mjs`.
+- sRGB → linear → XYZ (D65) → CIELAB → ΔE2000 pipeline, ~60 lines pure Node.
+- Replaces rMean-weighted approximation as default distance metric for k-means.
+- Escape hatch: `GENORAH_KMEANS_FAST=1` env falls back to rMean for speed.
+- Tests: 8/8 (`tests/v323-delta-e2000.test.mjs`) — identity, symmetry, JND threshold (<2.3), black/white ~100, perceptually distinct greens >10, Lab white/black endpoints.
+
+### Recursive sitemap BFS
+
+- `crawl-executor.mjs` now handles `<sitemapindex>` with nested `<sitemap><loc>` entries, not just flat `<urlset>`.
+- Depth-capped (default 3), URL-capped (default 500), cycle-safe via Set.
+- Captures `<lastmod>` alongside `<loc>`; emits `sitemap.bfs` + per-entry `sitemap.entry` ledger events.
+- Tests: 4/4 (`tests/v323-sitemap-bfs.test.mjs`) — flat urlset, nested sitemap index (3 URLs from 2 leaves), maxUrls cap, empty handling.
+
+### Interaction replay executor
+
+- `scripts/ingest/interaction-replay.mjs` parses Playwright-trace NDJSON (pre-extracted directory).
+- Library fingerprinting from network requests: GSAP, Framer Motion, Motion One, Lottie, Rive, React Spring.
+- Per-selector animation extraction: pairs consecutive DOM snapshots, derives (duration, property, samples).
+- Easing-family fitting against 7 presets (linear, ease-in, ease-out, ease-in-out, ease-out-expo, ease-out-quart, spring) via cubic Bezier curve + RMSE.
+- Confidence = rmse-banded (rmse<0.1 → 0.85, <0.2 → 0.6, else 0.4); low-confidence fits auto-emit paired `gap:motion-low-confidence`.
+- Emits `MOTION-INVENTORY.md` with per-selector YAML; `motion.fit` + `motion.library-detected` ledger events.
+
+### CMS schema executors
+
+- `scripts/ingest/cms-schema.mjs` dispatches by `--cms=<sanity|contentful|payload>`.
+- **Sanity**: GROQ type enumeration via `array::unique(*[]._type)`, field shape from sample doc.
+- **Contentful**: CMA `/environments/<env>/content_types` — full field metadata (type, linkType, required, localized).
+- **Payload**: `/api/access` collection discovery, OpenAPI fallback via `/api/api-docs.json`, per-collection sample probe.
+- Block-mapping heuristic proposes `hero / feature-grid / pricing / testimonial / faq / cta / article / page-shell` per type name regex; unmapped types emit `gap:cms-type-unmapped`.
+- Emits `CMS-SCHEMA.md` + `manifests/cms-schema.json`.
+- Ledger events: `cms.schema-export`, `cms.type-map`.
+
+### Totals
+
+- **287 skills**, **59 commands**, **24 agents**.
+- **88/88 tests pass** (+12 from v3.22: 8 ΔE2000 + 4 sitemap BFS).
+- Mirror parity, plugin.json + marketplace.json + package.json all at 3.23.0.
+
 ## v3.22.0 — 2026-04-12
 
 **Ingestion depth + E2E proven.**

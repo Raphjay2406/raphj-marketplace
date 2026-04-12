@@ -9,12 +9,98 @@ import { append } from './preservation-ledger.mjs';
 
 async function loadPng() { try { return (await import('pngjs')).PNG; } catch { return null; } }
 
-// Perceptual distance: ΔE approximation via weighted RGB (ΔE2000 full impl deferred).
-function dist(a, b) {
+// sRGB [0,255] → linear sRGB
+function srgbToLinear(v) { const x = v / 255; return x <= 0.04045 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4); }
+
+// sRGB → XYZ (D65)
+function rgbToXyz([r, g, b]) {
+  const R = srgbToLinear(r), G = srgbToLinear(g), B = srgbToLinear(b);
+  return [
+    (R * 0.4124564 + G * 0.3575761 + B * 0.1804375) * 100,
+    (R * 0.2126729 + G * 0.7151522 + B * 0.0721750) * 100,
+    (R * 0.0193339 + G * 0.1191920 + B * 0.9503041) * 100,
+  ];
+}
+
+// XYZ → CIELAB (D65 reference white)
+function xyzToLab([x, y, z]) {
+  const Xn = 95.047, Yn = 100.000, Zn = 108.883;
+  const f = t => (t > 0.008856) ? Math.cbrt(t) : (7.787 * t + 16 / 116);
+  const fx = f(x / Xn), fy = f(y / Yn), fz = f(z / Zn);
+  return [116 * fy - 16, 500 * (fx - fy), 200 * (fy - fz)];
+}
+
+function rgbToLab(rgb) { return xyzToLab(rgbToXyz(rgb)); }
+
+// CIEDE2000 — full implementation per Sharma, Wu, Dalal (2005).
+function deltaE2000(rgbA, rgbB) {
+  const [L1, a1, b1] = rgbToLab(rgbA);
+  const [L2, a2, b2] = rgbToLab(rgbB);
+  const kL = 1, kC = 1, kH = 1;
+
+  const C1 = Math.hypot(a1, b1);
+  const C2 = Math.hypot(a2, b2);
+  const Cbar = (C1 + C2) / 2;
+  const G = 0.5 * (1 - Math.sqrt(Math.pow(Cbar, 7) / (Math.pow(Cbar, 7) + Math.pow(25, 7))));
+
+  const a1p = (1 + G) * a1;
+  const a2p = (1 + G) * a2;
+  const C1p = Math.hypot(a1p, b1);
+  const C2p = Math.hypot(a2p, b2);
+
+  const hp = (ap, b) => {
+    if (ap === 0 && b === 0) return 0;
+    let h = Math.atan2(b, ap) * 180 / Math.PI;
+    return h < 0 ? h + 360 : h;
+  };
+  const h1p = hp(a1p, b1);
+  const h2p = hp(a2p, b2);
+
+  const dLp = L2 - L1;
+  const dCp = C2p - C1p;
+  let dhp;
+  if (C1p * C2p === 0) dhp = 0;
+  else if (Math.abs(h2p - h1p) <= 180) dhp = h2p - h1p;
+  else if (h2p - h1p > 180) dhp = h2p - h1p - 360;
+  else dhp = h2p - h1p + 360;
+  const dHp = 2 * Math.sqrt(C1p * C2p) * Math.sin(dhp / 2 * Math.PI / 180);
+
+  const Lbarp = (L1 + L2) / 2;
+  const Cbarp = (C1p + C2p) / 2;
+  let hbarp;
+  if (C1p * C2p === 0) hbarp = h1p + h2p;
+  else if (Math.abs(h1p - h2p) <= 180) hbarp = (h1p + h2p) / 2;
+  else if (h1p + h2p < 360) hbarp = (h1p + h2p + 360) / 2;
+  else hbarp = (h1p + h2p - 360) / 2;
+
+  const T = 1
+    - 0.17 * Math.cos((hbarp - 30) * Math.PI / 180)
+    + 0.24 * Math.cos((2 * hbarp) * Math.PI / 180)
+    + 0.32 * Math.cos((3 * hbarp + 6) * Math.PI / 180)
+    - 0.20 * Math.cos((4 * hbarp - 63) * Math.PI / 180);
+
+  const dTheta = 30 * Math.exp(-Math.pow((hbarp - 275) / 25, 2));
+  const RC = 2 * Math.sqrt(Math.pow(Cbarp, 7) / (Math.pow(Cbarp, 7) + Math.pow(25, 7)));
+  const SL = 1 + (0.015 * Math.pow(Lbarp - 50, 2)) / Math.sqrt(20 + Math.pow(Lbarp - 50, 2));
+  const SC = 1 + 0.045 * Cbarp;
+  const SH = 1 + 0.015 * Cbarp * T;
+  const RT = -Math.sin(2 * dTheta * Math.PI / 180) * RC;
+
+  return Math.sqrt(
+    Math.pow(dLp / (kL * SL), 2) +
+    Math.pow(dCp / (kC * SC), 2) +
+    Math.pow(dHp / (kH * SH), 2) +
+    RT * (dCp / (kC * SC)) * (dHp / (kH * SH))
+  );
+}
+
+// Default distance: ΔE2000 (perceptual). Use GENORAH_KMEANS_FAST=1 to switch to rMean approximation.
+function rMeanDist(a, b) {
   const rMean = (a[0] + b[0]) / 2;
   const dr = a[0] - b[0], dg = a[1] - b[1], db = a[2] - b[2];
   return Math.sqrt((2 + rMean / 256) * dr * dr + 4 * dg * dg + (2 + (255 - rMean) / 256) * db * db);
 }
+const dist = process.env.GENORAH_KMEANS_FAST ? rMeanDist : deltaE2000;
 
 function kmeans(samples, k = 12, iter = 20) {
   if (samples.length === 0) return [];
