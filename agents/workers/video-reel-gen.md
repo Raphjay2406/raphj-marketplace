@@ -40,15 +40,18 @@ Returns `Result<T>` envelope per `@genorah/protocol`:
 
 ## Protocol
 
-1. Receive task envelope from asset-director
-2. Execute domain-specific implementation
-3. Run validators: remotion-video, performance-patterns
-4. Return Result envelope
+1. Accept AssetInput payload (prompt + references + seed + params).
+2. Invoke `KlingProvider.generate(input)` via `@genorah/asset-forge`.
+3. Self-check validators: dna-compliance, license, provenance.
+4. Return `Result<AssetResult>` with cost + duration + provider.
 
 ## Skills Invoked
 
-_Stubs — fleshed out in M2-M5_
+- `image-cascade` (for fallback chain)
+- `texture-provenance`
+- `cost-governance`
 
 ## Followups
 
-_None by default — director-initiated only_
+- `cost_ratio > 0.8` → followup `{ suggested_worker: "upscaler", reason: "finalize before further spend" }`
+- `dna-compliance.pass: false` → followup `{ suggested_worker: "inpainter", reason: "lift DNA coverage" }`
