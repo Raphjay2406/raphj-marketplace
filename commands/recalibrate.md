@@ -67,6 +67,7 @@ APPROVE with user review.
 ### 5. User approval
 
 Prompt user to review diff. On approve:
+
 - Write new thresholds to `.claude-plugin/config.json`
 - Insert `recalibrations` row to L7 store
 - Ledger: `{kind: "recalibration-applied", payload: {...}}`
@@ -79,6 +80,14 @@ On reject: keep current thresholds; log attempt.
 - `--dry-run` — show proposed changes without writing
 - `--headless` (v3.19) — skip prompts; fail-closed on any ΔRMSE > 0.1 or κ < floor; auto-invokes `/gen:shakedown` before applying
 - `--cron` (v3.19) — emits Prometheus-compatible gauges to stdout, non-zero exit on proposed changes (for scheduled jobs)
+
+### 6. Self-improving weight calibration (v4-M5)
+
+After the recalibration ritual completes:
+
+1. Run `node ${plugin_root}/scripts/judge-calibration/calibrate.mjs` — reads `~/.claude/genorah/post-ship-delta.jsonld`, computes per-category miss rates, bumps weights where `mean_error ≥ 10`.
+2. Updated weights are written to `skills/quality-gate-v3/weights.json` (loaded by the quality-gate at runtime).
+3. If `--dry-run`, print proposed weight changes without writing.
 
 ## Cadence
 
