@@ -3,10 +3,10 @@
   "workspaces": [
     "packages/*"
   ],
-  "version": "3.25.0",
+  "version": "4.0.0",
   "private": true,
   "type": "module",
-  "description": "Genorah Claude Code plugin — internal testing infrastructure for hooks + dashboard + skill schema validation",
+  "description": "Genorah Claude Code plugin \u00e2\u20ac\u201d internal testing infrastructure for hooks + dashboard + skill schema validation",
   "engines": {
     "node": ">=20"
   },

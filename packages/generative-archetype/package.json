@@ -1,10 +1,13 @@
 {
   "name": "@genorah/generative-archetype",
-  "version": "4.0.0-alpha.4",
+  "version": "4.0.0",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "scripts": { "build": "tsc -p .", "test": "vitest run" },
+  "scripts": {
+    "build": "tsc -p .",
+    "test": "vitest run"
+  },
   "dependencies": {
     "zod": "^3.23.8",
     "sqlite-vec": "^0.1.4",
