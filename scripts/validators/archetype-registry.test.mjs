@@ -8,5 +8,5 @@ test("registry passes with no issues", async () => {
     console.error("Issues:", r.issues);
   }
   assert.equal(r.pass, true);
-  assert.ok(r.count >= 17, `expected at least 17 archetypes, got ${r.count}`);
+  assert.ok(r.count >= 42, `expected at least 42 archetypes, got ${r.count}`);
 });
