@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import { strict as assert } from "node:assert";
-import { checkPerfBudget, BUDGET_TABLE } from "./perf-budget.mjs";
+import { checkPerfBudget, BUDGET_TABLE } from "./web-vitals-budget.mjs";
 
 test("passes when all metrics are under cinematic budget", () => {
   const metrics = {
