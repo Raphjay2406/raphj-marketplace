@@ -1,3 +1,5 @@
+import { detectWebGpu } from "./webgpu/feature-detect.js";
+
 export interface Capabilities {
   webgl2: boolean;
   webgpu: boolean;
@@ -10,11 +12,9 @@ export async function probeCapabilities(): Promise<Capabilities> {
   const webgl2 = typeof document !== "undefined"
     ? !!document.createElement("canvas").getContext("webgl2")
     : false;
-  let webgpu = false;
-  const gpu = (navigator as any)?.gpu;
-  if (gpu?.requestAdapter) {
-    try { const adapter = await gpu.requestAdapter(); webgpu = !!adapter; } catch { webgpu = false; }
-  }
+  // Delegate WebGPU detection to the canonical feature-detect module (memoized).
+  const gpuCaps = await detectWebGpu();
+  const webgpu = gpuCaps.adapterAvailable;
   let battery = 1;
   try {
     const bat = await (navigator as any)?.getBattery?.();

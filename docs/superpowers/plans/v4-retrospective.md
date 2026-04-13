@@ -38,6 +38,10 @@
 
 - `@fastify/sse-v2` (scoped) does not exist on npm. The M1 plan document referenced it incorrectly. Actual package used is the community-maintained `fastify-sse-v2` (unscoped) at ^4.2.0. Future reviewers: if you install from the plan doc literally, you'll get a 404 — use `fastify-sse-v2`.
 
+### P2.9 deferral note — Theatre/GSAP/Lenis peerDeps-only move
+
+`@theatre/core`, `gsap`, and `lenis` are currently declared in both `dependencies` and `peerDependencies` in `packages/canvas-runtime/package.json`. The v4.0 plan had a Batch D note to move them to peerDeps-only to avoid double-install in consumer projects. This is **deferred to v4.1** — removing them from `dependencies` is a breaking change for consumers that don't install those peers explicitly, and v4.0 GA should not introduce unexpected package installation failures. Track in v4.1 milestone.
+
 ---
 
 ## v4.1 Priorities

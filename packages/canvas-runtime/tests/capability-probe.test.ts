@@ -1,9 +1,11 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { probeCapabilities, shouldLoadCinematicBundle } from "../src/CapabilityProbe.js";
+import { resetWebGpuCache } from "../src/webgpu/feature-detect.js";
 
 beforeEach(() => {
-  // Reset globals before each test
+  // Reset globals and the detectWebGpu memoization cache before each test
   (globalThis as any).navigator = {} as any;
+  resetWebGpuCache();
 });
 
 describe("probeCapabilities", () => {

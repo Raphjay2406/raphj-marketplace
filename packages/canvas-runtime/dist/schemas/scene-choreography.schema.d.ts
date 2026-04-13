@@ -150,7 +150,7 @@ export declare const SceneChoreographySchema: z.ZodEffects<z.ZodObject<{
         pos?: [number, number, number] | undefined;
     }>, "many">;
 }, "strip", z.ZodTypeAny, {
-    intensity: "section" | "none" | "accent" | "cinematic" | "immersive";
+    intensity: "none" | "section" | "accent" | "cinematic" | "immersive";
     schema_version: "4.0.0";
     project_id: string;
     bookmarks: {
@@ -175,7 +175,7 @@ export declare const SceneChoreographySchema: z.ZodEffects<z.ZodObject<{
         pos?: [number, number, number] | undefined;
     }[];
 }, {
-    intensity: "section" | "none" | "accent" | "cinematic" | "immersive";
+    intensity: "none" | "section" | "accent" | "cinematic" | "immersive";
     schema_version: "4.0.0";
     project_id: string;
     bookmarks: {
@@ -200,7 +200,7 @@ export declare const SceneChoreographySchema: z.ZodEffects<z.ZodObject<{
         pos?: [number, number, number] | undefined;
     }[];
 }>, {
-    intensity: "section" | "none" | "accent" | "cinematic" | "immersive";
+    intensity: "none" | "section" | "accent" | "cinematic" | "immersive";
     schema_version: "4.0.0";
     project_id: string;
     bookmarks: {
@@ -225,7 +225,7 @@ export declare const SceneChoreographySchema: z.ZodEffects<z.ZodObject<{
         pos?: [number, number, number] | undefined;
     }[];
 }, {
-    intensity: "section" | "none" | "accent" | "cinematic" | "immersive";
+    intensity: "none" | "section" | "accent" | "cinematic" | "immersive";
     schema_version: "4.0.0";
     project_id: string;
     bookmarks: {
