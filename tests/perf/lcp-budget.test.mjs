@@ -4,7 +4,7 @@
  */
 import { test } from "node:test";
 import { strict as assert } from "node:assert";
-import { checkPerfBudget } from "../../scripts/validators/perf-budget.mjs";
+import { checkPerfBudget } from "../../scripts/validators/web-vitals-budget.mjs";
 
 test("lcp-budget: cinematic preset passes within budget", () => {
   const metrics = {
