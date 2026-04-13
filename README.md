@@ -1,6 +1,6 @@
 # raphj-marketplace
 
-**Genorah v4.0.0 GA — Cinematic Intelligence.** 108 agents (10 directors + 98 workers via A2A v0.3 protocol), 50 archetypes with fractal mixing, 394-pt two-axis quality gate, 7 MCP integrations, 9 workspace packages, and the full preservation-first ingestion suite. Ships the AG-UI canvas runtime, living-system self-healing components, episodic memory graph, and the v4 marketplace for plugin distribution. Every feature is test-proven: 109/109 tests passing across packages and integration suites.
+**Genorah v4.0.0 GA — Cinematic Intelligence.** 108 agents (10 directors + 98 workers via A2A v0.3 protocol), 42 archetypes with fractal mixing, 394-pt two-axis quality gate, 10 MCP integrations, 9 workspace packages, and the full preservation-first ingestion suite. Ships the AG-UI canvas runtime, living-system self-healing components, episodic memory graph, and the v4 marketplace for plugin distribution. Every feature is test-proven: 109/109 tests passing across packages and integration suites.
 
 Genorah produces award-caliber websites (Awwwards SOTD 8.0+ baseline) through a 24-agent pipeline with machine-enforceable design identity, wave-based builds, and closed-loop quality enforcement. v4 adds cinematic-first motion choreography via Theatre.js + WebGPU effects, and the AG-UI protocol for real-time agent execution transparency.
 
@@ -84,7 +84,7 @@ export GENORAH_OFFLINE=1
 
 | Plugin | Skills | Commands | Agents | Version | Description |
 |--------|--------|----------|--------|---------|-------------|
-| `gen` | 287 | 59 | 108 | **4.0.0** | Cinematic Intelligence — AG-UI protocol + canvas runtime + 50 archetypes + 394-pt quality gate + 9 workspace packages + preservation-first ingestion + episodic memory graph + marketplace. 109/109 tests passing. |
+| `gen` | 287 | 59 | 108 | **4.0.0** | Cinematic Intelligence — AG-UI protocol + canvas runtime + 42 archetypes + 394-pt quality gate + 9 workspace packages + preservation-first ingestion + episodic memory graph + marketplace. 109/109 tests passing. |
 | `wavy-bavy` | 1 | — | — | 1.0.0 | Integrate the wavy-bavy library for seamless wave transitions |
 
 ## Genorah v3.18.0 — What's shipped

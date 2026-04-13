@@ -11,7 +11,7 @@
     {
       "name": "gen",
       "source": "./plugins/gen",
-      "description": "Genorah v4.0.0 — Cinematic Intelligence. 108-agent A2A-protocol pipeline (10 directors + 98 workers) for award-caliber frontend design. Persistent single-canvas 3D (R3F + Theatre.js + GSAP + Lenis) at cinematic/immersive intensity tiers. 50 archetypes (17 WebGPU-native), 394-pt two-axis quality gate (254 Design Craft + 140 UX Integrity), 7 MCP integrations (Rodin, Meshy, Flux Kontext, Recraft, Kling + nano-banana + Playwright), 9 npm packages, recipe-driven photoreal asset pipeline with cost ledger and full provenance, generative archetype synthesis, Living Systems runtime, sqlite-vec cross-project memory graph, Deno-sandboxed agent marketplace, offline-first mode. From discovery to ship in measurably enforced quality.",
+      "description": "Genorah v4.0.0 — Cinematic Intelligence. 108-agent A2A-protocol pipeline (10 directors + 98 workers) for award-caliber frontend design. Persistent single-canvas 3D (R3F + Theatre.js + GSAP + Lenis) at cinematic/immersive intensity tiers. 42 archetypes (17 WebGPU-native), 394-pt two-axis quality gate (254 Design Craft + 140 UX Integrity), 7 MCP integrations (Rodin, Meshy, Flux Kontext, Recraft, Kling + nano-banana + Playwright), 9 npm packages, recipe-driven photoreal asset pipeline with cost ledger and full provenance, generative archetype synthesis, Living Systems runtime, sqlite-vec cross-project memory graph, Deno-sandboxed agent marketplace, offline-first mode. From discovery to ship in measurably enforced quality.",
       "version": "4.0.0",
       "author": {
         "name": "raphj"

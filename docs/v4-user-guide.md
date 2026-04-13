@@ -33,7 +33,7 @@ run parallel research agents, select an archetype, and generate a locked Design 
 /gen:plugin-health
 ```
 
-Expected: `Genorah v4.0.0 — 108 agents, 50 archetypes, 394-pt gate, 7 MCPs`
+Expected: `Genorah v4.0.0 — 108 agents, 42 archetypes, 394-pt gate, 10 MCPs`
 
 ---
 
@@ -117,7 +117,7 @@ Scaffolds AI SDK v6 patterns with `stopWhen: stepCountIs(N)` guards and agent-tr
 
 ### Browse Archetypes
 
-Genorah ships 50 archetypes:
+Genorah ships 42 archetypes:
 
 **Classic 33:** Brutalist, Ethereal, Kinetic, Editorial, Neo-Corporate, Organic, Retro-Future,
 Luxury/Fashion, Playful/Startup, Data-Dense, Japanese Minimal, Glassmorphism, Neon Noir,

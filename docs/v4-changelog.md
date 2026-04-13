@@ -23,7 +23,7 @@
 
 ## Pillar 2 — Generative Archetypes v2
 
-- **50 archetypes** (was 33) — 17 new archetypes including Cinematic Scroll, Particle Storm,
+- **42 archetypes** (was 33) — 17 new archetypes including Cinematic Scroll, Particle Storm,
   Liquid Metal, Vapor Drift, Prismatic Clarity, Brutalist Future, Neon Bloom, Stone & Light,
   Circuit Gothic, Acid House, Chromatic Brutalism, Aurora, Aether, Bioluminescent, Deep Ocean,
   Desert Glass, and Monastic.

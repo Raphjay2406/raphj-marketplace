@@ -16,7 +16,7 @@ and PLAN.md are fully forward-compatible.
 |------|--------|--------|
 | Agent cards | `agent-cards.json` now uses A2A v0.3 schema (`tier: director/worker`) | Only affects custom tooling that reads `generated/` directly |
 | Quality gate | Extended from 354pt to 394pt (new axes: Cinematic Motion + AG-UI Protocol) | May lower existing project scores by 0–15pt — re-audit recommended |
-| Archetype count | 33 → 50 archetypes | No breakage; new archetypes are additive |
+| Archetype count | 33 → 42 archetypes | No breakage; new archetypes are additive |
 | Skill count | 287 → 320+ skills | Auto-discovered; no action needed |
 | Package workspace | 9 new `packages/*` (protocol, canvas-runtime, etc.) | Only relevant if you import internal packages directly |
 
@@ -53,7 +53,7 @@ git pull origin master
 /gen:plugin-health
 ```
 
-Expected output: `Genorah v4.0.0 — 108 agents, 50 archetypes, 394-pt gate`
+Expected output: `Genorah v4.0.0 — 108 agents, 42 archetypes, 394-pt gate`
 
 ### 4. Re-run Self-Audit
 
@@ -100,7 +100,7 @@ See the full changelog at [`docs/v4-changelog.md`](./v4-changelog.md).
 | Pillar | Summary |
 |--------|---------|
 | **Cinematic Intelligence** | AG-UI protocol + canvas-runtime + Theatre.js choreography + WebGPU effects |
-| **Generative Archetypes** | 50 archetypes (was 33) + fractal mixing protocol + DNA mutation engine |
+| **Generative Archetypes** | 42 archetypes (was 33) + fractal mixing protocol + DNA mutation engine |
 | **Living Systems** | Self-healing components + drift monitor + canary validator |
 | **Memory Graph** | Cross-session episodic memory + BM25 retrieval + context fabric upgrade |
 | **Marketplace** | Plugin distribution + versioned install + dependency resolution |
