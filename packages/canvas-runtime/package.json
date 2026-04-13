@@ -6,7 +6,10 @@
   "types": "./dist/index.d.ts",
   "peerDependencies": {
     "react": "^19.0.0",
-    "three": "^0.170.0"
+    "three": "^0.170.0",
+    "@theatre/core": "^0.7.2",
+    "gsap": "^3.13.0",
+    "lenis": "^1.2.0"
   },
   "dependencies": {
     "@react-three/drei": "^10.0.0",
