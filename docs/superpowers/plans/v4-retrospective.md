@@ -34,6 +34,10 @@
 | Cinematic demo project | Not required for GA; would add scope without unblocking anything | Post-release |
 | MCP sampling v2 host binding | v4.0 ships schema + registry API; v4.1 wires actual MCP host connection | v4.1 |
 
+### Package name note
+
+- `@fastify/sse-v2` (scoped) does not exist on npm. The M1 plan document referenced it incorrectly. Actual package used is the community-maintained `fastify-sse-v2` (unscoped) at ^4.2.0. Future reviewers: if you install from the plan doc literally, you'll get a 404 — use `fastify-sse-v2`.
+
 ---
 
 ## v4.1 Priorities
