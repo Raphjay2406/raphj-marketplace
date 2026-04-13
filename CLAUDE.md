@@ -4,7 +4,7 @@ This file provides guidance to Claude Code when working with the Genorah plugin 
 
 ## Project Overview
 
-**Genorah v4.0.0 — Cinematic Intelligence.** 108 agents, 50 archetypes, 394-pt quality gate, 7 MCPs, 7 packages. GA release. Ships AG-UI v0.3 protocol + canvas runtime, tiered agent structure (10 directors + 98 workers), living-system self-healing components, episodic memory graph, v4 marketplace with plugin distribution, 394-pt two-axis quality gate (Design 274 + UX 120 = 394), fractal archetype mixing (50 archetypes), and the full preservation-first ingestion suite (v3.21–v3.25). 109/109 tests passing. See `docs/v4-changelog.md` for the full feature list.
+**Genorah v4.0.0 — Cinematic Intelligence.** 108 agents, 42 archetypes, 394-pt quality gate, 10 MCPs, 7 packages. GA release. Ships AG-UI v0.3 protocol + canvas runtime, tiered agent structure (10 directors + 98 workers), living-system self-healing components, episodic memory graph, v4 marketplace with plugin distribution, 394-pt two-axis quality gate (Design 274 + UX 120 = 394), fractal archetype mixing (42 archetypes), and the full preservation-first ingestion suite (v3.21–v3.25). 109/109 tests passing. See `docs/v4-changelog.md` for the full feature list.
 
 ## Architecture (v4)
 
@@ -197,44 +197,18 @@ Genorah ships baked-in integration skills for major platforms:
 
 Each integration skill follows the 4-layer format and maps to DNA tokens for consistent visual theming of third-party UI components.
 
-## Preservation-First Ingestion (v3.21–v3.25)
+## Preservation-First Ingestion (v3.21+ retained)
 
-For existing projects built outside this pipeline, `/gen:ingest` brings them in without losing detail. Source preserved verbatim under `source/` (codebase) or `captured/` (URL). Every byte touched → `preservation.ledger.ndjson` append-only NDJSON.
+`/gen:ingest` ingests existing projects into Genorah. Captures source/URL verbatim, logs every byte touched to `preservation.ledger.ndjson`. Full feature set retained from v3.25 — see legacy docs for ingestion subcommands.
 
-| Subcommand | Purpose |
-|------------|---------|
-| `codebase <path>` | Mirror repo + framework detect + token/component inventory |
-| `url <url> --consent` | Playwright crawl — HTML + 4bp screenshots + computed-styles + assets |
-| `motion <slug> <trace-dir>` | Playwright-trace → MOTION-INVENTORY.md with exact preset fitting (7 cubic-Bezier presets) |
-| `cms <slug> --cms=<p>` | Schema introspection — Sanity (GROQ) / Contentful (CMA) / Payload (access + OpenAPI) |
-| `verify <slug>` | Preservation invariants — every source has capture, every asset has license or paired gap |
-| `gap <slug>` / `resolve` | User-decision prompts; blocking gaps stop scaffold |
+## 9-Axis Frontier (v3.20 retained, superseded by v4 pillars)
 
-**Invariants** (enforced by `verify`):
-1. Every `source/**` file has `capture.file` event.
-2. Every asset has confirmed license OR paired `gap:license-unknown`.
-3. Every `content.extract` has valid `CONTENT.md:*` destination.
-4. Every low-confidence `dna.extract` has paired `gap:dna-low-confidence`.
+v3.20's 9-axis frontier (agentic UX, server-driven UI, brandkit v2, multi-brand governance, experimentation layer, 3D scenes, commerce v2, observability/SRE, edge-native) is retained. Most axes are superseded by v4 pillars:
 
-**Runtime scripts** (`scripts/ingest/`): `preservation-ledger`, `codebase-scan`, `crawl` (plan emitter) + `crawl-executor` (Playwright), `dna-extract` (CSS-var path), `pixel-kmeans` (full ΔE2000 perceptual distance via sRGB→Lab→ΔE2000), `archetype-score`, `interaction-replay` (trace → easing fit), `cms-schema` (3-platform dispatcher), `cms-detect` (8-CMS fingerprinting), `asset-download`.
-
-Architecture: `docs/v3.21-ingestion-architecture.md`.
-
-## 9-Axis Frontier (v3.20)
-
-Shipped as composable skills + commands, integrating with DNA + pipeline:
-
-| Axis | Skills / Commands |
-|------|-------------------|
-| Agentic UX | `agentic-ux-patterns` + `agent-trace-ui` + `/gen:agents` — AI SDK v6 via Vercel AI Gateway with `stopWhen: stepCountIs(N)` + agent-trace UI primitives |
-| Server-driven UI | `server-driven-ui` — Zod discriminated-union → component tree for CMS-authored pages |
-| Brandkit v2 | `brand-motion-sigils` (Lottie + Rive) + `sonic-logo` + `haptic-signature` + `figma-variables-roundtrip` |
-| Multi-brand governance | `multi-brand-governance` + `/gen:multibrand` — parent DNA + N sub-brand overlays with drift policy |
-| Experimentation | `experimentation-layer` + `/gen:experiment` — A/B/n with quality-gate-aware winner (variants below Design 200 / UX 100 disqualified) |
-| 3D scenes | `3d-scene-composer` + `r3f-physics-rapier` + `gltf-authoring-pipeline` |
-| Commerce v2 | `commerce-hydrogen` + `commerce-medusa` |
-| Observability / SRE | `opentelemetry-traces` + `slo-error-budgets` |
-| Edge-native | `vercel-sandbox` + `vercel-botid` |
+- Agentic UX + server-driven UI → absorbed into SDUI renderer (`@genorah/sdui`)
+- Brandkit v2 → absorbed into `@genorah/generative-archetype` + Signature DNA forge
+- 3D scenes → absorbed into `@genorah/canvas-runtime` (Cinematic tier)
+- Commerce/observability/edge-native → retained as v3-era skills
 
 ## SEO/GEO Intelligence
 
