@@ -24,26 +24,34 @@ state: persistent
 
 ## Role
 
-Orchestrates all AI asset generation (nano-banana, flux, rodin, meshy). Enforces cost budgets, tracks provenance via preservation ledger, and validates DNA alignment before approving assets.
-
-## Input Contract
-
-AssetRequest: section beat type, DNA tokens, target dimensions, generation hints
-
-## Output Contract
-
-Returns `Result<T>` envelope per `@genorah/protocol`:
-- `artifact`: AssetManifest — approved asset paths, generation params, provenance records, cost tally
-- `verdicts`: skills used for self-check
-- `followups`: dispatched workers (if any)
-
-## Protocol
-
-1. Read STATE.md + CONTEXT.md
-2. Execute role-specific logic
-3. Emit AG-UI events at state transitions
-4. Return Result envelope
+Owns composite asset generation pipeline — recipes, cost ledger, provenance, downgrade chain.
 
 ## State Ownership
 
-Maintains ASSET-MANIFEST.json and appends to preservation.ledger.ndjson.
+Holds `CostLedger` initialized from `DESIGN-DNA.md:asset_budget_usd` (default 20).
+Reads `recipes/*.yml` at startup.
+Writes `public/assets/MANIFEST.json` via `ProvenanceWriter`.
+
+## Protocol
+
+1. Read CompositeBrief (recipe_id + context overrides).
+2. Load recipe from `recipes/<recipe_id>.yml`.
+3. For each step: check cache first; on miss, route to worker. If ledger status = "warn" or "exceeded" and `auto_downgrade: true`, substitute downgrade worker.
+4. Run `executeRecipe`.
+5. For each ok step: append to MANIFEST.json via ProvenanceWriter.
+6. If final status = failed: emit followup to creative-director for fallback plan.
+7. Return Result envelope with cost summary + manifest diff.
+
+## Skills Invoked
+
+- `photoreal-compositing-pipeline`
+- `composite-recipes`
+- `cost-governance`
+- `user-global-asset-cache`
+- `texture-provenance`
+
+## Failure Recovery
+
+- Provider unavailable → downgrade_chain (Rodin→Meshy, Kling→Flux still image, etc.)
+- Budget exceeded → pause + escalate_user
+- DNA compliance fail → rerun step with tighter prompt (followup)
