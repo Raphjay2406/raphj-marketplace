@@ -92,8 +92,8 @@ export GENORAH_OFFLINE=1
 ## Genorah v3.18.0 — What's shipped
 
 **Core:**
-- 33 Design Archetypes + formal mixing protocol (primary 60% + secondary 30% + tension 10%)
-- Two-axis 354-pt quality gate: Design Craft 234 + UX Integrity 120
+- 42 Design Archetypes + formal mixing protocol (primary 60% + secondary 30% + tension 10%)
+- Two-axis 394-pt quality gate: Design Craft 254 + UX Integrity 140
 - 14-stage pipeline (Discovery → Intent Alignment → DNA → Brainstorm → Plan → Plan Review → Rehearsal → Build → Mid-wave Reconciliation → Audit → Narrative Audit → Regression → Ship Check → Export → Post-ship Learning)
 - 8-layer Context Fabric (L1 scratchpad → L4 ledger → L5 BM25 → L6 Obsidian KB → L7 calibration → L8 user memory)
 - 10-track empirical research program

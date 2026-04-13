@@ -1,0 +1,13 @@
+{
+  "slug": "warm-artisan",
+  "name": "Warm Artisan",
+  "tier": "legacy",
+  "mandatory_techniques": [],
+  "forbidden_patterns": [],
+  "tension_zones": [],
+  "default_intensity": "accent",
+  "dna_color_palette": { "primary": "#000000", "secondary": "#888888", "accent": "#ffffff", "signature": "#3366ff" },
+  "dna_fonts": { "display": "TBD", "body": "TBD", "mono": "TBD" },
+  "dna_motion_tokens": { "easing": "ease", "duration_hero_ms": 1200, "duration_micro_ms": 200 },
+  "legacy_seed_source": "skills/design-archetypes/SKILL.md"
+}

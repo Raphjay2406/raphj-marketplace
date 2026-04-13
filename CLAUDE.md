@@ -4,7 +4,7 @@ This file provides guidance to Claude Code when working with the Genorah plugin 
 
 ## Project Overview
 
-**Genorah v4.0.0 — Cinematic Intelligence.** 108 agents, 42 archetypes, 394-pt quality gate, 10 MCPs, 7 packages. GA release. Ships AG-UI v0.3 protocol + canvas runtime, tiered agent structure (10 directors + 98 workers), living-system self-healing components, episodic memory graph, v4 marketplace with plugin distribution, 394-pt two-axis quality gate (Design 274 + UX 120 = 394), fractal archetype mixing (42 archetypes), and the full preservation-first ingestion suite (v3.21–v3.25). 109/109 tests passing. See `docs/v4-changelog.md` for the full feature list.
+**Genorah v4.0.0 — Cinematic Intelligence.** 108 agents, 42 archetypes, 394-pt quality gate, 10 MCPs, 9 packages. GA release. Ships AG-UI v0.3 protocol + canvas runtime, tiered agent structure (10 directors + 98 workers), living-system self-healing components, episodic memory graph, v4 marketplace with plugin distribution, 394-pt two-axis quality gate (Design Craft 254 + UX Integrity 140 = 394), fractal archetype mixing (42 archetypes), and the full preservation-first ingestion suite (v3.21–v3.25). 109/109 tests passing. See `docs/v4-changelog.md` for the full feature list.
 
 ## Architecture (v4)
 
@@ -141,7 +141,7 @@ Additional: `/gen:bugfix` for diagnostic root cause analysis with proposed solut
 
 **Design DNA** -- Per-project visual identity with 12 color tokens (8 semantic: bg, surface, text, border, primary, secondary, accent, muted + 4 expressive: glow, tension, highlight, signature), display/body/mono fonts, 8-level type scale, 5-level spacing, signature element, and 8+ motion tokens. Generates Tailwind v4 `@theme` CSS directly.
 
-**Design Archetypes** -- 19 opinionated personality systems (Brutalist, Ethereal, Kinetic, Editorial, Neo-Corporate, Organic, Retro-Future, Luxury/Fashion, Playful/Startup, Data-Dense, Japanese Minimal, Glassmorphism, Neon Noir, Warm Artisan, Swiss/International, Vaporwave, Neubrutalism, Dark Academia, AI-Native) plus a custom builder. Each locks in colors, fonts, mandatory techniques, forbidden patterns, and 3 tension zones. Escape hatch: builders may break ONE rule via tension override with documented rationale.
+**Design Archetypes** -- 42 opinionated personality systems (17 legacy: Brutalist, Ethereal, Kinetic, Editorial, Neo-Corporate, Organic, Retro-Future, Luxury/Fashion, Playful/Startup, Data-Dense, Japanese Minimal, Glassmorphism, Neon Noir, Warm Artisan, Swiss/International, Vaporwave, Neubrutalism, Dark Academia, AI-Native + 23 v4 additions: Claymorphism, Neumorphism, Y2K, Pixel-Art, Cyberpunk-HUD, Kinetic-Industrial, Liminal-Brutalism, Organic-Machinery, Quantum-Editorial, Signal-Noise, Temporal-Glass, Post-Flat, Hyperreal-Minimal, Neo-Physical, Cinematic-3D, Volumetric, Ambient-Computing, Biomorphic-Compute, Living-Data, Narrative-Cinema, Sonic-Visual, Archive-Futurist, Spatial-VisionOS) plus fractal mixing. Each locks in colors, fonts, mandatory techniques, forbidden patterns, and 3 tension zones. Escape hatch: builders may break ONE rule via tension override with documented rationale.
 
 **Creative Tension** -- Controlled rule-breaking with 5 tension types (Scale Violence, Material Collision, Temporal Disruption, Dimensional Break, Interaction Shock). Per-archetype techniques, 1-3 per page, spaced apart.
 

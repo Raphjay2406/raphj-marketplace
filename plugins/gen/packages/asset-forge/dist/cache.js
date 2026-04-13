@@ -15,6 +15,7 @@ export function computeCacheKey(input) {
 }
 export class AssetCache {
     keyv;
+    _closed = false;
     rootDir;
     constructor(opts) {
         this.rootDir = opts.rootDir;
@@ -40,6 +41,9 @@ export class AssetCache {
         return join(this.rootDir, "blobs", key.slice(0, 2), key);
     }
     async close() {
+        if (this._closed)
+            return;
+        this._closed = true;
         await this.keyv.disconnect();
     }
 }
