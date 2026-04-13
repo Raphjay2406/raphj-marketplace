@@ -60,4 +60,39 @@ describe("executeRecipe", () => {
     await executeRecipe({ recipe, dispatch });
     expect(dispatch).toHaveBeenCalledTimes(3); // w1 -> injected w2 -> w3
   });
+
+  it("succeeds when a 15-step recipe runs under max_followup_hops=20", async () => {
+    const steps = Array.from({ length: 15 }, (_, i) => ({ worker: `w${i}`, input: {} }));
+    const recipe = {
+      name: "t", version: "1.0.0",
+      steps,
+      validators_per_step: [], followups_enabled: false
+    };
+    const dispatch = vi.fn().mockResolvedValue({
+      schema_version: "4.0.0", status: "ok", artifact: {}, verdicts: [], followups: []
+    });
+    const result = await executeRecipe({ recipe, dispatch, max_followup_hops: 20 });
+    expect(result.status).toBe("ok");
+    expect(dispatch).toHaveBeenCalledTimes(15);
+    expect(result.error).toBeUndefined();
+  });
+
+  it("returns CIRCULAR_FOLLOWUP when self-referencing followup exceeds hop cap", async () => {
+    const recipe = {
+      name: "t", version: "1.0.0",
+      steps: [{ worker: "self-ref", input: {} }],
+      validators_per_step: [], followups_enabled: true
+    };
+    // worker always returns a followup targeting itself => infinite loop
+    const dispatch = vi.fn().mockResolvedValue({
+      schema_version: "4.0.0", status: "ok", artifact: {}, verdicts: [],
+      followups: [{ suggested_worker: "self-ref", reason: "retry" }]
+    });
+    const result = await executeRecipe({ recipe, dispatch, max_followup_hops: 5 });
+    expect(result.status).toBe("failed");
+    expect(result.error?.code).toBe("CIRCULAR_FOLLOWUP");
+    expect(result.error?.recovery_hint).toBe("escalate_user");
+    // should have stopped at or before the hop cap
+    expect(dispatch.mock.calls.length).toBeLessThanOrEqual(5);
+  });
 });

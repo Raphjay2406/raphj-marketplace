@@ -4,6 +4,13 @@ import type { ResultEnvelope } from "@genorah/protocol";
 export interface ExecuteInput {
   recipe: Recipe;
   dispatch: (worker: string, input: Record<string, unknown>) => Promise<ResultEnvelope<unknown>>;
+  max_followup_hops?: number;
+}
+
+export interface ExecuteResult {
+  status: "ok" | "partial" | "failed";
+  envelopes: ResultEnvelope<unknown>[];
+  error?: { code: string; message: string; recovery_hint: string };
 }
 
 function interpolate(value: unknown, context: Record<string, unknown>): unknown {
@@ -29,12 +36,25 @@ function resolveInput(input: Record<string, unknown>, context: Record<string, un
   return out;
 }
 
-export async function executeRecipe(inp: ExecuteInput): Promise<{ status: "ok" | "partial" | "failed"; envelopes: ResultEnvelope<unknown>[] }> {
+export async function executeRecipe(inp: ExecuteInput): Promise<ExecuteResult> {
+  const maxHops = inp.max_followup_hops ?? 10;
+  let hops = 0;
   const envelopes: ResultEnvelope<unknown>[] = [];
   let previous: ResultEnvelope<unknown> | null = null;
   const queue = [...inp.recipe.steps];
 
   while (queue.length) {
+    if (hops++ >= maxHops) {
+      return {
+        status: "failed" as const,
+        envelopes,
+        error: {
+          code: "CIRCULAR_FOLLOWUP",
+          message: `exceeded max_followup_hops=${maxHops}`,
+          recovery_hint: "escalate_user"
+        }
+      };
+    }
     const step = queue.shift()!;
     const context = { previous: previous ?? { artifact: {} } };
     const resolvedInput = resolveInput(step.input, context);
