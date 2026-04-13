@@ -10,7 +10,7 @@ function check(name, cond, fail) {
 // Check 1: plugin.json version
 try {
   const pkg = JSON.parse(readFileSync(".claude-plugin/plugin.json", "utf8"));
-  check("plugin.json version is 4.0.0-alpha.1", pkg.version === "4.0.0-alpha.1", `got ${pkg.version}`);
+  check("plugin.json version is 4.0.0-alpha.5", pkg.version === "4.0.0-alpha.5", `got ${pkg.version}`);
 } catch (e) {
   check("plugin.json readable", false, e.message);
 }
@@ -29,12 +29,12 @@ function walk(dir) {
 const dirs = walk("agents/directors").length;
 const workers = walk("agents/workers").length;
 check("10 directors", dirs === 10, `got ${dirs}`);
-check("95 workers", workers === 95, `got ${workers}`);
+check("98 workers", workers === 98, `got ${workers}`);
 
 // Check 3: agent-cards.json
 try {
   const cards = JSON.parse(readFileSync(".claude-plugin/generated/agent-cards.json", "utf8"));
-  check("105 agent cards generated", cards.length === 105, `got ${cards.length}`);
+  check("108 agent cards generated", cards.length === 108, `got ${cards.length}`);
   check("all cards have schema_version a2a-v0.3", cards.every(c => c.schema_version === "a2a-v0.3"), "mixed");
   check("all cards at version 4.0.0 + stable channel", cards.every(c => c.version === "4.0.0" && c.channel === "stable"), "mixed");
 } catch (e) {
