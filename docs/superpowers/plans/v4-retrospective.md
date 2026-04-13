@@ -32,6 +32,7 @@
 | CDN-shared asset cache pool | Requires cloud infra agreement; local SQLite cache ships instead | v4.1 |
 | Visual regression baseline capture | Playwright baseline capture needs stable viewport harness first | Post-release |
 | Cinematic demo project | Not required for GA; would add scope without unblocking anything | Post-release |
+| MCP sampling v2 host binding | v4.0 ships schema + registry API; v4.1 wires actual MCP host connection | v4.1 |
 
 ---
 

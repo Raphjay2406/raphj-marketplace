@@ -45,6 +45,7 @@
   without blocking the main wave.
 - **Wave-resume hardening** — `scripts/wave-resume.mjs` persists wave state to
   `.planning/genorah/wave-state.json`; resume-after-interrupt is fully idempotent.
+- **MCP sampling v2 adapter** — schema + in-process registry scaffolded; full Claude/MCP host integration deferred to v4.1.
 
 ## Pillar 4 — Memory Graph
 
