@@ -1,11 +1,21 @@
 /**
  * sync-obsidian-vault.mjs
  * Syncs the v4 knowledge bundle into the Obsidian vault at D:/Genorah/Genorah-Plugin.
- * - Overwrites generated content (agents, archetypes, indexes, MOC, schema)
- * - Preserves user-created notes
- * - Backs up any conflicting top-level files to <filename>.user.md
- * - v3.25.1+: mirrors agents/directors/ and agents/workers/<domain>/ subfolders
- * - v3.25.1+: idempotently adds graph.json color groups for v4 paths
+ *
+ * Strategy (v3.25.2+):
+ *  - Agent / command / skill / archetype HUB files are merged in-place into the
+ *    canonical hub files (All Agents.md, All Commands.md, Skills Overview.md,
+ *    All Archetypes.md) using <!-- v4-auto-sync:start / end --> markers.
+ *    User-written prose outside the markers is never touched.
+ *  - Individual agent / archetype reference cards are still hard-copied into
+ *    their per-file locations as before.
+ *  - No new _index or _All* duplicate files are created.
+ *  - Re-running produces no diff (idempotent).
+ *
+ * Preserved behaviours from v3.25.1:
+ *  - agents/directors/ and agents/workers/<domain>/ subfolder mirroring
+ *  - graph.json color-group idempotent injection
+ *  - .user.md backup for top-level files with backup:true
  */
 
 import {
@@ -17,6 +27,7 @@ import {
   writeFileSync,
   readFileSync,
   renameSync,
+  unlinkSync,
 } from "fs";
 import { join, basename } from "path";
 
@@ -26,8 +37,53 @@ const DST = "D:/Genorah/Genorah-Plugin";
 
 let agentsWritten = 0;
 let archetypesWritten = 0;
-let indexesUpdated = 0;
+let hubsMerged = 0;
 let backupsCreated = 0;
+
+// ─── Merge helpers ────────────────────────────────────────────────────────────
+
+const SYNC_START = "<!-- v4-auto-sync:start -->";
+const SYNC_END   = "<!-- v4-auto-sync:end -->";
+
+/**
+ * Merge freshContent into hubPath inside <!-- v4-auto-sync:start/end --> markers.
+ * - If markers exist: replace content between them.
+ * - If markers don't exist: append the full block (first run).
+ * - User-written content outside markers is never modified.
+ */
+function mergeIntoHub(hubPath, sectionTitle, freshContent) {
+  if (!existsSync(hubPath)) {
+    console.log(`  [skip] Hub not found: ${basename(hubPath)}`);
+    return;
+  }
+
+  const existing = readFileSync(hubPath, "utf8");
+  // Canonical form: markers on their own lines, single blank line padding inside
+  const normalizedFresh = freshContent.trim();
+  const block = `\n${SYNC_START}\n\n${normalizedFresh}\n\n${SYNC_END}\n`;
+
+  const startIdx = existing.indexOf(SYNC_START);
+  const endIdx   = existing.indexOf(SYNC_END);
+
+  if (startIdx !== -1 && endIdx !== -1 && endIdx > startIdx) {
+    // Extract what's currently between the markers and compare (trimmed)
+    const currentBetween = existing.slice(startIdx + SYNC_START.length, endIdx).trim();
+    if (currentBetween === normalizedFresh) {
+      console.log(`  [no-diff] ${basename(hubPath)}`);
+      return;
+    }
+    // Replace existing block
+    const updated = existing.slice(0, startIdx) + block + existing.slice(endIdx + SYNC_END.length);
+    writeFileSync(hubPath, updated, "utf8");
+  } else {
+    // First run: append block
+    const updated = existing.trimEnd() + "\n" + block;
+    writeFileSync(hubPath, updated, "utf8");
+  }
+
+  console.log(`  [merged] ${basename(hubPath)}`);
+  hubsMerged++;
+}
 
 // Helper: copy a file, optionally backing up the destination first
 function safeCopy(srcPath, dstPath, { backup = false } = {}) {
@@ -42,38 +98,32 @@ function safeCopy(srcPath, dstPath, { backup = false } = {}) {
   copyFileSync(srcPath, dstPath);
 }
 
-// ─── 1. Refresh agents ────────────────────────────────────────────────────────
+// ─── 1. Refresh individual agent files ────────────────────────────────────────
 // Mirror source structure: agents/directors/ → Agents/directors/
 //                          agents/workers/<domain>/ → Agents/workers/<domain>/
-// Falls back to flat copy for any source files at agents/ root (legacy bundle)
-console.log("\n[1] Syncing agents...");
+// v3 subdirs (pipeline/, specialists/, protocols/) are never touched.
+console.log("\n[1] Syncing individual agent files...");
 const agentsDst = join(DST, "Agents");
 mkdirSync(agentsDst, { recursive: true });
 
-// v3 subdirs preserved — never touched by sync
 const V3_DIRS = new Set(["pipeline", "specialists", "protocols"]);
-// Root-level override files — stay at Agents/ root
-const ROOT_KEEP = new Set(["All Agents.md"]);
+const AGENT_HUB = join(agentsDst, "All Agents.md"); // canonical hub — merged, not overwritten
 
-// Step 1a: Sync from plugin source (directors/ and workers/<domain>/)
 const agentPluginSrc = PLUGIN_AGENTS_SRC;
 if (existsSync(agentPluginSrc)) {
   for (const entry of readdirSync(agentPluginSrc, { withFileTypes: true })) {
-    if (V3_DIRS.has(entry.name)) continue; // leave v3 dirs alone
+    if (V3_DIRS.has(entry.name)) continue;
     if (entry.name === "figma-translator.md") {
-      // figma-translator lives at plugin root — copy to Agents/ root
       copyFileSync(join(agentPluginSrc, entry.name), join(agentsDst, entry.name));
       agentsWritten++;
       continue;
     }
     if (entry.isDirectory()) {
-      // directors/ or workers/ (with potential subdomains)
       const dstSubDir = join(agentsDst, entry.name);
       mkdirSync(dstSubDir, { recursive: true });
       const srcSubDir = join(agentPluginSrc, entry.name);
       for (const sub of readdirSync(srcSubDir, { withFileTypes: true })) {
         if (sub.isDirectory()) {
-          // workers/<domain>/
           const dstDomain = join(dstSubDir, sub.name);
           mkdirSync(dstDomain, { recursive: true });
           for (const file of readdirSync(join(srcSubDir, sub.name), { withFileTypes: true })) {
@@ -91,135 +141,132 @@ if (existsSync(agentPluginSrc)) {
         }
       }
     }
-    // skip root-level .md files in plugin agents/ — those are the v3 pipeline agents
-    // that already live in pipeline/ subdir
   }
 }
+console.log(`  → ${agentsWritten} individual agent files written`);
 
-// Step 1b: Sync agents index from v4 knowledge bundle (flat, named index.md)
+// ─── 2. Merge agents hub (All Agents.md) ─────────────────────────────────────
+console.log("\n[2] Merging agents hub...");
 const bundleAgentsSrc = join(SRC, "agents");
-if (existsSync(bundleAgentsSrc)) {
-  for (const entry of readdirSync(bundleAgentsSrc, { withFileTypes: true })) {
-    if (!entry.isFile() || !entry.name.endsWith(".md")) continue;
-    if (entry.name === "index.md") {
-      // Sync index — keep named _All Agents v4 (*.md)
-      // Find existing descriptive index in vault
-      const existing = readdirSync(agentsDst).find((f) =>
-        f.startsWith("_All Agents v4")
-      );
-      const dstName = existing || "_All Agents v4 (index).md";
-      copyFileSync(join(bundleAgentsSrc, entry.name), join(agentsDst, dstName));
-      agentsWritten++;
-      continue;
-    }
-    // Flat bundle files: only write to Agents/ root if they haven't been placed
-    // in a subdir already (catch-all for any new workers not yet in WORKER_DOMAINS)
-    const alreadyPlaced = isFilePlacedInSubdir(agentsDst, entry.name, V3_DIRS);
-    if (!alreadyPlaced && !ROOT_KEEP.has(entry.name)) {
-      // Write to workers/ root as catch-all
-      mkdirSync(join(agentsDst, "workers"), { recursive: true });
-      const dstPath = join(agentsDst, "workers", entry.name);
-      copyFileSync(join(bundleAgentsSrc, entry.name), dstPath);
-      agentsWritten++;
-    }
+const agentsIndexSrc  = join(bundleAgentsSrc, "index.md");
+if (existsSync(agentsIndexSrc)) {
+  const raw = readFileSync(agentsIndexSrc, "utf8");
+  // Strip YAML frontmatter if present
+  const content = raw.replace(/^---[\s\S]*?---\n/, "").trim();
+  mergeIntoHub(AGENT_HUB, "v4 Agents", content);
+} else {
+  console.log("  [skip] No agents/index.md in bundle");
+}
+
+// Remove any legacy _All Agents v4 *.md duplicates left from previous syncs
+for (const f of readdirSync(agentsDst)) {
+  if (f.startsWith("_All Agents v4")) {
+    unlinkSync(join(agentsDst, f));
+    console.log(`  [removed legacy] ${f}`);
   }
 }
 
-console.log(`  → ${agentsWritten} agent files written`);
-
-/**
- * Check if a filename already exists somewhere under Agents/directors/ or
- * Agents/workers/<domain>/ so we don't double-write bundle flat files.
- */
-function isFilePlacedInSubdir(agentsRoot, filename, skipDirs) {
-  for (const entry of readdirSync(agentsRoot, { withFileTypes: true })) {
-    if (!entry.isDirectory()) continue;
-    if (skipDirs.has(entry.name)) continue;
-    const subDir = join(agentsRoot, entry.name);
-    for (const sub of readdirSync(subDir, { withFileTypes: true })) {
-      if (sub.isDirectory()) {
-        // workers/<domain>/
-        const domainDir = join(subDir, sub.name);
-        if (existsSync(join(domainDir, filename))) return true;
-      } else if (sub.name === filename) {
-        return true;
-      }
-    }
-  }
-  return false;
-}
-
-// ─── 2. Refresh archetypes ────────────────────────────────────────────────────
-console.log("\n[2] Syncing archetypes...");
+// ─── 3. Refresh individual archetype files ────────────────────────────────────
+console.log("\n[3] Syncing individual archetype files...");
 const archetypesDst = join(DST, "Archetypes");
 mkdirSync(archetypesDst, { recursive: true });
+const ARCHETYPE_HUB = join(archetypesDst, "All Archetypes.md"); // canonical hub
 const archetypesSrc = join(SRC, "archetypes");
 if (existsSync(archetypesSrc)) {
   for (const entry of readdirSync(archetypesSrc, { withFileTypes: true })) {
-    if (entry.isFile() && entry.name.endsWith(".md")) {
-      if (entry.name === "index.md") {
-        // Keep descriptive name
-        const existing = readdirSync(archetypesDst).find((f) =>
-          f.startsWith("_All Archetypes")
-        );
-        const dstName = existing || "_All Archetypes (index).md";
-        copyFileSync(join(archetypesSrc, entry.name), join(archetypesDst, dstName));
-      } else {
-        copyFileSync(join(archetypesSrc, entry.name), join(archetypesDst, entry.name));
-      }
-      archetypesWritten++;
-    }
+    if (!entry.isFile() || !entry.name.endsWith(".md")) continue;
+    if (entry.name === "index.md") continue; // handled in step 4
+    copyFileSync(join(archetypesSrc, entry.name), join(archetypesDst, entry.name));
+    archetypesWritten++;
   }
 }
-console.log(`  → ${archetypesWritten} archetype files written`);
+console.log(`  → ${archetypesWritten} individual archetype files written`);
 
-// ─── 3. Refresh commands index ────────────────────────────────────────────────
-console.log("\n[3] Syncing commands index...");
-const cmdsSrc = join(SRC, "commands", "index.md");
-const cmdsDir = join(DST, "Commands");
+// ─── 4. Merge archetypes hub (All Archetypes.md) ─────────────────────────────
+console.log("\n[4] Merging archetypes hub...");
+const archetypesIndexSrc = join(archetypesSrc, "index.md");
+if (existsSync(archetypesIndexSrc)) {
+  const raw = readFileSync(archetypesIndexSrc, "utf8");
+  const content = raw.replace(/^---[\s\S]*?---\n/, "").trim();
+  // If the canonical hub doesn't exist yet, create it from the index content
+  if (!existsSync(ARCHETYPE_HUB)) {
+    writeFileSync(ARCHETYPE_HUB, `# All Archetypes\n\n${SYNC_START}\n\n${content}\n\n${SYNC_END}\n`, "utf8");
+    console.log(`  [created] All Archetypes.md`);
+    hubsMerged++;
+  } else {
+    mergeIntoHub(ARCHETYPE_HUB, "v4 Archetypes", content);
+  }
+} else {
+  console.log("  [skip] No archetypes/index.md in bundle");
+}
+
+// Remove legacy _All Archetypes *.md duplicates
+for (const f of readdirSync(archetypesDst)) {
+  if (f.startsWith("_All Archetypes")) {
+    unlinkSync(join(archetypesDst, f));
+    console.log(`  [removed legacy] ${f}`);
+  }
+}
+
+// ─── 5. Merge commands hub (All Commands.md) ─────────────────────────────────
+console.log("\n[5] Merging commands hub...");
+const cmdsSrc     = join(SRC, "commands", "index.md");
+const cmdsDir     = join(DST, "Commands");
+const COMMANDS_HUB = join(cmdsDir, "All Commands.md");
+mkdirSync(cmdsDir, { recursive: true });
 if (existsSync(cmdsSrc)) {
-  mkdirSync(cmdsDir, { recursive: true });
-  // Keep descriptive name
-  const existing = readdirSync(cmdsDir).find((f) => f.startsWith("_All Commands"));
-  const dstName = join(cmdsDir, existing || "_All Commands (index).md");
-  copyFileSync(cmdsSrc, dstName);
-  indexesUpdated++;
-  console.log(`  → Commands/${basename(dstName)} written`);
+  const raw = readFileSync(cmdsSrc, "utf8");
+  const content = raw.replace(/^---[\s\S]*?---\n/, "").trim();
+  mergeIntoHub(COMMANDS_HUB, "v4 Commands", content);
+} else {
+  console.log("  [skip] No commands/index.md in bundle");
 }
 
-// ─── 4. Refresh skills index ──────────────────────────────────────────────────
-console.log("\n[4] Syncing skills index...");
-const skillsSrc = join(SRC, "skills", "index.md");
-const skillsDir = join(DST, "Skills");
+// Remove legacy _All Commands *.md duplicates
+for (const f of readdirSync(cmdsDir)) {
+  if (f.startsWith("_All Commands")) {
+    unlinkSync(join(cmdsDir, f));
+    console.log(`  [removed legacy] ${f}`);
+  }
+}
+
+// ─── 6. Merge skills hub (Skills Overview.md) ─────────────────────────────────
+console.log("\n[6] Merging skills hub...");
+const skillsSrc   = join(SRC, "skills", "index.md");
+const skillsDir   = join(DST, "Skills");
+const SKILLS_HUB  = join(skillsDir, "Skills Overview.md");
+mkdirSync(skillsDir, { recursive: true });
 if (existsSync(skillsSrc)) {
-  mkdirSync(skillsDir, { recursive: true });
-  const existing = readdirSync(skillsDir).find((f) => f.startsWith("_All Skills"));
-  const dstName = join(skillsDir, existing || "_All Skills (index).md");
-  copyFileSync(skillsSrc, dstName);
-  indexesUpdated++;
-  console.log(`  → Skills/${basename(dstName)} written`);
+  const raw = readFileSync(skillsSrc, "utf8");
+  const content = raw.replace(/^---[\s\S]*?---\n/, "").trim();
+  mergeIntoHub(SKILLS_HUB, "v4 Skills", content);
+} else {
+  console.log("  [skip] No skills/index.md in bundle");
 }
 
-// ─── 5. Top-level MOC + schema ────────────────────────────────────────────────
-console.log("\n[5] Syncing MOC + frontmatter schema...");
-const mocSrc = join(SRC, "MOC.md");
-const mocDst = join(DST, "MOC.md");
-if (existsSync(mocSrc)) {
-  safeCopy(mocSrc, mocDst, { backup: true });
-  indexesUpdated++;
-  console.log("  → MOC.md written");
+// Remove legacy _All Skills *.md duplicates
+for (const f of readdirSync(skillsDir)) {
+  if (f.startsWith("_All Skills")) {
+    unlinkSync(join(skillsDir, f));
+    console.log(`  [removed legacy] ${f}`);
+  }
 }
 
+// ─── 7. Top-level frontmatter schema (no hub equivalent — direct copy) ────────
+console.log("\n[7] Syncing frontmatter-schema.md...");
 const schemaSrc = join(SRC, "frontmatter-schema.md");
 const schemaDst = join(DST, "frontmatter-schema.md");
 if (existsSync(schemaSrc)) {
   safeCopy(schemaSrc, schemaDst, { backup: true });
-  indexesUpdated++;
   console.log("  → frontmatter-schema.md written");
 }
 
-// ─── 6. Idempotent graph.json color groups ────────────────────────────────────
-console.log("\n[6] Updating graph.json color groups...");
+// NOTE: MOC.md is intentionally NOT written — its content has been merged into
+// Genorah Plugin Overview.md (the canonical vault map-of-content). Future syncs
+// should update that file directly if MOC content changes.
+
+// ─── 8. Idempotent graph.json color groups ────────────────────────────────────
+console.log("\n[8] Updating graph.json color groups...");
 const graphPath = join(DST, ".obsidian", "graph.json");
 if (existsSync(graphPath)) {
   const graph = JSON.parse(readFileSync(graphPath, "utf8"));
@@ -237,6 +284,7 @@ if (existsSync(graphPath)) {
     { query: "path:Agents/workers/research",     color: { a: 1, rgb: 4259584 } },
     { query: "path:Agents/workers",              color: { a: 1, rgb: 8421504 } },
     { query: "path:Archetypes",                  color: { a: 1, rgb: 16763955 } },
+    { query: "file:All Archetypes",              color: { a: 1, rgb: 16763955 } },
   ];
 
   const existingQueries = new Set(graph.colorGroups.map((g) => g.query));
@@ -256,8 +304,8 @@ if (existsSync(graphPath)) {
 // ─── Summary ──────────────────────────────────────────────────────────────────
 console.log("\n==============================");
 console.log("Sync complete:");
-console.log(`  Agents written:     ${agentsWritten}`);
-console.log(`  Archetypes written: ${archetypesWritten}`);
-console.log(`  Indexes updated:    ${indexesUpdated}`);
-console.log(`  Backups created:    ${backupsCreated}`);
+console.log(`  Individual agent files:  ${agentsWritten}`);
+console.log(`  Individual archetype files: ${archetypesWritten}`);
+console.log(`  Hubs merged (in-place):  ${hubsMerged}`);
+console.log(`  Backups created:         ${backupsCreated}`);
 console.log("==============================\n");
