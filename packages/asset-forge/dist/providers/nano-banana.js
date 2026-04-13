@@ -1,6 +1,7 @@
 import { createHash } from "crypto";
 import { writeFileSync, mkdirSync, existsSync, readFileSync } from "fs";
 import { join } from "path";
+import { tmpdir } from "os";
 const PRICE = {
     cost_usd: 0.0, // nano-banana is the in-house MCP server — cost is handled upstream
     duration_ms_estimate: 12_000,
@@ -11,7 +12,7 @@ export class NanoBananaProvider {
     downloadDir;
     mcpClient;
     constructor(opts = {}) {
-        this.downloadDir = opts.downloadDir ?? "/tmp/genorah-nano-banana";
+        this.downloadDir = opts.downloadDir ?? join(tmpdir(), "genorah-nano-banana");
         this.mcpClient = opts.mcpClient;
     }
     async estimateCost(_input) {

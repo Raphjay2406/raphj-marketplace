@@ -1,6 +1,7 @@
 import { createHash } from "crypto";
 import { writeFileSync, mkdirSync } from "fs";
 import { join } from "path";
+import { tmpdir } from "os";
 import { GenorahError } from "@genorah/protocol";
 const PRICE = {
     cost_usd: 0.04,
@@ -16,7 +17,7 @@ export class RecraftProvider {
     constructor(opts) {
         this.opts = opts;
         this.endpoint = opts.endpoint ?? "https://external.api.recraft.ai/v1/images/generations";
-        this.downloadDir = opts.downloadDir ?? "/tmp/genorah-recraft";
+        this.downloadDir = opts.downloadDir ?? join(tmpdir(), "genorah-recraft");
         this.style = opts.style ?? "vector_illustration";
     }
     async estimateCost(_input) {

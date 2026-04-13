@@ -1,6 +1,7 @@
 import { createHash } from "crypto";
 import { writeFileSync, mkdirSync } from "fs";
 import { join } from "path";
+import { tmpdir } from "os";
 import { GenorahError } from "@genorah/protocol";
 const PRICE_PER_SECOND = 0.35;
 const DEFAULT_DURATION_SECONDS = 6;
@@ -14,7 +15,7 @@ export class KlingProvider {
     constructor(opts) {
         this.opts = opts;
         this.endpoint = opts.endpoint ?? "https://api.klingai.com/v2.1/videos/text2video";
-        this.downloadDir = opts.downloadDir ?? "/tmp/genorah-kling";
+        this.downloadDir = opts.downloadDir ?? join(tmpdir(), "genorah-kling");
     }
     async estimateCost(input) {
         const duration = input.params?.duration_seconds ?? DEFAULT_DURATION_SECONDS;

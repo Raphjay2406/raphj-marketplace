@@ -18,9 +18,9 @@ export declare const ManifestEntrySchema: z.ZodObject<{
     sha256: string;
     cost_usd: number;
     provider: string;
-    path: string;
     bytes: number;
     duration_ms: number;
+    path: string;
     prompt: string;
     reference_hashes: string[];
     cache_hit: boolean;
@@ -33,9 +33,9 @@ export declare const ManifestEntrySchema: z.ZodObject<{
     sha256: string;
     cost_usd: number;
     provider: string;
-    path: string;
     bytes: number;
     duration_ms: number;
+    path: string;
     prompt: string;
     reference_hashes: string[];
     cache_hit: boolean;
@@ -67,9 +67,9 @@ export declare const ManifestSchema: z.ZodObject<{
         sha256: string;
         cost_usd: number;
         provider: string;
-        path: string;
         bytes: number;
         duration_ms: number;
+        path: string;
         prompt: string;
         reference_hashes: string[];
         cache_hit: boolean;
@@ -82,9 +82,9 @@ export declare const ManifestSchema: z.ZodObject<{
         sha256: string;
         cost_usd: number;
         provider: string;
-        path: string;
         bytes: number;
         duration_ms: number;
+        path: string;
         prompt: string;
         reference_hashes: string[];
         cache_hit: boolean;
@@ -99,9 +99,9 @@ export declare const ManifestSchema: z.ZodObject<{
         sha256: string;
         cost_usd: number;
         provider: string;
-        path: string;
         bytes: number;
         duration_ms: number;
+        path: string;
         prompt: string;
         reference_hashes: string[];
         cache_hit: boolean;
@@ -117,9 +117,9 @@ export declare const ManifestSchema: z.ZodObject<{
         sha256: string;
         cost_usd: number;
         provider: string;
-        path: string;
         bytes: number;
         duration_ms: number;
+        path: string;
         prompt: string;
         reference_hashes: string[];
         cache_hit: boolean;

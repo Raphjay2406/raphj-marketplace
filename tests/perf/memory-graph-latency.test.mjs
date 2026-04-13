@@ -71,6 +71,6 @@ test("memory-graph-latency: p99 query under 50ms for 10k records", async (t) => 
     `p99 latency ${p99.toFixed(2)}ms exceeds budget ${P99_BUDGET_MS}ms`
   );
 
-  // Cleanup
-  rmSync(dir, { recursive: true, force: true });
+  // Cleanup — best-effort; on Windows the SQLite file may be locked briefly
+  try { rmSync(dir, { recursive: true, force: true }); } catch { /* EBUSY on Windows — ignored */ }
 });

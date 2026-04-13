@@ -22,10 +22,23 @@ function resolveInput(input, context) {
     return out;
 }
 export async function executeRecipe(inp) {
+    const maxHops = inp.max_followup_hops ?? 10;
+    let hops = 0;
     const envelopes = [];
     let previous = null;
     const queue = [...inp.recipe.steps];
     while (queue.length) {
+        if (hops++ >= maxHops) {
+            return {
+                status: "failed",
+                envelopes,
+                error: {
+                    code: "CIRCULAR_FOLLOWUP",
+                    message: `exceeded max_followup_hops=${maxHops}`,
+                    recovery_hint: "escalate_user"
+                }
+            };
+        }
         const step = queue.shift();
         const context = { previous: previous ?? { artifact: {} } };
         const resolvedInput = resolveInput(step.input, context);

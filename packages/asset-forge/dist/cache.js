@@ -39,6 +39,9 @@ export class AssetCache {
     blobPath(key) {
         return join(this.rootDir, "blobs", key.slice(0, 2), key);
     }
+    async close() {
+        await this.keyv.disconnect();
+    }
 }
 export function defaultCacheDir() {
     return join(process.env["HOME"] ?? process.env["USERPROFILE"] ?? ".", ".claude/genorah/asset-cache");

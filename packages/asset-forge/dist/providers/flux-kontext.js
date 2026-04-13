@@ -1,6 +1,7 @@
 import { createHash } from "crypto";
 import { writeFileSync, mkdirSync } from "fs";
 import { join } from "path";
+import { tmpdir } from "os";
 import { GenorahError } from "@genorah/protocol";
 const PRICE = {
     cost_usd: 0.05,
@@ -15,7 +16,7 @@ export class FluxKontextProvider {
     constructor(opts) {
         this.opts = opts;
         this.endpoint = opts.endpoint ?? "https://api.fal.ai/v1/flux-1.1-pro-ultra-kontext/run";
-        this.downloadDir = opts.downloadDir ?? "/tmp/genorah-flux-kontext";
+        this.downloadDir = opts.downloadDir ?? join(tmpdir(), "genorah-flux-kontext");
     }
     async estimateCost(_input) {
         return { cost_usd: PRICE.cost_usd, duration_ms_estimate: PRICE.duration_ms_estimate };

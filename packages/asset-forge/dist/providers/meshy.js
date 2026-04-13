@@ -1,6 +1,7 @@
 import { createHash } from "crypto";
 import { writeFileSync, mkdirSync } from "fs";
 import { join } from "path";
+import { tmpdir } from "os";
 import { GenorahError } from "@genorah/protocol";
 const PRICE = {
     cost_usd: 0.20,
@@ -15,7 +16,7 @@ export class MeshyProvider {
     constructor(opts) {
         this.opts = opts;
         this.endpoint = opts.endpoint ?? "https://api.meshy.ai/v5/text-to-3d";
-        this.downloadDir = opts.downloadDir ?? "/tmp/genorah-meshy";
+        this.downloadDir = opts.downloadDir ?? join(tmpdir(), "genorah-meshy");
     }
     async estimateCost(_input) {
         return { cost_usd: PRICE.cost_usd, duration_ms_estimate: PRICE.duration_ms_estimate };

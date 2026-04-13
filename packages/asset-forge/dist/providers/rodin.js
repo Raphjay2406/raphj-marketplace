@@ -1,6 +1,7 @@
 import { createHash } from "crypto";
 import { writeFileSync, mkdirSync } from "fs";
 import { join } from "path";
+import { tmpdir } from "os";
 import { GenorahError } from "@genorah/protocol";
 const PRICE = {
     cost_usd: 0.35,
@@ -16,7 +17,7 @@ export class RodinProvider {
     constructor(opts) {
         this.opts = opts;
         this.endpoint = opts.endpoint ?? "https://hyperhuman.deemos.com/api/v2/rodin";
-        this.downloadDir = opts.downloadDir ?? "/tmp/genorah-rodin";
+        this.downloadDir = opts.downloadDir ?? join(tmpdir(), "genorah-rodin");
         this.model = opts.model ?? "gen-2";
     }
     async estimateCost(_input) {

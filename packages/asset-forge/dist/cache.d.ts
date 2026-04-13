@@ -26,6 +26,7 @@ export declare class AssetCache {
     set(key: string, entry: CacheEntry): Promise<void>;
     has(key: string): Promise<boolean>;
     blobPath(key: string): string;
+    close(): Promise<void>;
 }
 export declare function defaultCacheDir(): string;
 //# sourceMappingURL=cache.d.ts.map
