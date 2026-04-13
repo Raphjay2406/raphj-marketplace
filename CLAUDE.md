@@ -4,7 +4,7 @@ This file provides guidance to Claude Code when working with the Genorah plugin 
 
 ## Project Overview
 
-**Genorah v4.0.0-alpha.2** — ships A2A protocol (L4 full citizenship), tiered agent structure (105 agents: 10 directors + 95 workers), `Result<T>` typed envelope, and embedded HTTP daemon. M2 Cinematic Canvas shipped: 17 WebGPU-native archetype presets (50 total), Scroll Coherence 6th hard gate, perf-budget validator, canvas-runtime test suite. Pillars 1, 2, 5, 6 land in M3–M5. See `docs/superpowers/specs/2026-04-12-genorah-v4-cinematic-intelligence-design.md`.
+**Genorah v4.0.0-alpha.3** — M3 Asset Forge 2.0 shipped. Ships A2A protocol (L4 full citizenship), tiered agent structure (105 agents: 10 directors + 95 workers), `Result<T>` typed envelope, and embedded HTTP daemon. M2 Cinematic Canvas: 17 WebGPU-native archetype presets (50 total), Scroll Coherence 6th hard gate, perf-budget validator, canvas-runtime test suite. M3 Asset Forge 2.0: 5 new MCPs (Rodin Gen-2, Meshy 5, Flux Kontext, Recraft V3, Kling 2.1), recipe-driven composite pipelines, user-global asset cache (SQLite), cost ledger with downgrade chain, full provenance MANIFEST, Scene Craft 13th quality category (Design Craft 234 → 254 pts). Pillars 5, 6 land in M4–M5. See `docs/superpowers/specs/2026-04-12-genorah-v4-cinematic-intelligence-design.md`.
 
 ## Architecture (v4)
 
