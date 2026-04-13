@@ -47,11 +47,13 @@ for pkg in packages/*/; do (cd "$pkg" && npm install && npm run build 2>/dev/nul
 node scripts/generate-agent-cards.mjs
 ```
 
-**Step 5** — Verify install (expected: `24/24 passed`):
+**Step 5** — Verify install:
 
 ```bash
 node scripts/gen-self-audit.mjs
 ```
+
+Expected: `plugin integrity: 24/24 passed` (structural checks). For full unit test coverage (~230 tests across all packages), run `npm test` in each `packages/*/` directory.
 
 ### Optional MCP servers
 
