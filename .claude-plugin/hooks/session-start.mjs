@@ -198,6 +198,30 @@ try {
     // MCP config read failed — skip silently
   }
 
+  // v4.0.0 — telemetry first-run: emit UI_RENDER trigger if telemetry.json is missing
+  try {
+    const { homedir } = await import('os');
+    const telemetryPath = join(homedir(), '.claude', 'genorah', 'telemetry.json');
+    const legacyConsentPath = join(homedir(), '.claude', 'genorah', 'telemetry-consent.json');
+    if (!existsSync(telemetryPath) && !existsSync(legacyConsentPath)) {
+      // Emit AG-UI UI_RENDER event to trigger consent prompt on first run
+      additionalContext += `\n<!-- genorah:agui-event -->\n`;
+      additionalContext += JSON.stringify({
+        type: 'UI_RENDER',
+        component: 'telemetry-consent-prompt',
+        version: '4.0.0',
+        emittedAt: new Date().toISOString(),
+      }) + '\n';
+      additionalContext += `<!-- /genorah:agui-event -->\n`;
+      additionalContext += `\n**Genorah v4 Telemetry:** This is your first session with v4. `;
+      additionalContext += `Opt-in usage telemetry is available (skill injections, AG-UI event counts, `;
+      additionalContext += `validator verdicts, marketplace installs — aggregate counts only, never content). `;
+      additionalContext += `See \`docs/telemetry-policy.md\` for full details. `;
+      additionalContext += `To consent: \`echo '{"consent":true,"version":"4.0.0","decidedAt":"${new Date().toISOString()}"}' > ~/.claude/genorah/telemetry.json\`. `;
+      additionalContext += `To opt out: \`echo '{"consent":false,"version":"4.0.0","decidedAt":"${new Date().toISOString()}"}' > ~/.claude/genorah/telemetry.json\`.\n`;
+    }
+  } catch { /* never crash */ }
+
   // v3.5.4 — drift-alert banner from L7 calibration store
   try {
     const { homedir } = await import('os');
