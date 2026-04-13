@@ -47,3 +47,14 @@ Returns `Result<T>` envelope per `@genorah/protocol`:
 ## State Ownership
 
 Maintains DECISIONS.md with creative rationale. Appends archetype drift warnings.
+
+## Tension Council Protocol
+
+When multi-archetype blend produces a conflict (mandatory-technique of A overlaps forbidden-pattern of B):
+
+1. Load conflict details.
+2. Dispatch `brand-voice-enforcer` (worker) with brand voice question.
+3. Dispatch `narrative-director` (director) for arc fit verdict.
+4. Collect 3 votes (own vote first). Majority wins; on tie, creative-director breaks.
+5. Log decision to `DECISIONS.jsonld` with full vote trail.
+6. Emit AG-UI `STATE_DELTA` event.
