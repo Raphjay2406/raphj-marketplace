@@ -28,19 +28,27 @@ All 7 P0 blockers + 18 P1 items resolved. 240+ tests passing. Self-audit 24/24. 
 - memory-graph dist built → perf latency test unskipped
 - MCP sampling v2 scope clarified in changelog
 
-## Deferred to v4.0.1 / v4.1 (15 P2s)
+## P2 cleanup — DONE (6 commits, 2026-04-13)
 
-- daemon-lifecycle silent spawn-fail observability
-- offline-mode blocklist additions (stitch, playwright)
-- CapabilityProbe/detectWebGpu consolidation
-- sandbox `any` → `unknown`
-- visitCount silent localStorage fail comment
-- SECURITY.md
-- packages/marketplace dist pre-build
-- perf-budget.ts vs perf-budget.mjs naming
-- weights.json totals
-- Theatre/GSAP/Lenis move from deps to peerDeps (currently both)
-- Minor coverage gaps on optional paths
+All 15 P2 items resolved in branch master, post-tag cleanup batch:
+
+| P2 | Item | Status |
+| --- | --- | --- |
+| P2.1 | daemon-lifecycle silent spawn-fail visibility | ✅ |
+| P2.2 | offline-mode blocklist: stitch + playwright added | ✅ |
+| P2.3 | sandbox `any` → `unknown` (+ consumer type assertion) | ✅ |
+| P2.4 | visitCount intentional localStorage swallow documented | ✅ |
+| P2.5 | SECURITY.md created at repo root | ✅ |
+| P2.6 | perf-budget validator renamed → web-vitals-budget | ✅ |
+| P2.7 | packages/marketplace dist rebuilt (sandbox.ts changed) | ✅ |
+| P2.8 | CapabilityProbe delegates to detectWebGpu (memoized) | ✅ |
+| P2.9 | Theatre/GSAP/Lenis peerDeps-only move | ⏭️ deferred to v4.1 (see retrospective) |
+| P2.10 | weights.json extended with max_points + axis split | ✅ |
+| P2.11 | agent-card: beta/canary channel + empty tools tests | ✅ |
+| P2.12 | cost-ledger: pickDowngrade unknown provider test | ✅ |
+| P2.13 | cache: close() idempotent test | ✅ |
+| P2.14 | uniqueness-ledger: wrong-dimension rejection test | ✅ |
+| P2.15 | living-system provider: time_of_day + scroll_velocity signal tests | ✅ |
 
 ## Test breakdown (final)
 

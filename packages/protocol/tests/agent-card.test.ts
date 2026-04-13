@@ -48,4 +48,16 @@ describe("buildAgentCard", () => {
     const bad = { ...frontmatter, channel: "flaky" as any };
     expect(() => buildAgentCard(bad)).toThrow();
   });
+
+  it("accepts beta and canary channels", () => {
+    const beta = buildAgentCard({ ...frontmatter, channel: "beta" as const });
+    const canary = buildAgentCard({ ...frontmatter, channel: "canary" as const });
+    expect(beta.channel).toBe("beta");
+    expect(canary.channel).toBe("canary");
+  });
+
+  it("accepts empty tools list", () => {
+    const card = buildAgentCard({ ...frontmatter, tools: [] });
+    expect(card.tools).toEqual([]);
+  });
 });

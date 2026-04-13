@@ -1,15 +1,31 @@
 {
-  "Color System": 1.2,
-  "Typography": 1.2,
-  "Layout & Composition": 1.0,
-  "Depth & Polish": 1.0,
-  "Motion & Interaction": 1.0,
-  "Creative Courage": 1.2,
-  "UX Intelligence": 1.0,
-  "Accessibility": 1.0,
-  "Content Quality": 1.0,
-  "Responsive Craft": 1.0,
-  "Performance": 1.0,
-  "Integration Quality": 1.0,
-  "Scene Craft": 1.0
+  "version": "4.0.0",
+  "total_points": 394,
+  "design_craft_points": 254,
+  "ux_integrity_points": 140,
+  "design_craft_categories": {
+    "Color System":         { "multiplier": 1.2, "max_points": 20 },
+    "Typography":           { "multiplier": 1.2, "max_points": 20 },
+    "Layout & Composition": { "multiplier": 1.0, "max_points": 20 },
+    "Depth & Polish":       { "multiplier": 1.0, "max_points": 20 },
+    "Motion & Interaction": { "multiplier": 1.0, "max_points": 20 },
+    "Creative Courage":     { "multiplier": 1.2, "max_points": 20 },
+    "Accessibility":        { "multiplier": 1.0, "max_points": 20 },
+    "Content Quality":      { "multiplier": 1.0, "max_points": 20 },
+    "Responsive Craft":     { "multiplier": 1.0, "max_points": 20 },
+    "Performance":          { "multiplier": 1.0, "max_points": 20 },
+    "Integration Quality":  { "multiplier": 1.0, "max_points": 14 },
+    "Scene Craft":          { "multiplier": 1.0, "max_points": 20, "note": "cinematic/immersive only" }
+  },
+  "ux_integrity_subgates": {
+    "UX Heuristics":         { "multiplier": 1.0, "max_points": 20, "skill": "ux-heuristics-gate" },
+    "Interaction Fidelity":  { "multiplier": 1.0, "max_points": 20, "skill": "interaction-fidelity-gate" },
+    "Cognitive Load":        { "multiplier": 1.0, "max_points": 20, "skill": "cognitive-load-gate" },
+    "Conversion Integrity":  { "multiplier": 1.0, "max_points": 20, "skill": "conversion-gate" },
+    "Visual Craft":          { "multiplier": 1.0, "max_points": 20, "skill": "visual-craft-quantified" },
+    "Synthetic Usability":   { "multiplier": 1.0, "max_points": 20, "skill": "synthetic-user-testing" },
+    "Neuro-Aesthetic":       { "multiplier": 1.0, "max_points": 20, "skill": "neuro-aesthetic" }
+  },
+  "calibration_window_days": 90,
+  "min_samples_for_calibration": 5
 }

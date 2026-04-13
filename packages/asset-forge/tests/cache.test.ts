@@ -39,4 +39,11 @@ describe("AssetCache", () => {
     await cache.init();
     expect(await cache.get("nope")).toBeNull();
   });
+
+  it("close() is idempotent", async () => {
+    const cache = new AssetCache({ rootDir: freshTmp() });
+    await cache.init();
+    await expect(cache.close()).resolves.not.toThrow();
+    await expect(cache.close()).resolves.not.toThrow();
+  });
 });

@@ -38,6 +38,7 @@ export interface CacheOptions {
 
 export class AssetCache {
   private keyv: Keyv<CacheEntry>;
+  private _closed = false;
   readonly rootDir: string;
 
   constructor(opts: CacheOptions) {
@@ -69,6 +70,8 @@ export class AssetCache {
   }
 
   async close(): Promise<void> {
+    if (this._closed) return;
+    this._closed = true;
     await this.keyv.disconnect();
   }
 }

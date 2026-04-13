@@ -31,4 +31,9 @@ describe("CostLedger", () => {
     l.preview({ provider: "rodin", cost_usd: 5 });
     expect(l.spend_usd).toBe(0);
   });
+
+  it("pickDowngrade returns null for unknown provider", () => {
+    const l = new CostLedger({ budget_usd: 10, downgrade_chain: { rodin: "meshy" } });
+    expect(l.pickDowngrade("unknown")).toBeNull();
+  });
 });

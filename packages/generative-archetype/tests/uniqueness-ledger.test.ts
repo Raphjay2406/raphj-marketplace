@@ -32,4 +32,10 @@ describe("UniquenessLedger", () => {
     const near = await ledger.nearest([1, 0, 0, 0], 2);
     expect(near).toHaveLength(2);
   });
+
+  it("rejects embedding with wrong dimension", async () => {
+    ledger = new UniquenessLedger({ path: TMP, dims: 4 });
+    await ledger.init();
+    await expect(ledger.record("bad", [1, 0, 0], { project: "X" })).rejects.toThrow(/dim/i);
+  });
 });

@@ -19,6 +19,7 @@ export interface CacheOptions {
 }
 export declare class AssetCache {
     private keyv;
+    private _closed;
     readonly rootDir: string;
     constructor(opts: CacheOptions);
     init(): Promise<void>;
