@@ -1,17 +1,31 @@
-import { describe, it, expect, beforeEach } from "vitest";
-import { rmSync, mkdirSync, readFileSync } from "fs";
+import { describe, it, expect, afterEach } from "vitest";
+import { mkdirSync } from "fs";
+import { join } from "path";
+import { readFileSync } from "fs";
 import { AssetCache, CostLedger, ProvenanceWriter, executeRecipe, DummyProvider } from "../src/index.js";
 import { parse } from "yaml";
 
-const TMP = "/tmp/genorah-recipe-e2e";
-beforeEach(() => { rmSync(TMP, { recursive: true, force: true }); mkdirSync(TMP, { recursive: true }); });
+const BASE_TMP = "/tmp/genorah-recipe-e2e";
+let _counter = 0;
+function freshTmp(): string {
+  const dir = join(BASE_TMP, String(++_counter));
+  mkdirSync(dir, { recursive: true });
+  return dir;
+}
+
+let _cacheToClose: AssetCache | null = null;
+afterEach(async () => {
+  if (_cacheToClose) { await _cacheToClose.close(); _cacheToClose = null; }
+});
 
 describe("recipe E2E", () => {
   it("brand-marks runs 3 steps with cache + ledger + provenance", async () => {
-    const cache = new AssetCache({ rootDir: `${TMP}/cache` });
+    const tmp = freshTmp();
+    const cache = new AssetCache({ rootDir: `${tmp}/cache` });
+    _cacheToClose = cache;
     await cache.init();
     const ledger = new CostLedger({ budget_usd: 5 });
-    const prov = new ProvenanceWriter({ path: `${TMP}/MANIFEST.json` });
+    const prov = new ProvenanceWriter({ path: `${tmp}/MANIFEST.json` });
     const dummy = new DummyProvider();
     const recipe = parse(readFileSync("../../recipes/brand-marks.yml", "utf8"));
 

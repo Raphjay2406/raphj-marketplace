@@ -67,6 +67,10 @@ export class AssetCache {
   blobPath(key: string): string {
     return join(this.rootDir, "blobs", key.slice(0, 2), key);
   }
+
+  async close(): Promise<void> {
+    await this.keyv.disconnect();
+  }
 }
 
 export function defaultCacheDir(): string {
