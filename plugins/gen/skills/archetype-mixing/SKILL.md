@@ -99,3 +99,7 @@ BLOCK on impossible pair. WARN on tense pair with rationale requirement.
 - ❌ Secondary voice in >50% of sections — it's the new primary; demote primary
 - ❌ Impossible pair shipped via tension-override — defeats conflict detection
 - ❌ Skipping per-section archetype_voice assignment — all sections score poorly on specificity
+
+## v4 M4 — Tension Council
+
+When mandatory-vs-forbidden conflicts arise during blending, invoke the **Tension Council** (see `skills/archetype-arbitration/SKILL.md`). The council runs a 3-agent vote (creative-director + brand-voice-enforcer + narrative-director) and logs the resolution to DECISIONS.jsonld. Do not proceed with scaffold until all conflicts are resolved.

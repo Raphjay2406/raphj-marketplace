@@ -1,0 +1,34 @@
+{
+  "slug": "volumetric",
+  "name": "Volumetric",
+  "tier": "webgpu-native",
+  "mandatory_techniques": [
+    "WebGPU fog shader",
+    "density grid"
+  ],
+  "forbidden_patterns": [
+    "flat-2d-hero"
+  ],
+  "tension_zones": [
+    "atmospheric-depth",
+    "edge-bleed",
+    "fog-reveal"
+  ],
+  "default_intensity": "cinematic",
+  "dna_color_palette": {
+    "primary": "#0F1117",
+    "secondary": "#C7A86B",
+    "accent": "#F6F2EC",
+    "signature": "#1A73E8"
+  },
+  "dna_fonts": {
+    "display": "Söhne Breit",
+    "body": "Söhne",
+    "mono": "Berkeley Mono"
+  },
+  "dna_motion_tokens": {
+    "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+    "duration_hero_ms": 1600,
+    "duration_micro_ms": 160
+  }
+}

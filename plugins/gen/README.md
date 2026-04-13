@@ -1,5 +1,7 @@
 # raphj-marketplace
 
+> **v4.0.0-alpha.1 in active development.** Protocol layer (L4 A2A) + tiered agent structure shipped. Pillars 1, 2, 5, 6 land in M2–M5. Production-ready targets v4.0.0 GA (M6).
+
 Personal Claude Code plugin marketplace by Raphjay2406.
 
 ## Installation

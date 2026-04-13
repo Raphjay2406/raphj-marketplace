@@ -182,6 +182,24 @@ if command -v node >/dev/null 2>&1; then
   fi
 fi
 
+# Hard gate #6: Scroll Coherence (v4)
+if [ -f ".planning/genorah/DESIGN-DNA.md" ]; then
+  INTENSITY=$(grep -oE '3d_intensity:\s*\w+' .planning/genorah/DESIGN-DNA.md | awk '{print $2}')
+  if [[ "$INTENSITY" == "cinematic" || "$INTENSITY" == "immersive" ]]; then
+    node -e "
+      import('./scripts/validators/scroll-coherence.mjs').then(async m => {
+        const fs = await import('fs/promises');
+        const { globby } = await import('globby');
+        const paths = await globby(['app/**/*.tsx','src/**/*.tsx']);
+        const files = {};
+        for (const p of paths) files[p] = await fs.readFile(p, 'utf8');
+        const r = await m.runScrollCoherence({ files, intensity: '$INTENSITY' });
+        if (!r.pass) { console.error('HARD-GATE FAIL: Scroll Coherence — ' + r.reason); process.exit(1); }
+      })
+    " || exit 1
+  fi
+fi
+
 # --- Report ---
 
 if [ $VIOLATION_COUNT -gt 0 ]; then

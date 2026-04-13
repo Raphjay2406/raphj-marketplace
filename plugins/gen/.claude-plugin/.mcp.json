@@ -58,5 +58,21 @@
     "args": ["${CLAUDE_PLUGIN_ROOT}/mcp-servers/3dsvg-export/server.mjs"],
     "description": "Headless 3dsvg export server (Genorah v3.4.1). Renders preset → PNG (single, batch) and MP4 via Playwright + 3dsvg registerCanvas. Used by /gen:hero-mark export for the 30-variant brand matrix. Requires playwright (already declared) + optional @ffmpeg-installer/ffmpeg for MP4.",
     "optional": true
+  },
+  "flux-kontext": {
+    "type": "stdio",
+    "command": "npx",
+    "args": ["-y", "@fal/flux-kontext-mcp@^1.0.0"],
+    "env": { "FAL_KEY": "${FAL_KEY}" },
+    "description": "Flux Kontext image generation via fal.ai. DNA-locked hero backgrounds with reference image conditioning. Optional — pipeline uses HTTP adapter when MCP is absent.",
+    "optional": true
+  },
+  "recraft": {
+    "type": "stdio",
+    "command": "npx",
+    "args": ["-y", "@recraft/mcp-server@^1.0.0"],
+    "env": { "RECRAFT_API_KEY": "${RECRAFT_API_KEY}" },
+    "description": "Recraft V3 native SVG vector generation. Brand marks, favicon, OG templates with DNA-token color binding. Optional — pipeline uses HTTP adapter when MCP is absent.",
+    "optional": true
   }
 }
