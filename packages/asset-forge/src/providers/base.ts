@@ -1,4 +1,6 @@
 import { createHash } from "crypto";
+import { tmpdir } from "os";
+import { join } from "path";
 
 export interface AssetInput {
   prompt: string;
@@ -43,7 +45,7 @@ export class DummyProvider implements AssetProvider {
     return {
       provider: "dummy",
       sha256: sha,
-      path: `/tmp/dummy-${sha}.bin`,
+      path: join(tmpdir(), `dummy-${sha}.bin`),
       bytes: 0,
       cost_usd: 0,
       duration_ms: 100,

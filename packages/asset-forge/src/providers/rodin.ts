@@ -1,6 +1,7 @@
 import { createHash } from "crypto";
 import { writeFileSync, mkdirSync } from "fs";
 import { join } from "path";
+import { tmpdir } from "os";
 import { GenorahError } from "@genorah/protocol";
 import type { AssetProvider, AssetInput, AssetResult, CostEstimate } from "./base.js";
 
@@ -26,7 +27,7 @@ export class RodinProvider implements AssetProvider {
 
   constructor(private opts: RodinOptions) {
     this.endpoint = opts.endpoint ?? "https://hyperhuman.deemos.com/api/v2/rodin";
-    this.downloadDir = opts.downloadDir ?? "/tmp/genorah-rodin";
+    this.downloadDir = opts.downloadDir ?? join(tmpdir(), "genorah-rodin");
     this.model = opts.model ?? "gen-2";
   }
 

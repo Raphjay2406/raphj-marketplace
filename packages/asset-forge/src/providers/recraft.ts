@@ -1,6 +1,7 @@
 import { createHash } from "crypto";
 import { writeFileSync, mkdirSync } from "fs";
 import { join } from "path";
+import { tmpdir } from "os";
 import { GenorahError } from "@genorah/protocol";
 import type { AssetProvider, AssetInput, AssetResult, CostEstimate } from "./base.js";
 
@@ -26,7 +27,7 @@ export class RecraftProvider implements AssetProvider {
 
   constructor(private opts: RecraftOptions) {
     this.endpoint = opts.endpoint ?? "https://external.api.recraft.ai/v1/images/generations";
-    this.downloadDir = opts.downloadDir ?? "/tmp/genorah-recraft";
+    this.downloadDir = opts.downloadDir ?? join(tmpdir(), "genorah-recraft");
     this.style = opts.style ?? "vector_illustration";
   }
 

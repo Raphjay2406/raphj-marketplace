@@ -1,6 +1,7 @@
 import { createHash } from "crypto";
 import { writeFileSync, mkdirSync } from "fs";
 import { join } from "path";
+import { tmpdir } from "os";
 import { GenorahError } from "@genorah/protocol";
 import type { AssetProvider, AssetInput, AssetResult, CostEstimate } from "./base.js";
 
@@ -23,7 +24,7 @@ export class KlingProvider implements AssetProvider {
 
   constructor(private opts: KlingOptions) {
     this.endpoint = opts.endpoint ?? "https://api.klingai.com/v2.1/videos/text2video";
-    this.downloadDir = opts.downloadDir ?? "/tmp/genorah-kling";
+    this.downloadDir = opts.downloadDir ?? join(tmpdir(), "genorah-kling");
   }
 
   async estimateCost(input: AssetInput): Promise<CostEstimate> {

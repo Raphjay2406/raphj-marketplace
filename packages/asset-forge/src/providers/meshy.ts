@@ -1,6 +1,7 @@
 import { createHash } from "crypto";
 import { writeFileSync, mkdirSync } from "fs";
 import { join } from "path";
+import { tmpdir } from "os";
 import { GenorahError } from "@genorah/protocol";
 import type { AssetProvider, AssetInput, AssetResult, CostEstimate } from "./base.js";
 
@@ -24,7 +25,7 @@ export class MeshyProvider implements AssetProvider {
 
   constructor(private opts: MeshyOptions) {
     this.endpoint = opts.endpoint ?? "https://api.meshy.ai/v5/text-to-3d";
-    this.downloadDir = opts.downloadDir ?? "/tmp/genorah-meshy";
+    this.downloadDir = opts.downloadDir ?? join(tmpdir(), "genorah-meshy");
   }
 
   async estimateCost(_input: AssetInput): Promise<CostEstimate> {

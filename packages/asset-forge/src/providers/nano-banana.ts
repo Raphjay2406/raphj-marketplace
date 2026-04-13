@@ -1,6 +1,7 @@
 import { createHash } from "crypto";
 import { writeFileSync, mkdirSync, existsSync, readFileSync } from "fs";
 import { join } from "path";
+import { tmpdir } from "os";
 import type { AssetProvider, AssetInput, AssetResult, CostEstimate } from "./base.js";
 
 export interface NanoBananaOptions {
@@ -31,7 +32,7 @@ export class NanoBananaProvider implements AssetProvider {
   private mcpClient?: NanoBananaMcpClient;
 
   constructor(opts: NanoBananaOptions = {}) {
-    this.downloadDir = opts.downloadDir ?? "/tmp/genorah-nano-banana";
+    this.downloadDir = opts.downloadDir ?? join(tmpdir(), "genorah-nano-banana");
     this.mcpClient = opts.mcpClient;
   }
 
