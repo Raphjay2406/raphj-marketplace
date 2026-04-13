@@ -10,7 +10,7 @@ function check(name, cond, fail) {
 // Check 1: plugin.json version
 try {
   const pkg = JSON.parse(readFileSync(".claude-plugin/plugin.json", "utf8"));
-  check("plugin.json version is 4.0.0-alpha.5", pkg.version === "4.0.0-alpha.5", `got ${pkg.version}`);
+  check("plugin.json version is 4.0.0", pkg.version === "4.0.0", `got ${pkg.version}`);
 } catch (e) {
   check("plugin.json readable", false, e.message);
 }

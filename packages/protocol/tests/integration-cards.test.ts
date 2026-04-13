@@ -12,7 +12,7 @@ describe("generated agent cards", () => {
     const cards = JSON.parse(
       readFileSync(join(root, ".claude-plugin/generated/agent-cards.json"), "utf8")
     );
-    expect(cards).toHaveLength(105);
+    expect(cards).toHaveLength(108);
     for (const card of cards) {
       expect(() => AgentCardSchema.parse(card)).not.toThrow();
     }
