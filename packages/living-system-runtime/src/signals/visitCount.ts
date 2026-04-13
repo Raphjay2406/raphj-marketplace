@@ -6,6 +6,8 @@ export function readVisitCount(): number {
 
 export function incrementVisit(): number {
   const next = readVisitCount() + 1;
+  // Silent failure is intentional: Safari private mode + storage quota rejection
+  // should not break visit tracking. The signal just won't persist across tabs/sessions.
   try { localStorage.setItem(KEY, String(next)); } catch {}
   return next;
 }

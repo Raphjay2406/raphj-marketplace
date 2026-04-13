@@ -11,7 +11,7 @@ describe("runInSandbox", () => {
   it.skipIf(!DENO_AVAILABLE)("executes a pure script and returns stdout", async () => {
     const src = `const input = JSON.parse(await new Response(Deno.stdin.readable).text()); console.log(JSON.stringify({doubled: input.x * 2}));`;
     const result = await runInSandbox({ entry_source: src, payload: { x: 3 }, timeout_ms: 10000 });
-    expect(result.parsed.doubled).toBe(6);
+    expect((result.parsed as { doubled: number }).doubled).toBe(6);
   });
 
   it.skipIf(!DENO_AVAILABLE)("blocks filesystem writes by default", async () => {

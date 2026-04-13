@@ -12,7 +12,7 @@ export interface SandboxInput {
 
 export interface SandboxResult {
   stdout: string;
-  parsed: any;
+  parsed: unknown;
   duration_ms: number;
 }
 
