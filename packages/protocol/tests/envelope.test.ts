@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { ResultEnvelope, parseResultEnvelope } from "../src/envelope.js";
+import { ResultEnvelope, parseResultEnvelope, partial } from "../src/envelope.js";
 import Ajv from "ajv";
 import addFormats from "ajv-formats";
 import schema from "../src/schemas/result-envelope.schema.json" with { type: "json" };
@@ -71,6 +71,15 @@ describe("ResultEnvelope", () => {
       ]
     };
     expect(parseResultEnvelope(envelope).followups[0].suggested_worker).toBe("inpainter");
+  });
+});
+
+describe("partial helper", () => {
+  it("partial() helper produces partial status envelope", () => {
+    const env = partial({ x: 1 }, [{ validator: "t", pass: false, score: 0.5 }]);
+    expect(env.status).toBe("partial");
+    expect(env.artifact.x).toBe(1);
+    expect(env.verdicts).toHaveLength(1);
   });
 });
 

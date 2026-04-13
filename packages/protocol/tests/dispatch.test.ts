@@ -29,6 +29,14 @@ describe("dispatch", () => {
     expect(env.verdicts[0].notes).toMatch(/t\/o/);
   });
 
+  it("rethrows non-GenorahError exceptions", async () => {
+    await expect(dispatch({
+      worker: "x",
+      payload: {},
+      handler: async () => { throw new Error("unexpected"); }
+    })).rejects.toThrow("unexpected");
+  });
+
   it("emits RESULT_ENVELOPE ag-ui event", async () => {
     const { AgUiEmitter } = await import("../src/ag-ui.js");
     const em = new AgUiEmitter();

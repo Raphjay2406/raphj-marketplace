@@ -2,7 +2,7 @@
 import { describe, it, expect } from "vitest";
 import { render } from "@testing-library/react";
 import React from "react";
-import { PageRenderer } from "../src/renderer.js";
+import { PageRenderer, SectionRenderer } from "../src/renderer.js";
 
 describe("PageRenderer", () => {
   it("renders a hero section with CTA", () => {
@@ -59,5 +59,10 @@ describe("PageRenderer", () => {
 
   it("throws on invalid spec", () => {
     expect(() => render(<PageRenderer spec={{ slug: "bad" }} />)).toThrow();
+  });
+
+  it("renders null for unknown section kind", () => {
+    const { container } = render(<SectionRenderer section={{ type: "unknown" } as any} />);
+    expect(container.innerHTML).toBe("");
   });
 });

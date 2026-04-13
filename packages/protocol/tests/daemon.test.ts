@@ -77,4 +77,32 @@ describe("protocol daemon", () => {
     const res = await fetch(`${daemon.url}/a2a/nope/x`, { method: "POST" });
     expect(res.status).toBe(404);
   });
+
+  it("returns 400 on malformed JSON body", async () => {
+    const agents = new Map();
+    agents.set("creative-director", {
+      card: {
+        schema_version: "a2a-v0.3",
+        id: "genorah/creative-director",
+        version: "4.0.0",
+        channel: "stable",
+        name: "Creative Director",
+        description: "x",
+        tier: "director",
+        capabilities: [{ id: "review-plan" }],
+        tools: [],
+        auth: { local: { type: "none" }, remote: { type: "oauth2", flow: "authorization_code_pkce" } },
+        streaming: { supports_sse: true, ag_ui_events: true },
+        mcp: { sampling_v2_compatible: true }
+      },
+      handler: async () => ok({ ok: true })
+    });
+    daemon = await startDaemon({ host: "127.0.0.1", port: 0, agents });
+    const res = await fetch(`${daemon.url}/a2a/creative-director/review-plan`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: "{bad"
+    });
+    expect(res.status).toBe(400);
+  });
 });

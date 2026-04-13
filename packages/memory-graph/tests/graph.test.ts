@@ -9,6 +9,8 @@ function tmpDb(): string {
   return join(tmpdir(), `memory-graph-test-${randomUUID()}.db`);
 }
 
+const TMP = join(tmpdir(), `memory-graph-test-${randomUUID()}`);
+
 describe("MemoryGraph", () => {
   it("records a decision with embedding + metadata", async () => {
     const path = tmpDb();
@@ -23,6 +25,21 @@ describe("MemoryGraph", () => {
       });
       const res = await g.query({ embedding: [0.5, 0.5, 0, 0], k: 1 });
       expect(res[0].decision_id).toBe("d-1");
+    } finally {
+      try { rmSync(path); } catch {}
+    }
+  });
+
+  it("filter.project_id returns only matching project decisions", async () => {
+    const path = tmpDb();
+    try {
+      const g = new MemoryGraph({ path, dims: 4 });
+      await g.init();
+      await g.record({ project_id: "alpha", decision_id: "d1", archetype: "brutalist", score: 200, category: "x", summary: "", embedding: [1,0,0,0] });
+      await g.record({ project_id: "beta", decision_id: "d2", archetype: "brutalist", score: 200, category: "x", summary: "", embedding: [1,0,0,0] });
+      const r = await g.query({ embedding: [1,0,0,0], k: 5, filter: { project_id: "alpha" } });
+      expect(r).toHaveLength(1);
+      expect(r[0].decision_id).toBe("d1");
     } finally {
       try { rmSync(path); } catch {}
     }
