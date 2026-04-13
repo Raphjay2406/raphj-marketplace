@@ -27,6 +27,10 @@ if (event === "SessionStart") {
     detached: true,
     stdio: "ignore"
   });
+  if (!child.pid) {
+    console.error("[daemon-lifecycle] failed to spawn daemon subprocess; no pid assigned");
+    process.exit(1);
+  }
   writeFileSync(pidFile, String(child.pid));
   child.unref();
   process.exit(0);

@@ -14,7 +14,7 @@ if (NET_TOOLS.includes(tool)) {
 }
 
 // Block MCP calls to network-dependent servers
-const NET_MCP = new Set(["rodin", "meshy", "flux-kontext", "recraft", "kling", "nano-banana"]);
+const NET_MCP = new Set(["rodin", "meshy", "flux-kontext", "recraft", "kling", "nano-banana", "stitch", "playwright"]);
 if (tool.startsWith("mcp__")) {
   const server = tool.split("__")[1];
   if (NET_MCP.has(server)) {
