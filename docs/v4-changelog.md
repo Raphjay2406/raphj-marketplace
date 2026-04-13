@@ -82,7 +82,7 @@
 - **`scripts/gen-self-audit.mjs`** — Validates plugin consistency (version parity, agent card
   count, archetype count, skill count, quality gate total) with BLOCK/WARN/INFO tiers.
 - **Offline smoke** (`scripts/tests/offline-smoke.mjs`) — Validates core pipeline with
-  `GENORAH_OFFLINE=1`; confirms graceful degradation of all 7 MCP integrations.
+  `GENORAH_OFFLINE=1`; confirms graceful degradation of all 10 MCP integrations.
 
 ## Hardening + Infrastructure (M6)
 
