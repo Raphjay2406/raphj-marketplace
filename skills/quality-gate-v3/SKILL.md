@@ -1,17 +1,19 @@
 ---
 name: quality-gate-v3
-description: Two-axis 374-pt quality gate — Design Craft 254 (12 inherited + Scene Craft 13th category) + UX Integrity 120. A section must clear BOTH axes for tier >= Strong. Six UX sub-gates with machine-checkable binary items replace vague aesthetic-only scoring. Scene Craft (20 pts) activates only for intensity=cinematic|immersive. Supersedes quality-gate-v2 once all v3.5.0 measurement skills ship.
+description: Two-axis 394-pt quality gate — Design Craft 254 (12 inherited + Scene Craft 13th category) + UX Integrity 140 (120 inherited + Neuro-aesthetic 14th category, 20 pts). A section must clear BOTH axes for tier >= Strong. Six UX sub-gates with machine-checkable binary items replace vague aesthetic-only scoring. Scene Craft (20 pts) activates only for intensity=cinematic|immersive. Supersedes quality-gate-v2 once all v3.5.0 measurement skills ship.
 tier: core
-triggers: quality-gate, quality-gate-v3, ux-integrity, two-axis, 374, 254, scene-craft, scoring, tier
-version: 0.2.0
-status: PROVISIONAL — numeric thresholds recalibrated after research tracks R1/R5/R8 complete (see docs/v3.5-research-program.md). Scene Craft added in v4 M3.
+triggers: quality-gate, quality-gate-v3, ux-integrity, two-axis, 374, 394, 254, scene-craft, neuro-aesthetic, scoring, tier
+version: 0.3.0
+status: PROVISIONAL — numeric thresholds recalibrated after research tracks R1/R5/R8 complete (see docs/v3.5-research-program.md). Scene Craft added in v4 M3. Neuro-aesthetic (14th category) added in v4 M4.
 ---
 
-# Quality Gate v3 — Two-Axis 374-pt (v4 M3)
+# Quality Gate v3 — Two-Axis 394-pt (v4 M4)
 
 Supersedes `quality-gate-v2` when v3.5.0 ships. Until then, runs in shadow mode: scores computed for reporting but not enforced. v2 remains authoritative through v3.4.x.
 
 Design Craft axis expanded from **234 → 254 pts** in v4 M3 by adding Scene Craft as the 13th category (20 pts, cinematic/immersive projects only). Total gate moves from 354 → 374 pts. Tier thresholds shift proportionally.
+
+**v4 M4 addition:** UX Integrity axis expanded from **120 → 140 pts** by adding Neuro-aesthetic as the 14th quality category (20 pts, all projects). Total gate moves from 374 → **394 pts**. Scored by `scripts/validators/neuro-aesthetic.mjs`; rubric: fixation on CTA (4), saccade path (4), attention heatmap peak (4), Hick's law choices (3), reading grade (2), cognitive load (3).
 
 ## Layer 1 — When to use
 
