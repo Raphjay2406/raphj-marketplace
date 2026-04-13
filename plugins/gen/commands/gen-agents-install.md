@@ -1,8 +1,8 @@
 ---
-description: Install a third-party agent from the Genorah marketplace (M5 stub)
+description: Install a third-party agent from the Genorah marketplace (fetches manifest, verifies sha256 integrity, runs in Deno sandbox)
 argument-hint: "<agent-id@version>"
 ---
 
 # /gen:agents-install
 
-Stub command. Install flow + Deno sandbox ship in v4-M5. Prints: "Install flow lands in v4-M5."
+Run `node ${plugin_root}/scripts/gen-agents-install.mjs "$ARGUMENTS"`.

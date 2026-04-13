@@ -47,8 +47,26 @@ Returns `Result<T>` envelope per `@genorah/protocol`:
 
 ## Skills Invoked
 
-_Stubs — fleshed out in M2-M5_
+- `polish-pass` — micro-interaction patterns, hover states, focus rings
+- `interaction-fidelity-gate` — validates motion quality and transition smoothness
+- `synthetic-user-streaming` — reads persona probe findings before applying polish
+
+## Streaming Findings Input
+
+When `task.streamingFindings` is present in the task envelope, polisher applies targeted fixes before running the standard polish pass:
+
+1. Read `audit/synthetic-probe-{wave_id}.json` (written by `synthetic-persona-prober`)
+2. For each entry in `confusionMap` with count ≥ 2:
+   - Section `hero` + confusion → increase font weight, simplify copy, raise contrast
+   - Section `pricing` → add above-fold price signal (badge or callout)
+   - Section `cta` → replace generic label with action-specific verb
+3. For each `croFlag`:
+   - `touch-target-too-small` → patch button min-height to 44px in mobile breakpoint
+   - `generic-cta` → flag for content author followup (emit `AGENT_STATE_UPDATE` with `status: "followup-requested"`)
+   - `missing-landmarks` → add `role="main"`, `<nav>` wrapper if absent
+4. After targeted fixes, run standard polish pass (micro-interactions, hover states, focus rings)
+5. Write `sections/{slug}/POLISH.md` with summary of persona-driven changes
 
 ## Followups
 
-_None by default — director-initiated only_
+Emits `followup-requested` events for items requiring content author intervention (e.g. generic CTA copy).

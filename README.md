@@ -12,6 +12,74 @@ Personal Claude Code plugin marketplace by Raphjay2406.
 claude plugin marketplace add https://github.com/Raphjay2406/raphj-marketplace
 ```
 
+## Install
+
+### Via Claude Code plugin marketplace (when available)
+
+```bash
+/plugin install gen --version 4.0.0
+```
+
+### Manual install (development)
+
+**Step 1** — Clone into your plugins directory:
+
+```bash
+git clone <this-repo-url> ~/.claude/plugins/genorah
+cd ~/.claude/plugins/genorah
+```
+
+**Step 2** — Install workspace dependencies:
+
+```bash
+npm install
+```
+
+**Step 3** — Build all v4 packages:
+
+```bash
+for pkg in packages/*/; do (cd "$pkg" && npm install && npm run build 2>/dev/null); done
+```
+
+**Step 4** — Generate agent cards:
+
+```bash
+node scripts/generate-agent-cards.mjs
+```
+
+**Step 5** — Verify install (expected: `24/24 passed`):
+
+```bash
+node scripts/gen-self-audit.mjs
+```
+
+### Optional MCP servers
+
+For full asset generation (Rodin, Meshy, Flux Kontext, Recraft, Kling, nano-banana), set env vars:
+
+```bash
+export ROD_API_KEY=...
+export MESHY_API_KEY=...
+export FAL_KEY=...
+export RECRAFT_API_KEY=...
+export KLING_API_KEY=...
+```
+
+For offline-only mode (skips all MCP/network calls):
+
+```bash
+export GENORAH_OFFLINE=1
+```
+
+### Quick start
+
+```bash
+/gen:start-project
+/gen:plan
+/gen:build
+/gen:audit
+```
+
 ## Available Plugins
 
 | Plugin | Skills | Commands | Agents | Version | Description |
