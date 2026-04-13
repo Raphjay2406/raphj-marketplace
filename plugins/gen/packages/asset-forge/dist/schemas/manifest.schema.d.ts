@@ -1,0 +1,135 @@
+import { z } from "zod";
+export declare const ManifestEntrySchema: z.ZodObject<{
+    path: z.ZodString;
+    sha256: z.ZodUnion<[z.ZodString, z.ZodString]>;
+    bytes: z.ZodNumber;
+    provider: z.ZodString;
+    model: z.ZodOptional<z.ZodString>;
+    seed: z.ZodOptional<z.ZodNumber>;
+    prompt: z.ZodString;
+    reference_hashes: z.ZodArray<z.ZodString, "many">;
+    cost_usd: z.ZodNumber;
+    duration_ms: z.ZodNumber;
+    cache_hit: z.ZodBoolean;
+    dna_compliance_pass: z.ZodBoolean;
+    parent_sha256: z.ZodOptional<z.ZodString>;
+    recorded_at: z.ZodOptional<z.ZodString>;
+}, "strip", z.ZodTypeAny, {
+    sha256: string;
+    cost_usd: number;
+    provider: string;
+    bytes: number;
+    duration_ms: number;
+    path: string;
+    prompt: string;
+    reference_hashes: string[];
+    cache_hit: boolean;
+    dna_compliance_pass: boolean;
+    model?: string | undefined;
+    seed?: number | undefined;
+    parent_sha256?: string | undefined;
+    recorded_at?: string | undefined;
+}, {
+    sha256: string;
+    cost_usd: number;
+    provider: string;
+    bytes: number;
+    duration_ms: number;
+    path: string;
+    prompt: string;
+    reference_hashes: string[];
+    cache_hit: boolean;
+    dna_compliance_pass: boolean;
+    model?: string | undefined;
+    seed?: number | undefined;
+    parent_sha256?: string | undefined;
+    recorded_at?: string | undefined;
+}>;
+export type ManifestEntry = z.infer<typeof ManifestEntrySchema>;
+export declare const ManifestSchema: z.ZodObject<{
+    schema_version: z.ZodLiteral<"4.0.0">;
+    entries: z.ZodArray<z.ZodObject<{
+        path: z.ZodString;
+        sha256: z.ZodUnion<[z.ZodString, z.ZodString]>;
+        bytes: z.ZodNumber;
+        provider: z.ZodString;
+        model: z.ZodOptional<z.ZodString>;
+        seed: z.ZodOptional<z.ZodNumber>;
+        prompt: z.ZodString;
+        reference_hashes: z.ZodArray<z.ZodString, "many">;
+        cost_usd: z.ZodNumber;
+        duration_ms: z.ZodNumber;
+        cache_hit: z.ZodBoolean;
+        dna_compliance_pass: z.ZodBoolean;
+        parent_sha256: z.ZodOptional<z.ZodString>;
+        recorded_at: z.ZodOptional<z.ZodString>;
+    }, "strip", z.ZodTypeAny, {
+        sha256: string;
+        cost_usd: number;
+        provider: string;
+        bytes: number;
+        duration_ms: number;
+        path: string;
+        prompt: string;
+        reference_hashes: string[];
+        cache_hit: boolean;
+        dna_compliance_pass: boolean;
+        model?: string | undefined;
+        seed?: number | undefined;
+        parent_sha256?: string | undefined;
+        recorded_at?: string | undefined;
+    }, {
+        sha256: string;
+        cost_usd: number;
+        provider: string;
+        bytes: number;
+        duration_ms: number;
+        path: string;
+        prompt: string;
+        reference_hashes: string[];
+        cache_hit: boolean;
+        dna_compliance_pass: boolean;
+        model?: string | undefined;
+        seed?: number | undefined;
+        parent_sha256?: string | undefined;
+        recorded_at?: string | undefined;
+    }>, "many">;
+}, "strip", z.ZodTypeAny, {
+    entries: {
+        sha256: string;
+        cost_usd: number;
+        provider: string;
+        bytes: number;
+        duration_ms: number;
+        path: string;
+        prompt: string;
+        reference_hashes: string[];
+        cache_hit: boolean;
+        dna_compliance_pass: boolean;
+        model?: string | undefined;
+        seed?: number | undefined;
+        parent_sha256?: string | undefined;
+        recorded_at?: string | undefined;
+    }[];
+    schema_version: "4.0.0";
+}, {
+    entries: {
+        sha256: string;
+        cost_usd: number;
+        provider: string;
+        bytes: number;
+        duration_ms: number;
+        path: string;
+        prompt: string;
+        reference_hashes: string[];
+        cache_hit: boolean;
+        dna_compliance_pass: boolean;
+        model?: string | undefined;
+        seed?: number | undefined;
+        parent_sha256?: string | undefined;
+        recorded_at?: string | undefined;
+    }[];
+    schema_version: "4.0.0";
+}>;
+export type Manifest = z.infer<typeof ManifestSchema>;
+//# sourceMappingURL=manifest.schema.d.ts.map

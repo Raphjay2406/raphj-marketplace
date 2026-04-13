@@ -1,0 +1,25 @@
+{
+  "name": "@genorah/asset-forge",
+  "version": "4.0.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "zod": "^3.23.8",
+    "yaml": "^2.6.0",
+    "sharp": "^0.33.5",
+    "p-limit": "^6.1.0",
+    "keyv": "^5.2.1",
+    "@keyv/sqlite": "^4.0.0",
+    "@genorah/protocol": "4.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.2",
+    "vitest": "^2.1.4",
+    "@types/node": "^24.0.0"
+  }
+}

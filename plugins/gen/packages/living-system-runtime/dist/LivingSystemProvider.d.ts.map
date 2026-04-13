@@ -1,0 +1,1 @@
+{"version":3,"file":"LivingSystemProvider.d.ts","sourceRoot":"","sources":["../src/LivingSystemProvider.tsx"],"names":[],"mappings":"AAAA,OAAO,KAAoB,MAAM,OAAO,CAAC;AACzC,OAAO,EAAE,WAAW,EAA4C,MAAM,kCAAkC,CAAC;AAoBzG,wBAAgB,oBAAoB,CAAC,EAAE,KAAK,EAAE,QAAQ,EAAE,EAAE;IAAE,KAAK,EAAE,WAAW,CAAC;IAAC,QAAQ,EAAE,KAAK,CAAC,SAAS,CAAA;CAAE,2CA0C1G"}
