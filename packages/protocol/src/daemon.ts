@@ -50,11 +50,31 @@ export async function startDaemon(opts: DaemonOptions): Promise<Daemon> {
   });
 
   app.get("/ag-ui/stream", (req, reply) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const buffer: any[] = [];
+    let resolve: (() => void) | null = null;
+    const unsub = em.subscribe((event) => {
+      buffer.push(event);
+      if (resolve) { resolve(); resolve = null; }
+    });
+    const heartbeat = setInterval(() => {
+      buffer.push({ type: "HEARTBEAT", at: Date.now() });
+      if (resolve) { resolve(); resolve = null; }
+    }, 15_000);
+    req.raw.on("close", () => { clearInterval(heartbeat); unsub(); });
+
     reply.sse(
       (async function* () {
-        while (true) {
-          yield { data: JSON.stringify({ alive: true, at: Date.now() }) };
-          await new Promise(r => setTimeout(r, 15000));
+        try {
+          while (true) {
+            while (buffer.length > 0) {
+              yield { data: JSON.stringify(buffer.shift()) };
+            }
+            await new Promise<void>(r => { resolve = r; });
+          }
+        } finally {
+          clearInterval(heartbeat);
+          unsub();
         }
       })()
     );
