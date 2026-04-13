@@ -5,3 +5,5 @@ Thumbs.db
 node_modules/
 *.log
 .claude/genorah-dedup/
+.superpowers/
+.claude/settings.local.json
