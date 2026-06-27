@@ -1,5 +1,5 @@
 // scripts/audit-perf-hook.mjs
-import { checkPerfBudget } from "./validators/perf-budget.mjs";
+import { checkPerfBudget } from "./validators/web-vitals-budget.mjs";
 
 export function auditPerf({ metrics, intensity, emit }) {
   const result = checkPerfBudget(metrics, intensity);

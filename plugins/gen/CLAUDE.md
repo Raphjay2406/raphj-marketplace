@@ -4,7 +4,7 @@ This file provides guidance to Claude Code when working with the Genorah plugin 
 
 ## Project Overview
 
-**Genorah v4.0.0-alpha.3** — M3 Asset Forge 2.0 shipped. Ships A2A protocol (L4 full citizenship), tiered agent structure (105 agents: 10 directors + 95 workers), `Result<T>` typed envelope, and embedded HTTP daemon. M2 Cinematic Canvas: 17 WebGPU-native archetype presets (50 total), Scroll Coherence 6th hard gate, perf-budget validator, canvas-runtime test suite. M3 Asset Forge 2.0: 5 new MCPs (Rodin Gen-2, Meshy 5, Flux Kontext, Recraft V3, Kling 2.1), recipe-driven composite pipelines, user-global asset cache (SQLite), cost ledger with downgrade chain, full provenance MANIFEST, Scene Craft 13th quality category (Design Craft 234 → 254 pts). Pillars 5, 6 land in M4–M5. See `docs/superpowers/specs/2026-04-12-genorah-v4-cinematic-intelligence-design.md`.
+**Genorah v4.0.0 — Cinematic Intelligence.** 108 agents, 42 archetypes, 394-pt quality gate, 10 MCPs, 9 packages. GA release. Ships AG-UI v0.3 protocol + canvas runtime, tiered agent structure (10 directors + 98 workers), living-system self-healing components, episodic memory graph, v4 marketplace with plugin distribution, 394-pt two-axis quality gate (Design Craft 254 + UX Integrity 140 = 394), fractal archetype mixing (42 archetypes), and the full preservation-first ingestion suite (v3.21–v3.25). 109/109 tests passing. See `docs/v4-changelog.md` for the full feature list.
 
 ## Architecture (v4)
 
@@ -38,7 +38,7 @@ scripts/ingest/ (v3.21+ runtime for codebase/URL ingestion into the pipeline)
 - **Agents:** `agents/{agent-name}.md` -- role definition, input/output contracts, context budget
 - **Commands:** `commands/{command-name}.md` -- description, argument-hint, numbered workflow steps
 - **Hooks:** `.claude-plugin/hooks/` -- 7 hooks: `session-start.mjs`, `pre-tool-use.mjs`, `post-tool-use.mjs`, `user-prompt.mjs`, `pre-compact.mjs`, `session-end.mjs`, `dna-compliance-check.sh`
-- **MCP Servers:** `.claude-plugin/.mcp.json` -- 5 optional MCP servers (nano-banana, stitch, playwright, obsidian, obsidian-fs)
+- **MCP Servers:** `.claude-plugin/.mcp.json` -- optional MCP servers (gpt-image, stitch, playwright, obsidian, obsidian-fs, …). **gpt-image** (OpenAI gpt-image-2) replaced the old Gemini **nano-banana** image server — see "AI Image Generation" for the relocation + cache gotcha.
 - **Template:** `skills/_skill-template/SKILL.md` -- canonical 4-layer format reference
 
 ## Agents (21 total)
@@ -61,7 +61,7 @@ Five optional MCP servers declared in `.claude-plugin/.mcp.json`:
 
 | Server | Package | Purpose |
 |--------|---------|---------|
-| **nano-banana** | Gemini 3.1 Flash Image | AI image generation -- hero backgrounds, textures, OG images, style transfer |
+| **gpt-image** | OpenAI gpt-image-2 | AI image generation + editing -- hero backgrounds, textures, OG images, photo edits (object removal, mask inpainting). Replaced nano-banana. Lives at `P:\Genorah\gpt-image-mcp` (see "AI Image Generation"). |
 | **stitch** | Google Stitch | Visual mockup generation -- text-to-screen, design system sync, variant exploration |
 | **playwright** | Playwright MCP | Visual QA -- 4-breakpoint screenshots, CSS/DOM verification, hover testing, console errors |
 | **obsidian** | obsidian-mcp-server | Obsidian REST API -- frontmatter management, tag ops, global search |
@@ -80,9 +80,9 @@ Earlier (v3.x):
 | Command | Purpose |
 |---------|---------|
 | `/gen:start-project` | Discovery, research, archetype selection, Design DNA generation, tech stack selection |
-| `/gen:discuss` | Per-phase creative deep dive, visual features, brand voice, tech stack trade-offs. Stitch mockups + nano-banana concept art when available. |
+| `/gen:discuss` | Per-phase creative deep dive, visual features, brand voice, tech stack trade-offs. Stitch mockups + gpt-image concept art when available. |
 | `/gen:plan` | Phase-scoped re-research, framework-aware PLAN.md generation with rendering rationale |
-| `/gen:build` | Wave-based implementation with framework-specific code generation. AI images via nano-banana. |
+| `/gen:build` | Wave-based implementation with framework-specific code generation. AI images via gpt-image. |
 | `/gen:iterate` | Brainstorm-first design changes with post-iterate stale-audit detection |
 | `/gen:review` | Focused creative review — archetype personality, conversion readiness, visual polish, mobile quality |
 | `/gen:bugfix` | Diagnostic root cause analysis with Playwright visual evidence capture |
@@ -132,7 +132,7 @@ Every skill uses the **4-layer format**: Layer 1 (Decision Guidance) explains wh
 1. **start-project** -- Discovery questions, parallel research agents, competitive benchmarking, archetype selection, Design DNA generation, content planning
 2. **discuss** -- Per-phase creative deep dive with visual feature proposals, brand voice refinement, Stitch mockups, and auto-organized task output
 3. **plan** -- Phase-scoped re-research, context-rot-safe PLAN.md generation with wow-moment specs, reference targets, and accessibility blocks
-4. **build** -- Wave-based implementation (parallel or sequential per master plan) with real-time status. Builders generate AI images via nano-banana when available.
+4. **build** -- Wave-based implementation (parallel or sequential per master plan) with real-time status. Builders generate AI images via gpt-image when available.
 5. **iterate** -- Brainstorm-first design changes or bug diagnosis with user approval before applying
 
 Additional: `/gen:bugfix` for diagnostic root cause analysis with proposed solutions. `/gen:audit` for standalone quality gate runs with Playwright visual QA. `/gen:companion` for Visual Companion interaction.
@@ -141,7 +141,7 @@ Additional: `/gen:bugfix` for diagnostic root cause analysis with proposed solut
 
 **Design DNA** -- Per-project visual identity with 12 color tokens (8 semantic: bg, surface, text, border, primary, secondary, accent, muted + 4 expressive: glow, tension, highlight, signature), display/body/mono fonts, 8-level type scale, 5-level spacing, signature element, and 8+ motion tokens. Generates Tailwind v4 `@theme` CSS directly.
 
-**Design Archetypes** -- 19 opinionated personality systems (Brutalist, Ethereal, Kinetic, Editorial, Neo-Corporate, Organic, Retro-Future, Luxury/Fashion, Playful/Startup, Data-Dense, Japanese Minimal, Glassmorphism, Neon Noir, Warm Artisan, Swiss/International, Vaporwave, Neubrutalism, Dark Academia, AI-Native) plus a custom builder. Each locks in colors, fonts, mandatory techniques, forbidden patterns, and 3 tension zones. Escape hatch: builders may break ONE rule via tension override with documented rationale.
+**Design Archetypes** -- 42 opinionated personality systems (17 legacy: Brutalist, Ethereal, Kinetic, Editorial, Neo-Corporate, Organic, Retro-Future, Luxury/Fashion, Playful/Startup, Data-Dense, Japanese Minimal, Glassmorphism, Neon Noir, Warm Artisan, Swiss/International, Vaporwave, Neubrutalism, Dark Academia, AI-Native + 23 v4 additions: Claymorphism, Neumorphism, Y2K, Pixel-Art, Cyberpunk-HUD, Kinetic-Industrial, Liminal-Brutalism, Organic-Machinery, Quantum-Editorial, Signal-Noise, Temporal-Glass, Post-Flat, Hyperreal-Minimal, Neo-Physical, Cinematic-3D, Volumetric, Ambient-Computing, Biomorphic-Compute, Living-Data, Narrative-Cinema, Sonic-Visual, Archive-Futurist, Spatial-VisionOS) plus fractal mixing. Each locks in colors, fonts, mandatory techniques, forbidden patterns, and 3 tension zones. Escape hatch: builders may break ONE rule via tension override with documented rationale.
 
 **Creative Tension** -- Controlled rule-breaking with 5 tension types (Scale Violence, Material Collision, Temporal Disruption, Dimensional Break, Interaction Shock). Per-archetype techniques, 1-3 per page, spaced apart.
 
@@ -169,15 +169,32 @@ Defined in the `visual-qa-protocol` skill (core tier). Falls back to code-only r
 
 ## AI Image Generation
 
-When nano-banana MCP is available, the pipeline generates DNA-matched images directly:
+The image MCP is **`gpt-image`** — a standalone Node/TS server wrapping **OpenAI gpt-image-2** (generate + edit).
+It **replaced the Gemini `nano-banana` server.** Tools: `mcp__gpt-image__generate_image`, `mcp__gpt-image__edit_image`.
+When available, the pipeline generates and edits DNA-matched images directly:
 
 - **Builder agents** generate hero backgrounds, textures, and illustrations during section construction
 - **Per-beat templates** (HOOK = dramatic cinematic, BREATHE = subtle atmosphere, PEAK = maximum expression)
-- **Style transfer** via reference images maintains visual consistency across multi-section pages
-- **Iterative editing** for DNA color alignment using continue_editing workflow
-- Falls back to text prompts saved to `.planning/genorah/image-prompts/` when MCP is unavailable
+- **Reference images** maintain visual consistency across multi-section pages (gpt-image-2 accepts multiple input images)
+- **Editing** (`edit_image`) for photo fixes — object removal, mask inpainting, DNA color alignment. gpt-image is
+  **stateless**: iterate by re-calling `edit_image` with the previous output. (The old stateful `continue_editing` /
+  `get_last_image_info` tools are gone.)
+- Falls back to text prompts saved to `.planning/genorah/image-prompts/` when the MCP is unavailable
 
 Defined in the `image-prompt-generation` skill (domain tier).
+
+### Where it lives + the cache gotcha (IMPORTANT)
+The `gpt-image` server is **not in this monorepo** — it was relocated to a standalone repo at
+**`P:\Genorah\gpt-image-mcp`** (own git repo + its own CLAUDE.md). The plugin's `.mcp.json` runs it by absolute path
+(`node P:/Genorah/gpt-image-mcp/dist/index.js`), so `npm run build` must have produced `dist/` there. Its `OPENAI_API_KEY`
+lives in that repo's gitignored `.env` (the server self-loads it).
+
+⚠️ **Claude Code loads this plugin from its CACHE, not from this source tree:**
+`~/.claude/plugins/cache/raphj-marketplace/gen/4.0.0/.claude-plugin/.mcp.json`. **Editing `.mcp.json` here has NO effect
+on what actually loads.** The cache copy was hand-edited to the `gpt-image` entry as a **stopgap**; MCP changes require a
+**Claude Code restart**. **Durable fix:** re-publish this plugin version (bump + marketplace sync) so a reinstall doesn't
+revert the cache to `nano-banana`. Follow-up: ~96 agent/skill files still call `mcp__nano-banana__{generate_image,
+edit_image,continue_editing,get_last_image_info}` — migrate them to `mcp__gpt-image__{generate_image,edit_image}`.
 
 ## Visual Companion
 
@@ -197,44 +214,18 @@ Genorah ships baked-in integration skills for major platforms:
 
 Each integration skill follows the 4-layer format and maps to DNA tokens for consistent visual theming of third-party UI components.
 
-## Preservation-First Ingestion (v3.21–v3.25)
+## Preservation-First Ingestion (v3.21+ retained)
 
-For existing projects built outside this pipeline, `/gen:ingest` brings them in without losing detail. Source preserved verbatim under `source/` (codebase) or `captured/` (URL). Every byte touched → `preservation.ledger.ndjson` append-only NDJSON.
+`/gen:ingest` ingests existing projects into Genorah. Captures source/URL verbatim, logs every byte touched to `preservation.ledger.ndjson`. Full feature set retained from v3.25 — see legacy docs for ingestion subcommands.
 
-| Subcommand | Purpose |
-|------------|---------|
-| `codebase <path>` | Mirror repo + framework detect + token/component inventory |
-| `url <url> --consent` | Playwright crawl — HTML + 4bp screenshots + computed-styles + assets |
-| `motion <slug> <trace-dir>` | Playwright-trace → MOTION-INVENTORY.md with exact preset fitting (7 cubic-Bezier presets) |
-| `cms <slug> --cms=<p>` | Schema introspection — Sanity (GROQ) / Contentful (CMA) / Payload (access + OpenAPI) |
-| `verify <slug>` | Preservation invariants — every source has capture, every asset has license or paired gap |
-| `gap <slug>` / `resolve` | User-decision prompts; blocking gaps stop scaffold |
+## 9-Axis Frontier (v3.20 retained, superseded by v4 pillars)
 
-**Invariants** (enforced by `verify`):
-1. Every `source/**` file has `capture.file` event.
-2. Every asset has confirmed license OR paired `gap:license-unknown`.
-3. Every `content.extract` has valid `CONTENT.md:*` destination.
-4. Every low-confidence `dna.extract` has paired `gap:dna-low-confidence`.
+v3.20's 9-axis frontier (agentic UX, server-driven UI, brandkit v2, multi-brand governance, experimentation layer, 3D scenes, commerce v2, observability/SRE, edge-native) is retained. Most axes are superseded by v4 pillars:
 
-**Runtime scripts** (`scripts/ingest/`): `preservation-ledger`, `codebase-scan`, `crawl` (plan emitter) + `crawl-executor` (Playwright), `dna-extract` (CSS-var path), `pixel-kmeans` (full ΔE2000 perceptual distance via sRGB→Lab→ΔE2000), `archetype-score`, `interaction-replay` (trace → easing fit), `cms-schema` (3-platform dispatcher), `cms-detect` (8-CMS fingerprinting), `asset-download`.
-
-Architecture: `docs/v3.21-ingestion-architecture.md`.
-
-## 9-Axis Frontier (v3.20)
-
-Shipped as composable skills + commands, integrating with DNA + pipeline:
-
-| Axis | Skills / Commands |
-|------|-------------------|
-| Agentic UX | `agentic-ux-patterns` + `agent-trace-ui` + `/gen:agents` — AI SDK v6 via Vercel AI Gateway with `stopWhen: stepCountIs(N)` + agent-trace UI primitives |
-| Server-driven UI | `server-driven-ui` — Zod discriminated-union → component tree for CMS-authored pages |
-| Brandkit v2 | `brand-motion-sigils` (Lottie + Rive) + `sonic-logo` + `haptic-signature` + `figma-variables-roundtrip` |
-| Multi-brand governance | `multi-brand-governance` + `/gen:multibrand` — parent DNA + N sub-brand overlays with drift policy |
-| Experimentation | `experimentation-layer` + `/gen:experiment` — A/B/n with quality-gate-aware winner (variants below Design 200 / UX 100 disqualified) |
-| 3D scenes | `3d-scene-composer` + `r3f-physics-rapier` + `gltf-authoring-pipeline` |
-| Commerce v2 | `commerce-hydrogen` + `commerce-medusa` |
-| Observability / SRE | `opentelemetry-traces` + `slo-error-budgets` |
-| Edge-native | `vercel-sandbox` + `vercel-botid` |
+- Agentic UX + server-driven UI → absorbed into SDUI renderer (`@genorah/sdui`)
+- Brandkit v2 → absorbed into `@genorah/generative-archetype` + Signature DNA forge
+- 3D scenes → absorbed into `@genorah/canvas-runtime` (Cinematic tier)
+- Commerce/observability/edge-native → retained as v3-era skills
 
 ## SEO/GEO Intelligence
 

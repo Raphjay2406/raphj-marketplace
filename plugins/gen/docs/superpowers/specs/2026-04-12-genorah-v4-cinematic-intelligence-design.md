@@ -19,7 +19,9 @@ Genorah v4 is the biggest update since the plugin's inception. It ships six tigh
 5. **Design Beyond Archetypes** — generative, living, signature-locked, composable, neuro-aesthetically-judged
 6. **Built Beyond Limits** — streaming pipeline, cross-project memory graph, agent marketplace, offline-first, self-improving judge
 
-**Headline numbers:** 104 agents (was 24) · 50 archetypes (was 33) · 394-pt quality gate (was 354) · 7 MCP integrations (was 2) · ~885 tests (was 109) · 22-week estimated scope.
+**Headline numbers:** 104 agents (was 24) · 50 archetypes (was 33) · 394-pt quality gate (was 354) · 7 MCP integrations (was 2) · ~885 tests (was 109) · 22-week estimated scope.[^archetype-count]
+
+[^archetype-count]: Adjusted to 42 at ship time (17 new + 25 existing seed archetypes as documented in SKILL.md).
 
 *Gate progression: 234 Design Craft + 120 UX Integrity = 354 (v3.25) → 254 Design Craft (+ Scene Craft 20) + 140 UX Integrity (+ Neuro-aesthetic 20) = 394 (v4).*
 
@@ -640,7 +642,7 @@ Target: **~885 tests passing at v4.0 ship** (109 retained from v3.25 + ~776 new)
 | Unit | ~600 (+500) | Every validator skill, every schema version, every error handler, every new archetype DNA preset |
 | Contract | ~120 (new) | A2A card spec compliance, Result envelope schema, AG-UI events, composite recipes, marketplace sandbox |
 | Integration | ~80 (+40) | Full pipeline per flagship archetype, photoreal recipe E2E, scroll-coherence, inbound A2A, offline-first, cost governance, cross-project memory |
-| Visual regression | ~50 (new) | 50 archetypes × reference hero × 4 breakpoints; deterministic scene keyframes; signature mark stability |
+| Visual regression | ~50 (new) | 42 archetypes × reference hero × 4 breakpoints; deterministic scene keyframes; signature mark stability |
 | Performance | ~20 (new) | LCP/JS budgets for cinematic; WebGPU render budget for immersive; asset cost cap; memory graph p99 |
 | Chaos | ~15 (new) | MCP kills, out-of-order messages, worker crash + resume, circular followups, malformed marketplace output |
 
