@@ -71,7 +71,7 @@ motion_health_score = 20
   - 2 × (motion_conflicts > 0 ? 1 : 0)
 ```
 
-Sub-gate trigger: `motion_health_score < 12` → parent Motion & Interaction category × 0.5 multiplier.
+Sub-gate trigger: `motion_health_score < 12` → **hard Floor check** enforced by `scripts/verify/verify-section.mjs`. A failing score blocks the section from passing the Floor; it does NOT apply a score multiplier or cap any category score.
 
 ### Output
 

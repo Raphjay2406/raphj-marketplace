@@ -78,7 +78,7 @@ Stored in manifest; enables `/gen:assets regenerate` to skip bit-identical re-ru
 
 ## Layer 3 — Integration
 
-- **Sub-gate**: `asset-forge-dna-compliance` reads MANIFEST.json, cascades into **Integration Quality** category of quality-gate-v3.
+- **Sub-gate**: `asset-forge-dna-compliance` reads MANIFEST.json; a failing compliance check is a **hard Floor block** enforced by `scripts/verify/verify-section.mjs` — it does NOT multiply or cap the Integration Quality category score.
 - **Brandkit**: `/gen:brandkit export` pulls icon-system/hero-glyph/pattern assets from manifest instead of regenerating.
 - **Companion**: `/gen:dashboard` Assets tab renders manifest with DNA-coverage bars + regen buttons.
 - **Ledger**: every manifest write also emits `{kind: "asset-generated", subject: <asset-id>, payload: <manifest-entry>}` to `.planning/genorah/journal.ndjson` (L4).

@@ -42,3 +42,19 @@ test('PEAK with no asset → floor fail on assets', async () => {
   assert.equal(v.floor.pass, false);
   assert.ok(v.floor.failures.some(f => f.check === 'assets'));
 });
+
+test('PEAK with server-not-ready → floor fail on build (fail-closed)', async () => {
+  const dir = section('PEAK');
+  const proj = mkdtempSync(join(tmpdir(), 'proj-'));
+  mkdirSync(join(proj, 'public/assets'), { recursive: true });
+  writeFileSync(join(proj, 'public/assets/MANIFEST.json'), JSON.stringify([{ path: '/assets/hero-abc.png', source: 'gpt-image' }]));
+  const deps = {
+    ensureBuild: async () => ({ ok: true }),
+    ensureDevServer: async () => ({ url: null, ready: false, stop: async () => {} }),
+    probe: async () => ({ console: { errors: [] }, overflow: [], axe: { critical: 0, serious: 0 }, motion: { present: true }, html: '<img src="/assets/hero-abc.png">', screenshots: {} }),
+    runLighthouse: async () => ({ performance: 0.95 }),
+  };
+  const v = await verifySection({ sectionDir: dir, projectDir: proj, perfBudget: 0.85, deps });
+  assert.equal(v.floor.pass, false);
+  assert.ok(v.floor.failures.some(f => f.check === 'build'), 'expected a build failure in floor.failures');
+});

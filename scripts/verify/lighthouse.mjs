@@ -13,7 +13,7 @@ export async function runLighthouse(url) {
     if (typeof score !== 'number') return { performance: 0, error: 'no performance score' };
     return { performance: score };
   } catch (e) {
-    return { performance: 0, error: e.message };
+    return { performance: 0, error: e?.message ?? String(e) };
   } finally {
     if (chrome) await chrome.kill();
   }
