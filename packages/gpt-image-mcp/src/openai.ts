@@ -50,9 +50,9 @@ export class OpenAiImageClient {
     form.set("model", this.cfg.model);
     form.set("prompt", p.prompt);
     for (const img of p.images) {
-      form.append("image[]", new Blob([img.bytes], { type: img.mime }), img.name);
+      form.append("image[]", new Blob([new Uint8Array(img.bytes)], { type: img.mime }), img.name);
     }
-    if (p.mask) form.set("mask", new Blob([p.mask.bytes], { type: p.mask.mime }), p.mask.name);
+    if (p.mask) form.set("mask", new Blob([new Uint8Array(p.mask.bytes)], { type: p.mask.mime }), p.mask.name);
     form.set("size", p.size);
     form.set("quality", p.quality);
     form.set("output_format", p.output_format);
