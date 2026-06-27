@@ -1,5 +1,0 @@
-# Build output — rebuild with `npm run build -w @genorah/gpt-image-mcp`
-dist/
-
-# Local secrets (also covered by the repo-root .gitignore)
-.env

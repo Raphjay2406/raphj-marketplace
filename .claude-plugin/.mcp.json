@@ -21,7 +21,7 @@
   },
   "gpt-image": {
     "command": "node",
-    "args": ["d:/Modulo/Plugins/v0-ahh-skill/packages/gpt-image-mcp/dist/index.js"],
+    "args": ["P:/Genorah/gpt-image-mcp/dist/index.js"],
     "env": {
       "OPENAI_API_KEY": "${OPENAI_API_KEY}",
       "GPT_IMAGE_OUTPUT_DIR": "${GPT_IMAGE_OUTPUT_DIR}",
