@@ -38,7 +38,7 @@ scripts/ingest/ (v3.21+ runtime for codebase/URL ingestion into the pipeline)
 - **Agents:** `agents/{agent-name}.md` -- role definition, input/output contracts, context budget
 - **Commands:** `commands/{command-name}.md` -- description, argument-hint, numbered workflow steps
 - **Hooks:** `.claude-plugin/hooks/` -- 7 hooks: `session-start.mjs`, `pre-tool-use.mjs`, `post-tool-use.mjs`, `user-prompt.mjs`, `pre-compact.mjs`, `session-end.mjs`, `dna-compliance-check.sh`
-- **MCP Servers:** `.claude-plugin/.mcp.json` -- 5 optional MCP servers (nano-banana, stitch, playwright, obsidian, obsidian-fs)
+- **MCP Servers:** `.claude-plugin/.mcp.json` -- optional MCP servers (gpt-image, stitch, playwright, obsidian, obsidian-fs, …). **gpt-image** (OpenAI gpt-image-2) replaced the old Gemini **nano-banana** image server — see "AI Image Generation" for the relocation + cache gotcha.
 - **Template:** `skills/_skill-template/SKILL.md` -- canonical 4-layer format reference
 
 ## Agents (21 total)
@@ -61,7 +61,7 @@ Five optional MCP servers declared in `.claude-plugin/.mcp.json`:
 
 | Server | Package | Purpose |
 |--------|---------|---------|
-| **nano-banana** | Gemini 3.1 Flash Image | AI image generation -- hero backgrounds, textures, OG images, style transfer |
+| **gpt-image** | OpenAI gpt-image-2 | AI image generation + editing -- hero backgrounds, textures, OG images, photo edits (object removal, mask inpainting). Replaced nano-banana. Lives at `P:\Genorah\gpt-image-mcp` (see "AI Image Generation"). |
 | **stitch** | Google Stitch | Visual mockup generation -- text-to-screen, design system sync, variant exploration |
 | **playwright** | Playwright MCP | Visual QA -- 4-breakpoint screenshots, CSS/DOM verification, hover testing, console errors |
 | **obsidian** | obsidian-mcp-server | Obsidian REST API -- frontmatter management, tag ops, global search |
@@ -80,9 +80,9 @@ Earlier (v3.x):
 | Command | Purpose |
 |---------|---------|
 | `/gen:start-project` | Discovery, research, archetype selection, Design DNA generation, tech stack selection |
-| `/gen:discuss` | Per-phase creative deep dive, visual features, brand voice, tech stack trade-offs. Stitch mockups + nano-banana concept art when available. |
+| `/gen:discuss` | Per-phase creative deep dive, visual features, brand voice, tech stack trade-offs. Stitch mockups + gpt-image concept art when available. |
 | `/gen:plan` | Phase-scoped re-research, framework-aware PLAN.md generation with rendering rationale |
-| `/gen:build` | Wave-based implementation with framework-specific code generation. AI images via nano-banana. |
+| `/gen:build` | Wave-based implementation with framework-specific code generation. AI images via gpt-image. |
 | `/gen:iterate` | Brainstorm-first design changes with post-iterate stale-audit detection |
 | `/gen:review` | Focused creative review — archetype personality, conversion readiness, visual polish, mobile quality |
 | `/gen:bugfix` | Diagnostic root cause analysis with Playwright visual evidence capture |
@@ -132,7 +132,7 @@ Every skill uses the **4-layer format**: Layer 1 (Decision Guidance) explains wh
 1. **start-project** -- Discovery questions, parallel research agents, competitive benchmarking, archetype selection, Design DNA generation, content planning
 2. **discuss** -- Per-phase creative deep dive with visual feature proposals, brand voice refinement, Stitch mockups, and auto-organized task output
 3. **plan** -- Phase-scoped re-research, context-rot-safe PLAN.md generation with wow-moment specs, reference targets, and accessibility blocks
-4. **build** -- Wave-based implementation (parallel or sequential per master plan) with real-time status. Builders generate AI images via nano-banana when available.
+4. **build** -- Wave-based implementation (parallel or sequential per master plan) with real-time status. Builders generate AI images via gpt-image when available.
 5. **iterate** -- Brainstorm-first design changes or bug diagnosis with user approval before applying
 
 Additional: `/gen:bugfix` for diagnostic root cause analysis with proposed solutions. `/gen:audit` for standalone quality gate runs with Playwright visual QA. `/gen:companion` for Visual Companion interaction.
@@ -169,15 +169,32 @@ Defined in the `visual-qa-protocol` skill (core tier). Falls back to code-only r
 
 ## AI Image Generation
 
-When nano-banana MCP is available, the pipeline generates DNA-matched images directly:
+The image MCP is **`gpt-image`** — a standalone Node/TS server wrapping **OpenAI gpt-image-2** (generate + edit).
+It **replaced the Gemini `nano-banana` server.** Tools: `mcp__gpt-image__generate_image`, `mcp__gpt-image__edit_image`.
+When available, the pipeline generates and edits DNA-matched images directly:
 
 - **Builder agents** generate hero backgrounds, textures, and illustrations during section construction
 - **Per-beat templates** (HOOK = dramatic cinematic, BREATHE = subtle atmosphere, PEAK = maximum expression)
-- **Style transfer** via reference images maintains visual consistency across multi-section pages
-- **Iterative editing** for DNA color alignment using continue_editing workflow
-- Falls back to text prompts saved to `.planning/genorah/image-prompts/` when MCP is unavailable
+- **Reference images** maintain visual consistency across multi-section pages (gpt-image-2 accepts multiple input images)
+- **Editing** (`edit_image`) for photo fixes — object removal, mask inpainting, DNA color alignment. gpt-image is
+  **stateless**: iterate by re-calling `edit_image` with the previous output. (The old stateful `continue_editing` /
+  `get_last_image_info` tools are gone.)
+- Falls back to text prompts saved to `.planning/genorah/image-prompts/` when the MCP is unavailable
 
 Defined in the `image-prompt-generation` skill (domain tier).
+
+### Where it lives + the cache gotcha (IMPORTANT)
+The `gpt-image` server is **not in this monorepo** — it was relocated to a standalone repo at
+**`P:\Genorah\gpt-image-mcp`** (own git repo + its own CLAUDE.md). The plugin's `.mcp.json` runs it by absolute path
+(`node P:/Genorah/gpt-image-mcp/dist/index.js`), so `npm run build` must have produced `dist/` there. Its `OPENAI_API_KEY`
+lives in that repo's gitignored `.env` (the server self-loads it).
+
+⚠️ **Claude Code loads this plugin from its CACHE, not from this source tree:**
+`~/.claude/plugins/cache/raphj-marketplace/gen/4.0.0/.claude-plugin/.mcp.json`. **Editing `.mcp.json` here has NO effect
+on what actually loads.** The cache copy was hand-edited to the `gpt-image` entry as a **stopgap**; MCP changes require a
+**Claude Code restart**. **Durable fix:** re-publish this plugin version (bump + marketplace sync) so a reinstall doesn't
+revert the cache to `nano-banana`. Follow-up: ~96 agent/skill files still call `mcp__nano-banana__{generate_image,
+edit_image,continue_editing,get_last_image_info}` — migrate them to `mcp__gpt-image__{generate_image,edit_image}`.
 
 ## Visual Companion
 
