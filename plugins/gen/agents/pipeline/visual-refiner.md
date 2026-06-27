@@ -36,11 +36,19 @@ You do NOT:
 - Modify `PLAN.md` or `DESIGN-DNA.md`.
 - Touch other sections.
 
+## Verification Spine Integration
+
+Before starting any refinement iteration, read `<sectionDir>/VERDICT.json`.
+
+- If `floor.pass === false`: **do not attempt visual refinement**. The Floor failures (build errors, console errors, asset 404s, overflow, axe, perf) must be fixed by the `polisher` (code fixes) first. Log escalation and exit. Visual refinement operates on the advisory **Ceiling** only.
+- If `floor.pass === true`: proceed. Your scoring target is the advisory `ceiling.score` from VERDICT.json. You do NOT re-run Playwright independently to decide whether Playwright is needed — the Floor verdict tells you that. You only contribute visual/layout refinement (archetype personality, depth, motion, creative courage).
+
 ## Protocol
 
 Follow `skills/closed-loop-iteration/SKILL.md` exactly. Summary:
 
 1. **Gate check** (before iteration 1):
+   - Read `VERDICT.json`: if `floor.pass === false`, exit with escalation to `polisher` for Floor fixes.
    - If `score ≥ target_tier`: exit, no-op.
    - If gap categories are outside the visual set (Content, Accessibility, Archetype Specificity): exit, log escalation.
    - If any hard gate is failing: exit, log escalation.

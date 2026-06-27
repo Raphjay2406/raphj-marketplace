@@ -31,14 +31,25 @@ Runs the following checks **in parallel where independent**. Aggregates to singl
 | Visual regression | Playwright snapshot diff | 0 unexpected diffs vs baseline |
 | Broken-link scan | `linkinator` or custom | 0 broken internal links; external 200s |
 
-### Tier 3 — Pipeline artifacts (warn only)
+### Tier 3 — Pipeline artifacts (warn only, **except Verification Spine which is BLOCKING**)
 
 | Check | Source | Pass criteria |
 |---|---|---|
+| **Verification Spine** | `scripts/verify/verify-section.mjs` (all sections) | all sections have `floor.pass: true` in VERDICT.json — **BLOCKING: ship-check FAILS (no-go) if any floor.pass !== true** |
 | DNA drift | `scripts/dna-drift-check.mjs` | coverage ≥ 92% |
 | Manifest integrity | asset-forge-dna-compliance | 0 `manifest_drift` |
 | Quality-gate-v3 | .planning/genorah/audit/ | all sections cleared target tier on BOTH axes |
 | Motion-health | audit/motion-health.json | per-section INP/CLS within budget |
+
+**Verification Spine run:**
+
+```bash
+for section in .planning/genorah/sections/*/; do
+  node scripts/verify/verify-section.mjs --section "$section" --project .
+done
+```
+
+Ship-check **fails (BLOCK)** if any section's `VERDICT.json` shows `floor.pass: false`. Fix with the `verifier` agent before re-running.
 
 ### Tier 4 — Metadata (blocking)
 
@@ -103,4 +114,4 @@ After PASS, primary next is `/gen:export` (deliverables) or direct deploy. After
 - ❌ Shipping on "all warnings" without re-running after fixes.
 - ❌ `--skip-slow` on production deploys.
 - ❌ Marking visual-regression diffs as expected without review — expected-diff file must have reviewer + timestamp.
-- ❌ Treating Tier 3 warns as blocking silently — they're explicitly non-blocking for velocity.
+- ❌ Treating Tier 3 pipeline warns (DNA drift, manifest integrity, quality-gate-v3, motion-health) as blocking — they're warn-only for velocity. The Verification Spine is the sole exception and IS blocking.

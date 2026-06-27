@@ -1,7 +1,7 @@
 {
   "name": "gen",
   "description": "Genorah v4.0.0 — Cinematic Intelligence. 108-agent A2A L4 pipeline (10 directors + 98 workers), 42 Design Archetypes (25 seed + 17 WebGPU-native), 394-pt two-axis quality gate (254 Design Craft + 140 UX Integrity), 10 MCP integrations. 9 npm packages shipping typed Result<T> protocol, persistent single-canvas 3D runtime (R3F + Theatre.js + GSAP + Lenis), recipe-driven photoreal asset pipeline (Rodin + Meshy + Flux Kontext + Recraft + Kling + gpt-image), generative archetype synthesis, Living Systems runtime, signature DNA forge, sqlite-vec cross-project memory graph, Deno-sandboxed agent marketplace, offline-first mode, server-driven UI renderer, WebGPU UI effects. From discovery to ship, measurably enforced quality end-to-end.",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "author": {
     "name": "raphj"
   },
