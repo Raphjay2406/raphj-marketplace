@@ -78,6 +78,7 @@ describe("GptImageProvider.edit", () => {
     const p = new GptImageProvider({ apiKey: "test-key", downloadDir: TMP });
     const result = await p.edit({ prompt: "make it warmer" }, { imagePaths: [inputImg] });
 
+    expect(capturedInit).toBeDefined();
     const body = capturedInit?.body as FormData;
     expect(body).toBeInstanceOf(FormData);
     expect(body.get("prompt")).toBe("make it warmer");
@@ -88,5 +89,25 @@ describe("GptImageProvider.edit", () => {
     expect((capturedInit?.headers as Record<string, string>)["Content-Type"]).toBeUndefined();
     expect(result.provider).toBe("gpt-image");
     expect(existsSync(result.path)).toBe(true);
+  });
+
+  it("includes the mask part when maskPath is provided", async () => {
+    const inputImg = joinTest(TMP, "src.png");
+    const maskImg = joinTest(TMP, "mask.png");
+    writeFileSyncTest(inputImg, Buffer.from("input-image"));
+    writeFileSyncTest(maskImg, Buffer.from("mask-image"));
+    const fakeOut = Buffer.from("edited-png");
+    let capturedInit: RequestInit | undefined;
+    globalThis.fetch = vi.fn().mockImplementationOnce(async (_url: string, init?: RequestInit) => {
+      capturedInit = init;
+      return { ok: true, json: async () => ({ data: [{ b64_json: fakeOut.toString("base64") }] }) } as unknown as Response;
+    });
+
+    const p = new GptImageProvider({ apiKey: "test-key", downloadDir: TMP });
+    await p.edit({ prompt: "warm it" }, { imagePaths: [inputImg], maskPath: maskImg });
+
+    const body = capturedInit?.body as FormData;
+    expect(body.has("mask")).toBe(true);
+    expect(body.getAll("image[]").length).toBe(1);
   });
 });
