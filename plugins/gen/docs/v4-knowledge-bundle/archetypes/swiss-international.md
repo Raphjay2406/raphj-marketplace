@@ -2,16 +2,21 @@
 id: "archetype/swiss-international"
 name: "Swiss/International"
 slug: "swiss-international"
-tier: "standard"
-version: "3.x"
-group: "v3-classic"
-tags: [archetype, genorah, standard, v3]
+tier: "legacy"
+version: "4.0.0"
+group: "v4-webgpu"
+mandatory_techniques: ""
+forbidden_patterns: ""
+tags: [archetype, genorah, legacy]
 ---
 
 # Swiss/International
 
-**Tier:** standard (v3 classic)
+**Tier:** legacy
+
+
+
 
 ## Source
 
-`skills/design-archetypes/SKILL.md` — search for `### Swiss/International`
+`skills/design-archetypes/archetypes/swiss-international/`

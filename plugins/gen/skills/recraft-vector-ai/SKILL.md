@@ -42,7 +42,7 @@ If `firefly-mcp` instead: similar API; different style enum.
 
 If neither MCP available:
 1. Start with `scripts/asset-forge/svg-parametric.mjs` output
-2. Optionally refine via nano-banana → raster → AI vectorize via vectorizer.ai library locally
+2. Optionally refine via gpt-image → raster → AI vectorize via vectorizer.ai library locally
 3. Lower quality but offline-safe
 
 ## Layer 3 — Archetype → Recraft substyle mapping

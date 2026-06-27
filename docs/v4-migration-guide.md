@@ -83,7 +83,7 @@ All v4 env vars are **opt-in**. The plugin degrades gracefully when absent.
 | Variable | Purpose | Default |
 |----------|---------|---------|
 | `ROD_API_KEY` | Remote Orchestration Daemon API key — enables cloud relay for multi-agent pipelines | Disabled |
-| `FAL_KEY` | fal.ai API key — enables Flux Pro image generation in Asset Forge | Falls back to nano-banana / text-prompt |
+| `FAL_KEY` | fal.ai API key — enables Flux Pro image generation in Asset Forge | Falls back to gpt-image / text-prompt |
 | `RECRAFT_API_KEY` | Recraft API key — vector/raster AI asset generation | Disabled |
 | `MESHY_API_KEY` | Meshy 3D generation API key | Disabled |
 | `GENORAH_MARKETPLACE_TOKEN` | Marketplace publish token — required for `claude plugin publish` | Read-only install works without it |

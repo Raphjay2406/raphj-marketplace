@@ -2,16 +2,21 @@
 id: "archetype/ethereal"
 name: "Ethereal"
 slug: "ethereal"
-tier: "standard"
-version: "3.x"
-group: "v3-classic"
-tags: [archetype, genorah, standard, v3]
+tier: "legacy"
+version: "4.0.0"
+group: "v4-webgpu"
+mandatory_techniques: ""
+forbidden_patterns: ""
+tags: [archetype, genorah, legacy]
 ---
 
 # Ethereal
 
-**Tier:** standard (v3 classic)
+**Tier:** legacy
+
+
+
 
 ## Source
 
-`skills/design-archetypes/SKILL.md` — search for `### Ethereal`
+`skills/design-archetypes/archetypes/ethereal/`

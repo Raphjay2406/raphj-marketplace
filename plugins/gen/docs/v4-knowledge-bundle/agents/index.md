@@ -53,6 +53,7 @@ tags: [index, agents]
 - [[flutter-author]] — Builds Flutter widgets with ThemeData DNA mapping, go_router navigation, Riverpo
 - [[flux-hero-gen]] — Generates hero background images using Flux API with DNA-matched color palettes 
 - [[gltf-lod-generator]] — Generates multiple LOD variants for GLTF models. Validates triangle counts and t
+- [[gpt-image-iterator]] — Runs iterative image editing via the gpt-image MCP (stateless re-edit loop). App
 - [[gsap-choreographer]] — Authors GSAP ScrollTrigger and timeline sequences bound to DNA motion tokens. En
 - [[hero-camera-choreographer]] — Authors camera keyframe sequences for hero and cinematic sections. Produces Thea
 - [[hubspot-integration-author]] — Scaffolds HubSpot CRM integration: forms, contact sync, marketing automation hoo
@@ -71,7 +72,6 @@ tags: [index, agents]
 - [[morph-target-author]] — Generates morph target animations for character and product 3D models. Validates
 - [[motion-critic]] — Evaluates motion design against quality gate: intentionality, DNA motion token u
 - [[n8n-workflow-author]] — Authors n8n automation workflow JSON for lead capture, CRM sync, and notificatio
-- [[nano-banana-iterator]] — Runs iterative image editing via nano-banana MCP. Applies DNA color corrections,
 - [[narrative-critic]] — Evaluates cross-section story arc coherence, beat sequencing validity, and emoti
 - [[nextjs-section]] — Builds a single page section as a Next.js RSC with Tailwind v4 DNA tokens, anima
 - [[og-image-author]] — Authors dynamic OG image generation routes with next/og, DNA typography, and bra

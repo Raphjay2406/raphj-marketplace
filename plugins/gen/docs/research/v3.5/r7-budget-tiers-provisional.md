@@ -50,7 +50,7 @@ Per-stage token estimates based on v3.5.0–4 instrumentation design (not yet me
 
 ## API spend (AI provider calls, not LLM tokens)
 
-| Mode | Flux/nano-banana | Meshy | Total est. |
+| Mode | Flux/gpt-image | Meshy | Total est. |
 |---|---|---|---|
 | lean | $2-4 | — | $2-6 |
 | standard | $6-12 | $2-4 | $8-18 |

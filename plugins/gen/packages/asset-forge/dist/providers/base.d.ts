@@ -24,6 +24,12 @@ export interface AssetProvider {
     estimateCost(input: AssetInput): Promise<CostEstimate>;
     generate(input: AssetInput): Promise<AssetResult>;
 }
+export interface ImageEditProvider extends AssetProvider {
+    edit(input: AssetInput, opts: {
+        imagePaths: string[];
+        maskPath?: string;
+    }): Promise<AssetResult>;
+}
 export declare class DummyProvider implements AssetProvider {
     readonly name = "dummy";
     readonly kind: "image";

@@ -18,7 +18,7 @@ version: 4.0.0
 ### When NOT to Use
 
 - Production builds where live CMS content is required — offline mode returns cached/stubbed content only
-- When nano-banana image generation is part of the build contract — images are unavailable offline
+- When gpt-image image generation is part of the build contract — images are unavailable offline
 - Performance benchmarking — stub latencies do not reflect real API timing
 
 ### Decision Tree
@@ -62,7 +62,7 @@ import { emitOfflineDegraded } from "@/scripts/offline-mode.mjs";
 
 async function generateHeroImage(dnaAnchor: object) {
   if (process.env.GENORAH_OFFLINE === "1") {
-    await emitOfflineDegraded({ skill: "image-prompt-generation", capability: "nano-banana-generate" });
+    await emitOfflineDegraded({ skill: "image-prompt-generation", capability: "gpt-image-generate" });
     return { imagePath: "public/images/offline-placeholder.jpg", source: "stub" };
   }
   // real generation

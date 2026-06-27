@@ -2,16 +2,21 @@
 id: "archetype/dark-academia"
 name: "Dark Academia"
 slug: "dark-academia"
-tier: "standard"
-version: "3.x"
-group: "v3-classic"
-tags: [archetype, genorah, standard, v3]
+tier: "legacy"
+version: "4.0.0"
+group: "v4-webgpu"
+mandatory_techniques: ""
+forbidden_patterns: ""
+tags: [archetype, genorah, legacy]
 ---
 
 # Dark Academia
 
-**Tier:** standard (v3 classic)
+**Tier:** legacy
+
+
+
 
 ## Source
 
-`skills/design-archetypes/SKILL.md` — search for `### Dark Academia`
+`skills/design-archetypes/archetypes/dark-academia/`

@@ -55,7 +55,7 @@ The standard pipeline from discovery to ship:
 | `/gen:discuss` | Creative Deep Dive | Visual feature proposals + Stitch mockups + brand voice |
 | `/gen:plan` | Planning | Wave map + per-section PLAN.md + layout assignments |
 | `/gen:rehearse` | Rehearsal | Dry-run section builds; catches blockers before real build |
-| `/gen:build` | Build | Wave-based implementation; AI images via nano-banana |
+| `/gen:build` | Build | Wave-based implementation; AI images via gpt-image |
 | `/gen:audit` | Quality Gate | 394-point audit; Playwright visual QA |
 | `/gen:ux-audit` | UX Gate | 6 UX Integrity sub-gates + synthetic personas |
 | `/gen:narrative-audit` | Arc Check | Cross-section story coherence |

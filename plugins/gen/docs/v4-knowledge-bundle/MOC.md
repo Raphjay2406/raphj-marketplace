@@ -2,7 +2,7 @@
 type: moc
 title: "Genorah v4.0.0 Knowledge Bundle"
 version: "4.0.0"
-generated: "2026-04-13"
+generated: "2026-06-27"
 tags: [moc, genorah, v4]
 ---
 
@@ -15,7 +15,7 @@ tags: [moc, genorah, v4]
 | Section | Index | Count |
 |---------|-------|-------|
 | Agents | [[agents/index]] | 132 |
-| Archetypes | [[archetypes/index]] | 42 |
+| Archetypes | [[archetypes/index]] | 44 |
 | Commands | [[commands/index]] | 68 |
 | Skills | [[skills/index]] | 310 |
 

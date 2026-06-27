@@ -36,7 +36,7 @@ Execute approved plan. For each asset:
    - **3D AI**: `meshy-mcp` (fallback procedural)
    - **2D SVG**: `scripts/asset-forge/svg-parametric.mjs`
    - **2D vector AI**: `recraft-mcp` (fallback parametric)
-   - **Raster**: image-cascade (Flux → Ideogram → nano-banana fallback)
+   - **Raster**: image-cascade (Flux → Ideogram → gpt-image fallback)
 4. Write asset file + preview.
 5. Append entry to `public/assets/MANIFEST.json`.
 6. Write ledger line: `{kind: "asset-generated", subject: <asset-id>, payload: <manifest-entry>}`.
@@ -59,12 +59,12 @@ Raster gen scoped to beat. Uses `skills/image-prompt-generation` archetype templ
 
 ### `character`
 
-Character/mascot suite. Requires `flux-mcp` or `nano-banana`. Produces:
+Character/mascot suite. Requires `flux-mcp` or `gpt-image` MCP. Produces:
 - 1 canonical reference
 - 4 turnaround views (0°, 90°, 180°, 270°)
 - 3 expression variants
 - 2 pose variants
-- Consistency enforced via IP-Adapter (flux) or style-transfer (nano-banana).
+- Consistency enforced via IP-Adapter (flux) or iterative edit (gpt-image).
 
 ### `regenerate <id>`
 

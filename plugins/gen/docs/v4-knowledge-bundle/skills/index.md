@@ -80,7 +80,7 @@ tags: [index, skills]
 
 ### Domain (per project type) (191)
 
-- **3d-asset-generation** `v2.3.0` — Full 3D asset generation suite: procedural geometry with Three.js, AI-assisted 3D via nano-banana + 
+- **3d-asset-generation** `v2.3.0` — Full 3D asset generation suite: procedural geometry with Three.js, AI-assisted 3D via gpt-image + Sp
 - **3d-scene-composer** `v3.20.0` — Full R3F scene composition beyond hero marks: camera rigs, lighting setups per archetype, scene grap
 - **3dsvg-extrusion** `v3.3.0` — Zero-config 3D SVG extrusion via the `3dsvg` npm component (MIT, by renatoworks). Extrudes any SVG p
 - **3dsvg-preset-library** `v3.4.0` — 75 curated 3dsvg presets (25 archetypes × 3 beats: HOOK/PEAK/CLOSE) with decision tree, override mat
@@ -159,7 +159,7 @@ tags: [index, skills]
 - **hubspot-integration** `v2.0.0` — HubSpot CRM, Marketing, and CMS integration patterns for Next.js and Astro. UTK tracking, Forms API 
 - **icon-system** `v2.2.0` — Icon system management: library selection, size scales, stroke weight per archetype, DNA color mappi
 - **image-asset-pipeline** `v2.0.0` — Image and asset pipeline: OG image generation, favicon sets, SVG optimization, responsive art direct
-- **image-cascade** `v0.1.0-provisional` — Graceful-degrade image generation pipeline — Flux 1.1 Pro Ultra → Flux Pro Raw → Ideogram 3 → nano-b
+- **image-cascade** `v0.1.0-provisional` — Graceful-degrade image generation pipeline — Flux 1.1 Pro Ultra → Flux Pro Raw → gpt-image-2 → Ideog
 - **ingest-gap-report** `v3.21.0` — Unified gap tracking for ingestion. Collects every ambiguity, low-confidence token, unknown license,
 - **inpainting-workflow** `v0.1.0-provisional` — Targeted asset edit loops via mask-based inpainting. Change character expression without re-generati
 - **integrations-misc** `v0.1.0` — Grab-bag of integration patterns — Notion, Airtable, Framer import, Webflow/WordPress migration, Ico

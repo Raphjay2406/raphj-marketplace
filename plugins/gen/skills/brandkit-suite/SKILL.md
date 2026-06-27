@@ -5,7 +5,7 @@ description: "Brand asset generation pipeline: logo variants (light/dark/mono), 
 triggers: ["brand kit", "brandkit", "design system export", "brand guidelines", "logo variants", "favicon", "og templates", "brand pdf", "style guide export"]
 used_by: ["brandkit", "export", "builder"]
 version: "3.1.0"
-mcp_optional: ["nano-banana"]
+mcp_optional: ["gpt-image"]
 ---
 
 ## Layer 1: Decision Guidance
@@ -24,7 +24,7 @@ Both share the DNA token pipeline underneath — no duplicate token definitions.
 
 ### When NOT to Use
 
-- Project lacks a locked logo asset AND nano-banana MCP absent (would require typographic wordmark-only, flag this to user first).
+- Project lacks a locked logo asset AND gpt-image MCP absent (would require typographic wordmark-only, flag this to user first).
 - `design-system-export` already ran and user only needs component tokens (no identity assets).
 - Non-final builds (score <170 on 234-pt gate) — wait until quality is shippable.
 
@@ -35,8 +35,8 @@ Both share the DNA token pipeline underneath — no duplicate token definitions.
 ├─ no prereq check → enforce: DESIGN-DNA.md exists + at least Wave 0 complete
 ├─ logo asset present in public/? 
 │   ├─ yes → skip logo-gen; generate variants from it
-│   └─ no → nano-banana MCP?
-│       ├─ yes → generate logo via nano-banana
+│   └─ no → gpt-image MCP?
+│       ├─ yes → generate logo via gpt-image
 │       └─ no → fallback to typographic wordmark from DNA display font
 └─ generate all 6 output categories → zip → /brand route
 ```
@@ -140,7 +140,7 @@ Re-syncs color/font tokens from `DESIGN-DNA.md` without regenerating logos (usef
 - **og-images skill** — brandkit's OG templates build on patterns from that skill.
 - **remotion-video / remotion-section-video** — brandkit's PDF + OG template rendering pipeline is Remotion-based.
 - **brand-voice-extraction** (v3.1) — if VOICE-PROFILE.md exists, brandkit PDF includes tone-of-voice section.
-- **nano-banana MCP** — optional. If available, generates logo from DNA colors + brand prompt. Graceful fallback to typographic wordmark.
+- **gpt-image MCP** — optional. If available, generates logo from DNA colors + brand prompt. Graceful fallback to typographic wordmark.
 
 ## Layer 4: Anti-Patterns
 

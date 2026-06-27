@@ -57,7 +57,7 @@ Expected: `plugin integrity: 24/24 passed` (structural checks). For full unit te
 
 ### Optional MCP servers
 
-For full asset generation (Rodin, Meshy, Flux Kontext, Recraft, Kling, nano-banana), set env vars:
+For full asset generation (Rodin, Meshy, Flux Kontext, Recraft, Kling, gpt-image), set env vars:
 
 ```bash
 export ROD_API_KEY=...
@@ -112,7 +112,7 @@ export GENORAH_OFFLINE=1
 - Procedural 3D (box/sphere/torus glTF, deterministic)
 - 3dsvg integration (75 archetype-curated presets + `<GenorahSVG3D>` wrapper + sanitization + Hero Mark sub-gate + 30-variant brandkit fan-out)
 - Meshy MCP scaffold for text/image → 3D
-- Image cascade (Flux → nano-banana → Ideogram → text-prompt fallback)
+- Image cascade (Flux → gpt-image → Ideogram → text-prompt fallback)
 
 **Full-stack delivery (v3.6):**
 - RSC patterns per framework (Next 16 Cache Components + Nuxt Nitro + SvelteKit streaming + Astro Server Islands)

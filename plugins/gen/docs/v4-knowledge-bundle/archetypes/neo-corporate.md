@@ -2,16 +2,21 @@
 id: "archetype/neo-corporate"
 name: "Neo-Corporate"
 slug: "neo-corporate"
-tier: "standard"
-version: "3.x"
-group: "v3-classic"
-tags: [archetype, genorah, standard, v3]
+tier: "legacy"
+version: "4.0.0"
+group: "v4-webgpu"
+mandatory_techniques: ""
+forbidden_patterns: ""
+tags: [archetype, genorah, legacy]
 ---
 
 # Neo-Corporate
 
-**Tier:** standard (v3 classic)
+**Tier:** legacy
+
+
+
 
 ## Source
 
-`skills/design-archetypes/SKILL.md` — search for `### Neo-Corporate`
+`skills/design-archetypes/archetypes/neo-corporate/`
