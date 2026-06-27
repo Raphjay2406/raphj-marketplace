@@ -47,15 +47,23 @@ function ping(port) {
 export async function ensureDevServer(projectDir, { port = 3000 } = {}) {
   const proc = spawn(devCommand(), { cwd: projectDir, shell: true, env: { ...process.env, PORT: String(port) } });
   const deadline = Date.now() + 60_000;
+  let ready = false;
   while (Date.now() < deadline) {
-    if (await ping(port)) break;
+    if (await ping(port)) { ready = true; break; }
     await new Promise(r => setTimeout(r, 1000));
   }
   const stop = async () => {
     try {
-      if (process.platform === 'win32') spawn('taskkill', ['/pid', String(proc.pid), '/t', '/f']);
-      else process.kill(-proc.pid, 'SIGKILL');
+      if (process.platform === 'win32') {
+        await new Promise((resolve) => {
+          const t = spawn('taskkill', ['/pid', String(proc.pid), '/t', '/f']);
+          t.on('close', resolve);
+          t.on('error', resolve);
+        });
+      } else {
+        process.kill(-proc.pid, 'SIGKILL');
+      }
     } catch { /* already dead */ }
   };
-  return { url: `http://127.0.0.1:${port}`, stop };
+  return { url: ready ? `http://127.0.0.1:${port}` : null, ready, stop };
 }
