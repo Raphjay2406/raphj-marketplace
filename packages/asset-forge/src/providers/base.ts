@@ -32,6 +32,13 @@ export interface AssetProvider {
   generate(input: AssetInput): Promise<AssetResult>;
 }
 
+export interface ImageEditProvider extends AssetProvider {
+  edit(
+    input: AssetInput,
+    opts: { imagePaths: string[]; maskPath?: string }
+  ): Promise<AssetResult>;
+}
+
 export class DummyProvider implements AssetProvider {
   readonly name = "dummy";
   readonly kind = "image" as const;
