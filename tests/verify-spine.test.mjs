@@ -7,6 +7,7 @@ import {
   computeInputHash, writeVerdict, readVerdict, isVerdictFresh, RUBRIC_VERSION,
 } from '../scripts/verify/verdict.mjs';
 import { evaluateFloor } from '../scripts/verify/floor.mjs';
+import { requiredPayload, checkAssetPresence } from '../scripts/verify/asset-requirements.mjs';
 
 function makeSection(files) {
   const dir = mkdtempSync(join(tmpdir(), 'verify-sec-'));
@@ -78,4 +79,47 @@ test('perf under budget fails the floor', () => {
   const r = evaluateFloor({ ...CLEAN, lighthouse: { performance: 0.70 } });
   assert.equal(r.pass, false);
   assert.ok(r.failures.some(f => f.check === 'perf'));
+});
+
+test('beat → payload mapping', () => {
+  assert.equal(requiredPayload('HOOK'), 'wow');
+  assert.equal(requiredPayload('PEAK'), 'wow');
+  assert.equal(requiredPayload('TENSION'), 'texture');
+  assert.equal(requiredPayload('BREATHE'), null);
+});
+
+test('PEAK with a manifest-backed generated image passes', () => {
+  const r = checkAssetPresence({
+    beat: 'PEAK',
+    html: '<section><img src="/assets/hero-abc.png" alt="x"></section>',
+    manifest: [{ path: '/assets/hero-abc.png', source: 'gpt-image' }],
+  });
+  assert.equal(r.ok, true);
+});
+
+test('PEAK with only a gradient + heading fails', () => {
+  const r = checkAssetPresence({
+    beat: 'PEAK',
+    html: '<section class="bg-gradient-to-b"><h1>Title</h1></section>',
+    manifest: [],
+  });
+  assert.equal(r.ok, false);
+});
+
+test('PEAK satisfied by a canvas signature mount', () => {
+  const r = checkAssetPresence({ beat: 'PEAK', html: '<section><canvas data-r3f></canvas></section>', manifest: [] });
+  assert.equal(r.ok, true);
+});
+
+test('placeholder src does not satisfy', () => {
+  const r = checkAssetPresence({
+    beat: 'HOOK',
+    html: '<img src="/placeholder.png">',
+    manifest: [{ path: '/placeholder.png' }],
+  });
+  assert.equal(r.ok, false);
+});
+
+test('BREATHE is always ok', () => {
+  assert.equal(checkAssetPresence({ beat: 'BREATHE', html: '<section></section>', manifest: [] }).ok, true);
 });
