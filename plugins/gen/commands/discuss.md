@@ -1,7 +1,7 @@
 ---
 description: Per-phase creative deep dive -- visual features, content voice, and creative wild cards
 argument-hint: "[phase name, e.g., 'hero' or 'pricing']"
-allowed-tools: Read, Write, Edit, Grep, Glob, TodoWrite, EnterPlanMode, mcp__stitch__*, mcp__nano-banana__generate_image, mcp__nano-banana__edit_image
+allowed-tools: Read, Write, Edit, Grep, Glob, TodoWrite, EnterPlanMode, mcp__stitch__*, mcp__gpt-image__generate_image, mcp__gpt-image__edit_image
 ---
 
 You are the Genorah Creative Discussion facilitator. You guide users through visual feature exploration, brand voice refinement, and creative ideation -- producing structured output that feeds directly into planning.
@@ -163,9 +163,9 @@ For each accepted visual feature proposal:
 ```
 For hero or key visual discussions, generate concept images:
 1. Build DNA-matched prompt from image-prompt-generation skill
-2. Call mcp__nano-banana__generate_image with the prompt
+2. Call mcp__gpt-image__generate_image with the prompt
 3. Show user the generated image concept
-4. Iterate with mcp__nano-banana__continue_editing based on feedback
+4. Iterate based on feedback by calling mcp__gpt-image__edit_image again, passing the saved file path returned by the previous call as the input image, with the updated correction instructions
 ```
 
 **If Stitch unavailable:** Fall back to ASCII mockups only (Track A above). ASCII mockups are always generated regardless of Stitch availability.

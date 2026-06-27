@@ -1,7 +1,7 @@
 ---
 description: Process client or stakeholder feedback into actionable iteration items — screenshots, annotations, text notes, or verbal feedback
 argument-hint: "[feedback text or path to screenshot/PDF]"
-allowed-tools: Read, Write, Edit, Grep, Glob, TodoWrite, mcp__plugin_playwright_playwright__browser_*, mcp__nano-banana__generate_image
+allowed-tools: Read, Write, Edit, Grep, Glob, TodoWrite, mcp__plugin_playwright_playwright__browser_*, mcp__gpt-image__generate_image, mcp__gpt-image__edit_image
 ---
 
 # /gen:feedback

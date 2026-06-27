@@ -75,7 +75,7 @@ async function generateHeroImage(dnaAnchor: object) {
 // scripts/hooks/offline-mode-gate.mjs
 export function check(toolName, toolInput) {
   if (process.env.GENORAH_OFFLINE !== "1") return { block: false };
-  const NETWORK_TOOLS = ["WebFetch", "WebSearch", "mcp__nano-banana__generate_image"];
+  const NETWORK_TOOLS = ["WebFetch", "WebSearch", "mcp__gpt-image__generate_image"];
   if (NETWORK_TOOLS.includes(toolName)) {
     return { block: true, reason: `GENORAH_OFFLINE=1: ${toolName} is a network tool` };
   }

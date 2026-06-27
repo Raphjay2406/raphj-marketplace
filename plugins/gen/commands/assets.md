@@ -1,7 +1,7 @@
 ---
 description: "Generate, audit, and manage project assets — 3D models, 2D SVG/raster, icons, patterns, characters. DNA-governed via MANIFEST.json. Subcommands: init | generate | 3d | 2d | image | character | regenerate | audit | library | export."
 argument-hint: "init | generate | 3d <kind> | 2d <kind> | image <beat> | character | regenerate <id> | audit | library | export"
-allowed-tools: Read, Write, Edit, Bash, Glob, Grep, mcp__nano-banana__generate_image, mcp__nano-banana__edit_image, mcp__nano-banana__continue_editing, mcp__plugin_playwright_playwright__browser_navigate, mcp__plugin_playwright_playwright__browser_take_screenshot
+allowed-tools: Read, Write, Edit, Bash, Glob, Grep, mcp__gpt-image__generate_image, mcp__gpt-image__edit_image, mcp__plugin_playwright_playwright__browser_navigate, mcp__plugin_playwright_playwright__browser_take_screenshot
 recommended-model: sonnet-4-6
 ---
 

@@ -242,14 +242,14 @@ export default function cloudinaryLoader({ src, width, quality }: {
 }
 ```
 
-## AI-Generated Image Integration (Nano-Banana MCP)
+## AI-Generated Image Integration (GPT-Image MCP)
 
-When the `nano-banana` MCP server is available, AI-generated images integrate directly into the asset pipeline:
+When the `gpt-image` MCP server is available, AI-generated images integrate directly into the asset pipeline:
 
 ### Generation → Optimization → Delivery
 
 ```
-1. Builder generates image via mcp__nano-banana__generate_image
+1. Builder generates image via mcp__gpt-image__generate_image
    → Saves to public/images/generated/{section}-{purpose}.png (PNG, ~2-4MB)
 
 2. Optimize for web delivery:
@@ -307,9 +307,9 @@ For AI-generated images, generate breakpoint-specific variants:
 </picture>
 ```
 
-For mobile crops, use `mcp__nano-banana__edit_image` to generate mobile-specific compositions:
+For mobile crops, use `mcp__gpt-image__edit_image` to generate mobile-specific compositions:
 ```
-mcp__nano-banana__edit_image({
+mcp__gpt-image__edit_image({
   imagePath: "public/images/generated/hero-desktop.png",
   prompt: "Crop and recompose this image for a portrait (9:16) mobile layout.
            Keep the central subject in focus. Ensure the top 40% has enough
@@ -339,11 +339,14 @@ AI-generated images may drift from DNA palette. Post-generation alignment:
 }
 ```
 
-Or use `mcp__nano-banana__continue_editing` for AI-based color correction:
+Or use `mcp__gpt-image__edit_image` again for AI-based color correction — pass the saved file path returned by the previous generation call as the input image:
 ```
-"Shift the color palette to match: primary [hex], accent [hex], background [hex].
- Maintain the composition and lighting. Adjust saturation to match the muted/vibrant
- quality of the target palette."
+mcp__gpt-image__edit_image({
+  imagePath: "<path returned by previous generate_image or edit_image call>",
+  prompt: "Shift the color palette to match: primary [hex], accent [hex], background [hex].
+           Maintain the composition and lighting. Adjust saturation to match the muted/vibrant
+           quality of the target palette."
+})
 ```
 
 ## Image Format Decision Guide
@@ -404,10 +407,10 @@ npx @squoosh/cli --avif '{quality: 65}' --webp '{quality: 80}' public/images/*.p
 
 ### Content-Aware Mobile Cropping
 
-For AI-generated images, generate mobile-specific compositions via nano-banana:
+For AI-generated images, generate mobile-specific compositions via gpt-image:
 
 ```
-mcp__nano-banana__edit_image({
+mcp__gpt-image__edit_image({
   imagePath: "public/images/hero-desktop.png",
   prompt: "Recompose this image for portrait (9:16) mobile layout.
            Keep the central subject in focus and visually prominent.
@@ -447,18 +450,18 @@ For standard images, use CSS `object-position` for smart crops:
 
 ## v3.2 Addendum: Multi-Model Image Generation + LQIP + Art-Direction Cropping
 
-### Model cascade for image generation (beyond nano-banana)
+### Model cascade for image generation (beyond gpt-image)
 
 Genorah routes image generation by beat + content type:
 
 | Beat / Content | Primary model | Fallback | Why |
 |---|---|---|---|
-| HOOK — hero atmosphere | nano-banana (Gemini 3.1 Flash Image) | Flux 1.1 Pro | Speed + DNA color adherence; Flux for photoreal fallback |
-| HOOK — typography-in-image (poster, branded hero with text) | **Ideogram 3** | nano-banana | Best typographic clarity (multi-line, curved, integrated). $0.03-0.05/img |
-| PEAK — showcase / painterly | **Flux 1.1 Pro** | nano-banana | Photoreal/painterly. $0.04/img (BFL API) |
-| PROOF — testimonials / portraits | nano-banana | Flux 1.1 Pro | Cost-optimized |
-| Texture / decorative | nano-banana | — | Fastest |
-| Iterative edits | **nano-banana** (continue_editing) | — | Only model with strong iterative-edit API in 2026 |
+| HOOK — hero atmosphere | gpt-image (gpt-image-2) | Flux 1.1 Pro | Speed + DNA color adherence; Flux for photoreal fallback |
+| HOOK — typography-in-image (poster, branded hero with text) | **Ideogram 3** | gpt-image | Best typographic clarity (multi-line, curved, integrated). $0.03-0.05/img |
+| PEAK — showcase / painterly | **Flux 1.1 Pro** | gpt-image | Photoreal/painterly. $0.04/img (BFL API) |
+| PROOF — testimonials / portraits | gpt-image | Flux 1.1 Pro | Cost-optimized |
+| Texture / decorative | gpt-image | — | Fastest |
+| Iterative edits | **gpt-image** (edit_image called again on previous output) | — | Stateless iterative editing: pass the saved file path from the prior call as the input image |
 
 All three models are optional MCP integrations. `.claude-plugin/.mcp.json` declares availability; graceful fallback to text-prompts-only when unavailable.
 
@@ -470,7 +473,7 @@ Every hero image gets a 20×20 pixelated LQIP generated from a 32×32 downsample
 - Hints final image aspect ratio + color tone (prevents CLS)
 - ~1KB per image in HTML; no extra request
 
-Implementation: nano-banana or local `sharp` pipeline produces the LQIP at build time; built into next-image / astro-image config.
+Implementation: gpt-image or local `sharp` pipeline produces the LQIP at build time; built into next-image / astro-image config.
 
 ### Responsive srcset — art direction per breakpoint
 

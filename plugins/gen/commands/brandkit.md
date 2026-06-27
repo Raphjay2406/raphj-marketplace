@@ -1,7 +1,7 @@
 ---
 description: "Generate brand kit deliverables (logo variants, favicons, OG templates, color exports, font specimens, guidelines PDF, /brand public route, brand.zip). Reuses DNA tokens; opt-in post-audit."
 argument-hint: "export | preview | sync"
-allowed-tools: Read, Write, Edit, Bash, Glob, Grep, mcp__nano-banana__generate_image, mcp__nano-banana__edit_image, mcp__plugin_playwright_playwright__browser_navigate
+allowed-tools: Read, Write, Edit, Bash, Glob, Grep, mcp__gpt-image__generate_image, mcp__gpt-image__edit_image, mcp__plugin_playwright_playwright__browser_navigate
 recommended-model: sonnet-4-6
 ---
 
@@ -45,7 +45,7 @@ Fail loudly with remediation if:
 ### 3. Logo resolution
 
 - If `public/logo.svg` exists → use it as source.
-- Else if nano-banana MCP available → generate logo with DNA primary + archetype prompt.
+- Else if gpt-image MCP available → generate logo via `mcp__gpt-image__generate_image` with DNA primary + archetype prompt.
 - Else → fallback to typographic wordmark from DNA display font.
 
 Report which path was taken so user knows what to review.

@@ -1,7 +1,7 @@
 ---
 name: 3d-specialist
 description: "Implements sections requiring Three.js, React Three Fiber, Spline embeds, or WebGL shaders with progressive enhancement and performance budgets. Enhanced section-builder variant with embedded 3D domain knowledge. Receives all context via spawn prompt from build-orchestrator (full Design DNA, beat assignment, content, quality rules). Reads exactly one file (PLAN.md). Writes production-ready TSX code and machine-readable SUMMARY.md."
-tools: Read, Write, Edit, Bash, Grep, Glob, mcp__nano-banana__generate_image, mcp__nano-banana__edit_image, mcp__nano-banana__continue_editing, mcp__nano-banana__get_last_image_info
+tools: Read, Write, Edit, Bash, Grep, Glob, mcp__gpt-image__generate_image, mcp__gpt-image__edit_image
 model: inherit
 maxTurns: 30
 ---
@@ -512,22 +512,22 @@ When your 3D section includes surrounding UI (text overlays, CTAs, navigation el
 - Do NOT create custom button/heading/badge components when shared ones exist
 - If a shared component needs a variant (e.g., transparent background over 3D canvas), extend it with a className prop rather than creating a new component
 
-### AI Texture Generation (Nano-Banana MCP)
+### AI Texture Generation (GPT-Image MCP)
 
-When the nano-banana MCP server is available, use it to generate custom textures for 3D scenes:
+When the gpt-image MCP server is available, use it to generate custom textures for 3D scenes:
 
 **Diffuse/albedo texture:**
 ```
-mcp__nano-banana__generate_image({
+mcp__gpt-image__generate_image({
   prompt: "Seamless tileable PBR diffuse texture, [archetype_texture_modifier],
            dominant color [DNA primary hex]. No objects, no text, uniform surface."
 })
 ```
 
-**Normal map (from diffuse):**
+**Normal map (from diffuse):** The `generate_image`/`edit_image` calls return the saved file path in their result. Pass that returned path as the input image to produce the normal map:
 ```
-mcp__nano-banana__edit_image({
-  imagePath: "path/to/diffuse.png",
+mcp__gpt-image__edit_image({
+  imagePath: "<path returned by the previous generate_image call>",
   prompt: "Convert to a normal map. Blue-purple height map encoding surface detail.
            Maintain all texture features but represent them as surface normals."
 })
@@ -535,14 +535,16 @@ mcp__nano-banana__edit_image({
 
 **Environment/background:**
 ```
-mcp__nano-banana__generate_image({
+mcp__gpt-image__generate_image({
   prompt: "360-degree equirectangular environment map for 3D scene lighting.
            [archetype_mood] atmosphere. [DNA color palette description].
            Seamless horizontal wrap. HDR-style high dynamic range."
 })
 ```
 
-**Error handling:** If nano-banana is unavailable or rate-limited, fall back to drei `<Environment preset="..." />` with the closest archetype-matched preset. Document the fallback in SUMMARY.md.
+**Iterative correction:** If the generated texture needs color correction (e.g. DNA color alignment), call `mcp__gpt-image__edit_image` again on the previously produced image, passing its saved file path as the input image along with the correction instructions. The server is stateless — each call is self-contained; there is no session to resume.
+
+**Error handling:** If gpt-image is unavailable or rate-limited, fall back to drei `<Environment preset="..." />` with the closest archetype-matched preset. Document the fallback in SUMMARY.md.
 
 ### Post-Processing Stack Per Archetype
 

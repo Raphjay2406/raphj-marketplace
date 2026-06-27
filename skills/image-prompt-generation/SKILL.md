@@ -403,29 +403,27 @@ Archetype personality is the PRIMARY creative driver for image prompts. The per-
 - **creative-tension** -- Tension zones may warrant intentionally discordant imagery, but DNA palette constraints still apply
 - **remotion** -- AI-generated images can serve as Remotion video composition backgrounds. Generate at appropriate resolution for video (1920x1080 minimum)
 
-## MCP-Powered Image Generation (Nano-Banana 2)
+## MCP-Powered Image Generation (gpt-image)
 
-When the `nano-banana` MCP server is available, Genorah can generate DNA-matched images directly during builds without leaving Claude Code. This replaces the tool-agnostic prompt workflow with direct generation.
+When the `gpt-image` MCP server is available, Genorah can generate DNA-matched images directly during builds without leaving Claude Code. This replaces the tool-agnostic prompt workflow with direct generation.
 
 ### MCP Tool Reference
 
 | Tool | Purpose | When to Use |
 |------|---------|-------------|
-| `mcp__nano-banana__generate_image` | Create new image from text prompt | Hero backgrounds, textures, illustrations, OG images |
-| `mcp__nano-banana__edit_image` | Edit existing image with natural language | Color correction, element removal, style adaptation |
-| `mcp__nano-banana__continue_editing` | Iteratively refine the last generated image | Progressive enhancement, DNA palette alignment |
-| `mcp__nano-banana__get_last_image_info` | Get metadata about last image | Verify output before using in build |
+| `mcp__gpt-image__generate_image` | Create new image from text prompt | Hero backgrounds, textures, illustrations, OG images |
+| `mcp__gpt-image__edit_image` | Edit existing image with natural language | Color correction, element removal, style adaptation, iterative refinement |
 
 ### DNA-to-Prompt Pipeline (MCP Mode)
 
-When nano-banana is available, translate DNA tokens directly into generation prompts:
+When gpt-image is available, translate DNA tokens directly into generation prompts:
 
 ```
 Step 1: Build prompt from DNA + archetype + beat + section purpose
-Step 2: Call mcp__nano-banana__generate_image with the prompt
+Step 2: Call mcp__gpt-image__generate_image with the prompt — the result includes the saved file path
 Step 3: Read the generated image (Claude can view it via Read tool)
 Step 4: Evaluate DNA color match visually
-Step 5: If colors drift, call mcp__nano-banana__continue_editing with:
+Step 5: If colors drift, call mcp__gpt-image__edit_image with the saved file path from Step 2 and:
         "Adjust the color palette: dominant color should be [DNA --color-primary hex],
          accent highlights should be [DNA --color-accent hex], background tones
          should match [DNA --color-bg hex]. Maintain composition and style."
@@ -434,7 +432,7 @@ Step 6: Save final image to public/images/generated/{section-name}-{purpose}.png
 
 ### Per-Beat Generation Templates (MCP Mode)
 
-These are optimized for nano-banana's Gemini model. Unlike tool-agnostic prompts, these include specific composition instructions that Gemini handles well.
+These are optimized for gpt-image. Unlike tool-agnostic prompts, these include specific composition instructions that the model handles well.
 
 **HOOK (Hero) — Maximum Visual Impact:**
 ```
@@ -471,16 +469,19 @@ No recognizable objects. No text. [DNA forbidden negatives].
 
 ### Iterative Editing Workflow
 
-For DNA color alignment, use the edit chain:
+For DNA color alignment, use the edit chain. Each call to `mcp__gpt-image__generate_image` or `mcp__gpt-image__edit_image` returns the saved file path — pass that path as the input to the next edit call:
 
 ```
-1. generate_image → initial generation
-2. continue_editing("Shift the overall color temperature toward [DNA palette description].
+1. mcp__gpt-image__generate_image → initial generation; note the returned file path
+2. mcp__gpt-image__edit_image(imagePath: <returned path>,
+   prompt: "Shift the overall color temperature toward [DNA palette description].
    The primary element should be closer to [exact hex]. Reduce [unwanted color].")
-3. continue_editing("Increase [DNA texture] quality. Add [signature element] motif
+   → returns updated file path
+3. mcp__gpt-image__edit_image(imagePath: <returned path>,
+   prompt: "Increase [DNA texture] quality. Add [signature element] motif
    subtly in the [position].")
-4. get_last_image_info → verify file path and size
-5. Move file to project's public/images/generated/ directory
+   → returns final file path
+4. Move file to project's public/images/generated/ directory
 ```
 
 ### Style Transfer via Reference Images
@@ -490,7 +491,7 @@ For visual consistency across a multi-section project:
 ```
 1. Generate the hero image first (highest quality, establishes style)
 2. For subsequent sections, use edit_image with referenceImages pointing to the hero:
-   mcp__nano-banana__edit_image({
+   mcp__gpt-image__edit_image({
      imagePath: "path/to/new-section-base.png",
      prompt: "Match the visual style, color palette, and mood of the reference image.
               Adapt for [section purpose]. Maintain [archetype] personality.",
@@ -523,7 +524,7 @@ Brand feel: [archetype_mood_modifier]. Professional, clean edges.
 
 ### Fallback When MCP Unavailable
 
-If `nano-banana` MCP is not available:
+If `gpt-image` MCP is not available:
 1. Generate the text prompt using the tool-agnostic templates above
 2. Output the prompt to `.planning/genorah/image-prompts/{section-name}.md`
 3. Instruct user to run prompt in their preferred tool (Midjourney, DALL-E, Flux)

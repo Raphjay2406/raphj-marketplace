@@ -1,7 +1,7 @@
 ---
 description: "Interactive 3D hero mark workflow — design via 3dsvg.design, emit live <GenorahSVG3D>, export 30-variant asset matrix, or preview gallery. Consumes the 75-preset library + archetype routing."
 argument-hint: "design | live | export | preview [--preset=<id>] [--override='color_override:#hex'] [--force]"
-allowed-tools: Read, Write, Edit, Bash, Glob, Grep, mcp__plugin_playwright_playwright__browser_navigate, mcp__plugin_playwright_playwright__browser_take_screenshot, mcp__plugin_playwright_playwright__browser_evaluate, mcp__nano-banana__generate_image
+allowed-tools: Read, Write, Edit, Bash, Glob, Grep, mcp__plugin_playwright_playwright__browser_navigate, mcp__plugin_playwright_playwright__browser_take_screenshot, mcp__plugin_playwright_playwright__browser_evaluate, mcp__gpt-image__generate_image, mcp__gpt-image__edit_image
 recommended-model: sonnet-4-6
 ---
 

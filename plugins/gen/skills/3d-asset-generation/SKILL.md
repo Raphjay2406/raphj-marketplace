@@ -1,6 +1,6 @@
 ---
 name: 3d-asset-generation
-description: "Full 3D asset generation suite: procedural geometry with Three.js, AI-assisted 3D via nano-banana + Spline, GLTF/GLB asset pipeline, per-archetype 3D aesthetics, performance-budgeted scene composition, progressive enhancement with static fallbacks."
+description: "Full 3D asset generation suite: procedural geometry with Three.js, AI-assisted 3D via gpt-image + Spline, GLTF/GLB asset pipeline, per-archetype 3D aesthetics, performance-budgeted scene composition, progressive enhancement with static fallbacks."
 tier: domain
 triggers: "3d asset, 3d generation, 3d model, GLTF, GLB, Spline scene, procedural 3d, 3d hero, 3d background, WebGL asset, three.js asset, react three fiber"
 version: "2.3.0"
@@ -16,7 +16,7 @@ metadata:
 ### When to Use
 
 - **Project needs unique 3D geometry** -- procedural blobs, crystals, terrain, particle fields generated from DNA tokens rather than pre-made models
-- **AI-assisted texture or heightmap creation** -- generate diffuse, normal, or roughness maps via nano-banana MCP for one-of-a-kind surfaces
+- **AI-assisted texture or heightmap creation** -- generate diffuse, normal, or roughness maps via gpt-image MCP for one-of-a-kind surfaces
 - **Spline scene embedding** -- designer-authored 3D scenes imported into React/Next.js/Astro with runtime DNA color mapping
 - **GLTF/GLB pipeline** -- optimizing, compressing, lazy-loading, and LOD-managing third-party or exported 3D assets
 - **Archetype-specific 3D aesthetics** -- each archetype demands different materials, lighting, geometry, and motion personality
@@ -301,12 +301,12 @@ export function DNAParticleField({
 }
 ```
 
-#### Pattern: AI-Assisted Texture via nano-banana
+#### Pattern: AI-Assisted Texture via gpt-image
 
-Generate textures with the nano-banana MCP, then apply as maps on procedural geometry. Per-archetype prompt templates produce cohesive results.
+Generate textures with the gpt-image MCP, then apply as maps on procedural geometry. Per-archetype prompt templates produce cohesive results.
 
 ```tsx
-// Step 1: Generate texture with nano-banana MCP (agent-side)
+// Step 1: Generate texture with gpt-image MCP (agent-side)
 // Prompt template per archetype:
 const TEXTURE_PROMPTS: Record<string, string> = {
   brutalist: "Raw concrete surface, rough grey texture, visible aggregate, no polish, tileable, 1024x1024",
@@ -798,15 +798,18 @@ import { BasisTextureLoader } from 'three/examples/jsm/loaders/BasisTextureLoade
    });
 ```
 
-**AI Texture Generation via Nano-Banana:**
+**AI Texture Generation via gpt-image:**
 ```
-1. mcp__nano-banana__generate_image({
+1. mcp__gpt-image__generate_image({
      prompt: "Seamless PBR diffuse texture, [archetype_texture_modifier], tileable,
               dominant color [DNA primary hex], subtle variation. No seams, no objects."
    })
+   // The returned result contains the saved file path of the generated image.
 2. Use generated PNG as diffuse map on MeshStandardMaterial
-3. For normal maps: mcp__nano-banana__edit_image({
-     imagePath: "diffuse.png",
+3. For normal maps: call mcp__gpt-image__edit_image again on the previously generated
+   diffuse image, passing its saved path as the input image:
+   mcp__gpt-image__edit_image({
+     imagePath: "<path returned from step 1>",
      prompt: "Convert to a normal map (blue-purple height map). Preserve surface detail."
    })
 ```
@@ -921,7 +924,7 @@ public/
 │   └── accents/
 │       └── crystal-01.glb      # < 100KB, < 10K tris
 ├── textures/
-│   ├── ai-generated/           # nano-banana outputs
+│   ├── ai-generated/           # gpt-image outputs
 │   │   ├── diffuse.webp
 │   │   ├── normal.webp
 │   │   └── roughness.webp

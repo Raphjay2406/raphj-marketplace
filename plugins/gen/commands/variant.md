@@ -1,7 +1,7 @@
 ---
 description: "Pareto variant generation — produces N diverse variants of a section, scores each on 4 objectives (Design/UX/Archetype/Reference), computes Pareto front, commits winner via archetype-weighted tiebreaker. Replaces /gen:tournament on HOOK/PEAK/CLOSE beats."
 argument-hint: "<section-id> [--n 3] [--budget lean|standard|max]"
-allowed-tools: Read, Write, Edit, Bash, Glob, Grep, mcp__nano-banana__generate_image, mcp__plugin_playwright_playwright__browser_navigate, mcp__plugin_playwright_playwright__browser_take_screenshot
+allowed-tools: Read, Write, Edit, Bash, Glob, Grep, mcp__gpt-image__generate_image, mcp__plugin_playwright_playwright__browser_navigate, mcp__plugin_playwright_playwright__browser_take_screenshot
 recommended-model: opus-4-6
 ---
 
