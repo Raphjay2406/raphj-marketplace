@@ -44,7 +44,7 @@ Tracks F (SEO/GEO), G (Store Submission), and H (Mobile Performance) are auto-ac
 
 ## Quick Mode
 
-If `--quick` or `-q`: run only the anti-slop 35-point gate. This is the minimum quality check. Skip all other audit tracks. Jump to Report Synthesis.
+If `--quick` or `-q`: run only the anti-slop 35-point gate. This is the minimum quality check. Skip all other audit tracks. Jump to Report Synthesis. **The Verification Spine (see below) ALWAYS runs, even in --quick mode — the floor check is non-negotiable and cannot be skipped.**
 
 ## Verification Spine (required, before audit tracks)
 
