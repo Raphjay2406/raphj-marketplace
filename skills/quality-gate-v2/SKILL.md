@@ -422,36 +422,9 @@ Final Score: 204.4 -> SOTD-Ready tier
 
 ---
 
-## v3.3 Addendum: Sub-Gate Integration (H5 fix)
+## v3.3 Addendum: Sub-Gate Integration (H5 fix) — superseded by v4.1
 
-The 234-point total is preserved, but four v3.0/3.1 sub-gates cascade into their parent categories. When a sub-gate fails, its parent category score is multiplied by a cap factor BEFORE weighted summation:
-
-| Sub-gate | Parent category | Cap on fail | Source skill |
-|---|---|---|---|
-| Motion Health (INP regression, RM parity, GPU layers) | Motion & Interaction | × 0.50 | `motion-health` |
-| DNA Drift coverage (<92% hard gate) | Color System + Typography (both) | × 0.60 each | `dna-drift-detection` |
-| Perf Budget (LCP/INP/CLS/bundle over beat-budget) | Performance | × 0.50, tier capped at Strong (199) | `perf-budgets` |
-| Reference Diff Fidelity (SSIM < beat threshold) | Creative Courage + Layout (both) | × 0.70 each (signals archetype drift) | `reference-diff-protocol` |
-
-### Cascade math example
-
-Section with raw scores:
-- Motion & Interaction: 20/22 (weighted 1.1× = 22.0) — but motion-health score 9/20 = FAIL → category × 0.5 = 11.0
-- Color System: 22/24 (weighted 1.2× = 26.4) — but DNA coverage 88% = FAIL → category × 0.6 = 15.8
-- All other categories pass normally.
-
-Final weighted total reflects the cascade. Per-section SUMMARY.md must display BOTH the raw category score AND the effective score after cap, so reviewers see what sub-gate triggered the reduction.
-
-### Reviewer responsibility
-
-When running `/gen:audit`, quality-reviewer agent MUST:
-1. Compute raw per-category scores first.
-2. Check each sub-gate independently.
-3. Apply cap multipliers for any failing sub-gate to its parent category.
-4. Report in audit output: `Category: raw / effective / cap-reason (if triggered)`.
-5. If perf-budgets fails → hard cap tier at Strong (199) regardless of other scores.
-
-This makes sub-gate wiring auditable, not implicit.
+> **v4.1:** Sub-gate failures no longer multiply category scores. Measurable failures are enforced as hard Floor checks by the Verification Spine (`scripts/verify/`); subjective shortfalls are reported as an advisory Ceiling score and never silently lower a passing Floor.
 
 
 ---
@@ -535,7 +508,7 @@ Projects ship `DNA_STRICT=1` in their `.claude/genorah.local.md` once they clear
 
 ### C. Motion-Health Sub-Gate — Actual Measurement
 
-Quality-reviewer MUST produce `.planning/genorah/audit/motion-health.json` per audit run. See `agents/pipeline/quality-reviewer.md` §"Motion Health Measurement Protocol" for the Playwright + PerformanceObserver recipe. Missing artifact = sub-gate FAIL (category Motion × 0.5 cap applied; effective score recorded in SUMMARY.md).
+Quality-reviewer MUST produce `.planning/genorah/audit/motion-health.json` per audit run. See `agents/pipeline/quality-reviewer.md` §"Motion Health Measurement Protocol" for the Playwright + PerformanceObserver recipe. Missing artifact = sub-gate FAIL (hard Floor check; failure blocks the section, recorded in SUMMARY.md).
 
 ### D. Reference-Diff SSIM Hard Cap
 
@@ -545,34 +518,30 @@ Previously SSIM was a "signal, not a hard fail." Upgraded:
 |---|---|
 | ≥ beat threshold | pass |
 | threshold − 1σ | warn; refiner MAY attempt 1 iteration |
-| > 2σ below threshold | **Creative Courage category × 0.7 cap** in final scoring |
+| > 2σ below threshold | **advisory Ceiling flag** — emits GAP-FIX item for archetype drift (no score multiplier) |
 | > 3σ below threshold, after 3 refine attempts | **BLOCK ship** — requires human override in DECISIONS.md |
 
 Beat thresholds stored in `skills/reference-diff-protocol/SKILL.md`; refiner attempts tracked in `sections/{id}/trajectory.json`.
 
-### E. SUMMARY.md — Cascade Transparency Template
+### E. SUMMARY.md — Sub-Gate Transparency Template
 
-Every section's SUMMARY.md MUST include this block after the score:
+Every section's SUMMARY.md MUST include a sub-gate verdict block after the score. As of v4.1, there are no score multipliers — sub-gates either PASS (no effect) or FAIL (hard Floor block). Report Floor status and advisory Ceiling findings only:
 
 ```markdown
-## Quality Cascade
+## Sub-Gate Results
 
-| Category | Raw | Cap | Reason | Effective |
-|---|---|---|---|---|
-| Color System | 22/24 | — | — | 22 |
-| Typography | 26/26 | — | — | 26 |
-| Motion & Interaction | 18/20 | × 0.5 | motion-health sub-gate fail (INP 203ms > 200 budget) | 9 |
-| Creative Courage | 19/22 | × 0.7 | reference-diff SSIM 0.41 vs beat threshold 0.55 | 13 |
-| ...all 12 categories... |
-| **Total (raw)** | **212** | | | |
-| **Total (effective)** | | | | **178** |
+| Sub-gate | Result | Detail |
+|---|---|---|
+| motion-health | PASS | INP 182ms ≤ 200ms budget |
+| dna-drift | PASS | coverage 96.2% |
+| ref-diff | WARN (advisory) | SSIM 0.41 vs threshold 0.55 — GAP-FIX emitted |
+| hero-mark | PASS | 5/5 checks |
 
-**Tier:** Strong (effective) / SOTD (raw)
-**Shipping score:** 178 (effective governs)
-**Sub-gates:** motion-health FAIL · dna-drift PASS (96.2%) · ref-diff WARN · hero-mark PASS
+**Floor verdict:** PASS
+**Ceiling advisory findings:** ref-diff below threshold — see GAP-FIX.md
 ```
 
-Reviewers and dashboard read this block verbatim. No more divining which sub-gate capped which category.
+Reviewers and dashboard read this block verbatim. Score multipliers are not applied; advisory Ceiling findings route to GAP-FIX only.
 
 ### Enforcement Matrix (v3.4.2 shipping)
 
@@ -581,5 +550,5 @@ Reviewers and dashboard read this block verbatim. No more divining which sub-gat
 | Archetype specificity | subjective | testable-markers grep (5 archetypes full, 20 WARN) |
 | DNA drift | advisory WARN | opt-in BLOCK via `DNA_STRICT=1`; default WARN |
 | Motion health | not measured | measured per audit, artifact required |
-| Reference diff | signal only | 2σ below → cap × 0.7; 3σ + 3 retries → block |
+| Reference diff | signal only | 2σ below → advisory Ceiling flag + GAP-FIX; 3σ + 3 retries → block |
 | Cascade transparency | implicit | explicit SUMMARY.md block, mandatory |

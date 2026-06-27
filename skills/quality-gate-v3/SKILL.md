@@ -83,6 +83,10 @@ Thresholds adjusted for 254-pt Design axis (cinematic). Non-cinematic projects u
 
 Floor applies to BLOCK threshold only; tier scale unchanged.
 
+### Floor / Ceiling decoupling (v4.1)
+
+The deterministic **Floor** (build, console-clean, responsive, axe, perf budget, required assets, interactions, motion) is computed by `scripts/verify/verify-section.mjs` and is a hard pass/fail. The subjective **Ceiling** (wow, archetype specificity, boldness) is an advisory 0–100 judge score that drives the tournament and emits GAP-FIX items. The Ceiling **never lowers or caps a Floor pass** — it can only request improvements. This guarantees reproducible scores and removes the silent multiplier cascades of v2.
+
 ## Layer 3 — Integration
 
 - **Cascade inherited from v2**: sub-gate failures (motion-health, DNA drift, SSIM, asset-forge) cap the relevant category. Applied to Axis 1 (Design) unless specified otherwise.
