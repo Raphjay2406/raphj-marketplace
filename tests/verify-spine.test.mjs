@@ -6,6 +6,7 @@ import { join } from 'path';
 import {
   computeInputHash, writeVerdict, readVerdict, isVerdictFresh, RUBRIC_VERSION,
 } from '../scripts/verify/verdict.mjs';
+import { evaluateFloor } from '../scripts/verify/floor.mjs';
 
 function makeSection(files) {
   const dir = mkdtempSync(join(tmpdir(), 'verify-sec-'));
@@ -42,4 +43,39 @@ test('verdict round-trips and freshness tracks the hash', () => {
   assert.equal(isVerdictFresh(dir, readVerdict(dir)), true);
   writeFileSync(join(dir, 'X.tsx'), 'b'); // mutate → stale
   assert.equal(isVerdictFresh(dir, readVerdict(dir)), false);
+});
+
+const CLEAN = {
+  build: { ok: true },
+  console: { errors: [] },
+  overflow: [],
+  axe: { critical: 0, serious: 0 },
+  lighthouse: { performance: 0.92 }, perfBudget: 0.85,
+  assets: { ok: true },
+  interactions: { failed: [] },
+  motion: { present: true },
+};
+
+test('clean measurements pass the floor', () => {
+  const r = evaluateFloor(CLEAN);
+  assert.equal(r.pass, true);
+  assert.equal(r.failures.length, 0);
+});
+
+test('a console error fails the floor with a named check', () => {
+  const r = evaluateFloor({ ...CLEAN, console: { errors: ['TypeError: x'] } });
+  assert.equal(r.pass, false);
+  assert.ok(r.failures.some(f => f.check === 'console'));
+});
+
+test('missing required asset fails the floor', () => {
+  const r = evaluateFloor({ ...CLEAN, assets: { ok: false, detail: 'PEAK has no wow payload' } });
+  assert.equal(r.pass, false);
+  assert.ok(r.failures.some(f => f.check === 'assets'));
+});
+
+test('perf under budget fails the floor', () => {
+  const r = evaluateFloor({ ...CLEAN, lighthouse: { performance: 0.70 } });
+  assert.equal(r.pass, false);
+  assert.ok(r.failures.some(f => f.check === 'perf'));
 });
