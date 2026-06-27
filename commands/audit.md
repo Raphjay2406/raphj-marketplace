@@ -46,6 +46,18 @@ Tracks F (SEO/GEO), G (Store Submission), and H (Mobile Performance) are auto-ac
 
 If `--quick` or `-q`: run only the anti-slop 35-point gate. This is the minimum quality check. Skip all other audit tracks. Jump to Report Synthesis.
 
+## Verification Spine (required, before audit tracks)
+
+Before spawning audit track agents, run the Verification Spine across all sections:
+
+```bash
+for section in .planning/genorah/sections/*/; do
+  node scripts/verify/verify-section.mjs --section "$section" --project .
+done
+```
+
+Read each `VERDICT.json` and aggregate: if any section has `floor.pass: false`, write the failures into the audit report and route to the `verifier` agent for GAP-FIX generation. **Do not proceed with advisory Ceiling scoring for a section until its Floor passes.** Floor failures are CRITICAL findings that block the section.
+
 ## Audit Dispatch
 
 Use **Agent tool** to spawn parallel quality auditors. Each agent focuses on one audit track:

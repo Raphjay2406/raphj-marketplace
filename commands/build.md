@@ -112,9 +112,21 @@ Spawn orchestrator agent via **Agent tool** which handles:
 - Quality gate checks per section (DNA compliance, anti-slop quick check)
 - GAP-FIX remediation loop (polisher, max 2 cycles)
 
+### Verification Spine (per section, before quality review)
+
+After each section builder completes and before the Post-Wave Quality Gate, run the Verification Spine on every built section:
+
+```bash
+node scripts/verify/verify-section.mjs \
+  --section .planning/genorah/sections/<name> \
+  --project <projectDir>
+```
+
+A section is **not complete** until its `VERDICT.json` shows `floor.pass: true`. The verify-gate hook enforces this — it will block SUMMARY.md writes while `floor.pass !== true`. Route Floor failures to the `verifier` agent, which interprets `VERDICT.json` and writes prioritized `GAP-FIX.md` instructions ordered: build > console > assets > overflow > axe > perf > interactions > motion. Max 2 remediation cycles before escalating to the user.
+
 ### Post-Wave Quality Gate
 
-After all sections in a wave complete:
+After all sections in a wave complete (all have `floor.pass: true`):
 - Run quality reviewer on all wave sections
 - Merge findings and classify severity (CRITICAL blocks, WARNING tallies)
 - If CRITICAL issues found: pause and present to user

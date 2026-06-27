@@ -105,7 +105,28 @@ Generate `.planning/genorah/sections/XX-{name}/PLAN.md` per section. Each PLAN.m
 - **MANDATORY responsive block**: breakpoint behavior at 375px, 768px, 1024px, 1440px
 - **MANDATORY compatibility block**: browser targets, progressive enhancement strategy
 - **MANDATORY integration block**: shared component usage, design token references, adjacent section coordination
+- **MANDATORY assets block**: declare every non-code asset the section needs, including source and intent:
+  ```yaml
+  assets:
+    - id: hero-bg
+      source: gpt-image | stitch | local | url
+      intent: "Full-bleed cinematic background for HOOK beat"
+    - id: icon-set
+      source: local
+      intent: "Custom SVG icons matching archetype personality"
+  ```
+  HOOK and PEAK sections MUST declare at least one `wow payload` asset (a visually dramatic image, animation, or 3D asset). A HOOK or PEAK PLAN.md with no declared wow payload is rejected before build.
 - Verification questions (canary-style DNA recall) that builders answer before executing
+
+## Step 3b: Planner-Lint (asset-declaration validation)
+
+After generating all PLAN.md files, validate the `assets:` blocks with the asset-declaration linter:
+
+```bash
+node -e "import('./scripts/validators/asset-declaration.mjs').then(m => m.validateAll('.planning/genorah/sections'))"
+```
+
+This linter rejects any HOOK or PEAK PLAN.md that has no declared wow payload asset. Fix the PLAN.md before proceeding — do not hand an unlinted plan to the builder.
 
 ## Visual Companion: Layout Preview
 

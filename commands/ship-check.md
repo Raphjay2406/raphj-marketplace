@@ -35,10 +35,21 @@ Runs the following checks **in parallel where independent**. Aggregates to singl
 
 | Check | Source | Pass criteria |
 |---|---|---|
+| **Verification Spine** | `scripts/verify/verify-section.mjs` (all sections) | all sections have `floor.pass: true` in VERDICT.json — **blocking if any floor.pass !== true** |
 | DNA drift | `scripts/dna-drift-check.mjs` | coverage ≥ 92% |
 | Manifest integrity | asset-forge-dna-compliance | 0 `manifest_drift` |
 | Quality-gate-v3 | .planning/genorah/audit/ | all sections cleared target tier on BOTH axes |
 | Motion-health | audit/motion-health.json | per-section INP/CLS within budget |
+
+**Verification Spine run:**
+
+```bash
+for section in .planning/genorah/sections/*/; do
+  node scripts/verify/verify-section.mjs --section "$section" --project .
+done
+```
+
+Ship-check **fails (BLOCK)** if any section's `VERDICT.json` shows `floor.pass: false`. Fix with the `verifier` agent before re-running.
 
 ### Tier 4 — Metadata (blocking)
 
