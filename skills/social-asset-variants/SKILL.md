@@ -65,7 +65,7 @@ Edge-runtime generation = fast + free.
 
 ### Photo-forward (Instagram feed, Pinterest) — image-cascade
 
-Generate via Flux/nano-banana with brand + composition prompt. Multiple crops from one master.
+Generate via Flux/gpt-image with brand + composition prompt. Multiple crops from one master.
 
 ### Animated (Reels, Stories, TikTok) — Remotion
 

@@ -1260,7 +1260,7 @@ Enforceable parameters for OG image generation. HARD constraints cause incorrect
 
 ## v3.4 Addendum: 3dsvg PNG Export Path
 
-When a project has `hero_mark.enabled`, the preset's offline 4K PNG export (from `export_formats: ["png-4k"]`) is the preferred OG image source over nano-banana generation:
+When a project has `hero_mark.enabled`, the preset's offline 4K PNG export (from `export_formats: ["png-4k"]`) is the preferred OG image source over gpt-image generation:
 
 1. Deterministic — same preset + DNA tokens = same export byte-for-byte.
 2. Brand-consistent — 3dsvg renders the actual logo glyph, not a generated approximation.
@@ -1268,5 +1268,5 @@ When a project has `hero_mark.enabled`, the preset's offline 4K PNG export (from
 
 Workflow:
 1. User runs `/gen:hero-mark design` (v3.4.1) — exports 4K PNG to `public/og/hero-mark.png`.
-2. og-images skill detects `public/og/hero-mark-*.png` and prefers those over nano-banana-generated defaults.
-3. Per-page OG (blog post, product page) can still composite nano-banana imagery + the 3dsvg hero mark via Satori.
+2. og-images skill detects `public/og/hero-mark-*.png` and prefers those over gpt-image-generated defaults.
+3. Per-page OG (blog post, product page) can still composite gpt-image imagery + the 3dsvg hero mark via Satori.

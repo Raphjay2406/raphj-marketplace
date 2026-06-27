@@ -1,8 +1,8 @@
 ---
 name: image-cascade
-description: Graceful-degrade image generation pipeline — Flux 1.1 Pro Ultra → Flux Pro Raw → Ideogram 3 → nano-banana → text prompt file. First available provider wins; results cached by sha256 prompt+seed+model.
+description: Graceful-degrade image generation pipeline — Flux 1.1 Pro Ultra → Flux Pro Raw → gpt-image-2 → Ideogram 3 → text prompt file. First available provider wins; results cached by sha256 prompt+seed+model.
 tier: domain
-triggers: image-cascade, image-generation, flux, ideogram, nano-banana, asset-forge, image-pipeline
+triggers: image-cascade, image-generation, flux, ideogram, gpt-image, asset-forge, image-pipeline
 version: 0.1.0-provisional
 ---
 
@@ -20,7 +20,7 @@ Any raster asset requiring photographic or painterly output. Vector output → u
 Priority:
   1. flux-mcp (Flux 1.1 Pro Ultra — highest fidelity, painterly + photographic)
   2. flux-mcp (Flux 1.1 Pro Raw — documentary realism)
-  3. nano-banana (Gemini 3.1 Flash Image — fast, good iteration)
+  3. gpt-image (OpenAI gpt-image-2 — strong general model, native edit/iterate, text-in-image)
   4. ideogram-mcp (Ideogram 3 — typography-in-image, stylized)
   5. text-prompt fallback — write prompt to .planning/genorah/image-prompts/ for manual gen
 ```
@@ -31,7 +31,7 @@ Priority:
 |---|---|
 | Hero background, cinematic | Flux 1.1 Ultra |
 | Photographic realism | Flux 1.1 Raw |
-| Stylized / iterative | nano-banana |
+| Stylized / iterative / edit | gpt-image-2 |
 | Text-in-image (poster, OG with typography) | Ideogram 3 |
 
 Override via `--provider` flag on `/gen:assets image`.

@@ -44,9 +44,9 @@ flux.inpaint({
 
 Preferred — highest quality edge blending.
 
-#### Path 2: nano-banana edit via continue_editing
+#### Path 2: gpt-image edit via edit_image
 
-nano-banana supports iterative editing. Not mask-precise but good for "change X in this image" style edits.
+gpt-image supports iterative editing via `mcp__gpt-image__edit_image`. It is **stateless** — there is no `continue_editing`; iterate by re-calling `edit_image` with the previous output as the input image. Pass a PNG `mask_path` (transparent pixels = region to edit) for mask-precise edits, or omit it for "change X in this image" style edits.
 
 #### Path 3: Manual SAM + local diffusion
 
