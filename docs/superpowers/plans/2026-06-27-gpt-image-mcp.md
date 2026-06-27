@@ -59,7 +59,7 @@ packages/gpt-image-mcp/
 - Test: `packages/gpt-image-mcp/test/config.test.ts`
 
 **Interfaces:**
-- Produces: `loadConfig(env?: NodeJS.ProcessEnv): Config` where `Config = { apiKey: string; outputDir: string; model: string; baseUrl: string }`; and `modelSupportsTransparent(model: string): boolean`.
+- Produces: `loadConfig(env?: NodeJS.ProcessEnv): Config` where `Config = { apiKey: string; outputDir: string; model: string; baseUrl: string }`; `modelSupportsTransparent(model: string): boolean`; and `loadEnvFile(filePath: string, env?: NodeJS.ProcessEnv): void` (zero-dep `.env` parser that merges file vars into `env` WITHOUT overriding values already set; missing file = no-op).
 
 - [ ] **Step 1: Create `package.json`**
 
@@ -185,6 +185,58 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): Config {
 export function modelSupportsTransparent(model: string): boolean {
   return !model.startsWith("gpt-image-2");
 }
+
+import { readFileSync } from "node:fs";
+
+/**
+ * Zero-dependency .env loader. Parses simple KEY=VALUE lines from `filePath` and merges them into
+ * `env`, but NEVER overrides a value already present (real shell env wins). Missing file = no-op.
+ * Lines starting with `#`, and blank lines, are ignored; surrounding quotes are stripped.
+ */
+export function loadEnvFile(filePath: string, env: NodeJS.ProcessEnv = process.env): void {
+  let text: string;
+  try {
+    text = readFileSync(filePath, "utf8");
+  } catch {
+    return; // no .env present — rely on the real environment
+  }
+  for (const line of text.split(/\r?\n/)) {
+    const m = /^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*)$/.exec(line);
+    if (!m) continue; // skips blanks and `#` comments
+    const key = m[1];
+    let val = m[2].trim();
+    if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+      val = val.slice(1, -1);
+    }
+    if (env[key] === undefined || env[key] === "") env[key] = val;
+  }
+}
+```
+
+- [ ] **Step 6b: Append `loadEnvFile` tests to `test/config.test.ts`**
+
+```ts
+import { promises as fsp } from "node:fs";
+import * as osm from "node:os";
+import * as pathm from "node:path";
+import { loadEnvFile } from "../src/config.js";
+
+describe("loadEnvFile", () => {
+  it("merges file vars without overriding existing env", async () => {
+    const dir = await fsp.mkdtemp(pathm.join(osm.tmpdir(), "envf-"));
+    const f = pathm.join(dir, ".env");
+    await fsp.writeFile(f, "# comment\nOPENAI_API_KEY=sk-file\nGPT_IMAGE_MODEL=\"gpt-image-1.5\"\n");
+    const env: NodeJS.ProcessEnv = { GPT_IMAGE_MODEL: "gpt-image-2" }; // already set -> wins
+    loadEnvFile(f, env);
+    expect(env.OPENAI_API_KEY).toBe("sk-file");
+    expect(env.GPT_IMAGE_MODEL).toBe("gpt-image-2");
+  });
+  it("is a no-op for a missing file", () => {
+    const env: NodeJS.ProcessEnv = {};
+    expect(() => loadEnvFile("/no/such/.env", env)).not.toThrow();
+    expect(env.OPENAI_API_KEY).toBeUndefined();
+  });
+});
 ```
 
 - [ ] **Step 7: Run test, verify it passes**
@@ -848,15 +900,18 @@ Expected: includes `registerTool` (SDK ≥ 1.10). If it shows only `tool`, use `
 - [ ] **Step 2: Implement `src/index.ts`**
 
 ```ts
+import { fileURLToPath } from "node:url";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import { loadConfig } from "./config.js";
+import { loadConfig, loadEnvFile } from "./config.js";
 import { OpenAiImageClient } from "./openai.js";
 import { generateShape, editShape } from "./schemas.js";
 import { makeGenerateHandler } from "./tools/generate.js";
 import { makeEditHandler } from "./tools/edit.js";
 
 async function main() {
+  // Load the package-local .env (dist/index.js -> ../.env = package root). Real shell env still wins.
+  loadEnvFile(fileURLToPath(new URL("../.env", import.meta.url)));
   const cfg = loadConfig(); // throws clearly if OPENAI_API_KEY is missing
   const client = new OpenAiImageClient({ apiKey: cfg.apiKey, model: cfg.model, baseUrl: cfg.baseUrl });
   const deps = { client, outputDir: cfg.outputDir, model: cfg.model };
