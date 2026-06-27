@@ -83,13 +83,16 @@ Thresholds adjusted for 254-pt Design axis (cinematic). Non-cinematic projects u
 
 Floor applies to BLOCK threshold only; tier scale unchanged.
 
+### Floor / Ceiling decoupling (v4.1)
+
+The deterministic **Floor** (build, console-clean, responsive, axe, perf budget, required assets, interactions, motion) is computed by `scripts/verify/verify-section.mjs` and is a hard pass/fail. The subjective **Ceiling** (wow, archetype specificity, boldness) is an advisory 0–100 judge score that drives the tournament and emits GAP-FIX items. The Ceiling **never lowers or caps a Floor pass** — it can only request improvements. This guarantees reproducible scores and removes the silent multiplier cascades of v2.
+
 ## Layer 3 — Integration
 
-- **Cascade inherited from v2**: sub-gate failures (motion-health, DNA drift, SSIM, asset-forge) cap the relevant category. Applied to Axis 1 (Design) unless specified otherwise.
-- **Scene Craft cap**: `scoreSceneCraft` result injected into Design Craft total after category 12. If `skipped`, category is omitted and denominator shown as 234.
-- **UX sub-gates** apply caps within their own axis only — e.g. Synthetic Usability fail caps itself × 0.5.
-- **SUMMARY.md cascade block** extended to show both axes, Scene Craft category (or "skipped"), and both raw/effective scores per axis.
-- **Ledger writes**: each sub-gate verdict emits `{kind: "subgate-fired", subject: <section-id>, payload: {gate, raw, cap, effective, reason}}`. Scene Craft emits `{kind: "scene-craft-scored", subject: <section-id>, payload: {score, findings, skipped}}`.
+- **Sub-gate enforcement (Floor/Ceiling model)**: Measurable sub-gate failures (motion-health, DNA drift, perf budget, asset-forge, Synthetic Usability pass/fail) are enforced as hard **Floor** checks by `scripts/verify/verify-section.mjs` — a failure blocks the section and is recorded in SUMMARY.md. They do **not** cap or multiply any category or axis score. Subjective shortfalls (SSIM advisory, archetype drift) are **Ceiling** flags that emit GAP-FIX items and never lower a passing Floor. This is the v4.1 Floor/Ceiling guarantee: the Ceiling never lowers or caps a Floor pass.
+- **Scene Craft injection**: `scoreSceneCraft` result injected into Design Craft total after category 12. If `skipped`, category is omitted and denominator shown as 234.
+- **SUMMARY.md sub-gate block** extended to show both axes, Scene Craft category (or "skipped"), raw scores per axis, Floor verdict, and advisory Ceiling notes. No raw/cap/effective columns — sub-gates are PASS/FAIL/WARN only.
+- **Ledger writes**: each sub-gate verdict emits `{kind: "subgate-fired", subject: <section-id>, payload: {gate, result: "pass"|"fail"|"warn", reason}}`. Scene Craft emits `{kind: "scene-craft-scored", subject: <section-id>, payload: {score, findings, skipped}}`.
 
 ## Layer 4 — Anti-patterns
 

@@ -6,7 +6,7 @@
     "stage": "quality-gate stage 5 (design fidelity)",
     "blocker": true,
     "applies_to": ["*.tsx", "*.jsx", "*.vue", "*.svelte", "*.astro"],
-    "cascade_on_fail": "Integration Quality category x 0.5",
+    "cascade_on_fail": "hard Floor check — blocks section via verify-section.mjs; no score multiplier",
     "require_per_archetype": {"mandatory": 3, "forbidden": 3, "signature": 1}
   },
   "archetypes": {

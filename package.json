@@ -6,7 +6,7 @@
   "version": "4.0.0",
   "private": true,
   "type": "module",
-  "description": "Genorah Claude Code plugin \u00e2\u20ac\u201d internal testing infrastructure for hooks + dashboard + skill schema validation",
+  "description": "Genorah Claude Code plugin â€” internal testing infrastructure for hooks + dashboard + skill schema validation",
   "engines": {
     "node": ">=20"
   },
@@ -23,9 +23,12 @@
     "prepush": "npm run check-mirror"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.12.1",
     "@testing-library/dom": "^10.4.1",
     "ajv": "^8.17.1",
     "js-yaml": "^4.1.1",
+    "lighthouse": "^13.4.0",
+    "playwright": "^1.61.1",
     "react-dom": "^19.2.5",
     "yaml": "^2.6.0"
   },
