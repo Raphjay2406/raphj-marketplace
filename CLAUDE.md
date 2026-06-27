@@ -61,7 +61,7 @@ Five optional MCP servers declared in `.claude-plugin/.mcp.json`:
 
 | Server | Package | Purpose |
 |--------|---------|---------|
-| **gpt-image** | OpenAI gpt-image-2 | AI image generation + editing -- hero backgrounds, textures, OG images, photo edits (object removal, mask inpainting). Replaced nano-banana. Lives at `P:\Genorah\gpt-image-mcp` (see "AI Image Generation"). |
+| **gpt-image** | OpenAI gpt-image-2 | AI image generation + editing -- hero backgrounds, textures, OG images, photo edits (object removal, mask inpainting). Replaced nano-banana. Bundled in-repo at `mcp-servers/gpt-image/` (see "AI Image Generation"). |
 | **stitch** | Google Stitch | Visual mockup generation -- text-to-screen, design system sync, variant exploration |
 | **playwright** | Playwright MCP | Visual QA -- 4-breakpoint screenshots, CSS/DOM verification, hover testing, console errors |
 | **obsidian** | obsidian-mcp-server | Obsidian REST API -- frontmatter management, tag ops, global search |
@@ -183,18 +183,22 @@ When available, the pipeline generates and edits DNA-matched images directly:
 
 Defined in the `image-prompt-generation` skill (domain tier).
 
-### Where it lives + the cache gotcha (IMPORTANT)
-The `gpt-image` server is **not in this monorepo** — it was relocated to a standalone repo at
-**`P:\Genorah\gpt-image-mcp`** (own git repo + its own CLAUDE.md). The plugin's `.mcp.json` runs it by absolute path
-(`node P:/Genorah/gpt-image-mcp/dist/index.js`), so `npm run build` must have produced `dist/` there. Its `OPENAI_API_KEY`
-lives in that repo's gitignored `.env` (the server self-loads it).
+### Where it lives (bundled) + how to update it
+The `gpt-image` server is **bundled inside this plugin** at **`mcp-servers/gpt-image/`**. The runtime is a single
+self-contained **esbuild bundle, `index.mjs`** (deps inlined; TS source in `src/`). `.mcp.json` runs it via
+`${CLAUDE_PLUGIN_ROOT}/mcp-servers/gpt-image/index.mjs` — **portable, ships with the plugin into the cache, survives reinstall**
+(no machine-specific path). Rebuild after a source change: `cd mcp-servers/gpt-image && npm install && npm run bundle`
+(esbuild → `index.mjs`). `sync-mirror` now also copies `mcp-servers/` into `plugins/gen/`.
 
-⚠️ **Claude Code loads this plugin from its CACHE, not from this source tree:**
-`~/.claude/plugins/cache/raphj-marketplace/gen/4.0.0/.claude-plugin/.mcp.json`. **Editing `.mcp.json` here has NO effect
-on what actually loads.** The cache copy was hand-edited to the `gpt-image` entry as a **stopgap**; MCP changes require a
-**Claude Code restart**. **Durable fix:** re-publish this plugin version (bump + marketplace sync) so a reinstall doesn't
-revert the cache to `nano-banana`. Follow-up: ~96 agent/skill files still call `mcp__nano-banana__{generate_image,
-edit_image,continue_editing,get_last_image_info}` — migrate them to `mcp__gpt-image__{generate_image,edit_image}`.
+**API key:** a bundled server can't ship a `.env` (gitignored + would land in the cache), so the key comes from the
+**OS environment** — `${OPENAI_API_KEY}` in `.mcp.json`. Set it once: `setx OPENAI_API_KEY "sk-..."`, then restart Claude
+Code so it inherits the var. (The server still loads a local `.env` next to `index.mjs` if present — dev fallback.)
+
+⚠️ **Cache note:** Claude Code loads the plugin from `~/.claude/plugins/cache/raphj-marketplace/gen/4.0.0/`. For the CURRENT
+install the bundle + `.mcp.json` were copied into that cache once so it works after a restart. Because the bundle now lives in
+the plugin source, the **durable fix is simply re-publishing** the plugin (bump + marketplace sync) — a fresh install/cache
+then ships the server automatically, no stopgap. The agent/skill `mcp__nano-banana__*` refs were already migrated to
+`mcp__gpt-image__*`. The old standalone `P:\Genorah\gpt-image-mcp` repo is **superseded** by this bundle (safe to delete).
 
 ## Visual Companion
 

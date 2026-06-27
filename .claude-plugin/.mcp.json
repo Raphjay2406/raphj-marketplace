@@ -21,7 +21,7 @@
   },
   "gpt-image": {
     "command": "node",
-    "args": ["P:/Genorah/gpt-image-mcp/dist/index.js"],
+    "args": ["${CLAUDE_PLUGIN_ROOT}/mcp-servers/gpt-image/index.mjs"],
     "env": {
       "OPENAI_API_KEY": "${OPENAI_API_KEY}",
       "GPT_IMAGE_OUTPUT_DIR": "${GPT_IMAGE_OUTPUT_DIR}",
