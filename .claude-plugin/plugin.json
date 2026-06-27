@@ -108,6 +108,15 @@
             "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/daemon-lifecycle.mjs\" SessionEnd"
           }
         ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/verify-gate.mjs\""
+          }
+        ]
       }
     ],
     "PostToolUse": [
@@ -117,6 +126,15 @@
           {
             "type": "command",
             "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/post-tool-use.mjs\""
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/verify-gate.mjs\""
           }
         ]
       }
