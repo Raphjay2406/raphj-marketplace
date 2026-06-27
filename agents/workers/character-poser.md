@@ -41,7 +41,7 @@ Returns `Result<T>` envelope per `@genorah/protocol`:
 ## Protocol
 
 1. Accept AssetInput payload (prompt + references + seed + params).
-2. Invoke `GptImageProvider.edit(input)` via `@genorah/asset-forge` (uses gpt-image MCP for iterative character refinement).
+2. Invoke `GptImageProvider.edit(input, { imagePaths: [referenceImage] })` via `@genorah/asset-forge` (uses gpt-image MCP for iterative character refinement).
 3. Self-check validators: dna-compliance, license, provenance.
 4. Return `Result<AssetResult>` with cost + duration + provider.
 
