@@ -51,4 +51,11 @@ describe("GptImageProvider.generate", () => {
     expect(caught).toBeInstanceOf(GenorahError);
     expect(caught?.structured.code).toBe("PROVIDER_UNAVAILABLE");
   });
+
+  it("estimateCost returns the seed cost and duration", async () => {
+    const p = new GptImageProvider({ apiKey: "test-key", downloadDir: TMP });
+    const est = await p.estimateCost({ prompt: "x" });
+    expect(est.cost_usd).toBe(0.04);
+    expect(est.duration_ms_estimate).toBe(15_000);
+  });
 });

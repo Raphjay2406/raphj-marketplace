@@ -56,7 +56,15 @@ export class GptImageProvider implements ImageEditProvider {
     return this.handleImageResponse(res, input, start);
   }
 
-  // edit() added in Task 2.
+  // edit() is implemented in Task 2. This throwing stub satisfies the
+  // ImageEditProvider contract so the class type-checks under strict tsc until then.
+  async edit(_input: AssetInput, _opts: { imagePaths: string[]; maskPath?: string }): Promise<AssetResult> {
+    throw new GenorahError({
+      code: "PROVIDER_UNAVAILABLE",
+      message: "GptImageProvider.edit not yet implemented (Task 2)",
+      recovery_hint: "retry_with_fallback",
+    });
+  }
 
   private async handleImageResponse(res: Response, input: AssetInput, start: number): Promise<AssetResult> {
     if (!res.ok) {
