@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { rmSync, mkdirSync, existsSync, readFileSync } from "fs";
+import { rmSync, mkdirSync, existsSync, readFileSync, writeFileSync as writeFileSyncTest } from "fs";
+import { join as joinTest } from "path";
 import { GptImageProvider } from "../src/providers/gpt-image.js";
 import { GenorahError } from "@genorah/protocol";
 
@@ -57,5 +58,35 @@ describe("GptImageProvider.generate", () => {
     const est = await p.estimateCost({ prompt: "x" });
     expect(est.cost_usd).toBe(0.04);
     expect(est.duration_ms_estimate).toBe(15_000);
+  });
+});
+
+describe("GptImageProvider.edit", () => {
+  it("sends multipart image[] with no Content-Type and omits input_fidelity/background for gpt-image-2", async () => {
+    const inputImg = joinTest(TMP, "src.png");
+    writeFileSyncTest(inputImg, Buffer.from("input-image"));
+    const fakeOut = Buffer.from("edited-png");
+    let capturedInit: RequestInit | undefined;
+    globalThis.fetch = vi.fn().mockImplementationOnce(async (_url: string, init?: RequestInit) => {
+      capturedInit = init;
+      return {
+        ok: true,
+        json: async () => ({ data: [{ b64_json: fakeOut.toString("base64") }] }),
+      } as unknown as Response;
+    });
+
+    const p = new GptImageProvider({ apiKey: "test-key", downloadDir: TMP });
+    const result = await p.edit({ prompt: "make it warmer" }, { imagePaths: [inputImg] });
+
+    const body = capturedInit?.body as FormData;
+    expect(body).toBeInstanceOf(FormData);
+    expect(body.get("prompt")).toBe("make it warmer");
+    expect(body.get("model")).toBe("gpt-image-2");
+    expect(body.getAll("image[]").length).toBe(1);
+    expect(body.get("input_fidelity")).toBeNull();
+    expect(body.get("background")).toBeNull();
+    expect((capturedInit?.headers as Record<string, string>)["Content-Type"]).toBeUndefined();
+    expect(result.provider).toBe("gpt-image");
+    expect(existsSync(result.path)).toBe(true);
   });
 });
