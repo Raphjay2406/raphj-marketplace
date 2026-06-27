@@ -551,4 +551,4 @@ Reviewers and dashboard read this block verbatim. Score multipliers are not appl
 | DNA drift | advisory WARN | opt-in BLOCK via `DNA_STRICT=1`; default WARN |
 | Motion health | not measured | measured per audit, artifact required |
 | Reference diff | signal only | 2σ below → advisory Ceiling flag + GAP-FIX; 3σ + 3 retries → block |
-| Cascade transparency | implicit | explicit SUMMARY.md block, mandatory |
+| Sub-gate transparency | implicit | explicit SUMMARY.md block, mandatory |
