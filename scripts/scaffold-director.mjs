@@ -80,7 +80,7 @@ const directors = [
     capability: "direct-assets",
     input: "AssetRequest",
     output: "AssetManifest",
-    role: "Orchestrates all AI asset generation (nano-banana, flux, rodin, meshy). Enforces cost budgets, tracks provenance via preservation ledger, and validates DNA alignment before approving assets.",
+    role: "Orchestrates all AI asset generation (gpt-image, flux, rodin, meshy). Enforces cost budgets, tracks provenance via preservation ledger, and validates DNA alignment before approving assets.",
     inputDesc: "AssetRequest: section beat type, DNA tokens, target dimensions, generation hints",
     outputDesc: "AssetManifest — approved asset paths, generation params, provenance records, cost tally",
     state: "Maintains ASSET-MANIFEST.json and appends to preservation.ledger.ndjson."
