@@ -2,16 +2,21 @@
 id: "archetype/vaporwave"
 name: "Vaporwave"
 slug: "vaporwave"
-tier: "standard"
-version: "3.x"
-group: "v3-classic"
-tags: [archetype, genorah, standard, v3]
+tier: "legacy"
+version: "4.0.0"
+group: "v4-webgpu"
+mandatory_techniques: ""
+forbidden_patterns: ""
+tags: [archetype, genorah, legacy]
 ---
 
 # Vaporwave
 
-**Tier:** standard (v3 classic)
+**Tier:** legacy
+
+
+
 
 ## Source
 
-`skills/design-archetypes/SKILL.md` — search for `### Vaporwave`
+`skills/design-archetypes/archetypes/vaporwave/`

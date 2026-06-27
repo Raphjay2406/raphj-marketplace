@@ -89,8 +89,6 @@ To verify the built server independently (no host): pipe a JSON-RPC `initialize`
 - Retry count in `openai.ts` (`attempt < 3` ⇒ up to 4 total calls vs "3 tries" — flip to `< 2` if 3-total is intended).
 - Add a `prepare`/build script so a fresh clone auto-builds `dist/` (the MCP can't start without it).
 - Optional: publish to npm so `.mcp.json` can use `npx -y @scope/gpt-image-mcp@latest` instead of an absolute path.
-- The gen plugin still has ~96 files referencing `mcp__nano-banana__*` — update to `mcp__gpt-image__{generate_image,edit_image}`
-  (drop the old stateful `continue_editing`/`get_last_image_info`).
 
 ## Git
 Standalone repo, local only (no remote). Recent: `17a004c` initial, `51f887b` input_fidelity fix. Commit-message trailer:

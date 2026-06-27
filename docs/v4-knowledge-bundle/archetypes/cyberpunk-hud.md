@@ -1,7 +1,7 @@
 ---
-id: "archetype/data-dense"
-name: "Data-Dense"
-slug: "data-dense"
+id: "archetype/cyberpunk-hud"
+name: "Cyberpunk / HUD Sci-Fi FUI"
+slug: "cyberpunk-hud"
 tier: "legacy"
 version: "4.0.0"
 group: "v4-webgpu"
@@ -10,7 +10,7 @@ forbidden_patterns: ""
 tags: [archetype, genorah, legacy]
 ---
 
-# Data-Dense
+# Cyberpunk / HUD Sci-Fi FUI
 
 **Tier:** legacy
 
@@ -19,4 +19,4 @@ tags: [archetype, genorah, legacy]
 
 ## Source
 
-`skills/design-archetypes/archetypes/data-dense/`
+`skills/design-archetypes/archetypes/cyberpunk-hud/`

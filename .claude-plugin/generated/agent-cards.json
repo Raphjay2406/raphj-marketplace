@@ -1600,6 +1600,47 @@
   },
   {
     "schema_version": "a2a-v0.3",
+    "id": "genorah/gpt-image-iterator",
+    "version": "4.0.0",
+    "channel": "stable",
+    "name": "gpt-image-iterator",
+    "description": "Runs iterative image editing via the gpt-image MCP (stateless re-edit loop). Applies DNA color corrections, style transfers, and beat-specific atmosphere adjustments.",
+    "tier": "worker",
+    "capabilities": [
+      {
+        "id": "iterate-gpt-image",
+        "input": "ImageIterSpec",
+        "output": "IteratedImageAsset"
+      }
+    ],
+    "tools": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Grep",
+      "Glob",
+      "mcp__gpt-image__edit_image"
+    ],
+    "auth": {
+      "local": {
+        "type": "none"
+      },
+      "remote": {
+        "type": "oauth2",
+        "flow": "authorization_code_pkce"
+      }
+    },
+    "streaming": {
+      "supports_sse": true,
+      "ag_ui_events": true
+    },
+    "mcp": {
+      "sampling_v2_compatible": true
+    }
+  },
+  {
+    "schema_version": "a2a-v0.3",
     "id": "genorah/gsap-choreographer",
     "version": "4.0.0",
     "channel": "stable",
@@ -2291,46 +2332,6 @@
         "id": "author-n8n-workflow",
         "input": "WorkflowSpec",
         "output": "N8NWorkflow"
-      }
-    ],
-    "tools": [
-      "Read",
-      "Write",
-      "Edit",
-      "Bash",
-      "Grep",
-      "Glob"
-    ],
-    "auth": {
-      "local": {
-        "type": "none"
-      },
-      "remote": {
-        "type": "oauth2",
-        "flow": "authorization_code_pkce"
-      }
-    },
-    "streaming": {
-      "supports_sse": true,
-      "ag_ui_events": true
-    },
-    "mcp": {
-      "sampling_v2_compatible": true
-    }
-  },
-  {
-    "schema_version": "a2a-v0.3",
-    "id": "genorah/nano-banana-iterator",
-    "version": "4.0.0",
-    "channel": "stable",
-    "name": "nano-banana-iterator",
-    "description": "Runs iterative image editing via nano-banana MCP. Applies DNA color corrections, style transfers, and beat-specific atmosphere adjustments.",
-    "tier": "worker",
-    "capabilities": [
-      {
-        "id": "iterate-nano-banana",
-        "input": "ImageIterSpec",
-        "output": "IteratedImageAsset"
       }
     ],
     "tools": [

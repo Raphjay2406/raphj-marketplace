@@ -51,6 +51,7 @@
 | `genorah/flutter-author` | author-flutter | Builds Flutter widgets with ThemeData DNA mapping, go_router navigation, Riverpod state, and platform adaptive widgets. |
 | `genorah/flux-hero-gen` | generate-flux-hero | Generates hero background images using Flux API with DNA-matched color palettes and beat-type visual language. |
 | `genorah/gltf-lod-generator` | generate-gltf-lod | Generates multiple LOD variants for GLTF models. Validates triangle counts and texture sizes against perf budgets. |
+| `genorah/gpt-image-iterator` | iterate-gpt-image | Runs iterative image editing via the gpt-image MCP (stateless re-edit loop). Applies DNA color corrections, style transfers, and beat-specific atmosphere adjustments. |
 | `genorah/gsap-choreographer` | choreograph-gsap | Authors GSAP ScrollTrigger and timeline sequences bound to DNA motion tokens. Enforces reduced-motion variants and performance budgets. |
 | `genorah/hero-camera-choreographer` | choreograph-camera | Authors camera keyframe sequences for hero and cinematic sections. Produces Theatre.js or GSAP ScrollTrigger camera paths tied to DNA motion tokens. |
 | `genorah/hubspot-integration-author` | author-hubspot-integration | Scaffolds HubSpot CRM integration: forms, contact sync, marketing automation hooks, and CMS API. |
@@ -69,7 +70,6 @@
 | `genorah/morph-target-author` | author-morph-targets | Generates morph target animations for character and product 3D models. Validates blend shape count against performance budget. |
 | `genorah/motion-critic` | critique-motion | Evaluates motion design against quality gate: intentionality, DNA motion token usage, reduced-motion compliance. |
 | `genorah/n8n-workflow-author` | author-n8n-workflow | Authors n8n automation workflow JSON for lead capture, CRM sync, and notification pipelines. |
-| `genorah/nano-banana-iterator` | iterate-nano-banana | Runs iterative image editing via nano-banana MCP. Applies DNA color corrections, style transfers, and beat-specific atmosphere adjustments. |
 | `genorah/narrative-critic` | critique-narrative | Evaluates cross-section story arc coherence, beat sequencing validity, and emotional progression. |
 | `genorah/nextjs-section` | build-nextjs-section | Builds a single page section as a Next.js RSC with Tailwind v4 DNA tokens, animation, and 4-breakpoint responsive layout. |
 | `genorah/og-image-author` | author-og-images | Authors dynamic OG image generation routes with next/og, DNA typography, and brand color templates. |
