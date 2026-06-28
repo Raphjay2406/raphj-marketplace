@@ -114,6 +114,22 @@ test('font link unions both option display fonts', () => {
 });
 
 // Task 2 CLI spawn test — proves the Windows pathToFileURL guard actually runs
+// Fix: lock all documented mockup kinds so doc and code can't silently drift
+test('mockupBlock: every documented kind renders non-empty colored output', () => {
+  for (const kind of ['nav', 'hero', 'text', 'cards', 'cta', 'footer']) {
+    const html = mockupBlock([{ kind, label: 'X' }], PAL);
+    assert.ok(
+      html.length > 20 && /#[0-9a-f]{6}/i.test(html),
+      `kind "${kind}" must render non-empty HTML containing a palette hex`
+    );
+  }
+});
+
+test('mockupBlock: unknown kind renders empty (default-empty is intentional)', () => {
+  const html = mockupBlock([{ kind: 'bogus' }], PAL);
+  assert.ok(!html.includes('mk-row'), 'unknown kind must not emit an mk-row element');
+});
+
 test('CLI spawn writes screen.html to the output dir', () => {
   const tmpDir = mkdtempSync(join(tmpdir(), 'companion-cli-'));
   const specPath = join(tmpDir, 'spec.json');
