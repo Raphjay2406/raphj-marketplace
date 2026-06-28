@@ -82,10 +82,24 @@ For any screen where the user must pick between options (archetype, creative dir
         "mono": "JetBrains Mono"  // optional
       },
       "mockup": {
-        // Optional list of text blocks describing the layout for the card body
+        // Optional list of layout blocks rendered as a color-accurate miniature page wireframe.
+        // Each block must use the `kind` field (NOT `type`). Unknown kinds render empty.
+        // `label` is optional display text shown inside nav, hero, and cta blocks.
+        //
+        // Supported kinds:
+        //   nav    — top bar with brand name + "menu" text, uses surface/border/primary
+        //   hero   — headline band with a CTA button, uses bg/text/primary
+        //   text   — two muted placeholder text rows, uses bg/muted
+        //   cards  — a 3-card row, uses bg/surface/border
+        //   cta    — full-width accent call-to-action band, uses accent/bg
+        //   footer — footer strip, uses surface/muted
         "blocks": [
-          { "type": "headline", "text": "Sample headline in this direction's voice" },
-          { "type": "body",     "text": "Supporting description of the layout / approach" }
+          { "kind": "nav",    "label": "Brand" },
+          { "kind": "hero",   "label": "Sample headline in this direction's voice" },
+          { "kind": "text" },
+          { "kind": "cards" },
+          { "kind": "cta",    "label": "Get started" },
+          { "kind": "footer" }
         ]
       },
       "hero": {
