@@ -39,6 +39,8 @@
   .action-btn.secondary { background: transparent; border: 1px solid var(--border); color: var(--text); }
   .empty { color: var(--muted); font-style: italic; padding: 24px; text-align: center; }
   .queued-banner { background: var(--warn); color: var(--bg); padding: 12px; border-radius: 8px; margin-bottom: 16px; font-weight: 600; }
+  #graph-frame { width: 100%; height: 420px; border: none; border-radius: 8px; background: var(--bg); margin-top: 12px; }
+  #graph-summary code { background: var(--bg); padding: 2px 6px; border-radius: 4px; font-size: 12px; }
 </style>
 </head>
 <body>
@@ -71,6 +73,12 @@
       <button class="action-btn secondary" onclick="queueAction('self-audit')">Queue /gen:self-audit</button>
     </div>
     <p style="font-size: 11px; color: var(--muted); margin-top: 8px;">Buttons queue commands; run the matching /gen:* command in your Claude Code session.</p>
+  </section>
+
+  <section id="graph-panel">
+    <h2>Knowledge Graph</h2>
+    <div id="graph-summary"></div>
+    <iframe id="graph-frame" src="/api/graph" title="Knowledge graph"></iframe>
   </section>
 
   <section>
@@ -149,6 +157,18 @@ function render(state) {
     banner.textContent = `⚡ ${state.action_queue.length} queued action(s): ${state.action_queue.join(', ')}`;
   } else {
     banner.style.display = 'none';
+  }
+
+  // Knowledge Graph panel
+  const graphSummary = document.getElementById('graph-summary');
+  const graphFrame = document.getElementById('graph-frame');
+  if (state.graph && state.graph.exists) {
+    const { nodes, edges, ageMs } = state.graph;
+    graphSummary.textContent = `${nodes} nodes · ${edges} edges · updated ${Math.round(ageMs / 1000)}s ago`;
+    graphFrame.style.display = '';
+  } else {
+    graphSummary.innerHTML = 'No graph yet — run <code>gen:graphify scan</code>';
+    graphFrame.style.display = 'none';
   }
 
   document.getElementById('context').textContent = state.context || '(empty)';
