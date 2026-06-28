@@ -16,7 +16,7 @@ parent_category: "Motion & Interaction"
 
 Motion & Interaction on the 234-pt gate scores creative motion quality — choreography, entrance polish, hover delight. It does not measure motion *safety*: INP regression, GPU layer explosion, reduced-motion parity, scroll-timeline fallback presence.
 
-Making Motion Health a new category 13 would force rebalancing the 234-pt gate, which ripples through archetype docs, exports, and Obsidian vault queries. Making it a **sub-gate inside Motion & Interaction** preserves the 234-pt total: fail Motion Health → parent category scores capped at 50%, regardless of creative merit.
+Making Motion Health a new category 13 would force rebalancing the 234-pt gate, which ripples through archetype docs, exports, and graphify graph queries. Making it a **sub-gate inside Motion & Interaction** preserves the 234-pt total: fail Motion Health → parent category scores capped at 50%, regardless of creative merit.
 
 This separates "is the motion beautiful?" (category) from "is the motion safe?" (sub-gate). A section can be beautifully animated but unsafe; the sub-gate blocks SOTD-Ready tier.
 

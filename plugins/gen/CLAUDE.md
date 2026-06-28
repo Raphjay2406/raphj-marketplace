@@ -38,7 +38,7 @@ scripts/ingest/ (v3.21+ runtime for codebase/URL ingestion into the pipeline)
 - **Agents:** `agents/{agent-name}.md` -- role definition, input/output contracts, context budget
 - **Commands:** `commands/{command-name}.md` -- description, argument-hint, numbered workflow steps
 - **Hooks:** `.claude-plugin/hooks/` -- 7 hooks: `session-start.mjs`, `pre-tool-use.mjs`, `post-tool-use.mjs`, `user-prompt.mjs`, `pre-compact.mjs`, `session-end.mjs`, `dna-compliance-check.sh`
-- **MCP Servers:** `.claude-plugin/.mcp.json` -- optional MCP servers (gpt-image, stitch, playwright, obsidian, obsidian-fs, …). **gpt-image** (OpenAI gpt-image-2) replaced the old Gemini **nano-banana** image server — see "AI Image Generation" for the relocation + cache gotcha.
+- **MCP Servers:** `.claude-plugin/.mcp.json` -- optional MCP servers (gpt-image, stitch, playwright, graphify, …). **gpt-image** (OpenAI gpt-image-2) replaced the old Gemini **nano-banana** image server — see "AI Image Generation" for the relocation + cache gotcha.
 - **Template:** `skills/_skill-template/SKILL.md` -- canonical 4-layer format reference
 
 ## Agents (21 total)
@@ -64,8 +64,7 @@ Five optional MCP servers declared in `.claude-plugin/.mcp.json`:
 | **gpt-image** | OpenAI gpt-image-2 | AI image generation + editing -- hero backgrounds, textures, OG images, photo edits (object removal, mask inpainting). Replaced nano-banana. Bundled in-repo at `mcp-servers/gpt-image/` (see "AI Image Generation"). |
 | **stitch** | Google Stitch | Visual mockup generation -- text-to-screen, design system sync, variant exploration |
 | **playwright** | Playwright MCP | Visual QA -- 4-breakpoint screenshots, CSS/DOM verification, hover testing, console errors |
-| **obsidian** | obsidian-mcp-server | Obsidian REST API -- frontmatter management, tag ops, global search |
-| **obsidian-fs** | obsidian-mcp | Obsidian filesystem -- direct vault read/write, no Obsidian required |
+| **graphify** | graphify MCP | Knowledge graph build, recall, and cross-session memory -- see "Knowledge Graph (graphify)". |
 
 All servers are optional. Commands gracefully degrade when servers are unavailable.
 
@@ -88,7 +87,7 @@ Earlier (v3.x):
 | `/gen:bugfix` | Diagnostic root cause analysis with Playwright visual evidence capture |
 | `/gen:audit` | Full 234-point quality gate audit. Playwright visual QA when available. |
 | `/gen:status` | Current pipeline state, wave progress, section statuses, next action suggestion |
-| `/gen:sync-knowledge` | Bidirectional sync between plugin skills and Obsidian knowledge vault |
+| `/gen:sync-knowledge` | Sync project knowledge into the graphify graph (run `gen:graphify` to build/recall) |
 | `/gen:companion` | Launch/interact with Visual Companion on localhost |
 | `/gen:export` | Export deliverables, design tokens, vault format, and build artifacts |
 | `/gen:migrate` | Migrate legacy .planning/modulo/ projects to .planning/genorah/ |
@@ -255,15 +254,9 @@ Five framework-native skills plus store submission validation and a cross-platfo
 | **store-submission** | App Store + Play Store | Screenshot specs, metadata limits, ASO keywords, review guideline checklist, TestFlight/internal track |
 | **mobile-performance** | All frameworks | Cold start <600ms, warm <300ms, 60/120fps budget, memory profiling, bundle size, battery impact |
 
-## Obsidian Integration
+## Knowledge Graph (graphify)
 
-Two-vault system with MCP-powered bidirectional sync:
-
-- **Project Vault** at `.planning/genorah/vault/` -- per-project, ephemeral, mirrors build state with Dataview-compatible frontmatter
-- **Knowledge Base Vault** at user-configured path -- persistent, cross-project, accumulates archetype history and pattern discovery
-- **Session-start hook** detects vault presence and reports drift warnings
-- **Session-end hook** prompts knowledge base accumulation on project completion
-- Config stored in `.claude/genorah.local.md` with standardized keys: `vault_path`, `obsidian_installed`, `vault_sync`
+Genorah uses **graphify** (`/gen:graphify`) as its cross-session knowledge layer. After each build cycle the graph is updated with decisions, DNA tokens, archetype history, and pattern discoveries; on session start the graph is queried to restore project context. Config lives in `.claude/genorah.local.md` under the keys `graphify_graph_path` (default `graphify-out/graph.json`) and `graphify_auto_update`.
 
 ## Session Infrastructure
 
@@ -271,8 +264,8 @@ Advanced session management and resource governance hooks active by default:
 
 | Hook | Event | Purpose |
 |------|-------|---------|
-| `session-start.mjs` | SessionStart | Loads CONTEXT.md, detects vault drift, reports MCP availability, auto-migrates legacy projects |
-| `session-end.mjs` | Stop | Writes SESSION-LOG.md with phase, wave, decisions, next actions, vault sync status |
+| `session-start.mjs` | SessionStart | Loads CONTEXT.md, queries graphify graph, reports MCP availability, auto-migrates legacy projects |
+| `session-end.mjs` | Stop | Writes SESSION-LOG.md with phase, wave, decisions, next actions, graphify sync status |
 | `pre-compact.mjs` | PreCompact | Preserves critical context (DNA tokens, arc position, wave state) into CONTEXT.md before compaction |
 | `post-tool-use.mjs` | PostToolUse | Records tool call metrics to METRICS.md for pipeline observability |
 | `pre-tool-use.mjs` | PreToolUse | Injects relevant skill content, enforces resource constraints, scans for PII patterns |
@@ -310,7 +303,7 @@ All state lives under `.planning/genorah/` in the target project:
 | `sections/*/SUMMARY.md` | Builder completion report |
 | `sections/*/GAP-FIX.md` | Quality reviewer / creative director fix instructions |
 | `audit/` | Screenshots, Lighthouse, axe-core, visual QA results |
-| `vault/` | Obsidian project vault (when configured) |
+| `graphify-out/` | graphify graph output (knowledge graph JSON) |
 
 ## Modifying This Plugin
 

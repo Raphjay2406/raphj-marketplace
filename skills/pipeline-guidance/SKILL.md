@@ -116,7 +116,7 @@ Canonical. Any guidance consumer reads from this table.
 | Dashboard action queue non-empty | `/gen:{queued command}` | User queued from dashboard |
 | refinement-queue non-empty | `/gen:iterate --from-queue` | Interactive refinements pending |
 | Plugin drift suspected | `/gen:self-audit` | Validate plugin itself |
-| Obsidian vault configured + stale | `/gen:sync-knowledge` | Vault bidirectional sync |
+| Knowledge graph stale | `/gen:sync-knowledge` | Graphify graph sync |
 | Client feedback received | `/gen:feedback` | Route feedback into DNA/quality loop |
 
 ## Layer 2: Output Format

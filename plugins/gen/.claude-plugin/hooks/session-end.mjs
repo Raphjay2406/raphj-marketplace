@@ -5,7 +5,7 @@
  * Generates SESSION-LOG.md for cross-session continuity.
  */
 
-import { readFileSync, writeFileSync, existsSync, mkdirSync, statSync, appendFileSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync, mkdirSync, appendFileSync } from 'fs';
 import { join } from 'path';
 
 try {
@@ -110,30 +110,10 @@ try {
       .join('\n');
   }
 
-  // --- Check if vault export is stale ---
-  let vaultStatus = '';
-  const vaultDir = join(planningDir, 'vault');
-  const localConfigFile = join(cwd, '.claude', 'genorah.local.md');
-
-  if (existsSync(vaultDir)) {
-    const indexFile = join(vaultDir, '_index.md');
-    if (existsSync(indexFile) && existsSync(stateFile)) {
-      try {
-        const indexMtime = statSync(indexFile).mtimeMs;
-        const stateMtime = statSync(stateFile).mtimeMs;
-        if (stateMtime > indexMtime) {
-          vaultStatus = '\n- Vault is behind project state — run `/gen:export` next session';
-        }
-      } catch {
-        // Skip vault status on error
-      }
-    }
-  }
-
-  // --- Check for project completion → knowledge base accumulation reminder ---
+  // --- Check for project completion → graphify suggestion ---
   let knowledgeBaseHint = '';
   if (phase.toLowerCase().includes('complete') || phase.toLowerCase().includes('done')) {
-    knowledgeBaseHint = `\n## Knowledge Base\n- Project appears complete. Run \`/gen:export --full\` to accumulate project history to Knowledge Base.\n`;
+    knowledgeBaseHint = `\n## Knowledge Graph\n- Project appears complete. Run \`/gen:graphify update\` to refresh the project graph, then \`graphify merge-graphs\` to consolidate cross-project knowledge.\n`;
   }
 
   const sessionLog = `# Session Log — ${isoDate}
@@ -143,7 +123,7 @@ try {
 
 ## Current State
 - Phase: ${phase}
-- Wave: ${wave}${vaultStatus}
+- Wave: ${wave}
 
 ## Recent Decisions
 ${decisionsBlock}

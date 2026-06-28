@@ -1,9 +1,8 @@
 ---
-vault_path: D:/Genorah/Genorah-Plugin
-obsidian_installed: true
-vault_sync: bidirectional
+graphify_graph_path: graphify-out/graph.json
+graphify_auto_update: true
 ---
 
 # Local Genorah config
 
-Vault location for Obsidian sync (set 2026-04-13).
+Knowledge graph location for graphify sync (updated 2026-06-28).

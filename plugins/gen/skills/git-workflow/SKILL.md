@@ -16,7 +16,7 @@ metadata:
 
 ### Why
 
-Generated sections typically land as a single "wip" commit or unlabeled squash. That discards the per-beat signal (HOOK vs PROOF) + score trajectory that's useful for future tooling (changelog gen, regression bisect, design-history Obsidian sync). This skill standardizes commit granularity, message format, and PR bodies so the git log becomes a legitimate project-history source.
+Generated sections typically land as a single "wip" commit or unlabeled squash. That discards the per-beat signal (HOOK vs PROOF) + score trajectory that's useful for future tooling (changelog gen, regression bisect, design-history graphify graph). This skill standardizes commit granularity, message format, and PR bodies so the git log becomes a legitimate project-history source.
 
 ### When to Use
 

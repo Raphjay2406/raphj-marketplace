@@ -77,7 +77,7 @@ Do **not** write ledger lines for routine tool calls (file reads, small edits) �
 
 - Rotates at 50MB → archived to `.planning/genorah/archive/journal-YYYYMMDD.ndjson.gz`.
 - Monthly compaction: low-signal entries (raw metrics, duplicates) dropped; high-signal (decisions, ship events, feedback) preserved forever.
-- Gitignored by default — per-project local memory, not source-controlled. Cross-project lessons flow to Obsidian vault (L6).
+- Gitignored by default — per-project local memory, not source-controlled. Cross-project lessons flow to the graphify graph (L6) under `.planning/genorah/lessons/`.
 
 ## Layer 4 — Anti-patterns
 

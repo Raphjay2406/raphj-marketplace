@@ -54,7 +54,7 @@ const INTENT_MAP = [
   { rx: /\bfeedback\b/i,                                             to: "/gen:feedback" },
   { rx: /\b(migrate|upgrade\s+project)\b/i,                          to: "/gen:migrate" },
   { rx: /\b(iterate|change\s+design|redesign\s+section|adjust)\b/i,  to: "/gen:iterate" },
-  { rx: /\b(sync\s+(knowledge|vault|obsidian))\b/i,                  to: "/gen:sync-knowledge" },
+  { rx: /\b(sync\s+(knowledge|vault|graph))\b/i,                     to: "/gen:graphify" },
 ];
 
 function detectIntent(msg) {

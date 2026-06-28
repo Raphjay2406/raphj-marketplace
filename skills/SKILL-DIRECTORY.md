@@ -183,7 +183,6 @@ Utility skills are loaded **on-demand** when a specific technical need arises. T
 | `form-builder` | COMPLETE | 8 | 437 | Form UI patterns: react-hook-form, zod validation, accessible form components |
 | `i18n-rtl` | COMPLETE | 8 | 305 | Internationalization and RTL layout: locale-aware formatting, bidirectional text patterns |
 | `visual-companion-screens` | COMPLETE | 20 | — | HTML fragment templates for Visual Companion: viewport harness, DNA token overlays, Emotional Arc indicators, quality gate score panels, annotation layers |
-| `obsidian-integration` | COMPLETE | 20 | — | Obsidian vault integration and sync: vault-to-project knowledge linking, dataview query patterns, canvas layout export, plugin compatibility, sync hooks |
 
 ---
 

@@ -67,7 +67,7 @@ Stored at `.planning/genorah/review-queue/{id}.json`. Mirrors interactive-refine
 }
 ```
 
-Written to `.planning/genorah/APPROVALS.md` (Dataview-compatible frontmatter for Obsidian vault).
+Written to `.planning/genorah/APPROVALS.md` (structured frontmatter for project tracking).
 
 ### Diff mode
 
@@ -102,7 +102,7 @@ Authentication options:
 - **`/gen:iterate --from-queue`** — consumes review-queue comments same as refinement-queue (interactive-refinement shape-compatible).
 - **interactive-refinement** — sibling skill; shared comment schema.
 - **`/gen:feedback`** — existing command; pulls approval data from APPROVALS.md into DECISIONS.md.
-- **Obsidian vault** — APPROVALS.md syncs as a Dataview-queryable artifact.
+- **graphify graph** — APPROVALS.md is picked up on the next `gen:graphify` run as a queryable artifact.
 
 ## Layer 4: Anti-Patterns
 
