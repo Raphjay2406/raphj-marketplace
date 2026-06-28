@@ -1,6 +1,10 @@
 // tests/companion-render.test.mjs
 import { test } from 'node:test';
 import assert from 'node:assert';
+import { execFileSync } from 'node:child_process';
+import { writeFileSync, readFileSync, existsSync, mkdtempSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import {
   esc, TOKENS, swatchRow, fontLinkAll, typeSpecimen, heroBlock,
   mockupBlock, contrastBadges, choiceCard,
@@ -107,4 +111,50 @@ test('font link unions both option display fonts', () => {
   const html = renderScreen(SPEC);
   assert.match(html, /Lora/);
   assert.match(html, /Archivo/);
+});
+
+// Task 2 CLI spawn test — proves the Windows pathToFileURL guard actually runs
+test('CLI spawn writes screen.html to the output dir', () => {
+  const tmpDir = mkdtempSync(join(tmpdir(), 'companion-cli-'));
+  const specPath = join(tmpDir, 'spec.json');
+  const outDir = join(tmpDir, 'out');
+
+  const cliSpec = {
+    kind: 'directions',
+    title: 'CLI test',
+    options: [
+      {
+        id: 'opt1',
+        label: 'Option One',
+        blurb: 'test blurb',
+        palette: PAL,
+        fonts: { display: 'Playfair Display', body: 'Inter', mono: 'JetBrains Mono' },
+        mockup: { blocks: [{ kind: 'hero', label: 'Hero' }] },
+        hero: { gradientFrom: '#0a0a0f', gradientTo: '#6366f1' },
+      },
+    ],
+  };
+
+  writeFileSync(specPath, JSON.stringify(cliSpec));
+
+  // Resolve the CLI script path from this test file's URL (Windows-safe)
+  const scriptURL = new URL('../scripts/companion/render-screen.mjs', import.meta.url);
+  const scriptPath = scriptURL.pathname.replace(/^\/([A-Za-z]:)/, '$1');
+
+  let stdout;
+  try {
+    stdout = execFileSync(process.execPath, [scriptPath, '--spec', specPath, '--out', outDir], {
+      encoding: 'utf8',
+    });
+  } catch (err) {
+    assert.fail(`CLI exited non-zero:\n${err.stderr ?? err.message}`);
+  }
+
+  const writtenPath = join(outDir, 'screen.html');
+  assert.ok(existsSync(writtenPath), `screen.html was not created at ${writtenPath}`);
+
+  const content = readFileSync(writtenPath, 'utf8');
+  assert.ok(content.includes('data-choice='), 'HTML missing data-choice attribute');
+  assert.ok(content.includes(PAL.primary), `HTML missing primary hex ${PAL.primary}`);
+  assert.ok(stdout.trim().length > 0, 'CLI printed no path to stdout');
 });

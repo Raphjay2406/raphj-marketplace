@@ -1,6 +1,7 @@
 // scripts/companion/render-screen.mjs
 import { readFileSync, writeFileSync, mkdirSync } from 'fs';
 import { join } from 'path';
+import { pathToFileURL } from 'node:url';
 import { fontLinkAll, choiceCard, styleBlock, esc } from './components.mjs';
 
 export function renderScreen(spec) {
@@ -15,7 +16,7 @@ export function renderScreen(spec) {
 }
 
 // CLI
-if (import.meta.url === `file://${process.argv[1].replace(/\\/g, '/')}`) {
+if (import.meta.url === pathToFileURL(process.argv[1]).href) {
   const arg = (k, d) => { const i = process.argv.indexOf(k); return i >= 0 ? process.argv[i + 1] : d; };
   const specPath = arg('--spec');
   const outDir = arg('--out');
