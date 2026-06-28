@@ -38,7 +38,86 @@ version: "2.0.0"
 
 ---
 
-## Layer 2: Templates
+## Layer 2: Screen-Spec Schema and Deterministic Renderer
+
+### How to Render Selection Screens
+
+For any screen where the user must pick between options (archetype, creative directions, iterate proposals, palette), **do not hand-write HTML card templates**. Instead:
+
+1. Compose a **screen-spec** object and write it to `.planning/genorah/companion/spec.json`.
+2. Run the deterministic renderer: `node scripts/companion/render-screen.mjs --spec .planning/genorah/companion/spec.json --out .planning/genorah/companion`
+3. The renderer produces a color-accurate HTML fragment containing `[data-choice]` cards that `helper.js` in the companion server can track for selection events.
+
+### Screen-Spec JSON Schema
+
+```jsonc
+{
+  "kind": "archetype" | "directions" | "iterate" | "palette",
+  "title": "Human-readable screen title",
+  "subtitle": "One-line context or instruction",
+  "multiselect": false,          // true only when multiple picks are valid
+  "options": [
+    {
+      "id": "unique-slug",        // machine-readable; written to .events on selection
+      "label": "Option Name",     // shown in <h3> inside the card
+      "blurb": "One-sentence description shown below the label",
+      "palette": {
+        // All 12 DNA color tokens (hex strings)
+        "bg": "#0a0a0f",
+        "surface": "#141420",
+        "text": "#e8e6e3",
+        "border": "#2a2a3a",
+        "primary": "#6366f1",
+        "secondary": "#818cf8",
+        "accent": "#22d3ee",
+        "muted": "#64748b",
+        "glow": "#6366f1",
+        "tension": "#f43f5e",
+        "highlight": "#22d3ee",
+        "signature": "#6366f1"
+      },
+      "fonts": {
+        "display": "Inter",
+        "body": "Inter",
+        "mono": "JetBrains Mono"  // optional
+      },
+      "mockup": {
+        // Optional list of text blocks describing the layout for the card body
+        "blocks": [
+          { "type": "headline", "text": "Sample headline in this direction's voice" },
+          { "type": "body",     "text": "Supporting description of the layout / approach" }
+        ]
+      },
+      "hero": {
+        // One of:
+        "imagePath": "option-a-hero.png",    // relative to --out dir; use when MCP generated a PNG
+        // OR (fallback, always safe):
+        "gradientFrom": "#6366f1",           // DNA primary token
+        "gradientTo":   "#22d3ee"            // DNA accent token
+      }
+    }
+  ]
+}
+```
+
+### [data-choice] Contract
+
+The renderer wraps each option in an element with `data-choice="<id>"` and an `<h3>` containing the `label`. When `multiselect` is `true`, the root element also carries `data-multiselect="true"`. The companion's `helper.js` listens for clicks on `[data-choice]` elements and appends selection events to `.planning/genorah/companion/.events`. Agents read the result with `node scripts/companion/read-selection.mjs --events .planning/genorah/companion/.events`.
+
+### kind Values and When to Use Each
+
+| kind | Surface | hero generation |
+|------|---------|-----------------|
+| `archetype` | Archetype picker in start-project Phase 3 | No — gradient only |
+| `directions` | Creative directions in start-project + discuss | Yes — gpt-image hero per option |
+| `iterate` | Approach picker in iterate brainstorm phase | Yes — gpt-image hero per option |
+| `palette` | DNA/palette approval step in start-project | No — gradient only |
+
+---
+
+### Legacy HTML Templates (Supplemental)
+
+The hand-authored templates below remain valid for non-selection screens (arc map, build progress, score dashboard, breakpoint preview, before/after diff, diagnostic view). Do **not** use them for selection screens — use the renderer above instead.
 
 Each template below is a self-contained HTML fragment. Agents fill in the data attributes and content, then push the fragment as a companion screen.
 

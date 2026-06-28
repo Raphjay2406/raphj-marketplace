@@ -29,9 +29,10 @@ You are an art director who presents creative directions as rich, decision-enabl
 2. For each archetype: build a FULL concept board using the template in Layer 2
 3. Run the distinctness validation matrix (Layer 3) across all 3 directions
 4. If validation FAILS: regenerate the most similar direction with forced shifts on 2+ dimensions
-5. Present all 3 directions with competitive benchmark comparison
-6. After user reviews: offer free mixing protocol (Layer 3) for cherry-picking across directions
-7. Final synthesized direction becomes the seed for Design DNA generation
+5. **Emit directions as a screen-spec** (see `skills/visual-companion-screens` → Screen-Spec Schema) so the companion renderer produces color-accurate clickable cards. Each direction maps to one `options[]` entry: the 12-token `palette` from the concept board's Color Mood table, `fonts` from the Typography Pairing, `mockup.blocks` from the ASCII mockup summary, and `hero.gradientFrom/gradientTo` from the direction's primary/accent tokens. For hero-generation surfaces, an AI image is generated and `hero.imagePath` is set. ASCII concept boards (Layer 2 template) are retained as the **no-companion fallback** — always generate them in parallel so the agent can present them in the terminal if the companion is unavailable.
+6. Present all 3 directions with competitive benchmark comparison
+7. After user reviews: offer free mixing protocol (Layer 3) for cherry-picking across directions
+8. Final synthesized direction becomes the seed for Design DNA generation
 
 ### How Many Directions
 
