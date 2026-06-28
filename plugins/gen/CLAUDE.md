@@ -57,7 +57,7 @@ Figma Translator
 
 ## MCP Server Integrations
 
-Five optional MCP servers declared in `.claude-plugin/.mcp.json`:
+Four optional MCP servers declared in `.claude-plugin/.mcp.json`:
 
 | Server | Package | Purpose |
 |--------|---------|---------|
@@ -89,7 +89,7 @@ Earlier (v3.x):
 | `/gen:status` | Current pipeline state, wave progress, section statuses, next action suggestion |
 | `/gen:sync-knowledge` | Sync project knowledge into the graphify graph (run `gen:graphify` to build/recall) |
 | `/gen:companion` | Launch/interact with Visual Companion on localhost |
-| `/gen:export` | Export deliverables, design tokens, vault format, and build artifacts |
+| `/gen:export` | Export deliverables, design tokens, and build artifacts |
 | `/gen:migrate` | Migrate legacy .planning/modulo/ projects to .planning/genorah/ |
 | `/gen:feedback` | Accept client/user feedback and route into Design DNA or quality loop |
 | `/gen:design-system` | Extract/sync component registry, design tokens, Figma integration |

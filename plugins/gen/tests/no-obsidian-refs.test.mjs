@@ -55,3 +55,9 @@ test('no obsidian references anywhere in the runtime surface', async () => {
   const offenders = files.filter(f => /obsidian/i.test(readFileSync(f, 'utf8')));
   assert.deepEqual(offenders, [], `obsidian refs remain in: ${offenders.join(', ')}`);
 });
+
+test('no deleted vault config keys remain in the runtime surface', async () => {
+  const files = await globby(['commands/**/*.md', 'skills/**/*.md', '.claude-plugin/hooks/*.mjs', 'CLAUDE.md']);
+  const offenders = files.filter(f => /vault_path|vault_sync|obsidian_installed|vault\/lessons/i.test(readFileSync(f, 'utf8')));
+  assert.deepEqual(offenders, [], `deleted vault-config refs remain in: ${offenders.join(', ')}`);
+});

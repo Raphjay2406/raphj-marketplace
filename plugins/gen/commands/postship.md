@@ -44,7 +44,7 @@ Lessons include:
 - Evidence ledger refs
 - `permit_cross_project` flag (default per project setting)
 
-Write to `<vault_path>/lessons/<project-id>-<lesson-id>.md`.
+Write to `.planning/genorah/lessons/<project-id>-<lesson-id>.md` (graphify indexes it on write).
 
 ### 4. Route issues
 
