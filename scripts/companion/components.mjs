@@ -24,7 +24,7 @@ export function fontLinkAll(options) {
   }
   const uniq = [...new Set(fams)];
   if (!uniq.length) return '';
-  const q = uniq.map(f => `family=${f.replace(/\s+/g, '+')}:wght@400;600;700`).join('&');
+  const q = uniq.map(f => `family=${esc(f).replace(/\s+/g, '+')}:wght@400;600;700`).join('&');
   return `<link rel="stylesheet" href="https://fonts.googleapis.com/css2?${q}&display=swap">`;
 }
 

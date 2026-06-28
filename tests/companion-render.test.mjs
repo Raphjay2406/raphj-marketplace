@@ -55,6 +55,7 @@ test('contrastBadges reports a ratio and pass/fail', () => {
   const html = contrastBadges(PAL);
   assert.match(html, /text\/bg/);
   assert.match(html, /\d\.\d{1,2}/); // a ratio number
+  assert.match(html, /text\/bg 1[0-9]\.\d{2} AA/); // double-digit ratio with AA label
 });
 
 test('choiceCard has data-choice and an h3 with the label', () => {
