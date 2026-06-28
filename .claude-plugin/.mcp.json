@@ -75,5 +75,12 @@
     "env": { "RECRAFT_API_KEY": "${RECRAFT_API_KEY}" },
     "description": "Recraft V3 native SVG vector generation. Brand marks, favicon, OG templates with DNA-token color binding. Optional — pipeline uses HTTP adapter when MCP is absent.",
     "optional": true
+  },
+  "graphify": {
+    "type": "stdio",
+    "command": "graphify-mcp",
+    "args": ["graphify-out/graph.json"],
+    "description": "Graphify knowledge-graph MCP — query_graph, get_node, get_neighbors, shortest_path over the repo's AST + semantic graph. Optional — recall() falls back to BM25 when absent.",
+    "optional": true
   }
 }

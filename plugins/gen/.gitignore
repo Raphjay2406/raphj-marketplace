@@ -7,3 +7,4 @@ node_modules/
 .claude/genorah-dedup/
 .superpowers/
 .claude/settings.local.json
+graphify-out/
