@@ -87,11 +87,16 @@ Generate 2-3 distinct approaches. Each approach MUST include:
 
 ## Visual Companion: Approach Picker
 
-Push `approach-picker.html` to the companion server with:
-- Side-by-side approach comparison cards
-- ASCII mockup renders
-- Blast radius indicators
-- Interactive selection
+### Visual selection (companion)
+
+When presenting iteration proposals for user selection, render them as color-accurate clickable cards instead of monochrome ASCII alone:
+
+1. Build a **screen-spec** JSON (see `skills/visual-companion-screens`) with `kind:"iterate"`, `title:"Choose an Approach"`, `subtitle`, `multiselect:false`, and an `options[]` array — each option carrying `id`, `label`, `blurb`, the 12-token `palette` (from DESIGN-DNA.md), `fonts`, a `mockup.blocks` list summarising the key layout changes, and `hero` (`{gradientFrom,gradientTo}` from the DNA primary/accent tokens). Write it to `.planning/genorah/companion/spec.json`.
+2. For each approach, generate a hero with `mcp__gpt-image__generate_image` using a DNA-matched prompt (see `image-prompt-generation`); save the PNG into `.planning/genorah/companion/` and set that option's `hero.imagePath` to the file name. If the MCP is unavailable, skip — the renderer falls back to a DNA gradient.
+3. Render: `node scripts/companion/render-screen.mjs --spec .planning/genorah/companion/spec.json --out .planning/genorah/companion`
+4. Ensure the companion is running and open it: `bash ${CLAUDE_PLUGIN_ROOT}/scripts/start-server.sh --project-dir <projectDir> --open` — report the URL.
+5. Tell the user: "Pick in the browser tab (or type your choice here)."
+6. **On the next turn**, read the pick: `node scripts/companion/read-selection.mjs --events .planning/genorah/companion/.events`. If `choices` is non-empty, proceed with it; otherwise use the user's typed choice. (The terminal ASCII summary remains the fallback when the companion can't run.)
 
 Present all approaches to the user. Wait for selection.
 - If user selects an approach ("approach 2"): proceed with that approach.

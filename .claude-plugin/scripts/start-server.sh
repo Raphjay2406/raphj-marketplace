@@ -45,7 +45,7 @@ if [ -f "${SCREEN_DIR}/.server-info" ]; then
   INFO=$(cat "${SCREEN_DIR}/.server-info")
   TYPE=$(printf '%s' "$INFO" | grep -o '"type":"[^"]*"' | head -1 | sed 's/.*"type":"//;s/"//')
   if [ "$TYPE" = "server-started" ]; then
-    PID=$(printf '%s' "$INFO" | grep -o '"pid":[0-9]*' | head -1 | sed 's/"pid"://')
+    PID=$(printf '%s' "$INFO" | grep -o '"pid":[[:space:]]*[0-9]*' | head -1 | sed 's/"pid":[[:space:]]*//')
     if kill -0 "$PID" 2>/dev/null; then
       echo "$INFO"
       URL=$(printf '%s' "$INFO" | grep -o '"url":"[^"]*"' | head -1 | sed 's/.*"url":"//;s/"//')

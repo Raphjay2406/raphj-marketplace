@@ -24,7 +24,7 @@ if [ ! -f "$INFO_FILE" ]; then
 fi
 
 INFO=$(cat "$INFO_FILE")
-PID=$(printf '%s' "$INFO" | grep -o '"pid":[0-9]*' | head -1 | sed 's/"pid"://')
+PID=$(printf '%s' "$INFO" | grep -o '"pid":[[:space:]]*[0-9]*' | head -1 | sed 's/"pid":[[:space:]]*//')
 
 if [ -z "$PID" ]; then
   echo '{"type":"not-running","message":"No PID in server info"}'
