@@ -27,3 +27,9 @@ test('memory skills carry no obsidian references', async () => {
   const offenders = files.filter(f => /obsidian/i.test(readFileSync(f, 'utf8')));
   assert.deepEqual(offenders, [], `obsidian refs remain in: ${offenders.join(', ')}`);
 });
+
+test('session hooks carry no obsidian references', async () => {
+  const files = await globby(['.claude-plugin/hooks/*.mjs', '.claude-plugin/hooks/*.sh']);
+  const offenders = files.filter(f => /obsidian/i.test(readFileSync(f, 'utf8')));
+  assert.deepEqual(offenders, [], `obsidian refs remain in hooks: ${offenders.join(', ')}`);
+});
