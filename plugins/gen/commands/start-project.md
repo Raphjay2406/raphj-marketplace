@@ -338,9 +338,9 @@ TodoWrite -- mark Phase 2 complete.
 
 Push visual companion screens at key moments:
 
-1. **archetype-picker.html** -- 19 archetypes displayed as visual cards with personality summaries
-2. **palette-explorer.html** -- DNA color palettes with industry-matched suggestions
-3. **font-preview.html** -- heading/body font combinations with live previews
+1. **font-preview.html** -- heading/body font combinations with live previews
+
+Archetype selection and palette/DNA approval are handled via the renderer handshake in Steps 3c and 3d below.
 
 ### Step 2: Generate creative directions
 
@@ -355,11 +355,40 @@ Generate 2-3 creative directions, each with:
 
 ### Step 3: Direction presentation
 
-Push **creative-directions.html** -- concept boards for each direction.
-
-Present directions as visual showcases. Have a strong recommendation but show alternatives.
+Present directions as visual showcases (concept boards for each direction). Have a strong recommendation but show alternatives.
 
 Escape hatch: "If none of these feel right, tell me what to change and I'll regenerate."
+
+### Step 3b: Visual selection (companion) — creative directions
+
+Before presenting directions to the user, render them as color-accurate clickable cards in the companion:
+
+1. Build a **screen-spec** JSON (see `skills/visual-companion-screens`) with `kind:"directions"`, `title`, `subtitle`, `multiselect:false`, and an `options[]` array — each option carrying `id`, `label`, `blurb`, the 12-token `palette`, `fonts`, a `mockup.blocks` list, and `hero` (`{gradientFrom,gradientTo}` from the direction's primary/accent tokens). Write it to `.planning/genorah/companion/spec.json`.
+2. For each direction, generate a hero with `mcp__gpt-image__generate_image` using a DNA-matched prompt (see `image-prompt-generation`); save the PNG into `.planning/genorah/companion/` and set that option's `hero.imagePath` to the file name. If the MCP is unavailable, skip — the renderer falls back to a DNA gradient.
+3. Render: `node scripts/companion/render-screen.mjs --spec .planning/genorah/companion/spec.json --out .planning/genorah/companion`
+4. Ensure the companion is running and open it: `bash ${CLAUDE_PLUGIN_ROOT}/scripts/start-server.sh --project-dir <projectDir> --open` — report the URL.
+5. Tell the user: "Pick in the browser tab (or type your choice here)."
+6. **On the next turn**, read the pick: `node scripts/companion/read-selection.mjs --events .planning/genorah/companion/.events`. If `choices` is non-empty, proceed with it; otherwise use the user's typed choice. (The terminal ASCII summary remains the fallback when the companion can't run.)
+
+### Step 3c: Visual selection (companion) — archetype picker
+
+At the archetype-selection step, render archetypes as cards (no hero generation — gradient only):
+
+1. Build a **screen-spec** JSON with `kind:"archetype"`, `title:"Choose Your Design Archetype"`, `multiselect:false`, and an `options[]` array — each option carrying `id` (archetype slug), `label`, `blurb`, the archetype's 4 primary palette colors mapped to the 12-token schema, and `hero:{gradientFrom, gradientTo}` from the archetype's primary/accent colors. Write to `.planning/genorah/companion/spec.json`.
+2. Render: `node scripts/companion/render-screen.mjs --spec .planning/genorah/companion/spec.json --out .planning/genorah/companion`
+3. Ensure the companion is running and open it: `bash ${CLAUDE_PLUGIN_ROOT}/scripts/start-server.sh --project-dir <projectDir> --open` — report the URL.
+4. Tell the user: "Pick your archetype in the browser tab (or type your choice here)."
+5. **On the next turn**, read the pick: `node scripts/companion/read-selection.mjs --events .planning/genorah/companion/.events`. If `choices` is non-empty, proceed with it; otherwise use the user's typed choice. (The terminal ASCII summary remains the fallback when the companion can't run.)
+
+### Step 3d: Visual selection (companion) — palette/DNA approval
+
+At the palette/DNA approval step, render palette options as swatched cards:
+
+1. Build a **screen-spec** JSON with `kind:"palette"`, `title:"Review Your Design DNA"`, `multiselect:false`, and an `options[]` array — each option carrying the full 12-token `palette`, `fonts`, and `hero:{gradientFrom,gradientTo}`. Write to `.planning/genorah/companion/spec.json`.
+2. Render: `node scripts/companion/render-screen.mjs --spec .planning/genorah/companion/spec.json --out .planning/genorah/companion`
+3. Ensure the companion is running: `bash ${CLAUDE_PLUGIN_ROOT}/scripts/start-server.sh --project-dir <projectDir> --open`
+4. Tell the user: "Review the palette in the browser tab and confirm or type adjustments."
+5. **On the next turn**, read the pick: `node scripts/companion/read-selection.mjs --events .planning/genorah/companion/.events`. If `choices` is non-empty, proceed with it; otherwise use the user's typed choice. (The terminal ASCII summary remains the fallback when the companion can't run.)
 
 ### Step 4: User selects direction
 
