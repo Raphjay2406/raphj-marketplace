@@ -98,12 +98,6 @@ When presenting iteration proposals for user selection, render them as color-acc
 5. Tell the user: "Pick in the browser tab (or type your choice here)."
 6. **On the next turn**, read the pick: `node scripts/companion/read-selection.mjs --events .planning/genorah/companion/.events`. If `choices` is non-empty, proceed with it; otherwise use the user's typed choice. (The terminal ASCII summary remains the fallback when the companion can't run.)
 
-Push `approach-picker.html` to the companion server with:
-- Side-by-side approach comparison cards
-- ASCII mockup renders
-- Blast radius indicators
-- Interactive selection
-
 Present all approaches to the user. Wait for selection.
 - If user selects an approach ("approach 2"): proceed with that approach.
 - If user suggests a different direction: brainstorm again with new input.

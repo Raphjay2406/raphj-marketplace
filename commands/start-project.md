@@ -338,9 +338,9 @@ TodoWrite -- mark Phase 2 complete.
 
 Push visual companion screens at key moments:
 
-1. **archetype-picker.html** -- 19 archetypes displayed as visual cards with personality summaries
-2. **palette-explorer.html** -- DNA color palettes with industry-matched suggestions
-3. **font-preview.html** -- heading/body font combinations with live previews
+1. **font-preview.html** -- heading/body font combinations with live previews
+
+Archetype selection and palette/DNA approval are handled via the renderer handshake in Steps 3c and 3d below.
 
 ### Step 2: Generate creative directions
 
@@ -355,9 +355,7 @@ Generate 2-3 creative directions, each with:
 
 ### Step 3: Direction presentation
 
-Push **creative-directions.html** -- concept boards for each direction.
-
-Present directions as visual showcases. Have a strong recommendation but show alternatives.
+Present directions as visual showcases (concept boards for each direction). Have a strong recommendation but show alternatives.
 
 Escape hatch: "If none of these feel right, tell me what to change and I'll regenerate."
 

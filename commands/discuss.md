@@ -62,13 +62,6 @@ Before starting the conversation, read:
 
 Determine what creative features are relevant to this phase.
 
-## Visual Companion: Feature Proposals
-
-Push `feature-proposals.html` to the companion server with:
-- Phase name and archetype context
-- Feature proposal cards with visual mockups
-- Interactive approval/rejection toggles
-
 ## Discussion Protocol
 
 Load `skills/cross-pollination/SKILL.md` for industry pairing and constraint-breaking techniques. Load `skills/creative-direction-format/SKILL.md` for concept board structuring and ASCII mockup system.
