@@ -146,7 +146,7 @@ const server = http.createServer((req, res) => {
   } else if (p === '/api/graph') {
     streamFile(res, path.join(process.cwd(), 'graphify-out', 'graph.html'), 'text/html; charset=utf-8');
   } else if (p.startsWith('/api/graph-asset/')) {
-    const rel = decodeURIComponent(p.slice('/api/graph-asset/'.length));
+    const rel = p.slice('/api/graph-asset/'.length);
     const abs = safeGraphAsset(process.cwd(), rel);
     if (!abs) return res.writeHead(403).end('forbidden');
     const ct = abs.endsWith('.json') ? 'application/json'

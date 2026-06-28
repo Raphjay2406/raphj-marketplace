@@ -18,3 +18,12 @@ test('rejects directory traversal', () => {
 test('rejects absolute escape', () => {
   assert.equal(safeGraphAsset('/proj', '/etc/passwd'), null);
 });
+
+test('double-encoded traversal must not escape graphify-out', () => {
+  const r = safeGraphAsset('/proj', '..%252f..%252fetc/passwd');
+  assert.ok(r === null || r.includes('graphify-out'), 'double-encoded input must not escape graphify-out');
+});
+
+test('malformed percent sequence returns null', () => {
+  assert.equal(safeGraphAsset('/proj', '%GG'), null);
+});
