@@ -71,3 +71,40 @@ test('fontLinkAll unions fonts across options into one link', () => {
   assert.match(link, /Lora/);
   assert.ok(link.split('family=').length - 1 >= 3); // Playfair, Inter, JetBrains, Lora (deduped Inter)
 });
+
+// Task 2: renderScreen tests
+import { renderScreen } from '../scripts/companion/render-screen.mjs';
+
+const SPEC = {
+  kind: 'directions', title: 'Pick a direction', subtitle: 'three ways', multiselect: false,
+  options: [
+    { id: 'a', label: 'Aurora', blurb: 'x', palette: PAL, fonts: { display: 'Lora', body: 'Inter' },
+      mockup: { blocks: [{ kind: 'hero', label: 'Hi' }] }, hero: { gradientFrom: '#000', gradientTo: '#fff' } },
+    { id: 'b', label: 'Brutal', blurb: 'y', palette: PAL, fonts: { display: 'Archivo', body: 'Inter' },
+      mockup: { blocks: [{ kind: 'nav' }] }, hero: { imagePath: 'b.png' } },
+  ],
+};
+
+test('renderScreen emits a fragment (no doctype) with both cards', () => {
+  const html = renderScreen(SPEC);
+  assert.ok(!/<!DOCTYPE|<html/i.test(html), 'must be a fragment');
+  assert.match(html, /data-choice="a"/);
+  assert.match(html, /data-choice="b"/);
+  assert.match(html, /class="cards"/);
+});
+
+test('single-select container has no data-multiselect; multiselect adds it', () => {
+  assert.ok(!/data-multiselect/.test(renderScreen(SPEC)));
+  assert.match(renderScreen({ ...SPEC, multiselect: true }), /class="cards" data-multiselect/);
+});
+
+test('palette kind turns on contrast badges', () => {
+  const html = renderScreen({ ...SPEC, kind: 'palette' });
+  assert.match(html, /text\/bg/);
+});
+
+test('font link unions both option display fonts', () => {
+  const html = renderScreen(SPEC);
+  assert.match(html, /Lora/);
+  assert.match(html, /Archivo/);
+});
