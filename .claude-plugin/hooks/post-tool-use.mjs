@@ -7,7 +7,8 @@
  */
 
 import { readFileSync, appendFileSync, existsSync, mkdirSync, writeFileSync } from 'fs';
-import { join } from 'path';
+import { dirname, join, resolve } from 'path';
+import { fileURLToPath } from 'url';
 
 // Hoisted error-log helper: ensures .claude/ exists once, reused from both
 // the normal flow and fatal-catch. Swallows its own errors (never crashes hook).
@@ -27,6 +28,8 @@ try {
   // Resolve the project working directory (cwd of the process)
   const cwd = process.cwd();
   const planningDir = join(cwd, '.planning', 'genorah');
+  // repoRoot: hooks/ -> .claude-plugin/ -> repo root (where scripts/ lives)
+  const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..');
 
   // Gate: only track if .planning/genorah/ exists
   if (!existsSync(planningDir)) {
@@ -66,10 +69,11 @@ try {
 
   // v3.5.4 — curated ledger emissions
   // Pattern-match Write/Edit targets against canonical kind taxonomy and emit ledger line.
+  // kind/subject hoisted so the graphify checkpoint block (below) can read kind.
+  let kind = null;
+  let subject = null;
   try {
     const journalFile = join(planningDir, 'journal.ndjson');
-    let kind = null;
-    let subject = null;
     if (tool_name === 'Write' || tool_name === 'Edit') {
       if (/decisions\.json$/.test(target)) { kind = 'decision-made'; subject = 'decisions.json'; }
       else if (/sections\/.+\/SUMMARY\.md$/.test(target)) { kind = 'section-shipped'; subject = target.match(/sections\/([^/]+)/)?.[1] || target; }
@@ -92,6 +96,29 @@ try {
     }
   } catch (err) {
     logHookError(cwd, `ledger emit failed: ${err.message}`);
+  }
+
+  // v4.3 — graphify checkpoint: debounced background graph update
+  try {
+    if (kind) {
+      const { isCheckpoint, shouldUpdate } = await import(`file://${join(repoRoot, 'scripts/graphify/checkpoint.mjs')}`);
+      // repoRoot resolution mirrors pre-tool-use.mjs: dirname(fileURLToPath(import.meta.url)) -> .. -> repo root
+      if (isCheckpoint({ kind })) {
+        const stampFile = join(planningDir, '.graphify-stamp');
+        let lastStampMs = null;
+        try { lastStampMs = Number(readFileSync(stampFile, 'utf8')) || null; } catch { /* none */ }
+        if (shouldUpdate({ now: Date.now(), lastStampMs })) {
+          writeFileSync(stampFile, String(Date.now()));
+          const { spawn } = await import('node:child_process');
+          // detached, non-blocking, swallow all output; never await
+          const child = spawn('graphify', ['update', '.'], { cwd, detached: true, stdio: 'ignore' });
+          child.on('error', () => {}); // graphify not installed → ignore
+          child.unref();
+        }
+      }
+    }
+  } catch (err) {
+    logHookError(cwd, `graphify checkpoint failed: ${err.message}`);
   }
 
   process.stdout.write('{}');
