@@ -40,6 +40,7 @@ If 4455 is busy, fall through 4456, 4457 ... up to 4465. Record chosen port in `
 7. **Decision tail** — last 10 entries from `DECISIONS.md`.
 8. **Context pane** — current CONTEXT.md rendered.
 9. **Quick actions** — re-run audit, regen section, view graph (`gen:graphify status`). Action buttons write to `.planning/genorah/.action-queue/` which user-prompt hook detects to suggest the matching `/gen:*` command on next prompt.
+10. **Knowledge graph panel** — embeds graphify's interactive `graph.html` with a node/edge/freshness summary; prompts `gen:graphify scan` when no graph exists.
 
 ## Auto-refresh
 
