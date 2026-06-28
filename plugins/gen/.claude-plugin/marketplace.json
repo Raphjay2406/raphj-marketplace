@@ -11,8 +11,8 @@
     {
       "name": "gen",
       "source": "./plugins/gen",
-      "description": "Genorah v4.2.0 — Visual Selection. Deterministic companion renderer turns screen-specs into color-accurate clickable HTML cards with real DNA hex swatches, real fonts, colored mockups, and WCAG contrast badges. Four surfaces: creative directions, iterate proposals, archetype pick, palette/DNA. Per-option hero images via gpt-image with DNA-gradient fallback. Selection round-trip: clicks recorded to .events, read-selection.mjs resolves pick for next turn. 108-agent A2A-protocol pipeline (10 directors + 98 workers), 42 archetypes, 394-pt two-axis quality gate, 10 MCP integrations. From discovery to ship in measurably enforced quality.",
-      "version": "4.2.0",
+      "description": "Genorah v4.3.0 — Knowledge Graph. Deterministic companion renderer turns screen-specs into color-accurate clickable HTML cards with real DNA hex swatches, real fonts, colored mockups, and WCAG contrast badges. Four surfaces: creative directions, iterate proposals, archetype pick, palette/DNA. Per-option hero images via gpt-image with DNA-gradient fallback. Selection round-trip: clicks recorded to .events, read-selection.mjs resolves pick for next turn. 108-agent A2A-protocol pipeline (10 directors + 98 workers), 42 archetypes, 394-pt two-axis quality gate, 10 MCP integrations. From discovery to ship in measurably enforced quality.",
+      "version": "4.3.0",
       "author": {
         "name": "raphj"
       },
