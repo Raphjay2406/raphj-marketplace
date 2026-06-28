@@ -16,12 +16,14 @@
 import http from 'http';
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
+import { fileURLToPath, pathToFileURL } from 'url';
 import { graphSummary } from '../../scripts/graphify/graph-summary.mjs';
 import { safeGraphAsset } from '../../scripts/graphify/graph-path.mjs';
+import { readVerdict } from '../../scripts/verify/verdict.mjs';
+import { parseProjectMeta, computeHotspots, listAuditShots } from '../../scripts/dashboard/signals.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const ROOT = path.join(process.cwd(), '.planning', 'genorah');
+const root = () => path.join(process.cwd(), '.planning', 'genorah');
 const PORT_RANGE = [4455, 4456, 4457, 4458, 4459, 4460, 4461, 4462, 4463, 4464, 4465];
 const clients = new Set();
 
@@ -40,8 +42,8 @@ function parseDnaTokens(dnaMd) {
   return tokens;
 }
 
-function scanSections() {
-  const secDir = path.join(ROOT, 'sections');
+export function scanSections() {
+  const secDir = path.join(root(), 'sections');
   return safeReaddir(secDir).map(name => {
     const dir = path.join(secDir, name);
     if (!fs.statSync(dir).isDirectory()) return null;
@@ -51,21 +53,31 @@ function scanSections() {
     const tier = (summary.match(/Tier:\s*([A-Za-z-]+)/i) || [])[1];
     const status = (summary.match(/Status:\s*([A-Za-z]+)/i) || [])[1] || 'pending';
     const beat = (plan.match(/beat:\s*(\w+)/i) || [])[1];
-    return { name, score: score ? +score : null, tier, status, beat };
+    const v = readVerdict(dir);
+    const verdict = v ? {
+      floorPass: v.floor?.pass ?? null,
+      failures: v.floor?.failures ?? [],
+      ceiling: v.ceiling?.score ?? null,
+    } : null;
+    return { name, score: score ? +score : null, tier, status, beat, verdict };
   }).filter(Boolean);
 }
 
-function snapshot() {
+export function snapshot() {
+  const sections = scanSections();
   return {
     ts: new Date().toISOString(),
-    project: safeRead(path.join(ROOT, 'PROJECT.md')),
-    dna_tokens: parseDnaTokens(safeRead(path.join(ROOT, 'DESIGN-DNA.md'))),
-    master_plan: safeRead(path.join(ROOT, 'MASTER-PLAN.md')),
-    context: safeRead(path.join(ROOT, 'CONTEXT.md')),
-    state: safeRead(path.join(ROOT, 'STATE.md')),
-    sections: scanSections(),
-    decisions_tail: safeRead(path.join(ROOT, 'DECISIONS.md')).split('\n').slice(-40).join('\n'),
-    action_queue: safeReaddir(path.join(ROOT, '.action-queue')),
+    project: safeRead(path.join(root(), 'PROJECT.md')),
+    project_meta: parseProjectMeta(safeRead(path.join(root(), 'PROJECT.md')), safeRead(path.join(root(), 'DESIGN-DNA.md'))),
+    dna_tokens: parseDnaTokens(safeRead(path.join(root(), 'DESIGN-DNA.md'))),
+    master_plan: safeRead(path.join(root(), 'MASTER-PLAN.md')),
+    context: safeRead(path.join(root(), 'CONTEXT.md')),
+    state: safeRead(path.join(root(), 'STATE.md')),
+    sections,
+    hotspots: computeHotspots(sections),
+    screenshots: listAuditShots(safeReaddir(path.join(root(), 'audit'))),
+    decisions_tail: safeRead(path.join(root(), 'DECISIONS.md')).split('\n').slice(-40).join('\n'),
+    action_queue: safeReaddir(path.join(root(), '.action-queue')),
     graph: graphSummary(process.cwd()),
   };
 }
@@ -109,7 +121,7 @@ function handleAction(req, res, cmd) {
   req.on('data', c => body += c);
   req.on('end', () => {
     try {
-      const queueDir = path.join(ROOT, '.action-queue');
+      const queueDir = path.join(root(), '.action-queue');
       fs.mkdirSync(queueDir, { recursive: true });
       const ts = new Date().toISOString().replace(/[:.]/g, '-');
       fs.writeFileSync(path.join(queueDir, `${ts}-${cmd}.json`), body || '{}');
@@ -140,8 +152,8 @@ const server = http.createServer((req, res) => {
     req.on('close', () => clients.delete(res));
   } else if (p.startsWith('/api/screenshot/')) {
     const rel = p.slice('/api/screenshot/'.length);
-    const abs = path.join(ROOT, 'audit', rel);
-    if (!abs.startsWith(path.join(ROOT, 'audit'))) return res.writeHead(403).end();
+    const abs = path.join(root(), 'audit', rel);
+    if (!abs.startsWith(path.join(root(), 'audit'))) return res.writeHead(403).end();
     streamFile(res, abs, 'image/png');
   } else if (p === '/api/graph') {
     streamFile(res, path.join(process.cwd(), 'graphify-out', 'graph.html'), 'text/html; charset=utf-8');
@@ -165,7 +177,7 @@ const server = http.createServer((req, res) => {
 const onChange = debounce(broadcast, 250);
 let watchWorking = false;
 try {
-  fs.watch(ROOT, { recursive: true }, onChange);
+  fs.watch(root(), { recursive: true }, onChange);
   watchWorking = true;
 } catch {
   // recursive watch unsupported — pure polling fallback below
@@ -186,16 +198,18 @@ function listen(idx = 0) {
   server.listen(port, () => {
     const info = { port, pid: process.pid, started_at: new Date().toISOString() };
     try {
-      fs.mkdirSync(ROOT, { recursive: true });
-      fs.writeFileSync(path.join(ROOT, '.dashboard-info'), JSON.stringify(info, null, 2));
+      fs.mkdirSync(root(), { recursive: true });
+      fs.writeFileSync(path.join(root(), '.dashboard-info'), JSON.stringify(info, null, 2));
     } catch {}
     console.log(`Genorah dashboard → http://localhost:${port}`);
   });
 }
 
-listen();
+if (import.meta.url === pathToFileURL(process.argv[1] ?? '').href) {
+  listen();
+}
 
 process.on('SIGINT', () => {
-  try { fs.unlinkSync(path.join(ROOT, '.dashboard-info')); } catch {}
+  try { fs.unlinkSync(path.join(root(), '.dashboard-info')); } catch {}
   process.exit(0);
 });

@@ -41,14 +41,30 @@
   .queued-banner { background: var(--warn); color: var(--bg); padding: 12px; border-radius: 8px; margin-bottom: 16px; font-weight: 600; }
   #graph-frame { width: 100%; height: 420px; border: none; border-radius: 8px; background: var(--bg); margin-top: 12px; }
   #graph-summary code { background: var(--bg); padding: 2px 6px; border-radius: 4px; font-size: 12px; }
+  .verdict { display:flex; align-items:center; gap:6px; margin-top:8px; flex-wrap:wrap; }
+  .badge { font-size:10px; font-weight:700; padding:2px 8px; border-radius:999px; letter-spacing:.06em; }
+  .badge.pass { background:color-mix(in srgb, var(--ok) 18%, transparent); color:var(--ok); }
+  .badge.fail { background:color-mix(in srgb, var(--fail) 18%, transparent); color:var(--fail); }
+  .badge.none { background:var(--bg); color:var(--muted); }
+  .chk { font-size:10px; color:var(--fail); border:1px solid var(--fail); border-radius:4px; padding:1px 5px; }
+  .ceil { font-size:11px; color:var(--muted); margin-left:auto; }
+  .hot-row { display:flex; align-items:center; gap:8px; margin:6px 0; font-size:12px; }
+  .hot-bar { height:10px; background:var(--fail); border-radius:3px; min-width:2px; }
+  .hot-name { width:110px; color:var(--text); }
+  .hot-count { color:var(--muted); }
+  .shots-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(180px,1fr)); gap:12px; }
+  .shot { border:1px solid var(--border); border-radius:8px; overflow:hidden; background:var(--bg); }
+  .shot img { width:100%; display:block; }
+  .shot .lbl { font-size:10px; color:var(--muted); padding:6px 8px; text-transform:uppercase; letter-spacing:.08em; }
 </style>
 </head>
 <body>
 <div class="container">
   <header>
     <div>
-      <h1><span class="status-dot"></span>Genorah Dashboard</h1>
-      <p style="font-size: 12px; color: var(--muted); margin-top: 4px;" id="ts">—</p>
+      <h1><span class="status-dot"></span><span id="proj-name">Genorah Dashboard</span></h1>
+      <p style="font-size:12px;color:var(--muted);margin-top:4px;" id="proj-sub">—</p>
+      <p style="font-size:12px; color: var(--muted); margin-top: 4px;" id="ts">—</p>
     </div>
     <div class="dna-chips" id="dna-chips"></div>
   </header>
@@ -63,6 +79,16 @@
   <section>
     <h2>Sections</h2>
     <div class="sections-grid" id="sections"></div>
+  </section>
+
+  <section>
+    <h2>Gate Hotspots</h2>
+    <div id="hotspots"></div>
+  </section>
+
+  <section>
+    <h2>Visual QA — latest capture</h2>
+    <div class="shots-grid" id="shots"></div>
   </section>
 
   <section>
@@ -94,6 +120,10 @@
 
 <script>
 function render(state) {
+  const meta = state.project_meta || {};
+  document.getElementById('proj-name').textContent = meta.name || 'Genorah Dashboard';
+  document.getElementById('proj-sub').textContent =
+    [meta.archetype, meta.goal].filter(Boolean).join(' · ') || '—';
   document.getElementById('ts').textContent = 'last update: ' + state.ts;
 
   // DNA chips
@@ -145,7 +175,66 @@ function render(state) {
       card.appendChild(makeDiv('name', s.name));
       card.appendChild(makeDiv(`score ${scoreClass}`.trim(), String(score)));
       card.appendChild(makeDiv('tier', s.tier || s.status || 'pending'));
+      const v = s.verdict;
+      const vr = document.createElement('div');
+      vr.className = 'verdict';
+      const badge = document.createElement('span');
+      if (!v) { badge.className = 'badge none'; badge.textContent = 'not verified'; }
+      else if (v.floorPass) { badge.className = 'badge pass'; badge.textContent = 'FLOOR PASS'; }
+      else { badge.className = 'badge fail'; badge.textContent = 'FLOOR FAIL'; }
+      vr.appendChild(badge);
+      if (v && v.floorPass === false) {
+        for (const f of (v.failures || [])) {
+          const chip = document.createElement('span');
+          chip.className = 'chk'; chip.textContent = f.check;
+          vr.appendChild(chip);
+        }
+      }
+      if (v && v.ceiling != null) {
+        const ceil = document.createElement('span');
+        ceil.className = 'ceil'; ceil.textContent = 'ceiling ' + v.ceiling;
+        vr.appendChild(ceil);
+      }
+      card.appendChild(vr);
       sec.appendChild(card);
+    }
+  }
+
+  // Gate Hotspots
+  const hot = document.getElementById('hotspots');
+  hot.replaceChildren();
+  const hotspots = state.hotspots || [];
+  if (!hotspots.length) {
+    const e = document.createElement('div'); e.className = 'empty';
+    e.textContent = 'no failures — floor clean'; hot.appendChild(e);
+  } else {
+    const max = Math.max(...hotspots.map(h => h.count));
+    for (const h of hotspots) {
+      const row = document.createElement('div'); row.className = 'hot-row';
+      const name = document.createElement('span'); name.className = 'hot-name'; name.textContent = h.check;
+      const bar = document.createElement('div'); bar.className = 'hot-bar';
+      bar.style.width = Math.round((h.count / max) * 180) + 'px';
+      const cnt = document.createElement('span'); cnt.className = 'hot-count'; cnt.textContent = h.count;
+      row.append(name, bar, cnt); hot.appendChild(row);
+    }
+  }
+
+  // Screenshot grid
+  const shots = document.getElementById('shots');
+  shots.replaceChildren();
+  const screenshots = state.screenshots || [];
+  if (!screenshots.length) {
+    const e = document.createElement('div'); e.className = 'empty';
+    e.textContent = 'no captures yet — run /gen:audit'; shots.appendChild(e);
+  } else {
+    for (const sh of screenshots) {
+      const cell = document.createElement('div'); cell.className = 'shot';
+      const img = document.createElement('img');
+      img.loading = 'lazy'; img.alt = sh.label;
+      img.src = '/api/screenshot/' + encodeURIComponent(sh.file);
+      const lbl = document.createElement('div'); lbl.className = 'lbl';
+      lbl.textContent = sh.label + ' · ' + sh.width + 'px';
+      cell.append(img, lbl); shots.appendChild(cell);
     }
   }
 
