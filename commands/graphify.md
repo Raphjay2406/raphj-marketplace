@@ -6,7 +6,7 @@ allowed-tools: Read, Bash
 
 # /gen:graphify
 
-Always-on repo understanding + memory recall backed by graphify. Replaces the Obsidian knowledge surface; falls back to the BM25 semantic-index when graphify isn't installed.
+Always-on repo understanding + memory recall backed by graphify. Replaces the legacy knowledge-vault surface; falls back to the BM25 semantic-index when graphify isn't installed.
 
 ## Usage
 

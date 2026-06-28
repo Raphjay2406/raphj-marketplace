@@ -33,3 +33,15 @@ test('session hooks carry no obsidian references', async () => {
   const offenders = files.filter(f => /obsidian/i.test(readFileSync(f, 'utf8')));
   assert.deepEqual(offenders, [], `obsidian refs remain in hooks: ${offenders.join(', ')}`);
 });
+
+test('commands carry no obsidian references', async () => {
+  const files = await globby(['commands/**/*.md']);
+  const offenders = files.filter(f => /obsidian/i.test(readFileSync(f, 'utf8')));
+  assert.deepEqual(offenders, [], `obsidian refs remain in commands: ${offenders.join(', ')}`);
+});
+
+test('sync-knowledge documents graphify sync', () => {
+  const t = readFileSync('commands/sync-knowledge.md', 'utf8');
+  assert.match(t, /graphify/i);
+  assert.match(t, /merge-graphs|gen:graphify/);
+});
