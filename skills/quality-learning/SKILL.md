@@ -1,6 +1,6 @@
 ---
 name: quality-learning
-description: "Self-improving quality loop: accumulate project scores in Obsidian Knowledge Base, query empirical patterns during research phase, recommend proven techniques based on archetype/industry history. Turns the plugin from rule-based to empirically-improving."
+description: "Self-improving quality loop: accumulate project scores in the graphify Knowledge Base, query empirical patterns during research phase, recommend proven techniques based on archetype/industry history. Turns the plugin from rule-based to empirically-improving."
 tier: utility
 triggers: "quality learning, empirical, past projects, patterns, history, what worked, score history, archetype performance"
 version: "2.8.1"
@@ -25,7 +25,7 @@ Rule-based systems plateau. A plugin that remembers which techniques actually sc
 
 ## Layer 2 — Quality Accumulation Protocol
 
-After each project audit (via `/gen:audit`) or project completion, export the following to the Obsidian Knowledge Base at `Knowledge/project-history/{project-slug}.md`:
+After each project audit (via `/gen:audit`) or project completion, export the following to the graphify Knowledge Base at `.planning/genorah/quality-history/{project-slug}.md`:
 
 ```markdown
 # Project: [name] — [YYYY-MM-DD]
@@ -82,10 +82,11 @@ After each project audit (via `/gen:audit`) or project completion, export the fo
 ### Export Rules
 
 - Run export automatically at the end of every `/gen:audit` that produces a final score.
-- If the Knowledge Base path does not exist, create it.
+- If `.planning/genorah/quality-history/` does not exist, create it.
 - Use the project slug (lowercase, hyphenated) as the filename.
 - If a file already exists for this project, append the date to create a version history: `{slug}-{YYYY-MM-DD}.md`.
 - Never overwrite a previous export — history is the point.
+- graphify indexes each exported file automatically; query via `recall()` or `gen:graphify query --type quality-history`.
 
 ---
 
@@ -95,7 +96,7 @@ When `/gen:start-project` runs the Researcher agent, execute the following query
 
 ### Step 1 — Gather History
 
-1. Read `Knowledge/project-history/` for all past project files.
+1. Read `.planning/genorah/quality-history/` for all past project files, or query the graphify graph for nodes of type `"quality-history"`.
 2. Parse each file to extract: archetype, industry, framework, final score, per-category scores, techniques, penalties, font pairings, and lessons.
 
 ### Step 2 — Filter by Relevance
@@ -165,7 +166,7 @@ When `/gen:start-project` runs the Researcher agent, execute the following query
 
 - **quality-gate-v2** — provides the scoring system that this skill accumulates
 - **design-archetypes** — archetype labels used for filtering and grouping
-- **obsidian-integration** — the Knowledge Base where project history is stored
+- **sqlite-vec-memory-graph** — the graphify graph where project history is indexed and recalled
 - **typography** — font pairing performance data feeds back into font selection
 - **color-system** — color technique performance influences palette recommendations
 

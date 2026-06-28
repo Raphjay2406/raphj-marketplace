@@ -2,6 +2,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert';
 import { readFileSync } from 'node:fs';
+import { globby } from 'globby';
+import { existsSync } from 'node:fs';
 
 test('.mcp.json declares no obsidian servers', () => {
   const mcp = JSON.parse(readFileSync('.claude-plugin/.mcp.json', 'utf8'));
@@ -9,4 +11,19 @@ test('.mcp.json declares no obsidian servers', () => {
   assert.ok(!('obsidian-fs' in mcp), 'obsidian-fs entry must be removed');
   // the other servers survive
   assert.ok('gpt-image' in mcp && 'graphify' in mcp, 'non-obsidian servers must remain');
+});
+
+test('obsidian-integration skill is deleted', () => {
+  assert.equal(existsSync('skills/obsidian-integration/SKILL.md'), false);
+});
+
+test('memory skills carry no obsidian references', async () => {
+  const files = await globby([
+    'skills/cross-project-kb/SKILL.md',
+    'skills/sqlite-vec-memory-graph/SKILL.md',
+    'skills/context-fabric-ledger/SKILL.md',
+    'skills/quality-learning/SKILL.md',
+  ]);
+  const offenders = files.filter(f => /obsidian/i.test(readFileSync(f, 'utf8')));
+  assert.deepEqual(offenders, [], `obsidian refs remain in: ${offenders.join(', ')}`);
 });
