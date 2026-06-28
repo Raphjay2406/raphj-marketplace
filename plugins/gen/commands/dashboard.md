@@ -31,12 +31,12 @@ If 4455 is busy, fall through 4456, 4457 ... up to 4465. Record chosen port in `
 
 ## What the dashboard shows
 
-1. **Project header** — archetype, DNA palette swatches (12 chips), tech stack, framework badge.
+1. **Project header** — real project name, archetype, and goal from `project_meta`; DNA palette swatches (12 chips).
 2. **Wave strip** — pill per wave, color encodes status (pending/building/qa/done/failed).
 3. **Sections grid** — card per section: beat icon, current status, latest score.
-4. **Score trend** — SVG sparkline per category × 12 showing iteration deltas.
-5. **Gate failure hotspots** — horizontal bar chart, top failing categories across project.
-6. **Screenshot grid** — section × 4 breakpoints, IntersectionObserver lazy load.
+4. **Section verdicts** — each section card shows its Verification Spine FLOOR pass/fail, the failing checks as chips, and the advisory Ceiling score.
+5. **Gate Hotspots** — which floor checks fail most across sections, rendered as a horizontal bar chart.
+6. **Visual QA** — the latest 4-breakpoint screenshot capture from `audit/`, served via `/api/screenshot/`.
 7. **Decision tail** — last 10 entries from `DECISIONS.md`.
 8. **Context pane** — current CONTEXT.md rendered.
 9. **Quick actions** — re-run audit, regen section, view graph (`gen:graphify status`). Action buttons write to `.planning/genorah/.action-queue/` which user-prompt hook detects to suggest the matching `/gen:*` command on next prompt.
