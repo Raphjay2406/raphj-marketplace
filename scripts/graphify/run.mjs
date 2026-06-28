@@ -3,7 +3,7 @@ import { pathToFileURL } from 'node:url';
 import { planCommand } from './plan-command.mjs';
 import { graphifyAvailable, graphExists, graphAgeMs } from './capability.mjs';
 
-export function main(argv) {
+export async function main(argv) {
   const sub = argv[2];
   const args = argv.slice(3);
   const caps = { available: graphifyAvailable(), graphExists: graphExists(), ageMs: graphAgeMs() };
@@ -13,6 +13,15 @@ export function main(argv) {
   if (plan.message) process.stdout.write(plan.message + '\n');
   const [cmd, cargs] = plan.exec;
   execFileSync(cmd, cargs, { stdio: 'inherit' });
+  if (sub === 'install') {
+    try {
+      const { resetCapabilityCache, graphifyAvailable } = await import('./capability.mjs');
+      resetCapabilityCache();
+      if (graphifyAvailable()) execFileSync('graphify', ['update', '.'], { stdio: 'inherit' });
+    } catch {
+      process.stdout.write('graphify installed; run `gen:graphify scan` to build the graph.\n');
+    }
+  }
 }
 
 if (import.meta.url === pathToFileURL(process.argv[1]).href) main(process.argv);
