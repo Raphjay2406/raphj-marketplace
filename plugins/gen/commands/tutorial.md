@@ -105,8 +105,8 @@ Display sample scorecard. Explain 4 tiers (build/runtime/pipeline/metadata) and 
 ### Stage 9 — postship + learnings (3 min)
 
 Explain:
-- Post-ship learning capture routes 3 lessons to Obsidian vault
-- Cross-project KB means Project B benefits from Project A's wins
+- Post-ship learning capture routes 3 lessons into the graphify knowledge graph (`gen:graphify`)
+- Cross-project KB means Project B benefits from Project A's wins; use `/gen:sync-knowledge` to merge graphs
 - `/gen:recalibrate` quarterly refreshes thresholds
 
 ### Stage 10 — next steps

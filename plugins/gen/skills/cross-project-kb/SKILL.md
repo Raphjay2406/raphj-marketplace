@@ -1,14 +1,14 @@
 ---
 name: cross-project-kb
-description: L6 of Context Fabric — Obsidian vault enrichment with lessons extracted at project completion. Per-archetype patterns, technique discoveries, conversion wins, failure modes. Session-end prompts extract 3 lessons per ship; cross-project retrieval on /gen:start-project.
+description: L6 of Context Fabric — graphify/ledger-backed lessons extracted at project completion. Per-archetype patterns, technique discoveries, conversion wins, failure modes. Session-end prompts extract 3 lessons per ship; cross-project retrieval on /gen:start-project.
 tier: core
-triggers: cross-project-kb, context-fabric-l6, obsidian, lessons, patterns, session-end
-version: 0.1.0-provisional
+triggers: cross-project-kb, context-fabric-l6, lessons, patterns, session-end, graphify
+version: 0.2.0
 ---
 
 # Cross-Project Knowledge Base (L6)
 
-Lessons from Project A reach Project B. The Obsidian vault at `vault_path` (config key in `.claude/genorah.local.md`) becomes long-term memory — not ephemeral per-project state, but accumulated design + technique wisdom.
+Lessons from Project A reach Project B. Lessons are markdown files under `.planning/genorah/lessons/`, indexed by graphify and queryable via `recall()` / `gen:graphify query` — this is long-term memory, not ephemeral per-project state.
 
 ## Layer 1 — When to use
 
@@ -19,7 +19,7 @@ Lessons from Project A reach Project B. The Obsidian vault at `vault_path` (conf
 
 ## Layer 2 — Lesson schema
 
-Obsidian note `lessons/<project-id>-<lesson-id>.md`:
+Lesson file `.planning/genorah/lessons/<project-id>-<lesson-id>.md`:
 
 ```yaml
 ---
@@ -68,7 +68,8 @@ If project shipped and user approved capture:
     1. What worked (technique discovery)
     2. What failed (anti-pattern confirmed)
     3. Novel observation (archetype insight, audience signal, etc.)"
-  Accept structured input; write 3 .md files to vault/lessons/
+  Accept structured input; write 3 .md files to .planning/genorah/lessons/
+  graphify indexes each file automatically on write
   Ledger: { kind: "lesson-captured", subject: lesson_id, payload: {...} }
 ```
 
@@ -81,7 +82,8 @@ Default `permit_cross_project: false` for client work; toggle via `.claude/genor
 When archetype chosen:
 
 ```
-1. Query vault/lessons/ for notes with archetype matching (or cross-archetype tagged).
+1. Query graphify for lesson nodes with archetype matching (or cross-archetype tagged):
+     gen:graphify query --type lesson --filter archetype=editorial
 2. Filter: permit_cross_project == true.
 3. Surface top 3 as "prior art from your previous work:"
 4. User can dismiss or deep-read before proceeding.
@@ -89,11 +91,13 @@ When archetype chosen:
 
 ### Ad-hoc search
 
-`/gen:research query` supports vault search:
+`/gen:research query` supports graph search:
 
 ```
 /gen:research query --source kb "what works for Editorial PEAK?"
 ```
+
+Internally calls `recall("Editorial PEAK techniques")` against the graphify index.
 
 ## Layer 5 — Privacy
 

@@ -99,7 +99,7 @@ Prereq: AUDIT-REPORT.md score ≥ 200
 Alternatives:
   - /gen:iterate — optional final polish on remaining gap categories
   - /gen:benchmark — score against curated SOTD library for competitive positioning
-  - /gen:sync-knowledge — push project learnings to Obsidian KB
+  - /gen:sync-knowledge — refresh the graphify knowledge graph
 ```
 
 ## Notes

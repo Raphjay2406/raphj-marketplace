@@ -82,7 +82,7 @@ await graph.upsertEdge({
 ### Reference Sites
 
 - **sqlite-vec docs** (alexgarcia.xyz/sqlite-vec) — cosine distance, vector column syntax, VACUUM strategy
-- **Obsidian Dataview** (blacksmithgu.github.io/obsidian-dataview) — graph query inspiration for node/edge mental model
+- **graphify graph** — node/edge mental model; knowledge surface queryable via `recall()` / `gen:graphify query`
 
 ## Layer 3: Integration Context
 
