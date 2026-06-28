@@ -17,6 +17,8 @@ import http from 'http';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { graphSummary } from '../../scripts/graphify/graph-summary.mjs';
+import { safeGraphAsset } from '../../scripts/graphify/graph-path.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(process.cwd(), '.planning', 'genorah');
@@ -64,6 +66,7 @@ function snapshot() {
     sections: scanSections(),
     decisions_tail: safeRead(path.join(ROOT, 'DECISIONS.md')).split('\n').slice(-40).join('\n'),
     action_queue: safeReaddir(path.join(ROOT, '.action-queue')),
+    graph: graphSummary(process.cwd()),
   };
 }
 
@@ -140,6 +143,16 @@ const server = http.createServer((req, res) => {
     const abs = path.join(ROOT, 'audit', rel);
     if (!abs.startsWith(path.join(ROOT, 'audit'))) return res.writeHead(403).end();
     streamFile(res, abs, 'image/png');
+  } else if (p === '/api/graph') {
+    streamFile(res, path.join(process.cwd(), 'graphify-out', 'graph.html'), 'text/html; charset=utf-8');
+  } else if (p.startsWith('/api/graph-asset/')) {
+    const rel = decodeURIComponent(p.slice('/api/graph-asset/'.length));
+    const abs = safeGraphAsset(process.cwd(), rel);
+    if (!abs) return res.writeHead(403).end('forbidden');
+    const ct = abs.endsWith('.json') ? 'application/json'
+      : abs.endsWith('.js') ? 'application/javascript'
+      : abs.endsWith('.css') ? 'text/css' : 'application/octet-stream';
+    streamFile(res, abs, ct);
   } else if (p.startsWith('/api/action/') && req.method === 'POST') {
     const cmd = p.slice('/api/action/'.length).replace(/[^a-z0-9-]/gi, '');
     handleAction(req, res, cmd);
