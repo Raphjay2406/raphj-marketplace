@@ -347,7 +347,7 @@ section. If resume fails, check `.planning/genorah/wave-state.json` for corrupti
 
 ### MCP servers unavailable
 
-All MCP integrations degrade gracefully. Check `.claude-plugin/.mcp.json` for declarations.
+All MCP integrations degrade gracefully. Check the plugin-root `.mcp.json` for declarations.
 Verify with `/gen:status` — the MCP availability summary appears in session-start output.
 
 ### Memory graph queries slow

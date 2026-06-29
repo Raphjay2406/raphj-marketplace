@@ -14,7 +14,9 @@ const ROOT = process.cwd();
 const MIRROR = join(ROOT, 'plugins/gen');
 
 const DIRS_TO_SYNC = ['commands', 'agents', 'skills', '.claude-plugin', 'scripts', 'tests', 'docs', '.github', 'mcp-servers'];
-const FILES_TO_SYNC = ['CLAUDE.md', 'README.md', 'package.json', 'LICENSE', '.gitignore'];
+// .mcp.json MUST be a plugin-ROOT file: Claude Code's plugin loader only reads <plugin>/.mcp.json,
+// never .claude-plugin/.mcp.json — so it is mirrored as a root file, not inside a synced dir.
+const FILES_TO_SYNC = ['CLAUDE.md', 'README.md', 'package.json', 'LICENSE', '.gitignore', '.mcp.json'];
 const SKIP_NAMES = new Set(['_skill-template', '.planning', '.DS_Store', 'node_modules']);
 
 function* walk(dir) {

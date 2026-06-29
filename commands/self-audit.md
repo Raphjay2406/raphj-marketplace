@@ -30,7 +30,7 @@ Read in parallel:
 - `Glob agents/**/*.md` — actual agent count
 - `Glob skills/*/SKILL.md` — actual skill count (excluding `_skill-template`)
 - `.claude-plugin/hooks/` — hook file list
-- `.claude-plugin/.mcp.json` — MCP server declarations
+- `.mcp.json` (plugin root) — MCP server declarations
 
 ### 3. Run validation checks
 

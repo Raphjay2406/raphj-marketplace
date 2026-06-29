@@ -117,16 +117,12 @@ try {
   }
 
   // --- MCP Server Availability Summary ---
-  // Note: We can't directly ping MCP servers from a hook (they're managed by Claude Code runtime).
-  // Instead, we report which MCP servers are DECLARED in .mcp.json so the agent knows what's available.
-  const mcpConfigFile = join(cwd, '.claude-plugin', '.mcp.json');
-  if (!mcpConfigFile) {
-    // Check parent directory for plugin root
-  }
-  // Try to find .mcp.json in the plugin installation
+  // We can't ping MCP servers from a hook (Claude Code manages them at runtime), so we report
+  // which servers are DECLARED in the plugin's root .mcp.json. The loader reads <plugin>/.mcp.json
+  // (sibling of .claude-plugin/), so resolve two levels up from this hook.
   try {
     const hookDir = dirname(new URL(import.meta.url).pathname.replace(/^\/([A-Z]:)/, '$1'));
-    const pluginRoot = join(hookDir, '..');
+    const pluginRoot = join(hookDir, '..', '..'); // hooks → .claude-plugin → plugin root
     const mcpFile = join(pluginRoot, '.mcp.json');
     if (existsSync(mcpFile)) {
       const mcpConfig = JSON.parse(readFileSync(mcpFile, 'utf8'));

@@ -7,7 +7,7 @@ import { spawn } from 'node:child_process';
 import { join } from 'node:path';
 
 test('meshy-mcp: initialize + tools/list responds correctly', async () => {
-  const server = spawn('node', [join(process.cwd(), '.claude-plugin/mcp-servers/meshy/server.mjs')], {
+  const server = spawn('node', [join(process.cwd(), 'mcp-servers/meshy/server.mjs')], {
     stdio: ['pipe', 'pipe', 'pipe'],
     env: { ...process.env, MESHY_API_KEY: '' },  // ensure stub mode
   });

@@ -69,8 +69,19 @@ for (const d of PARITY_DIRS) {
   }
 }
 
+// Root-level synced files (mirror FILES_TO_SYNC). .mcp.json is load-bearing — the plugin
+// loader reads it at the plugin root — so verify it can't silently diverge from source.
+const PARITY_FILES = ['CLAUDE.md', 'README.md', 'package.json', 'LICENSE', '.gitignore', '.mcp.json'];
+for (const f of PARITY_FILES) {
+  const rootF = join(ROOT, f);
+  if (!existsSync(rootF)) continue;
+  const mirrorF = join(MIRROR, f);
+  if (!existsSync(mirrorF)) { console.error(`  ✗ MISSING in mirror: ${f}`); drift++; }
+  else if (hashFile(rootF) !== hashFile(mirrorF)) { console.error(`  ✗ DIVERGED: ${f}`); drift++; }
+}
+
 if (drift > 0) {
   console.error(`\n❌ Mirror drift: ${drift} file(s). Run: npm run sync-mirror`);
   process.exit(1);
 }
-console.log(`✓ Mirror parity verified across ${PARITY_DIRS.join(', ')}`);
+console.log(`✓ Mirror parity verified across ${PARITY_DIRS.join(', ')} + root files`);

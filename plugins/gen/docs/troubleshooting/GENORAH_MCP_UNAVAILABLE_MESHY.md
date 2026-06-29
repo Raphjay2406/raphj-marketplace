@@ -16,9 +16,9 @@
 2. Set env var:
    - macOS/Linux: `export MESHY_API_KEY=your_key_here`
    - Windows: `$env:MESHY_API_KEY="your_key_here"`
-3. Verify server is declared in `.claude-plugin/.mcp.json`
+3. Verify server is declared in the plugin-root `.mcp.json`
 4. Restart Claude Code session
-5. Verify with: `node .claude-plugin/mcp-servers/meshy/server.mjs` — should accept stdio input
+5. Verify with: `node mcp-servers/meshy/server.mjs` — should accept stdio input
 
 If you want offline-only: no action needed. Procedural fallback (`scripts/asset-forge/3d-procedural.mjs`) provides deterministic box/sphere/torus without Meshy.
 

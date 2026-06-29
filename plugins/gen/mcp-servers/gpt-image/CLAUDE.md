@@ -79,7 +79,7 @@ The gen plugin's `.mcp.json` registers this server:
 }
 ```
 ⚠️ **Claude Code loads the gen plugin from its CACHE**, not the `d:\Modulo` source:
-`~/.claude/plugins/cache/raphj-marketplace/gen/4.0.0/.claude-plugin/.mcp.json`. Editing the monorepo source has NO
+`~/.claude/plugins/cache/raphj-marketplace/gen/<version>/.mcp.json` (plugin root, NOT .claude-plugin/). Editing the monorepo source has NO
 effect on what loads — you must edit (or re-sync) the cache, then **restart Claude Code**. The cache currently has the
 `gpt-image` entry (hand-edited stopgap). **Durable fix:** re-publish the gen plugin version with the gpt-image entry so a
 reinstall doesn't revert it. Tools appear as `mcp__gpt-image__generate_image` / `mcp__gpt-image__edit_image` after restart.

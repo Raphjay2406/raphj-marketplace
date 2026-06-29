@@ -6,7 +6,7 @@ import { globby } from 'globby';
 import { existsSync } from 'node:fs';
 
 test('.mcp.json declares no obsidian servers', () => {
-  const mcp = JSON.parse(readFileSync('.claude-plugin/.mcp.json', 'utf8'));
+  const mcp = JSON.parse(readFileSync('.mcp.json', 'utf8'));
   assert.ok(!('obsidian' in mcp), 'obsidian entry must be removed');
   assert.ok(!('obsidian-fs' in mcp), 'obsidian-fs entry must be removed');
   // the other servers survive
@@ -48,7 +48,7 @@ test('sync-knowledge documents graphify sync', () => {
 
 test('no obsidian references anywhere in the runtime surface', async () => {
   const files = await globby([
-    '.claude-plugin/.mcp.json',
+    '.mcp.json',
     '.claude-plugin/hooks/*.mjs', '.claude-plugin/hooks/*.sh',
     'commands/**/*.md', 'skills/**/*.md', 'agents/**/*.md', 'CLAUDE.md',
   ]);
