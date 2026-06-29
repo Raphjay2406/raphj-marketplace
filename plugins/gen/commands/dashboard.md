@@ -44,8 +44,7 @@ The dashboard **wears the project's own Design DNA**: on every update it applies
 7. **Visual QA** — the latest 4-breakpoint screenshot capture from `audit/`, served via `/api/screenshot/`.
 8. **Context pane** — current CONTEXT.md rendered.
 9. **Decision tail** — last entries from `DECISIONS.md`.
-10. **Quick actions** — queue `audit` / `status` / `self-audit`. Buttons write to `.planning/genorah/.action-queue/` which the user-prompt hook detects to suggest the matching `/gen:*` command on next prompt.
-11. **Knowledge graph panel** — embeds graphify's interactive `graph.html` (lazy-loaded only when a graph exists) with a node/edge/freshness summary; prompts `gen:graphify scan` when no graph exists.
+10. **Knowledge graph panel** — embeds graphify's interactive `graph.html` (lazy-loaded only when a graph exists) with a node/edge/freshness summary; prompts `gen:graphify scan` when no graph exists. A **"⤢ Full page"** link opens the dedicated full-viewport `/graph` view; when the graph is too large for the interactive viz, `/api/graph` serves a themed fallback with the command to generate one.
 
 ## Interaction (v4.5.0)
 
@@ -64,6 +63,5 @@ Server uses `fs.watch` with 250ms debounce + 5s polling fallback (Windows compat
 
 ## Notes
 
-- Dashboard is read-mostly: direct editing is not supported, use /gen:iterate.
-- "Quick action" buttons queue commands the user then invokes — Claude Code can't run slash commands on its own.
+- Dashboard is read-only: it reflects pipeline artifacts; to make changes, use /gen:iterate.
 - Server is project-scoped: runs against cwd's `.planning/genorah/`, so one dashboard per project.
