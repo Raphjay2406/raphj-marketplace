@@ -362,7 +362,7 @@ let firstPaint = true;
 let lastVm = null;
 let currentShots = [];
 const filterState = { q: '', verdict: 'all' };
-let drawerOpen = false, drawerReturn = null;
+let drawerOpen = false, drawerReturn = null, drawerReq = 0;
 let lbOpen = false, lbReturn = null, lbIndex = 0;
 
 // Animate a numeric element from → to. Instant when reduced-motion or no change.
@@ -604,6 +604,7 @@ function trapTab(e, c) {
 
 // ── Phase 3: section detail drawer ──
 async function openSection(name) {
+  const myReq = ++drawerReq; // guard: a newer open supersedes a slow in-flight one
   drawerReturn = document.activeElement;
   $('drawer-title').textContent = name;
   $('drawer-beat').textContent = '';
@@ -611,9 +612,12 @@ async function openSection(name) {
   openDrawer();
   try {
     const res = await fetch('/api/section/' + encodeURIComponent(name));
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    paintDrawer(buildSectionDetail(await res.json()));
+    const json = res.ok ? await res.json() : null;
+    if (myReq !== drawerReq) return; // superseded — don't paint a stale section
+    if (!json) throw new Error('HTTP ' + res.status);
+    paintDrawer(buildSectionDetail(json));
   } catch (err) {
+    if (myReq !== drawerReq) return;
     $('drawer-body').replaceChildren(divText('empty', 'could not load section — ' + (err.message || err)));
   }
 }
@@ -675,6 +679,7 @@ function openLightbox(i) {
   $('lb-close').focus();
 }
 function paintLightbox() {
+  lbIndex = Math.max(0, Math.min(currentShots.length - 1, lbIndex)); // re-clamp if the capture set shrank
   const sh = currentShots[lbIndex];
   if (!sh) return;
   $('lb-img').src = '/api/screenshot/' + encodeURIComponent(sh.file);
