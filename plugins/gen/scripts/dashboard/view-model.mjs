@@ -22,7 +22,7 @@ export function scoreTier(score) {
 
 export function summarize(sections = []) {
   const list = Array.isArray(sections) ? sections : [];
-  const scored = list.filter(s => typeof s?.score === 'number');
+  const scored = list.filter(s => Number.isFinite(s?.score)); // excludes NaN/Infinity, not just typeof
   const verified = list.filter(s => s?.verdict);
   const floorPass = verified.filter(s => s.verdict.floorPass === true).length;
   const floorFail = verified.filter(s => s.verdict.floorPass === false).length;
@@ -124,7 +124,8 @@ export function buildViewModel(snapshot = {}, nowIso = '') {
     stats: summarize(sections),
     waves: deriveWaves(sections, s.master_plan || ''),
     sections: sections.map(sec => {
-      const tier = scoreTier(sec.score);
+      const score = Number.isFinite(sec.score) ? sec.score : null; // normalize: no NaN reaches the UI
+      const tier = scoreTier(score);
       const v = sec.verdict;
       const verdict = !v
         ? { state: 'none', label: 'not verified', failures: [], ceiling: null }
@@ -135,8 +136,8 @@ export function buildViewModel(snapshot = {}, nowIso = '') {
         name: sec.name,
         beat: sec.beat || '—',
         wave: sec.wave ?? null,
-        score: sec.score ?? null,
-        scoreLabel: sec.score == null ? '—' : String(sec.score),
+        score,
+        scoreLabel: score == null ? '—' : String(score),
         tierLabel: tier.label,
         tierKlass: tier.klass,
         status: sec.status || null,

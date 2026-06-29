@@ -145,6 +145,17 @@ test('buildViewModel composes a render-ready model', () => {
   assert.equal(vm.queue.length, 1);
 });
 
+test('non-finite scores never leak NaN into the view model', () => {
+  // Defense-in-depth: real data is always int|null, but a malformed score must
+  // not reach the UI as "NaN" or poison the average.
+  assert.equal(summarize([{ score: NaN, verdict: { floorPass: true } }, { score: 200 }]).avgScore, 200);
+  const vm = buildViewModel({ sections: [{ name: 'x', score: NaN }, { name: 'y', score: 'bad' }] }, '');
+  assert.equal(vm.sections[0].score, null);
+  assert.equal(vm.sections[0].scoreLabel, '—');
+  assert.equal(vm.sections[0].tierLabel, '—');
+  assert.equal(vm.sections[1].scoreLabel, '—');
+});
+
 test('buildViewModel falls back when project name and tokens are absent', () => {
   const vm = buildViewModel({ ts: '2026-06-29T12:00:00.000Z' }, '2026-06-29T12:00:00.000Z');
   assert.equal(vm.project.name, 'Genorah Dashboard');
