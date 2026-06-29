@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>Knowledge Graph — Genorah</title>
+<style>
+  :root {
+    --bg: #0a0a0b; --surface: #141418; --text: #e8e8ea; --muted: #8a8a95; --border: #2a2a31; --primary: #7c5cff;
+    --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body { background: var(--bg); color: var(--text); font: 14px/1.5 var(--font-sans); display: flex; flex-direction: column; }
+  header {
+    flex: none; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 12px 20px; background: var(--surface); border-bottom: 1px solid var(--border);
+  }
+  header .left { display: flex; align-items: baseline; gap: 14px; min-width: 0; flex-wrap: wrap; }
+  header h1 { font-size: 16px; font-weight: 680; letter-spacing: -0.01em; }
+  header .summary { font: 12px var(--font-mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+  header a.back {
+    flex: none; color: var(--text); text-decoration: none; font-size: 13px; font-weight: 600;
+    padding: 7px 13px; border: 1px solid var(--border); border-radius: 8px; transition: border-color .15s, color .15s;
+  }
+  header a.back:hover { border-color: var(--primary); color: var(--primary); }
+  .stage { flex: 1; min-height: 0; position: relative; }
+  iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; background: #fff; }
+  .empty { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; color: var(--muted); padding: 40px; }
+  .empty[hidden] { display: none; } /* author display:grid would otherwise override the hidden attribute */
+  .empty code { background: var(--surface); border: 1px solid var(--border); padding: 2px 7px; border-radius: 4px; font-family: var(--font-mono); }
+</style>
+</head>
+<body>
+  <header>
+    <div class="left">
+      <h1>Knowledge Graph</h1>
+      <span class="summary" id="summary">loading…</span>
+    </div>
+    <a class="back" href="/">← Dashboard</a>
+  </header>
+  <div class="stage">
+    <iframe id="frame" title="Knowledge graph" src="/api/graph"></iframe>
+    <div class="empty" id="empty" hidden>No graph yet — run <code>gen:graphify scan</code>, then reload.</div>
+  </div>
+<script>
+fetch('/api/state').then(r => r.json()).then(s => {
+  const g = s.graph || {};
+  const summary = document.getElementById('summary');
+  if (g.exists) {
+    summary.textContent = `${g.nodes} nodes · ${g.edges} edges · updated ${Math.round((g.ageMs || 0) / 1000)}s ago`;
+  } else {
+    summary.textContent = 'no graph';
+    document.getElementById('frame').hidden = true;
+    document.getElementById('empty').hidden = false;
+  }
+}).catch(() => { document.getElementById('summary').textContent = ''; });
+</script>
+</body>
+</html>

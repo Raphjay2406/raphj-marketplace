@@ -158,6 +158,8 @@ const server = http.createServer((req, res) => {
 
   if (p === '/' || p === '/index.html') {
     streamFile(res, path.join(__dirname, 'dashboard.html'), 'text/html; charset=utf-8');
+  } else if (p === '/graph') {
+    streamFile(res, path.join(__dirname, 'graph-page.html'), 'text/html; charset=utf-8');
   } else if (p.startsWith('/scripts/dashboard/')) {
     // Serve the tested view-model (and any future dashboard module) to the browser,
     // so the page imports the same code node:test covers instead of duplicating it.
