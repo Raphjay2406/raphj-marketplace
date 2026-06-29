@@ -208,6 +208,54 @@
     header.top { flex-direction: column; align-items: flex-start; }
     .head-right { align-items: flex-start; }
   }
+  /* ── Phase 3: filter bar ── */
+  .filterbar { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+  .facets { display: inline-flex; gap: 2px; background: var(--bg); border: 1px solid var(--border); border-radius: 999px; padding: 3px; }
+  .facet { border: none; background: transparent; color: var(--muted); font: 600 var(--t-xs) var(--font-sans);
+    padding: 6px 12px; border-radius: 999px; cursor: pointer; transition: color .15s, background .15s; }
+  .facet:hover { color: var(--text); }
+  .facet.active { background: var(--primary); color: #fff; }
+  .facet:focus-visible, .filter-input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .filter-input { flex: 1; min-width: 140px; max-width: 280px; background: var(--bg); border: 1px solid var(--border);
+    border-radius: var(--r-sm); color: var(--text); font: var(--t-sm) var(--font-sans); padding: 7px 11px; }
+  .filter-input:focus-visible { border-color: var(--accent); }
+  .section-card { cursor: pointer; }
+  .section-card:focus-visible, .shot:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* ── Phase 3: drawer ── */
+  .scrim { position: fixed; inset: 0; background: color-mix(in srgb, #000 55%, transparent); z-index: 40; animation: fadein .2s ease; }
+  .scrim[hidden], .drawer[hidden], .lightbox[hidden] { display: none; }
+  @keyframes fadein { from { opacity: 0; } }
+  .drawer { position: fixed; top: 0; right: 0; height: 100vh; width: min(560px, 94vw); z-index: 50;
+    background: var(--surface); border-left: 1px solid var(--border); box-shadow: -30px 0 80px -40px #000;
+    display: flex; flex-direction: column; transform: translateX(100%); transition: transform .28s cubic-bezier(.2,.7,.2,1); }
+  .drawer.open { transform: translateX(0); }
+  .drawer-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
+    padding: 20px; border-bottom: 1px solid var(--border); }
+  .drawer-beat { font-size: var(--t-xs); text-transform: uppercase; letter-spacing: .14em; color: var(--muted); }
+  .drawer-title { font-size: var(--t-lg); font-weight: 680; letter-spacing: -0.01em; margin-top: 3px; word-break: break-word; }
+  .drawer-close, .lb-close { background: var(--bg); border: 1px solid var(--border); color: var(--text);
+    width: 32px; height: 32px; border-radius: var(--r-sm); cursor: pointer; font-size: 15px; flex: none; }
+  .drawer-close:hover, .lb-close:hover { border-color: var(--fail); color: var(--fail); }
+  .drawer-close:focus-visible, .lb-close:focus-visible, .lb-nav:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .drawer-body { padding: 20px; overflow: auto; display: grid; gap: 18px; }
+  .drawer-label { font-size: var(--t-xs); text-transform: uppercase; letter-spacing: .12em; color: var(--muted); margin-bottom: 8px; }
+  .fail-row { display: grid; grid-template-columns: auto 1fr; gap: 10px; align-items: baseline; padding: 8px 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--border) 60%, transparent); }
+  .fail-detail { font-size: var(--t-sm); color: var(--text); font-family: var(--font-mono); word-break: break-word; }
+
+  /* ── Phase 3: lightbox ── */
+  .lightbox { position: fixed; inset: 0; z-index: 60; display: flex; align-items: center; justify-content: center; gap: 8px;
+    background: color-mix(in srgb, #000 82%, transparent); animation: fadein .2s ease; padding: 24px; }
+  .lb-fig { display: flex; flex-direction: column; align-items: center; gap: 12px; max-width: 90vw; }
+  .lb-fig img { max-width: 86vw; max-height: 80vh; border: 1px solid var(--border); border-radius: var(--r-sm); background: var(--bg); }
+  .lb-fig figcaption { font-family: var(--font-mono); font-size: var(--t-sm); color: var(--text); text-transform: uppercase; letter-spacing: .08em; }
+  .lb-close { position: absolute; top: 20px; right: 20px; }
+  .lb-nav { background: color-mix(in srgb, var(--surface) 80%, transparent); border: 1px solid var(--border); color: var(--text);
+    width: 46px; height: 46px; border-radius: 50%; cursor: pointer; font-size: 22px; flex: none; }
+  .lb-nav:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+  .lb-nav:disabled { opacity: .3; cursor: default; }
+
   @media (prefers-reduced-motion: reduce) {
     * { animation: none !important; transition: none !important; }
   }
@@ -247,7 +295,18 @@
 
     <section class="panel span-12"><h2>Waves</h2><div class="waves" id="waves"></div></section>
 
-    <section class="panel span-12"><h2>Sections</h2><div class="sections-grid" id="sections"></div></section>
+    <section class="panel span-12"><h2>Sections</h2>
+      <div class="filterbar">
+        <div class="facets" role="group" aria-label="Filter sections by verdict">
+          <button class="facet active" data-verdict="all" aria-pressed="true">All</button>
+          <button class="facet" data-verdict="pass" aria-pressed="false">Pass</button>
+          <button class="facet" data-verdict="fail" aria-pressed="false">Fail</button>
+          <button class="facet" data-verdict="none" aria-pressed="false">Unverified</button>
+        </div>
+        <input class="filter-input" id="filter-q" type="text" placeholder="filter by name…" aria-label="Filter sections by name">
+      </div>
+      <div class="sections-grid" id="sections"></div>
+    </section>
 
     <section class="panel span-5"><h2>Gate Hotspots</h2><div id="hotspots"></div></section>
 
@@ -264,10 +323,29 @@
   </div>
 </div>
 
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title" hidden>
+  <div class="drawer-head">
+    <div>
+      <div class="drawer-beat" id="drawer-beat"></div>
+      <h2 class="drawer-title" id="drawer-title">Section</h2>
+    </div>
+    <button class="drawer-close" id="drawer-close" aria-label="Close section detail">✕</button>
+  </div>
+  <div class="drawer-body" id="drawer-body"></div>
+</aside>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Screenshot viewer" hidden>
+  <button class="lb-close" id="lb-close" aria-label="Close screenshot viewer">✕</button>
+  <button class="lb-nav lb-prev" id="lb-prev" aria-label="Previous breakpoint">‹</button>
+  <figure class="lb-fig"><img id="lb-img" alt=""><figcaption id="lb-cap"></figcaption></figure>
+  <button class="lb-nav lb-next" id="lb-next" aria-label="Next breakpoint">›</button>
+</div>
+
 <script type="module">
-let buildViewModel;
+let buildViewModel, filterSections, buildSectionDetail;
 try {
-  ({ buildViewModel } = await import('/scripts/dashboard/view-model.mjs'));
+  ({ buildViewModel, filterSections, buildSectionDetail } = await import('/scripts/dashboard/view-model.mjs'));
 } catch (e) {
   const b = document.getElementById('boot-error');
   b.hidden = false;
@@ -279,6 +357,13 @@ const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const $ = id => document.getElementById(id);
 const prev = { stats: {}, scores: {} };
 let firstPaint = true;
+
+// Phase 3 interaction state
+let lastVm = null;
+let currentShots = [];
+const filterState = { q: '', verdict: 'all' };
+let drawerOpen = false, drawerReturn = null, drawerReq = 0;
+let lbOpen = false, lbReturn = null, lbIndex = 0;
 
 // Animate a numeric element from → to. Instant when reduced-motion or no change.
 function countUp(el, from, to) {
@@ -342,13 +427,18 @@ function renderWaves(waves) {
   }
 }
 
-function renderSections(sections) {
+function renderSections(sections, emptyMsg = 'no sections yet — run /gen:plan') {
   const host = $('sections');
   host.replaceChildren();
-  if (!sections.length) { host.appendChild(emptyEl('no sections yet — run /gen:plan')); return; }
+  if (!sections.length) { host.appendChild(emptyEl(emptyMsg)); return; }
   for (const s of sections) {
     const card = document.createElement('div');
     card.className = 'section-card t-' + s.tierKlass;
+    card.setAttribute('role', 'button');
+    card.tabIndex = 0;
+    card.setAttribute('aria-label', `Open ${s.name} detail`);
+    card.addEventListener('click', () => openSection(s.name));
+    card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openSection(s.name); } });
     card.appendChild(divText('beat', s.beat));
     card.appendChild(divText('name', s.name));
 
@@ -397,8 +487,12 @@ function renderShots(screenshots) {
   const host = $('shots');
   host.replaceChildren();
   if (!screenshots.length) { host.appendChild(emptyEl('no captures yet — run /gen:audit')); return; }
-  for (const sh of screenshots) {
+  screenshots.forEach((sh, i) => {
     const cell = document.createElement('div'); cell.className = 'shot';
+    cell.setAttribute('role', 'button'); cell.tabIndex = 0;
+    cell.setAttribute('aria-label', `Open ${(sh.label || '')} screenshot full size`);
+    cell.addEventListener('click', () => openLightbox(i));
+    cell.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(i); } });
     const img = document.createElement('img');
     img.loading = 'lazy'; img.alt = (sh.label || '') + ' screenshot';
     img.src = '/api/screenshot/' + encodeURIComponent(sh.file);
@@ -406,7 +500,7 @@ function renderShots(screenshots) {
     lbl.textContent = (sh.label || '') + ' · ' + sh.width + 'px';
     cell.append(img, lbl);
     host.appendChild(cell);
-  }
+  });
 }
 
 function renderGraph(graph) {
@@ -441,12 +535,15 @@ function render(vm) {
     chips.appendChild(chip);
   }
 
+  lastVm = vm;
+  currentShots = vm.screenshots;
   renderStats(vm.stats);
   renderWaves(vm.waves);
-  renderSections(vm.sections);
+  paintSections();
   renderHotspots(vm.hotspots);
   renderShots(vm.screenshots);
   renderGraph(vm.graph);
+  if (lbOpen) paintLightbox(); // keep an open lightbox in sync with fresh captures
 
   const banner = $('queued-banner');
   if (vm.queue.length) {
@@ -471,6 +568,148 @@ async function queueAction(cmd) {
 for (const btn of document.querySelectorAll('.action-btn')) {
   btn.addEventListener('click', () => queueAction(btn.dataset.cmd));
 }
+
+// ── Phase 3: filtering ──
+function paintSections() {
+  if (!lastVm) return;
+  const emptyMsg = lastVm.sections.length ? 'no sections match this filter' : 'no sections yet — run /gen:plan';
+  renderSections(filterSections(lastVm.sections, filterState), emptyMsg);
+}
+for (const b of document.querySelectorAll('.facet')) {
+  b.addEventListener('click', () => {
+    filterState.verdict = b.dataset.verdict;
+    for (const x of document.querySelectorAll('.facet')) {
+      const on = x === b;
+      x.classList.toggle('active', on);
+      x.setAttribute('aria-pressed', String(on));
+    }
+    paintSections();
+  });
+}
+$('filter-q').addEventListener('input', e => { filterState.q = e.target.value; paintSections(); });
+
+// ── Phase 3: focus trap shared by drawer + lightbox ──
+function focusables(c) {
+  return [...c.querySelectorAll('button, [href], input, [tabindex]:not([tabindex="-1"])')]
+    .filter(el => !el.disabled && el.offsetParent !== null);
+}
+function trapTab(e, c) {
+  if (e.key !== 'Tab') return;
+  const f = focusables(c);
+  if (!f.length) return;
+  const first = f[0], last = f[f.length - 1];
+  if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+  else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+}
+
+// ── Phase 3: section detail drawer ──
+async function openSection(name) {
+  const myReq = ++drawerReq; // guard: a newer open supersedes a slow in-flight one
+  drawerReturn = document.activeElement;
+  $('drawer-title').textContent = name;
+  $('drawer-beat').textContent = '';
+  $('drawer-body').replaceChildren(emptyEl('loading…'));
+  openDrawer();
+  try {
+    const res = await fetch('/api/section/' + encodeURIComponent(name));
+    const json = res.ok ? await res.json() : null;
+    if (myReq !== drawerReq) return; // superseded — don't paint a stale section
+    if (!json) throw new Error('HTTP ' + res.status);
+    paintDrawer(buildSectionDetail(json));
+  } catch (err) {
+    if (myReq !== drawerReq) return;
+    $('drawer-body').replaceChildren(divText('empty', 'could not load section — ' + (err.message || err)));
+  }
+}
+function paintDrawer(d) {
+  $('drawer-title').textContent = d.name || 'Section';
+  $('drawer-beat').textContent = [d.beat, d.wave != null ? 'Wave ' + d.wave : ''].filter(Boolean).join(' · ');
+  const body = $('drawer-body');
+  body.replaceChildren();
+
+  const vblock = document.createElement('div');
+  vblock.appendChild(divText('drawer-label', 'Verification'));
+  const badge = document.createElement('span');
+  badge.className = 'badge ' + d.verdict.state;
+  badge.textContent = d.verdict.label + (d.verdict.ceiling != null ? '  ·  ceiling ' + d.verdict.ceiling : '');
+  vblock.appendChild(badge);
+  for (const f of d.verdict.failures) {
+    const row = document.createElement('div'); row.className = 'fail-row';
+    const chk = document.createElement('span'); chk.className = 'chk'; chk.textContent = f.check;
+    const det = document.createElement('span'); det.className = 'fail-detail'; det.textContent = f.detail || '(no detail)';
+    row.append(chk, det); vblock.appendChild(row);
+  }
+  body.appendChild(vblock);
+  body.appendChild(preBlock('Summary', d.summary || '(no SUMMARY.md)'));
+  body.appendChild(preBlock('Plan', d.plan || '(no PLAN.md)'));
+}
+function preBlock(label, text) {
+  const wrap = document.createElement('div');
+  wrap.appendChild(divText('drawer-label', label));
+  const pre = document.createElement('pre'); pre.textContent = text;
+  wrap.appendChild(pre);
+  return wrap;
+}
+function openDrawer() {
+  $('scrim').hidden = false;
+  $('drawer').hidden = false;
+  requestAnimationFrame(() => $('drawer').classList.add('open'));
+  drawerOpen = true;
+  $('drawer-close').focus();
+}
+function closeDrawer() {
+  $('drawer').classList.remove('open');
+  $('drawer').hidden = true;
+  $('scrim').hidden = true;
+  drawerOpen = false;
+  if (drawerReturn && drawerReturn.focus) drawerReturn.focus();
+}
+$('drawer-close').addEventListener('click', closeDrawer);
+$('scrim').addEventListener('click', closeDrawer);
+$('drawer').addEventListener('keydown', e => trapTab(e, $('drawer')));
+
+// ── Phase 3: screenshot lightbox ──
+function openLightbox(i) {
+  if (!currentShots.length) return;
+  lbReturn = document.activeElement;
+  lbIndex = Math.max(0, Math.min(currentShots.length - 1, i));
+  paintLightbox();
+  $('lightbox').hidden = false;
+  lbOpen = true;
+  $('lb-close').focus();
+}
+function paintLightbox() {
+  lbIndex = Math.max(0, Math.min(currentShots.length - 1, lbIndex)); // re-clamp if the capture set shrank
+  const sh = currentShots[lbIndex];
+  if (!sh) return;
+  $('lb-img').src = '/api/screenshot/' + encodeURIComponent(sh.file);
+  $('lb-img').alt = (sh.label || '') + ' screenshot';
+  $('lb-cap').textContent = (sh.label || '') + ' · ' + sh.width + 'px';
+  $('lb-prev').disabled = lbIndex === 0;
+  $('lb-next').disabled = lbIndex === currentShots.length - 1;
+}
+function lbStep(delta) {
+  const next = Math.max(0, Math.min(currentShots.length - 1, lbIndex + delta));
+  if (next !== lbIndex) { lbIndex = next; paintLightbox(); }
+}
+function closeLightbox() {
+  $('lightbox').hidden = true;
+  lbOpen = false;
+  if (lbReturn && lbReturn.focus) lbReturn.focus();
+}
+$('lb-close').addEventListener('click', closeLightbox);
+$('lb-prev').addEventListener('click', () => lbStep(-1));
+$('lb-next').addEventListener('click', () => lbStep(1));
+$('lightbox').addEventListener('click', e => { if (e.target === $('lightbox')) closeLightbox(); });
+$('lightbox').addEventListener('keydown', e => trapTab(e, $('lightbox')));
+
+document.addEventListener('keydown', e => {
+  if (lbOpen) {
+    if (e.key === 'Escape') closeLightbox();
+    else if (e.key === 'ArrowLeft') lbStep(-1);
+    else if (e.key === 'ArrowRight') lbStep(1);
+  } else if (drawerOpen && e.key === 'Escape') closeDrawer();
+});
 
 const evt = new EventSource('/api/sse');
 evt.onmessage = e => {

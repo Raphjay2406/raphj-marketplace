@@ -65,6 +65,24 @@ export function scanSections() {
   }).filter(Boolean);
 }
 
+// Phase 3: lazy per-section detail for the drawer. Path-locked to sections/<name>/.
+// Returns { name, summary, plan, verdict } or { error: 'forbidden' | 'not found' }.
+export function readSectionDetail(name) {
+  if (!name || typeof name !== 'string') return { error: 'not found' };
+  const sectionsRoot = path.join(root(), 'sections');
+  const dir = path.join(sectionsRoot, name);
+  if (!dir.startsWith(sectionsRoot + path.sep)) return { error: 'forbidden' };
+  let stat;
+  try { stat = fs.statSync(dir); } catch { return { error: 'not found' }; }
+  if (!stat.isDirectory()) return { error: 'not found' };
+  return {
+    name,
+    summary: safeRead(path.join(dir, 'SUMMARY.md')),
+    plan: safeRead(path.join(dir, 'PLAN.md')),
+    verdict: readVerdict(dir),
+  };
+}
+
 export function snapshot() {
   const sections = scanSections();
   return {
@@ -164,6 +182,15 @@ const server = http.createServer((req, res) => {
     const abs = path.join(root(), 'audit', rel);
     if (!abs.startsWith(path.join(root(), 'audit'))) return res.writeHead(403).end();
     streamFile(res, abs, 'image/png');
+  } else if (p.startsWith('/api/section/')) {
+    let name;
+    try { name = decodeURIComponent(p.slice('/api/section/'.length)); }
+    catch { return res.writeHead(400).end('bad request'); }
+    const d = readSectionDetail(name);
+    if (d.error === 'forbidden') return res.writeHead(403).end('forbidden');
+    if (d.error === 'not found') return res.writeHead(404).end('not found');
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify(d));
   } else if (p === '/api/graph') {
     streamFile(res, path.join(process.cwd(), 'graphify-out', 'graph.html'), 'text/html; charset=utf-8');
   } else if (p.startsWith('/api/graph-asset/')) {
