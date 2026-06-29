@@ -93,7 +93,7 @@ Also scaffolds `components/GenorahSVG3D.tsx` if absent — copy-pastes the canon
 
 ### 6. Subcommand: `export`
 
-Batch-renders the 30-variant matrix via the `3dsvg-export` MCP server (see `.claude-plugin/mcp-servers/3dsvg-export/README.md`):
+Batch-renders the 30-variant matrix via the `3dsvg-export` MCP server (see `mcp-servers/3dsvg-export/README.md`):
 
 - 5 materials: archetype's `preferred_materials` (top-5 from preset library metadata)
 - 3 angles: front 0°, 3/4-right (rotationY=-0.6), 3/4-left (rotationY=0.6)

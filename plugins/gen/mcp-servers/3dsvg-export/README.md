@@ -32,7 +32,7 @@ npm i -g playwright
 npx playwright install chromium
 ```
 
-Then register in `.claude-plugin/.mcp.json`:
+Then register in the plugin-root `.mcp.json`:
 
 ```json
 "3dsvg-export": {

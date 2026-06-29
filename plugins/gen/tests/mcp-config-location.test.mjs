@@ -24,6 +24,19 @@ test('the published mirror exposes .mcp.json at its plugin root', () => {
   assert.ok('gpt-image' in mcp, 'mirror must declare gpt-image at its root');
 });
 
+test('every locally-bundled server points to a bundle that actually exists at the plugin root', () => {
+  // Guards the 3dsvg-export-class bug: a server declared with ${CLAUDE_PLUGIN_ROOT}/mcp-servers/<x>
+  // whose bundle was stranded in .claude-plugin/mcp-servers/ would fail to spawn once the config loads.
+  const mcp = JSON.parse(readFileSync('.mcp.json', 'utf8'));
+  for (const [name, cfg] of Object.entries(mcp)) {
+    for (const arg of cfg.args || []) {
+      const m = /^\$\{CLAUDE_PLUGIN_ROOT\}\/(.+)$/.exec(arg);
+      if (!m) continue; // npx/command servers have no local bundle path
+      assert.ok(existsSync(m[1]), `${name}: bundle "${m[1]}" (from ${arg}) must exist at the plugin root`);
+    }
+  }
+});
+
 test('every optional gpt-image env var has a default (an unset no-default var can drop the server)', () => {
   const env = JSON.parse(readFileSync('.mcp.json', 'utf8'))['gpt-image'].env;
   for (const [k, v] of Object.entries(env)) {
