@@ -20,6 +20,13 @@ test('server serves the full-page view at /graph', () => {
   assert.match(server, /graph-page\.html/, 'must serve graph-page.html');
 });
 
+test('/api/graph degrades to a themed fallback when graph.html is absent', () => {
+  // graphify skips graph.html for >5000-node graphs; the route must not leak a bare "not found".
+  assert.match(server, /GRAPH_VIZ_FALLBACK/, 'must define + serve a fallback');
+  assert.match(server, /existsSync\([^)]*gp|fs\.existsSync/, 'must guard graph.html existence');
+  assert.match(server, /graphify tree/, 'fallback should tell the user how to generate the viz');
+});
+
 test('dashboard panel links to the full-page graph', () => {
   assert.match(dash, /href="\/graph"/, 'panel must link to /graph');
 });
