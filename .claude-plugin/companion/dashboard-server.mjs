@@ -173,17 +173,21 @@ const server = http.createServer((req, res) => {
   }
 });
 
-// File watching with polling fallback for Windows
-const onChange = debounce(broadcast, 250);
-let watchWorking = false;
-try {
-  fs.watch(root(), { recursive: true }, onChange);
-  watchWorking = true;
-} catch {
-  // recursive watch unsupported — pure polling fallback below
+// File watching with polling fallback for Windows.
+// Started ONLY when the server actually runs (see main-guard below), so importing
+// this module for tests leaves no live timer/watcher that would hang the test runner.
+function startWatchers() {
+  const onChange = debounce(broadcast, 250);
+  let watchWorking = false;
+  try {
+    fs.watch(root(), { recursive: true }, onChange);
+    watchWorking = true;
+  } catch {
+    // recursive watch unsupported — pure polling fallback below
+  }
+  // Polling fallback (interval longer when watch works to avoid doubled traffic)
+  setInterval(broadcast, watchWorking ? 15000 : 5000);
 }
-// Polling fallback (interval longer when watch works to avoid doubled traffic)
-setInterval(broadcast, watchWorking ? 15000 : 5000);
 
 function listen(idx = 0) {
   if (idx >= PORT_RANGE.length) {
@@ -206,6 +210,7 @@ function listen(idx = 0) {
 }
 
 if (import.meta.url === pathToFileURL(process.argv[1] ?? '').href) {
+  startWatchers();
   listen();
 }
 
