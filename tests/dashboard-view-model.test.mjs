@@ -5,6 +5,7 @@ import assert from 'node:assert';
 import {
   scoreTier, summarize, hotspotBars, themeFromTokens,
   relativeTime, deriveWaves, buildViewModel,
+  filterSections, buildSectionDetail,
 } from '../scripts/dashboard/view-model.mjs';
 
 test('scoreTier maps gate tiers at exact boundaries', () => {
@@ -164,4 +165,64 @@ test('buildViewModel falls back when project name and tokens are absent', () => 
   assert.deepEqual(vm.sections, []);
   assert.deepEqual(vm.hotspots, []);
   assert.equal(vm.tsLabel, '0s ago');
+});
+
+// ── Phase 3: interaction helpers ──
+const SECS = [
+  { name: 'hero', verdict: { state: 'pass' } },
+  { name: 'pricing-cta', verdict: { state: 'fail' } },
+  { name: 'footer', verdict: { state: 'none' } },
+];
+
+test('filterSections matches name case-insensitively', () => {
+  assert.deepEqual(filterSections(SECS, { q: 'CTA' }).map(s => s.name), ['pricing-cta']);
+  assert.deepEqual(filterSections(SECS, { q: '  ' }).map(s => s.name), ['hero', 'pricing-cta', 'footer']);
+});
+
+test('filterSections filters by verdict facet', () => {
+  assert.deepEqual(filterSections(SECS, { verdict: 'pass' }).map(s => s.name), ['hero']);
+  assert.deepEqual(filterSections(SECS, { verdict: 'fail' }).map(s => s.name), ['pricing-cta']);
+  assert.deepEqual(filterSections(SECS, { verdict: 'none' }).map(s => s.name), ['footer']);
+});
+
+test('filterSections passes through for all / empty / unknown facet', () => {
+  assert.equal(filterSections(SECS, { verdict: 'all' }).length, 3);
+  assert.equal(filterSections(SECS, {}).length, 3);
+  assert.equal(filterSections(SECS, { verdict: 'bogus' }).length, 3);
+  assert.deepEqual(filterSections(null), []);
+});
+
+test('filterSections combines name + verdict and does not mutate input', () => {
+  const before = JSON.stringify(SECS);
+  assert.deepEqual(filterSections(SECS, { q: 'o', verdict: 'pass' }).map(s => s.name), ['hero']);
+  assert.equal(JSON.stringify(SECS), before);
+});
+
+test('buildSectionDetail keeps full failure details and parses beat/wave', () => {
+  const d = buildSectionDetail({
+    name: 'cta', summary: 'Score: 132\n', plan: 'beat: CLOSE\nwave: 2\n',
+    verdict: { floor: { pass: false, failures: [{ check: 'console', detail: 'TypeError x' }, { check: 'perf', detail: 'LCP 5s' }] }, ceiling: { score: 48 } },
+  });
+  assert.equal(d.name, 'cta');
+  assert.equal(d.beat, 'CLOSE');
+  assert.equal(d.wave, 2);
+  assert.equal(d.summary, 'Score: 132\n');
+  assert.equal(d.verdict.state, 'fail');
+  assert.equal(d.verdict.label, 'FLOOR FAIL');
+  assert.equal(d.verdict.ceiling, 48);
+  assert.deepEqual(d.verdict.failures, [{ check: 'console', detail: 'TypeError x' }, { check: 'perf', detail: 'LCP 5s' }]);
+});
+
+test('buildSectionDetail maps pass and missing verdicts', () => {
+  const pass = buildSectionDetail({ name: 'hero', summary: 's', plan: 'beat: HOOK\n', verdict: { floor: { pass: true }, ceiling: { score: 90 } } });
+  assert.equal(pass.verdict.state, 'pass');
+  assert.deepEqual(pass.verdict.failures, []);
+  assert.equal(pass.verdict.ceiling, 90);
+  assert.equal(pass.beat, 'HOOK');
+
+  const none = buildSectionDetail({ name: 'footer' });
+  assert.equal(none.verdict.state, 'none');
+  assert.equal(none.summary, '');
+  assert.equal(none.plan, '');
+  assert.equal(none.wave, null);
 });
