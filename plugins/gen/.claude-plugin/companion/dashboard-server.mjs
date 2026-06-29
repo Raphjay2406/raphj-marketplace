@@ -28,6 +28,11 @@ const root = () => path.join(process.cwd(), '.planning', 'genorah');
 const PORT_RANGE = [4455, 4456, 4457, 4458, 4459, 4460, 4461, 4462, 4463, 4464, 4465];
 const clients = new Set();
 
+// Served by /api/graph when graph.json exists but graphify skipped graph.html
+// (it does so for graphs over ~5000 nodes). Themed so it reads cleanly inside the
+// dashboard panel iframe and the full-page /graph view instead of a bare "not found".
+const GRAPH_VIZ_FALLBACK = `<!doctype html><meta charset="utf-8"><style>html,body{height:100%;margin:0}body{display:grid;place-content:center;background:#0a0a0b;color:#8a8a95;font:14px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;text-align:center;padding:28px}code{background:#141418;border:1px solid #2a2a31;color:#e8e8ea;padding:2px 7px;border-radius:4px;font-family:ui-monospace,Menlo,Consolas,monospace}p{margin:0 0 12px}</style><div><p>The graph data exists, but no interactive HTML visualization was generated<br>(graphify skips it for graphs larger than ~5000 nodes).</p><p>Generate one with <code>graphify tree --output graphify-out/graph.html</code> then reload,<br>or read <code>graphify-out/GRAPH_REPORT.md</code>.</p></div>`;
+
 function safeRead(p, fallback = '') {
   try { return fs.readFileSync(p, 'utf8'); } catch { return fallback; }
 }
@@ -158,6 +163,8 @@ const server = http.createServer((req, res) => {
 
   if (p === '/' || p === '/index.html') {
     streamFile(res, path.join(__dirname, 'dashboard.html'), 'text/html; charset=utf-8');
+  } else if (p === '/graph') {
+    streamFile(res, path.join(__dirname, 'graph-page.html'), 'text/html; charset=utf-8');
   } else if (p.startsWith('/scripts/dashboard/')) {
     // Serve the tested view-model (and any future dashboard module) to the browser,
     // so the page imports the same code node:test covers instead of duplicating it.
@@ -192,7 +199,13 @@ const server = http.createServer((req, res) => {
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify(d));
   } else if (p === '/api/graph') {
-    streamFile(res, path.join(process.cwd(), 'graphify-out', 'graph.html'), 'text/html; charset=utf-8');
+    const gp = path.join(process.cwd(), 'graphify-out', 'graph.html');
+    if (fs.existsSync(gp)) {
+      streamFile(res, gp, 'text/html; charset=utf-8');
+    } else {
+      res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+      res.end(GRAPH_VIZ_FALLBACK); // graph.json present but no HTML viz — degrade gracefully
+    }
   } else if (p.startsWith('/api/graph-asset/')) {
     const rel = p.slice('/api/graph-asset/'.length);
     const abs = safeGraphAsset(process.cwd(), rel);
