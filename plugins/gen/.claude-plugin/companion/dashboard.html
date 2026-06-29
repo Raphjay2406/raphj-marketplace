@@ -2,276 +2,479 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
 <title>Genorah Dashboard</title>
 <style>
   :root {
-    --bg: #0a0a0b; --surface: #141418; --text: #e8e8ea; --muted: #8a8a95;
-    --border: #2a2a31; --primary: #7c5cff; --ok: #3fc28a; --warn: #f0a830; --fail: #ef4458;
+    /* Theme — overwritten per-project from DNA tokens at runtime. */
+    --bg: #0a0a0b; --surface: #141418; --raised: #1c1c22; --text: #e8e8ea;
+    --muted: #8a8a95; --border: #2a2a31; --primary: #7c5cff; --accent: #7c5cff;
+    --glow: #7c5cff; --ok: #3fc28a; --warn: #f0a830; --fail: #ef4458;
+
+    --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", "Cascadia Code", "JetBrains Mono", Menlo, Consolas, monospace;
+    --r-sm: 8px; --r: 14px; --r-lg: 20px;
+    --gap: 20px;
+    --t-xs: 11px; --t-sm: 12px; --t-base: 14px; --t-md: 16px; --t-lg: 20px; --t-xl: 30px;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { background: var(--bg); color: var(--text); font: 14px/1.5 ui-monospace, "SF Mono", Menlo, monospace; }
-  .container { max-width: 1440px; margin: 0 auto; padding: 24px; display: grid; gap: 24px; }
-  header { display: flex; align-items: center; justify-content: space-between; padding: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; }
-  header h1 { font-size: 18px; font-weight: 600; }
-  header .status-dot { display: inline-block; width: 8px; height: 8px; background: var(--ok); border-radius: 50%; margin-right: 8px; }
-  .dna-chips { display: flex; gap: 4px; flex-wrap: wrap; }
-  .dna-chip { width: 32px; height: 32px; border-radius: 6px; border: 1px solid var(--border); position: relative; }
-  .dna-chip:hover::after { content: attr(data-token); position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); background: var(--surface); padding: 4px 8px; border-radius: 4px; white-space: nowrap; font-size: 11px; }
-  section { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
-  section h2 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 16px; }
-  .waves { display: flex; gap: 8px; flex-wrap: wrap; }
-  .wave-pill { padding: 6px 12px; background: var(--bg); border: 1px solid var(--border); border-radius: 999px; font-size: 12px; }
-  .wave-pill.done { border-color: var(--ok); color: var(--ok); }
-  .wave-pill.building { border-color: var(--primary); color: var(--primary); }
-  .wave-pill.failed { border-color: var(--fail); color: var(--fail); }
-  .sections-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
-  .section-card { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px; }
-  .section-card .beat { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
-  .section-card .name { font-weight: 600; font-size: 14px; margin: 4px 0; }
-  .section-card .score { font-size: 24px; font-weight: 700; color: var(--primary); }
-  .section-card .score.low { color: var(--warn); }
-  .section-card .score.fail { color: var(--fail); }
-  .section-card .tier { font-size: 11px; color: var(--muted); }
-  pre { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px; white-space: pre-wrap; font-size: 12px; max-height: 300px; overflow: auto; }
-  .actions { display: flex; gap: 8px; flex-wrap: wrap; }
-  .action-btn { padding: 8px 16px; background: var(--primary); color: white; border: none; border-radius: 6px; cursor: pointer; font: inherit; font-weight: 600; }
-  .action-btn:hover { opacity: 0.9; }
+  html, body {
+    background:
+      radial-gradient(1100px 520px at 78% -8%, color-mix(in srgb, var(--glow) 16%, transparent), transparent 60%),
+      radial-gradient(900px 480px at 8% 0%, color-mix(in srgb, var(--primary) 9%, transparent), transparent 55%),
+      var(--bg);
+    background-attachment: fixed;
+    color: var(--text);
+    font: var(--t-base)/1.55 var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+  .num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+  .container { max-width: 1340px; margin: 0 auto; padding: 22px clamp(16px, 3vw, 34px) 64px; }
+
+  /* ── Header ── */
+  header.top {
+    position: sticky; top: 0; z-index: 20;
+    display: flex; align-items: center; justify-content: space-between; gap: 20px;
+    padding: 16px 20px; margin-bottom: var(--gap);
+    background: color-mix(in srgb, var(--surface) 86%, transparent);
+    backdrop-filter: blur(14px) saturate(1.2);
+    border: 1px solid var(--border); border-radius: var(--r-lg);
+    box-shadow: 0 1px 0 color-mix(in srgb, #fff 6%, transparent) inset,
+                0 18px 50px -28px color-mix(in srgb, var(--glow) 70%, transparent);
+  }
+  .ident { display: flex; align-items: center; gap: 14px; min-width: 0; }
+  .status-dot {
+    flex: none; width: 11px; height: 11px; border-radius: 50%;
+    background: var(--ok); box-shadow: 0 0 0 0 color-mix(in srgb, var(--ok) 60%, transparent);
+    animation: pulse 2.4s infinite;
+  }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--ok) 55%, transparent); }
+    70% { box-shadow: 0 0 0 8px transparent; }
+    100% { box-shadow: 0 0 0 0 transparent; }
+  }
+  .ident .meta { min-width: 0; }
+  .ident h1 {
+    font-size: var(--t-xl); font-weight: 680; letter-spacing: -0.02em; line-height: 1.05;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .ident .sub { font-size: var(--t-sm); color: var(--muted); margin-top: 3px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 52ch; }
+  .head-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; flex: none; }
+  .ts { font-size: var(--t-xs); color: var(--muted); font-family: var(--font-mono); }
+  .dna-chips { display: flex; gap: 5px; flex-wrap: wrap; justify-content: flex-end; max-width: 320px; }
+  .dna-chip {
+    width: 26px; height: 26px; border-radius: 7px; border: 1px solid color-mix(in srgb, #fff 14%, transparent);
+    position: relative; cursor: default; transition: transform .18s ease;
+  }
+  .dna-chip:hover { transform: translateY(-2px) scale(1.06); }
+  .dna-chip:hover::after {
+    content: attr(data-token); position: absolute; bottom: 130%; left: 50%; transform: translateX(-50%);
+    background: var(--raised); color: var(--text); padding: 4px 8px; border-radius: 6px; white-space: nowrap;
+    font-size: var(--t-xs); font-family: var(--font-mono); border: 1px solid var(--border); z-index: 5;
+    box-shadow: 0 8px 24px -10px #000;
+  }
+
+  /* ── Stat band ── */
+  .stats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: var(--gap); }
+  .stat {
+    background: linear-gradient(180deg, color-mix(in srgb, var(--raised) 70%, transparent), var(--surface));
+    border: 1px solid var(--border); border-radius: var(--r); padding: 14px 16px;
+    display: flex; flex-direction: column; gap: 4px; position: relative; overflow: hidden;
+  }
+  .stat::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 3px; background: var(--accent); opacity: .55; }
+  .stat .v { font-size: 26px; font-weight: 680; line-height: 1; }
+  .stat .l { font-size: var(--t-xs); text-transform: uppercase; letter-spacing: .1em; color: var(--muted); }
+  .stat.pass .v { color: var(--ok); } .stat.fail .v { color: var(--fail); }
+
+  /* ── Bento ── */
+  .bento { display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--gap); }
+  .span-12 { grid-column: span 12; } .span-7 { grid-column: span 7; }
+  .span-6 { grid-column: span 6; } .span-5 { grid-column: span 5; }
+  .panel {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg);
+    padding: 20px; box-shadow: 0 1px 0 color-mix(in srgb, #fff 5%, transparent) inset;
+    animation: rise .5s cubic-bezier(.2,.7,.2,1) both;
+  }
+  .bento .panel:nth-child(1){animation-delay:.04s} .bento .panel:nth-child(2){animation-delay:.09s}
+  .bento .panel:nth-child(3){animation-delay:.14s} .bento .panel:nth-child(4){animation-delay:.19s}
+  .bento .panel:nth-child(5){animation-delay:.24s} .bento .panel:nth-child(6){animation-delay:.29s}
+  .bento .panel:nth-child(7){animation-delay:.34s} .bento .panel:nth-child(8){animation-delay:.39s}
+  @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  .panel > h2 {
+    font-size: var(--t-xs); text-transform: uppercase; letter-spacing: .12em; color: var(--muted);
+    margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+  }
+  .panel > h2::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, var(--border), transparent); }
+
+  /* ── Waves ── */
+  .waves { display: flex; gap: 10px; flex-wrap: wrap; }
+  .wave-pill {
+    display: flex; align-items: center; gap: 8px; padding: 8px 14px; background: var(--bg);
+    border: 1px solid var(--border); border-radius: 999px; font-size: var(--t-sm); font-weight: 560;
+  }
+  .wave-pill .wdot { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); }
+  .wave-pill .cnt { color: var(--muted); font-family: var(--font-mono); font-size: var(--t-xs); }
+  .wave-pill.done { border-color: color-mix(in srgb, var(--ok) 55%, var(--border)); color: var(--ok); }
+  .wave-pill.done .wdot { background: var(--ok); }
+  .wave-pill.failed { border-color: color-mix(in srgb, var(--fail) 55%, var(--border)); color: var(--fail); }
+  .wave-pill.failed .wdot { background: var(--fail); }
+  .wave-pill.building { border-color: color-mix(in srgb, var(--primary) 55%, var(--border)); color: var(--primary); }
+  .wave-pill.building .wdot { background: var(--primary); animation: pulse 2s infinite; }
+  .wave-pill.qa { border-color: color-mix(in srgb, var(--warn) 55%, var(--border)); color: var(--warn); }
+  .wave-pill.qa .wdot { background: var(--warn); }
+
+  /* ── Sections ── */
+  .sections-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(212px, 1fr)); gap: 14px; }
+  .section-card {
+    background: var(--raised); border: 1px solid var(--border); border-radius: var(--r);
+    padding: 15px; transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+  }
+  .section-card:hover {
+    transform: translateY(-3px); border-color: color-mix(in srgb, var(--glow) 45%, var(--border));
+    box-shadow: 0 16px 36px -22px color-mix(in srgb, var(--glow) 80%, transparent);
+  }
+  .section-card .beat { font-size: var(--t-xs); text-transform: uppercase; letter-spacing: .14em; color: var(--muted); }
+  .section-card .name { font-weight: 640; font-size: var(--t-md); margin: 4px 0 10px; letter-spacing: -0.01em; }
+  .section-card .scorerow { display: flex; align-items: baseline; gap: 8px; }
+  .section-card .score { font-size: 30px; font-weight: 720; line-height: 1; }
+  .section-card .tier { font-size: var(--t-xs); font-weight: 600; }
+  .t-sotm .score, .t-honoree .score, .t-sotd .score, .t-sotm .tier, .t-honoree .tier, .t-sotd .tier { color: var(--ok); }
+  .t-sotm .score, .t-honoree .score { text-shadow: 0 0 22px color-mix(in srgb, var(--ok) 55%, transparent); }
+  .t-strong .score, .t-strong .tier { color: var(--primary); }
+  .t-baseline .score, .t-baseline .tier { color: var(--warn); }
+  .t-reject .score, .t-reject .tier { color: var(--fail); }
+  .t-none .score, .t-none .tier { color: var(--muted); }
+
+  .verdict { display: flex; align-items: center; gap: 6px; margin-top: 12px; flex-wrap: wrap;
+    padding-top: 12px; border-top: 1px solid color-mix(in srgb, var(--border) 70%, transparent); }
+  .badge { font-size: var(--t-xs); font-weight: 700; padding: 3px 9px; border-radius: 999px; letter-spacing: .05em; }
+  .badge.pass { background: color-mix(in srgb, var(--ok) 18%, transparent); color: var(--ok); }
+  .badge.fail { background: color-mix(in srgb, var(--fail) 18%, transparent); color: var(--fail); }
+  .badge.none { background: var(--bg); color: var(--muted); }
+  .chk { font-size: var(--t-xs); color: var(--fail); border: 1px solid color-mix(in srgb, var(--fail) 55%, transparent);
+    border-radius: 5px; padding: 1px 6px; font-family: var(--font-mono); }
+  .ceil { font-size: var(--t-xs); color: var(--muted); margin-left: auto; font-family: var(--font-mono); }
+
+  /* ── Hotspots ── */
+  .hot-row { display: grid; grid-template-columns: 120px 1fr auto; align-items: center; gap: 10px; margin: 9px 0; font-size: var(--t-sm); }
+  .hot-name { font-family: var(--font-mono); font-size: var(--t-xs); color: var(--text); }
+  .hot-track { background: color-mix(in srgb, var(--bg) 80%, transparent); border-radius: 4px; height: 11px; overflow: hidden; }
+  .hot-bar { height: 100%; width: 0; border-radius: 4px;
+    background: linear-gradient(90deg, color-mix(in srgb, var(--fail) 60%, var(--warn)), var(--fail));
+    transition: width .65s cubic-bezier(.2,.7,.2,1); }
+  .hot-count { font-family: var(--font-mono); color: var(--muted); font-size: var(--t-xs); }
+
+  /* ── Screenshots ── */
+  .shots-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+  .shot { border: 1px solid var(--border); border-radius: var(--r-sm); overflow: hidden; background: var(--bg);
+    transition: transform .2s ease, border-color .2s ease; }
+  .shot:hover { transform: translateY(-2px); border-color: color-mix(in srgb, var(--glow) 40%, var(--border)); }
+  .shot img { width: 100%; display: block; aspect-ratio: 16/10; object-fit: cover; object-position: top; }
+  .shot .lbl { font-size: var(--t-xs); color: var(--muted); padding: 7px 9px; text-transform: uppercase;
+    letter-spacing: .08em; font-family: var(--font-mono); }
+
+  /* ── Actions ── */
+  .actions { display: flex; gap: 10px; flex-wrap: wrap; }
+  .action-btn { padding: 9px 16px; background: var(--primary); color: #fff; border: none; border-radius: var(--r-sm);
+    cursor: pointer; font: 600 var(--t-sm) var(--font-sans); transition: transform .15s ease, filter .15s ease; }
+  .action-btn:hover { transform: translateY(-1px); filter: brightness(1.08); }
+  .action-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   .action-btn.secondary { background: transparent; border: 1px solid var(--border); color: var(--text); }
-  .empty { color: var(--muted); font-style: italic; padding: 24px; text-align: center; }
-  .queued-banner { background: var(--warn); color: var(--bg); padding: 12px; border-radius: 8px; margin-bottom: 16px; font-weight: 600; }
-  #graph-frame { width: 100%; height: 420px; border: none; border-radius: 8px; background: var(--bg); margin-top: 12px; }
-  #graph-summary code { background: var(--bg); padding: 2px 6px; border-radius: 4px; font-size: 12px; }
-  .verdict { display:flex; align-items:center; gap:6px; margin-top:8px; flex-wrap:wrap; }
-  .badge { font-size:10px; font-weight:700; padding:2px 8px; border-radius:999px; letter-spacing:.06em; }
-  .badge.pass { background:color-mix(in srgb, var(--ok) 18%, transparent); color:var(--ok); }
-  .badge.fail { background:color-mix(in srgb, var(--fail) 18%, transparent); color:var(--fail); }
-  .badge.none { background:var(--bg); color:var(--muted); }
-  .chk { font-size:10px; color:var(--fail); border:1px solid var(--fail); border-radius:4px; padding:1px 5px; }
-  .ceil { font-size:11px; color:var(--muted); margin-left:auto; }
-  .hot-row { display:flex; align-items:center; gap:8px; margin:6px 0; font-size:12px; }
-  .hot-bar { height:10px; background:var(--fail); border-radius:3px; min-width:2px; }
-  .hot-name { width:110px; color:var(--text); }
-  .hot-count { color:var(--muted); }
-  .shots-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(180px,1fr)); gap:12px; }
-  .shot { border:1px solid var(--border); border-radius:8px; overflow:hidden; background:var(--bg); }
-  .shot img { width:100%; display:block; }
-  .shot .lbl { font-size:10px; color:var(--muted); padding:6px 8px; text-transform:uppercase; letter-spacing:.08em; }
+  .hint { font-size: var(--t-xs); color: var(--muted); margin-top: 10px; }
+
+  /* ── Misc ── */
+  pre { background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-sm); padding: 13px;
+    white-space: pre-wrap; font: var(--t-sm)/1.5 var(--font-mono); max-height: 300px; overflow: auto; color: var(--muted); }
+  .empty { color: var(--muted); font-style: italic; padding: 20px; text-align: center; font-size: var(--t-sm); }
+  .queued-banner { background: linear-gradient(90deg, var(--warn), color-mix(in srgb, var(--warn) 70%, var(--fail)));
+    color: #1a1205; padding: 12px 16px; border-radius: var(--r); margin-bottom: var(--gap); font-weight: 650; font-size: var(--t-sm); }
+  #boot-error { background: color-mix(in srgb, var(--fail) 18%, var(--surface)); border: 1px solid var(--fail);
+    color: var(--text); padding: 14px 18px; border-radius: var(--r); margin-bottom: var(--gap); font-size: var(--t-sm); }
+  #graph-frame { width: 100%; height: 420px; border: none; border-radius: var(--r-sm); background: var(--bg); margin-top: 12px; }
+  #graph-summary { font-size: var(--t-sm); color: var(--muted); }
+  #graph-summary code { background: var(--bg); padding: 2px 7px; border-radius: 4px; font-family: var(--font-mono); }
+
+  @media (max-width: 1100px) {
+    .bento { grid-template-columns: repeat(6, 1fr); }
+    .span-7, .span-12 { grid-column: span 6; } .span-5, .span-6 { grid-column: span 6; }
+    .stats { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 680px) {
+    .bento { grid-template-columns: 1fr; } [class*="span-"] { grid-column: 1 / -1; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    header.top { flex-direction: column; align-items: flex-start; }
+    .head-right { align-items: flex-start; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
 </style>
 </head>
 <body>
 <div class="container">
-  <header>
-    <div>
-      <h1><span class="status-dot"></span><span id="proj-name">Genorah Dashboard</span></h1>
-      <p style="font-size:12px;color:var(--muted);margin-top:4px;" id="proj-sub">—</p>
-      <p style="font-size:12px; color: var(--muted); margin-top: 4px;" id="ts">—</p>
+  <div id="boot-error" hidden></div>
+
+  <header class="top">
+    <div class="ident">
+      <span class="status-dot" title="live"></span>
+      <div class="meta">
+        <h1 id="proj-name">Genorah Dashboard</h1>
+        <div class="sub" id="proj-sub">—</div>
+      </div>
     </div>
-    <div class="dna-chips" id="dna-chips"></div>
+    <div class="head-right">
+      <div class="ts" id="ts">connecting…</div>
+      <div class="dna-chips" id="dna-chips"></div>
+    </div>
   </header>
 
-  <div id="queued-banner" style="display:none;"></div>
+  <div class="stats" id="stats"></div>
 
-  <section>
-    <h2>Waves</h2>
-    <div class="waves" id="waves"></div>
-  </section>
+  <div id="queued-banner" class="queued-banner" style="display:none;"></div>
 
-  <section>
-    <h2>Sections</h2>
-    <div class="sections-grid" id="sections"></div>
-  </section>
+  <div class="bento">
+    <section class="panel span-12"><h2>Quick Actions</h2>
+      <div class="actions">
+        <button class="action-btn" data-cmd="audit">Queue /gen:audit</button>
+        <button class="action-btn secondary" data-cmd="status">Queue /gen:status</button>
+        <button class="action-btn secondary" data-cmd="self-audit">Queue /gen:self-audit</button>
+      </div>
+      <p class="hint">Buttons queue commands; run the matching /gen:* command in your Claude Code session.</p>
+    </section>
 
-  <section>
-    <h2>Gate Hotspots</h2>
-    <div id="hotspots"></div>
-  </section>
+    <section class="panel span-12"><h2>Waves</h2><div class="waves" id="waves"></div></section>
 
-  <section>
-    <h2>Visual QA — latest capture</h2>
-    <div class="shots-grid" id="shots"></div>
-  </section>
+    <section class="panel span-12"><h2>Sections</h2><div class="sections-grid" id="sections"></div></section>
 
-  <section>
-    <h2>Quick Actions</h2>
-    <div class="actions">
-      <button class="action-btn" onclick="queueAction('audit')">Queue /gen:audit</button>
-      <button class="action-btn secondary" onclick="queueAction('status')">Queue /gen:status</button>
-      <button class="action-btn secondary" onclick="queueAction('self-audit')">Queue /gen:self-audit</button>
-    </div>
-    <p style="font-size: 11px; color: var(--muted); margin-top: 8px;">Buttons queue commands; run the matching /gen:* command in your Claude Code session.</p>
-  </section>
+    <section class="panel span-5"><h2>Gate Hotspots</h2><div id="hotspots"></div></section>
 
-  <section id="graph-panel">
-    <h2>Knowledge Graph</h2>
-    <div id="graph-summary"></div>
-    <iframe id="graph-frame" src="/api/graph" title="Knowledge graph"></iframe>
-  </section>
+    <section class="panel span-7"><h2>Visual QA — latest capture</h2><div class="shots-grid" id="shots"></div></section>
 
-  <section>
-    <h2>Context</h2>
-    <pre id="context">loading…</pre>
-  </section>
+    <section class="panel span-6"><h2>Context</h2><pre id="context">loading…</pre></section>
 
-  <section>
-    <h2>Decisions (tail)</h2>
-    <pre id="decisions">loading…</pre>
-  </section>
+    <section class="panel span-6"><h2>Decisions (tail)</h2><pre id="decisions">loading…</pre></section>
+
+    <section class="panel span-12" id="graph-panel"><h2>Knowledge Graph</h2>
+      <div id="graph-summary"></div>
+      <iframe id="graph-frame" title="Knowledge graph"></iframe>
+    </section>
+  </div>
 </div>
 
-<script>
-function render(state) {
-  const meta = state.project_meta || {};
-  document.getElementById('proj-name').textContent = meta.name || 'Genorah Dashboard';
-  document.getElementById('proj-sub').textContent =
-    [meta.archetype, meta.goal].filter(Boolean).join(' · ') || '—';
-  document.getElementById('ts').textContent = 'last update: ' + state.ts;
+<script type="module">
+let buildViewModel;
+try {
+  ({ buildViewModel } = await import('/scripts/dashboard/view-model.mjs'));
+} catch (e) {
+  const b = document.getElementById('boot-error');
+  b.hidden = false;
+  b.textContent = 'renderer failed to load: ' + (e && e.message ? e.message : e);
+  throw e;
+}
 
-  // DNA chips
-  const chips = document.getElementById('dna-chips');
-  chips.innerHTML = '';
-  for (const [tok, val] of Object.entries(state.dna_tokens || {})) {
+const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $ = id => document.getElementById(id);
+const prev = { stats: {}, scores: {} };
+let firstPaint = true;
+
+// Animate a numeric element from → to. Instant when reduced-motion or no change.
+function countUp(el, from, to) {
+  const target = Number(to);
+  if (REDUCED || !Number.isFinite(target) || from === target) { el.textContent = String(to); return; }
+  const start = Number.isFinite(from) ? from : 0;
+  const t0 = performance.now(), dur = 600;
+  function step(now) {
+    const k = Math.min(1, (now - t0) / dur);
+    const eased = 1 - Math.pow(1 - k, 3);
+    el.textContent = String(Math.round(start + (target - start) * eased));
+    if (k < 1) requestAnimationFrame(step);
+    else el.textContent = String(to);
+  }
+  requestAnimationFrame(step);
+}
+
+function applyTheme(theme) {
+  const root = document.documentElement;
+  for (const [k, v] of Object.entries(theme || {})) root.style.setProperty('--' + k, v);
+}
+
+function renderStats(stats) {
+  const tiles = [
+    { key: 'total', label: 'Sections', cls: '' },
+    { key: 'verified', label: 'Verified', cls: '' },
+    { key: 'floorPass', label: 'Floor Pass', cls: 'pass' },
+    { key: 'floorFail', label: 'Floor Fail', cls: 'fail' },
+    { key: 'avgScore', label: 'Avg Score', cls: '' },
+  ];
+  const host = $('stats');
+  host.replaceChildren();
+  for (const t of tiles) {
+    const val = stats[t.key];
+    const tile = document.createElement('div');
+    tile.className = ('stat ' + t.cls).trim();
+    const v = document.createElement('div');
+    v.className = 'v num';
+    const l = document.createElement('div');
+    l.className = 'l';
+    l.textContent = t.label;
+    if (val == null) { v.textContent = '—'; }
+    else { countUp(v, firstPaint ? 0 : (prev.stats[t.key] ?? val), val); prev.stats[t.key] = val; }
+    tile.append(v, l);
+    host.appendChild(tile);
+  }
+}
+
+function renderWaves(waves) {
+  const host = $('waves');
+  host.replaceChildren();
+  if (!waves.length) { host.appendChild(emptyEl('no waves defined')); return; }
+  for (const w of waves) {
+    const pill = document.createElement('div');
+    pill.className = ('wave-pill ' + (w.status || '')).trim();
+    const dot = document.createElement('span'); dot.className = 'wdot';
+    const lbl = document.createElement('span'); lbl.textContent = w.label;
+    pill.append(dot, lbl);
+    if (w.count) { const c = document.createElement('span'); c.className = 'cnt'; c.textContent = '·' + w.count; pill.appendChild(c); }
+    host.appendChild(pill);
+  }
+}
+
+function renderSections(sections) {
+  const host = $('sections');
+  host.replaceChildren();
+  if (!sections.length) { host.appendChild(emptyEl('no sections yet — run /gen:plan')); return; }
+  for (const s of sections) {
+    const card = document.createElement('div');
+    card.className = 'section-card t-' + s.tierKlass;
+    card.appendChild(divText('beat', s.beat));
+    card.appendChild(divText('name', s.name));
+
+    const row = document.createElement('div'); row.className = 'scorerow';
+    const score = document.createElement('div'); score.className = 'score num';
+    if (s.score == null) { score.textContent = '—'; }
+    else { countUp(score, firstPaint ? 0 : (prev.scores[s.name] ?? s.score), s.score); prev.scores[s.name] = s.score; }
+    const tier = document.createElement('div'); tier.className = 'tier'; tier.textContent = s.tierLabel;
+    row.append(score, tier);
+    card.appendChild(row);
+
+    const vr = document.createElement('div'); vr.className = 'verdict';
+    const badge = document.createElement('span');
+    badge.className = 'badge ' + s.verdict.state;
+    badge.textContent = s.verdict.label;
+    vr.appendChild(badge);
+    for (const chk of s.verdict.failures) {
+      const c = document.createElement('span'); c.className = 'chk'; c.textContent = chk; vr.appendChild(c);
+    }
+    if (s.verdict.ceiling != null) {
+      const ceil = document.createElement('span'); ceil.className = 'ceil'; ceil.textContent = 'ceiling ' + s.verdict.ceiling; vr.appendChild(ceil);
+    }
+    card.appendChild(vr);
+    host.appendChild(card);
+  }
+}
+
+function renderHotspots(hotspots) {
+  const host = $('hotspots');
+  host.replaceChildren();
+  if (!hotspots.length) { host.appendChild(emptyEl('no failures — floor clean')); return; }
+  for (const h of hotspots) {
+    const row = document.createElement('div'); row.className = 'hot-row';
+    const name = document.createElement('span'); name.className = 'hot-name'; name.textContent = h.check;
+    const track = document.createElement('div'); track.className = 'hot-track';
+    const bar = document.createElement('div'); bar.className = 'hot-bar';
+    track.appendChild(bar);
+    requestAnimationFrame(() => { bar.style.width = h.px + 'px'; }); // animate from 0 → px
+    const cnt = document.createElement('span'); cnt.className = 'hot-count'; cnt.textContent = h.count;
+    row.append(name, track, cnt);
+    host.appendChild(row);
+  }
+}
+
+function renderShots(screenshots) {
+  const host = $('shots');
+  host.replaceChildren();
+  if (!screenshots.length) { host.appendChild(emptyEl('no captures yet — run /gen:audit')); return; }
+  for (const sh of screenshots) {
+    const cell = document.createElement('div'); cell.className = 'shot';
+    const img = document.createElement('img');
+    img.loading = 'lazy'; img.alt = (sh.label || '') + ' screenshot';
+    img.src = '/api/screenshot/' + encodeURIComponent(sh.file);
+    const lbl = document.createElement('div'); lbl.className = 'lbl';
+    lbl.textContent = (sh.label || '') + ' · ' + sh.width + 'px';
+    cell.append(img, lbl);
+    host.appendChild(cell);
+  }
+}
+
+function renderGraph(graph) {
+  const summary = $('graph-summary'), frame = $('graph-frame');
+  if (graph && graph.exists) {
+    summary.textContent = `${graph.nodes} nodes · ${graph.edges} edges · updated ${Math.round((graph.ageMs || 0) / 1000)}s ago`;
+    if (!frame.getAttribute('src')) frame.src = '/api/graph'; // lazy: only fetch when a graph exists
+    frame.style.display = '';
+  } else {
+    summary.innerHTML = 'No graph yet — run <code>gen:graphify scan</code>';
+    frame.removeAttribute('src');
+    frame.style.display = 'none';
+  }
+}
+
+function emptyEl(text) { const e = document.createElement('div'); e.className = 'empty'; e.textContent = text; return e; }
+function divText(cls, text) { const d = document.createElement('div'); d.className = cls; d.textContent = text; return d; }
+
+function render(vm) {
+  applyTheme(vm.theme);
+  $('proj-name').textContent = vm.project.name;
+  $('proj-sub').textContent = vm.project.sub;
+  $('ts').textContent = 'last update · ' + vm.tsLabel;
+
+  const chips = $('dna-chips');
+  chips.replaceChildren();
+  for (const { token, value } of vm.dnaChips) {
     const chip = document.createElement('div');
     chip.className = 'dna-chip';
-    chip.style.background = val;
-    chip.setAttribute('data-token', tok + ': ' + val);
+    chip.style.background = value;
+    chip.setAttribute('data-token', token + ': ' + value);
     chips.appendChild(chip);
   }
 
-  // Waves (derived from MASTER-PLAN) — textContent-safe
-  const waves = document.getElementById('waves');
-  waves.replaceChildren();
-  const waveMatches = [...(state.master_plan || '').matchAll(/wave[:\s]+(\d+)/gi)];
-  const uniqWaves = [...new Set(waveMatches.map(m => m[1]))];
-  if (!uniqWaves.length) {
-    const empty = document.createElement('div');
-    empty.className = 'empty';
-    empty.textContent = 'no waves defined';
-    waves.appendChild(empty);
-  } else {
-    for (const n of uniqWaves) {
-      const pill = document.createElement('div');
-      pill.className = 'wave-pill';
-      pill.textContent = `Wave ${n}`;
-      waves.appendChild(pill);
-    }
-  }
+  renderStats(vm.stats);
+  renderWaves(vm.waves);
+  renderSections(vm.sections);
+  renderHotspots(vm.hotspots);
+  renderShots(vm.screenshots);
+  renderGraph(vm.graph);
 
-  // Sections — use textContent for all data fields (XSS-safe)
-  const sec = document.getElementById('sections');
-  sec.replaceChildren();
-  if (!(state.sections || []).length) {
-    const empty = document.createElement('div');
-    empty.className = 'empty';
-    empty.textContent = 'no sections yet — run /gen:plan';
-    sec.appendChild(empty);
-  } else {
-    for (const s of state.sections) {
-      const score = s.score ?? '—';
-      const scoreClass = s.score == null ? '' : s.score >= 200 ? '' : s.score >= 170 ? 'low' : 'fail';
-      const card = document.createElement('div');
-      card.className = 'section-card';
-      const makeDiv = (cls, text) => { const d = document.createElement('div'); d.className = cls; d.textContent = text; return d; };
-      card.appendChild(makeDiv('beat', s.beat || '—'));
-      card.appendChild(makeDiv('name', s.name));
-      card.appendChild(makeDiv(`score ${scoreClass}`.trim(), String(score)));
-      card.appendChild(makeDiv('tier', s.tier || s.status || 'pending'));
-      const v = s.verdict;
-      const vr = document.createElement('div');
-      vr.className = 'verdict';
-      const badge = document.createElement('span');
-      if (!v) { badge.className = 'badge none'; badge.textContent = 'not verified'; }
-      else if (v.floorPass) { badge.className = 'badge pass'; badge.textContent = 'FLOOR PASS'; }
-      else { badge.className = 'badge fail'; badge.textContent = 'FLOOR FAIL'; }
-      vr.appendChild(badge);
-      if (v && v.floorPass === false) {
-        for (const f of (v.failures || [])) {
-          const chip = document.createElement('span');
-          chip.className = 'chk'; chip.textContent = f.check;
-          vr.appendChild(chip);
-        }
-      }
-      if (v && v.ceiling != null) {
-        const ceil = document.createElement('span');
-        ceil.className = 'ceil'; ceil.textContent = 'ceiling ' + v.ceiling;
-        vr.appendChild(ceil);
-      }
-      card.appendChild(vr);
-      sec.appendChild(card);
-    }
-  }
-
-  // Gate Hotspots
-  const hot = document.getElementById('hotspots');
-  hot.replaceChildren();
-  const hotspots = state.hotspots || [];
-  if (!hotspots.length) {
-    const e = document.createElement('div'); e.className = 'empty';
-    e.textContent = 'no failures — floor clean'; hot.appendChild(e);
-  } else {
-    const max = Math.max(...hotspots.map(h => h.count));
-    for (const h of hotspots) {
-      const row = document.createElement('div'); row.className = 'hot-row';
-      const name = document.createElement('span'); name.className = 'hot-name'; name.textContent = h.check;
-      const bar = document.createElement('div'); bar.className = 'hot-bar';
-      bar.style.width = Math.round((h.count / max) * 180) + 'px';
-      const cnt = document.createElement('span'); cnt.className = 'hot-count'; cnt.textContent = h.count;
-      row.append(name, bar, cnt); hot.appendChild(row);
-    }
-  }
-
-  // Screenshot grid
-  const shots = document.getElementById('shots');
-  shots.replaceChildren();
-  const screenshots = state.screenshots || [];
-  if (!screenshots.length) {
-    const e = document.createElement('div'); e.className = 'empty';
-    e.textContent = 'no captures yet — run /gen:audit'; shots.appendChild(e);
-  } else {
-    for (const sh of screenshots) {
-      const cell = document.createElement('div'); cell.className = 'shot';
-      const img = document.createElement('img');
-      img.loading = 'lazy'; img.alt = sh.label;
-      img.src = '/api/screenshot/' + encodeURIComponent(sh.file);
-      const lbl = document.createElement('div'); lbl.className = 'lbl';
-      lbl.textContent = sh.label + ' · ' + sh.width + 'px';
-      cell.append(img, lbl); shots.appendChild(cell);
-    }
-  }
-
-  // Action queue
-  const banner = document.getElementById('queued-banner');
-  if (state.action_queue && state.action_queue.length) {
+  const banner = $('queued-banner');
+  if (vm.queue.length) {
     banner.style.display = 'block';
-    banner.className = 'queued-banner';
-    banner.textContent = `⚡ ${state.action_queue.length} queued action(s): ${state.action_queue.join(', ')}`;
-  } else {
-    banner.style.display = 'none';
-  }
+    banner.textContent = `⚡ ${vm.queue.length} queued action(s): ${vm.queue.join(', ')}`;
+  } else { banner.style.display = 'none'; }
 
-  // Knowledge Graph panel
-  const graphSummary = document.getElementById('graph-summary');
-  const graphFrame = document.getElementById('graph-frame');
-  if (state.graph && state.graph.exists) {
-    const { nodes, edges, ageMs } = state.graph;
-    graphSummary.textContent = `${nodes} nodes · ${edges} edges · updated ${Math.round(ageMs / 1000)}s ago`;
-    graphFrame.style.display = '';
-  } else {
-    graphSummary.innerHTML = 'No graph yet — run <code>gen:graphify scan</code>';
-    graphFrame.style.display = 'none';
-  }
+  $('context').textContent = vm.context || '(empty)';
+  $('decisions').textContent = vm.decisions || '(empty)';
 
-  document.getElementById('context').textContent = state.context || '(empty)';
-  document.getElementById('decisions').textContent = state.decisions_tail || '(empty)';
+  firstPaint = false;
 }
 
 async function queueAction(cmd) {
-  await fetch('/api/action/' + cmd, { method: 'POST', body: JSON.stringify({ at: new Date().toISOString() }) });
-  alert('Queued /gen:' + cmd + '. Run it in your Claude Code session.');
+  try {
+    await fetch('/api/action/' + encodeURIComponent(cmd), {
+      method: 'POST', body: JSON.stringify({ at: new Date().toISOString() }),
+    });
+    alert('Queued /gen:' + cmd + '. Run it in your Claude Code session.');
+  } catch { alert('Could not queue action — is the dashboard server still running?'); }
+}
+for (const btn of document.querySelectorAll('.action-btn')) {
+  btn.addEventListener('click', () => queueAction(btn.dataset.cmd));
 }
 
 const evt = new EventSource('/api/sse');
 evt.onmessage = e => {
-  try { render(JSON.parse(e.data)); } catch {}
+  try { render(buildViewModel(JSON.parse(e.data), new Date().toISOString())); } catch (err) { console.error('render failed', err); }
 };
 evt.onerror = () => setTimeout(() => location.reload(), 3000);
 </script>

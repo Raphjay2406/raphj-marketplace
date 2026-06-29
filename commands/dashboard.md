@@ -29,18 +29,25 @@ See `.claude-plugin/companion/dashboard-server.mjs` for implementation.
 
 If 4455 is busy, fall through 4456, 4457 ... up to 4465. Record chosen port in `.dashboard-info`.
 
+## Look & feel (v4.4.0 redesign)
+
+The dashboard **wears the project's own Design DNA**: on every update it applies the DNA color tokens (`bg`, `surface`, `text`, `primary`, `accent`, `glow`, …) as CSS variables, so each project's cockpit is skinned in its own palette, with a fallback dark theme when tokens are absent. Presentation logic lives in the pure, unit-tested `scripts/dashboard/view-model.mjs` (`buildViewModel`), which the browser imports from the server at `/scripts/dashboard/view-model.mjs` — the same code `node:test` covers, never a duplicate. The surface is a composed **bento** layout with a refined sans/mono type system, layered depth, and motion (staggered panel entrance, number count-ups on change, growing hotspot bars, a live status pulse) — **all gated by `prefers-reduced-motion`**. Zero dependencies, no build step, no web-font fetch (offline-first). Rendering is XSS-safe (`textContent` / element construction; `encodeURIComponent` on URLs).
+
 ## What the dashboard shows
 
-1. **Project header** — real project name, archetype, and goal from `project_meta`; DNA palette swatches (12 chips).
-2. **Wave strip** — pill per wave, color encodes status (pending/building/qa/done/failed).
-3. **Sections grid** — card per section: beat icon, current status, latest score.
-4. **Section verdicts** — each section card shows its Verification Spine FLOOR pass/fail, the failing checks as chips, and the advisory Ceiling score.
-5. **Gate Hotspots** — which floor checks fail most across sections, rendered as a horizontal bar chart.
-6. **Visual QA** — the latest 4-breakpoint screenshot capture from `audit/`, served via `/api/screenshot/`.
-7. **Decision tail** — last 10 entries from `DECISIONS.md`.
+1. **Project header** — real project name, archetype, and goal from `project_meta`; DNA palette swatches; live "last update" age.
+2. **Stat band** — at-a-glance counts derived from `summarize`: total sections, verified, floor-pass, floor-fail, average score (count-up animated).
+3. **Wave strip** — pill per wave with a status dot, color-encoded (pending/building/qa/done/failed); status is derived from each wave's real section verdicts/scores (sections carry an additive `wave` parsed from `PLAN.md`), falling back to scraping `MASTER-PLAN.md` when sections lack a wave.
+4. **Sections grid** — card per section: beat, name, latest score in the gate's named tier (Reject→SOTM-Ready) with tier-keyed color.
+5. **Section verdicts** — each card shows its Verification Spine FLOOR pass/fail, the failing checks as chips, and the advisory Ceiling score.
+6. **Gate Hotspots** — which floor checks fail most across sections, as an animated horizontal bar chart.
+7. **Visual QA** — the latest 4-breakpoint screenshot capture from `audit/`, served via `/api/screenshot/`.
 8. **Context pane** — current CONTEXT.md rendered.
-9. **Quick actions** — re-run audit, regen section, view graph (`gen:graphify status`). Action buttons write to `.planning/genorah/.action-queue/` which user-prompt hook detects to suggest the matching `/gen:*` command on next prompt.
-10. **Knowledge graph panel** — embeds graphify's interactive `graph.html` with a node/edge/freshness summary; prompts `gen:graphify scan` when no graph exists.
+9. **Decision tail** — last entries from `DECISIONS.md`.
+10. **Quick actions** — queue `audit` / `status` / `self-audit`. Buttons write to `.planning/genorah/.action-queue/` which the user-prompt hook detects to suggest the matching `/gen:*` command on next prompt.
+11. **Knowledge graph panel** — embeds graphify's interactive `graph.html` (lazy-loaded only when a graph exists) with a node/edge/freshness summary; prompts `gen:graphify scan` when no graph exists.
+
+> **Phase status:** v4.4.0 is Phase 2 (visual redesign) of the dashboard initiative. Phase 3 (section drill-down, screenshot lightbox, filtering) follows as its own release.
 
 ## Auto-refresh
 

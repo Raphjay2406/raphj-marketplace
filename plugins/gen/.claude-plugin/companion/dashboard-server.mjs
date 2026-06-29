@@ -23,6 +23,7 @@ import { readVerdict } from '../../scripts/verify/verdict.mjs';
 import { parseProjectMeta, computeHotspots, listAuditShots } from '../../scripts/dashboard/signals.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const repoRoot = path.join(__dirname, '..', '..'); // .claude-plugin/companion → repo root
 const root = () => path.join(process.cwd(), '.planning', 'genorah');
 const PORT_RANGE = [4455, 4456, 4457, 4458, 4459, 4460, 4461, 4462, 4463, 4464, 4465];
 const clients = new Set();
@@ -53,13 +54,14 @@ export function scanSections() {
     const tier = (summary.match(/Tier:\s*([A-Za-z-]+)/i) || [])[1];
     const status = (summary.match(/Status:\s*([A-Za-z]+)/i) || [])[1] || 'pending';
     const beat = (plan.match(/beat:\s*(\w+)/i) || [])[1];
+    const wave = (plan.match(/wave:\s*(\d+)/i) || [])[1];
     const v = readVerdict(dir);
     const verdict = v ? {
       floorPass: v.floor?.pass ?? null,
       failures: v.floor?.failures ?? [],
       ceiling: v.ceiling?.score ?? null,
     } : null;
-    return { name, score: score ? +score : null, tier, status, beat, verdict };
+    return { name, score: score ? +score : null, tier, status, beat, wave: wave ? +wave : null, verdict };
   }).filter(Boolean);
 }
 
@@ -138,6 +140,13 @@ const server = http.createServer((req, res) => {
 
   if (p === '/' || p === '/index.html') {
     streamFile(res, path.join(__dirname, 'dashboard.html'), 'text/html; charset=utf-8');
+  } else if (p.startsWith('/scripts/dashboard/')) {
+    // Serve the tested view-model (and any future dashboard module) to the browser,
+    // so the page imports the same code node:test covers instead of duplicating it.
+    const dir = path.join(repoRoot, 'scripts', 'dashboard');
+    const abs = path.join(dir, p.slice('/scripts/dashboard/'.length));
+    if (!abs.startsWith(dir + path.sep) || !abs.endsWith('.mjs')) return res.writeHead(403).end('forbidden');
+    streamFile(res, abs, 'text/javascript; charset=utf-8');
   } else if (p === '/api/state') {
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify(snapshot()));

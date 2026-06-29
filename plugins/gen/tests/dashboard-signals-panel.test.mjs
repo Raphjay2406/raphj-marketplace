@@ -5,12 +5,15 @@ import { readFileSync } from 'node:fs';
 
 const html = readFileSync('.claude-plugin/companion/dashboard.html', 'utf8');
 
-test('renders the real project name from project_meta', () => {
-  assert.match(html, /project_meta/);
+test('renders the real project name from the project view-model', () => {
+  // v4.4.0: project_meta → vm.project.name (derived in the tested view-model),
+  // painted into #proj-name by the renderer.
+  assert.match(html, /id="proj-name"/);
+  assert.match(html, /project\.name/);
 });
 test('section card renders the floor verdict (PASS/FAIL) from verdict', () => {
   assert.match(html, /verdict/);
-  assert.match(html, /floorPass/);
+  assert.match(html, /verdict\.state|verdict\.label/);
 });
 test('has a gate hotspots panel reading state.hotspots', () => {
   assert.match(html, /state\.hotspots|\.hotspots\b/);
