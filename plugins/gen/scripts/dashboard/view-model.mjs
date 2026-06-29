@@ -108,6 +108,41 @@ export function deriveWaves(sections = [], masterPlan = '') {
     .map(n => ({ n, label: `Wave ${n}`, count: 0, status: 'planned' }));
 }
 
+// ── Phase 3: interaction helpers ──
+
+// Filter Phase-2 view-model sections by a case-insensitive name substring and a
+// verdict facet (all|pass|fail|none). Pure: returns a new array, never mutates.
+export function filterSections(sections = [], opts = {}) {
+  const list = Array.isArray(sections) ? sections : [];
+  const q = typeof opts.q === 'string' ? opts.q.trim().toLowerCase() : '';
+  const facet = typeof opts.verdict === 'string' ? opts.verdict : 'all';
+  const facetActive = facet === 'pass' || facet === 'fail' || facet === 'none';
+  return list.filter(s => {
+    if (q && !String(s?.name ?? '').toLowerCase().includes(q)) return false;
+    if (facetActive && (s?.verdict?.state ?? 'none') !== facet) return false;
+    return true;
+  });
+}
+
+// Format the raw /api/section/:name payload for the detail drawer. Unlike the
+// card mapping, this KEEPS the full {check, detail} failures. Pure.
+export function buildSectionDetail(raw = {}) {
+  const r = raw && typeof raw === 'object' ? raw : {};
+  const summary = typeof r.summary === 'string' ? r.summary : '';
+  const plan = typeof r.plan === 'string' ? r.plan : '';
+  const beat = (plan.match(/beat:\s*(\w+)/i) || [])[1] || null;
+  const waveRaw = (plan.match(/wave:\s*(\d+)/i) || [])[1];
+  const v = r.verdict;
+  const verdict = !v || typeof v !== 'object'
+    ? { state: 'none', label: 'not verified', failures: [], ceiling: null }
+    : v.floor?.pass === true
+      ? { state: 'pass', label: 'FLOOR PASS', failures: [], ceiling: v.ceiling?.score ?? null }
+      : v.floor?.pass === false
+        ? { state: 'fail', label: 'FLOOR FAIL', failures: Array.isArray(v.floor?.failures) ? v.floor.failures : [], ceiling: v.ceiling?.score ?? null }
+        : { state: 'none', label: 'not verified', failures: [], ceiling: v.ceiling?.score ?? null };
+  return { name: r.name ?? null, summary, plan, beat, wave: waveRaw ? +waveRaw : null, verdict };
+}
+
 export function buildViewModel(snapshot = {}, nowIso = '') {
   const s = snapshot && typeof snapshot === 'object' ? snapshot : {};
   const meta = s.project_meta || {};

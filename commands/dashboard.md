@@ -47,7 +47,16 @@ The dashboard **wears the project's own Design DNA**: on every update it applies
 10. **Quick actions** — queue `audit` / `status` / `self-audit`. Buttons write to `.planning/genorah/.action-queue/` which the user-prompt hook detects to suggest the matching `/gen:*` command on next prompt.
 11. **Knowledge graph panel** — embeds graphify's interactive `graph.html` (lazy-loaded only when a graph exists) with a node/edge/freshness summary; prompts `gen:graphify scan` when no graph exists.
 
-> **Phase status:** v4.4.0 is Phase 2 (visual redesign) of the dashboard initiative. Phase 3 (section drill-down, screenshot lightbox, filtering) follows as its own release.
+## Interaction (v4.5.0)
+
+The cockpit is a place you can investigate from, not just watch:
+
+- **Section drill-down** — click (or keyboard-activate) any section card to open a **detail drawer**: beat + wave, the full Verification Spine verdict with **every failing check and its `detail` text** (the grid only shows check names), the advisory ceiling, and the section's `SUMMARY.md` + `PLAN.md`. Detail is fetched on demand from `GET /api/section/<name>` (path-locked reader), keeping the live SSE stream lean.
+- **Screenshot lightbox** — click a Visual QA thumbnail to open it full-size, with `←`/`→` to step across the captured breakpoints and `Esc` to close.
+- **Section filtering** — filter the grid by floor verdict (All / Pass / Fail / Unverified) and by a free-text name match; filters apply instantly and persist across live updates.
+- **Accessibility** — cards/thumbnails are real buttons (keyboard-activatable, focus rings); drawer and lightbox are `role="dialog"` with `Esc` close, focus trapping, and focus restored to the trigger on close; all new motion is `prefers-reduced-motion`-gated.
+
+> **Phase status:** v4.5.0 completes the three-phase dashboard redesign — Phase 1 (signals, v4.3.1), Phase 2 (visual redesign, v4.4.0), Phase 3 (interaction / drill-down, v4.5.0).
 
 ## Auto-refresh
 
