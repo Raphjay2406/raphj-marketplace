@@ -38,7 +38,7 @@ scripts/ingest/ (v3.21+ runtime for codebase/URL ingestion into the pipeline)
 - **Agents:** `agents/{agent-name}.md` -- role definition, input/output contracts, context budget
 - **Commands:** `commands/{command-name}.md` -- description, argument-hint, numbered workflow steps
 - **Hooks:** `.claude-plugin/hooks/` -- 7 hooks: `session-start.mjs`, `pre-tool-use.mjs`, `post-tool-use.mjs`, `user-prompt.mjs`, `pre-compact.mjs`, `session-end.mjs`, `dna-compliance-check.sh`
-- **MCP Servers:** `.claude-plugin/.mcp.json` -- optional MCP servers (gpt-image, stitch, playwright, graphify, …). **gpt-image** (OpenAI gpt-image-2) replaced the old Gemini **nano-banana** image server — see "AI Image Generation" for the relocation + cache gotcha.
+- **MCP Servers:** `.mcp.json` **at the plugin ROOT** (NOT `.claude-plugin/.mcp.json`) -- optional MCP servers (gpt-image, stitch, playwright, graphify, …). Claude Code's plugin loader only reads `<plugin>/.mcp.json`; the file lived in `.claude-plugin/` until v4.5.4, so none of these servers actually loaded — see "AI Image Generation" for that fix + the cache gotcha. `sync-mirror` copies it to `plugins/gen/.mcp.json` (a root file). **gpt-image** (OpenAI gpt-image-2) replaced the old Gemini **nano-banana** image server.
 - **Template:** `skills/_skill-template/SKILL.md` -- canonical 4-layer format reference
 
 ## Agents (21 total)
@@ -57,7 +57,7 @@ Figma Translator
 
 ## MCP Server Integrations
 
-Four optional MCP servers declared in `.claude-plugin/.mcp.json`:
+Optional MCP servers declared in the plugin-root `.mcp.json`:
 
 | Server | Package | Purpose |
 |--------|---------|---------|
@@ -188,6 +188,13 @@ self-contained **esbuild bundle, `index.mjs`** (deps inlined; TS source in `src/
 `${CLAUDE_PLUGIN_ROOT}/mcp-servers/gpt-image/index.mjs` — **portable, ships with the plugin into the cache, survives reinstall**
 (no machine-specific path). Rebuild after a source change: `cd mcp-servers/gpt-image && npm install && npm run bundle`
 (esbuild → `index.mjs`). `sync-mirror` now also copies `mcp-servers/` into `plugins/gen/`.
+
+**⚠️ The MCP config lives at the plugin ROOT `.mcp.json` — NOT `.claude-plugin/.mcp.json`.** Claude Code's plugin
+loader only reads `<plugin>/.mcp.json`; this config sat in `.claude-plugin/` from day one, so **none** of gen's
+bundled servers (gpt-image, graphify, 3dsvg-export, …) ever loaded — every pipeline silently fell back to text
+prompts. Fixed in **v4.5.4**: `.mcp.json` moved to the repo/plugin root, added to `sync-mirror`'s `FILES_TO_SYNC`
+(→ `plugins/gen/.mcp.json`, a root file). Optional env vars now use `${VAR:-default}` so an unset value can't make
+the loader drop the whole server. Regression-guarded by `tests/mcp-config-location.test.mjs`.
 
 **API key:** a bundled server can't ship a `.env` (gitignored + would land in the cache), so the key comes from the
 **OS environment** — `${OPENAI_API_KEY}` in `.mcp.json`. Set it once: `setx OPENAI_API_KEY "sk-..."`, then restart Claude
